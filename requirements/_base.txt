@@ -1,6 +1,8 @@
 cryptography
 colorama
 Django
+django-crispy-forms
+crispy-tailwind
 django-filter
 django-maintenance-mode
 django-session-timeout
@@ -14,6 +16,7 @@ mysqlclient
 Pillow
 psycopg2-binary
 python-decouple
+python-webpack-boilerplate
 pyminizip
 PyYAML
 python-magic

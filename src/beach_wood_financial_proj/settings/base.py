@@ -40,16 +40,24 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.humanize",
+    "django.contrib.sites",
+    "webpack_boilerplate",
+    "crispy_forms",
+    "crispy_tailwind",
 ]
 
 MIDDLEWARE = [
+    # "django.middleware.cache.UpdateCacheMiddleware",  # new for the cache
     "django.middleware.security.SecurityMiddleware",
+    # "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # "django.middleware.cache.FetchFromCacheMiddleware",  # new for the cache
 ]
 
 ROOT_URLCONF = "beach_wood_financial_proj.urls"
@@ -108,11 +116,63 @@ USE_I18N = config("USE_I18N", cast=bool)
 
 USE_TZ = config("USE_TZ", cast=bool)
 
+# MESSAGE_TAGS = {
+#     messages.DEBUG: "is-link",
+#     messages.INFO: "is-info",
+#     messages.SUCCESS: "is-success",
+#     messages.WARNING: "is-warning",
+#     messages.ERROR: "is-danger",
+# }
+
+# LOGIN_REDIRECT_URL = ""
+# LOGOUT_REDIRECT_URL = "/"
+# LOGIN_URL = "users:auth:login"
+# AUTH_USER_MODEL = "users.CustomUser"
+
+# Django rest framework configs
+REST_FRAMEWORK = {
+    # "EXCEPTION_HANDLER": "core.errors.api_exception_handler",
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        # "rest_framework.authentication.TokenAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": [
+        "rest_framework.permissions.IsAuthenticated",
+    ],
+    "DEFAULT_PARSER_CLASSES": [
+        "rest_framework.parsers.JSONParser",
+        # "rest_framework.parsers.FormParser",
+    ],
+    "DATETIME_FORMAT": "%Y-%m-%d",
+}
+
+# Django maintenance mode configs
+MAINTENANCE_MODE_STATE_FILE_PATH = BASE_DIR / "maintenance_mode_state.txt"
+# the template that will be shown by the maintenance-mode page
+MAINTENANCE_MODE_TEMPLATE = "maintenance/503.html"
+
+# the HTTP status code to send
+# MAINTENANCE_MODE_STATUS_CODE = 404
+
+# list of urls that will not be affected by the maintenance-mode
+# urls will be used to compile regular expressions objects
+MAINTENANCE_MODE_IGNORE_URLS = (r"^/manager", r"/logout", r"/")
+
+# if True admin site will not be affected by the maintenance-mode page
+MAINTENANCE_MODE_IGNORE_ADMIN_SITE = True
+
+# if True the superuser will not see the maintenance-mode page
+MAINTENANCE_MODE_IGNORE_SUPERUSER = False
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
-STATICFILES_DIRS = [BASE_DIR / "static"]
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+    BASE_DIR / "frontend/build",
+]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 # Media URLs
@@ -138,6 +198,10 @@ PASSWORD_HASHERS = [
     "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
 ]
 
+# Crispy Configs
+CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
+CRISPY_TEMPLATE_PACK = "tailwind"
+
 # Django session timeout configs
 SESSION_COOKIE_AGE = config("SESSION_COOKIE_AGE", cast=int)
 SESSION_EXPIRE_SECONDS = config("SESSION_EXPIRE_SECONDS", cast=int)  # 1 hour
@@ -156,6 +220,24 @@ COMPRESS_LEVEL = config("COMPRESS_LEVEL", cast=int)
 
 # ENCRYPT_KEY
 ENCRYPT_KEY = bytes(config("ENCRYPT_KEY", cast=str), "ascii")
+
+# Webpack configs
+WEBPACK_LOADER = {
+    'MANIFEST_FILE': BASE_DIR / "frontend/build/manifest.json",
+}
+
+# Django logs configs
+# Django log viewer package config
+LOG_VIEWER_FILES_DIR = BASE_DIR / "logs"
+LOG_VIEWER_PAGE_LENGTH = 25  # total log lines per-page
+LOG_VIEWER_MAX_READ_LINES = 1000  # total log lines will be read
+LOG_VIEWER_FILE_LIST_MAX_ITEMS_PER_PAGE = 25  # Max log files loaded in Datatable per page
+LOG_VIEWER_PATTERNS = ["[INFO]", "[DEBUG]", "[WARNING]", "[ERROR]", "[CRITICAL]"]
+LOG_VIEWER_EXCLUDE_TEXT_PATTERN = (
+    None  # String regex expression to exclude the log from line
+)
+# Optionally you can set the next variables in order to customize the admin:
+LOG_VIEWER_FILE_LIST_TITLE = "Log viewer"
 
 # check if cache enabled
 if config("IS_CACHE_ENABLED", cast=bool) is True:
