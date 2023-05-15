@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "webpack_boilerplate",
     "crispy_forms",
     "crispy_tailwind",
+    "core.apps.CoreConfig",
 ]
 
 MIDDLEWARE = [
