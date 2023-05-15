@@ -1,0 +1,25 @@
+[tool.black]
+line-length = 91
+target-version = ['py311']
+
+[tool.isort]
+py_version=311
+profile = "django"
+known_django = "django"
+line_length = 91
+force_single_line = true
+#sections = ["FUTURE", "STDLIB", "THIRDPARTY", "DJANGO", "FIRSTPARTY", "LOCALFOLDER"]
+#skip = [".tox", "docs"]
+
+[tool.djlint]
+profile="django"
+extension="html.dj"
+indent=4
+exclude=".venv,venv,.tox"
+blank_line_after_tag="load,extends,include"
+blank_line_before_tag="load,extends,include"
+max_line_length=120
+format_attribute_template_tags=true
+format_js=true
+format_css=true
+
