@@ -23,5 +23,14 @@
   "python.linting.banditEnabled": false,
   "python.linting.pycodestyleEnabled": false,
   "autoDocstring.docstringFormat": "numpy",
-  "autoDocstring.includeName": true
+  "autoDocstring.includeName": true,
+  "workbench.colorCustomizations": {
+    "titleBar.activeForeground": "#fff",
+    // "titleBar.inactiveForeground": "#ffffffcc",
+    "titleBar.activeBackground": "#3b83f68c"
+    // "titleBar.inactiveBackground": "#3F758DCC"
+  },
+  "cSpell.words": [
+    "externalcss"
+  ]
 }
