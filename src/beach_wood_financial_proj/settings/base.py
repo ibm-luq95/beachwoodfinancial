@@ -43,9 +43,17 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "django.contrib.sites",
     "webpack_boilerplate",
+    # "django_components",
+    # "django_components.safer_staticfiles"  # <-- ADD
     "crispy_forms",
     "crispy_tailwind",
-    "core.apps.CoreConfig",
+    "log_viewer",
+    "maintenance_mode",
+    "import_export",
+    "django_filters",
+    "rest_framework",
+    # "slippers",
+    # "core.apps.CoreConfig",
 ]
 
 MIDDLEWARE = [
@@ -53,11 +61,13 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     # "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django_session_timeout.middleware.SessionTimeoutMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "maintenance_mode.middleware.MaintenanceModeMiddleware",
     # "django.middleware.cache.FetchFromCacheMiddleware",  # new for the cache
 ]
 
@@ -74,6 +84,13 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "core.context_processors.access_constants",
+                "core.context_processors.access_constants_as_group",
+                "maintenance_mode.context_processors.maintenance_mode",
+            ],
+            "builtins": [
+                "core.templatetags.nospaces",
+                # "slippers.templatetags.slippers",
             ],
         },
     },
@@ -105,6 +122,14 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
     },
 ]
+
+# Set login and logout urls
+LOGIN_REDIRECT_URL = ""
+LOGOUT_REDIRECT_URL = "/"
+# LOGIN_URL = "users:auth:login"
+
+# Set auth user model
+# AUTH_USER_MODEL = "users.CustomUser"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/

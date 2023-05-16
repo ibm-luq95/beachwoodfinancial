@@ -1,0 +1,27 @@
+{
+  "black-formatter.args": ["--config", "${workspaceFolder}/pyproject.toml"],
+  "black-formatter.trace": "info",
+  "black-formatter.showNotification": "on",
+  "black-formatter.importStrategy": "fromEnvironment",
+  "isort.args": ["--settings-path", "${workspaceFolder}/pyproject.toml"],
+  "python.formatting.provider": "none",
+  "[python]": {
+    "editor.defaultFormatter": "ms-python.black-formatter"
+  },
+  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.autoImportUserSymbols": true,
+  "python.analysis.completeFunctionParens": true,
+  "python.analysis.extraPaths": ["src/"],
+  "python.analysis.inlayHints.functionReturnTypes": true,
+  "python.analysis.inlayHints.pytestParameters": true,
+  "djangointellisense.projectRoot": "${workspaceFolder}/src",
+  "djangointellisense.settingsModule": "${workspaceFolder}/src/beach_wood_financial_proj/settings",
+  "djangointellisense.debugMessages": true,
+  "htmlhint.configFile": ".htmlhintrc",
+  "djlint.formatCss": true,
+  "djlint.formatJs": true,
+  "python.linting.banditEnabled": false,
+  "python.linting.pycodestyleEnabled": false,
+  "autoDocstring.docstringFormat": "numpy",
+  "autoDocstring.includeName": true
+}
