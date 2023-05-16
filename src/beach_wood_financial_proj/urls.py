@@ -25,6 +25,7 @@ static_and_media_path_urls = static(
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns = [
+    path("", include("home.urls"), name="home-urls"),
     path("js-settings/", js_settings, name="js_settings"),
 ]
 

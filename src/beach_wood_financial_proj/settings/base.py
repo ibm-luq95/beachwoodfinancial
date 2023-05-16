@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.humanize",
     "django.contrib.sites",
+    "django_extensions",
     "webpack_boilerplate",
     # "django_components",
     # "django_components.safer_staticfiles"  # <-- ADD
@@ -54,6 +55,7 @@ INSTALLED_APPS = [
     "rest_framework",
     # "slippers",
     # "core.apps.CoreConfig",
+    "home.apps.HomeConfig",
 ]
 
 MIDDLEWARE = [
@@ -84,8 +86,8 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                "core.context_processors.access_constants",
-                "core.context_processors.access_constants_as_group",
+                # "core.context_processors.access_constants",
+                # "core.context_processors.access_constants_as_group",
                 "maintenance_mode.context_processors.maintenance_mode",
             ],
             "builtins": [
@@ -197,7 +199,7 @@ MAINTENANCE_MODE_IGNORE_SUPERUSER = False
 STATIC_URL = "static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
-    BASE_DIR / "frontend/build",
+    BASE_DIR / "frontend" / "build",
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
@@ -249,7 +251,8 @@ ENCRYPT_KEY = bytes(config("ENCRYPT_KEY", cast=str), "ascii")
 
 # Webpack configs
 WEBPACK_LOADER = {
-    'MANIFEST_FILE': BASE_DIR / "frontend/build/manifest.json",
+    # 'MANIFEST_FILE': BASE_DIR / "frontend/build/manifest.json",
+    'MANIFEST_FILE': BASE_DIR / "frontend" / "build" / "manifest.json",
 }
 
 # Django logs configs
