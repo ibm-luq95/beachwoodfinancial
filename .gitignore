@@ -537,3 +537,7 @@ pyrightconfig.json
 # End of https://www.toptal.com/developers/gitignore/api/pycharm+all,python,django,node,pythonvanilla,visualstudiocode
 docs/
 src/frontend/package-lock.json
+# Only for Development only
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
