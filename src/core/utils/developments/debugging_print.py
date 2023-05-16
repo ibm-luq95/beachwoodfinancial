@@ -3,9 +3,10 @@
 import traceback
 from typing import Any, Optional
 
-from decouple import config
-
 from .custom_logger import get_formatted_logger
+from ..grab_env_file import grab_env_file
+
+config = grab_env_file()
 
 if config("STAGE_ENVIRONMENT", cast=str) == "DEV":
     from prettyprinter import cpprint
@@ -69,10 +70,10 @@ def get_all_methods(object, is_with_dunder=False) -> list:
 
 
 def debugging_colored_print(
-    txt: str,
-    fg_color: Optional[str] = "white",
-    bg_color: Optional[str] = "white",
-    mark: Optional[str] = None,
+        txt: str,
+        fg_color: Optional[str] = "white",
+        bg_color: Optional[str] = "white",
+        mark: Optional[str] = None,
 ) -> None:
     # debugging_print(locals())
     try:
@@ -106,13 +107,13 @@ def debugging_colored_print(
         if mark is not None:
             mark = mark * 5
             output_txt = (
-                fg_colors_map.get(fg_color)
-                + mark
-                + "  "
-                + txt
-                + "  "
-                + mark
-                + bg_colors_map.get(bg_color)
+                    fg_colors_map.get(fg_color)
+                    + mark
+                    + "  "
+                    + txt
+                    + "  "
+                    + mark
+                    + bg_colors_map.get(bg_color)
             )
         print(output_txt)
     except ImportError:
