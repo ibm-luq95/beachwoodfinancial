@@ -1,0 +1,151 @@
+{% extends "core/layouts/home.html" %}
+
+{% load crispy_forms_tags %}
+
+{% block home_content %}
+    <div class="w-full max-w-md p-6 mx-auto">
+        <div class="bg-white border border-gray-200 shadow-sm mt-7 rounded-xl dark:bg-gray-800 dark:border-gray-700">
+            <div class="p-4 sm:p-7">
+                <div class="text-center">
+                    <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">Sign in</h1>
+                </div>
+                <div class="mt-5">
+                    <!-- Form -->
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="grid gap-y-4">
+                            <!-- Form Group -->
+                            <div>
+                                <label for="user_type" class="block mb-2 text-sm dark:text-white">User Type</label>
+                                <div class="relative">
+                                    <div class="flex gap-x-6">
+                                        <div class="flex">
+                                            <input type="radio"
+                                                   name="user_type"
+                                                   class="shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                                   id="hs-radio-group-1"
+                                                   checked
+                                                   value="manager">
+                                            <label for="hs-radio-group-1"
+                                                   class="ml-2 text-sm text-gray-800 dark:text-gray-400">
+                                                Manager
+                                            </label>
+                                        </div>
+                                        <div class="flex">
+                                            <input type="radio"
+                                                   name="user_type"
+                                                   class="shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                                   id="hs-radio-group-2"
+                                                   value="bookkeeper">
+                                            <label for="hs-radio-group-2"
+                                                   class="ml-2 text-sm text-gray-800 dark:text-gray-400">
+                                                Bookkeeper
+                                            </label>
+                                        </div>
+                                        <div class="flex">
+                                            <input type="radio"
+                                                   name="user_type"
+                                                   class="shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                                   id="hs-radio-group-3"
+                                                   value="assistant">
+                                            <label for="hs-radio-group-3"
+                                                   class="ml-2 text-sm text-gray-800 dark:text-gray-400">
+                                                Assistant
+                                            </label>
+                                        </div>
+                                    </div>
+                                    <div class="absolute inset-y-0 right-0 flex items-center hidden pr-3 pointer-events-none">
+                                        <svg class="w-5 h-5 text-red-500"
+                                             width="16"
+                                             height="16"
+                                             fill="currentColor"
+                                             viewBox="0 0 16 16"
+                                             aria-hidden="true">
+                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <p class="hidden mt-2 text-xs text-red-600" id="email-error">
+                                    Please include a valid email address so we can get back to you
+                                </p>
+                            </div>
+                            <!-- End Form Group -->
+                            <!-- Form Group -->
+                            <div>
+                                <label for="email" class="block mb-2 text-sm dark:text-white">Email address</label>
+                                <div class="relative">
+                                    <input type="email"
+                                           id="email"
+                                           name="email"
+                                           class="block w-full px-4 py-3 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                                           required
+                                           aria-describedby="email-error" />
+                                    <div class="absolute inset-y-0 right-0 flex items-center hidden pr-3 pointer-events-none">
+                                        <svg class="w-5 h-5 text-red-500"
+                                             width="16"
+                                             height="16"
+                                             fill="currentColor"
+                                             viewBox="0 0 16 16"
+                                             aria-hidden="true">
+                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <p class="hidden mt-2 text-xs text-red-600" id="email-error">
+                                    Please include a valid email address so we can get back to you
+                                </p>
+                            </div>
+                            <!-- End Form Group -->
+                            <!-- Form Group -->
+                            <div>
+                                <div class="flex items-center justify-between">
+                                    <label for="password" class="block mb-2 text-sm dark:text-white">Password</label>
+                                    <a class="text-sm font-medium text-blue-600 decoration-2 hover:underline"
+                                       href="{% url 'auth:reset' %}">Forgot password?</a>
+                                </div>
+                                <div class="relative">
+                                    <input type="password"
+                                           id="password"
+                                           name="password"
+                                           class="block w-full px-4 py-3 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                                           required
+                                           aria-describedby="password-error" />
+                                    <div class="absolute inset-y-0 right-0 flex items-center hidden pr-3 pointer-events-none">
+                                        <svg class="w-5 h-5 text-red-500"
+                                             width="16"
+                                             height="16"
+                                             fill="currentColor"
+                                             viewBox="0 0 16 16"
+                                             aria-hidden="true">
+                                            <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4zm.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2z" />
+                                        </svg>
+                                    </div>
+                                </div>
+                                <p class="hidden mt-2 text-xs text-red-600" id="password-error">8+ characters required</p>
+                            </div>
+                            <!-- End Form Group -->
+                            <!-- Checkbox -->
+                            <div class="flex items-center">
+                                <div class="flex">
+                                    <input id="remember-me"
+                                           name="remember-me"
+                                           type="checkbox"
+                                           class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" />
+                                </div>
+                                <div class="ml-3">
+                                    <label for="remember-me" class="text-sm dark:text-white">Remember me</label>
+                                </div>
+                            </div>
+                            <!-- End Checkbox -->
+                            <button type="submit"
+                                    class="inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white transition-all bg-blue-500 border border-transparent rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
+                                Sign in
+                            </button>
+                        </div>
+                    </form>
+                    <!-- End Form -->
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock home_content %}

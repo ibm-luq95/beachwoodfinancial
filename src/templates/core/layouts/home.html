@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% nospaces %}
 <html lang="en" class="h-full">
     <head>
 
@@ -15,24 +16,37 @@
         {% block externalcss %}
         {% endblock externalcss %}
     </head>
-    <body class=" flex h-full">
+    <body class="flex h-full">
         <div class="max-w-full flex flex-col mx-auto w-full h-full">
             <!-- ========== HEADER ========== -->
-
-            {% include "core/inc/home_navbar.html" %}
-
+            {% #home-top-navbar perms=perms request=request %}
+            {% /home-top-navbar %}
             <!-- ========== END HEADER ========== -->
+            {% comment  %}
+            <!-- ========== ANNOUNCEMENT BANNER ========== -->
+            {% #announcement-banner %}
+            {% /announcement-banner %}
+            <!-- ========== END ANNOUNCEMENT BANNER ========== -->
+            {% endcomment %}
             <!-- ========== MAIN CONTENT ========== -->
-            <main id="home-content" role="main" class="container mx-auto mt-2 p-2">
+            <main id="home-content" role="main" >
+                {# Start Flash Message #}
+                {% #flash-messages messages=messages %}
+                {% /flash-messages %}
+                {# End Flash Message #}
                 {% block home_content %}
                 {% endblock home_content %}
             </main>
             <!-- ========== END MAIN CONTENT ========== -->
             <!-- ========== FOOTER ========== -->
-
-            {% include "core/inc/home_footer.html" %}
-
+            {% #home-footer perms=perms request=request %}
+            {% /home-footer %}
             <!-- ========== END FOOTER ========== -->
+            
+            <!-- ========== COOKIE BANNER ========== -->
+            {% #cookie-banner request=request perms=perms %}
+            {% /cookie-banner %}
+            <!-- ========== END COOKIE BANNER ========== -->
         </div>
 
         {% include "core/inc/js.html" %}
@@ -41,3 +55,4 @@
         {% endblock externaljs %}
     </body>
 </html>
+{% endnospaces %}

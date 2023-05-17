@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from decouple import Config, RepositoryEnv, Csv
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent  # Default BASE_DIR
@@ -53,15 +54,16 @@ INSTALLED_APPS = [
     "import_export",
     "django_filters",
     "rest_framework",
-    # "slippers",
-    # "core.apps.CoreConfig",
+    "slippers",
+    "core.apps.CoreConfig",
+    "beach_wood_user.apps.BeachWoodUserConfig",
     "home.apps.HomeConfig",
 ]
 
 MIDDLEWARE = [
     # "django.middleware.cache.UpdateCacheMiddleware",  # new for the cache
     "django.middleware.security.SecurityMiddleware",
-    # "whitenoise.middleware.WhiteNoiseMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django_session_timeout.middleware.SessionTimeoutMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -86,13 +88,13 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                # "core.context_processors.access_constants",
-                # "core.context_processors.access_constants_as_group",
+                "core.context_processors.access_constants",
+                "core.context_processors.access_constants_as_group",
                 "maintenance_mode.context_processors.maintenance_mode",
             ],
             "builtins": [
                 "core.templatetags.nospaces",
-                # "slippers.templatetags.slippers",
+                "slippers.templatetags.slippers",
             ],
         },
     },
@@ -126,12 +128,14 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Set login and logout urls
-LOGIN_REDIRECT_URL = ""
-LOGOUT_REDIRECT_URL = "/"
-# LOGIN_URL = "users:auth:login"
+# LOGIN_REDIRECT_URL = "auth:login"  # The URL or named URL pattern where requests
+# are redirected after login when the LoginView doesn’t get a next GET parameter.
+LOGOUT_REDIRECT_URL = "home:landing"
+LOGIN_URL = "auth:login"
+LOGOUT_URL = "auth:logout"
 
 # Set auth user model
-# AUTH_USER_MODEL = "users.CustomUser"
+AUTH_USER_MODEL = "beach_wood_user.BWUser"
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -143,19 +147,6 @@ TIME_ZONE = config("TIME_ZONE", cast=str)
 USE_I18N = config("USE_I18N", cast=bool)
 
 USE_TZ = config("USE_TZ", cast=bool)
-
-# MESSAGE_TAGS = {
-#     messages.DEBUG: "is-link",
-#     messages.INFO: "is-info",
-#     messages.SUCCESS: "is-success",
-#     messages.WARNING: "is-warning",
-#     messages.ERROR: "is-danger",
-# }
-
-# LOGIN_REDIRECT_URL = ""
-# LOGOUT_REDIRECT_URL = "/"
-# LOGIN_URL = "users:auth:login"
-# AUTH_USER_MODEL = "users.CustomUser"
 
 # Django rest framework configs
 REST_FRAMEWORK = {
@@ -267,6 +258,15 @@ LOG_VIEWER_EXCLUDE_TEXT_PATTERN = (
 )
 # Optionally you can set the next variables in order to customize the admin:
 LOG_VIEWER_FILE_LIST_TITLE = "Log viewer"
+
+# Django flash messages css classes
+MESSAGE_TAGS = {
+    messages.DEBUG: "bw-debug",
+    messages.INFO: "bw-info",
+    messages.SUCCESS: "bw-success",
+    messages.WARNING: "bw-warning",
+    messages.ERROR: "bw-error",
+}
 
 # check if cache enabled
 if config("IS_CACHE_ENABLED", cast=bool) is True:

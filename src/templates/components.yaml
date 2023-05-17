@@ -1,0 +1,6 @@
+components:
+  flash-messages: "components/core/inc/messages.html"
+  home-top-navbar: "components/core/inc/home_top_navbar.html"
+  home-footer: "components/core/inc/home_footer.html"
+  announcement-banner: "components/announcement_banner.html"
+  cookie-banner: "components/cookie_banner.html"

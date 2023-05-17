@@ -4,8 +4,8 @@ from typing import Optional
 from django import forms
 
 
-class CustomPasswordInputWidget(forms.widgets.PasswordInput):
+class BWPasswordInputWidget(forms.widgets.PasswordInput):
     def __init__(self, attrs: Optional[dict] = None, *args, **kwargs):
         attrs = attrs or {}
         attrs.update({"class": "input", "autocomplete": "new-password"})
-        super(CustomPasswordInputWidget, self).__init__(attrs)
+        super(BWPasswordInputWidget, self).__init__(attrs)

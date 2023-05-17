@@ -1,7 +1,255 @@
-{% extends "core/master/home.html" %}
+{% extends "core/layouts/home.html" %}
 
 {% block home_content %}
-    <h3>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor beatae assumenda enim ipsum voluptatum voluptatibus itaque fuga? Magnam, nemo inventore? Repellat unde tenetur commodi ipsum ducimus sit mollitia veritatis cumque.
-    </h3>
+    <section id="about-wrapper">
+        <!-- Features -->
+        <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+            <!-- Grid -->
+            <div class="md:grid md:grid-cols-2 md:items-center md:gap-12 xl:gap-32">
+                <div>
+                    <img class="rounded-xl"
+                         src="https://images.unsplash.com/photo-1648737963503-1a26da876aca?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=900&h=900&q=80"
+                         alt="Image Description">
+                </div>
+                <!-- End Col -->
+                <div class="mt-5 sm:mt-10 lg:mt-0">
+                    <div class="space-y-6 sm:space-y-8">
+                        <!-- Title -->
+                        <div class="space-y-2 md:space-y-4">
+                            <h2 class="font-bold text-3xl lg:text-4xl text-gray-800 dark:text-gray-200">
+                                We tackle the challenges start-ups face
+                            </h2>
+                            <p class="text-gray-500">
+                                Besides working with start-up enterprises as a partner for digitalization, we have built
+                                enterprise products for common pain points that we have encountered in various products and
+                                projects.
+                            </p>
+                        </div>
+                        <!-- End Title -->
+                        <!-- List -->
+                        <ul role="list" class="space-y-2 sm:space-y-4">
+                            <li class="flex space-x-3">
+                                <!-- Solid Check -->
+                                <svg class="flex-shrink-0 h-6 w-6 text-blue-600 dark:text-blue-500"
+                                     width="16"
+                                     height="16"
+                                     viewBox="0 0 16 16"
+                                     fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15.1965 7.85999C15.1965 3.71785 11.8387 0.359985 7.69653 0.359985C3.5544 0.359985 0.196533 3.71785 0.196533 7.85999C0.196533 12.0021 3.5544 15.36 7.69653 15.36C11.8387 15.36 15.1965 12.0021 15.1965 7.85999Z" fill="currentColor" fill-opacity="0.1" />
+                                    <path d="M10.9295 4.88618C11.1083 4.67577 11.4238 4.65019 11.6343 4.82904C11.8446 5.00788 11.8702 5.32343 11.6914 5.53383L7.44139 10.5338C7.25974 10.7475 6.93787 10.77 6.72825 10.5837L4.47825 8.5837C4.27186 8.40024 4.25327 8.0842 4.43673 7.87781C4.62019 7.67142 4.93622 7.65283 5.14261 7.83629L7.01053 9.49669L10.9295 4.88618Z" fill="currentColor" />
+                                </svg>
+                                <!-- End Solid Check -->
+                                <span class="text-sm sm:text-base text-gray-500">
+                                    <span class="font-bold">Easy & fast</span> designing
+                                </span>
+                            </li>
+                            <li class="flex space-x-3">
+                                <!-- Solid Check -->
+                                <svg class="flex-shrink-0 h-6 w-6 text-blue-600 dark:text-blue-500"
+                                     width="16"
+                                     height="16"
+                                     viewBox="0 0 16 16"
+                                     fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15.1965 7.85999C15.1965 3.71785 11.8387 0.359985 7.69653 0.359985C3.5544 0.359985 0.196533 3.71785 0.196533 7.85999C0.196533 12.0021 3.5544 15.36 7.69653 15.36C11.8387 15.36 15.1965 12.0021 15.1965 7.85999Z" fill="currentColor" fill-opacity="0.1" />
+                                    <path d="M10.9295 4.88618C11.1083 4.67577 11.4238 4.65019 11.6343 4.82904C11.8446 5.00788 11.8702 5.32343 11.6914 5.53383L7.44139 10.5338C7.25974 10.7475 6.93787 10.77 6.72825 10.5837L4.47825 8.5837C4.27186 8.40024 4.25327 8.0842 4.43673 7.87781C4.62019 7.67142 4.93622 7.65283 5.14261 7.83629L7.01053 9.49669L10.9295 4.88618Z" fill="currentColor" />
+                                </svg>
+                                <!-- End Solid Check -->
+                                <span class="text-sm sm:text-base text-gray-500">
+                                    Powerful <span class="font-bold">features</span>
+                                </span>
+                            </li>
+                            <li class="flex space-x-3">
+                                <!-- Solid Check -->
+                                <svg class="flex-shrink-0 h-6 w-6 text-blue-600 dark:text-blue-500"
+                                     width="16"
+                                     height="16"
+                                     viewBox="0 0 16 16"
+                                     fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M15.1965 7.85999C15.1965 3.71785 11.8387 0.359985 7.69653 0.359985C3.5544 0.359985 0.196533 3.71785 0.196533 7.85999C0.196533 12.0021 3.5544 15.36 7.69653 15.36C11.8387 15.36 15.1965 12.0021 15.1965 7.85999Z" fill="currentColor" fill-opacity="0.1" />
+                                    <path d="M10.9295 4.88618C11.1083 4.67577 11.4238 4.65019 11.6343 4.82904C11.8446 5.00788 11.8702 5.32343 11.6914 5.53383L7.44139 10.5338C7.25974 10.7475 6.93787 10.77 6.72825 10.5837L4.47825 8.5837C4.27186 8.40024 4.25327 8.0842 4.43673 7.87781C4.62019 7.67142 4.93622 7.65283 5.14261 7.83629L7.01053 9.49669L10.9295 4.88618Z" fill="currentColor" />
+                                </svg>
+                                <!-- End Solid Check -->
+                                <span class="text-sm sm:text-base text-gray-500">User Experience Design</span>
+                            </li>
+                        </ul>
+                        <!-- End List -->
+                    </div>
+                </div>
+                <!-- End Col -->
+            </div>
+            <!-- End Grid -->
+        </div>
+        <!-- End Features -->
+        <!-- Icon Blocks -->
+        <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+            <div class="max-w-2xl mx-auto">
+                <!-- Grid -->
+                <div class="grid gap-12">
+                    <div>
+                        <h2 class="text-3xl text-gray-800 font-bold lg:text-4xl dark:text-white">Our vision</h2>
+                        <p class="mt-3 text-gray-800 dark:text-gray-400">
+                            For as long as there have been cities, the public square has been a fundamental part of the
+                            urban landscape - an open, approachable space to meet and engage with friends and neighbours.
+                            Space aims to capture this spirit of bringing people together in an exciting, welcoming
+                            environment.
+                        </p>
+                    </div>
+                    <div class="space-y-6 lg:space-y-10">
+                        <!-- Icon Block -->
+                        <div class="flex">
+                            <svg class="flex-shrink-0 mt-2 h-6 w-6 text-gray-800 dark:text-white"
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 width="16"
+                                 height="16"
+                                 fill="currentColor"
+                                 viewBox="0 0 16 16">
+                                <path fill-rule="evenodd" d="M14.763.075A.5.5 0 0 1 15 .5v15a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5V14h-1v1.5a.5.5 0 0 1-.5.5h-9a.5.5 0 0 1-.5-.5V10a.5.5 0 0 1 .342-.474L6 7.64V4.5a.5.5 0 0 1 .276-.447l8-4a.5.5 0 0 1 .487.022zM6 8.694 1 10.36V15h5V8.694zM7 15h2v-1.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5V15h2V1.309l-7 3.5V15z" />
+                                <path d="M2 11h1v1H2v-1zm2 0h1v1H4v-1zm-2 2h1v1H2v-1zm2 0h1v1H4v-1zm4-4h1v1H8V9zm2 0h1v1h-1V9zm-2 2h1v1H8v-1zm2 0h1v1h-1v-1zm2-2h1v1h-1V9zm0 2h1v1h-1v-1zM8 7h1v1H8V7zm2 0h1v1h-1V7zm2 0h1v1h-1V7zM8 5h1v1H8V5zm2 0h1v1h-1V5zm2 0h1v1h-1V5zm0-2h1v1h-1V3z" />
+                            </svg>
+                            <div class="ml-5 sm:ml-8">
+                                <h3 class="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-200">
+                                    High quality
+                                    Co-Living spaces
+                                </h3>
+                                <p class="mt-1 text-gray-600 dark:text-gray-400">
+                                    Our fully furnished spaces are designed and purpose-built with Co-Living in mind,
+                                    featuring high-end finishes and amenities that go far beyond traditional apartment
+                                    buildings.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- End Icon Block -->
+                        <!-- Icon Block -->
+                        <div class="flex">
+                            <svg class="flex-shrink-0 mt-2 h-6 w-6 text-gray-800 dark:text-white"
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 width="16"
+                                 height="16"
+                                 fill="currentColor"
+                                 viewBox="0 0 16 16">
+                                <path d="M15 14s1 0 1-1-1-4-5-4-5 3-5 4 1 1 1 1h8zm-7.978-1A.261.261 0 0 1 7 12.996c.001-.264.167-1.03.76-1.72C8.312 10.629 9.282 10 11 10c1.717 0 2.687.63 3.24 1.276.593.69.758 1.457.76 1.72l-.008.002a.274.274 0 0 1-.014.002H7.022zM11 7a2 2 0 1 0 0-4 2 2 0 0 0 0 4zm3-2a3 3 0 1 1-6 0 3 3 0 0 1 6 0zM6.936 9.28a5.88 5.88 0 0 0-1.23-.247A7.35 7.35 0 0 0 5 9c-4 0-5 3-5 4 0 .667.333 1 1 1h4.216A2.238 2.238 0 0 1 5 13c0-1.01.377-2.042 1.09-2.904.243-.294.526-.569.846-.816zM4.92 10A5.493 5.493 0 0 0 4 13H1c0-.26.164-1.03.76-1.724.545-.636 1.492-1.256 3.16-1.275zM1.5 5.5a3 3 0 1 1 6 0 3 3 0 0 1-6 0zm3-2a2 2 0 1 0 0 4 2 2 0 0 0 0-4z" />
+                            </svg>
+                            <div class="ml-5 sm:ml-8">
+                                <h3 class="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-200">
+                                    Fostering
+                                    vibrant communities
+                                </h3>
+                                <p class="mt-1 text-gray-600 dark:text-gray-400">
+                                    Our passion is bringing people together. Beyond creating beautiful spaces, we provide
+                                    shared experiences.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- End Icon Block -->
+                        <!-- Icon Block -->
+                        <div class="flex">
+                            <svg class="flex-shrink-0 mt-2 h-6 w-6 text-gray-800 dark:text-white"
+                                 xmlns="http://www.w3.org/2000/svg"
+                                 width="16"
+                                 height="16"
+                                 fill="currentColor"
+                                 viewBox="0 0 16 16">
+                                <path d="M8.864.046C7.908-.193 7.02.53 6.956 1.466c-.072 1.051-.23 2.016-.428 2.59-.125.36-.479 1.013-1.04 1.639-.557.623-1.282 1.178-2.131 1.41C2.685 7.288 2 7.87 2 8.72v4.001c0 .845.682 1.464 1.448 1.545 1.07.114 1.564.415 2.068.723l.048.03c.272.165.578.348.97.484.397.136.861.217 1.466.217h3.5c.937 0 1.599-.477 1.934-1.064a1.86 1.86 0 0 0 .254-.912c0-.152-.023-.312-.077-.464.201-.263.38-.578.488-.901.11-.33.172-.762.004-1.149.069-.13.12-.269.159-.403.077-.27.113-.568.113-.857 0-.288-.036-.585-.113-.856a2.144 2.144 0 0 0-.138-.362 1.9 1.9 0 0 0 .234-1.734c-.206-.592-.682-1.1-1.2-1.272-.847-.282-1.803-.276-2.516-.211a9.84 9.84 0 0 0-.443.05 9.365 9.365 0 0 0-.062-4.509A1.38 1.38 0 0 0 9.125.111L8.864.046zM11.5 14.721H8c-.51 0-.863-.069-1.14-.164-.281-.097-.506-.228-.776-.393l-.04-.024c-.555-.339-1.198-.731-2.49-.868-.333-.036-.554-.29-.554-.55V8.72c0-.254.226-.543.62-.65 1.095-.3 1.977-.996 2.614-1.708.635-.71 1.064-1.475 1.238-1.978.243-.7.407-1.768.482-2.85.025-.362.36-.594.667-.518l.262.066c.16.04.258.143.288.255a8.34 8.34 0 0 1-.145 4.725.5.5 0 0 0 .595.644l.003-.001.014-.003.058-.014a8.908 8.908 0 0 1 1.036-.157c.663-.06 1.457-.054 2.11.164.175.058.45.3.57.65.107.308.087.67-.266 1.022l-.353.353.353.354c.043.043.105.141.154.315.048.167.075.37.075.581 0 .212-.027.414-.075.582-.05.174-.111.272-.154.315l-.353.353.353.354c.047.047.109.177.005.488a2.224 2.224 0 0 1-.505.805l-.353.353.353.354c.006.005.041.05.041.17a.866.866 0 0 1-.121.416c-.165.288-.503.56-1.066.56z" />
+                            </svg>
+                            <div class="ml-5 sm:ml-8">
+                                <h3 class="text-base sm:text-lg font-semibold text-gray-800 dark:text-gray-200">
+                                    Simple and
+                                    all-inclusive
+                                </h3>
+                                <p class="mt-1 text-gray-600 dark:text-gray-400">
+                                    We worry about the details so that our residents don't have to. From our online
+                                    application process to simple, all-inclusive billing we aim to make the living
+                                    experience as effortless as possible.
+                                </p>
+                            </div>
+                        </div>
+                        <!-- End Icon Block -->
+                    </div>
+                </div>
+                <!-- End Grid -->
+            </div>
+        </div>
+        <!-- End Icon Blocks -->
+        <!-- Hero -->
+        <div class="relative overflow-hidden">
+            <div class="mx-auto max-w-screen-md py-12 px-4 sm:px-6 md:max-w-screen-xl md:py-20 lg:py-32 md:px-8">
+                <div class="md:pr-8 md:w-1/2 xl:pr-0 xl:w-5/12">
+                    <!-- Title -->
+                    <h1 class="text-3xl text-gray-800 font-bold md:text-4xl md:leading-tight lg:text-5xl lg:leading-tight dark:text-gray-200">
+                        Solving problems for every <span class="text-blue-600 dark:text-blue-500">team</span>
+                    </h1>
+                    <p class="mt-3 text-base text-gray-500">
+                        Built on standard web technology, teams use Preline to build beautiful cross-platform hybrid apps in a fraction of the time.
+                    </p>
+                    <!-- End Title -->
+                    <div class="mt-8 grid">
+                        <button type="button"
+                                class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm sm:p-4 dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                            <svg class="w-4 h-auto"
+                                 width="46"
+                                 height="47"
+                                 viewBox="0 0 46 47"
+                                 fill="none">
+                                <path d="M46 24.0287C46 22.09 45.8533 20.68 45.5013 19.2112H23.4694V27.9356H36.4069C36.1429 30.1094 34.7347 33.37 31.5957 35.5731L31.5663 35.8669L38.5191 41.2719L38.9885 41.3306C43.4477 37.2181 46 31.1669 46 24.0287Z" fill="#4285F4" />
+                                <path d="M23.4694 47C29.8061 47 35.1161 44.9144 39.0179 41.3012L31.625 35.5437C29.6301 36.9244 26.9898 37.8937 23.4987 37.8937C17.2793 37.8937 12.0281 33.7812 10.1505 28.1412L9.88649 28.1706L2.61097 33.7812L2.52296 34.0456C6.36608 41.7125 14.287 47 23.4694 47Z" fill="#34A853" />
+                                <path d="M10.1212 28.1413C9.62245 26.6725 9.32908 25.1156 9.32908 23.5C9.32908 21.8844 9.62245 20.3275 10.0918 18.8588V18.5356L2.75765 12.8369L2.52296 12.9544C0.909439 16.1269 0 19.7106 0 23.5C0 27.2894 0.909439 30.8731 2.49362 34.0456L10.1212 28.1413Z" fill="#FBBC05" />
+                                <path d="M23.4694 9.07688C27.8699 9.07688 30.8622 10.9863 32.5344 12.5725L39.1645 6.11C35.0867 2.32063 29.8061 0 23.4694 0C14.287 0 6.36607 5.2875 2.49362 12.9544L10.0918 18.8588C11.9987 13.1894 17.25 9.07688 23.4694 9.07688Z" fill="#EB4335" />
+                            </svg>
+                            Sign up with Google
+                        </button>
+                    </div>
+                    <div class="py-6 flex items-center text-gray-400 uppercase before:flex-[1_1_0%] before:border-t before:mr-6 after:flex-[1_1_0%] after:border-t after:ml-6 dark:text-gray-500 dark:before:border-gray-600 dark:after:border-gray-600">
+                        Or
+                    </div>
+                    <!-- Form -->
+                    <form>
+                        <div class="mb-4">
+                            <label for="hs-hero-name-2"
+                                   class="block text-sm font-medium dark:text-white">
+                                <span class="sr-only">Full name</span>
+                            </label>
+                            <input type="text"
+                                   id="hs-hero-name-2"
+                                   class="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 sm:p-4 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                                   placeholder="Full name">
+                        </div>
+                        <div class="mb-4">
+                            <label for="hs-hero-email-2"
+                                   class="block text-sm font-medium dark:text-white">
+                                <span class="sr-only">Email address</span>
+                            </label>
+                            <input type="email"
+                                   id="hs-hero-email-2"
+                                   class="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 sm:p-4 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                                   placeholder="Email address">
+                        </div>
+                        <div class="mb-4">
+                            <label for="hs-hero-password-2"
+                                   class="block text-sm font-medium dark:text-white">
+                                <span class="sr-only">Password</span>
+                            </label>
+                            <input type="email"
+                                   id="hs-hero-password-2"
+                                   class="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 sm:p-4 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                                   placeholder="Password">
+                        </div>
+                        <div class="grid">
+                            <button type="submit"
+                                    class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800 sm:p-4">
+                                Sign up
+                            </button>
+                        </div>
+                    </form>
+                    <!-- End Form -->
+                </div>
+            </div>
+            <div class="hidden md:block md:absolute md:top-0 md:left-1/2 md:right-0 h-full bg-[url('https://images.unsplash.com/photo-1606868306217-dbf5046868d2?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1981&q=80')] bg-no-repeat bg-center bg-cover">
+            </div>
+            <!-- End Col -->
+        </div>
+        <!-- End Hero -->
+    </section>
 {% endblock home_content %}

@@ -9,8 +9,7 @@ from django.urls import (
     resolvers,
 )
 
-from core.utils import debugging_print
-from users.models import CustomUser
+from beach_wood_user.models import BWUser
 
 register = template.Library()
 
@@ -53,11 +52,11 @@ def collect_urls(urls=None, namespace=None, prefix=None) -> list | None:
 
 @register.simple_tag(takes_context=True)
 def fetch_url_by_name_pk(
-    context: RequestContext,
-    details_url: Optional[str] = None,
-    action_urls_pattern: Optional[str] = None,
-    url_name: Optional[str] = None,
-    object_pk: Optional[UUID] = None,
+        context: RequestContext,
+        details_url: Optional[str] = None,
+        action_urls_pattern: Optional[str] = None,
+        url_name: Optional[str] = None,
+        object_pk: Optional[UUID] = None,
 ) -> str | None:
     url_path = ""
 
@@ -76,11 +75,11 @@ def fetch_url_by_name_pk(
 
 @register.simple_tag(takes_context=True)
 def fetch_app_url_for_user(
-    context: RequestContext,
-    app_name: str,
-    path_name: str,
-    user_type: Optional[str] = None,
-    object_pk: Optional[UUID] = None,
+        context: RequestContext,
+        app_name: str,
+        path_name: str,
+        user_type: Optional[str] = None,
+        object_pk: Optional[UUID] = None,
 ) -> str:
     url_path = ""
     if user_type is not None:
@@ -97,9 +96,9 @@ def fetch_app_url_for_user(
 
 @register.simple_tag
 def fetch_user_details_url(
-    base_user: str,
-    user_object: CustomUser,
-    details_name: Optional[str] = "details",
+        base_user: str,
+        user_object: BWUser,
+        details_name: Optional[str] = "details",
 ) -> str:
     url_path = ""
     user_type = user_object.user_type

@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-#
 import re
 
-from django.utils.encoding import force_str
 from django.template import Library, Node
+from django.utils.encoding import force_str
 
 register = Library()
 
