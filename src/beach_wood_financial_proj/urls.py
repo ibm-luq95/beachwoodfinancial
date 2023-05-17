@@ -27,11 +27,12 @@ static_and_media_path_urls = static(
 urlpatterns = [
     path("", include("home.urls"), name="home-urls"),
     path("js-settings/", js_settings, name="js_settings"),
+    path("auth/", include("beach_wood_user.urls.auth"), name="auth-urls"),
 ]
 
 if settings.DEBUG:
     urlpatterns += static_and_media_path_urls
-    # urlpatterns.append(path("__debug__/", include("debug_toolbar.urls")))
+    urlpatterns.append(path("__debug__/", include("debug_toolbar.urls")))
     # urlpatterns.append(
     #     path("request-logs/", include("request_viewer.urls")),
     # )
