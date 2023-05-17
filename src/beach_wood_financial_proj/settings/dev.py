@@ -2,22 +2,20 @@ import mimetypes
 
 from .base import *
 
-# ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=str).split(",")
-
 mimetypes.add_type("application/javascript", ".js", True)
 
 DEBUG = config("DEBUG", cast=bool)
 
 INSTALLED_APPS = INSTALLED_APPS + [
     "django.contrib.admindocs",
-    # "debug_toolbar",
+    "debug_toolbar",
     # "request_viewer",
 ]
 
 MIDDLEWARE = MIDDLEWARE + [
     # "request_viewer.middleware.RequestViewerMiddleware",
     # "request_viewer.middleware.ExceptionMiddleware",
-    # "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "debug_toolbar.middleware.DebugToolbarMiddleware",
     "django.contrib.admindocs.middleware.XViewMiddleware",
 ]
 
