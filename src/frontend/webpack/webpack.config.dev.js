@@ -8,6 +8,9 @@ const ESLintPlugin = require("eslint-webpack-plugin");
 const common = require("./webpack.common.js");
 
 module.exports = merge(common, {
+  stats: {
+    errorDetails: true
+  },
   target: "web",
   mode: "development",
   devtool: "inline-source-map",
