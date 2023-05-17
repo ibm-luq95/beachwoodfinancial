@@ -6,7 +6,7 @@
     "build": "cross-env NODE_ENV=production webpack --config webpack/webpack.config.prod.js",
     "start": "webpack serve --config webpack/webpack.config.dev.js",
     "watch": "webpack --watch --config webpack/webpack.config.watch.js",
-    "tailwindcss": "tailwindcss -i ./src/input.css -o ./dist/output.css --watch"
+    "tailwindcss": "tailwindcss -i ./src/styles/index.scss -o ./build/css/app.css --watch"
   },
   "repository": {
     "type": "git",
@@ -63,12 +63,14 @@
     "@preline/dropdown": "^1.3.0",
     "@preline/overlay": "^1.4.0",
     "@preline/remove-element": "^1.3.0",
+    "@preline/scrollspy": "^1.3.0",
     "@preline/tabs": "^1.3.1",
     "@preline/tooltip": "^1.4.0",
     "@tailwindcss/container-queries": "^0.1.1",
     "autoprefixer": "^10.4.14",
     "bootstrap": "^5.1.3",
     "core-js": "^3.20.3",
+    "css.gg": "^2.0.0",
     "postcss": "^8.4.23",
     "preline": "^1.8.0",
     "tailwindcss": "^3.3.2"
