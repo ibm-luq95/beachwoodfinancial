@@ -19,13 +19,13 @@ from core.constants.users import (
 )
 
 
-class CustomUserTypeEnum(models.TextChoices):
+class BeachWoodUserTypeEnum(models.TextChoices):
     BOOKKEEPER = CON_BOOKKEEPER, _(stringcase.sentencecase(CON_BOOKKEEPER))
     ASSISTANT = CON_ASSISTANT, _(stringcase.sentencecase(CON_ASSISTANT))
     MANAGER = CON_MANAGER, _(stringcase.sentencecase(CON_MANAGER))
 
 
-class CustomUserStatusEnum(models.TextChoices):
+class BeachWoodUserStatusEnum(models.TextChoices):
     ENABLED = CON_ENABLED, _(stringcase.sentencecase(CON_MANAGER))
     PENDING = CON_PENDING, _(stringcase.sentencecase(CON_PENDING))
     CANCELED = CON_CANCELED, _(stringcase.sentencecase(CON_CANCELED))
@@ -33,6 +33,6 @@ class CustomUserStatusEnum(models.TextChoices):
     ARCHIVED = CON_ARCHIVED, _(stringcase.sentencecase(CON_ARCHIVED))
 
 
-class UserTypesEnum(models.TextChoices):
+class BeachWoodUserTypesEnum(models.TextChoices):
     DEVELOPER = CON_DEVELOPER, _(stringcase.sentencecase(CON_DEVELOPER))
     USER = CON_USER, _(stringcase.sentencecase(CON_USER))

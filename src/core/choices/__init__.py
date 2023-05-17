@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-#
-from .users import CustomUserStatusEnum, CustomUserTypeEnum, UserTypesEnum
+from .users import BeachWoodUserStatusEnum, BeachWoodUserTypeEnum, BeachWoodUserTypesEnum
 from .assistant import AssistantTypeEnum
 from .job import JobTypeEnum, JobStatusEnum, JobStateEnum
 from .tasks import TaskTypeEnum, TaskStatusEnum
