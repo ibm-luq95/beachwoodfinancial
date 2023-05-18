@@ -1,6 +1,7 @@
 cryptography
 colorama
 Django
+django-admin-rangefilter
 django-crispy-forms
 crispy-tailwind
 django-filter
