@@ -33,7 +33,7 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin):
     last_name = models.CharField(_("last name"), max_length=15)
     email = models.EmailField(_("email address"), unique=True)
     is_staff = models.BooleanField(_("is_staff"), default=False)
-    is_active = models.BooleanField(_("is_active"), default=True)
+    is_active = models.BooleanField(_("is active"), default=True)
     date_joined = models.DateTimeField(_("date_joined"), default=timezone.now)
     user_type = models.CharField(
         _("user type"), choices=BeachWoodUserTypeEnum.choices, max_length=15
@@ -58,8 +58,8 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin):
     objects = BeachWoodUserManager()
 
     class Meta:
-        verbose_name = "beach_wood_user"
-        verbose_name_plural = "beach_wood_users"
+        verbose_name = _("Beach wood user")
+        verbose_name_plural = _("Beach wood users")
         ordering = ["-created_at", "-updated_at"]
         permissions = [
             ("developer_user", "Developer User"),

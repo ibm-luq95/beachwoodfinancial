@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-#
-from .user import BeachWoodUserSerializer
+from .user import BWUserSerializer

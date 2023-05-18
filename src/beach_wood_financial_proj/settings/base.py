@@ -42,7 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
-    "django.contrib.sites",
+    # "django.contrib.sites",  # TODO: enable it
     "django_extensions",
     "webpack_boilerplate",
     # "django_components",
@@ -55,9 +55,11 @@ INSTALLED_APPS = [
     "django_filters",
     "rest_framework",
     "slippers",
+    "rangefilter",
     "core.apps.CoreConfig",
     "beach_wood_user.apps.BeachWoodUserConfig",
     "home.apps.HomeConfig",
+    "bookkeeper.apps.BookkeeperConfig",
 ]
 
 MIDDLEWARE = [
@@ -71,6 +73,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    # "bookkeeper.middleware.CheckAllowedLoginMiddleware",   # TODO: Enable it
     "maintenance_mode.middleware.MaintenanceModeMiddleware",
     # "django.middleware.cache.FetchFromCacheMiddleware",  # new for the cache
 ]

@@ -25,6 +25,7 @@ static_and_media_path_urls = static(
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns = [
+    path("admin/", admin.site.urls),
     path("", include("home.urls"), name="home-urls"),
     path("js-settings/", js_settings, name="js_settings"),
     path("auth/", include("beach_wood_user.urls.auth"), name="auth-urls"),
@@ -37,6 +38,6 @@ if settings.DEBUG:
     #     path("request-logs/", include("request_viewer.urls")),
     # )
     urlpatterns.append(path("admin/doc/", include("django.contrib.admindocs.urls")))
-    urlpatterns.append(path("admin/", admin.site.urls))
+    # urlpatterns.append(path("admin/", admin.site.urls))
 else:
     urlpatterns.append(path("secret/", admin.site.urls))

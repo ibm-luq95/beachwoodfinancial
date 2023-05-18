@@ -1,2 +1,2 @@
-from .base_mixin import BaseAdminModelMixin
+from .base_mixin import BWBaseAdminModelMixin
 from .jodit_editor_mixin import JoditEditorAdminMixin

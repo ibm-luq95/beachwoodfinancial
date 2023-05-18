@@ -5,7 +5,7 @@ from beach_wood_user.models import BWUser
 from core.constants import EXCLUDED_FIELDS
 
 
-class BeachWoodUserSerializer(serializers.ModelSerializer):
+class BWUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = BWUser
         exclude = EXCLUDED_FIELDS + ["password", "created_at"]

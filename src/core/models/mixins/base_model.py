@@ -15,14 +15,14 @@ from .diffing import DiffingMixin
 class BaseModelMixin(DiffingMixin, models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     metadata = models.JSONField(_("metadata"), null=True, blank=True, default=dict)
-    is_deleted = models.BooleanField(_("is_deleted"), default=False)
+    is_deleted = models.BooleanField(_("is deleted"), default=False)
     created_at = models.DateTimeField(
-        _("created_at"), default=timezone.now, editable=False
+        _("created at"), default=timezone.now, editable=False
     )
     updated_at = models.DateTimeField(
-        _("updated_at"), auto_now=True, blank=True, null=True, editable=False
+        _("updated at"), auto_now=True, blank=True, null=True, editable=False
     )
-    deleted_at = models.DateTimeField(_("deleted_at"), null=True, default=None, blank=True)
+    deleted_at = models.DateTimeField(_("deleted at"), null=True, default=None, blank=True)
 
     objects = SoftDeleteManager()
     # objects = models.Manager()
