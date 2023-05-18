@@ -61,6 +61,7 @@ INSTALLED_APPS = [
     "home.apps.HomeConfig",
     "bookkeeper.apps.BookkeeperConfig",
     "assistant.apps.AssistantConfig",
+    "manager.apps.ManagerConfig",
 ]
 
 MIDDLEWARE = [
