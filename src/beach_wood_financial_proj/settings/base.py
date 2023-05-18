@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     "beach_wood_user.apps.BeachWoodUserConfig",
     "home.apps.HomeConfig",
     "bookkeeper.apps.BookkeeperConfig",
+    "assistant.apps.AssistantConfig",
 ]
 
 MIDDLEWARE = [
