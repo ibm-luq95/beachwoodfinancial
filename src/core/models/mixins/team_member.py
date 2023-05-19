@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-#
-from assistant.models import Assistant
+from assistant.models import AssistantProxy
 from bookkeeper.models import BookkeeperProxy
 from django.db import models
-from manager.models import Manager
+from manager.models import ManagerProxy
 
 from core.models.fields import CustomForeignKey
 
 
 class TeamMembersMixin(models.Model):
     assistant = CustomForeignKey(
-        to=Assistant,
+        to=AssistantProxy,
         on_delete=models.PROTECT,
         related_name="%(class)s",
         null=True,
@@ -23,7 +23,7 @@ class TeamMembersMixin(models.Model):
         blank=True,
     )
     manager = CustomForeignKey(
-        to=Manager,
+        to=ManagerProxy,
         on_delete=models.PROTECT,
         related_name="%(class)s",
         null=True,
