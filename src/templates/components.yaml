@@ -4,3 +4,6 @@ components:
   home-footer: "components/core/inc/home_footer.html"
   announcement-banner: "components/announcement_banner.html"
   cookie-banner: "components/cookie_banner.html"
+  dashboard-top-navbar: "components/core/inc/dashboard/top_navbar.html"
+  dashboard-left-side: "components/core/inc/dashboard/left_side.html"
+  dashboard-content-header: "components/widgets/dashboard/shared/content_header.html"
