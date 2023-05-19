@@ -1,8 +1,6 @@
 {
   "parser": "@babel/eslint-parser",
-  "extends": [
-    "eslint:recommended"
-  ],
+  "extends": ["eslint:recommended"],
   "env": {
     "browser": true,
     "node": true
@@ -13,6 +11,7 @@
     "requireConfigFile": false
   },
   "rules": {
-    "semi": 2
+    "semi": 2,
+    "no-unused-vars": "off"
   }
 }
