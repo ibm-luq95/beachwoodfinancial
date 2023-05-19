@@ -1,0 +1,995 @@
+{% extends "core/layouts/dashboard.html" %}
+
+{% block dashboard_content %}
+    <!-- Page Heading -->
+    {% #dashboard-content-header title="Welcome Manager - Manager Name" subtitle="This is a simple application layout with sidebar and header examples using Tailwind CSS." %}
+    {% /dashboard-content-header %}
+    <!-- End Page Heading -->
+    <!-- Start Stats Widget -->
+    <!-- Card Section -->
+    <div class="max-w-[100rem] py-10 mx-auto">
+        <!-- Grid -->
+        <div class="grid gap-2 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4 ">
+            <!-- Card -->
+            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
+                <div class="flex justify-between p-4 md:p-5 gap-x-3">
+                    <div>
+                        <p class="text-xs tracking-wide text-gray-500 uppercase">Total users</p>
+                        <div class="flex items-center mt-1 gap-x-1">
+                            <h3 class="text-xl font-medium text-gray-800 sm:text-2xl dark:text-gray-200">72,540</h3>
+                            <span class="flex items-center text-green-600">
+                                <svg class="self-center inline-block w-7 h-7"
+                                     xmlns="http://www.w3.org/2000/svg"
+                                     width="16"
+                                     height="16"
+                                     fill="currentColor"
+                                     viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z" />
+                                </svg>
+                                <span class="inline-block text-lg">1.7%</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px] bg-blue-600 text-white rounded-full dark:bg-blue-900 dark:text-blue-200">
+                        <svg class="w-4 h-4"
+                             xmlns="http://www.w3.org/2000/svg"
+                             width="16"
+                             height="16"
+                             fill="currentColor"
+                             viewBox="0 0 16 16">
+                            <path d="M7 14s-1 0-1-1 1-4 5-4 5 3 5 4-1 1-1 1H7Zm4-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6Zm-5.784 6A2.238 2.238 0 0 1 5 13c0-1.355.68-2.75 1.936-3.72A6.325 6.325 0 0 0 5 9c-4 0-5 3-5 4s1 1 1 1h4.216ZM4.5 8a2.5 2.5 0 1 0 0-5 2.5 2.5 0 0 0 0 5Z" />
+                        </svg>
+                    </div>
+                </div>
+                <a class="inline-flex items-center justify-between px-4 py-3 text-sm text-gray-600 border-t border-gray-200 md:px-5 hover:bg-gray-50 rounded-b-xl dark:border-gray-700 dark:text-gray-400 dark:hover:bg-slate-800"
+                   href="#">
+                    View reports
+                    <svg class="w-2.5 h-2.5"
+                         width="16"
+                         height="16"
+                         viewBox="0 0 16 16"
+                         fill="none">
+                        <path d="M5.27921 2L10.9257 7.64645C11.1209 7.84171 11.1209 8.15829 10.9257 8.35355L5.27921 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                </a>
+            </div>
+            <!-- End Card -->
+            <!-- Card -->
+            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
+                <div class="flex justify-between p-4 md:p-5 gap-x-3">
+                    <div>
+                        <p class="text-xs tracking-wide text-gray-500 uppercase">Sessions</p>
+                        <div class="flex items-center mt-1 gap-x-1">
+                            <h3 class="mt-1 text-xl font-medium text-gray-800 dark:text-gray-200">29.4%</h3>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px] bg-blue-600 text-white rounded-full dark:bg-blue-900 dark:text-blue-200">
+                        <svg class="w-4 h-4"
+                             xmlns="http://www.w3.org/2000/svg"
+                             width="16"
+                             height="16"
+                             fill="currentColor"
+                             viewBox="0 0 16 16">
+                            <path d="M2.5 15a.5.5 0 1 1 0-1h1v-1a4.5 4.5 0 0 1 2.557-4.06c.29-.139.443-.377.443-.59v-.7c0-.213-.154-.451-.443-.59A4.5 4.5 0 0 1 3.5 3V2h-1a.5.5 0 0 1 0-1h11a.5.5 0 0 1 0 1h-1v1a4.5 4.5 0 0 1-2.557 4.06c-.29.139-.443.377-.443.59v.7c0 .213.154.451.443.59A4.5 4.5 0 0 1 12.5 13v1h1a.5.5 0 0 1 0 1h-11zm2-13v1c0 .537.12 1.045.337 1.5h6.326c.216-.455.337-.963.337-1.5V2h-7zm3 6.35c0 .701-.478 1.236-1.011 1.492A3.5 3.5 0 0 0 4.5 13s.866-1.299 3-1.48V8.35zm1 0v3.17c2.134.181 3 1.48 3 1.48a3.5 3.5 0 0 0-1.989-3.158C8.978 9.586 8.5 9.052 8.5 8.351z" />
+                        </svg>
+                    </div>
+                </div>
+                <a class="inline-flex items-center justify-between px-4 py-3 text-sm text-gray-600 border-t border-gray-200 md:px-5 hover:bg-gray-50 rounded-b-xl dark:border-gray-700 dark:text-gray-400 dark:hover:bg-slate-800"
+                   href="#">
+                    View reports
+                    <svg class="w-2.5 h-2.5"
+                         width="16"
+                         height="16"
+                         viewBox="0 0 16 16"
+                         fill="none">
+                        <path d="M5.27921 2L10.9257 7.64645C11.1209 7.84171 11.1209 8.15829 10.9257 8.35355L5.27921 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                </a>
+            </div>
+            <!-- End Card -->
+            <!-- Card -->
+            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
+                <div class="flex justify-between p-4 md:p-5 gap-x-3">
+                    <div>
+                        <p class="text-xs tracking-wide text-gray-500 uppercase">Avg. Click Rate</p>
+                        <div class="flex items-center mt-1 gap-x-1">
+                            <h3 class="text-xl font-medium text-gray-800 sm:text-2xl dark:text-gray-200">56.8%</h3>
+                            <span class="flex items-center text-red-600">
+                                <svg class="self-center inline-block w-7 h-7"
+                                     xmlns="http://www.w3.org/2000/svg"
+                                     width="16"
+                                     height="16"
+                                     fill="currentColor"
+                                     viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                                </svg>
+                                <span class="inline-block text-lg">1.7%</span>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px] bg-blue-600 text-white rounded-full dark:bg-blue-900 dark:text-blue-200">
+                        <svg class="w-4 h-4"
+                             xmlns="http://www.w3.org/2000/svg"
+                             width="16"
+                             height="16"
+                             fill="currentColor"
+                             viewBox="0 0 16 16">
+                            <path d="M8.5 4.466V1.75a1.75 1.75 0 1 0-3.5 0v5.34l-1.2.24a1.5 1.5 0 0 0-1.196 1.636l.345 3.106a2.5 2.5 0 0 0 .405 1.11l1.433 2.15A1.5 1.5 0 0 0 6.035 16h6.385a1.5 1.5 0 0 0 1.302-.756l1.395-2.441a3.5 3.5 0 0 0 .444-1.389l.271-2.715a2 2 0 0 0-1.99-2.199h-.581a5.114 5.114 0 0 0-.195-.248c-.191-.229-.51-.568-.88-.716-.364-.146-.846-.132-1.158-.108l-.132.012a1.26 1.26 0 0 0-.56-.642 2.632 2.632 0 0 0-.738-.288c-.31-.062-.739-.058-1.05-.046l-.048.002z" />
+                        </svg>
+                    </div>
+                </div>
+                <a class="inline-flex items-center justify-between px-4 py-3 text-sm text-gray-600 border-t border-gray-200 md:px-5 hover:bg-gray-50 rounded-b-xl dark:border-gray-700 dark:text-gray-400 dark:hover:bg-slate-800"
+                   href="#">
+                    View reports
+                    <svg class="w-2.5 h-2.5"
+                         width="16"
+                         height="16"
+                         viewBox="0 0 16 16"
+                         fill="none">
+                        <path d="M5.27921 2L10.9257 7.64645C11.1209 7.84171 11.1209 8.15829 10.9257 8.35355L5.27921 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                </a>
+            </div>
+            <!-- End Card -->
+            <!-- Card -->
+            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
+                <div class="flex justify-between p-4 md:p-5 gap-x-3">
+                    <div>
+                        <p class="text-xs tracking-wide text-gray-500 uppercase">Pageviews</p>
+                        <div class="flex items-center mt-1 gap-x-1">
+                            <h3 class="mt-1 text-xl font-medium text-gray-800 dark:text-gray-200">92,913</h3>
+                        </div>
+                    </div>
+                    <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px] bg-blue-600 text-white rounded-full dark:bg-blue-900 dark:text-blue-200">
+                        <svg class="w-4 h-4"
+                             xmlns="http://www.w3.org/2000/svg"
+                             width="16"
+                             height="16"
+                             fill="currentColor"
+                             viewBox="0 0 16 16">
+                            <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0z" />
+                            <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8zm8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7z" />
+                        </svg>
+                    </div>
+                </div>
+                <a class="inline-flex items-center justify-between px-4 py-3 text-sm text-gray-600 border-t border-gray-200 md:px-5 hover:bg-gray-50 rounded-b-xl dark:border-gray-700 dark:text-gray-400 dark:hover:bg-slate-800"
+                   href="#">
+                    View reports
+                    <svg class="w-2.5 h-2.5"
+                         width="16"
+                         height="16"
+                         viewBox="0 0 16 16"
+                         fill="none">
+                        <path d="M5.27921 2L10.9257 7.64645C11.1209 7.84171 11.1209 8.15829 10.9257 8.35355L5.27921 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                    </svg>
+                </a>
+            </div>
+            <!-- End Card -->
+        </div>
+        <!-- End Grid -->
+    </div>
+    <!-- End Card Section -->
+    <!-- End Stats Widget -->
+    <!-- Start Lists Cards -->
+    <div class="grid grid-cols-3 gap-2">
+        <div>
+            <ul class="flex flex-col">
+                <li class="inline-flex items-center px-4 py-3 -mt-px text-sm font-medium text-gray-800 border gap-x-2 first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white bg-slate-100">
+                    <div class="flex justify-between w-full">
+                        <h3 class="text-[17px] font-bold">Clients</h3>
+                    </div>
+                </li>
+                <li class="inline-flex items-center gap-x-3.5 py-3 px-4 text-sm font-medium bg-white border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
+                    <i class="fa-solid fa-user"></i>
+                    Newsletter
+                </li>
+                <li class="inline-flex items-center gap-x-3.5 py-3 px-4 text-sm font-medium bg-white border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
+                    <i class="fa-solid fa-user"></i>
+                    Downloads
+                </li>
+                <li class="inline-flex items-center gap-x-3.5 py-3 px-4 text-sm font-medium bg-white border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
+                    <i class="fa-solid fa-user"></i>
+                    Team Account
+                </li>
+                <li class="inline-flex items-center gap-x-3.5 py-3 px-4 text-sm font-medium bg-white border text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white">
+                    <i class="fa-solid fa-user"></i>
+                    Team Account
+                </li>
+                <li class="inline-flex items-center px-4 py-3 -mt-px text-sm font-medium text-gray-800 bg-white border gap-x-2 first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:bg-gray-800 dark:border-gray-700 dark:text-white text-center">
+                    <div class="flex justify-between w-full font-bold text-center">All</div>
+                </li>
+            </ul>
+        </div>
+        <!-- ... -->
+        <div>
+            <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
+                <!-- <h3 class="text-lg font-bold text-gray-800 dark:text-white">
+                Tasks
+            </h3> -->
+                <div class="chart-dashboard-wrapper">
+                    <canvas id="jobsChart"></canvas>
+                </div>
+            </div>
+        </div>
+        <div>
+            <!-- Card -->
+            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
+                <div class="p-4 md:p-5">
+                    <div class="flex items-center gap-x-2">
+                        <p class="text-xs uppercase tracking-wide text-gray-500">Tasks</p>
+                        <div class="hs-tooltip">
+                            <div class="hs-tooltip-toggle">
+                                <svg class="w-3.5 h-3.5 text-gray-500"
+                                     xmlns="http://www.w3.org/2000/svg"
+                                     width="16"
+                                     height="16"
+                                     fill="currentColor"
+                                     viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                    <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
+                                </svg>
+                                <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                      role="tooltip">The number of total tasks</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1 flex items-center">
+                        <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-gray-200">72,540</h3>
+                    </div>
+                </div>
+            </div>
+            <!-- End Card -->
+            <!-- Card -->
+            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800 my-1">
+                <div class="p-4 md:p-5">
+                    <div class="flex items-center gap-x-2">
+                        <p class="text-xs uppercase tracking-wide text-gray-500">Notes</p>
+                        <div class="hs-tooltip">
+                            <div class="hs-tooltip-toggle">
+                                <svg class="w-3.5 h-3.5 text-gray-500"
+                                     xmlns="http://www.w3.org/2000/svg"
+                                     width="16"
+                                     height="16"
+                                     fill="currentColor"
+                                     viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                    <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
+                                </svg>
+                                <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                      role="tooltip">The number of total notes</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1 flex items-center">
+                        <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-gray-200">72,540</h3>
+                    </div>
+                </div>
+            </div>
+            <!-- End Card -->
+            <!-- Card -->
+            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
+                <div class="p-4 md:p-5">
+                    <div class="flex items-center gap-x-2">
+                        <p class="text-xs uppercase tracking-wide text-gray-500">Documents</p>
+                        <div class="hs-tooltip">
+                            <div class="hs-tooltip-toggle">
+                                <svg class="w-3.5 h-3.5 text-gray-500"
+                                     xmlns="http://www.w3.org/2000/svg"
+                                     width="16"
+                                     height="16"
+                                     fill="currentColor"
+                                     viewBox="0 0 16 16">
+                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                    <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
+                                </svg>
+                                <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                      role="tooltip">The number of total documents</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-1 flex items-center">
+                        <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-gray-200">72,540</h3>
+                    </div>
+                </div>
+            </div>
+            <!-- End Card -->
+        </div>
+    </div>
+    <!-- End Lists Cards -->
+    <!-- Start Special Assignments Table -->
+    <!-- Table Section -->
+    <div class="max-w-[100rem] py-10 lg:py-14 mx-auto">
+        <!-- Card -->
+        <div class="flex flex-col">
+            <div class="-m-1.5 overflow-x-auto">
+                <div class="p-1.5 min-w-full inline-block align-middle">
+                    <div class="overflow-hidden bg-white border border-gray-200 shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-700">
+                        <!-- Header -->
+                        <div class="grid gap-3 px-6 py-4 border-b border-gray-200 md:flex md:justify-between md:items-center dark:border-gray-700">
+                            <div>
+                                <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Special Assignments</h2>
+                                <!-- <p class="text-sm text-gray-600 dark:text-gray-400">
+                                Keys you have generated to connect with third-party clients or access the <a class="inline-flex items-center gap-x-1.5 text-blue-600 decoration-2 hover:underline font-medium" href="#">Preline API.</a>
+                            </p> -->
+                            </div>
+                        </div>
+                        <!-- End Header -->
+                        <!-- Table -->
+                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                            <thead>
+                                <tr>
+                                    <th scope="col" class="py-3 pl-6 text-left">
+                                        <label for="hs-at-with-checkboxes-main" class="flex">
+                                            <input type="checkbox"
+                                                   class="text-blue-600 border-gray-200 rounded pointer-events-none shrink-0 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                                   id="hs-at-with-checkboxes-main" />
+                                            <span class="sr-only">Checkbox</span>
+                                        </label>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left">
+                                        <div class="flex items-center gap-x-2">
+                                            <span class="text-xs font-semibold tracking-wide text-gray-800 uppercase dark:text-gray-200">Name</span>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left">
+                                        <div class="flex items-center gap-x-2">
+                                            <span class="text-xs font-semibold tracking-wide text-gray-800 uppercase dark:text-gray-200">Created by</span>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left">
+                                        <div class="flex items-center gap-x-2">
+                                            <span class="text-xs font-semibold tracking-wide text-gray-800 uppercase dark:text-gray-200">API Key</span>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left">
+                                        <div class="flex items-center gap-x-2">
+                                            <span class="text-xs font-semibold tracking-wide text-gray-800 uppercase dark:text-gray-200">Status</span>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-left">
+                                        <div class="flex items-center gap-x-2">
+                                            <span class="text-xs font-semibold tracking-wide text-gray-800 uppercase dark:text-gray-200">Created</span>
+                                        </div>
+                                    </th>
+                                    <th scope="col" class="px-6 py-3 text-right"></th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="py-3 pl-6">
+                                            <label for="hs-at-with-checkboxes-1" class="flex">
+                                                <input type="checkbox"
+                                                       class="text-blue-600 border-gray-200 rounded pointer-events-none shrink-0 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                                       id="hs-at-with-checkboxes-1" />
+                                                <span class="sr-only">Checkbox</span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <span class="text-sm text-gray-600 dark:text-gray-400">Streamlab</span>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <div class="flex items-center gap-x-2">
+                                                <img class="inline-block w-6 h-6 rounded-full"
+                                                     src="https://images.unsplash.com/photo-1531927557220-a9e23c1e4794?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
+                                                     alt="Image Description" />
+                                                <div class="grow">
+                                                    <span class="text-sm text-gray-600 dark:text-gray-400">Christina
+                                                    Bersh</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <button type="button"
+                                                    class="inline-flex flex-shrink-0 justify-center items-center gap-x-2.5 py-2 px-2.5 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-xs dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800">
+                                                Copy Key
+                                                <svg class="h-3.5 w-3.5 text-gray-400"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     width="16"
+                                                     height="16"
+                                                     fill="currentColor"
+                                                     viewBox="0 0 16 16">
+                                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <span class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                                <svg class="w-2.5 h-2.5"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     width="16"
+                                                     height="16"
+                                                     fill="currentColor"
+                                                     viewBox="0 0 16 16">
+                                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                                                </svg>
+                                                Successful
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <span class="text-sm text-gray-600 dark:text-gray-400">28 Dec,
+                                            12:12</span>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-1.5">
+                                            <div class="hs-dropdown relative inline-block [--placement:bottom-right]">
+                                                <button id="hs-table-dropdown-1"
+                                                        type="button"
+                                                        class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-md text-gray-700 align-middle focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                                                    <svg class="w-4 h-4"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         width="16"
+                                                         height="16"
+                                                         fill="currentColor"
+                                                         viewBox="0 0 16 16">
+                                                        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                                                    </svg>
+                                                </button>
+                                                <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden mt-2 divide-y divide-gray-200 min-w-[10rem] z-10 bg-white shadow-2xl rounded-lg p-2 mt-2 dark:divide-gray-700 dark:bg-gray-800 dark:border dark:border-gray-700"
+                                                     aria-labelledby="hs-table-dropdown-1">
+                                                    <div class="py-2 first:pt-0 last:pb-0">
+                                                        <a class="flex items-center px-3 py-2 text-sm text-gray-800 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                                                           href="#">Rename</a>
+                                                        <a class="flex items-center px-3 py-2 text-sm text-gray-800 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                                                           href="#">Regenrate Key</a>
+                                                        <a class="flex items-center px-3 py-2 text-sm text-gray-800 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                                                           href="#">Disable</a>
+                                                    </div>
+                                                    <div class="py-2 first:pt-0 last:pb-0">
+                                                        <a class="flex items-center px-3 py-2 text-sm text-red-600 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-red-500 dark:hover:bg-gray-700"
+                                                           href="#">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="py-3 pl-6">
+                                            <label for="hs-at-with-checkboxes-2" class="flex">
+                                                <input type="checkbox"
+                                                       class="text-blue-600 border-gray-200 rounded pointer-events-none shrink-0 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                                       id="hs-at-with-checkboxes-2" />
+                                                <span class="sr-only">Checkbox</span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <span class="text-sm text-gray-600 dark:text-gray-400">Node</span>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <div class="flex items-center gap-x-2">
+                                                <img class="inline-block w-6 h-6 rounded-full"
+                                                     src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
+                                                     alt="Image Description" />
+                                                <div class="grow">
+                                                    <span class="text-sm text-gray-600 dark:text-gray-400">David
+                                                    Harrison</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <button type="button"
+                                                    class="inline-flex flex-shrink-0 justify-center items-center gap-x-2.5 py-2 px-2.5 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-xs dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800">
+                                                Copy Key
+                                                <svg class="h-3.5 w-3.5 text-gray-400"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     width="16"
+                                                     height="16"
+                                                     fill="currentColor"
+                                                     viewBox="0 0 16 16">
+                                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <span class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-green-200">
+                                                <svg class="w-2.5 h-2.5"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     width="16"
+                                                     height="16"
+                                                     fill="currentColor"
+                                                     viewBox="0 0 16 16">
+                                                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z">
+                                                    </path>
+                                                </svg>
+                                                Warning
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <span class="text-sm text-gray-600 dark:text-gray-400">20 Dec,
+                                            09:27</span>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-1.5">
+                                            <div class="hs-dropdown relative inline-block [--placement:bottom-right]">
+                                                <button id="hs-table-dropdown-2"
+                                                        type="button"
+                                                        class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-md text-gray-700 align-middle focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                                                    <svg class="w-4 h-4"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         width="16"
+                                                         height="16"
+                                                         fill="currentColor"
+                                                         viewBox="0 0 16 16">
+                                                        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                                                    </svg>
+                                                </button>
+                                                <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden mt-2 divide-y divide-gray-200 min-w-[10rem] z-10 bg-white shadow-2xl rounded-lg p-2 mt-2 dark:divide-gray-700 dark:bg-gray-800 dark:border dark:border-gray-700"
+                                                     aria-labelledby="hs-table-dropdown-2">
+                                                    <div class="py-2 first:pt-0 last:pb-0">
+                                                        <a class="flex items-center px-3 py-2 text-sm text-gray-800 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                                                           href="#">Rename</a>
+                                                        <a class="flex items-center px-3 py-2 text-sm text-gray-800 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                                                           href="#">Regenrate Key</a>
+                                                        <a class="flex items-center px-3 py-2 text-sm text-gray-800 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                                                           href="#">Disable</a>
+                                                    </div>
+                                                    <div class="py-2 first:pt-0 last:pb-0">
+                                                        <a class="flex items-center px-3 py-2 text-sm text-red-600 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-red-500 dark:hover:bg-gray-700"
+                                                           href="#">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="py-3 pl-6">
+                                            <label for="hs-at-with-checkboxes-3" class="flex">
+                                                <input type="checkbox"
+                                                       class="text-blue-600 border-gray-200 rounded pointer-events-none shrink-0 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                                       id="hs-at-with-checkboxes-3" />
+                                                <span class="sr-only">Checkbox</span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <span class="text-sm text-gray-600 dark:text-gray-400">FrontMail</span>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <div class="flex items-center gap-x-2">
+                                                <span class="inline-flex items-center justify-center w-6 h-6 bg-gray-300 rounded-full dark:bg-gray-700">
+                                                    <span class="text-xs font-medium leading-none text-gray-800 dark:text-gray-200">A</span>
+                                                </span>
+                                                <div class="grow">
+                                                    <span class="text-sm text-gray-600 dark:text-gray-400">Anne
+                                                    Richard</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <button type="button"
+                                                    class="inline-flex flex-shrink-0 justify-center items-center gap-x-2.5 py-2 px-2.5 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-xs dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800">
+                                                Copy Key
+                                                <svg class="h-3.5 w-3.5 text-gray-400"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     width="16"
+                                                     height="16"
+                                                     fill="currentColor"
+                                                     viewBox="0 0 16 16">
+                                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <span class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                                <svg class="w-2.5 h-2.5"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     width="16"
+                                                     height="16"
+                                                     fill="currentColor"
+                                                     viewBox="0 0 16 16">
+                                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                                                </svg>
+                                                Successful
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <span class="text-sm text-gray-600 dark:text-gray-400">18 Dec,
+                                            15:20</span>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-1.5">
+                                            <div class="hs-dropdown relative inline-block [--placement:bottom-right]">
+                                                <button id="hs-table-dropdown-3"
+                                                        type="button"
+                                                        class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-md text-gray-700 align-middle focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                                                    <svg class="w-4 h-4"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         width="16"
+                                                         height="16"
+                                                         fill="currentColor"
+                                                         viewBox="0 0 16 16">
+                                                        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                                                    </svg>
+                                                </button>
+                                                <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden mt-2 divide-y divide-gray-200 min-w-[10rem] z-10 bg-white shadow-2xl rounded-lg p-2 mt-2 dark:divide-gray-700 dark:bg-gray-800 dark:border dark:border-gray-700"
+                                                     aria-labelledby="hs-table-dropdown-3">
+                                                    <div class="py-2 first:pt-0 last:pb-0">
+                                                        <a class="flex items-center px-3 py-2 text-sm text-gray-800 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                                                           href="#">Rename</a>
+                                                        <a class="flex items-center px-3 py-2 text-sm text-gray-800 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                                                           href="#">Regenrate Key</a>
+                                                        <a class="flex items-center px-3 py-2 text-sm text-gray-800 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                                                           href="#">Disable</a>
+                                                    </div>
+                                                    <div class="py-2 first:pt-0 last:pb-0">
+                                                        <a class="flex items-center px-3 py-2 text-sm text-red-600 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-red-500 dark:hover:bg-gray-700"
+                                                           href="#">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="py-3 pl-6">
+                                            <label for="hs-at-with-checkboxes-4" class="flex">
+                                                <input type="checkbox"
+                                                       class="text-blue-600 border-gray-200 rounded pointer-events-none shrink-0 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                                       id="hs-at-with-checkboxes-4" />
+                                                <span class="sr-only">Checkbox</span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <span class="text-sm text-gray-600 dark:text-gray-400">MobileAPI</span>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <div class="flex items-center gap-x-2">
+                                                <img class="inline-block w-6 h-6 rounded-full"
+                                                     src="https://images.unsplash.com/photo-1541101767792-f9b2b1c4f127?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&&auto=format&fit=facearea&facepad=3&w=300&h=300&q=80"
+                                                     alt="Image Description" />
+                                                <div class="grow">
+                                                    <span class="text-sm text-gray-600 dark:text-gray-400">Samia
+                                                    Kartoon</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <button type="button"
+                                                    class="inline-flex flex-shrink-0 justify-center items-center gap-x-2.5 py-2 px-2.5 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-xs dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800">
+                                                Copy Key
+                                                <svg class="h-3.5 w-3.5 text-gray-400"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     width="16"
+                                                     height="16"
+                                                     fill="currentColor"
+                                                     viewBox="0 0 16 16">
+                                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <span class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                                <svg class="w-2.5 h-2.5"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     width="16"
+                                                     height="16"
+                                                     fill="currentColor"
+                                                     viewBox="0 0 16 16">
+                                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                                                </svg>
+                                                Successful
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <span class="text-sm text-gray-600 dark:text-gray-400">18 Dec,
+                                            15:20</span>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-1.5">
+                                            <div class="hs-dropdown relative inline-block [--placement:bottom-right]">
+                                                <button id="hs-table-dropdown-4"
+                                                        type="button"
+                                                        class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-md text-gray-700 align-middle focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                                                    <svg class="w-4 h-4"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         width="16"
+                                                         height="16"
+                                                         fill="currentColor"
+                                                         viewBox="0 0 16 16">
+                                                        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                                                    </svg>
+                                                </button>
+                                                <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden mt-2 divide-y divide-gray-200 min-w-[10rem] z-10 bg-white shadow-2xl rounded-lg p-2 mt-2 dark:divide-gray-700 dark:bg-gray-800 dark:border dark:border-gray-700"
+                                                     aria-labelledby="hs-table-dropdown-4">
+                                                    <div class="py-2 first:pt-0 last:pb-0">
+                                                        <a class="flex items-center px-3 py-2 text-sm text-gray-800 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                                                           href="#">Rename</a>
+                                                        <a class="flex items-center px-3 py-2 text-sm text-gray-800 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                                                           href="#">Regenrate Key</a>
+                                                        <a class="flex items-center px-3 py-2 text-sm text-gray-800 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                                                           href="#">Disable</a>
+                                                    </div>
+                                                    <div class="py-2 first:pt-0 last:pb-0">
+                                                        <a class="flex items-center px-3 py-2 text-sm text-red-600 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-red-500 dark:hover:bg-gray-700"
+                                                           href="#">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="py-3 pl-6">
+                                            <label for="hs-at-with-checkboxes-5" class="flex">
+                                                <input type="checkbox"
+                                                       class="text-blue-600 border-gray-200 rounded pointer-events-none shrink-0 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                                       id="hs-at-with-checkboxes-5" />
+                                                <span class="sr-only">Checkbox</span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <span class="text-sm text-gray-600 dark:text-gray-400">RachelsKey</span>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <div class="flex items-center gap-x-2">
+                                                <span class="inline-flex items-center justify-center w-6 h-6 bg-gray-300 rounded-full dark:bg-gray-700">
+                                                    <span class="text-xs font-medium leading-none text-gray-800 dark:text-gray-200">D</span>
+                                                </span>
+                                                <div class="grow">
+                                                    <span class="text-sm text-gray-600 dark:text-gray-400">David
+                                                    Harrison</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <button type="button"
+                                                    class="inline-flex flex-shrink-0 justify-center items-center gap-x-2.5 py-2 px-2.5 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-xs dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800">
+                                                Copy Key
+                                                <svg class="h-3.5 w-3.5 text-gray-400"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     width="16"
+                                                     height="16"
+                                                     fill="currentColor"
+                                                     viewBox="0 0 16 16">
+                                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <span class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-green-200">
+                                                <svg class="w-2.5 h-2.5"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     width="16"
+                                                     height="16"
+                                                     fill="currentColor"
+                                                     viewBox="0 0 16 16">
+                                                    <path d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z">
+                                                    </path>
+                                                </svg>
+                                                Danger
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <span class="text-sm text-gray-600 dark:text-gray-400">15 Dec,
+                                            14:41</span>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-1.5">
+                                            <div class="hs-dropdown relative inline-block [--placement:bottom-right]">
+                                                <button id="hs-table-dropdown-5"
+                                                        type="button"
+                                                        class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-md text-gray-700 align-middle focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                                                    <svg class="w-4 h-4"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         width="16"
+                                                         height="16"
+                                                         fill="currentColor"
+                                                         viewBox="0 0 16 16">
+                                                        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                                                    </svg>
+                                                </button>
+                                                <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden mt-2 divide-y divide-gray-200 min-w-[10rem] z-10 bg-white shadow-2xl rounded-lg p-2 mt-2 dark:divide-gray-700 dark:bg-gray-800 dark:border dark:border-gray-700"
+                                                     aria-labelledby="hs-table-dropdown-5">
+                                                    <div class="py-2 first:pt-0 last:pb-0">
+                                                        <a class="flex items-center px-3 py-2 text-sm text-gray-800 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                                                           href="#">Rename</a>
+                                                        <a class="flex items-center px-3 py-2 text-sm text-gray-800 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                                                           href="#">Regenrate Key</a>
+                                                        <a class="flex items-center px-3 py-2 text-sm text-gray-800 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                                                           href="#">Disable</a>
+                                                    </div>
+                                                    <div class="py-2 first:pt-0 last:pb-0">
+                                                        <a class="flex items-center px-3 py-2 text-sm text-red-600 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-red-500 dark:hover:bg-gray-700"
+                                                           href="#">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="py-3 pl-6">
+                                            <label for="hs-at-with-checkboxes-6" class="flex">
+                                                <input type="checkbox"
+                                                       class="text-blue-600 border-gray-200 rounded pointer-events-none shrink-0 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                                       id="hs-at-with-checkboxes-6" />
+                                                <span class="sr-only">Checkbox</span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <span class="text-sm text-gray-600 dark:text-gray-400">Gulp</span>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <div class="flex items-center gap-x-2">
+                                                <img class="inline-block w-6 h-6 rounded-full"
+                                                     src="https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
+                                                     alt="Image Description" />
+                                                <div class="grow">
+                                                    <span class="text-sm text-gray-600 dark:text-gray-400">Brian
+                                                    Halligan</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <button type="button"
+                                                    class="inline-flex flex-shrink-0 justify-center items-center gap-x-2.5 py-2 px-2.5 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-xs dark:bg-gray-800 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800">
+                                                Copy Key
+                                                <svg class="h-3.5 w-3.5 text-gray-400"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     width="16"
+                                                     height="16"
+                                                     fill="currentColor"
+                                                     viewBox="0 0 16 16">
+                                                    <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z" />
+                                                    <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z" />
+                                                </svg>
+                                            </button>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <span class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                                <svg class="w-2.5 h-2.5"
+                                                     xmlns="http://www.w3.org/2000/svg"
+                                                     width="16"
+                                                     height="16"
+                                                     fill="currentColor"
+                                                     viewBox="0 0 16 16">
+                                                    <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                                                </svg>
+                                                Successful
+                                            </span>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-3">
+                                            <span class="text-sm text-gray-600 dark:text-gray-400">11 Dec,
+                                            18:51</span>
+                                        </div>
+                                    </td>
+                                    <td class="w-px h-px whitespace-nowrap">
+                                        <div class="px-6 py-1.5">
+                                            <div class="hs-dropdown relative inline-block [--placement:bottom-right]">
+                                                <button id="hs-table-dropdown-6"
+                                                        type="button"
+                                                        class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-md text-gray-700 align-middle focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                                                    <svg class="w-4 h-4"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         width="16"
+                                                         height="16"
+                                                         fill="currentColor"
+                                                         viewBox="0 0 16 16">
+                                                        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
+                                                    </svg>
+                                                </button>
+                                                <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden mt-2 divide-y divide-gray-200 min-w-[10rem] z-10 bg-white shadow-2xl rounded-lg p-2 mt-2 dark:divide-gray-700 dark:bg-gray-800 dark:border dark:border-gray-700"
+                                                     aria-labelledby="hs-table-dropdown-6">
+                                                    <div class="py-2 first:pt-0 last:pb-0">
+                                                        <a class="flex items-center px-3 py-2 text-sm text-gray-800 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                                                           href="#">Rename</a>
+                                                        <a class="flex items-center px-3 py-2 text-sm text-gray-800 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                                                           href="#">Regenrate Key</a>
+                                                        <a class="flex items-center px-3 py-2 text-sm text-gray-800 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                                                           href="#">Disable</a>
+                                                    </div>
+                                                    <div class="py-2 first:pt-0 last:pb-0">
+                                                        <a class="flex items-center px-3 py-2 text-sm text-red-600 rounded-md gap-x-3 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-red-500 dark:hover:bg-gray-700"
+                                                           href="#">Delete</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <!-- End Table -->
+                        <!-- Footer -->
+                        <div class="grid gap-3 px-6 py-4 border-t border-gray-200 md:flex md:justify-between md:items-center dark:border-gray-700">
+                            <div>
+                                <p class="text-sm text-gray-600 dark:text-gray-400">
+                                    <span class="font-semibold text-gray-800 dark:text-gray-200">6</span>
+                                    results
+                                </p>
+                            </div>
+                            <div>
+                                <div class="inline-flex gap-x-2">
+                                    <button type="button"
+                                            class="inline-flex items-center justify-center gap-2 px-3 py-2 text-sm font-medium text-gray-700 align-middle transition-all bg-white border rounded-md shadow-sm hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                                        All
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Footer -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- End Card -->
+    </div>
+    <!-- End Table Section -->
+    <!-- End Special Assignments Table -->
+{% endblock dashboard_content %}
