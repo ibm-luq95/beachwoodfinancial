@@ -29,6 +29,7 @@ urlpatterns = [
     path("", include("home.urls"), name="home-urls"),
     path("js-settings/", js_settings, name="js_settings"),
     path("auth/", include("beach_wood_user.urls.auth"), name="auth-urls"),
+    path("dashboard/", include("dashboard.urls"), name="dashboard-urls"),
 ]
 
 if settings.DEBUG:

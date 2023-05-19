@@ -45,7 +45,7 @@ INSTALLED_APPS = [
     # "django.contrib.sites",  # TODO: enable it
     "django_extensions",
     "webpack_boilerplate",
-    # "django_components",
+    "django_components",
     # "django_components.safer_staticfiles"  # <-- ADD
     "crispy_forms",
     "crispy_tailwind",
@@ -62,6 +62,7 @@ INSTALLED_APPS = [
     "bookkeeper.apps.BookkeeperConfig",
     "assistant.apps.AssistantConfig",
     "manager.apps.ManagerConfig",
+    "dashboard.apps.DashboardConfig",
 ]
 
 MIDDLEWARE = [
@@ -100,7 +101,15 @@ TEMPLATES = [
             "builtins": [
                 "core.templatetags.nospaces",
                 "slippers.templatetags.slippers",
+                "django_components.templatetags.component_tags",
             ],
+            # 'loaders': [(
+            #     'django.template.loaders.cached.Loader', [
+            #         'django.template.loaders.filesystem.Loader',
+            #         'django.template.loaders.app_directories.Loader',
+            #         'django_components.template_loader.Loader',
+            #     ]
+            # )],
         },
     },
 ]
@@ -122,7 +131,7 @@ AUTH_PASSWORD_VALIDATORS = [
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
         "OPTIONS": {
             "min_length": 7,
-        }
+        },
     },
     {
         "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
@@ -196,6 +205,7 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static",
     BASE_DIR / "frontend" / "build",
+    BASE_DIR / "components",
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
@@ -248,7 +258,10 @@ ENCRYPT_KEY = bytes(config("ENCRYPT_KEY", cast=str), "ascii")
 # Webpack configs
 WEBPACK_LOADER = {
     # 'MANIFEST_FILE': BASE_DIR / "frontend/build/manifest.json",
-    'MANIFEST_FILE': BASE_DIR / "frontend" / "build" / "manifest.json",
+    "MANIFEST_FILE": BASE_DIR
+    / "frontend"
+    / "build"
+    / "manifest.json",
 }
 
 # Django logs configs
