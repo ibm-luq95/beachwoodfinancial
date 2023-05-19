@@ -1,6 +1,25 @@
 [tool.black]
 line-length = 91
 target-version = ['py311']
+include = '\.pyi?$'
+exclude = '''
+/(
+    \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | _build
+  | buck-out
+  | build
+  | dist
+  # The following are specific to Black, you probably don't want those.
+  | blib2to3
+  | tests/data
+  | profiling
+)/
+'''
 
 [tool.isort]
 py_version=311
@@ -8,6 +27,7 @@ profile = "django"
 known_django = "django"
 line_length = 91
 force_single_line = true
+known_first_party = "django_components"
 #sections = ["FUTURE", "STDLIB", "THIRDPARTY", "DJANGO", "FIRSTPARTY", "LOCALFOLDER"]
 #skip = [".tox", "docs"]
 
@@ -18,7 +38,7 @@ indent=4
 exclude=".venv,venv,.tox"
 blank_line_after_tag="load,extends,include"
 blank_line_before_tag="load,extends,include"
-max_line_length=120
+max_line_length=100
 format_attribute_template_tags=true
 format_js=true
 format_css=true
