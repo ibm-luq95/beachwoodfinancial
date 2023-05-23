@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from pathlib import Path
 from decouple import Config, RepositoryEnv, Csv
 from django.contrib.messages import constants as messages
+import jinja2
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent  # Default BASE_DIR
@@ -45,16 +46,17 @@ INSTALLED_APPS = [
     # "django.contrib.sites",  # TODO: enable it
     "django_extensions",
     "webpack_boilerplate",
-    "django_components",
+    # "django_components",
     # "django_components.safer_staticfiles"  # <-- ADD
     "crispy_forms",
     "crispy_tailwind",
+    "widget_tweaks",
     "log_viewer",
     "maintenance_mode",
     "import_export",
     "django_filters",
     "rest_framework",
-    "slippers",
+    # "slippers",
     "rangefilter",
     "core.apps.CoreConfig",
     "beach_wood_user.apps.BeachWoodUserConfig",
@@ -63,6 +65,7 @@ INSTALLED_APPS = [
     "assistant.apps.AssistantConfig",
     "manager.apps.ManagerConfig",
     "dashboard.apps.DashboardConfig",
+    "client_category.apps.ClientCategoryConfig",
 ]
 
 MIDDLEWARE = [
@@ -85,8 +88,34 @@ ROOT_URLCONF = "beach_wood_financial_proj.urls"
 
 TEMPLATES = [
     {
+        "BACKEND": "django.template.backends.jinja2.Jinja2",
+        "APP_DIRS": True,
+        "DIRS": [
+            BASE_DIR / "templates",
+            BASE_DIR / "components",
+        ],
+        "OPTIONS": {
+            "environment": "bw_jinja2.env.JinjaEnvironment",
+            # "autoescape": False,
+            # "undefined": jinja2.StrictUndefined,
+            # "undefined": jinja2.DebugUndefined,
+            "extensions": [
+                "jinja2.ext.do",
+            ],
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "core.context_processors.access_constants",
+                "core.context_processors.access_constants_as_group",
+                "maintenance_mode.context_processors.maintenance_mode",
+            ],
+        },
+    },
+    {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -100,16 +129,9 @@ TEMPLATES = [
             ],
             "builtins": [
                 "core.templatetags.nospaces",
-                "slippers.templatetags.slippers",
+                # "slippers.templatetags.slippers",
                 "django_components.templatetags.component_tags",
             ],
-            # 'loaders': [(
-            #     'django.template.loaders.cached.Loader', [
-            #         'django.template.loaders.filesystem.Loader',
-            #         'django.template.loaders.app_directories.Loader',
-            #         'django_components.template_loader.Loader',
-            #     ]
-            # )],
         },
     },
 ]

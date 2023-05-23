@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+    <head>
+
+        {% include "inc/meta_tags.html.jinja" %}
+
+        <title>
+            {% block title %}
+                {{ title }}
+            {% endblock title %}
+        </title>
+
+        {% include "inc/css.html.jinja" %}
+
+        {% block externalcss %}
+        {% endblock externalcss %}
+    </head>
+    <body class="flex h-full">
+        <div class="max-w-full flex flex-col mx-auto w-full h-full">
+            <!-- ========== HEADER ========== -->
+            {% include "inc/components/segments/home_top_navbar.html.jinja" %}
+            <!-- ========== END HEADER ========== -->
+            {#  comment #}
+            <!-- ========== ANNOUNCEMENT BANNER ========== -->
+                {# PUT ANNOUNCEMENT Compoenent here #}
+            <!-- ========== END ANNOUNCEMENT BANNER ========== -->
+            {#  comment #}
+            <!-- ========== MAIN CONTENT ========== -->
+            <main id="home-content" role="main" >
+                {# Start Flash Message #}
+                {% include "inc/messages.html.jinja" %}
+                {# End Flash Message #}
+                {% block home_content %}
+                {% endblock home_content %}
+            </main>
+            <!-- ========== END MAIN CONTENT ========== -->
+            <!-- ========== FOOTER ========== -->
+            {% include "inc/components/segments/home_footer.html.jinja" %}
+            <!-- ========== END FOOTER ========== -->
+            
+            <!-- ========== COOKIE BANNER ========== -->
+            {# PUT COOKIE HERE #}
+            <!-- ========== END COOKIE BANNER ========== -->
+        </div>
+
+        {% include "inc/js.html.jinja" %}
+
+        {% block externaljs %}
+        {% endblock externaljs %}
+    </body>
+</html>

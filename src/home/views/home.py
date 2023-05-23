@@ -6,7 +6,7 @@ from core.utils import get_trans_txt
 
 
 class LandingPageView(TemplateView):
-    template_name = "home/landing_page.html"
+    template_name = "home/landing_page.html.jinja"
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

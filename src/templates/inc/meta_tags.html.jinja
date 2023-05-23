@@ -1,0 +1,21 @@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="robots" content="index, follow" />
+{% if get_web_app_settings %}
+    <meta name="description"
+          content="{{ get_web_app_settings.description|default(undefined) }}" />
+    <meta name="keywords"
+          content="{{ get_web_app_settings.keywords|default(undefined) }}" />
+    <meta name="title"
+          content="{{ get_web_app_settings.title|default(undefined) }}" />
+    <meta name="url"
+          content="{{ get_web_app_settings.url|default(undefined) }}" />
+{% endif %}
+<meta name="author" content="Ibrahim Luqman" />
+<meta name="language" content="English" />
+<link rel="canonical" href="URL" />
+<meta name="subject" content="WEBSITE PAGE SUBJECT" />
+<meta name="copyright" content="COPYRIGHT_HOLDERS" />
+<meta name="revised" content="REVISION_DATE" />
+<meta name="classification" content="Business" />

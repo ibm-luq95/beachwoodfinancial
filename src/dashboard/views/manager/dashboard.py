@@ -5,7 +5,7 @@ from django.utils.translation import gettext as _
 
 
 class DashboardView(TemplateView):
-    template_name = "dashboard/manager/dashboard.html"
+    template_name = "dashboard/manager/dashboard.html.jinja"
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

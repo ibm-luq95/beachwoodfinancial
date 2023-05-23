@@ -1,0 +1,15 @@
+{% extends "layouts/dashboard_content_base.html.jinja" %}
+
+{% block dashboard_content_block %}
+  <!-- Page Heading -->
+  {% from "macros/dashboard/content_header.jinja" import dashboard_content_header %}
+  {{ dashboard_content_header(title="Client Categories", subtitle="All clients categories, it helps to organize the clients") }}
+  <!-- End Page Heading -->
+  <!-- Start Content -->
+  <!-- Table Section -->
+  <!-- Table Section -->
+  <div class="max-w-[100rem] py-6 mx-auto"></div>
+  <!-- End Table Section -->
+  <!-- End Table Section -->
+  <!-- End Content -->
+{% endblock dashboard_content_block %}

@@ -6,9 +6,16 @@ from django import template
 from django.core.paginator import Paginator
 from django.utils import timezone
 
+from crispy_forms.utils import render_crispy_form
+
 from core.constants.general import DEFAULT_FULL_DATE_TIME_FORMAT
 
 register = template.Library()
+
+
+@register.simple_tag(takes_context=True)
+def show_crispy_form(form):
+    return render_crispy_form(form)
 
 
 @register.filter(name="get_paginator_object")

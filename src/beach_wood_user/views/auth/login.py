@@ -16,7 +16,7 @@ from core.utils.grab_env_file import grab_env_file
 class BWLoginView(SuccessMessageMixin, CacheViewMixin, FormView):
     http_method_names = ["post", "get"]
     # success_url = reverse_lazy("users:auth:login")
-    template_name = "beach_wood_user/auth/login.html"
+    template_name = "beach_wood_user/auth/login.html.jinja"
     form_class = BWLoginForm
     success_message: str = get_trans_txt("Login successfully")
 

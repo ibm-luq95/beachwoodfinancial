@@ -1,0 +1,15 @@
+{% extends "layouts/dashboard_content_base.html.jinja" %}
+
+{% block dashboard_content_block %}
+    <!-- Page Heading -->
+    {% from "macros/dashboard/content_header.jinja" import dashboard_content_header %}
+    {{ dashboard_content_header(title="Client Category") }}
+    <!-- End Page Heading -->
+    {% from "macros/core/bw_form.jinja" import bw_form %}
+    {{ bw_form(form=form, form_id="createClientCategoryForm", submit_btn_text="Create", form_title="Create new category") }}
+    {# <form method="post">
+        {{ csrf_input }}
+        {{ crispy(form) }}
+        <button type="submit" class="btn-blue"  value="Submit">Submit</button>
+    </form> #}
+{% endblock dashboard_content_block %}
