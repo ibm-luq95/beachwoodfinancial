@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-#
 from core.constants.general import (
     DEFAULT_FULL_DATE_TIME_FORMAT,
-    DEFAULT_TEMPLATE_TABLE_LIST_TRUNCATED_STRING, DEFAULT_TEMPLATE_TABLE_LIST_LONG_TRUNCATED_STRING,
+    DEFAULT_TEMPLATE_TABLE_LIST_TRUNCATED_STRING,
+    DEFAULT_TEMPLATE_TABLE_LIST_LONG_TRUNCATED_STRING,
 )
 from core.constants.status_labels import (
     CON_ENABLED,
@@ -20,6 +21,16 @@ from core.constants.status_labels import (
     STALLED,
     ONGOING,
 )
+
+
+def access_css_classes_constants(request) -> dict:
+    return {
+        "BW_TAILWIDCSS_TEXT_INPUT_CSS_CLASSES": (
+            "py-2 px-3 pr-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg "
+            "focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 "
+            "dark:border-gray-700 dark:text-gray-400"
+        )
+    }
 
 
 def access_constants(request) -> dict:

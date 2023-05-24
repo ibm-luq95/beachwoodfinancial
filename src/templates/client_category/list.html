@@ -1,0 +1,16 @@
+{% extends "core/layouts/dashboard_content_base.html" %}
+
+{% block dashboard_content_block %}
+    <!-- Page Heading -->
+    {% #dashboard-content-header title="Client Categories" subtitle="All clients categories, it helps to organize the clients" %}
+    {% /dashboard-content-header %}
+    <!-- End Page Heading -->
+    <!-- Start Content -->
+
+    <!-- Table Section -->
+    {% component "table_list" header_cols=fields perms=perms is_show_create_btn=True %}
+    <!-- End Table Section -->
+    
+    
+    <!-- End Content -->
+{% endblock dashboard_content_block %}

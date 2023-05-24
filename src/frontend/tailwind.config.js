@@ -10,6 +10,8 @@ const pwdParent = Path.dirname(pwd);
 const projectPaths = [
   Path.join(pwdParent, "templates", "**", "*.html"),
   Path.join(pwdParent, "static", "**", "*.js"),
+  Path.join(pwdParent, "components", "**", "*.js"),
+  Path.join(pwdParent, "components", "**", "*.html"),
   // add js file paths if you need
 ];
 

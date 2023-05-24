@@ -1,0 +1,47 @@
+{% load widget_tweaks %}
+
+<!-- Card -->
+<div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900 mt-5">
+    <div class="mb-8">
+        <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">{{ form_title }}</h2>
+        <p class="text-sm text-gray-600 dark:text-gray-400">{{ form_subtitle }}</p>
+    </div>
+    <form id="{{ form_id }}"
+          method="{{ form_method }}"
+          action="{{ form_action_url }}"
+          {% if is_upload_form == True %}enctype="multipart/form-data"{% endif %}>
+        <fieldset form="{{ form_id }}">
+            {% csrf_token %}
+            <!-- Grid -->
+            <div class="grid grid-cols-12 gap-4 sm:gap-6">
+                {% for input in form %}
+                    <div class="col-span-2">
+                        <label class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
+                            {{ input.label }}
+                        </label>
+                    </div>
+                    <!-- End Col -->
+                    <div class="col-span-10">
+                        {% render_field input class+=BW_TAILWIDCSS_TEXT_INPUT_CSS_CLASSES placeholder=input.label %}
+                        {% if input.help_text %}
+                            <p class="text-sm text-gray-500 mt-2" id="hs-input-helper-text">{{ input.help_text }}</p>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
+            <!-- End Grid -->
+            <div class="mt-5 flex justify-end gap-x-2">
+                {% comment  %}
+                        <button type="button" class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                            Cancel
+                        </button>
+                {% endcomment %}
+                <button type="button"
+                        class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                    {{ submit_btn_text }}
+                </button>
+            </div>
+        </fieldset>
+    </form>
+</div>
+<!-- End Card -->

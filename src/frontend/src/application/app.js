@@ -5,6 +5,8 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 import "preline";
 import "css.gg/icons/all.css";
+import "sortable-tablesort/sortable.min.css";
+import "sortable-tablesort/sortable.min.js";
 // eslint-disable-next-line no-unused-vars
 import Chart from "chart.js/auto";
 

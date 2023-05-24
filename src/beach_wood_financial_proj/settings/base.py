@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     "django_extensions",
     "webpack_boilerplate",
     "django_components",
-    # "django_components.safer_staticfiles"  # <-- ADD
     "crispy_forms",
     "crispy_tailwind",
     "log_viewer",
@@ -55,6 +54,7 @@ INSTALLED_APPS = [
     "django_filters",
     "rest_framework",
     "slippers",
+    "widget_tweaks",
     "rangefilter",
     "core.apps.CoreConfig",
     "beach_wood_user.apps.BeachWoodUserConfig",
@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "assistant.apps.AssistantConfig",
     "manager.apps.ManagerConfig",
     "dashboard.apps.DashboardConfig",
+    "client_category.apps.ClientCategoryConfig",
 ]
 
 MIDDLEWARE = [
@@ -86,7 +87,10 @@ ROOT_URLCONF = "beach_wood_financial_proj.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [
+            BASE_DIR / "templates",
+            BASE_DIR / "components",
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -95,6 +99,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "core.context_processors.access_constants",
+                "core.context_processors.access_css_classes_constants",
                 "core.context_processors.access_constants_as_group",
                 "maintenance_mode.context_processors.maintenance_mode",
             ],
@@ -103,13 +108,6 @@ TEMPLATES = [
                 "slippers.templatetags.slippers",
                 "django_components.templatetags.component_tags",
             ],
-            # 'loaders': [(
-            #     'django.template.loaders.cached.Loader', [
-            #         'django.template.loaders.filesystem.Loader',
-            #         'django.template.loaders.app_directories.Loader',
-            #         'django_components.template_loader.Loader',
-            #     ]
-            # )],
         },
     },
 ]
