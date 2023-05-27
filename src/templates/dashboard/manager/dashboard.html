@@ -1,11 +1,12 @@
-{% extends "core/layouts/dashboard.html" %}
+{% extends "core/layouts/dashboard_content_base.html" %}
 
-{% block dashboard_content %}
+{% block dashboard_content_block %}
     <!-- Page Heading -->
     {% #dashboard-content-header title="Welcome Manager - Manager Name" subtitle="This is a simple application layout with sidebar and header examples using Tailwind CSS." %}
     {% /dashboard-content-header %}
     <!-- End Page Heading -->
-    <!-- Start Stats Widget -->
+    
+        <!-- Start Stats Widget -->
     <!-- Card Section -->
     <div class="max-w-[100rem] py-10 mx-auto">
         <!-- Grid -->
@@ -992,4 +993,5 @@
     </div>
     <!-- End Table Section -->
     <!-- End Special Assignments Table -->
-{% endblock dashboard_content %}
+{% endblock dashboard_content_block %}
+

@@ -17,6 +17,7 @@ class ClientCategoryListView(BaseListViewMixin, ListView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context.setdefault("title", get_trans_txt("Client Categories"))
+        context.setdefault("table_header_columns", ["name"])
         messages.set_level(self.request, messages.DEBUG)
         return context
 

@@ -44,59 +44,33 @@
           <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
             <thead>
               <tr>
+                
+                {% for column in table_header_columns %}
+                {% if is_checkbox_enabled is True %}
                 <th scope="col" class="pl-6 py-3 text-left">
                   <label for="hs-at-with-checkboxes-main" class="flex">
                     <input type="checkbox" class="shrink-0 border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" id="hs-at-with-checkboxes-main">
                     <span class="sr-only">Checkbox</span>
                   </label>
                 </th>
+                {% endif %}
+                  
 
                 <th scope="col" class="px-6 py-3 text-left">
                   <div class="flex items-center gap-x-2">
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                      Name
+                      {{ column }}
                     </span>
                   </div>
                 </th>
-
-                <th scope="col" class="px-6 py-3 text-left">
-                  <div class="flex items-center gap-x-2">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                      Created by
-                    </span>
-                  </div>
-                </th>
-
-                <th scope="col" class="px-6 py-3 text-left">
-                  <div class="flex items-center gap-x-2">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                      API Key
-                    </span>
-                  </div>
-                </th>
-
-                <th scope="col" class="px-6 py-3 text-left">
-                  <div class="flex items-center gap-x-2">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                      Status
-                    </span>
-                  </div>
-                </th>
-
-                <th scope="col" class="px-6 py-3 text-left">
-                  <div class="flex items-center gap-x-2">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                      Created
-                    </span>
-                  </div>
-                </th>
-
-                <th scope="col" class="px-6 py-3 text-right"></th>
+                {% endfor %}
               </tr>
             </thead>
 
             <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
               <tr>
+                
+                {% if is_checkbox_enabled is True %}
                 <td class="h-px w-px whitespace-nowrap">
                   <div class="pl-6 py-3">
                     <label for="hs-at-with-checkboxes-1" class="flex">
@@ -105,6 +79,8 @@
                     </label>
                   </div>
                 </td>
+                {% endif %}
+                  
 
                 <td class="h-px w-px whitespace-nowrap">
                   <div class="px-6 py-3">
@@ -179,6 +155,8 @@
               </tr>
 
               <tr>
+                
+                {% if is_checkbox_enabled is True %}
                 <td class="h-px w-px whitespace-nowrap">
                   <div class="pl-6 py-3">
                     <label for="hs-at-with-checkboxes-2" class="flex">
@@ -187,6 +165,8 @@
                     </label>
                   </div>
                 </td>
+                {% endif %}
+                  
 
                 <td class="h-px w-px whitespace-nowrap">
                   <div class="px-6 py-3">
@@ -261,6 +241,8 @@
               </tr>
 
               <tr>
+                
+                {% if is_checkbox_enabled is True %}
                 <td class="h-px w-px whitespace-nowrap">
                   <div class="pl-6 py-3">
                     <label for="hs-at-with-checkboxes-5" class="flex">
@@ -269,6 +251,8 @@
                     </label>
                   </div>
                 </td>
+                {% endif %}
+                  
 
                 <td class="h-px w-px whitespace-nowrap">
                   <div class="px-6 py-3">
@@ -345,6 +329,8 @@
               </tr>
 
               <tr>
+                
+                {% if is_checkbox_enabled is True %}
                 <td class="h-px w-px whitespace-nowrap">
                   <div class="pl-6 py-3">
                     <label for="hs-at-with-checkboxes-6" class="flex">
@@ -353,6 +339,8 @@
                     </label>
                   </div>
                 </td>
+                {% endif %}
+                  
 
                 <td class="h-px w-px whitespace-nowrap">
                   <div class="px-6 py-3">

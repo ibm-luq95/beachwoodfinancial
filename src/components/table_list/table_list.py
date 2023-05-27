@@ -20,6 +20,8 @@ class TableList(component.Component):
         header_cols=None,
         perms=None,
         is_show_create_btn=True,
+        is_checkbox_enabled=False,
+        table_header_columns=None,
     ):
         return {
             "header_title": header_title,
@@ -29,6 +31,8 @@ class TableList(component.Component):
             "header_cols": header_cols,
             "perms": perms,
             "is_show_create_btn": is_show_create_btn,
+            "is_checkbox_enabled": is_checkbox_enabled,
+            "table_header_columns": table_header_columns,
         }
 
     class Media:
