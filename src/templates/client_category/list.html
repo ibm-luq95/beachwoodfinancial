@@ -1,16 +1,22 @@
 {% extends "core/layouts/dashboard_content_base.html" %}
 
+{% load development_tags %}
+
 {% block dashboard_content_block %}
-    <!-- Page Heading -->
+    {% comment  %}
+        <!-- Page Heading -->
     {% #dashboard-content-header title="Client Categories" subtitle="All clients categories, it helps to organize the clients" %}
     {% /dashboard-content-header %}
     <!-- End Page Heading -->
+    {% endcomment %}
     <!-- Start Content -->
-
     <!-- Table Section -->
-    {% component "table_list" header_cols=fields perms=perms is_show_create_btn=True table_header_columns=table_header_columns %}
+    {% comment  %}
+        {% component "table_list" header_cols=fields perms=perms is_show_create_btn=True table_header_columns=table_header_columns object_list=object_list %}
+    {% endcomment %}
+    
+    {% include "bw_components/client_category/table_list.html" with is_checkbox_enabled=True is_show_created_at=True header_title="Categories" header_subtitle="All clients categories, it helps to organize the clients" is_show_create_btn=True app_label=app_label %}
+
     <!-- End Table Section -->
-    
-    
     <!-- End Content -->
 {% endblock dashboard_content_block %}
