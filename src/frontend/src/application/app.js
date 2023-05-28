@@ -5,12 +5,25 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 import "preline";
 import "css.gg/icons/all.css";
-import "sortable-tablesort/sortable.min.css";
-import "sortable-tablesort/sortable.min.js";
+// import "sortable-tablesort/sortable-base.css";
+// import "sortable-tablesort/sortable.min.js";
+import tableSort from "table-sort-js/table-sort.js";
 // eslint-disable-next-line no-unused-vars
 import Chart from "chart.js/auto";
 
 window.document.addEventListener("DOMContentLoaded", function () {
+  const bwfInputs = document.querySelectorAll(".bw-input");
+  const bwDisabledLinks = document.querySelectorAll("a.bw-disabled-anchor");
+  const allDisabledCssClassed = ["disabled:opacity-75", "cursor-not-allowed"];
+  bwfInputs.forEach((input) => {
+    input.disabled = false;
+    input.classList.remove(...allDisabledCssClassed);
+  });
+  bwDisabledLinks.forEach((link) => {
+    link.addEventListener("click", (event) => {
+      event.preventDefault();
+    });
+  });
   const jobsChart = document.querySelector("canvas#jobsChart");
   if (jobsChart) {
     const options2 = {
