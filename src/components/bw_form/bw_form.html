@@ -1,7 +1,7 @@
 {% load widget_tweaks development_tags %}
 
 <!-- Card -->
-<div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900 mt-5">
+<div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900">
     <div class="mb-8">
         <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">{{ form_title }}</h2>
         <p class="text-sm text-gray-600 dark:text-gray-400">{{ form_subtitle }}</p>
@@ -16,17 +16,14 @@
             <div class="grid grid-cols-12 gap-4 sm:gap-6">
                 {% for input in form %}
                     <div class="col-span-2">
-                        <label class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">
-                            {{ input.label }}
-                        </label>
+                        {% #bw-label label_txt=input.label %}
+                        {% /bw-label %}
                     </div>
                     <!-- End Col -->
                     <div class="col-span-10">
                         {% with placeholder=input.field.widget.attrs.placeholder|default:input.label %}
-                        {% render_field input class+=BW_TAILWIDCSS_TEXT_INPUT_CSS_CLASSES placeholder=placeholder %}
+                            {% render_field input class+=BW_TAILWINDCSS_TEXT_INPUT_CSS_CLASSES placeholder=placeholder %}
                         {% endwith %}
-                            
-                        
                         {% if input.help_text %}
                             <p class="text-sm text-gray-500 mt-2" id="hs-input-helper-text">{{ input.help_text }}</p>
                         {% endif %}
