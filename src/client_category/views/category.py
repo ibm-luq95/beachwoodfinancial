@@ -1,5 +1,8 @@
 # -*- coding: utf-8 -*-#
 from django.contrib import messages
+from django.contrib.messages.views import SuccessMessageMixin
+from django.urls import reverse_lazy
+from django.utils.translation import gettext as _
 from django.views.generic import CreateView
 from django.views.generic import ListView
 
@@ -17,15 +20,18 @@ class ClientCategoryListView(BaseListViewMixin, ListView):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context.setdefault("title", get_trans_txt("Client Categories"))
-        context.setdefault("table_header_columns", ["name"])
+        context.setdefault("table_header_columns", self.model.get_columns_names())
+        # debugging_print(self.model.get_columns_names())
         messages.set_level(self.request, messages.DEBUG)
         return context
 
 
-class ClientCategoryCreateView(CreateView):
+class ClientCategoryCreateView(SuccessMessageMixin, CreateView):
     template_name = "client_category/create.html"
     form_class = ClientCategoryForm
     model = ClientCategory
+    success_message = _("Category created successfully")
+    success_url = reverse_lazy("dashboard:client_category:create")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
