@@ -1,10 +1,16 @@
 # -*- coding: utf-8 -*-#
 import stringcase
+from django.forms import model_to_dict
 
 from core.utils import debugging_print
 
 
 class BaseListViewMixin:
+    # def get_queryset(self) -> dict:
+    #     queryset = super().get_queryset()
+    #     rows = [model_to_dict(x) for x in queryset]
+    #     return rows.pop(0)
+
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
@@ -14,6 +20,9 @@ class BaseListViewMixin:
             # context.setdefault("app_label", self.model._meta.model_name)
         if hasattr(self, "model"):
             excluded_fields = ["id", "updated_at", "metadata", "deleted_at", "is_deleted"]
+            # for f in getattr(self.model, "_meta").fields:
+                # debugging_print(field.is_relation and field.many_to_many and field.related_name)
+                # debugging_print(f.is_relation)
             names_list = [field.name for field in getattr(self.model, "_meta").fields]
             new_list = []
             for name in names_list:
