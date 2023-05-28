@@ -98,6 +98,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                # "django.template.context_processors.i18n",
                 "core.context_processors.access_constants",
                 "core.context_processors.access_css_classes_constants",
                 "core.context_processors.access_constants_as_group",
