@@ -4,6 +4,8 @@ from core.forms import BaseModelFormMixin
 
 
 class ClientCategoryForm(BaseModelFormMixin):
+    field_order = ["name", "status"]
+
     def __init__(self, *args, **kwargs):
         super(ClientCategoryForm, self).__init__(*args, **kwargs)
 
