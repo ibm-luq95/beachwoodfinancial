@@ -37,8 +37,6 @@
     "titleBar.activeBackground": "#3b83f68c",
     "activityBar.activeBackground": "#6ca2f88c",
     "activityBar.background": "#6ca2f88c",
-    // "activityBar.foreground": "#15202b",
-    // "activityBar.inactiveForeground": "#15202b99",
     "activityBar.inactiveForeground": "#e7e7e7",
     "activityBarBadge.background": "#d50a58",
     "activityBarBadge.foreground": "#e7e7e7",
@@ -50,7 +48,8 @@
     "statusBarItem.remoteBackground": "#3b83f68c",
     "statusBarItem.remoteForeground": "#e7e7e7",
     "titleBar.inactiveBackground": "#3b83f699",
-    "titleBar.inactiveForeground": "#e7e7e799"
+    "titleBar.inactiveForeground": "#e7e7e799",
+    "activityBar.foreground": "#15202b"
   },
   "peacock.color": "#3b83f68c"
 }
