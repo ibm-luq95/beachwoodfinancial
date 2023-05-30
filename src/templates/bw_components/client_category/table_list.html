@@ -17,9 +17,20 @@
     {{ app_label|add:'_table' }}
 {% endblock table_id_block %}
 {# End Table ID Block #}
+{# Start Custom Css Class #}
+{% block custom_css_class_name %}
+    client-category-table-list
+{% endblock custom_css_class_name %}
+{# End Custom Css Class #}
 {# Start Create Button Block #}
 {% block create_btn_block %}
     {% component "tl_create_btn" app_name=app_label %}
+    
+    {% comment %}
+    {% #bw-button type="button" data-pk='ss' btn_text="Click" variant="" %}{% /bw-button %}
+    {% endcomment %}
+        
+    {% bw_button btn_text="Click" %}
 {% endblock create_btn_block %}
 {# End Create Button Block #}
 {# Start Table Header Columns #}
@@ -142,7 +153,7 @@
 {# End Table Results #}
 {# Start Table Pagination #}
 {% block pagination_block %}
-    {% #tl-pagination %}
+    {% #tl-pagination page_obj=page_obj pagination_list_url_name=pagination_list_url_name %}
     {% /tl-pagination %}
 {% endblock pagination_block %}
 {# End Table Pagination #}

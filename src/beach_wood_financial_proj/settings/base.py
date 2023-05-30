@@ -71,6 +71,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django_session_timeout.middleware.SessionTimeoutMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -106,6 +107,7 @@ TEMPLATES = [
             ],
             "builtins": [
                 "core.templatetags.nospaces",
+                "core.templatetags.components.buttons",
                 "slippers.templatetags.slippers",
                 "django_components.templatetags.component_tags",
             ],
@@ -160,6 +162,12 @@ TIME_ZONE = config("TIME_ZONE", cast=str)
 USE_I18N = config("USE_I18N", cast=bool)
 
 USE_TZ = config("USE_TZ", cast=bool)
+
+LOCALE_PATHS = [
+    BASE_DIR / "locale/",
+]
+
+LANGUAGES = (("en", "English"),)
 
 # Django rest framework configs
 REST_FRAMEWORK = {

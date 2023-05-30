@@ -10,4 +10,5 @@ def access_css_classes_constants(request) -> dict:
         "BW_BASE_INPUT_CSS_CLASSES": "bw-input",
         "BW_DISABLED_ANCHOR_CSS_CLASSES": "bw-disabled-anchor",
         "BW_DISABLED_DISABLED_INPUTS_CSS_CLASSES": "disabled:opacity-75 cursor-not-allowed",
+        "BW_TABLE_LIST_COMPONENT_CLASS": "table-list-component",
     }

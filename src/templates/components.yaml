@@ -8,6 +8,7 @@ components:
   dashboard-left-side: "components/core/inc/dashboard/left_side.html"
   dashboard-content-header: "components/widgets/dashboard/shared/content_header.html"
   tl-pagination: "components/widgets/core/table_list_widgets/table_list_pagination.html"
+  tl-filters: "components/widgets/core/table_list_widgets/table_filters.html"
   bw-button: "components/core/inputs/button.html"
   bw-input: "components/core/inputs/input.html"
   bw-textarea: "components/core/inputs/textarea.html"
@@ -15,3 +16,4 @@ components:
   bw-select: "components/core/inputs/select.html"
   bw-label: "components/core/inputs/label.html"
   bw-link: "components/core/elements/anchor.html"
+  bw-link-btn: "components/core/elements/anchor_btn.html"
