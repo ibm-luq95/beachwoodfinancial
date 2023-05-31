@@ -8,7 +8,7 @@ register = template.Library()
 
 
 #
-@register.inclusion_tag("bw_components/components/button.html", takes_context=True)
+@register.inclusion_tag("", takes_context=True)
 # @register.inclusion_tag("bw_components/components/button.html")
 def bw_button(context, *args, **kwargs) -> dict:
     # def bw_button(*args, **kwargs) -> dict:

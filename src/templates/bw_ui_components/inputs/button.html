@@ -1,0 +1,5 @@
+{% load i18n %}
+
+<button type="{{ btn_type }}" id="{{ btn_id }}" class="{{ btn_css_classes }}" {% if data_attributes %}{{ data_attributes }}{% endif %} {{ is_disabled }}>
+    {{ btn_text }}
+</button>

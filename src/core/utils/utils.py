@@ -52,3 +52,12 @@ def foreign_key_snake_case_plural(s: str) -> str:
     snake_name = f"{snake_name}s"
     # print(snake_name)
     return snake_name
+
+
+def get_request_context(context) -> dict:
+    full_dict = dict()
+    for con in context:
+        if isinstance(con, dict):
+            full_dict.update(con)
+
+    return full_dict

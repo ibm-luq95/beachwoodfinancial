@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+from importlib import import_module
 from pathlib import Path
 from decouple import Config, RepositoryEnv, Csv
 from django.contrib.messages import constants as messages
@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     "assistant.apps.AssistantConfig",
     "manager.apps.ManagerConfig",
     "dashboard.apps.DashboardConfig",
+    "bw_ui_components.apps.BwUiComponentsConfig",
     "client_category.apps.ClientCategoryConfig",
 ]
 
@@ -85,6 +86,11 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "beach_wood_financial_proj.urls"
 
+UI_COMPONENTS_TEMPLATETAGS = [
+    "core.templatetags.nospaces",
+    "bw_ui_components.templatetags.inputs.button",
+]
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
@@ -106,8 +112,7 @@ TEMPLATES = [
                 "maintenance_mode.context_processors.maintenance_mode",
             ],
             "builtins": [
-                "core.templatetags.nospaces",
-                "core.templatetags.components.buttons",
+                *UI_COMPONENTS_TEMPLATETAGS,
                 "slippers.templatetags.slippers",
                 "django_components.templatetags.component_tags",
             ],
