@@ -1,19 +1,24 @@
 # -*- coding: utf-8 -*-#
 from django import template
 
-from core.utils import get_request_context
+from core.constants.css_classes import (
+    BW_PRELINE_INPUT_SUCCESS_STATE,
+    BW_PRELINE_INPUT_DANGER_STATE,
+)
+from core.utils import get_request_context, debugging_print
 
 register = template.Library()
 
 
 @register.inclusion_tag("bw_ui_components/inputs/button.html", takes_context=True)
 def bw_button(context, *args, **kwargs) -> dict:
-    context_data = get_request_context(context)
+    context_data = get_request_context(context, kwargs)
     data_aria_attributes = ""
     btn_variant = kwargs.get("btn_variant").upper()
     is_soft_color = bool(kwargs.get("is_soft_color"))
     is_disabled = "disabled" if kwargs.get("is_disabled") else ""
     btn_size = kwargs.get("btn_size", "DEFAULT").upper()
+
     btn_css_classes = context_data.get("SOLID_COLORS_CSS_CLASSES").get(btn_variant)
     if is_soft_color is True:
         btn_css_classes = context_data.get("SOFT_COLORS_CSS_CLASSES").get(btn_variant)
@@ -26,10 +31,10 @@ def bw_button(context, *args, **kwargs) -> dict:
     if is_disabled:
         btn_css_classes += " cursor-not-allowed"
     kwargs.update({"btn_css_classes": btn_css_classes})
+    debugging_print(kwargs)
 
     return {
         **context_data,
         **kwargs,
-        "data_aria_attributes": data_aria_attributes,
         "is_disabled": is_disabled,
     }

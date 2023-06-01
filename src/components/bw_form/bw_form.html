@@ -22,7 +22,7 @@
                     <!-- End Col -->
                     <div class="col-span-10">
                         {% with placeholder=input.field.widget.attrs.placeholder|default:input.label %}
-                            {% render_field input class+=BW_TAILWINDCSS_TEXT_INPUT_CSS_CLASSES placeholder=placeholder %}
+                            {% render_field input class+=BW_PRELINE_TEXT_INPUT_CSS_CLASSES placeholder=placeholder %}
                         {% endwith %}
                         {% if input.help_text %}
                             <p class="text-sm text-gray-500 mt-2" id="hs-input-helper-text">{{ input.help_text }}</p>

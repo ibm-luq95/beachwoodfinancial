@@ -1,29 +1,33 @@
 # -*- coding: utf-8 -*-#
+from core.constants.css_classes import (
+    BW_PRELINE_TEXT_INPUT_CSS_CLASSES,
+    BW_PRELINE_BASE_TABLE,
+    BW_BASE_INPUT_CSS_CLASSES,
+    BW_DISABLED_ANCHOR_CSS_CLASSES,
+    BW_DISABLED_DISABLED_INPUTS_CSS_CLASSES,
+    BW_TABLE_LIST_COMPONENT_CLASS,
+    BW_FULL_INPUT_CSS_CLASSES,
+    BW_PRELINE_BASE_BUTTON,
+    BW_PRELINE_INPUT_DANGER_STATE,
+    BW_PRELINE_INPUT_SUCCESS_STATE,
+)
+
+
 def access_css_classes_constants(request) -> dict:
     return {
-        "BW_TAILWINDCSS_TEXT_INPUT_CSS_CLASSES": (
-            "py-2 px-3 pr-11 block w-full border-gray-200 shadow-sm text-sm rounded-lg "
-            "focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 "
-            "dark:border-gray-700 dark:text-gray-400"
-        ),
-        "BW_TAILWINDCSS_TABLE_CSS_CLASSES": "table-sort min-w-full divide-y divide-gray-200 dark:divide-gray-700",
-        "BW_BASE_INPUT_CSS_CLASSES": "bw-input",
-        "BW_DISABLED_ANCHOR_CSS_CLASSES": "bw-disabled-anchor",
-        "BW_DISABLED_DISABLED_INPUTS_CSS_CLASSES": "disabled:opacity-75 cursor-not-allowed",
-        "BW_TABLE_LIST_COMPONENT_CLASS": "table-list-component",
+        "BW_PRELINE_TEXT_INPUT_CSS_CLASSES": BW_PRELINE_TEXT_INPUT_CSS_CLASSES,
+        "BW_TAILWINDCSS_TABLE_CSS_CLASSES": BW_PRELINE_BASE_TABLE,
+        "BW_BASE_INPUT_CSS_CLASSES": BW_BASE_INPUT_CSS_CLASSES,
+        "BW_PRELINE_INPUT_DANGER_STATE": BW_PRELINE_INPUT_DANGER_STATE,
+        "BW_PRELINE_INPUT_SUCCESS_STATE": BW_PRELINE_INPUT_SUCCESS_STATE,
+        "BW_DISABLED_ANCHOR_CSS_CLASSES": BW_DISABLED_ANCHOR_CSS_CLASSES,
+        "BW_DISABLED_DISABLED_INPUTS_CSS_CLASSES": BW_DISABLED_DISABLED_INPUTS_CSS_CLASSES,
+        "BW_TABLE_LIST_COMPONENT_CLASS": BW_TABLE_LIST_COMPONENT_CLASS,
+        "BW_FULL_INPUT_CSS_CLASSES": BW_FULL_INPUT_CSS_CLASSES,
         "BW_DEFAULT_BUTTONS_CSS_CLASSES": {
-            "SMALL": (
-                "py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent "
-                "font-semibold focus:ring-2 focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all text-sm"
-            ),
-            "DEFAULT": (
-                "py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent "
-                "font-semibold transition-all text-sm focus:outline-none focus:ring-2"
-            ),
-            "LARGE": (
-                "py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent "
-                "font-semibold transition-all text-sm focus:outline-none focus:ring-2"
-            ),
+            "SMALL": f"py-2 px-3 {BW_PRELINE_BASE_BUTTON}",
+            "DEFAULT": f"py-3 px-4 {BW_PRELINE_BASE_BUTTON}",
+            "LARGE": f"py-3 px-4 {BW_PRELINE_BASE_BUTTON}",
         },
         "SOLID_COLORS_CSS_CLASSES": {
             "DARK": (
@@ -79,7 +83,7 @@ def access_css_classes_constants(request) -> dict:
                 "dark:hover:bg-gray-600 dark:focus:ring-gray-600 dark:text-white dark:focus:ring-offset-gray-800"
             ),
             "DANGER": (
-                "bg-red-100 text-red-500 hover:text-white hover:bg-red-100 focus:outline-none focus:ring-2 "
+                "bg-red-100 text-red-500 hover:text-white hover:bg-red-300 focus:outline-none focus:ring-2 "
                 "ring-offset-white focus:ring-red-500 focus:ring-offset-2 transition-all text-sm "
                 "dark:focus:ring-offset-gray-800"
             ),

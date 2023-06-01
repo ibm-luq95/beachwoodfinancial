@@ -88,7 +88,9 @@ ROOT_URLCONF = "beach_wood_financial_proj.urls"
 
 UI_COMPONENTS_TEMPLATETAGS = [
     "core.templatetags.nospaces",
+    "bw_ui_components.templatetags.inputs.label",
     "bw_ui_components.templatetags.inputs.button",
+    "bw_ui_components.templatetags.inputs.input",
 ]
 
 TEMPLATES = [
