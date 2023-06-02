@@ -7,9 +7,8 @@
     {% #dashboard-content-header title="Client Categories" subtitle="All clients categories, it helps to organize the clients" %}
     {% /dashboard-content-header %}
     <!-- End Page Heading -->
-    {% bw_input input_type="text" input_id="iid" lbl_text="Name" corner_hint_text="Optional" aria_describedby="show helper" helper_text="Please fill input" input_state="success" state_text="Error while validation" placeholder="ddd" %}
-    {% bw_button btn_text="Click" btn_variant="danger" is_soft_color=True btn_size="small" data_pk="eee" data_title="ddlel" is_disabled=True btn_type="button" %}
     <!-- Table Section -->
+
     {% include "bw_components/client_category/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Categories" header_subtitle="All clients categories, it helps to organize the clients" is_show_create_btn=True app_label=app_label page_obj=page_obj pagination_list_url_name="dashboard:client_category:list" is_filters_enabled=True %}
 
     <!-- End Table Section -->

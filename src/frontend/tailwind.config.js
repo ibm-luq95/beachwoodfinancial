@@ -8,11 +8,11 @@ const pwdParent = Path.dirname(pwd);
 
 // We can add current project paths here
 const projectPaths = [
+  Path.join(pwdParent, "node_modules", "preline", "dist", "*.js"),
   Path.join(pwdParent, "templates", "**", "*.html"),
   Path.join(pwdParent, "static", "**", "*.js"),
   Path.join(pwdParent, "components", "**", "*.js"),
   Path.join(pwdParent, "components", "**", "*.html"),
-  Path.join(pwdParent, "node_modules", "preline", "dist", "*.js"),
   // add js file paths if you need
 ];
 

@@ -1,0 +1,8 @@
+{% load i18n %}
+
+<a href=""
+   target="{{ link_target|default:'_self' }}"
+   id="{{ link_id }}"
+   class="{% if is_disabled is True %}
+              {{ BW_DISABLED_ANCHOR_CSS_CLASSES }}
+          {% endif %}">{{ link_text }}</a>

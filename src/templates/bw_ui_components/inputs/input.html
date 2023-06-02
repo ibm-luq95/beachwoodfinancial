@@ -35,12 +35,11 @@
        id="hs-validation-name-error-helper">{{ state_text }}</p>
   {% elif input_state == "error" %}
     <p class="text-sm text-red-600 mt-2" id="{{ input_id }}_helper">{{ state_text }}</p>
-  {% else %}
-    {% if helper_text %}
-      <p class="text-sm text-gray-500 mt-2" id="{{ aria_describedby }}">{{ helper_text }}</p>
-    {% endif %}
   {% endif %}
-  {% comment  %}
-    {% firstof "variable contents" as variable %}
-  {% endcomment %}
+  {% if helper_text %}
+    <p class="text-sm text-gray-500 mt-2" id="{{ aria_describedby }}">{{ helper_text }}</p>
+  {% endif %}
 </div>
+{% comment  %}
+{% firstof "variable contents" as variable %}
+{% endcomment %}

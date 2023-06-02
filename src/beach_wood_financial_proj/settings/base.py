@@ -91,6 +91,12 @@ UI_COMPONENTS_TEMPLATETAGS = [
     "bw_ui_components.templatetags.inputs.label",
     "bw_ui_components.templatetags.inputs.button",
     "bw_ui_components.templatetags.inputs.input",
+    "bw_ui_components.templatetags.inputs.select",
+    "bw_ui_components.templatetags.inputs.radiobox",
+    "bw_ui_components.templatetags.inputs.checkbox",
+    "bw_ui_components.templatetags.inputs.file_input",
+    "bw_ui_components.templatetags.elements.anchor",
+    "bw_ui_components.templatetags.elements.icon",
 ]
 
 TEMPLATES = [

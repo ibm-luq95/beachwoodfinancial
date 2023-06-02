@@ -31,7 +31,7 @@ def bw_button(context, *args, **kwargs) -> dict:
     if is_disabled:
         btn_css_classes += " cursor-not-allowed"
     kwargs.update({"btn_css_classes": btn_css_classes})
-    debugging_print(kwargs)
+    # debugging_print(kwargs)
 
     return {
         **context_data,

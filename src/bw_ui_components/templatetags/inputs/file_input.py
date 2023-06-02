@@ -10,8 +10,8 @@ from core.utils import get_request_context, debugging_print
 register = template.Library()
 
 
-@register.inclusion_tag("bw_ui_components/inputs/input.html", takes_context=True)
-def bw_input(context, *args, **kwargs) -> dict:
+@register.inclusion_tag("bw_ui_components/inputs/file.html", takes_context=True)
+def bw_file_input(context, *args, **kwargs) -> dict:
     context_data = get_request_context(context, kwargs)
     input_state = kwargs.get("input_state", None)
     input_state_css_classes = ""
