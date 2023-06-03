@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "slippers",
     "widget_tweaks",
     "rangefilter",
+    "django_tables2",
     "core.apps.CoreConfig",
     "beach_wood_user.apps.BeachWoodUserConfig",
     "home.apps.HomeConfig",
@@ -114,6 +115,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.request",
                 # "django.template.context_processors.i18n",
                 "core.context_processors.access_constants",
                 "core.context_processors.access_css_classes_constants",
@@ -128,6 +130,17 @@ TEMPLATES = [
         },
     },
 ]
+
+DJANGO_TABLES2_TEMPLATE = "bw_ui_components/django_tables2/base_table.html"
+DJANGO_TABLES2_TABLE_ATTRS = {
+    # "class": "table table-hover",
+    "thead": {
+        "class": "bg-gray-50 dark:bg-slate-800",
+    },
+    "th": {"class": "pl-6 lg:pl-3 xl:pl-0 pr-6 py-3 text-left"},
+    "tbody": {"class": "divide-y divide-gray-200 dark:divide-gray-700"},
+    "td": {"class": "h-px w-px whitespace-nowrap"},
+}
 
 WSGI_APPLICATION = "beach_wood_financial_proj.wsgi.application"
 

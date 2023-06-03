@@ -1,4 +1,5 @@
-<!-- Card -->
+<div class="py-5 lg:py-5 mx-auto">
+    <!-- Card -->
 <div class="flex flex-col">
     <div class="-m-1.5 overflow-x-auto mt-5">
         <div class="p-1.5 min-w-full inline-block align-middle">
@@ -18,7 +19,7 @@
                 </div>
                 <!-- End Header -->
                 <!-- Table -->
-                <table class="{{ BW_TAILWINDCSS_TABLE_CSS_CLASSES }} {{ BW_TABLE_LIST_COMPONENT_CLASS }}
+                <table class="{{ BW_PRELINE_BASE_TABLE }} {{ BW_TABLE_LIST_COMPONENT_CLASS }}
                               {% block custom_css_class_name %}
                               {% endblock custom_css_class_name %}"
                        id="{% block table_id_block %}
@@ -56,3 +57,5 @@
     </div>
 </div>
 <!-- End Card -->
+</div>
+
