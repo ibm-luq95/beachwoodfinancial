@@ -27,3 +27,13 @@ BW_PRELINE_INPUT_DANGER_STATE = (
 BW_PRELINE_INPUT_SUCCESS_STATE = (
     "border-green-500 rounded-md text-sm focus:border-green-500 focus:ring-green-500"
 )
+BW_PRELINE_FILTER_TEXT_INPUT = (
+    f"{BW_FULL_INPUT_CSS_CLASSES} py-2 px-3 pl-11 block w-full border-gray-200 shadow-sm rounded-md text-sm focus:z-10 "
+    f"focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 "
+    f"dark:text-gray-400"
+)
+BW_PRELINE_FILTER_SELECT_INPUT_DEFAULT = (
+    f"{BW_FULL_INPUT_CSS_CLASSES} py-2 pl-4 pr-0 block w-full border-gray-200 rounded-md text-sm "
+    f"focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 "
+    f"dark:border-gray-700 dark:text-gray-400"
+)

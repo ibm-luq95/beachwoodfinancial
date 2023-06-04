@@ -99,6 +99,9 @@ UI_COMPONENTS_TEMPLATETAGS = [
     "bw_ui_components.templatetags.elements.anchor",
     "bw_ui_components.templatetags.elements.icon",
     "bw_ui_components.templatetags.table_list.table",
+    "bw_ui_components.templatetags.table_list.actions_dropdown",
+    "bw_ui_components.templatetags.table_list.filters",
+    "bw_ui_components.templatetags.forms.delete_form",
 ]
 
 TEMPLATES = [

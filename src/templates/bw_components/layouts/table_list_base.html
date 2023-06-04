@@ -1,61 +1,65 @@
+{% load development_tags widget_tweaks form_helpers %}
+
 <div class="py-5 lg:py-5 mx-auto">
     <!-- Card -->
-<div class="flex flex-col">
-    <div class="-m-1.5 overflow-x-auto mt-5">
-        <div class="p-1.5 min-w-full inline-block align-middle">
-            <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
-                <!-- Header -->
-                <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-gray-700">
-                    <div></div>
-                    
-                    <div>
-                        <div class="inline-flex gap-x-2">
-                            {% if is_show_create_btn is True %}
-                                {% block create_btn_block %}
-                                {% endblock create_btn_block %}
-                            {% endif %}
+    <div class="flex flex-col">
+        <div class="-m-1.5 overflow-x-auto mt-5">
+            <div class="p-1.5 min-w-full inline-block align-middle">
+                <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
+                    <!-- Header -->
+                    <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-gray-700">
+                        {% if is_filters_enabled is True %}
+                            {# Start Filter Form #}
+                            {% bw_tl_filter_form filter_form=filter_form filter_form_id="clientCategoryFilterForm" filter_cancel_url=filter_cancel_url object_list=object_list %}
+                            {# End Filter Form #}
+                        {% endif %}
+                        <div>
+                            <div class="inline-flex gap-x-2">
+                                {% if is_show_create_btn is True %}
+                                    {% block create_btn_block %}
+                                    {% endblock create_btn_block %}
+                                {% endif %}
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!-- End Header -->
-                <!-- Table -->
-                <table class="{{ BW_PRELINE_BASE_TABLE }} {{ BW_TABLE_LIST_COMPONENT_CLASS }}
-                              {% block custom_css_class_name %}
-                              {% endblock custom_css_class_name %}"
-                       id="{% block table_id_block %}
-                               table
-                           {% endblock table_id_block %}">
-                    <thead>
-                        {% block thead_block %}
-                        {% endblock thead_block %}
-                    </thead>
-                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                        {% block tbody_block %}
-                        {% endblock tbody_block %}
-                    </tbody>
-                </table>
-                <!-- End Table -->
-                <!-- Footer -->
-                <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-gray-700">
-                    <div>
-                        <p class="text-sm text-gray-600 dark:text-gray-400">
-                            <span class="font-semibold text-gray-800 dark:text-gray-200 mr-1">
-                                {% block results_block %}
-                                    0
-                                {% endblock results_block %}
-                            </span> results
-                        </p>
+                    <!-- End Header -->
+                    <!-- Table -->
+                    <table class="{{ BW_PRELINE_BASE_TABLE }} {{ BW_TABLE_LIST_COMPONENT_CLASS }}
+                                  {% block custom_css_class_name %}
+                                  {% endblock custom_css_class_name %}"
+                           id="{% block table_id_block %}
+                                   table
+                               {% endblock table_id_block %}">
+                        <thead>
+                            {% block thead_block %}
+                            {% endblock thead_block %}
+                        </thead>
+                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                            {% block tbody_block %}
+                            {% endblock tbody_block %}
+                        </tbody>
+                    </table>
+                    <!-- End Table -->
+                    <!-- Footer -->
+                    <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-gray-700">
+                        <div>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                <span class="font-semibold text-gray-800 dark:text-gray-200 mr-1">
+                                    {% block results_block %}
+                                        0
+                                    {% endblock results_block %}
+                                </span> results
+                            </p>
+                        </div>
+                        <div>
+                            {% block pagination_block %}
+                            {% endblock pagination_block %}
+                        </div>
                     </div>
-                    <div>
-                        {% block pagination_block %}
-                        {% endblock pagination_block %}
-                    </div>
+                    <!-- End Footer -->
                 </div>
-                <!-- End Footer -->
             </div>
         </div>
     </div>
+    <!-- End Card -->
 </div>
-<!-- End Card -->
-</div>
-
