@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-#
 
 import uuid
+from typing import Optional
 
 from django.db import models
 from django.forms.models import model_to_dict
@@ -8,21 +9,25 @@ from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from core.models.managers import SoftDeleteManager
-from core.utils import sort_dict
+from core.utils import sort_dict, debugging_print
 from .diffing import DiffingMixin
 
 
 class BaseModelMixin(DiffingMixin, models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    metadata = models.JSONField(_("metadata"), null=True, blank=True, default=dict)
-    is_deleted = models.BooleanField(_("is deleted"), default=False)
+    metadata = models.JSONField(
+        _("metadata"), null=True, blank=True, default=dict, editable=False
+    )
+    is_deleted = models.BooleanField(_("is deleted"), default=False, editable=False)
     created_at = models.DateTimeField(
         _("created at"), default=timezone.now, editable=False
     )
     updated_at = models.DateTimeField(
         _("updated at"), auto_now=True, blank=True, null=True, editable=False
     )
-    deleted_at = models.DateTimeField(_("deleted at"), null=True, default=None, blank=True)
+    deleted_at = models.DateTimeField(
+        _("deleted at"), null=True, default=None, blank=True, editable=False
+    )
 
     objects = SoftDeleteManager()
     # objects = models.Manager()
@@ -37,6 +42,21 @@ class BaseModelMixin(DiffingMixin, models.Model):
             ("view_archive", "Can view archive"),
         ]
 
+    @classmethod
+    def get_columns_names(
+        cls,
+        fields: Optional[list | tuple] = None,
+        excluded: Optional[list | tuple] = None,
+    ) -> list | tuple:
+        columns_names = []
+        excluded_fields = ["id", "metadata", "deleted_at", "updated_at", "is_deleted"]
+        if excluded is not None:
+            excluded_fields = excluded_fields + excluded
+        for field in cls._meta.get_fields():
+            if field.name not in excluded_fields:
+                columns_names.insert(0, field.verbose_name)
+        return columns_names
+
     def soft_delete(self):
         self.is_deleted = True
         self.deleted_at = timezone.now()
@@ -46,9 +66,7 @@ class BaseModelMixin(DiffingMixin, models.Model):
         self.original_objects.delete()
 
     def delete(self):
-        self.is_deleted = True
-        self.deleted_at = timezone.now()
-        self.save()
+        self.soft_delete()
 
     def restore(self):
         self.is_deleted = False

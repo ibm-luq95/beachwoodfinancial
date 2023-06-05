@@ -9,8 +9,9 @@ const common = require("./webpack.common.js");
 
 module.exports = merge(common, {
   stats: {
-    errorDetails: true
+    errorDetails: true,
   },
+  // cache: false,
   target: "web",
   mode: "development",
   devtool: "inline-source-map",

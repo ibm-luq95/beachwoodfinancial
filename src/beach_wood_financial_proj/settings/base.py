@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+from importlib import import_module
 from pathlib import Path
 from decouple import Config, RepositoryEnv, Csv
 from django.contrib.messages import constants as messages
@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     "django_extensions",
     "webpack_boilerplate",
     "django_components",
-    # "django_components.safer_staticfiles"  # <-- ADD
     "crispy_forms",
     "crispy_tailwind",
     "log_viewer",
@@ -55,7 +54,9 @@ INSTALLED_APPS = [
     "django_filters",
     "rest_framework",
     "slippers",
+    "widget_tweaks",
     "rangefilter",
+    "django_tables2",
     "core.apps.CoreConfig",
     "beach_wood_user.apps.BeachWoodUserConfig",
     "home.apps.HomeConfig",
@@ -63,6 +64,8 @@ INSTALLED_APPS = [
     "assistant.apps.AssistantConfig",
     "manager.apps.ManagerConfig",
     "dashboard.apps.DashboardConfig",
+    "bw_ui_components.apps.BwUiComponentsConfig",
+    "client_category.apps.ClientCategoryConfig",
 ]
 
 MIDDLEWARE = [
@@ -70,6 +73,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
     "django_session_timeout.middleware.SessionTimeoutMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -83,10 +87,30 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "beach_wood_financial_proj.urls"
 
+UI_COMPONENTS_TEMPLATETAGS = [
+    "core.templatetags.nospaces",
+    "bw_ui_components.templatetags.inputs.label",
+    "bw_ui_components.templatetags.inputs.button",
+    "bw_ui_components.templatetags.inputs.input",
+    "bw_ui_components.templatetags.inputs.select",
+    "bw_ui_components.templatetags.inputs.radiobox",
+    "bw_ui_components.templatetags.inputs.checkbox",
+    "bw_ui_components.templatetags.inputs.file_input",
+    "bw_ui_components.templatetags.elements.anchor",
+    "bw_ui_components.templatetags.elements.icon",
+    "bw_ui_components.templatetags.table_list.table",
+    "bw_ui_components.templatetags.table_list.actions_dropdown",
+    "bw_ui_components.templatetags.table_list.filters",
+    "bw_ui_components.templatetags.forms.delete_form",
+]
+
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates"],
+        "DIRS": [
+            BASE_DIR / "templates",
+            BASE_DIR / "components",
+        ],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -94,25 +118,32 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.request",
+                # "django.template.context_processors.i18n",
                 "core.context_processors.access_constants",
+                "core.context_processors.access_css_classes_constants",
                 "core.context_processors.access_constants_as_group",
                 "maintenance_mode.context_processors.maintenance_mode",
             ],
             "builtins": [
-                "core.templatetags.nospaces",
+                *UI_COMPONENTS_TEMPLATETAGS,
                 "slippers.templatetags.slippers",
                 "django_components.templatetags.component_tags",
             ],
-            # 'loaders': [(
-            #     'django.template.loaders.cached.Loader', [
-            #         'django.template.loaders.filesystem.Loader',
-            #         'django.template.loaders.app_directories.Loader',
-            #         'django_components.template_loader.Loader',
-            #     ]
-            # )],
         },
     },
 ]
+
+DJANGO_TABLES2_TEMPLATE = "bw_ui_components/django_tables2/base_table.html"
+DJANGO_TABLES2_TABLE_ATTRS = {
+    # "class": "table table-hover",
+    "thead": {
+        "class": "bg-gray-50 dark:bg-slate-800",
+    },
+    "th": {"class": "pl-6 lg:pl-3 xl:pl-0 pr-6 py-3 text-left"},
+    "tbody": {"class": "divide-y divide-gray-200 dark:divide-gray-700"},
+    "td": {"class": "h-px w-px whitespace-nowrap"},
+}
 
 WSGI_APPLICATION = "beach_wood_financial_proj.wsgi.application"
 
@@ -161,6 +192,12 @@ TIME_ZONE = config("TIME_ZONE", cast=str)
 USE_I18N = config("USE_I18N", cast=bool)
 
 USE_TZ = config("USE_TZ", cast=bool)
+
+LOCALE_PATHS = [
+    BASE_DIR / "locale/",
+]
+
+LANGUAGES = (("en", "English"),)
 
 # Django rest framework configs
 REST_FRAMEWORK = {

@@ -1,0 +1,7 @@
+{% extends "core/layouts/dashboard_content_base.html" %}
+
+{% load i18n %}
+
+{% block dashboard_content_block %}
+    {% bw_delete_form form_id="clientCategoryDeleteForm" object=object cancel_url="dashboard:client_category:list" object_name="client category" %}
+{% endblock dashboard_content_block %}
