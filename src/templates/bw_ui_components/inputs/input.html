@@ -1,0 +1,45 @@
+{% load i18n %}
+
+<div class="{% if is_inline_input is True %}
+              sm:inline-flex sm:items-center space-y-2 sm:space-y-0 sm:space-x-3 w-full
+            {% endif %}">
+  <div class="flex justify-between items-center">
+    {% if lbl_text %}
+      {% bw_label html_for=input_id lbl_text=lbl_text %}
+    {% endif %}
+    {% if corner_hint_text %}
+      <span class="block text-sm text-gray-500 mb-2">{{ corner_hint_text }}</span>
+    {% endif %}
+  </div>
+  <div class="relative">
+    <input type="{{ input_type }}"
+           id="{{ input_id }}"
+           name="{{ input_name }}"
+           class="{{ BW_PRELINE_TEXT_INPUT_CSS_CLASSES }} {{ input_state_css_classes }}"
+           placeholder="{{ placeholder }}"
+           disabled
+           {% if input_value %}value="{{ input_value }}"{% endif %}
+           aria-describedby="{{ aria_describedby }}" />
+    {% if input_state == "error" %}
+
+      {% include "bw_ui_components/global/input_error_icon.html" %}
+
+    {% elif input_state == "success" %}
+
+      {% include "bw_ui_components/global/input_success_icon.html" %}
+
+    {% endif %}
+  </div>
+  {% if input_state == "success" %}
+    <p class="text-sm text-green-600 mt-2"
+       id="hs-validation-name-error-helper">{{ state_text }}</p>
+  {% elif input_state == "error" %}
+    <p class="text-sm text-red-600 mt-2" id="{{ input_id }}_helper">{{ state_text }}</p>
+  {% endif %}
+  {% if helper_text %}
+    <p class="text-sm text-gray-500 mt-2" id="{{ aria_describedby }}">{{ helper_text }}</p>
+  {% endif %}
+</div>
+{% comment  %}
+{% firstof "variable contents" as variable %}
+{% endcomment %}

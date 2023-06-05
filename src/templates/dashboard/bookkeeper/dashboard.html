@@ -1,12 +1,13 @@
-{% extends "core/layouts/dashboard.html" %}
+{% extends "core/layouts/dashboard_content_base.html" %}
 
-{% block dashboard_content %}
-    <!-- Page Heading -->
-    {% #dashboard-content-header title="Hello, Freddie Gislason" subtitle="Man should fear never beginning to live." %}
-    {% /dashboard-content-header %}
-    <!-- End Page Heading -->
-
-    <!-- Start Content -->
+{% block dashboard_content_block %}
+        <!-- Page Heading -->
+        {% #dashboard-content-header title="Hello, Freddie Gislason" subtitle="Man should fear never beginning to live." %}
+        {% /dashboard-content-header %}
+        <!-- End Page Heading -->
+    
+    
+        <!-- Start Content -->
     <!-- Start Stats -->
     <!-- Card Section -->
     <div class="max-w-[100rem] py-10 sm:px-6 lg:px-4 lg:py-14 mx-auto">
@@ -1420,4 +1421,5 @@
     <!-- End Table Section -->
     <!-- End Special Assignments Table -->
     <!-- End Content -->
-{% endblock dashboard_content %}
+{% endblock dashboard_content_block %}
+

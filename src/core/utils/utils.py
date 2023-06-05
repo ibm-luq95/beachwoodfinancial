@@ -52,3 +52,18 @@ def foreign_key_snake_case_plural(s: str) -> str:
     snake_name = f"{snake_name}s"
     # print(snake_name)
     return snake_name
+
+
+def get_request_context(context, kwargs_element) -> dict:
+    full_dict = dict()
+    data_aria_attributes = ""
+    for con in context:
+        if isinstance(con, dict):
+            full_dict.update(con)
+    for key, value in kwargs_element.items():
+        if key.startswith("data_") or key.startswith("aria_"):
+            new_data_name = key.replace("_", "-")
+            data_aria_attributes += f"{new_data_name}={value} "
+    data_aria_attributes = data_aria_attributes.strip()
+    full_dict.update({"data_aria_attributes": data_aria_attributes})
+    return full_dict
