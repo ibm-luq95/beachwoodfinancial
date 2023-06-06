@@ -37,6 +37,17 @@
                         </div>
                     </div>
                 {% endfor %}
+                {% if current_password %}
+                    <div class="col-span-2">
+                        {% #bw-label label_txt="Current Password:" %}
+                        {% /bw-label %}
+                    </div>
+                    <div class="col-span-10">
+                        <div class="relative pt-2">
+                            <p class="font-mono text-sm">{{ current_password }}</p>
+                        </div>
+                    </div>
+                {% endif %}
             </div>
             <!-- End Grid -->
             <div class="mt-5 flex justify-end gap-x-2">

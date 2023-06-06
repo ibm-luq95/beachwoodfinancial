@@ -15,7 +15,7 @@ BW_PRELINE_TEXT_INPUT_CSS_CLASSES = (
     f"dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 shadow-sm text-sm rounded-lg"
 )
 BW_PRELINE_INPUT_ERROR_CLASSES = (
-    f"border-red-500 text-sm focus:border-red-500 focus:ring-red-500 dark:bg-gray-800 "
+    f" border-red-500 text-sm focus:border-red-500 focus:ring-red-500 dark:bg-gray-800 "
     f"dark:border-gray-700 dark:text-gray-400"
 )
 BW_PRELINE_BASE_BUTTON = (
