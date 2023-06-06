@@ -20,4 +20,9 @@ urlpatterns = [
         include("important_contact.urls"),
         name="important-contact",
     ),
+    path(
+        "client-account/",
+        include("client_account.urls"),
+        name="client-account",
+    ),
 ]
