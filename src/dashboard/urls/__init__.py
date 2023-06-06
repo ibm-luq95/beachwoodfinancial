@@ -12,7 +12,12 @@ urlpatterns = [
     ),
     path(
         "client-category/",
-        include("dashboard.urls.client_category"),
+        include("client_category.urls"),
         name="client-category",
+    ),
+    path(
+        "important-contact/",
+        include("important_contact.urls"),
+        name="important-contact",
     ),
 ]
