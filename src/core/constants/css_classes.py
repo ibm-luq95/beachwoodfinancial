@@ -10,7 +10,13 @@ BW_TABLE_CONTAINER = "bw-table-container"
 BW_TABLE_LIST_SORT_CLASS = "table-sort"
 BW_PRELINE_TEXT_INPUT_CSS_CLASSES = (
     f"{BW_BASE_INPUT_CSS_CLASSES} {BW_DISABLED_DISABLED_INPUTS_CSS_CLASSES} py-2 px-3 "
-    f"pr-11 block w-full shadow-sm text-sm rounded-lg "
+    # f"pr-11 block w-full shadow-sm text-sm rounded-lg "
+    f"block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 "
+    f"dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 shadow-sm text-sm rounded-lg"
+)
+BW_PRELINE_INPUT_ERROR_CLASSES = (
+    f"border-red-500 text-sm focus:border-red-500 focus:ring-red-500 dark:bg-gray-800 "
+    f"dark:border-gray-700 dark:text-gray-400"
 )
 BW_PRELINE_BASE_BUTTON = (
     f"{BW_BASE_INPUT_CSS_CLASSES} {BW_DISABLED_DISABLED_INPUTS_CSS_CLASSES} inline-flex justify-center items-center "

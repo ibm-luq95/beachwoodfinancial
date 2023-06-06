@@ -18,15 +18,23 @@
                     <div class="col-span-2">
                         {% #bw-label label_txt=input.label %}
                         {% /bw-label %}
+                        {% if input.field.required %}<span class="ml-1 text-sm">*</span>{% endif %}
                     </div>
                     <!-- End Col -->
                     <div class="col-span-10">
-                        {% with placeholder=input.field.widget.attrs.placeholder|default:input.label %}
-                            {% render_field input class+=BW_PRELINE_TEXT_INPUT_CSS_CLASSES placeholder=placeholder %}
-                        {% endwith %}
-                        {% if input.help_text %}
-                            <p class="text-sm text-gray-500 mt-2" id="hs-input-helper-text">{{ input.help_text }}</p>
-                        {% endif %}
+                        <div class="relative">
+                            {% with placeholder=input.field.widget.attrs.placeholder|default:input.label WIDGET_ERROR_CLASS=BW_PRELINE_INPUT_ERROR_CLASSES %}
+                                {% render_field input class+=BW_PRELINE_TEXT_INPUT_CSS_CLASSES placeholder=placeholder %}
+                            {% endwith %}
+                            {% if input.help_text %}
+                                <p class="text-sm text-gray-500 mt-2" id="hs-input-helper-text">{{ input.help_text }}</p>
+                            {% endif %}
+                            {% if input.errors %}
+                                {% for error in input.errors %}
+                                    <p class="text-sm text-red-600 mt-2" id="{{ input.id_for_label }}">{{ error }}</p>
+                                {% endfor %}
+                            {% endif %}
+                        </div>
                     </div>
                 {% endfor %}
             </div>
