@@ -22,6 +22,7 @@ class BWForm(component.Component):
         is_upload_form=False,
         submit_btn_text="Create",
         perms="",
+        current_password=None,
     ):
         return {
             "form": form,
@@ -33,6 +34,7 @@ class BWForm(component.Component):
             "is_upload_form": is_upload_form,
             "submit_btn_text": submit_btn_text,
             "perms": perms,
+            "current_password": current_password,
         }
 
     class Media:

@@ -67,6 +67,7 @@ INSTALLED_APPS = [
     "bw_ui_components.apps.BwUiComponentsConfig",
     "client_category.apps.ClientCategoryConfig",
     "important_contact.apps.ImportantContactConfig",
+    "client_account.apps.ClientAccountConfig",
 ]
 
 MIDDLEWARE = [
