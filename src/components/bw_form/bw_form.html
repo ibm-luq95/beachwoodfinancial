@@ -1,4 +1,4 @@
-{% load widget_tweaks development_tags %}
+{% load widget_tweaks development_tags bw_form_helpers core_tags %}
 
 <!-- Card -->
 <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900">
@@ -23,8 +23,17 @@
                     <!-- End Col -->
                     <div class="col-span-10">
                         <div class="relative">
+                            {% my_custom_tag "Hello, world!" as my_variable %}
+                            {{ my_variable }}
+                            {# ModelMultipleChoiceField #}
                             {% with placeholder=input.field.widget.attrs.placeholder|default:input.label WIDGET_ERROR_CLASS=BW_PRELINE_INPUT_ERROR_CLASSES %}
-                                {% render_field input class+=BW_PRELINE_TEXT_INPUT_CSS_CLASSES placeholder=placeholder %}
+                                {% if input.field|bw_get_form_field_type == "ModelMultipleChoiceField" %}
+                                    {% for choice_value, choice_label in input.field.widget.choices %}
+                                        {% bw_checkbox checkbox_txt=choice_label input_id=choice_value.value|stringformat:"s" input_name=input.html_name input_value=choice_value.value|stringformat:"s" field=input %}
+                                    {% endfor %}
+                                {% else %}
+                                    {% render_field input class+=BW_PRELINE_TEXT_INPUT_CSS_CLASSES placeholder=placeholder %}
+                                {% endif %}
                             {% endwith %}
                             {% if input.help_text %}
                                 <p class="text-sm text-gray-500 mt-2" id="hs-input-helper-text">{{ input.help_text }}</p>
@@ -57,6 +66,7 @@
                         </button>
                 {% endcomment %}
                 <button type="submit"
+                        form="{{ form_id }}"
                         class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
                     {{ submit_btn_text }}
                 </button>
