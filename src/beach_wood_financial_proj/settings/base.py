@@ -56,7 +56,6 @@ INSTALLED_APPS = [
     "slippers",
     "widget_tweaks",
     "rangefilter",
-    "django_tables2",
     "core.apps.CoreConfig",
     "beach_wood_user.apps.BeachWoodUserConfig",
     "home.apps.HomeConfig",
@@ -68,6 +67,7 @@ INSTALLED_APPS = [
     "client_category.apps.ClientCategoryConfig",
     "important_contact.apps.ImportantContactConfig",
     "client_account.apps.ClientAccountConfig",
+    "client.apps.ClientConfig",
 ]
 
 MIDDLEWARE = [

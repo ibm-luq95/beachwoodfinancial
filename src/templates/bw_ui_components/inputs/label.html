@@ -1,6 +1,5 @@
 {% load i18n %}
 
 <label for="{{ html_for }}"
-    class="block text-sm font-medium mb-2 dark:text-white {{ BW_FULL_INPUT_CSS_CLASSES }}">
-    {{ lbl_text }}
-</label>
+       class="inline-block text-sm text-gray-800 mt-2.5 dark:text-gray-200">{{ lbl_text }}</label>
+{% if is_required %}<span class="ml-1 text-sm">*</span>{% endif %}

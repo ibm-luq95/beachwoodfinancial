@@ -252,6 +252,20 @@
                 <div id="clients-categories-accordion-child"
                      class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
                     <ul class="pt-2 pl-3 hs-accordion-group" data-hs-accordion-always-open>
+                        <li>
+                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
+                               href="{% url 'dashboard:client:list' %}">
+                                <i class="fa-solid fa-list"></i>
+                                {% translate "List" %}
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
+                               href="{% url 'dashboard:client:create' %}">
+                                <i class="fa-solid fa-plus"></i>
+                                {% translate "Add new" %}
+                            </a>
+                        </li>
                         <li class="hs-accordion" id="clients-categories-accordion">
                             <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
                                href="javascript:;">

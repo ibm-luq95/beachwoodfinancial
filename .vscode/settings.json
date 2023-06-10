@@ -45,5 +45,14 @@
     "titleBar.inactiveForeground": "#e7e7e799",
     "sash.hoverBorder": "#6ca2f88c"
   },
-  "peacock.color": "#3b83f68c"
+  "peacock.color": "#3b83f68c",
+  "files.readonlyInclude": {
+    "src/frontend/node_modules/**": true
+  },
+  "isort.importStrategy": "fromEnvironment",
+  "isort.logLevel": "warn",
+  "isort.check": true,
+  // "isort.interpreter": [
+  //   "${userHome}/.virtualenvs/beach_wood_financial_dev_venv_3.11.4/bin/python3"
+  // ],
 }

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-#
 from django import template
 
-from core.utils import get_request_context
+from core.utils import get_request_context, debugging_print
 
 register = template.Library()
 
