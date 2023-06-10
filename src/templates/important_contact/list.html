@@ -3,10 +3,11 @@
 {% load development_tags %}
 
 {% block dashboard_content_block %}
-    <!-- Page Heading -->
-    {% #dashboard-content-header title="Important Contacts" subtitle="Contacts for all clients" %}
-    {% /dashboard-content-header %}
-    <!-- End Page Heading -->
+    {# Page Heading #}
+
+    {% include "components/inc/dashboard/content_header.html" with title="Important Contacts" subtitle="Contacts for all clients" %}
+
+    {# End Page Heading #}
     <!-- Table Section -->
 
     {% include "bw_components/important_contact/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Categories" header_subtitle="All clients categories, it helps to organize the clients" is_show_create_btn=True app_label=app_label page_obj=page_obj pagination_list_url_name="dashboard:important_contact:list" is_filters_enabled=True is_actions_menu_enabled=True actions_items="show,update,delete" actions_app_name=app_label actions_base_url="dashboard:important_contact" base_url_name="dashboard:important_contact" filter_form=filter_form filter_cancel_url="dashboard:important_contact:list" object_list=object_list %}

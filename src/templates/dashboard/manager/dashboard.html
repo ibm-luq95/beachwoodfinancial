@@ -1,10 +1,11 @@
 {% extends "core/layouts/dashboard_content_base.html" %}
 
 {% block dashboard_content_block %}
-    <!-- Page Heading -->
-    {% #dashboard-content-header title="Welcome Manager - Manager Name" subtitle="This is a simple application layout with sidebar and header examples using Tailwind CSS." %}
-    {% /dashboard-content-header %}
-    <!-- End Page Heading -->
+    {# Page Heading #}
+
+    {% include "components/inc/dashboard/content_header.html" with title="Welcome Manager - Manager Name" subtitle="This is a simple application layout with sidebar and header examples using Tailwind CSS." %}
+
+    {# End Page Heading #}
     
         <!-- Start Stats Widget -->
     <!-- Card Section -->

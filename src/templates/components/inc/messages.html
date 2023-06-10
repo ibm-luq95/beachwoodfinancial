@@ -1,4 +1,5 @@
-{% nospaces %}
+{% load i18n %}
+
 {% if messages %}
     {% for message in messages %}
         {% if message.tags == "bw-success" %}
@@ -103,4 +104,3 @@
         {% endif %}
     {% endfor %}
 {% endif %}
-{% endnospaces %}

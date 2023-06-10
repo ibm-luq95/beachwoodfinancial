@@ -281,7 +281,8 @@
 {# End Table Results #}
 {# Start Table Pagination #}
 {% block pagination_block %}
-    {% #tl-pagination page_obj=page_obj pagination_list_url_name=pagination_list_url_name %}
-    {% /tl-pagination %}
+
+    {% include "components/inc/dashboard/table_list/table_list_pagination.html" with page_obj=page_obj pagination_list_url_name=pagination_list_url_name %}
+
 {% endblock pagination_block %}
 {# End Table Pagination #}
