@@ -25,4 +25,9 @@ urlpatterns = [
         include("client_account.urls"),
         name="client-account",
     ),
+    path(
+        "client/",
+        include("client.urls"),
+        name="client",
+    ),
 ]

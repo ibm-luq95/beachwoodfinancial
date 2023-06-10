@@ -1,4 +1,4 @@
-{% load development_tags widget_tweaks form_helpers %}
+{% load development_tags widget_tweaks bw_form_helpers %}
 {% load i18n %}
 
 <form method="get" id="{{ filter_form_id }}">
@@ -7,7 +7,7 @@
         <div class="flex">
             <!-- Input -->
             {% for filter_field in filter_form %}
-                {% if filter_field.field|get_form_field_type == "CharField" %}
+                {% if filter_field.field|bw_get_form_field_type == "CharField" %}
                     <div class="mr-2">
                         <label for="hs-as-table-product-review-search" class="sr-only">
                             {{ filter_field.field.label }}
@@ -26,7 +26,7 @@
                             </div>
                         </div>
                     </div>
-                {% elif filter_field.field|get_form_field_type == "ChoiceField" %}
+                {% elif filter_field.field|bw_get_form_field_type == "ChoiceField" %}
                     <div class="mr-2">
                         <label for="hs-as-table-product-review-search" class="sr-only">
                             {{ filter_field.field.label }}
