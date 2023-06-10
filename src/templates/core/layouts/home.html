@@ -19,33 +19,33 @@
     <body class="flex h-full">
         <div class="max-w-full flex flex-col mx-auto w-full h-full">
             <!-- ========== HEADER ========== -->
-            {% #home-top-navbar perms=perms request=request %}
-            {% /home-top-navbar %}
+
+            {% include "components/inc/home_top_navbar.html" %}
+
             <!-- ========== END HEADER ========== -->
             {% comment  %}
             <!-- ========== ANNOUNCEMENT BANNER ========== -->
-            {% #announcement-banner %}
-            {% /announcement-banner %}
+            {% include "components/inc/announcement_banner.html" %}
             <!-- ========== END ANNOUNCEMENT BANNER ========== -->
             {% endcomment %}
             <!-- ========== MAIN CONTENT ========== -->
-            <main id="home-content" role="main" >
+            <main id="home-content" role="main">
                 {# Start Flash Message #}
-                {% #flash-messages messages=messages %}
-                {% /flash-messages %}
+
+                {% include "components/inc/messages.html" %}
+
                 {# End Flash Message #}
                 {% block home_content %}
                 {% endblock home_content %}
             </main>
             <!-- ========== END MAIN CONTENT ========== -->
             <!-- ========== FOOTER ========== -->
-            {% #home-footer perms=perms request=request %}
-            {% /home-footer %}
+
+            {% include "components/inc/home_footer.html" %}
+
             <!-- ========== END FOOTER ========== -->
-            
             <!-- ========== COOKIE BANNER ========== -->
-            {% #cookie-banner request=request perms=perms %}
-            {% /cookie-banner %}
+            {% include "components/inc/cookie_banner.html" %}
             <!-- ========== END COOKIE BANNER ========== -->
         </div>
 

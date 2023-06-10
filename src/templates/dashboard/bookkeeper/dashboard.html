@@ -1,10 +1,12 @@
 {% extends "core/layouts/dashboard_content_base.html" %}
 
 {% block dashboard_content_block %}
-        <!-- Page Heading -->
-        {% #dashboard-content-header title="Hello, Freddie Gislason" subtitle="Man should fear never beginning to live." %}
-        {% /dashboard-content-header %}
-        <!-- End Page Heading -->
+    {# Page Heading #}
+
+    {% include "components/inc/dashboard/content_header.html" with title="Hello, Freddie Gislason" subtitle="Man should fear never beginning to live." %}
+
+    {# End Page Heading #}
+
     
     
         <!-- Start Content -->

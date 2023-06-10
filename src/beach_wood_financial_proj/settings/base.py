@@ -53,7 +53,6 @@ INSTALLED_APPS = [
     "import_export",
     "django_filters",
     "rest_framework",
-    "slippers",
     "widget_tweaks",
     "rangefilter",
     "core.apps.CoreConfig",
@@ -129,7 +128,6 @@ TEMPLATES = [
             ],
             "builtins": [
                 *UI_COMPONENTS_TEMPLATETAGS,
-                "slippers.templatetags.slippers",
                 "django_components.templatetags.component_tags",
             ],
         },
