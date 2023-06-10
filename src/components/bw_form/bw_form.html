@@ -23,8 +23,8 @@
                     <!-- End Col -->
                     <div class="col-span-10">
                         <div class="relative">
-                            {% my_custom_tag "Hello, world!" as my_variable %}
-                            {{ my_variable }}
+                            {% setvar "a string" as new_template_var %}
+                            {{ new_template_var }}
                             {# ModelMultipleChoiceField #}
                             {% with placeholder=input.field.widget.attrs.placeholder|default:input.label WIDGET_ERROR_CLASS=BW_PRELINE_INPUT_ERROR_CLASSES %}
                                 {% if input.field|bw_get_form_field_type == "ModelMultipleChoiceField" %}
