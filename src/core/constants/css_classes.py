@@ -43,3 +43,9 @@ BW_PRELINE_FILTER_SELECT_INPUT_DEFAULT = (
     f"focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 "
     f"dark:border-gray-700 dark:text-gray-400"
 )
+BW_PRELINE_CHECKBOX_CSS_CLASSES = (
+    f"{BW_FULL_INPUT_CSS_CLASSES} shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 pointer-events-none "
+    f"focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 "
+    f"dark:checked:bg-blue-500 dark:checked:border-blue-500 "
+    f"dark:focus:ring-offset-gray-800"
+)
