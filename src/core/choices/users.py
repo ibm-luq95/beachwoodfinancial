@@ -20,9 +20,9 @@ from core.constants.users import (
 
 
 class BeachWoodUserTypeEnum(models.TextChoices):
-    BOOKKEEPER = CON_BOOKKEEPER, _(stringcase.sentencecase(CON_BOOKKEEPER))
-    ASSISTANT = CON_ASSISTANT, _(stringcase.sentencecase(CON_ASSISTANT))
     MANAGER = CON_MANAGER, _(stringcase.sentencecase(CON_MANAGER))
+    ASSISTANT = CON_ASSISTANT, _(stringcase.sentencecase(CON_ASSISTANT))
+    BOOKKEEPER = CON_BOOKKEEPER, _(stringcase.sentencecase(CON_BOOKKEEPER))
 
 
 class BeachWoodUserStatusEnum(models.TextChoices):

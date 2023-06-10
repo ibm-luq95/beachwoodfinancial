@@ -17,7 +17,9 @@ Including another URLconf
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
-from django.urls import path, include
+from django.urls import path, include, reverse_lazy
+from django.views.generic import RedirectView
+
 from core.views import js_settings
 
 static_and_media_path_urls = static(
@@ -26,7 +28,8 @@ static_and_media_path_urls = static(
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", include("home.urls"), name="home-urls"),
+    # path("", include("home.urls"), name="home-urls"),
+    path("", RedirectView.as_view(url=reverse_lazy("auth:login")), name="home-url"),
     path("js-settings/", js_settings, name="js_settings"),
     path("auth/", include("beach_wood_user.urls.auth"), name="auth-urls"),
     path("dashboard/", include("dashboard.urls"), name="dashboard-urls"),

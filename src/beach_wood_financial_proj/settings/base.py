@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django.contrib.humanize",
+    "django.forms",
     # "django.contrib.sites",  # TODO: enable it
     "django_extensions",
     "webpack_boilerplate",
@@ -57,7 +58,7 @@ INSTALLED_APPS = [
     "rangefilter",
     "core.apps.CoreConfig",
     "beach_wood_user.apps.BeachWoodUserConfig",
-    "home.apps.HomeConfig",
+    # "home.apps.HomeConfig",
     "bookkeeper.apps.BookkeeperConfig",
     "assistant.apps.AssistantConfig",
     "manager.apps.ManagerConfig",
@@ -134,16 +135,8 @@ TEMPLATES = [
     },
 ]
 
-DJANGO_TABLES2_TEMPLATE = "bw_ui_components/django_tables2/base_table.html"
-DJANGO_TABLES2_TABLE_ATTRS = {
-    # "class": "table table-hover",
-    "thead": {
-        "class": "bg-gray-50 dark:bg-slate-800",
-    },
-    "th": {"class": "pl-6 lg:pl-3 xl:pl-0 pr-6 py-3 text-left"},
-    "tbody": {"class": "divide-y divide-gray-200 dark:divide-gray-700"},
-    "td": {"class": "h-px w-px whitespace-nowrap"},
-}
+# FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
+
 
 WSGI_APPLICATION = "beach_wood_financial_proj.wsgi.application"
 
