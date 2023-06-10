@@ -72,7 +72,7 @@ class ClientListView(BaseListViewMixin, ListView):
         return self.filterset.qs
 
 
-class ClientCreateView(SuccessMessageMixin, FormView):
+class ClientCreateView(SuccessMessageMixin, CreateView):
     # permission_required = "client.add_client"
     template_name = "client/create.html"
     form_class = ClientForm
@@ -87,6 +87,6 @@ class ClientCreateView(SuccessMessageMixin, FormView):
         context.setdefault("title", _("Create client"))
         return context
 
-    def form_valid(self, form: BaseForm):
-        debugging_print(form.cleaned_data)
-        return super().form_valid(form)
+    # def form_valid(self, form: BaseForm):
+    #     debugging_print(form.cleaned_data)
+    #     return super().form_valid(form)
