@@ -131,8 +131,8 @@
                 </div>
             </td>
             <td class="h-px w-px whitespace-nowrap">
-                <div class="px-6 py-3">
-                    <span class="text-sm text-gray-600 dark:text-gray-400">5</span>
+                <div class="px-10 py-3">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.clients.count }}</span>
                 </div>
             </td>
             {% if is_show_created_at is True %}
@@ -158,7 +158,8 @@
 {# End Table Results #}
 {# Start Table Pagination #}
 {% block pagination_block %}
-    {% #tl-pagination page_obj=page_obj pagination_list_url_name=pagination_list_url_name %}
-    {% /tl-pagination %}
+
+    {% include "components/inc/dashboard/table_list/table_list_pagination.html" with page_obj=page_obj pagination_list_url_name=pagination_list_url_name %}
+
 {% endblock pagination_block %}
 {# End Table Pagination #}

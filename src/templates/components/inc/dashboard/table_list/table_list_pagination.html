@@ -1,3 +1,5 @@
+{% load i18n %}
+
 <div class="inline-flex gap-x-2">
     {% if page_obj.has_previous %}
         <a href="{% url pagination_list_url_name %}?page={{ page_obj.previous_page_number }}"

@@ -52,10 +52,7 @@
                     </div>
                 {% endfor %}
                 {% if current_password %}
-                    <div class="col-span-2">
-                        {% #bw-label label_txt="Current Password:" %}
-                        {% /bw-label %}
-                    </div>
+                    <div class="col-span-2">{% bw_label lbl_text="Current Password:" %}</div>
                     <div class="col-span-10">
                         <div class="relative pt-2">
                             <p class="font-mono text-sm">{{ current_password }}</p>
