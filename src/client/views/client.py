@@ -23,10 +23,10 @@ from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.status_labels import CON_ARCHIVED
 from core.utils import get_trans_txt, debugging_print
 from core.views.mixins import (
-    BaseListViewMixin,
-    BaseLoginRequiredMixin,
-    ListViewMixin,
-    ArchiveListViewMixin,
+    BWBaseListViewMixin,
+    BWLoginRequiredMixin,
+    BWListViewMixin,
+    BWArchiveListViewMixin,
 )
 
 # from documents.forms import DocumentForm
@@ -34,13 +34,13 @@ from important_contact.forms import ImportantContactForm
 
 
 # from jobs.forms import JobForm
-# from manager.views.mixins import ManagerAccessMixin, ManagerAssistantAccessMixin
+# from manager.views.mixins import BWManagerAccessMixin, ManagerAssistantAccessMixin
 # from notes.forms import NoteForm
 # from special_assignment.forms import SpecialAssignmentForm
 # from task.forms import TaskForm
 
 
-class ClientListView(BaseListViewMixin, ListView):
+class ClientListViewBW(BWBaseListViewMixin, ListView):
     # permission_required = "client.can_view_list"
     template_name = "client/list.html"
     model = ClientProxy

@@ -91,6 +91,7 @@ ROOT_URLCONF = "beach_wood_financial_proj.urls"
 
 UI_COMPONENTS_TEMPLATETAGS = [
     "core.templatetags.nospaces",
+    "core.templatetags.bw_form_helpers",
     "bw_ui_components.templatetags.inputs.label",
     "bw_ui_components.templatetags.inputs.button",
     "bw_ui_components.templatetags.inputs.input",
@@ -168,7 +169,7 @@ AUTH_PASSWORD_VALIDATORS = [
 # Set login and logout urls
 # LOGIN_REDIRECT_URL = "auth:login"  # The URL or named URL pattern where requests
 # are redirected after login when the LoginView doesn’t get a next GET parameter.
-LOGOUT_REDIRECT_URL = "home:landing"
+LOGOUT_REDIRECT_URL = "auth:login"
 LOGIN_URL = "auth:login"
 LOGOUT_URL = "auth:logout"
 

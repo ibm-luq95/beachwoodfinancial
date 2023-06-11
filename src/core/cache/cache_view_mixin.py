@@ -4,7 +4,7 @@ from typing import Any, Union, Optional
 from django.core.cache import cache
 
 
-class CacheViewMixin:
+class BWCacheViewMixin:
     """This is cache mixin, which will use with any cbv"""
 
     def cmx_check(self, key: str) -> bool:

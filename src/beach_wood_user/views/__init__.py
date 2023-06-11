@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-#
-from .auth import BWLoginView, BWForgetPasswordView
+from .auth import BWLoginViewBW, BWForgetPasswordView

@@ -13,16 +13,18 @@
                 </div>
                 <div class="mt-5">
                     <!-- Form -->
-                    <form method="post" novalidate>
+                    <form method="post">
                         {% csrf_token %}
+                        {# Start input to prevent autofill - only for development #}
+                        {# <input autocomplete="false" name="hidden" type="text" class="hidden" /> #}
+                        {# End input to prevent autofill - only for development #}
                         <div class="grid gap-y-4">
                             {{ form }}
-                        <button type="submit"
-                                class="inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white transition-all bg-blue-500 border border-transparent rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
-                            {% translate "Sign in" %}
-                        </button>
+                            <button type="submit"
+                                    class="inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white transition-all bg-blue-500 border border-transparent rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
+                                {% translate "Sign in" %}
+                            </button>
                         </div>
-                        
                     </form>
                     <!-- End Form -->
                 </div>

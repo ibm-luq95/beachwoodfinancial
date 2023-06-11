@@ -10,10 +10,10 @@ from client_account.forms import ClientAccountForm
 from client_account.models import ClientAccount
 
 from core.utils import get_trans_txt, debugging_print
-from core.views.mixins import BaseListViewMixin
+from core.views.mixins import BWBaseListViewMixin
 
 
-class ClientAccountListView(BaseListViewMixin, ListView):
+class ClientAccountListViewBW(BWBaseListViewMixin, ListView):
     template_name = "client_account/list.html"
     model = ClientAccount
 

@@ -9,10 +9,10 @@ from client_category.filters import ClientCategoryFilter
 from client_category.forms import ClientCategoryForm
 from client_category.models import ClientCategory
 from core.utils import get_trans_txt, debugging_print
-from core.views.mixins import BaseListViewMixin
+from core.views.mixins import BWBaseListViewMixin
 
 
-class ClientCategoryListView(BaseListViewMixin, ListView):
+class ClientCategoryListViewBW(BWBaseListViewMixin, ListView):
     template_name = "client_category/list.html"
     model = ClientCategory
 

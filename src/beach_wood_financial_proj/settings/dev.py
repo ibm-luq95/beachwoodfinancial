@@ -9,6 +9,7 @@ DEBUG = config("DEBUG", cast=bool)
 INSTALLED_APPS = INSTALLED_APPS + [
     "django.contrib.admindocs",
     "debug_toolbar",
+    "debug_permissions",
     # "request_viewer",
 ]
 
@@ -34,9 +35,9 @@ DATABASES = {
         },
     }
 }
+TEMPLATES[0]["OPTIONS"]["builtins"].append("core.templatetags.development_tags")
 
 # Set Cache Configurations
-
 # Cache Redis
 CACHES = {
     "default": {
