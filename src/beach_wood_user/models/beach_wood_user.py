@@ -32,9 +32,9 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin):
     first_name = models.CharField(_("first name"), max_length=15)
     last_name = models.CharField(_("last name"), max_length=15)
     email = models.EmailField(_("email address"), unique=True)
-    is_staff = models.BooleanField(_("is_staff"), default=False)
+    is_staff = models.BooleanField(_("is staff"), default=False)
     is_active = models.BooleanField(_("is active"), default=True)
-    date_joined = models.DateTimeField(_("date_joined"), default=timezone.now)
+    date_joined = models.DateTimeField(_("date joined"), default=timezone.now)
     user_type = models.CharField(
         _("user type"), choices=BeachWoodUserTypeEnum.choices, max_length=15
     )

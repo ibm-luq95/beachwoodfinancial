@@ -4,21 +4,23 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.translation import gettext as _
 from django.views.generic.edit import FormView
 
 from beach_wood_user.forms import BWLoginForm
 from beach_wood_user.models import BWUser
-from core.cache import CacheViewMixin
-from core.utils import get_trans_txt
+from core.cache import BWCacheViewMixin
+from core.utils import debugging_print
 from core.utils.grab_env_file import grab_env_file
 
 
-class BWLoginView(SuccessMessageMixin, CacheViewMixin, FormView):
+class BWLoginViewBW(SuccessMessageMixin, BWCacheViewMixin, FormView):
     http_method_names = ["post", "get"]
     # success_url = reverse_lazy("users:auth:login")
     template_name = "beach_wood_user/auth/login.html"
     form_class = BWLoginForm
-    success_message: str = get_trans_txt("Login successfully")
+    success_message: str = _("Login successfully")
+    success_url = reverse_lazy("auth:login")
 
     def get(self, request, *args, **kwargs):
         """Handle GET requests: instantiate a blank version of the form."""
@@ -28,17 +30,15 @@ class BWLoginView(SuccessMessageMixin, CacheViewMixin, FormView):
         if self.request.user.is_authenticated:
             user_type = self.request.user.user_type
             if user_type == "bookkeeper":
-                return redirect("bookkeeper:dashboard")
-            elif user_type == "manager":
-                return redirect("manager:dashboard")
-            elif user_type == "assistant":
-                return redirect("assistant:dashboard")
+                return redirect("dashboard:manager:home")
+            elif user_type == "manager" or user_type == "assistant":
+                return redirect("dashboard:bookkeeper:home")
         return self.render_to_response(self.get_context_data())
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context.setdefault("title", get_trans_txt("Login"))
+        context.setdefault("title", _("Login"))
 
         return context
 
@@ -56,24 +56,23 @@ class BWLoginView(SuccessMessageMixin, CacheViewMixin, FormView):
         user_type = form.cleaned_data.get("user_type")
         email = form.cleaned_data.get("email")
         password = form.cleaned_data.get("password")
-
         user_check = BWUser.objects.filter(email=email)
         if not user_check:
-            form.add_error("email", f"Email not exists!")
+            form.add_error("email", _(f"Email not exists!"))
             return self.form_invalid(form)
-            # raise ValidationError(f"Email not exists!", code="invalid")
+        #     # raise ValidationError(f"Email not exists!", code="invalid")
         user_check = user_check.first()
         check_user_type = user_check.user_type
-
+        #
         # check if the user type came from the form equal the user type saved in the db
         if user_type != check_user_type:
-            form.add_error("user_type", f"User type not matched your account type!")
+            form.add_error("user_type", _(f"User type not matching your account type!"))
             return self.form_invalid(form)
         user = authenticate(self.request, email=email, password=password)
         if user is not None:
             login(self.request, user)
         else:
-            messages.error(self.request, "User credentials not correct!")
+            messages.error(self.request, _("User credentials not correct!"))
             return super().form_invalid(form)
 
         # Check if next url exists
@@ -81,31 +80,36 @@ class BWLoginView(SuccessMessageMixin, CacheViewMixin, FormView):
         if next_url:
             return redirect(next_url)
 
-        site_settings_object = self.cmx_get_item("web_app_settings")
-        if user_type == "assistant":
-            # check if assistants allowed to log in from site settings
-            if site_settings_object.can_assistants_login is False:
-                messages.error(
-                    self.request,
-                    "Assistants not allowed to login, contact the administrator",
-                )
-                logout(self.request)
-                return super().form_invalid(form)
-            else:
-                return redirect("assistant:dashboard")
+        # site_settings_object = self.cmx_get_item("web_app_settings")
+        # if user_type == "assistant":
+        #     # check if assistants allowed to log in from site settings
+        #     if site_settings_object.can_assistants_login is False:
+        #         messages.error(
+        #             self.request,
+        #             _("Assistants not allowed to login, contact the administrator"),
+        #         )
+        #         logout(self.request)
+        #         return super().form_invalid(form)
+        #     else:
+        #         return redirect("assistant:dashboard")
+        #
+        # elif user_type == "bookkeeper":
+        #     # check if bookkeeper allowed to log in from site settings
+        #     if site_settings_object.can_bookkeepers_login is False:
+        #         messages.error(
+        #             self.request,
+        #             _("Bookkeepers not allowed to login, contact the administrator"),
+        #         )
+        #         logout(self.request)
+        #         return super().form_invalid(form)
+        #     else:
+        #         return redirect("bookkeeper:dashboard")
+        # elif user_type == "manager":
+        #     return redirect("manager:dashboard")
 
-        elif user_type == "bookkeeper":
-            # check if bookkeeper allowed to log in from site settings
-            if site_settings_object.can_bookkeepers_login is False:
-                messages.error(
-                    self.request,
-                    "Bookkeepers not allowed to login, contact the administrator",
-                )
-                logout(self.request)
-                return super().form_invalid(form)
-            else:
-                return redirect("bookkeeper:dashboard")
-        elif user_type == "manager":
-            return redirect("manager:dashboard")
+        if check_user_type == "manager" or check_user_type == "assistant":
+            self.success_url = reverse_lazy("dashboard:manager:home")
+        elif check_user_type == "bookkeeper":
+            self.success_url = reverse_lazy("dashboard:bookkeeper:home")
 
         return super().form_valid(form)

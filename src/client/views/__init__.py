@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-#
-from .client import ClientCreateView, ClientListView
+from .client import ClientCreateView, ClientListViewBW

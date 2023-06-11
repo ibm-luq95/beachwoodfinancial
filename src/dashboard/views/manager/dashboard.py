@@ -3,9 +3,13 @@ from django.contrib import messages
 from django.views.generic import TemplateView
 from django.utils.translation import gettext as _
 
+from core.cache import BWCacheViewMixin
+from core.views.mixins import BWLoginRequiredMixin, BWManagerAccessMixin
 
-class DashboardView(TemplateView):
+
+class DashboardViewBW(BWLoginRequiredMixin, BWManagerAccessMixin, BWCacheViewMixin, TemplateView):
     template_name = "dashboard/manager/dashboard.html"
+    http_method_names = ["get"]
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

@@ -20,13 +20,13 @@ from core.constants.users import (
 
 
 class BeachWoodUserTypeEnum(models.TextChoices):
-    BOOKKEEPER = CON_BOOKKEEPER, _(stringcase.sentencecase(CON_BOOKKEEPER))
-    ASSISTANT = CON_ASSISTANT, _(stringcase.sentencecase(CON_ASSISTANT))
     MANAGER = CON_MANAGER, _(stringcase.sentencecase(CON_MANAGER))
+    ASSISTANT = CON_ASSISTANT, _(stringcase.sentencecase(CON_ASSISTANT))
+    BOOKKEEPER = CON_BOOKKEEPER, _(stringcase.sentencecase(CON_BOOKKEEPER))
 
 
 class BeachWoodUserStatusEnum(models.TextChoices):
-    ENABLED = CON_ENABLED, _(stringcase.sentencecase(CON_MANAGER))
+    ENABLED = CON_ENABLED, _(stringcase.sentencecase(CON_ENABLED))
     PENDING = CON_PENDING, _(stringcase.sentencecase(CON_PENDING))
     CANCELED = CON_CANCELED, _(stringcase.sentencecase(CON_CANCELED))
     DISABLED = CON_DISABLED, _(stringcase.sentencecase(CON_DISABLED))
