@@ -8,12 +8,23 @@ from django.views.generic import CreateView, UpdateView, ListView, DeleteView
 from client_account.filters import ClientAccountFilter
 from client_account.forms import ClientAccountForm
 from client_account.models import ClientAccount
+from core.cache import BWCacheViewMixin
 
 from core.utils import get_trans_txt, debugging_print
-from core.views.mixins import BWBaseListViewMixin
+from core.views.mixins import (
+    BWBaseListViewMixin,
+    BWLoginRequiredMixin,
+    BWManagerAccessMixin,
+)
 
 
-class ClientAccountListViewBW(BWBaseListViewMixin, ListView):
+class ClientAccountListViewBW(
+    BWLoginRequiredMixin,
+    BWManagerAccessMixin,
+    BWCacheViewMixin,
+    BWBaseListViewMixin,
+    ListView,
+):
     template_name = "client_account/list.html"
     model = ClientAccount
 
@@ -30,7 +41,13 @@ class ClientAccountListViewBW(BWBaseListViewMixin, ListView):
         return self.filterset.qs
 
 
-class ClientAccountCreateView(SuccessMessageMixin, CreateView):
+class ClientAccountCreateView(
+    BWLoginRequiredMixin,
+    BWManagerAccessMixin,
+    BWCacheViewMixin,
+    SuccessMessageMixin,
+    CreateView,
+):
     template_name = "client_account/create.html"
     form_class = ClientAccountForm
     model = ClientAccount
@@ -45,7 +62,13 @@ class ClientAccountCreateView(SuccessMessageMixin, CreateView):
         return context
 
 
-class ClientAccountUpdateView(SuccessMessageMixin, UpdateView):
+class ClientAccountUpdateView(
+    BWLoginRequiredMixin,
+    BWManagerAccessMixin,
+    BWCacheViewMixin,
+    SuccessMessageMixin,
+    UpdateView,
+):
     template_name = "client_account/update.html"
     form_class = ClientAccountForm
     model = ClientAccount
@@ -65,7 +88,13 @@ class ClientAccountUpdateView(SuccessMessageMixin, UpdateView):
         return kwargs
 
 
-class ClientAccountDeleteView(SuccessMessageMixin, DeleteView):
+class ClientAccountDeleteView(
+    BWLoginRequiredMixin,
+    BWManagerAccessMixin,
+    BWCacheViewMixin,
+    SuccessMessageMixin,
+    DeleteView,
+):
     template_name = "client_account/delete.html"
     # form_class = ClientCategoryForm
     model = ClientAccount

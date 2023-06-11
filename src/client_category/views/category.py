@@ -8,11 +8,22 @@ from django.views.generic import CreateView, UpdateView, ListView, DeleteView
 from client_category.filters import ClientCategoryFilter
 from client_category.forms import ClientCategoryForm
 from client_category.models import ClientCategory
+from core.cache import BWCacheViewMixin
 from core.utils import get_trans_txt, debugging_print
-from core.views.mixins import BWBaseListViewMixin
+from core.views.mixins import (
+    BWBaseListViewMixin,
+    BWLoginRequiredMixin,
+    BWManagerAccessMixin,
+)
 
 
-class ClientCategoryListViewBW(BWBaseListViewMixin, ListView):
+class ClientCategoryListViewBW(
+    BWLoginRequiredMixin,
+    BWManagerAccessMixin,
+    BWCacheViewMixin,
+    BWBaseListViewMixin,
+    ListView,
+):
     template_name = "client_category/list.html"
     model = ClientCategory
 
@@ -29,7 +40,13 @@ class ClientCategoryListViewBW(BWBaseListViewMixin, ListView):
         return self.filterset.qs
 
 
-class ClientCategoryCreateView(SuccessMessageMixin, CreateView):
+class ClientCategoryCreateView(
+    BWLoginRequiredMixin,
+    BWManagerAccessMixin,
+    BWCacheViewMixin,
+    SuccessMessageMixin,
+    CreateView,
+):
     template_name = "client_category/create.html"
     form_class = ClientCategoryForm
     model = ClientCategory
@@ -44,7 +61,13 @@ class ClientCategoryCreateView(SuccessMessageMixin, CreateView):
         return context
 
 
-class ClientCategoryUpdateView(SuccessMessageMixin, UpdateView):
+class ClientCategoryUpdateView(
+    BWLoginRequiredMixin,
+    BWManagerAccessMixin,
+    BWCacheViewMixin,
+    SuccessMessageMixin,
+    UpdateView,
+):
     template_name = "client_category/update.html"
     form_class = ClientCategoryForm
     model = ClientCategory
@@ -59,9 +82,14 @@ class ClientCategoryUpdateView(SuccessMessageMixin, UpdateView):
         return context
 
 
-class ClientCategoryDeleteView(SuccessMessageMixin, DeleteView):
+class ClientCategoryDeleteView(
+    BWLoginRequiredMixin,
+    BWManagerAccessMixin,
+    BWCacheViewMixin,
+    SuccessMessageMixin,
+    DeleteView,
+):
     template_name = "client_category/delete.html"
-    # form_class = ClientCategoryForm
     model = ClientCategory
     success_message = _("Category deleted successfully")
     success_url = reverse_lazy("dashboard:client_category:list")

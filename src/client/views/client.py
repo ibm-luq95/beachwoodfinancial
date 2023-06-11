@@ -19,6 +19,7 @@ from bookkeeper.models import BookkeeperProxy
 from client.filters import ClientFilter
 from client.forms import ClientForm
 from client.models import ClientProxy
+from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.status_labels import CON_ARCHIVED
 from core.utils import get_trans_txt, debugging_print
@@ -27,6 +28,7 @@ from core.views.mixins import (
     BWLoginRequiredMixin,
     BWListViewMixin,
     BWArchiveListViewMixin,
+    BWManagerAccessMixin,
 )
 
 # from documents.forms import DocumentForm
@@ -40,7 +42,13 @@ from important_contact.forms import ImportantContactForm
 # from task.forms import TaskForm
 
 
-class ClientListViewBW(BWBaseListViewMixin, ListView):
+class ClientListViewBW(
+    BWLoginRequiredMixin,
+    BWManagerAccessMixin,
+    BWCacheViewMixin,
+    BWBaseListViewMixin,
+    ListView,
+):
     # permission_required = "client.can_view_list"
     template_name = "client/list.html"
     model = ClientProxy
@@ -72,7 +80,13 @@ class ClientListViewBW(BWBaseListViewMixin, ListView):
         return self.filterset.qs
 
 
-class ClientCreateView(SuccessMessageMixin, CreateView):
+class ClientCreateView(
+    BWLoginRequiredMixin,
+    BWManagerAccessMixin,
+    BWCacheViewMixin,
+    SuccessMessageMixin,
+    CreateView,
+):
     # permission_required = "client.add_client"
     template_name = "client/create.html"
     form_class = ClientForm
