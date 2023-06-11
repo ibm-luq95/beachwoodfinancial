@@ -9,10 +9,10 @@ from important_contact.filters import ImportantContactFilter
 from important_contact.forms import ImportantContactForm
 from important_contact.models import ImportantContact
 from core.utils import get_trans_txt, debugging_print
-from core.views.mixins import BaseListViewMixin
+from core.views.mixins import BWBaseListViewMixin
 
 
-class ImportantContactListView(BaseListViewMixin, ListView):
+class ImportantContactListViewBW(BWBaseListViewMixin, ListView):
     template_name = "important_contact/list.html"
     model = ImportantContact
 

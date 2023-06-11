@@ -7,7 +7,7 @@ from core.constants.general import IS_SHOW_CREATED_AT
 from core.utils import debugging_print
 
 
-class BaseListViewMixin:
+class BWBaseListViewMixin:
     paginate_by = LIST_VIEW_PAGINATE_BY
 
     # def get_queryset(self) -> dict:

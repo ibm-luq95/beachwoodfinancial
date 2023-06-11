@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-#
 from .client_account import (
-    ClientAccountListView,
+    ClientAccountListViewBW,
     ClientAccountCreateView,
     ClientAccountDeleteView,
     ClientAccountUpdateView,

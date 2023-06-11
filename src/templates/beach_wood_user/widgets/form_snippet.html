@@ -1,0 +1,31 @@
+{% for field in form %}
+    <div>
+        {% if not fields and not errors %}
+            {% for field in hidden_fields %}{{ field }}{% endfor %}
+        {% endif %}
+        {% if field.label %}
+            <label for="{{ field.auto_id }}" class="block mb-2 text-sm dark:text-white">
+                {{ field.legend_tag }}
+            </label>
+        {% endif %}
+        <div class="relative">
+            {% if field.errors %}
+                {{ field|bw_add_state_css_class:'error' }}
+            {% else %}
+                {{ field }}
+            {% endif %}
+            {% if field.errors %}
+                {% for error in field.errors %}
+                    <p class="text-sm text-red-600 mt-2"
+                       id="{{ field.auto_id }}-hs-validation-name-error-helper">
+                        {{ error|safe }}
+                    </p>
+                {% endfor %}
+            {% endif %}
+            {% if field.help_text %}
+                <p class="text-sm text-gray-500 mt-2"
+                   id="{{ field.auto_id }}-hs-input-helper-text">{{ field.help_text|safe }}</p>
+            {% endif %}
+        </div>
+    </div>
+{% endfor %}
