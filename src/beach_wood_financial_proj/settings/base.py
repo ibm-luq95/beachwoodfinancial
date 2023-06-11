@@ -317,6 +317,16 @@ MESSAGE_TAGS = {
     messages.ERROR: "bw-error",
 }
 
+# Django-filter configs
+FILTERS_VERBOSE_LOOKUPS = {
+    "exact": "",
+    "iexact": "",
+    "contains": "",
+    "icontains": "",
+}
+FILTERS_EMPTY_CHOICE_LABEL = ""
+# FILTERS_NULL_CHOICE_LABEL = ""
+
 # check if cache enabled
 if config("IS_CACHE_ENABLED", cast=bool) is True:
     CACHE_MIDDLEWARE_ALIAS = config(

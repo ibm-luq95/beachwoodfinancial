@@ -5,8 +5,10 @@
     <fieldset form="{{ filter_form_id }}"
               {% if object_list.count <= 0 %}disabled{% endif %}>
         <div class="flex">
+            
             <!-- Input -->
             {% for filter_field in filter_form %}
+            {# {{ filter_field.field|bw_get_form_field_type }} #}
                 {% if filter_field.field|bw_get_form_field_type == "CharField" %}
                     <div class="mr-2">
                         <label for="hs-as-table-product-review-search" class="sr-only">
@@ -35,11 +37,19 @@
                             {% render_field filter_field class+=BW_PRELINE_FILTER_SELECT_INPUT_DEFAULT placeholder=filter_field.field.label disabled="disabled" %}
                         </div>
                     </div>
+                    {% else %}
+                    <div class="mr-2">
+                        <label for="hs-as-table-product-review-search" class="sr-only">
+                            {{ filter_field.field.label }}
+                        </label>
+                        <div class="relative">
+                            {% render_field filter_field class+=BW_PRELINE_FILTER_SELECT_INPUT_DEFAULT placeholder=filter_field.field.label disabled="disabled" %}
+                        </div>
+                    </div>
                 {% endif %}
             {% endfor %}
             <div>
                 <button type="submit"
-                        form="{{ filter_form_id }}"
                         class="inline-flex flex-shrink-0 h-[2.375rem] w-[2.375rem] py-3 px-4 justify-center items-center gap-2 rounded-md bg-blue-100 border border-transparent font-semibold text-blue-500 hover:text-white hover:bg-blue-100 focus:outline-none focus:ring-2 ring-offset-white focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800 mx-1">
                     <i class="fa-solid fa-filter"></i>
                 </button>
