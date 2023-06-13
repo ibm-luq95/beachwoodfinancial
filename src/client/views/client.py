@@ -111,13 +111,14 @@ class ClientUpdateView(
     BWManagerAccessMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
-    CreateView,
+    UpdateView,
 ):
     # permission_required = "client.add_client"
     template_name = "client/update.html"
     form_class = ClientForm
     success_message = _("Client updated successfully")
     success_url = reverse_lazy("dashboard:client:list")
+    model = ClientProxy
 
     # template_name_suffix = "_create_client"
 
@@ -149,7 +150,7 @@ class ClientDeleteView(
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context.setdefault("title", get_trans_txt("Delete client"))
+        context.setdefault("title", _("Delete client"))
         return context
 
 
@@ -166,5 +167,5 @@ class ClientDetailsView(
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context.setdefault("title", get_trans_txt("Client details"))
+        context.setdefault("title", _("Client details"))
         return context
