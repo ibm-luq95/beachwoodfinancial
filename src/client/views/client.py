@@ -42,7 +42,7 @@ from important_contact.forms import ImportantContactForm
 # from task.forms import TaskForm
 
 
-class ClientListViewBW(
+class ClientListView(
     BWLoginRequiredMixin,
     BWManagerAccessMixin,
     BWCacheViewMixin,
@@ -104,3 +104,68 @@ class ClientCreateView(
     # def form_valid(self, form: BaseForm):
     #     debugging_print(form.cleaned_data)
     #     return super().form_valid(form)
+
+
+class ClientUpdateView(
+    BWLoginRequiredMixin,
+    BWManagerAccessMixin,
+    BWCacheViewMixin,
+    SuccessMessageMixin,
+    UpdateView,
+):
+    # permission_required = "client.add_client"
+    template_name = "client/update.html"
+    form_class = ClientForm
+    success_message = _("Client updated successfully")
+    success_url = reverse_lazy("dashboard:client:list")
+    model = ClientProxy
+
+    # template_name_suffix = "_create_client"
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        context.setdefault("title", _("Update client"))
+        return context
+
+    # def form_valid(self, form: BaseForm):
+    #     debugging_print(form.cleaned_data)
+    #     return super().form_valid(form)
+
+
+class ClientDeleteView(
+    BWLoginRequiredMixin,
+    BWManagerAccessMixin,
+    BWCacheViewMixin,
+    BWBaseListViewMixin,
+    SuccessMessageMixin,
+    DeleteView,
+):
+    template_name = "client/delete.html"
+    # form_class = ClientCategoryForm
+    model = ClientProxy
+    success_message = _("Client deleted successfully")
+    success_url = reverse_lazy("dashboard:client:list")
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        context.setdefault("title", _("Delete client"))
+        return context
+
+
+class ClientDetailsView(
+    BWLoginRequiredMixin,
+    BWManagerAccessMixin,
+    BWCacheViewMixin,
+    DetailView,
+):
+    template_name = "client/details.html"
+    # form_class = ClientCategoryForm
+    model = ClientProxy
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        context.setdefault("title", _("Client details"))
+        return context

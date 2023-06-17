@@ -5,14 +5,25 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import CreateView, UpdateView, ListView, DeleteView
 
+from core.cache import BWCacheViewMixin
 from important_contact.filters import ImportantContactFilter
 from important_contact.forms import ImportantContactForm
 from important_contact.models import ImportantContact
 from core.utils import get_trans_txt, debugging_print
-from core.views.mixins import BWBaseListViewMixin
+from core.views.mixins import (
+    BWBaseListViewMixin,
+    BWLoginRequiredMixin,
+    BWManagerAccessMixin,
+)
 
 
-class ImportantContactListViewBW(BWBaseListViewMixin, ListView):
+class ImportantContactListViewBW(
+    BWLoginRequiredMixin,
+    BWManagerAccessMixin,
+    BWCacheViewMixin,
+    BWBaseListViewMixin,
+    ListView,
+):
     template_name = "important_contact/list.html"
     model = ImportantContact
 
@@ -29,7 +40,14 @@ class ImportantContactListViewBW(BWBaseListViewMixin, ListView):
         return self.filterset.qs
 
 
-class ImportantContactCreateView(SuccessMessageMixin, CreateView):
+class ImportantContactCreateView(
+    BWLoginRequiredMixin,
+    BWManagerAccessMixin,
+    BWCacheViewMixin,
+    BWBaseListViewMixin,
+    SuccessMessageMixin,
+    CreateView,
+):
     template_name = "important_contact/create.html"
     form_class = ImportantContactForm
     model = ImportantContact
@@ -44,7 +62,14 @@ class ImportantContactCreateView(SuccessMessageMixin, CreateView):
         return context
 
 
-class ImportantContactUpdateView(SuccessMessageMixin, UpdateView):
+class ImportantContactUpdateView(
+    BWLoginRequiredMixin,
+    BWManagerAccessMixin,
+    BWCacheViewMixin,
+    BWBaseListViewMixin,
+    SuccessMessageMixin,
+    UpdateView,
+):
     template_name = "important_contact/update.html"
     form_class = ImportantContactForm
     model = ImportantContact
@@ -59,7 +84,14 @@ class ImportantContactUpdateView(SuccessMessageMixin, UpdateView):
         return context
 
 
-class ImportantContactDeleteView(SuccessMessageMixin, DeleteView):
+class ImportantContactDeleteView(
+    BWLoginRequiredMixin,
+    BWManagerAccessMixin,
+    BWCacheViewMixin,
+    BWBaseListViewMixin,
+    SuccessMessageMixin,
+    DeleteView,
+):
     template_name = "important_contact/delete.html"
     # form_class = ClientCategoryForm
     model = ImportantContact

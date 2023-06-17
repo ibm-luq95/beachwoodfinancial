@@ -1,4 +1,4 @@
-{% load i18n %}
+{% load i18n static %}
 
 <!-- Sidebar Toggle -->
 <div class="sticky inset-x-0 top-0 z-20 px-4 bg-white border-y sm:px-6 md:px-8 lg:hidden dark:bg-gray-800 dark:border-gray-700">
@@ -46,7 +46,9 @@
     <div class="px-6">
         <a class="flex-none text-xl font-semibold text-white"
            href="#"
-           aria-label="Brand">Beach Wood Financial</a>
+           aria-label="Brand">
+            <img src="{% static 'img/logo.png' %}" alt="" />
+        </a>
     </div>
     <nav class="flex flex-col flex-wrap w-full p-6 hs-accordion-group"
          data-hs-accordion-always-open>
