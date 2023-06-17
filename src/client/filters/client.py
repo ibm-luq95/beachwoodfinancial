@@ -1,25 +1,53 @@
 # -*- coding: utf-8 -*-#
 import django_filters
 from django import forms
+from django.utils.translation import gettext as _
 
 from bookkeeper.models import BookkeeperProxy
 from client.models import ClientProxy
 from client_category.models import ClientCategory
+from core.choices import ImportantContactLabelsEnum
+from django.db import models
+
+
+class DateFiltersEnum(models.TextChoices):
+    PAYROLL = "today", _("Today")
+    CEO = "this_week", _("This week")
+    OTHER = "this_month", _("This month")
 
 
 class ClientFilter(django_filters.FilterSet):
-    bookkeepers = django_filters.ModelMultipleChoiceFilter(
+    form_prefix = "client-filter"
+    contact_label = django_filters.ChoiceFilter(
+        field_name="important_contacts__contact_label",
+        label=_("Contact label"),
+        widget=forms.Select,
+        choices=ImportantContactLabelsEnum.choices,
+        empty_label=_("Contact label")
+    )
+    contact_name = django_filters.CharFilter(
+        field_name="important_contacts__company_name", label=_("Contact name")
+    )
+    bookkeepers = django_filters.ModelChoiceFilter(
         field_name="bookkeepers",
         queryset=BookkeeperProxy.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
+        # widget=forms.Select(attrs={"placeholder": "dsfj"}, emp),
         lookup_expr="exact",
-        label="Managed by",
+        label=_("Managed by"),
+        empty_label=_("Managed by"),
     )
-    categories = django_filters.ModelMultipleChoiceFilter(
+    categories = django_filters.ModelChoiceFilter(
         field_name="categories",
         queryset=ClientCategory.objects.all(),
-        widget=forms.CheckboxSelectMultiple,
+        # widget=forms.CheckboxSelectMultiple,
         lookup_expr="exact",
+        empty_label=_("Categories"),
+    )
+
+    created = django_filters.ChoiceFilter(
+        field_name="created_at",
+        empty_label=_("Created"),
+        choices=DateFiltersEnum.choices
     )
 
     class Meta:
@@ -28,6 +56,7 @@ class ClientFilter(django_filters.FilterSet):
             "name": ["icontains"],
             # "categories": ["exact"],
             "industry": ["icontains"],
-            "important_contacts__company_name": ["icontains"],
-            "important_contacts__contact_label": ["exact"],
+            # "important_contacts__company_name": ["icontains"],
+            # "important_contacts__contact_label": ["exact"],
+            # "created_at": ["exact"]
         }

@@ -39,13 +39,16 @@ def bw_add_state_css_class(input_bound_field: BoundField, state: str) -> SafeStr
 @register.simple_tag(takes_context=True)
 def bw_testing_form_field(context, input_bound_field: BoundField) -> None:
     # debugging_print(dir(input_bound_field))
-    debugging_print(input_bound_field.value())
+    # debugging_print(input_bound_field, is_inspect=True)
+    # debugging_print(input_bound_field.data)
+    # debugging_print(input_bound_field.value())
     # debugging_print(type(input_bound_field))
     # debugging_print(dir(input_bound_field.widget))
     # checkboxselectmultiple
     # widget_type = input_bound_field.widget_type
-    field_obj: ModelMultipleChoiceField | Field = input_bound_field.field
-    # debugging_print(widget_type)
+    # field_obj: ModelMultipleChoiceField | Field = input_bound_field.field
+    # debugging_print(dir(field_obj))
+    # debugging_print(field_obj.bound_data)
     # debugging_print(input_bound_field.label)
     # debugging_print(dir(field_obj.choices))
     # debugging_print(input_bound_field.css_classes())
@@ -56,3 +59,5 @@ def bw_testing_form_field(context, input_bound_field: BoundField) -> None:
     #     debugging_print(f"{choice_value.instance} -> Instance")
     #     debugging_print(f"{choice_value.value} -> Value")
     # debugging_print(dir(field_obj))
+
+    return ""

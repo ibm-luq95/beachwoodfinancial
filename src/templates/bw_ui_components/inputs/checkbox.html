@@ -5,10 +5,12 @@
        <input type="checkbox"
               disabled
               class="{{ BW_PRELINE_CHECKBOX_CSS_CLASSES }}"
-              id="{{ input_id }}"
-              name="{{ input_name }}"
-              value="{{ input_value }}"
-              {% if is_checked is True or input_value in field.value %}checked{% endif %} />
-       <label for="{{ input_id }}"
-              class="text-sm text-gray-800 ml-2 dark:text-gray-400">{{ checkbox_txt }}</label>
+              id="{{ field.id_for_label }}"
+              name="{{ field.data.name }}"
+              value="{{ field.data.value }}"
+              {% if is_checked is True or field.data.selected is True %}checked{% endif %} />
+       <label for="{{ field.id_for_label }}"
+              class="text-sm text-gray-800 ml-2 dark:text-gray-400">
+              {{ field.choice_label }}
+       </label>
 </div>
