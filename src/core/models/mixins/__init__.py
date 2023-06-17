@@ -6,3 +6,4 @@ from .str_renderer import StrModelMixin
 from .general_status import GeneralStatusFieldMixin
 from .staff_member import StaffMemberMixin
 from .team_member import TeamMembersMixin
+from .get_object_section import GetObjectSectionMixin

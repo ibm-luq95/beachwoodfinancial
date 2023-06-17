@@ -30,4 +30,9 @@ urlpatterns = [
         include("client.urls"),
         name="client",
     ),
+    path(
+        "note/",
+        include("note.urls"),
+        name="note",
+    ),
 ]

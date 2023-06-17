@@ -2,7 +2,6 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db.models import Q
-from django.forms import BaseForm
 from django.urls import reverse_lazy
 from django.views.generic import (
     CreateView,
