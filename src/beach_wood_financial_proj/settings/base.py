@@ -68,6 +68,7 @@ INSTALLED_APPS = [
     "important_contact.apps.ImportantContactConfig",
     "client_account.apps.ClientAccountConfig",
     "client.apps.ClientConfig",
+    "note.apps.NoteConfig",
 ]
 
 MIDDLEWARE = [
