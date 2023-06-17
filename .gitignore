@@ -541,3 +541,4 @@ src/frontend/package-lock.json
 **/migrations/**
 !**/migrations
 !**/migrations/__init__.py
+poetry.lock
