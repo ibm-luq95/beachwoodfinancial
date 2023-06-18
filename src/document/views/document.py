@@ -156,7 +156,7 @@ class DocumentDeleteView(
     template_name = "document/delete.html"
     model = Document
     success_message = _("Document deleted successfully")
-    success_url = reverse_lazy("dashboard:client:list")
+    success_url = reverse_lazy("dashboard:document:list")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

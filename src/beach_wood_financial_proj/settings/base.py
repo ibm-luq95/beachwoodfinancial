@@ -70,6 +70,7 @@ INSTALLED_APPS = [
     "client.apps.ClientConfig",
     "note.apps.NoteConfig",
     "document.apps.DocumentConfig",
+    "job_category.apps.JobCategoryConfig",
 ]
 
 MIDDLEWARE = [
