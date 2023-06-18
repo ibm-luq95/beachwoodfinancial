@@ -35,4 +35,9 @@ urlpatterns = [
         include("note.urls"),
         name="note",
     ),
+    path(
+        "document/",
+        include("document.urls"),
+        name="document",
+    ),
 ]
