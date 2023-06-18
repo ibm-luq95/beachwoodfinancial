@@ -69,6 +69,7 @@ INSTALLED_APPS = [
     "client_account.apps.ClientAccountConfig",
     "client.apps.ClientConfig",
     "note.apps.NoteConfig",
+    "document.apps.DocumentConfig",
 ]
 
 MIDDLEWARE = [
