@@ -7,7 +7,7 @@ from core.models.mixins import BaseModelMixin
 from core.utils import PasswordHasher
 
 
-# from client.models import ClientProxy
+from client.models import ClientProxy
 
 
 class ClientAccount(BaseModelMixin):
@@ -17,13 +17,13 @@ class ClientAccount(BaseModelMixin):
         BaseModelMixin (models.Model): Django base model mixin
     """
 
-    # client = models.ForeignKey(
-    #     to=ClientProxy,
-    #     on_delete=models.RESTRICT,
-    #     null=True,
-    #     related_name="client_accounts",
-    #     blank=True,
-    # )
+    client = models.ForeignKey(
+        to=ClientProxy,
+        on_delete=models.RESTRICT,
+        null=True,
+        related_name="client_accounts",
+        blank=True,
+    )
     is_services = models.BooleanField(_("is services"), default=False)
     account_name = models.CharField(_("account name"), max_length=50, null=True)
     account_email = models.EmailField(_("account email"), max_length=50, null=True)
