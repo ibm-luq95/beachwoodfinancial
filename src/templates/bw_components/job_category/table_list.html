@@ -1,0 +1,165 @@
+{% extends "bw_components/layouts/table_list_base.html" %}
+
+{% load i18n %}
+
+{# Start Table Header #}
+{% block header_title %}
+    {% translate header_title %}
+{% endblock header_title %}
+{# End Table Header #}
+{# Start Table Subtitle #}
+{% block header_subtitle %}
+    {% translate header_subtitle %}
+{% endblock header_subtitle %}
+{# End Table Subtitle #}
+{# Start Table ID Block #}
+{% block table_id_block %}
+    {{ app_label|add:'_table' }}
+{% endblock table_id_block %}
+{# End Table ID Block #}
+{# Start Custom Css Class #}
+{% block custom_css_class_name %}
+    job-category-table-list
+{% endblock custom_css_class_name %}
+{# End Custom Css Class #}
+{# Start Create Button Block #}
+{% block create_btn_block %}
+    {% component "tl_create_btn" app_name=app_label actions_base_url=actions_base_url %}
+    {% comment %}
+    {% bw_button btn_text="Click" btn_variant="success" btn_size="small" data_pk="eee" data_title="ddlel" is_disabled=True btn_type="button" %}
+    {% endcomment %}
+{% endblock create_btn_block %}
+{# End Create Button Block #}
+{# Start Table Header Columns #}
+{% block thead_block %}
+    <tr>
+        {% if is_checkbox_enabled is True %}
+            <th scope="col" class="pl-6 py-3 text-left">
+                <label for="{{ column|add:'-checkbox' }}" class="flex">
+                    <input type="checkbox"
+                           class="shrink-0 border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 {{ BW_DISABLED_DISABLED_INPUTS_CSS_CLASSES }} {{ BW_BASE_INPUT_CSS_CLASSES }}"
+                           id="{{ column|add:'-checkbox' }}"
+                           disabled />
+                    <span class="sr-only">{{ column|title }}</span>
+                </label>
+            </th>
+        {% endif %}
+        <th scope="col" class="px-6 py-3 text-left">
+            <div class="flex items-center gap-x-2">
+                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                    {% translate "Name" %}
+                </span>
+                <div class="flex justify-center items-center w-5 h-5 border border-gray-200 group-hover:bg-gray-200 text-gray-500 rounded dark:border-gray-700 dark:group-hover:bg-gray-700 dark:text-gray-400">
+                    <svg class="w-2.5 h-2.5"
+                         width="16"
+                         height="16"
+                         viewBox="0 0 16 16"
+                         fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.55921 0.287451C7.86808 -0.0958171 8.40096 -0.0958167 8.70982 0.287451L12.9295 5.52367C13.3857 6.08979 13.031 7 12.3542 7H3.91488C3.23806 7 2.88336 6.08979 3.33957 5.52367L7.55921 0.287451Z" fill="currentColor" />
+                        <path d="M8.70983 15.7125C8.40096 16.0958 7.86808 16.0958 7.55921 15.7125L3.33957 10.4763C2.88336 9.9102 3.23806 9 3.91488 9H12.3542C13.031 9 13.3857 9.9102 12.9295 10.4763L8.70983 15.7125Z" fill="currentColor" />
+                    </svg>
+                </div>
+            </div>
+        </th>
+        <th scope="col" class="px-6 py-3 text-left">
+            <div class="flex items-center gap-x-2">
+                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                    {% translate "Jobs" %}
+                </span>
+                <div class="flex justify-center items-center w-5 h-5 border border-gray-200 group-hover:bg-gray-200 text-gray-500 rounded dark:border-gray-700 dark:group-hover:bg-gray-700 dark:text-gray-400">
+                    <svg class="w-2.5 h-2.5"
+                         width="16"
+                         height="16"
+                         viewBox="0 0 16 16"
+                         fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7.55921 0.287451C7.86808 -0.0958171 8.40096 -0.0958167 8.70982 0.287451L12.9295 5.52367C13.3857 6.08979 13.031 7 12.3542 7H3.91488C3.23806 7 2.88336 6.08979 3.33957 5.52367L7.55921 0.287451Z" fill="currentColor" />
+                        <path d="M8.70983 15.7125C8.40096 16.0958 7.86808 16.0958 7.55921 15.7125L3.33957 10.4763C2.88336 9.9102 3.23806 9 3.91488 9H12.3542C13.031 9 13.3857 9.9102 12.9295 10.4763L8.70983 15.7125Z" fill="currentColor" />
+                    </svg>
+                </div>
+            </div>
+        </th>
+        {% if is_show_created_at is True %}
+            <th scope="col" class="px-6 py-3 text-left">
+                <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                        {% translate "Created" %}
+                    </span>
+                    <div class="flex justify-center items-center w-5 h-5 border border-gray-200 group-hover:bg-gray-200 text-gray-500 rounded dark:border-gray-700 dark:group-hover:bg-gray-700 dark:text-gray-400">
+                        <svg class="w-2.5 h-2.5"
+                             width="16"
+                             height="16"
+                             viewBox="0 0 16 16"
+                             fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M7.55921 0.287451C7.86808 -0.0958171 8.40096 -0.0958167 8.70982 0.287451L12.9295 5.52367C13.3857 6.08979 13.031 7 12.3542 7H3.91488C3.23806 7 2.88336 6.08979 3.33957 5.52367L7.55921 0.287451Z" fill="currentColor" />
+                            <path d="M8.70983 15.7125C8.40096 16.0958 7.86808 16.0958 7.55921 15.7125L3.33957 10.4763C2.88336 9.9102 3.23806 9 3.91488 9H12.3542C13.031 9 13.3857 9.9102 12.9295 10.4763L8.70983 15.7125Z" fill="currentColor" />
+                        </svg>
+                    </div>
+                </div>
+            </th>
+        {% endif %}
+        <th scope="col" class="px-6 py-3 text-left disable-sort">
+            <div class="flex items-center gap-x-2"></div>
+        </th>
+    </tr>
+{% endblock thead_block %}
+{# End Table Header Columns #}
+{# Start Table Body #}
+{% block tbody_block %}
+    {% for object in object_list %}
+        <tr>
+            {% if is_checkbox_enabled is True %}
+                <td class="h-px w-px whitespace-nowrap">
+                    <div class="pl-6 py-3">
+                        <label for="{{ object.pk|add:'-checkbox' }}" class="flex">
+                            <input type="checkbox"
+                                   class="shrink-0 border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 {{ BW_DISABLED_DISABLED_INPUTS_CSS_CLASSES }} {{ BW_BASE_INPUT_CSS_CLASSES }}"
+                                   id="{{ object.pk|add:'-checkbox' }}"
+                                   disabled />
+                            <span class="sr-only">{{ object.title|title }}</span>
+                        </label>
+                    </div>
+                </td>
+            {% endif %}
+            <td class="h-px w-px whitespace-nowrap">
+                <div class="px-6 py-3">
+                    <a href="{% url base_url_name|add:':update' object.pk %}">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.name }}</span>
+                    </a>
+                </div>
+            </td>
+            <td class="h-px w-px whitespace-nowrap">
+                <div class="px-10 py-3">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">7</span>
+                </div>
+            </td>
+            {% if is_show_created_at is True %}
+                <td class="h-px w-px whitespace-nowrap">
+                    <div class="px-6 py-3">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.created_at|date }}</span>
+                    </div>
+                </td>
+            {% endif %}
+            <td class="h-px w-px whitespace-nowrap text-center">
+                {% if is_actions_menu_enabled is True %}
+                    {% bw_actions_dropdown actions_items=actions_items actions_base_url=actions_base_url actions_app_name=actions_app_name object=object %}
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock tbody_block %}
+{# End Table Body #}
+{# Start Table Results #}
+{% block results_block %}
+    {{ object_list.count }}
+{% endblock results_block %}
+{# End Table Results #}
+{# Start Table Pagination #}
+{% block pagination_block %}
+
+    {% include "components/inc/dashboard/table_list/table_list_pagination.html" with page_obj=page_obj pagination_list_url_name=pagination_list_url_name %}
+
+{% endblock pagination_block %}
+{# End Table Pagination #}

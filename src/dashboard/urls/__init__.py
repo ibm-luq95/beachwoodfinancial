@@ -40,4 +40,9 @@ urlpatterns = [
         include("document.urls"),
         name="document",
     ),
+    path(
+        "job-category/",
+        include("job_category.urls"),
+        name="job_category",
+    ),
 ]
