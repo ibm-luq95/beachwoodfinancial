@@ -51,33 +51,19 @@
                     <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 w-56 hidden z-10 mt-2 min-w-[15rem] bg-white shadow-md rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700 dark:divide-gray-700"
                          aria-labelledby="hs-dropdown-basic">
                         <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                           href="#">
-                            {% translate "Contact" %}
-                        </a>
+                           href="#">{% translate "Contact" %}</a>
                         <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                           href="#">
-                           {% translate "Account" %}
-                        </a>
+                           href="#">{% translate "Account" %}</a>
                         <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                           href="#">
-                           {% translate "Job" %}
-                        </a>
+                           href="#">{% translate "Job" %}</a>
                         <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                           href="#">
-                           {% translate "Assignments" %}
-                        </a>
+                           href="#">{% translate "Assignments" %}</a>
                         <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                           href="#">
-                           {% translate "Service" %}
-                        </a>
+                           href="#">{% translate "Service" %}</a>
                         <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                           href="#">
-                           {% translate "Note" %}
-                        </a>
+                           href="#">{% translate "Note" %}</a>
                         <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                           href="#">
-                           {% translate "Document" %}
-                        </a>
+                           href="#">{% translate "Document" %}</a>
                     </div>
                 </div>
                 <a class="py-2 px-3 flex items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800 ml-4"
@@ -104,6 +90,16 @@
                 </button>
                 <button type="button"
                         class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-2 border-b-[3px] border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 flex-auto justify-center text-center font-medium dark:hover:text-gray-400"
+                        id="client-details-tab-btn"
+                        data-hs-tab="#client-details-tab"
+                        aria-controls="client-details-tab"
+                        role="tab">
+                    <i class="fa-solid fa-user-gear hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 w-3.5 h-3.5 text-gray-400 dark:text-gray-600"></i>
+                    {% translate "Details" %}
+                    <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">5+</span>
+                </button>
+                <button type="button"
+                        class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-2 border-b-[3px] border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 flex-auto justify-center text-center font-medium dark:hover:text-gray-400"
                         id="jobs-tab-btn"
                         data-hs-tab="#jobs-tab"
                         aria-controls="jobs-tab"
@@ -120,16 +116,6 @@
                         role="tab">
                     <i class="fa-solid fa-address-book hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 w-3.5 h-3.5 text-gray-400 dark:text-gray-600"></i>
                     {% translate "Contacts" %}
-                    <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">5+</span>
-                </button>
-                <button type="button"
-                        class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-2 border-b-[3px] border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 flex-auto justify-center text-center font-medium dark:hover:text-gray-400"
-                        id="client-details-tab-btn"
-                        data-hs-tab="#client-details-tab"
-                        aria-controls="client-details-tab"
-                        role="tab">
-                    <i class="fa-solid fa-user-gear hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 w-3.5 h-3.5 text-gray-400 dark:text-gray-600"></i>
-                    {% translate "Details" %}
                     <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">5+</span>
                 </button>
                 <button type="button"
@@ -152,16 +138,7 @@
                     {% translate "Assignments" %}
                     <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">5+</span>
                 </button>
-                <button type="button"
-                        class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-2 border-b-[3px] border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 flex-auto justify-center text-center font-medium dark:hover:text-gray-400"
-                        id="services-tab-btn"
-                        data-hs-tab="#services-tab"
-                        aria-controls="services-tab"
-                        role="tab">
-                    <i class="fa-solid fa-key hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 w-3.5 h-3.5 text-gray-400 dark:text-gray-600"></i>
-                    {% translate "Services" %}
-                    <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">5+</span>
-                </button>
+            
                 <button type="button"
                         class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-2 border-b-[3px] border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 flex-auto justify-center text-center font-medium dark:hover:text-gray-400"
                         id="notes-tab-btn"
@@ -189,7 +166,9 @@
                  role="tabpanel"
                  aria-labelledby="tabs-with-icons-item-1">
                 <p class="text-gray-500 dark:text-gray-400 mb-2 mt-4">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem eligendi exercitationem magnam facilis non vel natus repellat quos provident pariatur inventore, numquam fugit sapiente illo ut itaque, obcaecati corrupti consectetur!
+                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem eligendi
+                    exercitationem magnam facilis non vel natus repellat quos provident pariatur
+                    inventore, numquam fugit sapiente illo ut itaque, obcaecati corrupti consectetur!
                 </p>
                 <hr />
                 {# Start Widget Ros #}
@@ -299,29 +278,19 @@
                                     </h3>
                                     <ul class="max-w-xs flex flex-col divide-y divide-gray-200 dark:divide-gray-700 mt-2">
                                         <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white">
-                                            <a href="">
-                                                Pam Zboncak
-                                            </a>
+                                            <a href="">Pam Zboncak</a>
                                         </li>
                                         <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white">
-                                            <a href="">
-                                                Marvin Yost
-                                            </a>
+                                            <a href="">Marvin Yost</a>
                                         </li>
                                         <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white">
-                                            <a href="">
-                                                Lora Kuphal
-                                            </a>
+                                            <a href="">Lora Kuphal</a>
                                         </li>
                                         <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white">
-                                            <a href="">
-                                                Dr. Shawna Rodriguez
-                                            </a>
+                                            <a href="">Dr. Shawna Rodriguez</a>
                                         </li>
                                         <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white">
-                                            <a href="">
-                                                Mr. Leticia Johnston
-                                            </a>
+                                            <a href="">Mr. Leticia Johnston</a>
                                         </li>
                                     </ul>
                                 </div>
@@ -368,14 +337,10 @@
                                                                             Lorem, ipsum.
                                                                         </td>
                                                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                                            <a href="">
-                                                                                Lorem, ipsum dolor.
-                                                                            </a>
+                                                                            <a href="">Lorem, ipsum dolor.</a>
                                                                         </td>
                                                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                                            <a href="">
-                                                                                Lorem, ipsum dolor.
-                                                                            </a>
+                                                                            <a href="">Lorem, ipsum dolor.</a>
                                                                         </td>
                                                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                                             <span class="inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Badge</span>
@@ -386,14 +351,10 @@
                                                                             Lorem, ipsum.
                                                                         </td>
                                                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                                            <a href="">
-                                                                                Lorem, ipsum dolor.
-                                                                            </a>
+                                                                            <a href="">Lorem, ipsum dolor.</a>
                                                                         </td>
                                                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                                            <a href="">
-                                                                                Lorem, ipsum dolor.
-                                                                            </a>
+                                                                            <a href="">Lorem, ipsum dolor.</a>
                                                                         </td>
                                                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                                             <span class="inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-green-100 text-green-800">Badge</span>
@@ -404,14 +365,10 @@
                                                                             Lorem, ipsum.
                                                                         </td>
                                                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                                            <a href="">
-                                                                                Lorem, ipsum dolor.
-                                                                            </a>
+                                                                            <a href="">Lorem, ipsum dolor.</a>
                                                                         </td>
                                                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                                            <a href="">
-                                                                                Lorem, ipsum dolor.
-                                                                            </a>
+                                                                            <a href="">Lorem, ipsum dolor.</a>
                                                                         </td>
                                                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                                             <span class="inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-red-100 text-red-800">Badge</span>
@@ -422,14 +379,10 @@
                                                                             Lorem, ipsum.
                                                                         </td>
                                                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                                            <a href="">
-                                                                                Lorem, ipsum dolor.
-                                                                            </a>
+                                                                            <a href="">Lorem, ipsum dolor.</a>
                                                                         </td>
                                                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
-                                                                            <a href="">
-                                                                                Lorem, ipsum dolor.
-                                                                            </a>
+                                                                            <a href="">Lorem, ipsum dolor.</a>
                                                                         </td>
                                                                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                                                                             <span class="inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800">Badge</span>
@@ -455,7 +408,9 @@
                  role="tabpanel"
                  aria-labelledby="tabs-with-icons-item-2">
                 <p class="text-gray-500 dark:text-gray-400">
-                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis minus maxime hic quas laborum ea suscipit voluptas dolore molestias voluptate quaerat reprehenderit, eius quos amet esse quidem illum soluta neque!
+                    Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis minus maxime hic
+                    quas laborum ea suscipit voluptas dolore molestias voluptate quaerat reprehenderit,
+                    eius quos amet esse quidem illum soluta neque!
                 </p>
             </div>
             <div id="contact-tab"
@@ -482,12 +437,7 @@
                  aria-labelledby="tabs-with-icons-item-3">
                 <p class="text-gray-500 dark:text-gray-400">Assignments tab</p>
             </div>
-            <div id="services-tab"
-                 class="hidden"
-                 role="tabpanel"
-                 aria-labelledby="tabs-with-icons-item-3">
-                <p class="text-gray-500 dark:text-gray-400">Account & Services tab</p>
-            </div>
+        
             <div id="notes-tab"
                  class="hidden"
                  role="tabpanel"
