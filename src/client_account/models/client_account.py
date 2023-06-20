@@ -2,7 +2,7 @@
 from django.db import models
 from django.utils.translation import gettext as _
 
-from core.choices import ClientAccountStatusEnum
+from core.choices import ClientAccountStatusEnum, ServiceNameEnum
 from core.models.mixins import BaseModelMixin
 from core.utils import PasswordHasher
 
@@ -24,6 +24,7 @@ class ClientAccount(BaseModelMixin):
     #     related_name="client_accounts",
     #     blank=True,
     # )
+    is_services = models.BooleanField(_("is services"), default=False)
     account_name = models.CharField(_("account name"), max_length=50, null=True)
     account_email = models.EmailField(_("account email"), max_length=50, null=True)
     account_url = models.URLField(_("account url"), max_length=50, null=True)
@@ -34,6 +35,14 @@ class ClientAccount(BaseModelMixin):
         max_length=10,
         choices=ClientAccountStatusEnum.choices,
         default=ClientAccountStatusEnum.ENABLED,
+    )
+    service_name = models.CharField(
+        _("service name"),
+        max_length=35,
+        choices=ServiceNameEnum.choices,
+        db_index=True,
+        null=True,
+        blank=True,
     )
     last_modified_date = models.DateTimeField(_("last_modified_date"), auto_now=True)
 
