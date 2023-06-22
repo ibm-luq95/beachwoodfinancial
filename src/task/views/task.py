@@ -19,9 +19,6 @@ from core.views.mixins import (
     BWBaseListViewMixin,
     BWManagerAccessMixin,
 )
-from job.filters import JobFilter
-from job.forms import JobForm
-from job.models import JobProxy
 from note.forms import NoteForm
 from note.models import Note
 from note.filters import NoteFilter
@@ -30,7 +27,7 @@ from task.forms import TaskForm
 from task.models import TaskProxy
 
 
-class JobListView(
+class TaskListView(
     BWLoginRequiredMixin,
     BWManagerAccessMixin,
     BWCacheViewMixin,
@@ -38,15 +35,15 @@ class JobListView(
     ListView,
 ):
     # permission_required = "client.can_view_list"
-    template_name = "job/list.html"
-    model = JobProxy
+    template_name = "task/list.html"
+    model = TaskProxy
     paginate_by = LIST_VIEW_PAGINATE_BY
     list_type = "list"
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context["title"] = _("Jobs")
+        context["title"] = _("Tasks")
         context.setdefault("filter_form", self.filterset.form)
         context.setdefault("list_type", self.list_type)
         context.setdefault("page_header", "Tasks".title())
@@ -56,11 +53,11 @@ class JobListView(
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        self.filterset = JobFilter(self.request.GET, queryset=queryset)
+        self.filterset = TaskFilter(self.request.GET, queryset=queryset)
         return self.filterset.qs
 
 
-class JobCreateView(
+class TaskCreateView(
     BWLoginRequiredMixin,
     BWManagerAccessMixin,
     BWCacheViewMixin,
@@ -68,41 +65,21 @@ class JobCreateView(
     CreateView,
 ):
     # permission_required = "client.add_client"
-    template_name = "job/create.html"
-    form_class = JobForm
-    success_message = _("Job created successfully")
-    success_url = reverse_lazy("dashboard:job:list")
+    template_name = "task/create.html"
+    form_class = TaskForm
+    success_message = _("Task created successfully")
+    success_url = reverse_lazy("dashboard:task:list")
 
     # template_name_suffix = "_create_client"
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context.setdefault("title", _("Create job"))
+        context.setdefault("title", _("Create task"))
         return context
 
 
-class JobDetailsView(
-    BWLoginRequiredMixin,
-    BWManagerAccessMixin,
-    BWCacheViewMixin,
-    SuccessMessageMixin,
-    DetailView,
-):
-    # permission_required = "client.add_client"
-    template_name = "job/details.html"
-    model = JobProxy
-
-    # template_name_suffix = "_create_client"
-
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
-        context.setdefault("title", _("Details job"))
-        return context
-
-
-class JobUpdateView(
+class TaskUpdateView(
     BWLoginRequiredMixin,
     BWManagerAccessMixin,
     BWCacheViewMixin,
@@ -110,10 +87,10 @@ class JobUpdateView(
     UpdateView,
 ):
     # permission_required = "client.add_client"
-    template_name = "job/update.html"
-    form_class = JobForm
-    success_message = _("Job updated successfully")
-    success_url = reverse_lazy("dashboard:job:list")
+    template_name = "task/update.html"
+    form_class = NoteForm
+    success_message = _("Task updated successfully")
+    success_url = reverse_lazy("dashboard:task:list")
     model = Note
 
     # template_name_suffix = "_create_client"
@@ -121,11 +98,11 @@ class JobUpdateView(
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context.setdefault("title", _("Update job"))
+        context.setdefault("title", _("Update task"))
         return context
 
 
-class JobDeleteView(
+class TaskDeleteView(
     BWLoginRequiredMixin,
     BWManagerAccessMixin,
     BWCacheViewMixin,
@@ -133,14 +110,14 @@ class JobDeleteView(
     SuccessMessageMixin,
     DeleteView,
 ):
-    template_name = "job/delete.html"
+    template_name = "task/delete.html"
     # form_class = ClientCategoryForm
     model = TaskProxy
-    success_message = _("Job deleted successfully")
-    success_url = reverse_lazy("dashboard:job:list")
+    success_message = _("Task deleted successfully")
+    success_url = reverse_lazy("dashboard:task:list")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context.setdefault("title", _("Delete job"))
+        context.setdefault("title", _("Delete task"))
         return context

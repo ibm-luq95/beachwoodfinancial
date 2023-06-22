@@ -1,0 +1,16 @@
+{% extends "core/layouts/dashboard_content_base.html" %}
+
+{% load development_tags %}
+
+{% block dashboard_content_block %}
+    {# Page Heading #}
+
+    {% include "components/inc/dashboard/content_header.html" with title="Tasks" subtitle="Subtitle" %}
+
+    {# End Page Heading #}
+    <!-- Table Section -->
+
+    {% include "bw_components/task/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Tasks" header_subtitle="Sub" is_show_create_btn=True app_label=app_label page_obj=page_obj pagination_list_url_name="dashboard:task:list" is_filters_enabled=True is_actions_menu_enabled=True actions_items="update,delete" actions_app_name=app_label actions_base_url="dashboard:task" base_url_name="dashboard:task" filter_form=filter_form filter_cancel_url="dashboard:task:list" object_list=object_list %}
+
+    <!-- End Table Section -->
+{% endblock dashboard_content_block %}

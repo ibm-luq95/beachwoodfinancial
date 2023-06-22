@@ -45,4 +45,14 @@ urlpatterns = [
         include("job_category.urls"),
         name="job_category",
     ),
+    path(
+        "task/",
+        include("task.urls"),
+        name="task",
+    ),
+    path(
+        "job/",
+        include("job.urls"),
+        name="job",
+    ),
 ]

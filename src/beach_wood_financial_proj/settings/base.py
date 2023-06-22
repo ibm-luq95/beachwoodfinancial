@@ -71,6 +71,8 @@ INSTALLED_APPS = [
     "note.apps.NoteConfig",
     "document.apps.DocumentConfig",
     "job_category.apps.JobCategoryConfig",
+    "job.apps.JobConfig",
+    "task.apps.TaskConfig",
 ]
 
 MIDDLEWARE = [
