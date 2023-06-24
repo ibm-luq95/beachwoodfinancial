@@ -18,6 +18,11 @@ BW_PRELINE_INPUT_ERROR_CLASSES = (
     f" border-red-500 text-sm focus:border-red-500 focus:ring-red-500 dark:bg-gray-800 "
     f"dark:border-gray-700 dark:text-gray-400"
 )
+BW_PRELINE_SELECT_INPUT_CSS_CLASSES = (
+    f"{BW_FULL_INPUT_CSS_CLASSES} py-3 px-4 pr-9 block w-full border-gray-200 "
+    f"rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 "
+    f"dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+)
 BW_PRELINE_BASE_BUTTON = (
     f"{BW_BASE_INPUT_CSS_CLASSES} {BW_DISABLED_DISABLED_INPUTS_CSS_CLASSES} inline-flex justify-center items-center "
     f"gap-2 rounded-md border border-transparent transition-all text-sm font-semibold "
