@@ -7,6 +7,8 @@ from django.utils.translation import gettext as _
 from client.models import ClientProxy
 from core.choices import DocumentTypesEnum
 from core.models.mixins import BaseModelMixin, GeneralStatusFieldMixin, StrModelMixin
+from job.models import JobProxy
+from task.models import TaskProxy
 
 
 def saved_document_file_path(instance, filename):
@@ -37,12 +39,20 @@ class Document(BaseModelMixin, GeneralStatusFieldMixin, StrModelMixin):
         blank=True,
         related_name="documents",
     )
-    # job = models.ForeignKey(
-    #     to=JobProxy, on_delete=models.SET_NULL, null=True, blank=True, related_name="documents"
-    # )
-    # task = models.ForeignKey(
-    #     to=TaskProxy, on_delete=models.SET_NULL, null=True, blank=True, related_name="documents"
-    # )
+    job = models.ForeignKey(
+        to=JobProxy,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="documents",
+    )
+    task = models.ForeignKey(
+        to=TaskProxy,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="documents",
+    )
 
     # def delete(self, *args, **kwargs):
     #     self.document_file.storage.delete(self.document_file.name)

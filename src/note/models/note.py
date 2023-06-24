@@ -9,10 +9,8 @@ from core.models.mixins import (
     GeneralStatusFieldMixin,
     StrModelMixin,
 )
-
-
-# from jobs.models import JobProxy
-# from task.models import TaskProxy
+from job.models import JobProxy
+from task.models import TaskProxy
 
 
 class Note(BaseModelMixin, GetObjectSectionMixin, GeneralStatusFieldMixin, StrModelMixin):
@@ -31,16 +29,16 @@ class Note(BaseModelMixin, GetObjectSectionMixin, GeneralStatusFieldMixin, StrMo
         blank=True,
         related_name="notes",
     )
-    # job = models.ForeignKey(
-    #     to=JobProxy, on_delete=models.SET_NULL, null=True, blank=True, related_name="notes"
-    # )
-    # task = models.ForeignKey(
-    #     to=TaskProxy,
-    #     on_delete=models.SET_NULL,
-    #     null=True,
-    #     blank=True,
-    #     related_name="notes",
-    # )
+    job = models.ForeignKey(
+        to=JobProxy, on_delete=models.SET_NULL, null=True, blank=True, related_name="notes"
+    )
+    task = models.ForeignKey(
+        to=TaskProxy,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="notes",
+    )
     note_section = models.CharField(
         _("note section"),
         max_length=15,
