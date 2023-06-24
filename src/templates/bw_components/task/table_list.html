@@ -49,24 +49,68 @@
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                     {% translate "Title" %}
                 </span>
+
                 {% include "bw_components/global/table_list/sort_icon.html" %}
+
             </div>
         </th>
-        <th scope="col" class="px-6 py-3 text-left">
-            <div class="flex items-center gap-x-2">
-                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "Section" %}
-                </span>
-                {% include "bw_components/global/table_list/sort_icon.html" %}
-            </div>
-        </th>
+        {% if is_show_job_column is True %}
+            <th scope="col" class="px-6 py-3 text-left">
+                <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                        {% translate "Job" %}
+                    </span>
+
+                    {% include "bw_components/global/table_list/sort_icon.html" %}
+
+                </div>
+            </th>
+        {% endif %}
+        {% if is_show_manager_column is True %}
+            <th scope="col" class="px-6 py-3 text-left">
+                <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                        {% translate "Manager" %}
+                    </span>
+
+                    {% include "bw_components/global/table_list/sort_icon.html" %}
+
+                </div>
+            </th>
+        {% endif %}
+        {% if is_show_type_column is True %}
+            <th scope="col" class="px-6 py-3 text-left">
+                <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                        {% translate "Type" %}
+                    </span>
+
+                    {% include "bw_components/global/table_list/sort_icon.html" %}
+
+                </div>
+            </th>
+        {% endif %}
+        {% if is_show_status_column is True %}
+            <th scope="col" class="px-6 py-3 text-left">
+                <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                        {% translate "Status" %}
+                    </span>
+
+                    {% include "bw_components/global/table_list/sort_icon.html" %}
+
+                </div>
+            </th>
+        {% endif %}
         {% if is_show_created_at is True %}
             <th scope="col" class="px-6 py-3 text-left">
                 <div class="flex items-center gap-x-2">
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                         {% translate "Created" %}
                     </span>
+
                     {% include "bw_components/global/table_list/sort_icon.html" %}
+
                 </div>
             </th>
         {% endif %}
@@ -96,15 +140,38 @@
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
                     <a href="{% url base_url_name|add:':update' object.pk %}">
-                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.title }}</span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.title|bw_truncate_titles }}</span>
                     </a>
                 </div>
             </td>
-            <td class="h-px w-px whitespace-nowrap">
-                <div class="px-10 py-3">
-                    <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.get_note_section_display }}</span>
-                </div>
-            </td>
+            {% if is_show_job_column is True %}
+                <td class="h-px w-px whitespace-nowrap">
+                    <div class="px-6 py-3">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.job }}</span>
+                    </div>
+                </td>
+            {% endif %}
+            {% if is_show_manager_column is True %}
+                <td class="h-px w-px whitespace-nowrap">
+                    <div class="px-6 py-3">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.job.managed_by }}</span>
+                    </div>
+                </td>
+            {% endif %}
+            {% if is_show_type_column is True %}
+                <td class="h-px w-px whitespace-nowrap">
+                    <div class="px-6 py-3">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.get_task_type_display }}</span>
+                    </div>
+                </td>
+            {% endif %}
+            {% if is_show_status_column is True %}
+                <td class="h-px w-px whitespace-nowrap">
+                    <div class="px-6 py-3">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.get_status_display }}</span>
+                    </div>
+                </td>
+            {% endif %}
             {% if is_show_created_at is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     <div class="px-6 py-3">
