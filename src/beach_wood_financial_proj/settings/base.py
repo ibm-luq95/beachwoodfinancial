@@ -110,6 +110,7 @@ UI_COMPONENTS_TEMPLATETAGS = [
     "bw_ui_components.templatetags.table_list.actions_dropdown",
     "bw_ui_components.templatetags.table_list.filters",
     "bw_ui_components.templatetags.forms.delete_form",
+    "bw_ui_components.templatetags.components.core.badge",
 ]
 
 TEMPLATES = [
@@ -135,6 +136,7 @@ TEMPLATES = [
             ],
             "builtins": [
                 *UI_COMPONENTS_TEMPLATETAGS,
+                "core.templatetags.string_helpers_tags",
                 "django_components.templatetags.component_tags",
             ],
         },
