@@ -13,6 +13,7 @@ from django.views.generic import (
 from django.utils.translation import gettext as _
 
 from core.cache import BWCacheViewMixin
+from core.choices import JobStatusEnum
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.views.mixins import (
     BWLoginRequiredMixin,
@@ -24,7 +25,6 @@ from job.forms import JobForm
 from job.models import JobProxy
 from note.forms import NoteForm
 from note.models import Note
-from note.filters import NoteFilter
 from task.filters import TaskFilter
 from task.forms import TaskForm
 from task.models import TaskProxy
@@ -98,7 +98,10 @@ class JobDetailsView(
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context.setdefault("title", _("Details job"))
+        context.setdefault("title", _(f"Job - {self.get_object().title}"))
+        job_update_form = JobForm(instance=self.get_object(), is_updated=True)
+        context.setdefault("job_update_form", job_update_form)
+        context.setdefault("job_status_choices", JobStatusEnum.choices)
         return context
 
 
