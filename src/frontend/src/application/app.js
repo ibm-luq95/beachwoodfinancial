@@ -8,14 +8,29 @@ import "css.gg/icons/all.css";
 import tableSort from "table-sort-js/table-sort.js";
 // eslint-disable-next-line no-unused-vars
 import Chart from "chart.js/auto";
+import "./job/details.js";
 
 window.document.addEventListener("DOMContentLoaded", function () {
   const bwfInputs = document.querySelectorAll(".bw-input");
   const bwDisabledLinks = document.querySelectorAll("a.bw-disabled-anchor");
   const allDisabledCssClassed = ["disabled:opacity-75", "cursor-not-allowed"];
   bwfInputs.forEach((input) => {
-    input.disabled = false;
-    input.classList.remove(...allDisabledCssClassed);
+    const dataAttrs = input.dataset;
+    const checkKeepDisabled = Object.prototype.hasOwnProperty.call(
+      dataAttrs,
+      "keepDisabled",
+    );
+    if (checkKeepDisabled === true) {
+      const keepDisabled = dataAttrs["keepDisabled"];
+      const keepDisabledValue = /true/.test(keepDisabled);
+      if (keepDisabledValue === true) {
+        input.disabled = true;
+      }
+    } else {
+      input.disabled = false;
+      input.classList.remove(...allDisabledCssClassed);
+    }
+    
   });
   bwDisabledLinks.forEach((link) => {
     link.addEventListener("click", (event) => {
