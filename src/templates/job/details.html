@@ -1,6 +1,389 @@
 {% extends "core/layouts/dashboard_content_base.html" %}
 
-{% block dashboard_content_block %}
+{% load i18n %}
 
-    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Repellendus, ipsam. Labore fuga voluptatibus, suscipit earum animi fugiat illum quam vel error ratione? Nam, quas laboriosam expedita unde itaque quos aliquid.
+{% load tailwind_filters %}
+
+{% block dashboard_content_block %}
+    <div class="grid grid-cols-3 gap-4">
+        <div class="col-span-2 bg-slate-50 p-5 shadow-md rounded">
+            {# Start Job Title #}
+            <h2 class="text-lg font-bold tracking-wider border-b border-slate-950 pb-2">{{ object.title }}</h2>
+            {# End Job Title #}
+            <div class="flex flex-col rounded-md p-3">
+                <!-- <span class="text-sm text-gray-500 dark:text-gray-400">Desciption :</span> -->
+                <article>
+                    <p>{{ object.description|safe }}</p>
+                </article>
+            </div>
+            <form class="form pt-4 flex items-center justify-between gap-2 rounded">
+                <div>
+                    <!-- <label for="hs" class="sr-only">Label</label> -->
+                    <div class="flex rounded-md shadow-sm">
+                        <span class="px-4 inline-flex items-center p-3 min-w-fit rounded-md border border-gray-200 bg-gray-50 text-sm dark:bg-gray-700 dark:border-gray-700">
+                            <span class="text-sm text-gray-900 flex items-center gap-3 dark:text-gray-400">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     fill="none"
+                                     viewBox="0 0 24 24"
+                                     stroke-width="1.5"
+                                     stroke="currentColor"
+                                     class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+                                </svg>
+                            Due Date: 22 / 07 / 2023</span>
+                        </span>
+                    </div>
+                </div>
+                {# Start Job Status #}
+                <div class="hs-tooltip inline-block">
+                    <p class="hs-tooltip-toggle">
+                        {% bw_badge code=object.status text=object.get_status_display is_solid=False size="md" %}
+                        <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                              role="tooltip">{% translate "Status" %}</span>
+                    </p>
+                </div>
+                {# End Job Status #}
+                {# Start Job State #}
+                <div class="hs-tooltip inline-block">
+                    <p class="hs-tooltip-toggle">
+                        {% bw_badge code=object.state text=object.get_state_display is_solid=False size="md" %}
+                        <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                              role="tooltip">{% translate "State" %}</span>
+                    </p>
+                </div>
+                {# End Job State #}
+                <div>
+                    <!-- <label for="hs-trailing" class="sr-only">Label</label> -->
+                    <div class="flex rounded-md shadow-sm">
+                        <span class="px-4 inline-flex items-center p-3 min-w-fit rounded-md border border-gray-200 bg-gray-50 text-sm dark:bg-gray-700 dark:border-gray-700">
+                            <span class="text-sm text-gray-900 flex items-center gap-3 dark:text-gray-400">
+                                <svg xmlns="http://www.w3.org/2000/svg"
+                                     fill="none"
+                                     viewBox="0 0 24 24"
+                                     stroke-width="1.5"
+                                     stroke="currentColor"
+                                     class="w-6 h-6">
+                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+                                </svg>
+                            Created at Date: 23 /06 / 2023</span>
+                        </span>
+                    </div>
+                </div>
+            </form>
+            <div class="my-3">
+                <!-- <label for="hs-trailing-button" class="sr-only">Label</label> -->
+                <div class="flex rounded-md shadow-sm">
+                    <span class="px-4 inline-flex items-center min-w-fit rounded-md border border-r-0 border-gray-200 bg-gray-50 text-sm dark:bg-gray-700 dark:border-gray-700">
+                        <span class="text-sm text-gray-500 dark:text-gray-400">{% translate "Notes:" %}</span>
+                    </span>
+                    <textarea id="jobDescription"
+                              disabled
+                              name="hs-trailing-button-add-on-with-leading-and-trailing"
+                              class="{{ BW_FULL_INPUT_CSS_CLASSES }} py-3 px-4 block w-full border-gray-200 shadow-sm rounded-0 text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 rounded dark:text-gray-400">{{ object.note }}</textarea>
+                </div>
+            </div>
+            {# Start Tabs Block #}
+            <section id="job-tabs">
+                <nav class="relative z-0 flex border rounded-xl overflow-hidden dark:border-gray-700"
+                     aria-label="Tabs"
+                     role="tablist">
+                    <button type="button"
+                            class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400 active"
+                            id="tasks-btn"
+                            data-hs-tab="#tasks-tab"
+                            aria-controls="tasks-tab"
+                            role="tab">
+                        <i class="fa-solid fa-list-check hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 w-3.5 h-3.5 text-gray-400 dark:text-gray-600 mr-1"></i>
+                        {% translate "Tasks" %}
+                        <!-- <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">99+</span> -->
+                    </button>
+                    <button type="button"
+                            class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400 dark:hover:text-gray-300"
+                            id="documents-btn"
+                            data-hs-tab="#documents-tab"
+                            aria-controls="documents-tab"
+                            role="tab">
+                        <i class="fa-solid fa-file hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 w-3.5 h-3.5 text-gray-400 dark:text-gray-600 mr-1"></i>
+                        {% translate "Documents" %}
+                    </button>
+                    <button type="button"
+                            class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400 dark:hover:text-gray-300"
+                            id="notes-btn"
+                            data-hs-tab="#notes-tab"
+                            aria-controls="notes-tab"
+                            role="tab">
+                        <i class="fa-solid fa-note-sticky hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 w-3.5 h-3.5 text-gray-400 dark:text-gray-600 mr-1"></i>
+                        {% translate "Notes" %}
+                    </button>
+                </nav>
+                <div class="mt-3">
+                    <div id="tasks-tab"
+                         role="tabpanel"
+                         aria-labelledby="bar-with-underline-item-1">
+                        <!-- <p class="text-gray-500 dark:text-gray-400">
+                            This is the <em class="font-semibold text-gray-800 dark:text-gray-200">first</em> item's tab body.
+</p> -->
+
+                        {% include "bw_components/task/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Tasks" header_subtitle="Sub" is_show_create_btn=True app_label=app_label page_obj=page_obj pagination_list_url_name="dashboard:task:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete" actions_app_name=app_label actions_base_url="dashboard:task" base_url_name="dashboard:task" filter_form=filter_form filter_cancel_url="dashboard:task:list" object_list=object.tasks.all is_show_job_column=False is_show_manager_column=True is_show_type_column=True is_show_status_column=True %}
+
+                    </div>
+                    <div id="documents-tab"
+                         class="hidden"
+                         role="tabpanel"
+                         aria-labelledby="bar-with-underline-item-2">
+                        <!-- <p class="text-gray-500 dark:text-gray-400">
+                            This is the <em class="font-semibold text-gray-800 dark:text-gray-200">second</em> item's tab body.
+</p> -->
+
+                        {% include "bw_components/document/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Documents" header_subtitle="Documents related to clients" is_show_create_btn=True app_label=app_label page_obj=page_obj pagination_list_url_name="dashboard:document:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete" actions_app_name=app_label actions_base_url="dashboard:document" base_url_name="dashboard:document" filter_form=filter_form filter_cancel_url="dashboard:document:list" object_list=object.documents.all is_show_section=False %}
+
+                    </div>
+                    <div id="notes-tab"
+                         class="hidden"
+                         role="tabpanel"
+                         aria-labelledby="bar-with-underline-item-3">
+                        <!-- <p class="text-gray-500 dark:text-gray-400">
+                            This is the <em class="font-semibold text-gray-800 dark:text-gray-200">third</em> item's tab body.
+</p> -->
+
+                        {% include "bw_components/note/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Accounts" header_subtitle="Notes, helping organize your clients and work" is_show_create_btn=True app_label=app_label page_obj=page_obj pagination_list_url_name="dashboard:note:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete" actions_app_name=app_label actions_base_url="dashboard:note" base_url_name="dashboard:note" filter_form=filter_form filter_cancel_url="dashboard:note:list" object_list=object.notes.all is_show_section=False %}
+
+                    </div>
+                </div>
+            </section>
+            {# End Tabs Block #}
+        </div>
+        <div class="bg-slate-50 p-5 shadow-md flex flex-col gap-4 rounded">
+            <div class="main flex flex-col my-4 gap-4">
+                <div>
+                    <label for="job-status-input" class="sr-only">{% translate "Status" %}</label>
+                    <div class="flex rounded-md shadow-sm">
+                        <input list="job-status-datalist"
+                               id="job-status-input"
+                               name="job-status-input"
+                               class="{{ BW_FULL_INPUT_CSS_CLASSES }} py-3 px-4 block w-full border-gray-200 shadow-sm rounded-l-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
+                               disabled
+                               value="{{ object.get_status_display }}"
+                              />
+                        <datalist id="job-status-datalist">
+                            {% for choice in job_status_choices %}
+                                <option value="{{ choice.0|safe }}">{{ choice.1|safe }}</option>
+                            {% endfor %}
+                            
+                        </datalist>
+                        <button type="button"
+                                class="{{ BW_FULL_INPUT_CSS_CLASSES }} hs-tooltip -ml-px py-3 px-4 inline-flex justify-center items-center gap-2 border font-medium bg-blue-100 border-transparent text-blue-500 hover:text-white hover:bg-blue-100 focus:outline-none focus:ring-2 ring-offset-white focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                                disabled
+                                id="updateJobStatusBtn">
+                            <i class="fa-solid fa-save"></i>
+                            <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                  role="tooltip">{% translate "Update status" %}</span>
+                        </button>
+                        <button type="button"
+                                class="{{ BW_FULL_INPUT_CSS_CLASSES }} hs-tooltip hs-tooltip-toggle py-3 px-4 inline-flex flex-shrink-0 justify-center items-center gap-2 rounded-r-md border border-transparent font-semibold bg-yellow-100 text-yellow-500 hover:text-white hover:bg-yellow-100 focus:outline-none focus:ring-2 ring-offset-white focus:ring-yellow-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                                data-hs-overlay="#update-job-details-modal"
+                                disabled>
+                            <i class="fa-solid fa-pencil"></i>
+                            <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                  role="tooltip">{% translate "Update job" %}</span>
+                        </button>
+                    </div>
+                </div>
+                <div>
+                    <div class="flex rounded-md shadow-sm">
+                        <div class="hs-tooltip px-4 inline-flex items-center min-w-fit rounded-l-md border border-r-0 border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+                            <span class="hs-tooltip-toggle text-sm text-gray-500 dark:text-gray-400">
+                                <i class="fa-solid fa-user-circle fa-xl"></i>
+                            </span>
+                            <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                  role="tooltip">{% translate "Managed by" %}</span>
+                        </div>
+                        <select id="hs-hidden-select"
+                                class="{{ BW_FULL_INPUT_CSS_CLASSES }} py-3 px-4 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                                disabled>
+                            <option selected>Open this select menu</option>
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                        </select>
+                        {# {% bw_select options='{"one": "One", "tow": "tow", "three": "three"}' %} #}
+                    </div>
+                    <div class="my-3">
+                        <div class="flex rounded-md shadow-sm">
+                            <div class="hs-tooltip px-4 inline-flex items-center min-w-fit rounded-l-md border border-r-0 border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+                                <span class="hs-tooltip-toggle text-sm text-gray-500 dark:text-gray-400">
+                                    <i class="fa-solid fa-building fa-xl"></i>
+                                </span>
+                                <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                      role="tooltip">{% translate "Client" %}</span>
+                            </div>
+                            <input type="text"
+                                   name="hs-input-with-add-on-url"
+                                   id="hs-input-with-add-on-url"
+                                   class="{{ BW_FULL_INPUT_CSS_CLASSES }} py-3 px-4 pr-11 block w-full border-gray-200 shadow-sm rounded-r-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                                   data-keep-disabled="true"
+                                   value="{{ object.client.name|safe }}"
+                                   placeholder="{{ object.client.name|safe }}"
+                                   readonly
+                                   disabled />
+                        </div>
+                    </div>
+                </div>
+                {# Start Add Discussion Form Block #}
+                <div>
+                    <form action="" id="addDiscussionFormInJob">
+                        <fieldset form="addDiscussionFormInJob">
+                            {% csrf_token %}
+                            <p class="text-lg px-4 font-bold border-b-2 pb-1">{% translate "Add discussions or reply" %}</p>
+                            <div class="my-3">
+                                <div class="flex rounded-md shadow-sm">
+                                    <div class="px-4 inline-flex items-center min-w-fit rounded-l-md border border-r-0 border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+                                        <span class="text-sm text-gray-500 dark:text-gray-400">
+                                            <i class="fa-solid fa-user-circle fa-xl"></i>
+                                        </span>
+                                    </div>
+                                    <textarea name="discussion"
+                                              id="discussion"
+                                              class="py-3 px-4 pr-11 block w-full border-gray-200 shadow-sm rounded-r-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"></textarea>
+                                </div>
+                            </div>
+                            <div class="my-3">
+                                <div class="flex rounded-md shadow-sm">
+                                    <div class="px-4 inline-flex items-center min-w-fit rounded-l-md border border-r-0 border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+                                        <span class="text-sm text-gray-500 dark:text-gray-400">
+                                            <i class="fa-solid fa-paperclip fa-lg"></i>
+                                        </span>
+                                    </div>
+                                    <label for="small-file-input" class="sr-only">Choose file</label>
+                                    <input type="file"
+                                           name="small-file-input"
+                                           id="small-file-input"
+                                           class="block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 file:bg-transparent file:border-0 file:bg-blue-500 file:text-white file:mr-4 file:py-2 file:px-4 dark:file:bg-gray-700 dark:file:text-gray-400" />
+                                </div>
+                            </div>
+                            <div>
+                                <button type="submit"
+                                        id="addDiscussionBtnInJob"
+                                        class="w-full py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                    {% translate "Add" %}
+                                </button>
+                            </div>
+                        </fieldset>
+                    </form>
+                </div>
+                {# End Add Discussion Form Block #}
+            </div>
+            {# Start Replies Block #}
+            <div>
+                <p class="text-lg px-4 font-bold border-b-2 pb-1">{% translate "Replies" %}</p>
+                <div class="my-2">
+                    <div class="grid grid-cols-12 gap-4 my-5">
+                        <div>
+                            <div class="text-center">
+                                <i class="fa-solid fa-user-circle fa-lg rounded-full ring-2 ring-white dark:ring-gray-800"></i>
+                            </div>
+                        </div>
+                        <div class="col-span-10 relative">
+                            <small class="inline-block relative bottom-1">
+                                <a class="inline-block mr-3 text-blue-700" href="">Name</a>
+                                <p class="inline-block italic">Fri Sep 23 2022</p>
+                            </small>
+                            <p class="text-sm">
+                                {{ "Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, repellat!"|truncatechars:50 }}
+                            </p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-12 gap-4 my-5 ml-9">
+                        <div>
+                            <div class="text-center">
+                                <i class="fa-solid fa-user-circle fa-lg rounded-full ring-2 ring-white dark:ring-gray-800"></i>
+                            </div>
+                        </div>
+                        <div class="col-span-10 relative">
+                            <small class="inline-block relative bottom-1">
+                                <a class="inline-block mr-3 text-blue-700" href="">Name</a>
+                                <p class="inline-block italic">Fri Sep 23 2022</p>
+                            </small>
+                            <p class="text-sm">
+                                {{ "Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, repellat!"|truncatechars:50 }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="my-2">
+                    <div class="grid grid-cols-12 gap-4 my-5">
+                        <div>
+                            <div class="text-center">
+                                <i class="fa-solid fa-user-circle fa-lg rounded-full ring-2 ring-white dark:ring-gray-800"></i>
+                            </div>
+                        </div>
+                        <div class="col-span-10 relative">
+                            <small class="inline-block relative bottom-1">
+                                <a class="inline-block mr-3 text-blue-700" href="">Name</a>
+                                <p class="inline-block italic">Fri Sep 23 2022</p>
+                            </small>
+                            <p class="text-sm">
+                                {{ "Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis, repellat!"|truncatechars:50 }}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {# End Replies Block #}
+        </div>
+    </div>
+    {# Start Update Job Modal #}
+    <div id="update-job-details-modal"
+         class="hs-overlay hidden w-full h-full fixed top-0 left-0 z-[60] overflow-x-hidden overflow-y-auto">
+        <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all sm:max-w-lg sm:w-full m-3 sm:mx-auto h-[calc(100%-3.5rem)]">
+            <div class="max-h-full overflow-hidden flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+                <div class="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700">
+                    <h3 class="font-bold text-gray-800 dark:text-white">Modal title</h3>
+                    <button type="button"
+                            class="hs-dropdown-toggle inline-flex flex-shrink-0 justify-center items-center h-8 w-8 rounded-md text-gray-500 hover:text-gray-400 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 focus:ring-offset-white transition-all text-sm dark:focus:ring-gray-700 dark:focus:ring-offset-gray-800"
+                            data-hs-overlay="#update-job-details-modal">
+                        <span class="sr-only">Close</span>
+                        <svg class="w-3.5 h-3.5"
+                             width="8"
+                             height="8"
+                             viewBox="0 0 8 8"
+                             fill="none"
+                             xmlns="http://www.w3.org/2000/svg">
+                            <path d="M0.258206 1.00652C0.351976 0.912791 0.479126 0.860131 0.611706 0.860131C0.744296 0.860131 0.871447 0.912791 0.965207 1.00652L3.61171 3.65302L6.25822 1.00652C6.30432 0.958771 6.35952 0.920671 6.42052 0.894471C6.48152 0.868271 6.54712 0.854471 6.61352 0.853901C6.67992 0.853321 6.74572 0.865971 6.80722 0.891111C6.86862 0.916251 6.92442 0.953381 6.97142 1.00032C7.01832 1.04727 7.05552 1.1031 7.08062 1.16454C7.10572 1.22599 7.11842 1.29183 7.11782 1.35822C7.11722 1.42461 7.10342 1.49022 7.07722 1.55122C7.05102 1.61222 7.01292 1.6674 6.96522 1.71352L4.31871 4.36002L6.96522 7.00648C7.05632 7.10078 7.10672 7.22708 7.10552 7.35818C7.10442 7.48928 7.05182 7.61468 6.95912 7.70738C6.86642 7.80018 6.74102 7.85268 6.60992 7.85388C6.47882 7.85498 6.35252 7.80458 6.25822 7.71348L3.61171 5.06702L0.965207 7.71348C0.870907 7.80458 0.744606 7.85498 0.613506 7.85388C0.482406 7.85268 0.357007 7.80018 0.264297 7.70738C0.171597 7.61468 0.119017 7.48928 0.117877 7.35818C0.116737 7.22708 0.167126 7.10078 0.258206 7.00648L2.90471 4.36002L0.258206 1.71352C0.164476 1.61976 0.111816 1.4926 0.111816 1.36002C0.111816 1.22744 0.164476 1.10028 0.258206 1.00652Z" fill="currentColor" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="p-4 overflow-y-auto">
+                    <div class="space-y-4">
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Be bold</h3>
+                            <p class="mt-1 text-gray-800 dark:text-gray-400">
+                                Motivate teams to do their best work. Offer best practices to get users going in the right direction. Be bold and offer just enough help to get the work started, and then get out of the way. Give accurate information so users can make educated decisions. Know your user's struggles and desired outcomes and give just enough information to let them get where they need to go.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Be optimistic</h3>
+                            <p class="mt-1 text-gray-800 dark:text-gray-400">
+                                Focusing on the details gives people confidence in our products. Weave a consistent story across our fabric and be diligent about vocabulary across all messaging by being brand conscious across products to create a seamless flow across all the things. Let people know that they can jump in and start working expecting to find a dependable experience across all the things. Keep teams in the loop about what is happening by informing them of relevant features, products and opportunities for success. Be on the journey with them and highlight the key points that will help them the most - right now. Be in the moment by focusing attention on the important bits first.
+                            </p>
+                        </div>
+                        <div>
+                            <h3 class="text-lg font-semibold text-gray-800 dark:text-white">Be practical, with a wink</h3>
+                            <p class="mt-1 text-gray-800 dark:text-gray-400">
+                                Keep our own story short and give teams just enough to get moving. Get to the point and be direct. Be concise - we tell the story of how we can help, but we do it directly and with purpose. Be on the lookout for opportunities and be quick to offer a helping hand. At the same time realize that nobody likes a nosy neighbor. Give the user just enough to know that something awesome is around the corner and then get out of the way. Write clear, accurate, and concise text that makes interfaces more usable and consistent - and builds trust. We strive to write text that is understandable by anyone, anywhere, regardless of their culture or language so that everyone feels they are part of the team.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-gray-700">
+                    <button type="button"
+                            class="hs-dropdown-toggle py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
+                            data-hs-overlay="#update-job-details-modal">Close</button>
+                    <a class="py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                       href="#">Save changes</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    {# End Update Job Modal #}
 {% endblock dashboard_content_block %}
