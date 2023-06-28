@@ -4,10 +4,13 @@ import "../styles/dashboard.scss";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 import "preline";
-import "css.gg/icons/all.css";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+// import "css.gg/icons/all.css";
+// import "css.gg/icons/css/al"
 import tableSort from "table-sort-js/table-sort.js";
 // eslint-disable-next-line no-unused-vars
 import Chart from "chart.js/auto";
+
 import "./job/details.js";
 
 window.document.addEventListener("DOMContentLoaded", function () {
@@ -30,13 +33,39 @@ window.document.addEventListener("DOMContentLoaded", function () {
       input.disabled = false;
       input.classList.remove(...allDisabledCssClassed);
     }
-    
   });
   bwDisabledLinks.forEach((link) => {
     link.addEventListener("click", (event) => {
       event.preventDefault();
     });
   });
+  // rich editor
+  const allRichEditors = document.querySelectorAll("textarea.rich-editor");
+  if (allRichEditors.length > 0) {
+    // ClassicEditor.builtinPlugins.forEach((pl) => {
+    //   console.log(pl);
+    // });
+    allRichEditors.forEach((editor) => {
+      ClassicEditor.create(editor, {
+        toolbar: [
+          "heading",
+          "|",
+          "alignment", // <--- ADDED
+          "bold",
+          "italic",
+          "link",
+          "bulletedList",
+          "numberedList",
+          // "uploadImage",
+          "blockQuote",
+          "undo",
+          "redo",
+        ],
+      }).catch((error) => {
+        console.error(error);
+      });
+    });
+  }
   const jobsChart = document.querySelector("canvas#jobsChart");
   if (jobsChart) {
     const options2 = {

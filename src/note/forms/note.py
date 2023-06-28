@@ -4,6 +4,7 @@ from typing import Optional
 from core.forms import BaseModelFormMixin, JoditFormMixin
 from core.forms.mixins.remove_fields_mixin import RemoveFieldsMixin
 from note.models import Note
+from django import forms
 
 
 class NoteForm(
@@ -35,7 +36,4 @@ class NoteForm(
     class Meta(BaseModelFormMixin.Meta):
         model = Note
         # fields = "__all__"
-        # widgets = {
-        # "body": SummernoteWidget()
-        # "body": SummernoteInplaceWidget()
-        # }
+        widgets = {"body": forms.Textarea(attrs={"class": "rich-editor"})}

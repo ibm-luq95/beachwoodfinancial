@@ -9,5 +9,5 @@ class JoditFormMixin:
             for field_name in self.fields:
                 if isinstance(self.fields.get(field_name).widget, forms.Textarea):
                     self.fields[field_name].widget.attrs.update(
-                        {"class": "wyswyg-textarea"}
+                        {"class": "rich-editor"}
                     )
