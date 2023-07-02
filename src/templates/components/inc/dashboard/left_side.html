@@ -786,9 +786,16 @@
                     <ul class="pt-2 pl-2">
                         <li>
                             <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                               href="javascript:;">
+                               href="{% url 'dashboard:site_settings:web_app_settings' %}">
                                 <i class="fa-solid fa-sliders"></i>
                                 {% translate "Web App Settings" %}
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
+                               href="{% url 'dashboard:site_settings:app_configs_settings' %}">
+                                <i class="fa-solid fa-gears"></i>
+                                {% translate "Configurations" %}
                             </a>
                         </li>
                         <li>

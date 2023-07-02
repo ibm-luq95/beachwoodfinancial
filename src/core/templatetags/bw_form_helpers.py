@@ -42,7 +42,14 @@ def bw_testing_form_field(context, input_bound_field: BoundField) -> None:
     # debugging_print(input_bound_field, is_inspect=True)
     # debugging_print(input_bound_field.data)
     # debugging_print(input_bound_field.value())
-    # debugging_print(type(input_bound_field))
+    debugging_print(type(input_bound_field))
+    debugging_print(input_bound_field.label)
+    debugging_print(input_bound_field.value())
+    # debugging_print(input_bound_field.field.widget)
+    # debugging_print(input_bound_field.field.widget, is_inspect=True)
+    debugging_print(input_bound_field.field, is_inspect=True)
+    # debugging_print(input_bound_field.field)
+    # debugging_print(input_bound_field.field.show_hidden_initial)
     # debugging_print(dir(input_bound_field.widget))
     # checkboxselectmultiple
     # widget_type = input_bound_field.widget_type

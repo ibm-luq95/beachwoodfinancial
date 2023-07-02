@@ -21,6 +21,7 @@
                     </div>
                     <!-- End Col -->
                     <div class="col-span-10">
+                        {# {{ input.field|bw_get_form_field_type }} #}
                         <div class="relative">
                             {# ModelMultipleChoiceField #}
                             {% with placeholder=input.field.widget.attrs.placeholder|default:input.label WIDGET_ERROR_CLASS=BW_PRELINE_INPUT_ERROR_CLASSES %}
@@ -34,6 +35,9 @@
                                             {% translate "No "|add:input.label %}
                                         </p>
                                     {% endif %}
+                                {% elif input.field|bw_get_form_field_type == "BooleanField" %}
+                                    {# {% bw_checkbox checkbox_txt=input.field.label field=input %} #}
+                                    {% bw_switch bound_field=input %}
                                 {% else %}
                                     {% render_field input class+=BW_PRELINE_TEXT_INPUT_CSS_CLASSES placeholder=placeholder %}
                                 {% endif %}

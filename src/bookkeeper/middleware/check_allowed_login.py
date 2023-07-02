@@ -43,4 +43,4 @@ class CheckAllowedLoginMiddleware:
                         "You not allowed to login, please contact the administrator",
                     )
                     logout(request)
-                    return redirect(reverse_lazy("users:auth:login"))
+                    return redirect(reverse_lazy("auth:login"))

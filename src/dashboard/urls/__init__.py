@@ -55,4 +55,9 @@ urlpatterns = [
         include("job.urls"),
         name="job",
     ),
+    path(
+        "site-settings/",
+        include("site_settings.urls"),
+        name="site_settings",
+    ),
 ]
