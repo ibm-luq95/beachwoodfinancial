@@ -3,6 +3,8 @@ bandit
 black
 bpython
 django-debug-toolbar
+django-debugtools
+django-model-info
 django-stubs
 django-stubs-ext
 djangorestframework-stubs

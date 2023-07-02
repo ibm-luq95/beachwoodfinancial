@@ -9,7 +9,9 @@ DEBUG = config("DEBUG", cast=bool)
 INSTALLED_APPS = INSTALLED_APPS + [
     "django.contrib.admindocs",
     "debug_toolbar",
+    "debugtools",
     "debug_permissions",
+    "django_model_info.apps.DjangoModelInfoConfig",
     # "request_viewer",
 ]
 
@@ -17,6 +19,7 @@ MIDDLEWARE = MIDDLEWARE + [
     # "request_viewer.middleware.RequestViewerMiddleware",
     # "request_viewer.middleware.ExceptionMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
+    "debugtools.middleware.XViewMiddleware",
     "django.contrib.admindocs.middleware.XViewMiddleware",
 ]
 
@@ -35,7 +38,9 @@ DATABASES = {
         },
     }
 }
-TEMPLATES[0]["OPTIONS"]["builtins"].append("core.templatetags.development_tags")
+TEMPLATES[0]["OPTIONS"]["builtins"].extend(
+    ["debugtools.templatetags.debugtools_tags", "core.templatetags.development_tags"]
+)
 
 # Set Cache Configurations
 # Cache Redis
@@ -59,6 +64,7 @@ DEBUG_TOOLBAR_PANELS = [
     "debug_toolbar.panels.request.RequestPanel",
     "debug_toolbar.panels.sql.SQLPanel",
     "debug_toolbar.panels.staticfiles.StaticFilesPanel",
+    "debugtools.panels.ViewPanel",
     "debug_toolbar.panels.templates.TemplatesPanel",
     "debug_toolbar.panels.cache.CachePanel",
     "debug_toolbar.panels.signals.SignalsPanel",

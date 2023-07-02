@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.humanize",
     "django.forms",
-    # "django.contrib.sites",  # TODO: enable it
+    "django.contrib.sites",  # TODO: enable it
     "django_extensions",
     "webpack_boilerplate",
     "django_components",
@@ -73,6 +73,7 @@ INSTALLED_APPS = [
     "job_category.apps.JobCategoryConfig",
     "job.apps.JobConfig",
     "task.apps.TaskConfig",
+    "site_settings.apps.SiteSettingsConfig",
 ]
 
 MIDDLEWARE = [
@@ -104,6 +105,7 @@ UI_COMPONENTS_TEMPLATETAGS = [
     "bw_ui_components.templatetags.inputs.radiobox",
     "bw_ui_components.templatetags.inputs.checkbox",
     "bw_ui_components.templatetags.inputs.file_input",
+    "bw_ui_components.templatetags.inputs.switch",
     "bw_ui_components.templatetags.elements.anchor",
     "bw_ui_components.templatetags.elements.icon",
     "bw_ui_components.templatetags.table_list.table",
