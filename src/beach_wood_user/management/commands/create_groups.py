@@ -3,6 +3,7 @@
 from django.contrib.auth.models import Group, Permission
 from django.core.management.base import BaseCommand
 from django.db import transaction
+from django.utils.translation import gettext as _
 
 from core.constants import BOOKKEEPER_GROUP_NAME, MANAGER_GROUP_NAME, ASSISTANT_GROUP_NAME
 from core.management.mixins import CommandStdOutputMixin
@@ -12,7 +13,7 @@ from core.management.mixins import CommandStdOutputMixin
 
 
 class Command(BaseCommand, CommandStdOutputMixin):
-    help = "Create groups for manager, bookkeeper, assistant"
+    help = _("Create groups for manager, bookkeeper, assistant")
     apps_name = ("manager", "bookkeeper", "assistant")
     groups_names = (BOOKKEEPER_GROUP_NAME, ASSISTANT_GROUP_NAME, MANAGER_GROUP_NAME)
 
@@ -21,7 +22,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
             "-a",
             "--app-name",
             type=str,
-            help="Pass app specific name to create group only",
+            help=_("Pass app specific name to create group only"),
             required=False,
         )
         parser.add_argument(
@@ -32,7 +33,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
             const=True,
             type=str,
             required=False,
-            help="Delete all groups for manager, bookkeeper, assistant",
+            help=_("Delete all groups for manager, bookkeeper, assistant"),
             # default=False,
         )
 
@@ -49,7 +50,9 @@ class Command(BaseCommand, CommandStdOutputMixin):
                 if passed_app:
                     if passed_app not in self.apps_name:
                         raise Exception(
-                            f"The app {passed_app} not allowed!, the allowed {self.apps_name}"
+                            _(
+                                f"The app {passed_app} not allowed!, the allowed {self.apps_name}"
+                            )
                         )
                     models = [passed_app]
                 else:
@@ -71,7 +74,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
                         case "manager":
                             group_obj = Group.objects.create(name=MANAGER_GROUP_NAME)
                         case _:
-                            raise Exception(f"The {model} not exists!")
+                            raise Exception(_(f"The {model} not exists!"))
                     # for perm in permissions:
                     #     pe = Permission.objects.filter(codename=perm)
                     #     if pe:
@@ -82,7 +85,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
                     #         self.stdout_output("error", f"Permission {perm} not exists!")
                     # debugging_print(group_obj.permissions.all())
                     self.stdout_output(
-                        "success", f"Group {group_obj.name} created successfully"
+                        "success", _(f"Group {group_obj.name} created successfully")
                     )
         except Exception as ex:
             self.stdout_output("error", str(ex))
@@ -93,11 +96,11 @@ class Command(BaseCommand, CommandStdOutputMixin):
                 for group in self.groups_names:
                     group_obj = Group.objects.filter(name=group)
                     if group_obj.count() <= 0:
-                        self.stdout_output("error", f"Group {group} not exists!")
+                        self.stdout_output("error", _(f"Group {group} not exists!"))
                         pass
                     else:
                         group_obj = group_obj.first()
-                        self.stdout_output("warn", f"Deleting {group}")
+                        self.stdout_output("warn", _(f"Deleting {group}"))
                         group_obj.delete()
 
         except Exception as ex:

@@ -29,7 +29,7 @@ class CustomFormatter(logging.Formatter):
 
 
 def get_formatted_logger(logger_name: Optional[str] = None) -> Logger:
-    logger = logging.getLogger("django" or logger_name)
+    logger = logging.getLogger(logger_name or "django")
     # logger.setLevel(logging.DEBUG)
 
     # create console handler with a higher log level

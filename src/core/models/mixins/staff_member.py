@@ -20,7 +20,11 @@ class StaffMemberMixin(models.Model):
         to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="%(class)s"
     )
     profile_picture = models.ImageField(
-        _("profile picture"), upload_to="profile_pictures/", null=True, blank=True, validators=[file_validator]
+        _("profile picture"),
+        upload_to="profile_pictures/",
+        null=True,
+        blank=True,
+        validators=[file_validator],
     )
 
     bio = models.TextField(_("bio"), null=True, blank=True)
@@ -41,4 +45,4 @@ class StaffMemberMixin(models.Model):
                 Q(is_seen=False) & ~Q(status__in=[CON_ARCHIVED])
             )
         else:
-            None
+            return None

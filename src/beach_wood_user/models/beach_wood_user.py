@@ -53,7 +53,7 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin):
     )
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = []
+    REQUIRED_FIELDS = ["user_type"]
 
     objects = BeachWoodUserManager()
 
