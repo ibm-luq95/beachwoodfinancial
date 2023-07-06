@@ -4,6 +4,7 @@ Django
 django-admin-rangefilter
 django-crispy-forms
 crispy-tailwind
+gunicorn
 django-filter
 django-maintenance-mode
 django-session-timeout

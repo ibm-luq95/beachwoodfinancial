@@ -2,6 +2,7 @@ autopep8
 bandit
 black
 bpython
+Coverage
 django-debug-toolbar
 django-debugtools
 django-model-info

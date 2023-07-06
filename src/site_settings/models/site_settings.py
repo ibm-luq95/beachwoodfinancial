@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-#
+from django.contrib.sites.models import Site
 from django.db import models
 from django.urls import reverse_lazy
 from django.utils.text import slugify
@@ -40,6 +41,13 @@ class SiteSettings(BaseModelMixin):
     keywords = models.TextField(
         _("keywords"), null=True, blank=True, help_text=HELP_MESSAGES.get("keywords")
     )
+    classification = models.CharField(
+        _("classification"),
+        max_length=100,
+        null=True,
+        blank=True,
+        help_text=HELP_MESSAGES.get("classification"),
+    )
     logo = models.ImageField(
         _("logo"),
         upload_to="app_logo/",
@@ -80,6 +88,13 @@ class SiteSettings(BaseModelMixin):
         default=True,
         help_text=HELP_MESSAGES.get("can_assistants_login"),
     )
+    site = models.ForeignKey(
+        to=Site,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
+        help_text=HELP_MESSAGES.get("site"),
+    )
     facebook = models.URLField(
         _("facebook"),
         null=True,
@@ -104,12 +119,15 @@ class SiteSettings(BaseModelMixin):
         blank=True,
         help_text=HELP_MESSAGES.get("instagram"),
     )
+    author = models.CharField(
+        _("author"), max_length=50, default="Ibrahim Luqman", editable=False
+    )
 
     class Meta(BaseModelMixin.Meta):
         db_table = "site_settings"
 
     def __str__(self):
-        return f"Settings for {self.slug}"
+        return _(f"Settings for {self.slug}")
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.slug)

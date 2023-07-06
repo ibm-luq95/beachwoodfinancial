@@ -37,6 +37,8 @@
                                     {% endif %}
                                 {% elif input.field|bw_get_form_field_type == "BooleanField" %}
                                     {# {% bw_checkbox checkbox_txt=input.field.label field=input %} #}
+                                    {# {{ input }} #}
+                                    {# {% bw_testing_form_field input.field %} #}
                                     {% bw_switch bound_field=input %}
                                 {% else %}
                                     {% render_field input class+=BW_PRELINE_TEXT_INPUT_CSS_CLASSES placeholder=placeholder %}

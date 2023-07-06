@@ -20,6 +20,8 @@ HELP_MESSAGES = {
     "twitter": _("Twitter URL"),
     "youtube": _("Youtube channel URL"),
     "instagram": _("Instagram URL"),
+    "site": _("The site this settings related to."),
+    "classification": _("Classification for this web app")
 }
 
 APPLICATION_CONFIGURATIONS_HELP_MESSAGES = {

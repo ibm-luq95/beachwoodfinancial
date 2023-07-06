@@ -131,6 +131,7 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.request",
                 # "django.template.context_processors.i18n",
+                "site_settings.context_processors.site_settings.return_site_settings_context",
                 "core.context_processors.access_constants",
                 "core.context_processors.access_css_classes_constants",
                 "core.context_processors.access_constants_as_group",
