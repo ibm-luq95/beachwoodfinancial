@@ -1,4 +1,5 @@
 # -*- encoding: utf-8 -*-
+from django.contrib.sites.models import Site
 from django.utils.translation import gettext as _
 from django.db import models
 from django.core import validators
@@ -85,6 +86,12 @@ class ApplicationConfigurations(BaseModelMixin):
             "default_long_template_truncated_string"
         ),
         validators=[validators.integer_validator],
+    )
+    site = models.ForeignKey(
+        to=Site,
+        on_delete=models.CASCADE,
+        null=True,
+        blank=True,
     )
 
     class Meta(BaseModelMixin.Meta):
