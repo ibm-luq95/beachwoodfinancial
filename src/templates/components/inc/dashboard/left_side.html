@@ -47,7 +47,7 @@
         <a class="flex-none text-xl font-semibold text-white"
            href="#"
            aria-label="Brand">
-            <img src="{{ get_web_app_settings.logo }}" alt="" />
+            <img src="{% if get_web_app_settings.logo %} {{ get_web_app_settings.logo.url }} {% endif %}" alt="{{ get_web_app_settings.name }}" />
         </a>
     </div>
     <nav class="flex flex-col flex-wrap w-full p-6 hs-accordion-group"
@@ -577,7 +577,7 @@
             <li class="hs-accordion" id="special-assignment-accordion">
                 <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
                    href="javascript:;">
-                    <i class="fa-solid fa-list-check w-3.5 h-3.5"></i>
+                    <i class="fa-solid fa-list-ol w-3.5 h-3.5"></i>
                     {% translate "Assignments" %}
                     <svg class="hs-accordion-active:block ml-auto hidden w-3 h-3 text-gray-600 group-hover:text-gray-500"
                          width="16"
