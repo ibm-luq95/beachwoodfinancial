@@ -1,7 +1,5 @@
 # -*- coding: utf-8 -*-#
-# import colorama
 import stringcase
-from colorama import Fore
 from decouple import Config, RepositoryEnv
 from django.conf import settings
 from django.contrib.sites.models import Site
@@ -72,7 +70,9 @@ class Command(BaseCommand, CommandStdOutputMixin):
 
                     try:
                         site_settings = SiteSettings.objects.get(slug="web-app")
-                        site_settings_key_cache = stringcase.snakecase(f"site settings web app {site_domain}")
+                        site_settings_key_cache = stringcase.snakecase(
+                            f"site settings web app {site_domain}"
+                        )
                         BWCacheHandler.set_item(site_settings_key_cache, site_settings)
                         # app_configs = ApplicationConfigurations.objects.filter(slug="app-configs").first()
 
