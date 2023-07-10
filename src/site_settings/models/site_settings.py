@@ -94,6 +94,7 @@ class SiteSettings(BaseModelMixin):
         null=True,
         blank=True,
         help_text=HELP_MESSAGES.get("site"),
+        db_index=True,
     )
     facebook = models.URLField(
         _("facebook"),
