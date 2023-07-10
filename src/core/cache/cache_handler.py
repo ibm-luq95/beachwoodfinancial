@@ -1,7 +1,10 @@
 # -*- coding: utf-8 -*-#
 from typing import Any, Union, Optional
+from django.utils.translation import gettext as _
 
 from django.core.cache import cache
+
+from core.utils import colored_output_with_logging
 
 
 class BWCacheHandler:
@@ -70,3 +73,28 @@ class BWCacheHandler:
             None: If key not exists
         """
         cache.delete(key)
+
+    @staticmethod
+    def update_item(key: str, value: Any, timeout: Optional[int] = None) -> None:
+        """
+        This will update a key in the cache
+        Parameters
+        ----------
+        key
+        value
+        timeout
+
+        Returns
+        -------
+        None
+        """
+        if BWCacheHandler.check(key) is True:
+            BWCacheHandler.delete_item(key)
+            BWCacheHandler.set_item(key, value, timeout)
+        else:
+            colored_output_with_logging(
+                is_logged=True,
+                text=_(f"The cache key {key} not exists!"),
+                log_level="warning",
+                color="yellow",
+            )
