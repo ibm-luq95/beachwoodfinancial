@@ -7,6 +7,7 @@ from django.views.generic import (
 )
 
 from core.cache import BWCacheViewMixin
+from core.constants.site_settings import APP_CONFIGS_DB_SLUG
 from core.views.mixins import (
     BWLoginRequiredMixin,
     BWManagerAccessMixin,
@@ -30,13 +31,13 @@ class ApplicationConfigurationsFormView(
     model = ApplicationConfigurations
 
     def get_object(self, queryset=None):
-        obj = self.model.objects.select_related().filter(slug="app-configs").first()
+        obj = self.model.objects.filter(slug=APP_CONFIGS_DB_SLUG).first()
         if not obj:
-            messages.warning(self.request, _("No web app settings!"))
+            messages.warning(self.request, _("No web app configs!"))
         return obj
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context.setdefault("title", _("Update site settings"))
+        context.setdefault("title", _("Update web application configurations"))
         return context

@@ -14,6 +14,6 @@ def log_user_login(sender, request, user, **kwargs):
     # site_settings = SiteSettings.objects.select_related().filter(slug="web-app").first()
     # app_configs = ApplicationConfigurations.objects.filter(slug="app-configs").first()
     # if site_settings:
-    #     BWCacheHandler.set_item(WEB_APP_SETTINGS_KEY, site_settings)
+    #     BWCacheHandler.set_item(WEB_APP_SITE_SETTINGS_KEY, site_settings)
     # if app_configs:
     #     BWCacheHandler.set_item(APP_CONFIGS_SETTINGS_KEY, app_configs)

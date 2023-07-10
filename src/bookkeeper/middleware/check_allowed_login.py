@@ -6,7 +6,7 @@ from django.shortcuts import redirect
 from django.urls import reverse_lazy
 
 from core.cache import BWCacheHandler
-from core.constants.site_settings import WEB_APP_SETTINGS_KEY
+from core.constants.site_settings import WEB_APP_SITE_SETTINGS_KEY
 
 
 class CheckAllowedLoginMiddleware:
@@ -33,7 +33,7 @@ class CheckAllowedLoginMiddleware:
                 request.user.user_type == "bookkeeper"
                 or request.user.user_type == "assistants"
             ):
-                site_settings = BWCacheHandler.get_item(WEB_APP_SETTINGS_KEY)
+                site_settings = BWCacheHandler.get_item(WEB_APP_SITE_SETTINGS_KEY)
                 if (
                     site_settings.can_bookkeepers_login is False
                     or site_settings.can_assistants_login is False

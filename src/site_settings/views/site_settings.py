@@ -7,6 +7,7 @@ from django.views.generic import (
 )
 
 from core.cache import BWCacheViewMixin
+from core.constants.site_settings import SITE_SETTINGS_DB_SLUG
 from core.utils import debugging_print
 from core.views.mixins import (
     BWLoginRequiredMixin,
@@ -31,9 +32,9 @@ class SiteSettingsFormView(
     model = SiteSettings
 
     def get_object(self, queryset=None):
-        obj = self.model.objects.select_related().filter(slug="web-app").first()
+        obj = self.model.objects.filter(slug=SITE_SETTINGS_DB_SLUG).first()
         if not obj:
-            messages.warning(self.request, _("No web app settings!"))
+            messages.warning(self.request, _("No web app site settings!"))
         return obj
 
     def get_context_data(self, **kwargs):
