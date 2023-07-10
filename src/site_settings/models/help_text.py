@@ -2,7 +2,9 @@
 from django.utils.translation import gettext as _
 
 HELP_MESSAGES = {
-    "slug": _("Site settings code name which indicate the settings section"),
+    "slug": _(
+        "Site settings code name which indicate the settings section (it must be unique)"
+    ),
     "name": _("Web application name"),
     "title": _("Web application title, (it used in SEO)"),
     "email": _("Web application contact email address"),
@@ -21,7 +23,7 @@ HELP_MESSAGES = {
     "youtube": _("Youtube channel URL"),
     "instagram": _("Instagram URL"),
     "site": _("The site this settings related to."),
-    "classification": _("Classification for this web app")
+    "classification": _("Classification for this web app"),
 }
 
 APPLICATION_CONFIGURATIONS_HELP_MESSAGES = {
