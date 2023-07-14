@@ -25,7 +25,7 @@ def bw_badge(context, *args, **kwargs) -> dict:
                 # font_size = "text-xs"
                 font_size = "text-sm"
             case "sm":
-                badge_size = "py-1 px-1.5"
+                badge_size = "py-1 px-2"
                 font_size = "text-xs"
     else:
         badge_size = "py-1.5 px-3"
