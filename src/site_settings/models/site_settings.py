@@ -62,6 +62,13 @@ class SiteSettings(BaseModelMixin):
         blank=True,
         help_text=HELP_MESSAGES.get("phone"),
     )
+    subject = models.CharField(
+        _("subject"),
+        max_length=70,
+        null=True,
+        blank=True,
+        help_text=HELP_MESSAGES.get("subject"),
+    )
     manager_name = models.CharField(
         _("manager name"),
         max_length=50,
