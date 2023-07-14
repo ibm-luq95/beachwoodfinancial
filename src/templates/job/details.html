@@ -79,7 +79,8 @@
                     <textarea id="jobDescription"
                               disabled
                               name="hs-trailing-button-add-on-with-leading-and-trailing"
-                              class="{{ BW_FULL_INPUT_CSS_CLASSES }} py-3 px-4 block w-full border-gray-200 shadow-sm rounded-0 text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 rounded dark:text-gray-400">{{ object.note }}</textarea>
+                              class="{{ BW_FULL_INPUT_CSS_CLASSES }} py-3 px-4 block w-full border-gray-200 shadow-sm rounded-0 text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 rounded dark:text-gray-400"
+                              readonly>{{ object.note }}</textarea>
                 </div>
             </div>
             {# Start Tabs Block #}
@@ -124,7 +125,7 @@
                             This is the <em class="font-semibold text-gray-800 dark:text-gray-200">first</em> item's tab body.
 </p> -->
 
-                        {% include "bw_components/task/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Tasks" header_subtitle="Sub" is_show_create_btn=True app_label=app_label page_obj=page_obj pagination_list_url_name="dashboard:task:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete" actions_app_name=app_label actions_base_url="dashboard:task" base_url_name="dashboard:task" filter_form=filter_form filter_cancel_url="dashboard:task:list" object_list=object.tasks.all is_show_job_column=False is_show_manager_column=True is_show_type_column=True is_show_status_column=True %}
+                        {% include "bw_components/task/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at is_show_create_btn=True app_label=app_label pagination_list_url_name="dashboard:task:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete" actions_app_name=app_label actions_base_url="dashboard:task" base_url_name="dashboard:task" filter_form=filter_form filter_cancel_url="dashboard:task:list" object_list=object.tasks.all is_show_job_column=False is_show_manager_column=True is_show_type_column=True is_show_status_column=True %}
 
                     </div>
                     <div id="documents-tab"
@@ -135,7 +136,7 @@
                             This is the <em class="font-semibold text-gray-800 dark:text-gray-200">second</em> item's tab body.
 </p> -->
 
-                        {% include "bw_components/document/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Documents" header_subtitle="Documents related to clients" is_show_create_btn=True app_label=app_label page_obj=page_obj pagination_list_url_name="dashboard:document:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete" actions_app_name=app_label actions_base_url="dashboard:document" base_url_name="dashboard:document" filter_form=filter_form filter_cancel_url="dashboard:document:list" object_list=object.documents.all is_show_section=False %}
+                        {% include "bw_components/document/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at is_show_create_btn=True app_label=app_label pagination_list_url_name="dashboard:document:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete" actions_app_name=app_label actions_base_url="dashboard:document" base_url_name="dashboard:document" filter_form=filter_form filter_cancel_url="dashboard:document:list" object_list=object.documents.all is_show_section=False %}
 
                     </div>
                     <div id="notes-tab"
@@ -146,7 +147,7 @@
                             This is the <em class="font-semibold text-gray-800 dark:text-gray-200">third</em> item's tab body.
 </p> -->
 
-                        {% include "bw_components/note/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Accounts" header_subtitle="Notes, helping organize your clients and work" is_show_create_btn=True app_label=app_label page_obj=page_obj pagination_list_url_name="dashboard:note:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete" actions_app_name=app_label actions_base_url="dashboard:note" base_url_name="dashboard:note" filter_form=filter_form filter_cancel_url="dashboard:note:list" object_list=object.notes.all is_show_section=False %}
+                        {% include "bw_components/note/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Notes" is_show_create_btn=True app_label=app_label pagination_list_url_name="dashboard:note:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete" actions_app_name=app_label actions_base_url="dashboard:note" base_url_name="dashboard:note" filter_form=filter_form filter_cancel_url="dashboard:note:list" object_list=object.notes.all is_show_section=False %}
 
                     </div>
                 </div>
@@ -163,13 +164,11 @@
                                name="job-status-input"
                                class="{{ BW_FULL_INPUT_CSS_CLASSES }} py-3 px-4 block w-full border-gray-200 shadow-sm rounded-l-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
                                disabled
-                               value="{{ object.get_status_display }}"
-                              />
+                               value="{{ object.get_status_display }}" />
                         <datalist id="job-status-datalist">
                             {% for choice in job_status_choices %}
                                 <option value="{{ choice.0|safe }}">{{ choice.1|safe }}</option>
                             {% endfor %}
-                            
                         </datalist>
                         <button type="button"
                                 class="{{ BW_FULL_INPUT_CSS_CLASSES }} hs-tooltip -ml-px py-3 px-4 inline-flex justify-center items-center gap-2 border font-medium bg-blue-100 border-transparent text-blue-500 hover:text-white hover:bg-blue-100 focus:outline-none focus:ring-2 ring-offset-white focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
@@ -276,8 +275,8 @@
             {# Start Replies Block #}
             <div>
                 <p class="text-lg px-4 font-bold border-b-2 pb-1">{% translate "Replies" %}</p>
-                <div class="my-2">
-                    <div class="grid grid-cols-12 gap-4 my-5">
+                <div class="my-2 flex flex-col bg-white border shadow-sm rounded-xl pl-3 py-3 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
+                    <div class="grid grid-cols-12 gap-4 my-2">
                         <div>
                             <div class="text-center">
                                 <i class="fa-solid fa-user-circle fa-lg rounded-full ring-2 ring-white dark:ring-gray-800"></i>
@@ -293,7 +292,7 @@
                             </p>
                         </div>
                     </div>
-                    <div class="grid grid-cols-12 gap-4 my-5 ml-9">
+                    <div class="grid grid-cols-12 gap-4 my-4 ml-9">
                         <div>
                             <div class="text-center">
                                 <i class="fa-solid fa-user-circle fa-lg rounded-full ring-2 ring-white dark:ring-gray-800"></i>
@@ -310,8 +309,8 @@
                         </div>
                     </div>
                 </div>
-                <div class="my-2">
-                    <div class="grid grid-cols-12 gap-4 my-5">
+                <div class="my-2 flex flex-col bg-white border shadow-sm rounded-xl pl-3 py-3 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
+                    <div class="grid grid-cols-12 gap-4 my-2">
                         <div>
                             <div class="text-center">
                                 <i class="fa-solid fa-user-circle fa-lg rounded-full ring-2 ring-white dark:ring-gray-800"></i>
