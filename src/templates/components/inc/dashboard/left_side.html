@@ -47,7 +47,8 @@
         <a class="flex-none text-xl font-semibold text-white"
            href="#"
            aria-label="Brand">
-            <img src="{% if get_web_app_settings.logo %} {{ get_web_app_settings.logo.url }} {% endif %}" alt="{{ get_web_app_settings.name }}" />
+            <img src="{% if get_web_app_settings.logo %} {{ get_web_app_settings.logo.url }} {% endif %}"
+                 alt="{{ get_web_app_settings.name }}" />
         </a>
     </div>
     <nav class="flex flex-col flex-wrap w-full p-6 hs-accordion-group"
@@ -713,43 +714,30 @@
                     </ul>
                 </div>
             </li>
+            {% comment  %}
             <li class="hs-accordion" id="company-services-accordion">
-                <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                   href="javascript:;">
+                <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white" href="javascript:;">
                     <i class="fa-solid fa-building-lock w-3.5 h-3.5"></i>
                     {% translate "Company Services" %}
-                    <svg class="hs-accordion-active:block ml-auto hidden w-3 h-3 text-gray-600 group-hover:text-gray-500"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
+                    <svg class="hs-accordion-active:block ml-auto hidden w-3 h-3 text-gray-600 group-hover:text-gray-500" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round">
                         </path>
                     </svg>
-                    <svg class="hs-accordion-active:hidden ml-auto block w-3 h-3 text-gray-600 group-hover:text-gray-500"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
+                    <svg class="hs-accordion-active:hidden ml-auto block w-3 h-3 text-gray-600 group-hover:text-gray-500" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round">
                         </path>
                     </svg>
                 </a>
-                <div id="company-services-accordion-child"
-                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
+                <div id="company-services-accordion-child" class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
                     <ul class="pt-2 pl-2">
                         <li>
-                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                               href="javascript:;">
+                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white" href="javascript:;">
                                 <i class="fa-solid fa-list"></i>
                                 {% translate "List" %}
                             </a>
                         </li>
                         <li>
-                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                               href="javascript:;">
+                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white" href="javascript:;">
                                 <i class="fa-solid fa-plus"></i>
                                 {% translate "Add new" %}
                             </a>
@@ -757,6 +745,7 @@
                     </ul>
                 </div>
             </li>
+            {% endcomment %}
             <li class="hs-accordion" id="site-settings-accordion">
                 <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
                    href="javascript:;">
