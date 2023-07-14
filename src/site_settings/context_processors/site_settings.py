@@ -13,9 +13,11 @@ def get_web_app_settings(request) -> Union[SiteSettings, None]:
             .filter(slug=SITE_SETTINGS_DB_SLUG)
             .first()
         )
-        print(site_settings)
+        # print(site_settings)
         if site_settings:
             return BWCacheHandler.get_item(WEB_APP_SITE_SETTINGS_KEY)
+        else:
+            return None
 
 
 def return_site_settings_context(request):
