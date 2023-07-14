@@ -24,6 +24,7 @@ HELP_MESSAGES = {
     "instagram": _("Instagram URL"),
     "site": _("The site this settings related to."),
     "classification": _("Classification for this web app"),
+    "subject": _("Website subject"),
 }
 
 APPLICATION_CONFIGURATIONS_HELP_MESSAGES = {
