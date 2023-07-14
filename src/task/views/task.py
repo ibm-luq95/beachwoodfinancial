@@ -1,16 +1,12 @@
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models import Q
 from django.urls import reverse_lazy
+from django.utils.translation import gettext as _
 from django.views.generic import (
     CreateView,
     DeleteView,
-    DetailView,
     ListView,
     UpdateView,
-    RedirectView,
-    FormView,
 )
-from django.utils.translation import gettext as _
 
 from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
@@ -21,7 +17,6 @@ from core.views.mixins import (
 )
 from note.forms import NoteForm
 from note.models import Note
-from note.filters import NoteFilter
 from task.filters import TaskFilter
 from task.forms import TaskForm
 from task.models import TaskProxy
@@ -88,10 +83,10 @@ class TaskUpdateView(
 ):
     # permission_required = "client.add_client"
     template_name = "task/update.html"
-    form_class = NoteForm
+    form_class = TaskForm
     success_message = _("Task updated successfully")
     success_url = reverse_lazy("dashboard:task:list")
-    model = Note
+    model = TaskProxy
 
     # template_name_suffix = "_create_client"
 
@@ -111,7 +106,6 @@ class TaskDeleteView(
     DeleteView,
 ):
     template_name = "task/delete.html"
-    # form_class = ClientCategoryForm
     model = TaskProxy
     success_message = _("Task deleted successfully")
     success_url = reverse_lazy("dashboard:task:list")
