@@ -16,15 +16,6 @@ DATABASES = {
         },
     }
 }
-# Cache configurations
-CACHES = {
-    "default": {
-        "BACKEND": config("CACHE_BACKEND_ENGINE", cast=str),
-        "LOCATION": f"redis://{config('REDIS_USER', cast=str)}:{config('REDIS_PASSWORD', cast=str)}"
-                    f"@{config('REDIS_HOST', cast=str)}:{config('REDIS_PORT', cast=str)}",
-        "TIMEOUT": None,
-    }
-}
 
 # Django production deployment settings
 CSRF_COOKIE_SECURE = config("CSRF_COOKIE_SECURE", cast=bool)
