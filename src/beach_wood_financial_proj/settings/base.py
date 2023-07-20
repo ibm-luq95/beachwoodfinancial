@@ -17,7 +17,7 @@ from django.contrib.messages import constants as messages
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent  # Default BASE_DIR
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
-env_file_path = BASE_DIR / ".env" / ".env_dev"
+env_file_path = BASE_DIR / ".env" / ".env"
 
 config = Config(RepositoryEnv(env_file_path))
 
@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "django.contrib.humanize",
     "django.forms",
-    "django.contrib.sites",  # TODO: enable it
+    "django.contrib.sites",
     "django_extensions",
     "webpack_boilerplate",
     "django_components",
@@ -77,7 +77,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    # "django.middleware.cache.UpdateCacheMiddleware",  # new for the cache
+    # "django.middleware.cache.UpdateCacheMiddleware",  # new for the cache, not working with django-redis package
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -88,9 +88,9 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # "bookkeeper.middleware.CheckAllowedLoginMiddleware",   # TODO: Enable it
+    "bookkeeper.middleware.CheckAllowedLoginMiddleware",  # TODO: Enable it
     "maintenance_mode.middleware.MaintenanceModeMiddleware",
-    # "django.middleware.cache.FetchFromCacheMiddleware",  # new for the cache
+    # "django.middleware.cache.FetchFromCacheMiddleware",  # new for the cache, not working with django-redis package
 ]
 
 ROOT_URLCONF = "beach_wood_financial_proj.urls"
@@ -305,9 +305,8 @@ WEBPACK_LOADER = {
     / "manifest.json",
 }
 
-# Django logs configs
 # Django log viewer package config
-LOG_VIEWER_FILES_DIR = BASE_DIR / "logs"
+LOG_VIEWER_FILES_DIR = BASE_DIR.parent / "logs"
 LOG_VIEWER_PAGE_LENGTH = 25  # total log lines per-page
 LOG_VIEWER_MAX_READ_LINES = 1000  # total log lines will be read
 LOG_VIEWER_FILE_LIST_MAX_ITEMS_PER_PAGE = 25  # Max log files loaded in Datatable per page
@@ -339,6 +338,24 @@ FILTERS_EMPTY_CHOICE_LABEL = ""
 
 # check if cache enabled
 if config("IS_CACHE_ENABLED", cast=bool) is True:
+    CACHES = {
+        "default": {
+            "BACKEND": "django_redis.cache.RedisCache",
+            "LOCATION": f"redis://{config('REDIS_HOST')}/1",
+            "OPTIONS": {
+                "PASSWORD": config("REDIS_PASSWORD"),
+                "PARSER_CLASS": "redis.connection.HiredisParser",
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+                "PICKLE_VERSION": -1,
+                "SERIALIZER": "django_redis.serializers.json.JSONSerializer",
+                # "SERIALIZER": "django_redis.serializers.msgpack.MSGPackSerializer",
+                # "COMPRESSOR": "django_redis.compressors.lzma.LzmaCompressor",
+            },
+        }
+    }
+    # SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+    # SESSION_CACHE_ALIAS = "default"
+    DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
     CACHE_MIDDLEWARE_ALIAS = config(
         "CACHE_MIDDLEWARE_ALIAS", cast=str
     )  # which cache alias to use
@@ -352,3 +369,112 @@ if config("IS_CACHE_ENABLED", cast=bool) is True:
     # use the
     # same
     # Django instance
+
+# LOGGING = {
+#     "version": 1,
+#     "disable_existing_loggers": False,
+#     "root": {"level": "INFO", "handlers": ["file"]},
+#     "handlers": {
+#         "file": {
+#             "level": "INFO",
+#             "class": "logging.FileHandler",
+#             "filename": BASE_DIR.parent / "logs" / "django_info.log",
+#             "formatter": "app",
+#         },
+#     },
+#     "loggers": {
+#         "django": {"handlers": ["file"], "level": "INFO", "propagate": False},
+#     },
+#     "formatters": {
+#         "app": {
+#             "format": (
+#                 "%(asctime)s [%(levelname)-8s] " "(%(module)s.%(funcName)s) %(message)s"
+#             ),
+#             "datefmt": "%Y-%m-%d %H:%M:%S",
+#         },
+#     },
+# }
+LOGGING = {
+    # The version number of our log
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "large": {
+            "format": "%(asctime)s  %(levelname)s  %(process)d  %(pathname)s  %(funcName)s  %(lineno)d  %(message)s  "
+        },
+        "tiny": {"format": "%(asctime)s  %(message)s  "},
+        "verbose": {
+            # "format": "{levelname} {asctime} {module} {message}",
+            "format": "{name} at {asctime} ({levelname}) ({module}) :: {message}",
+            "style": "{",
+        },
+    },
+    "filters": {
+        "require_debug_false": {
+            "()": "django.utils.log.RequireDebugFalse",
+        },
+        "require_debug_true": {
+            "()": "django.utils.log.RequireDebugTrue",
+        },
+    },
+    # django uses some of its own loggers for internal operations. In case you want to disable them just replace the
+    # False above with true.
+    # A handler for WARNING. It is basically writing the WARNING messages into a file called WARNING.log
+    "handlers": {
+        "warning_file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": BASE_DIR.parent / "logs" / "bw_warning.log",
+            "formatter": "verbose",
+        },
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            # "formatter": "verbose",
+            "filters": ["require_debug_true"],
+        },
+        "errors_file": {
+            "level": "ERROR",
+            # "class": "logging.handlers.TimedRotatingFileHandler",
+            "class": "logging.FileHandler",
+            # "when": "midnight",
+            # "interval": 1,
+            "filename": BASE_DIR.parent / "logs" / "bw_errors.log",
+            "formatter": "large",
+            # "formatter": "verbose",
+        },
+        # "info_file": {
+        #     "level": "INFO",
+        #     "class": "logging.handlers.TimedRotatingFileHandler",
+        #     "when": "midnight",
+        #     "interval": 1,
+        #     "filename": BASE_DIR.parent / "logs" / "bw_info.log",
+        #     "formatter": "large",
+        # },
+    },
+    # A logger for WARNING which has a handler called 'file'. A logger can have multiple handler
+    "loggers": {
+        # notice the blank '', Usually you would put built in loggers like django or root here based on your needs
+        # "django": {
+        #     "handlers": [
+        #         "console",
+        #     ],  # notice how file variable is called in handler which has been defined above
+        #     "level": "DEBUG",
+        # },
+        "bw_logger": {
+            "handlers": ["warning_file"],
+            "level": "INFO",
+            "propagate": False,  # required to avoid double logging with root logger
+        },
+        "bw_error_logger": {
+            "handlers": ["errors_file"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+        # "bw_info_logger": {
+        #     "handlers": ["info_file"],
+        #     "level": "INFO",
+        #     "propagate": False,
+        # },
+    },
+}
