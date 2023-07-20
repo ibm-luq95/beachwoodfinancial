@@ -4,6 +4,7 @@ from django.contrib.auth import logout
 from django.http import HttpRequest
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
+from django.utils.translation import gettext as _
 
 from core.cache import BWCacheHandler
 from core.constants.site_settings import WEB_APP_SITE_SETTINGS_KEY
@@ -28,19 +29,22 @@ class CheckAllowedLoginMiddleware:
         self, request: HttpRequest, view_func, view_args: list, view_kwargs: dict
     ):
         if request.user.is_authenticated:
+            # print(request.get_host())
             # check if the user type is bookkeeper or assistants
             if (
                 request.user.user_type == "bookkeeper"
                 or request.user.user_type == "assistants"
             ):
-                site_settings = BWCacheHandler.get_item(WEB_APP_SITE_SETTINGS_KEY)
+                site_settings = BWCacheHandler.get_item(
+                    request.get_host(), WEB_APP_SITE_SETTINGS_KEY
+                )
                 if (
                     site_settings.can_bookkeepers_login is False
                     or site_settings.can_assistants_login is False
                 ):
                     messages.error(
                         request,
-                        "You not allowed to login, please contact the administrator",
+                        _("You not allowed to login, please contact the administrator"),
                     )
                     logout(request)
                     return redirect(reverse_lazy("auth:login"))
