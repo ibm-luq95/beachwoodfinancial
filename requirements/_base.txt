@@ -14,6 +14,7 @@ django-import-export
 django-extensions
 django-components
 django-widget-tweaks
+django-redis
 hiredis
 mysql-connector-python
 mysqlclient
