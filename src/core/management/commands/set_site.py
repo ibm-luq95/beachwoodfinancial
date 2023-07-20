@@ -9,6 +9,7 @@ from django.db import transaction
 from django.utils.translation import gettext as _
 
 from core.management.mixins import CommandStdOutputMixin
+from core.utils.grab_env_file import grab_env_file
 
 
 class Command(BaseCommand, CommandStdOutputMixin):
@@ -67,8 +68,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
                 #     self.stdout_output("error", "You have to pass -i option!")
 
                 if init_set_site is True:
-                    env_file_path = settings.BASE_DIR / ".env" / ".env_dev"
-                    config = Config(RepositoryEnv(env_file_path))
+                    config = grab_env_file()
                     site_domain = config("SITE_DOMAIN", cast=str)
                     site_name = config("SITE_NAME", cast=str)
                     self.stdout_output("warn", _(f"Site domain - {site_domain}"))

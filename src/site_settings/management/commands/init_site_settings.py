@@ -1,11 +1,6 @@
 # -*- coding: utf-8 -*-#
-import sys
 
-from decouple import Config, RepositoryEnv
-from django.conf import settings
 from django.contrib.sites.models import Site
-import re
-
 from django.core.management import CommandError
 from django.core.management.base import BaseCommand
 from django.db import transaction
@@ -14,7 +9,6 @@ from django.utils.translation import gettext as _
 from core.constants.identity import BWIdentity
 from core.constants.site_settings import SITE_SETTINGS_DB_SLUG, APP_CONFIGS_DB_SLUG
 from core.management.mixins import CommandStdOutputMixin
-from core.utils import debugging_print
 from core.utils.grab_env_file import grab_env_file
 from site_settings.models import SiteSettings, ApplicationConfigurations
 
@@ -91,7 +85,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
 
                 # check if pick_from_env_file passed
                 if pick_from_env_file is True:
-                    config = grab_env_file(".env_dev")
+                    config = grab_env_file()
                     site_domain = config("SITE_DOMAIN", cast=str)
                 else:
                     if site_domain is None:
