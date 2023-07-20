@@ -542,3 +542,4 @@ src/frontend/package-lock.json
 !**/migrations
 !**/migrations/__init__.py
 poetry.lock
+testing_sicripts
