@@ -4,7 +4,6 @@ from decouple import Config, RepositoryEnv
 
 cwd = Path.cwd()
 env_path = cwd / ".env" / ".env"
-print(env_path)
 
 # check if .env file not exists
 if env_path.exists() is False:
