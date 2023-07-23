@@ -7,6 +7,7 @@ django-debug-toolbar
 django-debugtools
 django-model-info
 django-stubs
+django-pdb
 django-stubs-ext
 djangorestframework-stubs
 djangorestframework-stubs[compatible-mypy]
