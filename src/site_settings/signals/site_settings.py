@@ -15,13 +15,13 @@ def update_site_settings_cache(sender, instance, created, **kwargs):
     site_settings_object = instance
     # debugging_print(locals())
     site_settings_serializer = SiteSettingsSerializer(instance=site_settings_object)
-    debugging_print(BWCacheHandler.get_site_dict(site_settings_object.site.domain))
+    # debugging_print(BWCacheHandler.get_site_dict(site_settings_object.site.domain))
     BWCacheHandler.update_item(
         site_settings_object.site.domain,
         WEB_APP_SITE_SETTINGS_KEY,
         site_settings_serializer.data,
     )
-    debugging_print(BWCacheHandler.get_site_dict(site_settings_object.site.domain))
+    # debugging_print(BWCacheHandler.get_site_dict(site_settings_object.site.domain))
     # check it is not created
     # if not created:
     #     if slug == SITE_SETTINGS_DB_SLUG:
