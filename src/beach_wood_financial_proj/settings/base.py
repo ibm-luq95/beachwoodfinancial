@@ -340,7 +340,7 @@ FILTERS_EMPTY_CHOICE_LABEL = ""
 if config("IS_CACHE_ENABLED", cast=bool) is True:
     CACHES = {
         "default": {
-            "BACKEND": "django_redis.cache.RedisCache",
+            "BACKEND": config("CACHE_BACKEND_ENGINE", cast=str),
             "LOCATION": f"redis://{config('REDIS_HOST')}/1",
             "OPTIONS": {
                 "PASSWORD": config("REDIS_PASSWORD"),
