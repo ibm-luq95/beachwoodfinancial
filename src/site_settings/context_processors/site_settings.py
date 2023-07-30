@@ -21,7 +21,7 @@ def get_web_app_settings(request) -> Union[SiteSettings, None]:
             )
             if site_settings is not None:
                 if site_settings:
-                    print(BWCacheHandler.get_item(request.get_host(), WEB_APP_SITE_SETTINGS_KEY))
+                    # print(BWCacheHandler.get_item(request.get_host(), WEB_APP_SITE_SETTINGS_KEY))
                     return BWCacheHandler.get_item(request.get_host(), WEB_APP_SITE_SETTINGS_KEY)
                 else:
                     return None
