@@ -12,11 +12,7 @@ from client_category.models import ClientCategory
 from important_contact.models import ImportantContact
 
 file_validator = FileValidator(
-    max_size=1024 * 1000,
-    content_types=(
-        "image/png",
-        "image/jpeg",
-    ),
+    max_size=1024 * 1000, content_types=("image/png", "image/jpeg")
 )
 
 
@@ -79,15 +75,3 @@ class Client(BaseModelMixin):
                 output_size = (150, 150)
                 image.thumbnail(output_size)
                 image.save(self.company_logo.path)
-
-    def get_total_tasks_for_all_jobs(self) -> int:
-        all_tasks_count = []
-        if self.jobs.count() <= 0:
-            return 0
-        for job in self.jobs.all():
-            all_tasks_count.append(job.tasks.count())
-
-        return sum(all_tasks_count)  # TODO: check if sum or len to use
-
-    def get_tasks_count(self):
-        return self.jobs.all()

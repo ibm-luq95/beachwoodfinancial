@@ -97,3 +97,15 @@ class ClientProxy(Client):
                     special_assignments.filter(Q(status=CON_ARCHIVED)).update(
                         status=CON_NOT_STARTED
                     )
+
+    def get_total_tasks_for_all_jobs(self) -> int:
+        all_tasks_count = []
+        if self.jobs.count() <= 0:
+            return 0
+        for job in self.jobs.all():
+            all_tasks_count.append(job.tasks.count())
+
+        return sum(all_tasks_count)  # TODO: check if sum or len to use
+
+    def get_jobs_count(self) -> int | None:
+        return self.jobs.count()
