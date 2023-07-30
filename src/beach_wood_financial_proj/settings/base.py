@@ -106,6 +106,7 @@ UI_COMPONENTS_TEMPLATETAGS = [
     "bw_ui_components.templatetags.inputs.file_input",
     "bw_ui_components.templatetags.inputs.switch",
     "bw_ui_components.templatetags.elements.anchor",
+    "bw_ui_components.templatetags.elements.date",
     "bw_ui_components.templatetags.elements.icon",
     "bw_ui_components.templatetags.table_list.table",
     "bw_ui_components.templatetags.table_list.actions_dropdown",
