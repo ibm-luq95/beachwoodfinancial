@@ -60,4 +60,9 @@ urlpatterns = [
         include("site_settings.urls"),
         name="site_settings",
     ),
+    path(
+        "management/bookkeeper/",
+        include("bookkeeper.urls"),
+        name="management_bookkeepers",
+    ),
 ]
