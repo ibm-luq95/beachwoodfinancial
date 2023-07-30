@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-#
 from django.contrib import messages
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login
 from django.contrib.messages.views import SuccessMessageMixin
 from django.shortcuts import redirect
 from django.urls import reverse_lazy
@@ -10,7 +10,6 @@ from django.views.generic.edit import FormView
 from beach_wood_user.forms import BWLoginForm
 from beach_wood_user.models import BWUser
 from core.cache import BWCacheViewMixin
-from core.utils import debugging_print
 from core.utils.grab_env_file import grab_env_file
 
 
@@ -30,9 +29,10 @@ class BWLoginViewBW(SuccessMessageMixin, BWCacheViewMixin, FormView):
         if self.request.user.is_authenticated:
             user_type = self.request.user.user_type
             if user_type == "bookkeeper":
-                return redirect("dashboard:manager:home")
-            elif user_type == "manager" or user_type == "assistant":
                 return redirect("dashboard:bookkeeper:home")
+            elif user_type == "manager" or user_type == "assistant":
+                return redirect("dashboard:manager:home")
+
         return self.render_to_response(self.get_context_data())
 
     def get_context_data(self, **kwargs):
