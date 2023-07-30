@@ -30,6 +30,15 @@ def bw_actions_dropdown(context, *args, **kwargs) -> dict:
                     )
                 }
             )
+        if "details" in actions_items:
+            all_actions_urls_dict.update(
+                {
+                    "details": reverse_lazy(
+                        f"{actions_base_url}:details", kwargs={"pk": object_var.pk}
+                    )
+                }
+            )
+        # keep delete the last one to correct orders in the dropdown menu
         if "delete" in actions_items:
             all_actions_urls_dict.update(
                 {
@@ -38,6 +47,7 @@ def bw_actions_dropdown(context, *args, **kwargs) -> dict:
                     )
                 }
             )
+
     except:
         pass
     kwargs.update({"action_urls": all_actions_urls_dict})
