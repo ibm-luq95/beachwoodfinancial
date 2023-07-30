@@ -9,15 +9,16 @@ from core.constants.status_labels import CON_ARCHIVED
 from core.utils import FileValidator
 from core.utils import get_trans_txt
 
-file_validator = FileValidator(
-    max_size=1024 * 1000,
-    content_types=IMAGES_FT,
-)
+file_validator = FileValidator(max_size=1024 * 1000, content_types=IMAGES_FT)
 
 
 class StaffMemberMixin(models.Model):
     user = models.OneToOneField(
-        to=settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="%(class)s"
+        to=settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="%(class)s",
+        null=True,
+        blank=True,
     )
     profile_picture = models.ImageField(
         _("profile picture"),
