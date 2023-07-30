@@ -18,4 +18,4 @@ class Bookkeeper(BaseModelMixin, StaffMemberMixin):
 
     def __str__(self):
         # return f"Bookkeeper -> {self.user.fullname}"
-        return f"{self.user.fullname}"
+        return getattr(self.user, "fullname")
