@@ -7,3 +7,9 @@
 .ck-editor__editable_inline {
   min-height: 500px;
 }
+
+div.scrollable-wrapper {
+  height: 50px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
