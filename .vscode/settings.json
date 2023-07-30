@@ -24,7 +24,11 @@
   "python.linting.pycodestyleEnabled": false,
   "autoDocstring.docstringFormat": "numpy",
   "autoDocstring.includeName": true,
-  "cSpell.words": ["externalcss"],
+  "cSpell.words": [
+    "externalcss",
+    "filterset",
+    "fullname"
+  ],
   // OLD
   // "workbench.colorCustomizations": {
   //   "titleBar.activeForeground": "#fff",
