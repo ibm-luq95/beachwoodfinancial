@@ -10,10 +10,14 @@
       "stopOnEntry": true,
       "request": "launch",
       "program": "${workspaceFolder}/src/manage.py",
+      "console": "integratedTerminal",
       "args": ["runserver"],
       "django": true,
       "justMyCode": true,
-    //   "redirectOutput": true,
+      "redirectOutput": true,
+      "showReturnValue": true,
+      "cwd": "${workspaceFolder}/src",
+      "autoReload": {"enable": true}
     //   "debugOptions": [
     //     "WaitOnAbnormalExit",
     //     "WaitOnNormalExit",
