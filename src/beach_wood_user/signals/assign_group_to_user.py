@@ -74,9 +74,6 @@ def assign_groups(sender, instance: BWUser, created: bool, **kwargs):
 
     except Exception as ex:
         colored_output_with_logging(
-            is_logged=True,
-            text=traceback.format_exc(),
-            log_level="error",
-            color="red",
+            is_logged=True, text=traceback.format_exc(), log_level="error", color="red"
         )
         raise Exception(str(ex))
