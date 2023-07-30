@@ -1,0 +1,15 @@
+{% load i18n %}
+
+{% if is_in_table_list is True %}<div class="px-6 py-3">{% endif %}
+    {% if show_no_date_tooltip is not False %}
+        <div class="hs-tooltip inline-block">
+            <button type="button" class="hs-tooltip-toggle">
+                {{ formatted_date }}
+                <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-white"
+                      role="tooltip">{{ show_no_date_tooltip }}</span>
+            </button>
+        </div>
+    {% else %}
+        <span class="text-sm text-gray-500">{{ formatted_date }}</span>
+    {% endif %}
+    {% if is_in_table_list is True %}</div>{% endif %}
