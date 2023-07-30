@@ -1,0 +1,187 @@
+{% extends "bw_components/layouts/table_list_base.html" %}
+
+{% load i18n %}
+
+{# Start Table Header #}
+{% block header_title %}
+    {% translate header_title %}
+{% endblock header_title %}
+{# End Table Header #}
+{# Start Table Subtitle #}
+{% block header_subtitle %}
+    {% translate header_subtitle %}
+{% endblock header_subtitle %}
+{# End Table Subtitle #}
+{# Start Table ID Block #}
+{% block table_id_block %}
+    {{ app_label|add:'_table' }}
+{% endblock table_id_block %}
+{# End Table ID Block #}
+{# Start Custom Css Class #}
+{% block custom_css_class_name %}
+    bookkeepers-table-list
+{% endblock custom_css_class_name %}
+{# End Custom Css Class #}
+{# Start Create Button Block #}
+{% block create_btn_block %}
+    {% component "tl_create_btn" app_name=app_label actions_base_url=actions_base_url %}
+    {% comment %}
+    {% bw_button btn_text="Click" btn_variant="success" btn_size="small" data_pk="eee" data_title="ddlel" is_disabled=True btn_type="button" %}
+    {% endcomment %}
+{% endblock create_btn_block %}
+{# End Create Button Block #}
+{# Start Table Header Columns #}
+{% block thead_block %}
+    <tr>
+        {% if is_checkbox_enabled is True %}
+            <th scope="col" class="pl-6 py-3 text-left disable-sort">
+                <label for="{{ column|add:'-checkbox' }}" class="flex">
+                    <input type="checkbox"
+                           class="shrink-0 border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 {{ BW_DISABLED_DISABLED_INPUTS_CSS_CLASSES }} {{ BW_BASE_INPUT_CSS_CLASSES }}"
+                           id="{{ column|add:'-checkbox' }}"
+                           disabled />
+                    <span class="sr-only">{{ column|title }}</span>
+                </label>
+            </th>
+        {% endif %}
+        <th scope="col" class="px-6 py-3 text-left order-by-desc">
+            <div class="flex items-center gap-x-2">
+                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                    {% translate "Name" %}
+                </span>
+
+                {% include "bw_components/global/table_list/sort_icon.html" %}
+
+            </div>
+        </th>
+        <th scope="col" class="px-6 py-3 text-left">
+            <div class="flex items-center gap-x-2">
+                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                    {% translate "Email Address" %}
+                </span>
+
+                {% include "bw_components/global/table_list/sort_icon.html" %}
+
+            </div>
+        </th>
+        <th scope="col" class="px-6 py-3 text-left">
+            <div class="flex items-center gap-x-2">
+                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                    {% translate "Clients" %}
+                </span>
+
+                {% include "bw_components/global/table_list/sort_icon.html" %}
+
+            </div>
+        </th>
+        <th scope="col" class="px-6 py-3 text-left">
+            <div class="flex items-center gap-x-2">
+                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                    {% translate "Active" %}
+                </span>
+
+                {% include "bw_components/global/table_list/sort_icon.html" %}
+
+            </div>
+        </th>
+        <th scope="col" class="px-6 py-3 text-left">
+            <div class="flex items-center gap-x-2">
+                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                    {% translate "Last login" %}
+                </span>
+
+                {% include "bw_components/global/table_list/sort_icon.html" %}
+
+            </div>
+        </th>
+        {% if is_show_created_at is True %}
+            <th scope="col" class="px-6 py-3 text-left dates-mdy-sort">
+                <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                        {% translate "Created" %}
+                    </span>
+
+                    {% include "bw_components/global/table_list/sort_icon.html" %}
+
+                </div>
+            </th>
+        {% endif %}
+        <th scope="col" class="px-6 py-3 text-right disable-sort">
+            <div class="flex items-center gap-x-2"></div>
+        </th>
+    </tr>
+{% endblock thead_block %}
+{# End Table Header Columns #}
+{# Start Table Body #}
+{% block tbody_block %}
+    {% for object in object_list %}
+        <tr>
+            {% if is_checkbox_enabled is True %}
+                <td class="h-px w-px whitespace-nowrap">
+                    <div class="pl-6 py-3">
+                        <label for="{{ object.pk|add:'-checkbox' }}" class="flex">
+                            <input type="checkbox"
+                                   class="shrink-0 border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 {{ BW_DISABLED_DISABLED_INPUTS_CSS_CLASSES }} {{ BW_BASE_INPUT_CSS_CLASSES }}"
+                                   id="{{ object.pk|add:'-checkbox' }}"
+                                   disabled />
+                            <span class="sr-only">{{ object.title|title }}</span>
+                        </label>
+                    </div>
+                </td>
+            {% endif %}
+            <td class="h-px w-px whitespace-nowrap">
+                <div class="px-6 py-3">
+                    <a href="{% url base_url_name|add:':details' object.pk %}">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.user.fullname }}</span>
+                    </a>
+                </div>
+            </td>
+            <td class="h-px w-px whitespace-nowrap">
+                <div class="px-6 py-3">
+                    <a class="text-sm text-blue-500 dark:text-blue-400"
+                       href="mailto:{{ object.user.email }}">{{ object.user.email }}</a>
+                </div>
+            </td>
+            <td class="h-px w-px whitespace-nowrap">
+                <div class="px-6 py-3">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.clients.count }}</span>
+                </div>
+            </td>
+            <td class="h-px w-px whitespace-nowrap">
+                <div class="px-6 py-3">
+                    {% translate "Enabled" as true_tooltip_txt %}
+                    {% translate "Disabled" as false_tooltip_txt %}
+
+                    {% include "bw_components/global/check_times_icon.html" with status=object.user.is_active is_tooltip_enabled=True true_tooltip_txt=true_tooltip_txt false_tooltip_txt=false_tooltip_txt %}
+
+                </div>
+            </td>
+            <td class="h-px w-px whitespace-nowrap">
+                {% bw_date date_txt=object.last_login is_in_table_list=True %}
+            </td>
+            {% if is_show_created_at is True %}
+                <td class="h-px w-px whitespace-nowrap">
+                    {% bw_date date_txt=object.created_at is_in_table_list=True %}
+                </td>
+            {% endif %}
+            <td class="h-px w-px whitespace-nowrap text-center">
+                {% if is_actions_menu_enabled is True %}
+                    {% bw_actions_dropdown actions_items=actions_items actions_base_url=actions_base_url actions_app_name=actions_app_name object=object %}
+                {% endif %}
+            </td>
+        </tr>
+    {% endfor %}
+{% endblock tbody_block %}
+{# End Table Body #}
+{# Start Table Results #}
+{% block results_block %}
+    {{ object_list.object_list|length }}
+{% endblock results_block %}
+{# End Table Results #}
+{# Start Table Pagination #}
+{% block pagination_block %}
+
+    {% include "components/inc/dashboard/table_list/table_list_pagination.html" with page_obj=object_list pagination_list_url_name=pagination_list_url_name %}
+
+{% endblock pagination_block %}
+{# End Table Pagination #}
