@@ -1,1 +1,2 @@
 from .mixins import BaseModelFormMixin, JoditFormMixin
+from .abstract_staff_member_form import AbstractStaffMemberForm
