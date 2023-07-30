@@ -47,7 +47,7 @@
         <a class="flex-none text-xl font-semibold text-white"
            href="#"
            aria-label="Brand">
-            <img src="{% if get_web_app_settings.logo %} {{ get_web_app_settings.logo.url }} {% endif %}"
+            <img src="{% if get_web_app_settings.logo %} {{ get_web_app_settings.logo }} {% endif %}"
                  alt="{{ get_web_app_settings.name }}" />
         </a>
     </div>
@@ -210,14 +210,14 @@
                                 <ul class="pt-2 pl-2">
                                     <li>
                                         <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                           href="javascript:;">
+                                           href="{% url 'dashboard:management_bookkeeper:list' %}">
                                             <i class="fa-solid fa-list"></i>
                                             {% translate "List" %}
                                         </a>
                                     </li>
                                     <li>
                                         <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                           href="javascript:;">
+                                           href="{% url 'dashboard:management_bookkeeper:create' %}"">
                                             <i class="fa-solid fa-plus"></i>
                                             {% translate "Add new" %}
                                         </a>
