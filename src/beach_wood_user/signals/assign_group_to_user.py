@@ -8,6 +8,7 @@ from django.dispatch import receiver
 from django.utils.translation import gettext as _
 
 from assistant.models import AssistantProxy
+from beach_wood_user.models import Profile
 from beach_wood_user.models.beach_wood_user import BWUser
 from bookkeeper.models import BookkeeperProxy
 from core.constants import BOOKKEEPER_GROUP_NAME, MANAGER_GROUP_NAME, ASSISTANT_GROUP_NAME
@@ -34,15 +35,30 @@ def assign_groups(sender, instance: BWUser, created: bool, **kwargs):
                     case "assistant":
                         group = ASSISTANT_GROUP_NAME
                         permission_codename = "assistant_user"
-                        AssistantProxy.objects.create(user=created_user)
+                        assistant = AssistantProxy.objects.create(
+                            user=created_user, profile=Profile.objects.create()
+                        )
+                        # # Create profile for new user
+                        # assistant.profile = Profile()
+                        # assistant.save()
                     case "bookkeeper":
                         group = BOOKKEEPER_GROUP_NAME
                         permission_codename = "bookkeeper_user"
-                        BookkeeperProxy.objects.create(user=created_user)
+                        bookkeeper = BookkeeperProxy.objects.create(
+                            user=created_user, profile=Profile.objects.create()
+                        )
+                        # # Create profile for new user
+                        # bookkeeper.profile = Profile()
+                        # bookkeeper.save()
                     case "manager":
                         group = MANAGER_GROUP_NAME
                         permission_codename = "manager_user"
-                        ManagerProxy.objects.create(user=created_user)
+                        manager = ManagerProxy.objects.create(
+                            user=created_user, profile=Profile.objects.create()
+                        )
+                        # # Create profile for new user
+                        # manager.profile = Profile()
+                        # manager.save()
                 # fetch user group
                 group_object = Group.objects.filter(name=group)
                 if not group_object:
@@ -70,6 +86,7 @@ def assign_groups(sender, instance: BWUser, created: bool, **kwargs):
                 else:
                     permission_object = permission_object.first()
                     created_user.user_permissions.add(permission_object)
+
                 created_user.save()
 
     except Exception as ex:
