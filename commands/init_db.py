@@ -63,11 +63,7 @@ def init_db_command():
                 "autocommit": False,
             }
             if args.rais_warning is True:
-                conn_config.update(
-                    {
-                        "raise_on_warnings": True,
-                    }
-                )
+                conn_config.update({"raise_on_warnings": True})
             if whereami == "LOCAL":
                 conn_config.update({"option_files": "/opt/lampp/etc/my.cnf"})
             conn = MySQLConnection(**conn_config)
@@ -77,24 +73,37 @@ def init_db_command():
                 if args.init_db is True:
                     colored_print(text="Initializing the database and user", color="blue")
                     sql_statements = {
-                        "create_db": f"CREATE DATABASE IF NOT EXISTS {config('DB_NAME', cast=str)} CHARACTER SET utf8;",
-                        "create_user": f"CREATE USER IF NOT EXISTS '{config('DB_USER', cast=str)}'@'"
-                        f"{config('DB_HOST', cast=str)}' "
-                        f"IDENTIFIED BY '{config('DB_PASSWORD', cast=str)}';",
-                        "grant": f"GRANT ALL PRIVILEGES ON {config('DB_NAME', cast=str)}.* TO '"
-                        f"{config('DB_USER', cast=str)}'@'{config('DB_HOST', cast=str)}';",
+                        "create_db": (
+                            "CREATE DATABASE IF NOT EXISTS"
+                            f" {config('DB_NAME', cast=str)} CHARACTER SET utf8;"
+                        ),
+                        "create_user": (
+                            f"CREATE USER IF NOT EXISTS '{config('DB_USER', cast=str)}'@'"
+                            f"{config('DB_HOST', cast=str)}' "
+                            f"IDENTIFIED BY '{config('DB_PASSWORD', cast=str)}';"
+                        ),
+                        "grant": (
+                            f"GRANT ALL PRIVILEGES ON {config('DB_NAME', cast=str)}.* TO '"
+                            f"{config('DB_USER', cast=str)}'@'{config('DB_HOST', cast=str)}';"
+                        ),
                         "flush": "FLUSH PRIVILEGES;",
                     }
                     colored_print(
-                        text=f"Start initializing {config('DB_NAME', cast=str)} and user {config('DB_USER', cast=str)}",
+                        text=(
+                            f"Start initializing {config('DB_NAME', cast=str)} and user"
+                            f" {config('DB_USER', cast=str)}"
+                        ),
                         color="cyan",
                     )
 
                 if args.delete_db is True:
                     colored_print(text="Deleting database and user...", color="yellow")
                     colored_print(
-                        text=f"Do you want to delete database {config('DB_NAME', cast=str)} and user "
-                        f"{config('DB_USER', cast=str)}? [Y|N] ",
+                        text=(
+                            "Do you want to delete database"
+                            f" {config('DB_NAME', cast=str)} and user"
+                            f" {config('DB_USER', cast=str)}? [Y|N] "
+                        ),
                         color="yellow",
                     )
                     confirm = input("> ")
@@ -104,17 +113,19 @@ def init_db_command():
                         return
                     elif confirm == "y":
                         sql_statements = {
-                            "drop_user": f"DROP USER IF EXISTS '{config('DB_USER', cast=str)}'@'"
-                            f"{config('DB_HOST', cast=str)}';",
-                            "drop_db": f"DROP DATABASE IF EXISTS {config('DB_NAME', cast=str)}",
+                            "drop_user": (
+                                f"DROP USER IF EXISTS '{config('DB_USER', cast=str)}'@'"
+                                f"{config('DB_HOST', cast=str)}';"
+                            ),
+                            "drop_db": (
+                                f"DROP DATABASE IF EXISTS {config('DB_NAME', cast=str)}"
+                            ),
                             "flush": "FLUSH PRIVILEGES;",
                         }
                 cnt = 1
                 for query_key, query_stmt in sql_statements.items():
                     verbose_output(
-                        args,
-                        f"{cnt}.Executing {query_key}: {query_stmt}",
-                        "yellow",
+                        args, f"{cnt}.Executing {query_key}: {query_stmt}", "yellow"
                     )
                     cursor.execute(query_stmt)
                     colored_print(text=f"Output: > {cursor.fetchone()}")
