@@ -10,6 +10,13 @@ register = template.Library()
 def bw_badge(context, *args, **kwargs) -> dict:
     context_data = get_request_context(context, kwargs)
     size = kwargs.get("size", None)
+    is_very_small_font = kwargs.get("is_very_small_font", False)
+    color_weight = "100"  # default for soft colors
+    text_color_weight = "800"  # default for soft colors
+    is_solid = kwargs.get("is_solid", False)
+    if is_solid is True:
+        color_weight = "500"
+        text_color_weight = ""
     font_size = "text-xs"
     badge_size = "py-1.5 px-3"
     if size is not None:
@@ -29,6 +36,10 @@ def bw_badge(context, *args, **kwargs) -> dict:
                 font_size = "text-xs"
     else:
         badge_size = "py-1.5 px-3"
+    if is_very_small_font is True:
+        font_size = "text-[10px]"
     kwargs.update({"badge_size": badge_size})
     kwargs.update({"font_size": font_size})
+    kwargs.update({"color_weight": color_weight})
+    kwargs.update({"text_color_weight": text_color_weight})
     return {**context_data, **kwargs}
