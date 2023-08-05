@@ -3,6 +3,7 @@ from django.db import models
 from django.utils.translation import gettext as _
 
 from core.choices import AssistantTypeEnum
+from core.constants.users import ASSISTANT_FULL_MANAGER_PERMISSION_SHORT_NAME
 from core.models.mixins import StaffMemberMixin, BaseModelMixin
 
 
@@ -29,7 +30,7 @@ class Assistant(BaseModelMixin, StaffMemberMixin):
             ("can_access_client", _("Can access client(s) account details")),
             ("can_assign_bookkeeper_to_client", _("Assign bookkeeper to client")),
             (
-                "assistant_has_full_manager_permissions",
+                ASSISTANT_FULL_MANAGER_PERMISSION_SHORT_NAME,
                 "Assistant has full manager permissions",
             ),
             ("can_edit_users", "Can edit users"),

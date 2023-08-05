@@ -2,11 +2,13 @@
 from random import randint
 
 from django.contrib.auth.base_user import BaseUserManager
+from django.contrib.auth.models import Permission
 from django.db import transaction
 from django.db.models.aggregates import Count
 from django.utils.translation import gettext as _
 
 from core.models.querysets import BaseQuerySetMixin
+from core.utils.grab_env_file import grab_env_file
 
 
 class BeachWoodUserManager(BaseUserManager):
@@ -39,13 +41,17 @@ class BeachWoodUserManager(BaseUserManager):
         Create and save a SuperUser with the given email and password.
         """
         with transaction.atomic():
-
             extra_fields.setdefault("is_staff", True)
             extra_fields.setdefault("is_superuser", True)
             extra_fields.setdefault("is_active", True)
+            config = grab_env_file()
+            development_admin_emails = ["admin@admin.com", "admin@admin.dev"]
 
             # create admin names for superuser in case it is admin
-            if email == "admin@admin.com":
+            if (
+                email in development_admin_emails
+                and config("STAGE_ENVIRONMENT", cast=str) == "DEV"
+            ):
                 extra_fields.setdefault("first_name", "Administrator")
                 extra_fields.setdefault("last_name", "Account")
                 extra_fields.setdefault("user_type", "manager")
@@ -55,6 +61,8 @@ class BeachWoodUserManager(BaseUserManager):
             if extra_fields.get("is_superuser") is not True:
                 raise ValueError(_("Superuser must have is_superuser=True."))
             created_user = self.create_user(email, password, **extra_fields)
+            developer_permission = Permission.objects.get(codename="developer_user")
+            created_user.user_permissions.add(developer_permission)
             return created_user
 
     def random(self):

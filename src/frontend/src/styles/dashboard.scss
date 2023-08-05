@@ -13,3 +13,34 @@ div.scrollable-wrapper {
   overflow-x: hidden;
   overflow-y: auto;
 }
+
+.linkedin-social-icon-link {
+  &:hover {
+    color: #0072b1;
+  }
+}
+
+.github-social-icon-link {
+  &:hover {
+    color: #333;
+  }
+}
+
+.instagram-social-icon-link {
+  &:hover {
+    // color: #833ab4;
+    color: #c13584;
+  }
+}
+
+.facebook-social-icon-link {
+  &:hover {
+    color: #4267b2;
+  }
+}
+
+.twitter-social-icon-link {
+  &:hover {
+    color: #1da1f2;
+  }
+}
