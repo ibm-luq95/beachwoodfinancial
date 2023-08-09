@@ -219,8 +219,8 @@
             {# Start Seen #}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
-                    {% translate "Assistant opened and seen by manager" as true_tooltip_txt %}
-                    {% translate "Assistant not open yet by manager" as false_tooltip_txt %}
+                    {% translate "Assignment opened and seen by manager" as true_tooltip_txt %}
+                    {% translate "Assignment not open yet by manager" as false_tooltip_txt %}
 
                     {% include "bw_components/global/check_times_icon.html" with status=object.is_seen is_tooltip_enabled=True true_tooltip_txt=true_tooltip_txt false_tooltip_txt=false_tooltip_txt %}
 
