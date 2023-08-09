@@ -157,18 +157,19 @@
             {# Start Title #}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
-                    
                     <a href="{% url base_url_name|add:':details' object.pk %}">
-                        {% if object.attachment %} 
-                    <div class="hs-tooltip inline-block mr-1 [--placement:right]">
-                        <button type="button" class="hs-tooltip-toggle text-sm text-gray-600 dark:text-gray-400">
-                            <i class="fa-solid fa-paperclip"></i>
-                          <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700" role="tooltip">
-                            {% translate "Assignment contains attachment file" %}
-                          </span>
-                        </button>
-                      </div>
-                    {% endif %}
+                        {% if object.attachment %}
+                            <div class="hs-tooltip inline-block mr-1 [--placement:right]">
+                                <button type="button"
+                                        class="hs-tooltip-toggle text-sm text-gray-600 dark:text-gray-400">
+                                    <i class="fa-solid fa-paperclip"></i>
+                                    <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                          role="tooltip">
+                                        {% translate "Assignment contains attachment file" %}
+                                    </span>
+                                </button>
+                            </div>
+                        {% endif %}
                         <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.title|truncatechars:DEFAULT_TEMPLATE_TABLE_LIST_TRUNCATED_STRING }}</span>
                     </a>
                 </div>
