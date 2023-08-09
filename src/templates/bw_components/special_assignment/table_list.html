@@ -204,7 +204,7 @@
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
                     <span class="text-sm text-gray-600 dark:text-gray-400">
-                        {{ object.discussions.count }}
+                        {{ object.discussions.get_only_discussions_without_replies.count }}
                     </span>
                 </div>
             </td>

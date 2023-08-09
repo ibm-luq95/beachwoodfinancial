@@ -9,6 +9,6 @@ class RepliesManager(SoftDeleteManager):
         return queryset
 
     def get_only_discussions_without_replies(self) -> DiscussionQuerySet:
-        queryset = self.filter(replies=None)
+        queryset = self.get_queryset().filter(replies=None)
 
         return queryset

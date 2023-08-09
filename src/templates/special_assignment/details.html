@@ -4,6 +4,7 @@
 
 {% load humanize %}
 {% load tailwind_filters %}
+{% load bw_users_tags %}
 {% load static %}
 
 {% block dashboard_content_block %}
@@ -21,13 +22,24 @@
                             <span class="inline-block mx-2 text-sm">
                                 <a href="#">@{{ object.get_managed_user }}</a>
                             </span>
-                            <span class="inline-block text-sm text-gray-500">{{ object.created_at|naturaltime }}</span>
+                            <div class="hs-tooltip inline-block">
+                                <button type="button" class="hs-tooltip-toggle">
+                                    <span class="inline-block text-sm text-gray-500">{{ object.created_at|naturaltime }}</span>
+                                    <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                          role="tooltip">{% translate "Created at" %}</span>
+                                </button>
+                            </div>
                         </div>
                         <div>
                             <div class="hs-tooltip inline-block">
                                 <div class="hs-tooltip inline-block">
                                     <button type="button" class="hs-tooltip-toggle">
-                                        <span class="m-1 inline-flex justify-center items-center w-[33px] h-[33px] rounded-full bg-yellow-100 text-yellow-500">
+                                        <span class="m-1 inline-flex justify-center items-center w-[33px] h-[33px] rounded-full
+                                                     {% if object.is_seen is False %}
+                                                         bg-yellow-100 text-yellow-500
+                                                     {% else %}
+                                                         bg-blue-100 text-blue-500
+                                                     {% endif %}">
                                             <i class="fa-solid fa-eye-slash w-4 h-4"></i>
                                         </span>
                                         <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
@@ -88,118 +100,6 @@
                 {% endif %}
                 {# End Attachments #}
             </div>
-            {# Start Replies #}
-            <div class="grid grid-cols-2 gap-3">
-                <div class="">
-                    <div class="my-3 flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-                        <div class="p-4 md:p-5">
-                            <h3 class="text-lg font-bold text-gray-800 dark:text-white">{% translate "Post new reply" %}</h3>
-                            <section id="reply-form-wrapper">
-                                <form action="" enctype="multipart/form-data" id="replyForm" method="POST">
-                                    <fieldset form="replyForm">
-                                        {% csrf_token %}
-                                        <input type="hidden" name="sp" value="{{ object.pk }}" />
-                                        <input type="hidden" name="user" value="{{ object.pk }}" />
-                                        <div class="my-3">
-                                            <label for="input-label"
-                                                   class="block text-sm font-medium mb-2 dark:text-white">
-                                                {% translate "Body" %}
-                                            </label>
-                                            <textarea class="py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
-                                                      rows="3"
-                                                      placeholder="This is a textarea placeholder"
-                                                      name="body"></textarea>
-                                        </div>
-                                        <div class="my-3">
-                                            <label class="block">
-                                                <span class="sr-only">{% translate "Upload attachment" %}</span>
-                                                <input type="file"
-                                                       class="block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600" />
-                                            </label>
-                                        </div>
-                                        <div class="mt-5">
-                                            <button type="submit"
-                                                    class="w-full py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-                                                {% translate "Reply" %}
-                                            </button>
-                                        </div>
-                                    </fieldset>
-                                </form>
-                            </section>
-                        </div>
-                    </div>
-                </div>
-                <div class="my-3">
-                    <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-                        <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5 dark:bg-gray-800 dark:border-gray-700">
-                            <p class="mt-1 text-sm text-gray-500 dark:text-gray-500">{% translate "Repies" %}(2)</p>
-                        </div>
-                        <div class="p-4 md:p-5">
-                            <div class="reply-wrapper">
-                                <div class="flex-shrink-0 group block">
-                                    <div class="flex items-center">
-                                        <img class="inline-block flex-shrink-0 h-[2.5rem] w-[2.5rem] rounded-full"
-                                             src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
-                                             alt="Image Description" />
-                                        <div class="ml-3">
-                                            <h3 class="font-semibold text-sm text-gray-800 dark:text-white">Maria Wanner</h3>
-                                            <p class="font-medium text-gray-700">
-                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, placeat minima quis excepturi dignissimos nostrum dolore voluptatem magni id, laboriosam aspernatur voluptas fugit corporis quas nisi? Quod ratione laborum vel.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="reply-wrapper">
-                                <div class="flex-shrink-0 group block">
-                                    <div class="flex items-center">
-                                        <img class="inline-block flex-shrink-0 h-[2.5rem] w-[2.5rem] rounded-full"
-                                             src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
-                                             alt="Image Description" />
-                                        <div class="ml-3">
-                                            <h3 class="font-semibold text-sm text-gray-800 dark:text-white">Maria Wanner</h3>
-                                            <p class="font-medium text-gray-700">
-                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, placeat minima quis excepturi dignissimos nostrum dolore voluptatem magni id, laboriosam aspernatur voluptas fugit corporis quas nisi? Quod ratione laborum vel.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="reply-wrapper">
-                                <div class="flex-shrink-0 group block">
-                                    <div class="flex items-center">
-                                        <img class="inline-block flex-shrink-0 h-[2.5rem] w-[2.5rem] rounded-full"
-                                             src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
-                                             alt="Image Description" />
-                                        <div class="ml-3">
-                                            <h3 class="font-semibold text-sm text-gray-800 dark:text-white">Maria Wanner</h3>
-                                            <p class="font-medium text-gray-700">
-                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, placeat minima quis excepturi dignissimos nostrum dolore voluptatem magni id, laboriosam aspernatur voluptas fugit corporis quas nisi? Quod ratione laborum vel.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="reply-wrapper">
-                                <div class="flex-shrink-0 group block">
-                                    <div class="flex items-center">
-                                        <img class="inline-block flex-shrink-0 h-[2.5rem] w-[2.5rem] rounded-full"
-                                             src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
-                                             alt="Image Description" />
-                                        <div class="ml-3">
-                                            <h3 class="font-semibold text-sm text-gray-800 dark:text-white">Maria Wanner</h3>
-                                            <p class="font-medium text-gray-700">
-                                                Lorem ipsum dolor sit amet consectetur adipisicing elit. Eligendi, placeat minima quis excepturi dignissimos nostrum dolore voluptatem magni id, laboriosam aspernatur voluptas fugit corporis quas nisi? Quod ratione laborum vel.
-                                            </p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {# End Replies #}
         </div>
         {# End Left Aside #}
         <!-- ... -->
@@ -258,5 +158,201 @@
             {# End Start Assigned By #}
         </div>
         {# End Right Aside #}
+    </div>
+    <div class="grid grid-cols-12 gap-3">
+        {# Start Replies #}
+        <div class="col-span-4">
+            <div class="my-3 flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+                <div class="p-4 md:p-5">
+                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">{% translate "Post new reply" %}</h3>
+                    <section id="reply-form-wrapper">
+                        <form action="{% url 'dashboard:discussion:api:create' %}"
+                              enctype="multipart/form-data"
+                              id="replyForm"
+                              method="post">
+                            <fieldset form="replyForm">
+                                {% csrf_token %}
+                                <input type="hidden"
+                                       disabled
+                                       name="special_assignment"
+                                       class="{{ BW_BASE_INPUT_CSS_CLASSES }}"
+                                       value="{{ object.pk }}" />
+                                <input type="hidden"
+                                       name="{{ request.user.user_type }}"
+                                       class="{{ BW_BASE_INPUT_CSS_CLASSES }}"
+                                       disabled
+                                       value="{% bw_get_staff_member_pk user=request.user %}" />
+                                <div class="my-3">
+                                    <label for="input-label"
+                                           class="block text-sm font-medium mb-2 dark:text-white">
+                                        {% translate "Body *" %}
+                                    </label>
+                                    <textarea class="{{ BW_BASE_INPUT_CSS_CLASSES }} py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                                              rows="3"
+                                              placeholder="This is a textarea placeholder"
+                                              name="body"
+                                              id="body"
+                                              disabled
+                                              required></textarea>
+                                </div>
+                                <div class="my-3">
+                                    <label class="block">
+                                        <span class="sr-only">{% translate "Upload attachment" %}</span>
+                                        <input type="file"
+                                               disabled
+                                               class="{{ BW_BASE_INPUT_CSS_CLASSES }} block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"
+                                               name="attachment"
+                                               id="attachment" />
+                                    </label>
+                                </div>
+                                <div class="my-3">
+                                    <div class="relative flex items-start">
+                                        <div class="flex items-center h-5 mt-1">
+                                            <input id="isReplyCheckbox"
+                                                   disabled
+                                                   name="isReplyCheckbox"
+                                                   type="checkbox"
+                                                   class="{{ BW_BASE_INPUT_CSS_CLASSES }} border-gray-200 rounded text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                                   aria-describedby="isReplyCheckbox-description" />
+                                        </div>
+                                        <label for="isReplyCheckbox" class="ml-3">
+                                            <span class="block text-sm font-semibold text-gray-800 dark:text-gray-300">{% translate "Reply" %}</span>
+                                            <span id="isReplyCheckbox-description"
+                                                  class="block text-sm text-gray-600 dark:text-gray-500">Notify me when this action happens.</span>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="mt-5">
+                                    <button type="submit"
+                                            disabled
+                                            class="{{ BW_BASE_INPUT_CSS_CLASSES }} w-full py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                        {% translate "Reply" %}
+                                    </button>
+                                </div>
+                            </fieldset>
+                        </form>
+                    </section>
+                </div>
+            </div>
+        </div>
+        <div class="my-3 col-span-8">
+            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+                <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5 dark:bg-gray-800 dark:border-gray-700">
+                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-500">
+                        {% translate "Replies" %}({{ object.discussions.count }})
+                    </p>
+                </div>
+                <div class="p-4 md:p-5">
+                    {% for discussion in object.discussions.get_only_discussions_without_replies.all %}
+                        <div class="discussion-wrapper">
+                            <div class="flex-shrink-0 group block">
+                                <div class="flex items-center">
+                                    <div class="flex mr-2">
+                                        <label class="inline-flex items-center">
+                                            <input type="radio"
+                                                   disabled
+                                                   class="{{ BW_BASE_INPUT_CSS_CLASSES }} form-radio shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                                   name="replies"
+                                                   value="{{ discussion.pk }}"
+                                                   id="discussion-pk-{{ discussion.pk }}" />
+                                        </label>
+                                    </div>
+                                    <img class="inline-block flex-shrink-0 h-[2.5rem] w-[2.5rem] rounded-full"
+                                         src="{% if discussion.get_managed_user.profile.profile_picture %} {{ discussion.get_managed_user.profile.profile_picture.url }} {% else %} https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80  {% endif %}"
+                                         alt="Image Description" />
+                                    <div class="ml-3">
+                                        <h3 class="font-semibold text-sm text-gray-800 dark:text-white">
+                                            <span>{{ discussion.get_managed_user }}</span>
+                                            <span class="inline-block text-gray-400 text-xs mx-2 italic">{{ discussion.created_at|naturaltime }}</span>
+                                            {% if discussion.attachment %}
+                                                <div class="hs-tooltip inline-block mx-3">
+                                                    <a href="{{ discussion.attachment.url }}"
+                                                       download="{{ discussion.attachment.url }}"
+                                                       class="hs-tooltip-toggle">
+                                                        <i class="fa-solid fa-paperclip"></i>
+                                                        <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-white"
+                                                              role="tooltip">
+                                                            {% translate "Contain an attachment" %}
+                                                        </span>
+                                                    </a>
+                                                </div>
+                                            {% endif %}
+                                        </h3>
+                                        <details>
+                                            <summary class="font-semibold text-sm text-gray-800 dark:text-white">
+                                                {{ discussion.body|safe|truncatechars:50 }}
+                                            </summary>
+                                            <p class="font-medium text-gray-700">{{ discussion.body|safe }}</p>
+                                            {# Start Reply #}
+                                            {% if discussion.discussion_replies.all %}
+                                                <section class="mb-2 mt-5 ml-8">
+                                                    {% for reply in discussion.discussion_replies.all %}
+                                                        <div class="reply-wrapper mb-3">
+                                                            <div class="flex-shrink-0 group block">
+                                                                <div class="flex items-center">
+                                                                    <img class="inline-block flex-shrink-0 h-[2rem] w-[2rem] rounded-full"
+                                                                         src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
+                                                                         alt="Image Description" />
+                                                                    <div class="ml-3">
+                                                                        <h3 class="font-semibold text-gray-800 dark:text-white text-sm">
+                                                                            <span>{{ reply.get_managed_user }}</span>
+                                                                            <span class="inline-block text-gray-400 text-xs mx-2 italic">{{ reply.created_at|naturaltime }}</span>
+                                                                            {% if reply.attachment %}
+                                                                                <div class="hs-tooltip inline-block mx-3">
+                                                                                    <a href="{{ reply.attachment.url }}"
+                                                                                       download="{{ reply.attachment.url }}"
+                                                                                       class="hs-tooltip-toggle">
+                                                                                        <i class="fa-solid fa-paperclip"></i>
+                                                                                        <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-white"
+                                                                                              role="tooltip">
+                                                                                            {% translate "Contain an attachment" %}
+                                                                                        </span>
+                                                                                    </a>
+                                                                                </div>
+                                                                            {% endif %}
+                                                                        </h3>
+                                                                        <details>
+                                                                            <summary class="font-semibold text-sm text-gray-800 dark:text-white">
+                                                                                {{ reply.body|safe|truncatechars:50 }}
+                                                                            </summary>
+                                                                            <p class="font-medium text-gray-700">{{ reply.body|safe }}</p>
+                                                                        </details>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    {% endfor %}
+                                                </section>
+                                            {% endif %}
+                                            {# End Reply #}
+                                        </details>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% empty %}
+                        <div class="min-h-[15rem] flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+                            <div class="flex flex-auto flex-col justify-center items-center p-4 md:p-5">
+                                <svg class="max-w-[5rem]"
+                                     viewBox="0 0 375 428"
+                                     fill="none"
+                                     xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M254.509 253.872L226.509 226.872" class="stroke-gray-400 dark:stroke-white" stroke="currentColor" stroke-width="7" stroke-linecap="round" />
+                                    <path d="M237.219 54.3721C254.387 76.4666 264.609 104.226 264.609 134.372C264.609 206.445 206.182 264.872 134.109 264.872C62.0355 264.872 3.60864 206.445 3.60864 134.372C3.60864 62.2989 62.0355 3.87207 134.109 3.87207C160.463 3.87207 184.993 11.6844 205.509 25.1196" class="stroke-gray-400 dark:stroke-white" stroke="currentColor" stroke-width="7" stroke-linecap="round" />
+                                    <rect x="270.524" y="221.872" width="137.404" height="73.2425" rx="36.6212" transform="rotate(40.8596 270.524 221.872)" class="fill-gray-400 dark:fill-white" fill="currentColor" />
+                                    <ellipse cx="133.109" cy="404.372" rx="121.5" ry="23.5" class="fill-gray-400 dark:fill-white" fill="currentColor" />
+                                    <path d="M111.608 188.872C120.959 177.043 141.18 171.616 156.608 188.872" class="stroke-gray-400 dark:stroke-white" stroke="currentColor" stroke-width="7" stroke-linecap="round" />
+                                    <ellipse cx="96.6084" cy="116.872" rx="9" ry="12" class="fill-gray-400 dark:fill-white" fill="currentColor" />
+                                    <ellipse cx="172.608" cy="117.872" rx="9" ry="12" class="fill-gray-400 dark:fill-white" fill="currentColor" />
+                                    <path d="M194.339 147.588C189.547 148.866 189.114 142.999 189.728 138.038C189.918 136.501 191.738 135.958 192.749 137.131C196.12 141.047 199.165 146.301 194.339 147.588Z" class="fill-gray-400 dark:fill-white" fill="currentColor" />
+                                </svg>
+                                <p class="mt-5 text-sm text-gray-500 dark:text-gray-500">{% translate "No replies to show" %}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {# End Replies #}
     </div>
 {% endblock dashboard_content_block %}

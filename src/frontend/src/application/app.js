@@ -4,6 +4,8 @@ import "../styles/dashboard.scss";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 import "preline";
+import 'animate.css';
+import { getCookie } from "../utils/cookie";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // import "css.gg/icons/all.css";
 // import "css.gg/icons/css/al"
@@ -12,6 +14,7 @@ import tableSort from "table-sort-js/table-sort.js";
 import Chart from "chart.js/auto";
 
 import "./job/details.js";
+import "./special_assignment/details.js";
 
 window.document.addEventListener("DOMContentLoaded", function () {
   const bwfInputs = document.querySelectorAll(".bw-input");
