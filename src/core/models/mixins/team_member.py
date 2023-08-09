@@ -44,5 +44,5 @@ class TeamMembersMixin(models.Model):
             return None
 
     @property
-    def get_user_type(self):
+    def get_user_type(self) -> str:
         return self.get_managed_user().user.user_type

@@ -44,7 +44,7 @@
         <th scope="col" class="px-6 py-3 text-left">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "Name" %}
+                    {% translate "Title" %}
                 </span>
 
                 {% include "bw_components/global/table_list/sort_icon.html" %}
@@ -54,7 +54,7 @@
         <th scope="col" class="px-6 py-3 text-left">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "Managed By" %}
+                    {% translate "Client" %}
                 </span>
 
                 {% include "bw_components/global/table_list/sort_icon.html" %}
@@ -64,7 +64,7 @@
         <th scope="col" class="px-6 py-3 text-left">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "Industry" %}
+                    {% translate "Manager" %}
                 </span>
 
                 {% include "bw_components/global/table_list/sort_icon.html" %}
@@ -74,7 +74,7 @@
         <th scope="col" class="px-6 py-3 text-left">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "Jobs" %}
+                    {% translate "Assigned by" %}
                 </span>
 
                 {% include "bw_components/global/table_list/sort_icon.html" %}
@@ -84,7 +84,7 @@
         <th scope="col" class="px-6 py-3 text-left">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "Tasks" %}
+                    {% translate "Reply(s)" %}
                 </span>
 
                 {% include "bw_components/global/table_list/sort_icon.html" %}
@@ -94,7 +94,28 @@
         <th scope="col" class="px-6 py-3 text-left disable-sort">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "Assignments" %}
+                    {% translate "Status" %}
+                </span>
+            </div>
+        </th>
+        <th scope="col" class="px-6 py-3 text-left disable-sort">
+            <div class="flex items-center gap-x-2">
+                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                    {% translate "Seen" %}
+                </span>
+            </div>
+        </th>
+        <th scope="col" class="px-6 py-3 text-left disable-sort">
+            <div class="flex items-center gap-x-2">
+                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                    {% translate "Start date" %}
+                </span>
+            </div>
+        </th>
+        <th scope="col" class="px-6 py-3 text-left disable-sort">
+            <div class="flex items-center gap-x-2">
+                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                    {% translate "Due date" %}
                 </span>
             </div>
         </th>
@@ -133,59 +154,89 @@
                     </div>
                 </td>
             {% endif %}
+            {# Start Title #}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
+                    
                     <a href="{% url base_url_name|add:':details' object.pk %}">
-                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.name }}</span>
+                        {% if object.attachment %} 
+                    <div class="hs-tooltip inline-block mr-1 [--placement:right]">
+                        <button type="button" class="hs-tooltip-toggle text-sm text-gray-600 dark:text-gray-400">
+                            <i class="fa-solid fa-paperclip"></i>
+                          <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700" role="tooltip">
+                            {% translate "Assignment contains attachment file" %}
+                          </span>
+                        </button>
+                      </div>
+                    {% endif %}
+                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.title|truncatechars:DEFAULT_TEMPLATE_TABLE_LIST_TRUNCATED_STRING }}</span>
                     </a>
                 </div>
             </td>
+            {# End Title #}
+            {# Start Client #}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
-                    <div class="scrollable-wrapper">
-                        {% for bookkeeper in object.bookkeepers.all %}
-                            {% if request.user.user_type == "bookkeeper" %}
-                                <a href="" class="disabledAnchorElement text-sm">{{ bookkeeper }}</a>
-                            {% else %}
-                                <a href="{% url 'dashboard:management_bookkeeper:details' bookkeeper.pk %}"
-                                   class="text-sm {{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }}">{{ bookkeeper }}</a>
-                            {% endif %}
-                            <br />
-                        {% empty %}
-                            {% translate "No Bookkeepers" %}
-                            {% comment  %}
-                    {# {% fetch_user_details_url base_user=user_type user_object=bookkeeper.user %} #}
-                        {% translate "No staff member for this client" as red_text %}
-                        {% include "components/core/red_text.html" with text=red_text %}
-
-
-                            {% endcomment %}
-                        {% endfor %}
-                    </div>
+                    <a class="{{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }} text-sm"
+                       href="{% url 'dashboard:client:details' object.client.pk %}">
+                        {{ object.client.name }}
+                    </a>
                 </div>
             </td>
+            {# End Client #}
+            {# Start Manager #}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
-                    <span class="text-sm text-gray-600 dark:text-gray-400 italic hover:not-italic">{{ object.industry|truncatechars:DEFAULT_TEMPLATE_TABLE_LIST_TRUNCATED_STRING }}</span>
+                    <a href="#" class="{{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }} text-sm">{{ object.get_managed_user }}</a>
                 </div>
             </td>
+            {# End Manager #}
+            {# Start Assigned by #}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
-                    <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.get_jobs_count }}</span>
+                    <a href="#" class="{{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }} text-sm">
+                        {{ object.assigned_by.fullname }}
+                    </a>
                 </div>
             </td>
+            {# End Assigned by #}
+            {# Start Reply(s) #}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
                     <span class="text-sm text-gray-600 dark:text-gray-400">
-                        {{ object.get_total_tasks_for_all_jobs }}
+                        {{ object.discussions.count }}
                     </span>
                 </div>
             </td>
+            {# End Reply(s) #}
+            {# Start Status #}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
-                    <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.special_assignments.count }}</span>
+                    {% bw_badge code=object.status text=object.get_status_display is_solid=False size="sm" %}
                 </div>
             </td>
+            {# End Status #}
+            {# Start Seen #}
+            <td class="h-px w-px whitespace-nowrap">
+                <div class="px-6 py-3">
+                    {% translate "Assistant opened and seen by manager" as true_tooltip_txt %}
+                    {% translate "Assistant not open yet by manager" as false_tooltip_txt %}
+
+                    {% include "bw_components/global/check_times_icon.html" with status=object.is_seen is_tooltip_enabled=True true_tooltip_txt=true_tooltip_txt false_tooltip_txt=false_tooltip_txt %}
+
+                </div>
+            </td>
+            {# End Seen #}
+            {# Start Start Date #}
+            <td class="h-px w-px whitespace-nowrap">
+                {% bw_date date_txt=object.start_date is_in_table_list=True %}
+            </td>
+            {# End Start Date #}
+            {# Start Due Date #}
+            <td class="h-px w-px whitespace-nowrap">
+                {% bw_date date_txt=object.due_date is_in_table_list=True %}
+            </td>
+            {# End Due Date #}
             {% if is_show_created_at is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     {% bw_date date_txt=object.created_at is_in_table_list=True %}

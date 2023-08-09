@@ -17,6 +17,15 @@ window.document.addEventListener("DOMContentLoaded", function () {
   const bwfInputs = document.querySelectorAll(".bw-input");
   const bwDisabledLinks = document.querySelectorAll("a.bw-disabled-anchor");
   const allDisabledCssClassed = ["disabled:opacity-75", "cursor-not-allowed"];
+  const readonlySelectElements = document.querySelectorAll(".readonly-select");
+  if (readonlySelectElements.length > 0) {
+    readonlySelectElements.forEach((element) => {
+      element.addEventListener("change", (event) => {
+        return false;
+      });
+    });
+  }
+
   bwfInputs.forEach((input) => {
     const dataAttrs = input.dataset;
     const checkKeepDisabled = Object.prototype.hasOwnProperty.call(

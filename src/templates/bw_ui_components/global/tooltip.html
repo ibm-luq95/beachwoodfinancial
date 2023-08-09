@@ -1,0 +1,11 @@
+{% load i18n %}
+
+<div class="hs-tooltip inline-block
+            {% if placement %}[--placement:{{ placement }}]{% endif %}
+            {% if extra_css_classes %}{{ extra_css_classes }}{% endif %}">
+  <button type="button" class="hs-tooltip-toggle">
+    {{ hover_text|safe }}
+    <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+          role="tooltip">{{ tooltip_text|safe }}</span>
+  </button>
+</div>
