@@ -1,0 +1,78 @@
+# -*- coding: utf-8 -*-#
+from rest_framework.viewsets import ViewSet, ModelViewSet
+
+from job.models import JobProxy
+from job.serializers.job import JobSerializer
+import traceback
+
+from django.utils.translation import gettext as _
+from rest_framework import parsers
+from rest_framework import permissions
+from rest_framework import status
+from rest_framework.exceptions import APIException
+from rest_framework.request import Request
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from core.api.permissions import BaseApiPermissionMixin
+from core.utils import get_formatted_logger
+
+logger = get_formatted_logger()
+
+
+class JobViewSet(ModelViewSet):
+    serializer_class = JobSerializer
+    permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
+    perm_slug = "job.job"
+    queryset = JobProxy.objects.all()
+
+
+class UpdateJobApiView(APIView):
+    permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
+    perm_slug = "job.job"
+
+    def put(self, request: Request, *args, **kwargs):
+        try:
+            data = request.data
+            job_object = JobProxy.objects.get(pk=data.get("jobId"))
+            del data["jobId"]
+            # debugging_print(data)
+
+            # serializer = JobSerializer(instance=job_object, data=data, partial=True)
+            serializer = JobSerializer(
+                instance=job_object, data=data, context={"request": request}, partial=True
+            )
+            serializer.is_valid(raise_exception=True)
+            # if not serializer.is_valid(raise_exception=True):
+            #     raise APIException(serializer.errors)
+            # debugging_print(serializer.validated_data)
+            # raise APIException("stop")
+            # serializer.update(job_object, serializer.validated_data)
+            serializer.save()
+            # tasks = data.get("tasks")
+            # bookkeepers = data.get("bookkeeper")
+
+            return Response(
+                data={"job": serializer.data, "msg": _("Job updated successfully!")},
+                status=status.HTTP_200_OK,
+            )
+        except APIException as ex:
+            # logger.error("API Exception")
+            logger.error(traceback.format_exc())
+            # logger.error(ex.detail)
+            response_data = {
+                "status": status.HTTP_400_BAD_REQUEST,
+                # "user_error_msg": ex.detail,
+                "user_error_msg": serializer.errors,
+                # "user_error_msg": str(ex),
+            }
+            return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
+        except Exception as ex:
+            # debugging_print(ex)
+            logger.error(traceback.format_exc())
+            response_data = {
+                "status": status.HTTP_400_BAD_REQUEST,
+                "error": str(ex),
+                "user_error_msg": _("Error while update job!"),
+            }
+            return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
