@@ -175,11 +175,11 @@
                                 <input type="hidden"
                                        disabled
                                        name="special_assignment"
-                                       class="{{ BW_BASE_INPUT_CSS_CLASSES }}"
+                                       class="{{ BW_FULL_INPUT_CSS_CLASSES }}"
                                        value="{{ object.pk }}" />
                                 <input type="hidden"
                                        name="{{ request.user.user_type }}"
-                                       class="{{ BW_BASE_INPUT_CSS_CLASSES }}"
+                                       class="{{ BW_FULL_INPUT_CSS_CLASSES }}"
                                        disabled
                                        value="{% bw_get_staff_member_pk user=request.user %}" />
                                 <div class="my-3">
@@ -187,7 +187,7 @@
                                            class="block text-sm font-medium mb-2 dark:text-white">
                                         {% translate "Body *" %}
                                     </label>
-                                    <textarea class="{{ BW_BASE_INPUT_CSS_CLASSES }} py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                                    <textarea class="{{ BW_FULL_INPUT_CSS_CLASSES }} py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
                                               rows="3"
                                               placeholder="This is a textarea placeholder"
                                               name="body"
@@ -200,7 +200,7 @@
                                         <span class="sr-only">{% translate "Upload attachment" %}</span>
                                         <input type="file"
                                                disabled
-                                               class="{{ BW_BASE_INPUT_CSS_CLASSES }} block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"
+                                               class="{{ BW_FULL_INPUT_CSS_CLASSES }} block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"
                                                name="attachment"
                                                id="attachment" />
                                     </label>
@@ -212,7 +212,7 @@
                                                    disabled
                                                    name="isReplyCheckbox"
                                                    type="checkbox"
-                                                   class="{{ BW_BASE_INPUT_CSS_CLASSES }} border-gray-200 rounded text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                                   class="{{ BW_FULL_INPUT_CSS_CLASSES }} border-gray-200 rounded text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
                                                    aria-describedby="isReplyCheckbox-description" />
                                         </div>
                                         <label for="isReplyCheckbox" class="ml-3">
@@ -225,7 +225,7 @@
                                 <div class="mt-5">
                                     <button type="submit"
                                             disabled
-                                            class="{{ BW_BASE_INPUT_CSS_CLASSES }} w-full py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                            class="{{ BW_FULL_INPUT_CSS_CLASSES }} w-full py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
                                         {% translate "Reply" %}
                                     </button>
                                 </div>
@@ -251,7 +251,7 @@
                                         <label class="inline-flex items-center">
                                             <input type="radio"
                                                    disabled
-                                                   class="{{ BW_BASE_INPUT_CSS_CLASSES }} form-radio shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                                   class="{{ BW_FULL_INPUT_CSS_CLASSES }} form-radio shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
                                                    name="replies"
                                                    value="{{ discussion.pk }}"
                                                    id="discussion-pk-{{ discussion.pk }}" />
