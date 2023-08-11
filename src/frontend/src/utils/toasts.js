@@ -8,7 +8,7 @@ import { getIconForToasts } from "./icons";
  * @param {string} notificationType notification message type
  */
 const showToastNotification = (msg, notificationType = "success") => {
-  const toastsWrapperElement = document.querySelector("div#toastsWrapper");
+  const toastsWrapperElement = document.querySelector("div#toasts-wrapper");
   const iconWrapper = toastsWrapperElement.querySelector("div#iconWrapper");
   const msgElement = toastsWrapperElement.querySelector("p#msg");
   msgElement.textContent = msg;
@@ -20,7 +20,7 @@ const showToastNotification = (msg, notificationType = "success") => {
     ...["animate__animated", "animate__fadeInRight", "animate__faster"],
   );
   setTimeout(() => {
-    toastsWrapperElement.classList.add(...["animate__fadeOutRight", "animate__faster"]);
+    // toastsWrapperElement.classList.add(...["animate__fadeOutRight", "animate__faster"]);
   }, 4000);
 };
 
