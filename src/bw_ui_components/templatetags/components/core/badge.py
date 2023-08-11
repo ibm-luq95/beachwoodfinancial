@@ -38,6 +38,8 @@ def bw_badge(context, *args, **kwargs) -> dict:
         badge_size = "py-1.5 px-3"
     if is_very_small_font is True:
         font_size = "text-[10px]"
+
+    # debugging_print(kwargs)
     kwargs.update({"badge_size": badge_size})
     kwargs.update({"font_size": font_size})
     kwargs.update({"color_weight": color_weight})
