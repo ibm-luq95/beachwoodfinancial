@@ -1,0 +1,83 @@
+{% load widget_tweaks %}
+{% load development_tags %}
+{% load i18n %}
+
+<div class="grid sm:grid-cols-12 gap-2 sm:gap-4 py-8 first:pt-0 last:pb-0 border-t first:border-transparent border-gray-200 dark:border-gray-700">
+    {% for field in form %}
+        <div class="sm:col-span-2">
+            <label for="af-submit-application-full-name"
+                   class="inline-block text-sm font-medium text-gray-500 mt-2.5">
+                {# {{ field.label }} - {{ field|field_type }} #}
+                {{ field.label }}
+            </label>
+        </div>
+        <!-- End Col -->
+        <div class="sm:col-span-10">
+            <div>
+                {# {{ field.value }} #}
+                <!-- Radio -->
+                {% if field|field_type == 'booleanfield' %}
+                    {{ field|add_class:"rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50" }}
+                    <!-- Date -->
+                {% elif field|field_type == 'datefield' or field|field_type == 'emailfield' or field|field_type == "passwordfield" or field|field_type == "charfield" or field|field_type == 'datetimefield' or field|field_type == 'urlfield' or field|field_type == "decimalfield" or field|field_type == "integerfield" or field|field_type == "slugfield" or field|field_type == "uuidfield" or field|field_type == "urlfield" %}
+                    {{ field|add_class:"py-2 px-3 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"|attr:"placeholder:" }}
+                {% elif field|field_type == "modelmultiplechoicefield" or field|field_type == "multiplechoicefield" %}
+                    {% if field.field.widget.choices %}
+                        <div class="grid space-y-2">
+                            {% for choice in field %}
+                                <div class="relative flex items-start">
+                                    <div class="flex items-center h-5 mt-1">
+                                        <input type="checkbox"
+                                               class="border-gray-200 rounded text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                               aria-describedby="checkbox-description-{{ choice.id_for_label }}"
+                                               id="{{ choice.id_for_label }}"
+                                               name="{{ choice.data.name }}"
+                                               value="{{ choice.data.value }}"
+                                               {% if choice.data.selected is True %}checked{% endif %} />
+                                    </div>
+                                    <label for="{{ choice.id_for_label }}" class="ml-3">
+                                        <span class="block text-sm font-semibold text-gray-800 dark:text-gray-300">{{ choice.choice_label }}</span>
+                                        <!-- <span id="checkbox-description-{{ choice.id_for_label }}" class="block text-sm text-gray-600 dark:text-gray-500">Notify me when this action happens.</span> -->
+                                    </label>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% else %}
+                        <p class="text-yellow-500 font-semibold text-[14px] relative top-2">
+                            {% translate "No "|add:input.label %}
+                        </p>
+                    {% endif %}
+                {% elif field|field_type == "modelchoicefield" or field|field_type == "typedchoicefield" %}
+                    {# {{ field.field.widget.choices }} #}
+                    {% if field.field.widget.choices %} 
+                    <select id="{{ field.id_for_label }}"
+                            name="{{ field.name }}"
+                            class="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                        <!-- <option selected>Open this select menu</option> -->
+                        {% for choice in field %}
+                            <option value="{{ choice.data.value }}"
+                                    {% if choice.data.selected is True %}selected{% endif %}>{{ choice.choice_label }}</option>
+                        {% endfor %}
+                    </select>
+                    {% endif %}
+                    
+                {% elif field|field_type == "filefield" or field|field_type == "imagefield" %}
+                    {{ field|add_class:"block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-2 file:px-4 dark:file:bg-gray-700 dark:file:text-gray-400"|attr:"placeholder:" }}
+                {% else %}
+                    <!-- Fallback -->
+                    {{ field }}
+                {% endif %}
+                {% if field.help_text %}
+                    <p class="text-sm text-gray-500 mt-2" id="hs-input-helper-text">{{ field.help_text }}</p>
+                {% endif %}
+                {% if field.errors %}
+                    {% for error in field.errors %}
+                        <p class="text-sm text-red-600 mt-2"
+                           id="{{ field.id_for_label|add:'error' }}">{{ error }}</p>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <!-- End Col -->
+    {% endfor %}
+</div>
