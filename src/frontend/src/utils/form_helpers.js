@@ -22,16 +22,37 @@ const formInputSerializer = ({
   filesArray = [],
 }) => {
   const serializedObject = {};
+  const checkboxArray = new Set();
   Array.from(formElement.elements).forEach((element) => {
     // check if the element.name in excludedFields
     if (excludedFields.includes(element.name) === false) {
-      // check if the element name not empty string
       if (element.name !== "") {
-        serializedObject[element.name] =
-          element.type === "checkbox" ? element.checked : element.value;
+        // check if the element type is checkbox
+        if (element.type !== "checkbox") {
+          // check if the element name not empty string
+          serializedObject[element.name] = element.value;
+        } else {
+          //checkbox single or multiple inputs
+          checkboxArray.add(element.name);
+        }
       }
     }
   });
+  if (checkboxArray.size > 0) {
+    for (const checkboxName of checkboxArray) {
+      const checkedElementArray = new Array();
+      const checkboxElements = formElement.querySelectorAll(
+        `input[name='${checkboxName}']:checked`,
+      );
+      if (checkboxElements.length > 0) {
+        checkboxElements.forEach((element) => {
+          checkedElementArray.push(element.value);
+        });
+        serializedObject[checkboxName] = checkedElementArray;
+      }
+    }
+  }
+
   // check if returnAsFormData is true
   if (returnAsFormData === false) {
     return isOrdered === true ? orderObjectItems(serializedObject) : serializedObject;
@@ -104,8 +125,8 @@ const disableAndEnableFieldsetItems = ({ formElement, state }) => {
     case "enable":
     case "e":
     case "en":
-      // fieldset.disabled = false;
-      // submitBtn.disabled = false;
+      fieldset.disabled = false;
+      submitBtn.disabled = false;
       if (allFormInputs.length > 0) {
         allFormInputs.forEach((element) => {
           element.disabled = false;
@@ -116,8 +137,8 @@ const disableAndEnableFieldsetItems = ({ formElement, state }) => {
     case "disable":
     case "dis":
     case "d":
-      // fieldset.disabled = true;
-      // submitBtn.disabled = true;
+      fieldset.disabled = true;
+      submitBtn.disabled = true;
       if (allFormInputs.length > 0) {
         allFormInputs.forEach((element) => {
           element.disabled = true;
