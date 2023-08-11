@@ -15,4 +15,5 @@ urlpatterns = [
     path("update/<uuid:pk>", JobUpdateView.as_view(), name="update"),
     path("delete/<uuid:pk>", JobDeleteView.as_view(), name="delete"),
     path("<uuid:pk>", JobDetailsView.as_view(), name="details"),
+    path("api/", include("job.urls.api"), name="api"),
 ]
