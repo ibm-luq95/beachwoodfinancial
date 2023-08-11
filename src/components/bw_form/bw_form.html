@@ -57,7 +57,7 @@
                                 {% if input.field|bw_get_form_field_type == "ModelMultipleChoiceField" %}
                                     {% if input.field.widget.choices %}
                                         {% for checkbox_field in input %}
-                                            {% bw_checkbox checkbox_txt=choice_label field=checkbox_field %}
+                                            {% bw_checkbox field=checkbox_field %}
                                         {% endfor %}
                                     {% else %}
                                         <p class="text-yellow-500 font-semibold text-[14px] relative top-2">
