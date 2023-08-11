@@ -9,6 +9,7 @@ from document.models import Document
 
 class DocumentForm(BaseModelFormMixin, RemoveFieldsMixin):
     # auto_id = "doct_"
+    # default_renderer = Rend()
 
     def __init__(
         self,
