@@ -1,6 +1,7 @@
 "use strict";
 
 import { UploadFileRequest } from "../../utils/apis/upload_file.js";
+import { CSRFINPUTNAME } from "../../utils/constants.js";
 import { getCookie } from "../../utils/cookie.js";
 import { formInputSerializer } from "../../utils/form_helpers.js";
 import { showToastNotification } from "../../utils/toasts";
@@ -34,7 +35,7 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
         const uploadRequest = new UploadFileRequest(
           currentTarget.action,
           formInputs,
-          currentTarget.elements["csrfmiddlewaretoken"].value,
+          currentTarget.elements[CSRFINPUTNAME].value,
           currentTarget.method,
           false,
         );
