@@ -74,10 +74,10 @@ BW_PRELINE_CORE_BG_COLORS = {
     "white": {"soft": "bg-white/[.1] text-gray-600", "solid": "bg-white text-gray-600"},
     "indigo": {
         "soft": " bg-indigo-100 text-indigo-800 ",
-        "solid": " bg-indigo text-gray-600 ",
+        "solid": "bg-indigo-500 text-white",
     },
     "gray": {"soft": " bg-gray-100 text-gray-800 ", "solid": " bg-gray-500 text-white "},
 }
 BW_PRELINE_BASE_BADGE_CLASSES = (
-    "uppercase inline-flex items-center gap-1.5 rounded-full font-medium"
+    "uppercase inline-flex items-center gap-1.5 rounded-full font-medium m-0.5"
 )
