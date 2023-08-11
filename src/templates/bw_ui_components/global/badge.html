@@ -1,70 +1,70 @@
 {# Check green colors #}
 {% if code == CON_COMPLETED or code == CON_ENABLED %}
     <span class="{{ BW_PRELINE_BASE_BADGE_CLASSES }} {{ font_size }} {{ badge_size }}
-                 {% if is_solid is Fasle %}
-                     {{ BW_PRELINE_CORE_BG_COLORS.green.soft }}
-                 {% else %}
+                 {% if is_solid is True %}
                      {{ BW_PRELINE_CORE_BG_COLORS.green.solid }}
+                 {% else %}
+                     {{ BW_PRELINE_CORE_BG_COLORS.green.soft }}
                  {% endif %}
                  {% if extra_css_classes %}{{ extra_css_classes }}{% endif %}">{{ text }}</span>
 {% endif %}
 {# Check red color #}
 {% if code == CON_REJECTED or code == CON_DISABLED or code == CON_PAST_DUE or code == CON_CANCELED or code == CON_NOT_COMPLETED or code == CON_DEVELOPER %}
     <span class="{{ BW_PRELINE_BASE_BADGE_CLASSES }} {{ font_size }} {{ badge_size }}
-                 {% if is_solid is Fasle %}
-                     {{ BW_PRELINE_CORE_BG_COLORS.red.soft }}
-                 {% else %}
+                 {% if is_solid is True %}
                      {{ BW_PRELINE_CORE_BG_COLORS.red.solid }}
+                 {% else %}
+                     {{ BW_PRELINE_CORE_BG_COLORS.red.soft }}
                  {% endif %}
                  {% if extra_css_classes %}{{ extra_css_classes }}{% endif %}">{{ text }}</span>
 {% endif %}
 {# Check purple color #}
 {% if code == CON_PENDING or code == CON_ONGOING %}
     <span class="{{ BW_PRELINE_BASE_BADGE_CLASSES }} {{ font_size }} {{ badge_size }}
-                 {% if is_solid is Fasle %}
-                     {{ BW_PRELINE_CORE_BG_COLORS.purple.soft }}
-                 {% else %}
+                 {% if is_solid is True %}
                      {{ BW_PRELINE_CORE_BG_COLORS.purple.solid }}
+                 {% else %}
+                     {{ BW_PRELINE_CORE_BG_COLORS.purple.soft }}
                  {% endif %}
                  {% if extra_css_classes %}{{ extra_css_classes }}{% endif %}">{{ text }}</span>
 {% endif %}
 {# Check blue color #}
 {% if code == CON_IN_PROGRESS or code == CON_USER %}
     <span class="{{ BW_PRELINE_BASE_BADGE_CLASSES }} {{ font_size }} {{ badge_size }}
-                 {% if is_solid is Fasle %}
-                     {{ BW_PRELINE_CORE_BG_COLORS.blue.soft }}
-                 {% else %}
+                 {% if is_solid is True %}
                      {{ BW_PRELINE_CORE_BG_COLORS.blue.solid }}
+                 {% else %}
+                     {{ BW_PRELINE_CORE_BG_COLORS.blue.soft }}
                  {% endif %}
                  {% if extra_css_classes %}{{ extra_css_classes }}{% endif %}">{{ text }}</span>
 {% endif %}
 {# Check yellow color #}
 {% if code == CON_NEED_INFO or code == CON_STALLED or code == CON_URGENT %}
     <span class="{{ BW_PRELINE_BASE_BADGE_CLASSES }} {{ font_size }} {{ badge_size }}
-                 {% if is_solid is Fasle %}
-                     {{ BW_PRELINE_CORE_BG_COLORS.yellow.soft }}
-                 {% else %}
+                 {% if is_solid is True %}
                      {{ BW_PRELINE_CORE_BG_COLORS.yellow.solid }}
+                 {% else %}
+                     {{ BW_PRELINE_CORE_BG_COLORS.yellow.soft }}
                  {% endif %}
                  {% if extra_css_classes %}{{ extra_css_classes }}{% endif %}">{{ text }}</span>
 {% endif %}
 {# Check gray color #}
 {% if code == CON_ARCHIVED or code == CON_DRAFT %}
     <span class="{{ BW_PRELINE_BASE_BADGE_CLASSES }} {{ font_size }} {{ badge_size }}
-                 {% if is_solid is Fasle %}
-                     {{ BW_PRELINE_CORE_BG_COLORS.gray.soft }}
-                 {% else %}
+                 {% if is_solid is True %}
                      {{ BW_PRELINE_CORE_BG_COLORS.gray.solid }}
+                 {% else %}
+                     {{ BW_PRELINE_CORE_BG_COLORS.gray.soft }}
                  {% endif %}
                  {% if extra_css_classes %}{{ extra_css_classes }}{% endif %}">{{ text }}</span>
 {% endif %}
 {# Check white color #}
 {% if code == CON_NOT_STARTED or code == CON_NO_TYPE or code == CON_RECURRING or code == CON_WEEKLY or code == CON_MONTHLY or code == CON_QUARTERLY or code == CON_YEARLY or code == CON_ONE_TIME %}
     <span class="{{ BW_PRELINE_BASE_BADGE_CLASSES }} {{ font_size }} {{ badge_size }}
-                 {% if is_solid is Fasle %}
-                     {{ BW_PRELINE_CORE_BG_COLORS.gray.soft }}
-                 {% else %}
+                 {% if is_solid is True %}
                      {{ BW_PRELINE_CORE_BG_COLORS.gray.solid }}
+                 {% else %}
+                     {{ BW_PRELINE_CORE_BG_COLORS.gray.soft }}
                  {% endif %}
                  {% if extra_css_classes %}{{ extra_css_classes }}{% endif %}">{{ text }}</span>
 {% endif %}
