@@ -8,10 +8,7 @@ register = template.Library()
 
 @register.simple_tag
 def check_user_permissions(
-        perms: PermWrapper,
-        app_name: str,
-        perm_name: str,
-        is_include_app_name=True,
+    perms: PermWrapper, app_name: str, perm_name: str, is_include_app_name=True
 ) -> bool:
     plurals_names = ["company_services", "jobs"]
     replaced_app_name = app_name.replace("_", "")
