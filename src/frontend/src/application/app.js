@@ -4,7 +4,7 @@ import "../styles/dashboard.scss";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 import "preline";
-import 'animate.css';
+import "animate.css";
 import { getCookie } from "../utils/cookie";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // import "css.gg/icons/all.css";
@@ -15,6 +15,7 @@ import Chart from "chart.js/auto";
 
 import "./job/details.js";
 import "./special_assignment/details.js";
+import "./task/create_task_modal.js";
 
 window.document.addEventListener("DOMContentLoaded", function () {
   const bwfInputs = document.querySelectorAll(".bw-input");
@@ -58,24 +59,26 @@ window.document.addEventListener("DOMContentLoaded", function () {
     //   console.log(pl);
     // });
     allRichEditors.forEach((editor) => {
-      ClassicEditor.create(editor, {
-        toolbar: [
-          "heading",
-          "|",
-          "alignment", // <--- ADDED
-          "bold",
-          "italic",
-          "link",
-          "bulletedList",
-          "numberedList",
-          // "uploadImage",
-          "blockQuote",
-          "undo",
-          "redo",
-        ],
-      }).catch((error) => {
-        console.error(error);
-      });
+      if (editor) {
+        ClassicEditor.create(editor, {
+          toolbar: [
+            "heading",
+            "|",
+            "alignment", // <--- ADDED
+            "bold",
+            "italic",
+            "link",
+            "bulletedList",
+            "numberedList",
+            // "uploadImage",
+            "blockQuote",
+            "undo",
+            "redo",
+          ],
+        }).catch((error) => {
+          console.error(error);
+        });
+      }
     });
   }
   const jobsChart = document.querySelector("canvas#jobsChart");
@@ -127,4 +130,15 @@ window.document.addEventListener("DOMContentLoaded", function () {
       },
     });
   }
+
+  // Modal Events
+  /* const mo = document.querySelector("#hs-static-backdrop-modal");
+  mo.addEventListener("open.hs.overlay", (evt) => {
+    // console.log(evt);
+    console.log("open");
+  });
+  mo.addEventListener("close.hs.overlay", (evt) => {
+    // console.log(evt);
+    console.log("Close");
+  }); */
 });
