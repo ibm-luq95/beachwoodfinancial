@@ -9,6 +9,7 @@ Object.prototype.getConstructorName = function () {
 };
 
 const isDisabledCssClass = "is-disabled";
+const CSRFINPUTNAME = "csrfmiddlewaretoken";
 const eyeSlashIconHTMLCode = `<i class="fa-solid fa-eye-slash"></i>`;
 const eyeIconHTMLCode = `<i class="fa-solid fa-eye"></i>`;
 // console.log(global.window.settings);
@@ -26,4 +27,5 @@ export {
   DEBUG,
   FETCHURLNAMEURL,
   CURRENTUSER,
+  CSRFINPUTNAME,
 };
