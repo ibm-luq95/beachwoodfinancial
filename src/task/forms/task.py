@@ -1,9 +1,7 @@
 from django import forms
 
-from core.forms import (
-    BaseModelFormMixin,
-    JoditFormMixin,
-)
+from core.forms import BaseModelFormMixin, JoditFormMixin
+from job.models import JobProxy
 from task.models import TaskProxy
 
 
@@ -46,7 +44,7 @@ class TaskForm(BaseModelFormMixin, JoditFormMixin):
 
         # this used in manager client details view, to pass only jobs for custom client
         if self.initial.get("client", None) is not None:
-            self.fields["job"].queryset = Job.objects.filter(
+            self.fields["job"].queryset = JobProxy.objects.filter(
                 client=self.initial.get("client")
             )
             # self.fields["client"].widget.attrs.update({"class": "cursor-not-allowed readonly-select"})
