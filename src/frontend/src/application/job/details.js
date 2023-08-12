@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
   if (updateJobStatusBtn) {
     updateJobStatusBtn.addEventListener("click", (event) => {
       const jobStatusInput = document.querySelector("input#job-status-input");
-      console.log(jobStatusInput.value);
+      // console.log(jobStatusInput.value);
     });
 
     if (addDiscussionFormInJob) {

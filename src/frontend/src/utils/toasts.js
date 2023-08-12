@@ -20,8 +20,8 @@ const showToastNotification = (msg, notificationType = "success") => {
     ...["animate__animated", "animate__fadeInRight", "animate__faster"],
   );
   setTimeout(() => {
-    // toastsWrapperElement.classList.add(...["animate__fadeOutRight", "animate__faster"]);
-  }, 4000);
+    toastsWrapperElement.classList.add(...["animate__fadeOutRight", "animate__faster"]);
+  }, 1500);
 };
 
 export { showToastNotification };

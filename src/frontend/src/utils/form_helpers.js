@@ -68,7 +68,7 @@ const formInputSerializer = ({
     if (filesArray.length > 0) {
       for (const fieldName of filesArray) {
         if (formElement.elements[fieldName].files[0]) {
-          console.log(formElement.elements[fieldName]);
+          // console.log(formElement.elements[fieldName]);
           formData.append(fieldName, formElement.elements[fieldName].files[0]);
         }
       }
