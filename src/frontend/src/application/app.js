@@ -5,7 +5,8 @@ import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 import "preline";
 import "animate.css";
-import { getCookie } from "../utils/cookie";
+// import tinymce from 'tinymce';
+
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // import "css.gg/icons/all.css";
 // import "css.gg/icons/css/al"
@@ -15,7 +16,9 @@ import Chart from "chart.js/auto";
 
 import "./job/details.js";
 import "./special_assignment/details.js";
-import "./task/create_task_modal.js";
+import "./task/task.js";
+import "./document/document.js";
+import "./note/note.js";
 
 window.document.addEventListener("DOMContentLoaded", function () {
   const bwfInputs = document.querySelectorAll(".bw-input");
@@ -59,22 +62,27 @@ window.document.addEventListener("DOMContentLoaded", function () {
     //   console.log(pl);
     // });
     allRichEditors.forEach((editor) => {
+      console.log(editor);
       if (editor) {
+        // tinymce.init({
+        //   selector: 'textarea',  // change this value according to your HTML
+        //   menubar: 'file edit view'
+        // });
         ClassicEditor.create(editor, {
-          toolbar: [
-            "heading",
-            "|",
-            "alignment", // <--- ADDED
-            "bold",
-            "italic",
-            "link",
-            "bulletedList",
-            "numberedList",
-            // "uploadImage",
-            "blockQuote",
-            "undo",
-            "redo",
-          ],
+          // toolbar: [
+          //   "heading",
+          //   "|",
+          //   "alignment", // <--- ADDED
+          //   "bold",
+          //   "italic",
+          //   "link",
+          //   "bulletedList",
+          //   "numberedList",
+          //   // "uploadImage",
+          //   "blockQuote",
+          //   "undo",
+          //   "redo",
+          // ],
         }).catch((error) => {
           console.error(error);
         });
