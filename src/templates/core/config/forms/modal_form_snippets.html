@@ -44,7 +44,7 @@
                         </div>
                     {% else %}
                         <p class="text-yellow-500 font-semibold text-[14px] relative top-2">
-                            {% translate "No "|add:input.label %}
+                            {% translate "No data" %}
                         </p>
                     {% endif %}
                 {% elif field|field_type == "modelchoicefield" or field|field_type == "typedchoicefield" %}
