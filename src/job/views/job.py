@@ -106,14 +106,24 @@ class JobDetailsView(
             is_updated=True,
             renderer=BWFormRenderer(),
             client=self.get_object().client,
+            # removed_fields=["job"],
         )
-        task_form = TaskForm(initial={"job": self.get_object()}, renderer=BWFormRenderer())
+        task_form = TaskForm(
+            initial={"job": self.get_object(), "client": self.get_object().client},
+            # removed_fields=["job"],
+            hidden_fields=["job"],
+            renderer=BWFormRenderer(),
+        )
         document_form = DocumentForm(
             initial={"job": self.get_object(), "document_section": "job"},
             renderer=BWFormRenderer(),
             removed_fields=["client", "task", "status", "job", "document_section"],
         )
-        note_form = NoteForm(renderer=BWFormRenderer())
+        note_form = NoteForm(
+            renderer=BWFormRenderer(),
+            initial={"job": self.get_object(), "note_section": "note"},
+            removed_fields=["client", "task", "note_section", "job"],
+        )
         context.setdefault("job_update_form", job_update_form)
         context.setdefault("job_status_choices", JobStatusEnum.choices)
         context.setdefault("task_form", task_form)

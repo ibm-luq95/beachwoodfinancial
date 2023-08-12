@@ -1,21 +1,19 @@
 # -*- coding: utf-8 -*-#
-from rest_framework.viewsets import ViewSet, ModelViewSet
-
-from job.models import JobProxy
-from job.serializers.job import JobSerializer
 import traceback
 
 from django.utils.translation import gettext as _
-from rest_framework import parsers
 from rest_framework import permissions
 from rest_framework import status
 from rest_framework.exceptions import APIException
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.viewsets import ModelViewSet
 
 from core.api.permissions import BaseApiPermissionMixin
 from core.utils import get_formatted_logger
+from job.models import JobProxy
+from job.serializers.job import JobSerializer
 
 logger = get_formatted_logger()
 
