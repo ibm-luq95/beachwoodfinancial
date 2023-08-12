@@ -30,7 +30,12 @@
                           {% if is_upload_form is True %}enctype="multipart/form-data"{% endif %}>
                         <fieldset form="{{ form_id }}">
                             {% csrf_token %}
-                            {% bw_hidden_method_input value="patch" %}
+                            {% if enable_hidden_method is True %}
+                                {% bw_hidden_method_input value="patch" %}
+                            {% endif %}
+                            {% if extra_hidden_inputs_markup_list %}
+                                {% for hidden_input in extra_hidden_inputs_markup_list %}{{ hidden_input|safe }}{% endfor %}
+                            {% endif %}
                             {{ form_object }}
                         </fieldset>
                     </form>

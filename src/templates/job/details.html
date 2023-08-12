@@ -2,6 +2,7 @@
 
 {% load i18n %}
 
+{% load bw_form_helpers %}
 {% load tailwind_filters %}
 
 {% block dashboard_content_block %}
@@ -96,7 +97,7 @@
                             aria-controls="tasks-tab"
                             role="tab">
                         <i class="fa-solid fa-list-check hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 w-3.5 h-3.5 text-gray-400 dark:text-gray-600 mr-1"></i>
-                        {% translate "Tasks" %}
+                        {% translate "Tasks" %} ({{ object.tasks.count }})
                         <!-- <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">99+</span> -->
                     </button>
                     <button type="button"
@@ -106,7 +107,7 @@
                             aria-controls="documents-tab"
                             role="tab">
                         <i class="fa-solid fa-file hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 w-3.5 h-3.5 text-gray-400 dark:text-gray-600 mr-1"></i>
-                        {% translate "Documents" %}
+                        {% translate "Documents" %} ({{ object.documents.count }})
                     </button>
                     <button type="button"
                             class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400 dark:hover:text-gray-300"
@@ -115,18 +116,21 @@
                             aria-controls="notes-tab"
                             role="tab">
                         <i class="fa-solid fa-note-sticky hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 w-3.5 h-3.5 text-gray-400 dark:text-gray-600 mr-1"></i>
-                        {% translate "Notes" %}
+                        {% translate "Notes" %} ({{ object.notes.count }})
                     </button>
                 </nav>
                 <div class="mt-3">
+                    {% convert_dict_to_str job=object.pk as extra_hidden_inputs %}
                     <div id="tasks-tab"
                          role="tabpanel"
                          aria-labelledby="bar-with-underline-item-1">
                         <!-- <p class="text-gray-500 dark:text-gray-400">
                             This is the <em class="font-semibold text-gray-800 dark:text-gray-200">first</em> item's tab body.
 </p> -->
-                        {% bw_js_modal modal_css_id="createTaskModal" modal_size="md" modal_title="Create new task" is_submit_btn_enabled=True is_form_modal=True form_object=task_form is_upload_form=True form_id="createTaskForm" form_submit_text="Create" %}
-                        {% bw_create_btn_js_modal js_create_btn_css_id="createTaskBtn" modal_css_id="createTaskModal" app_name="task" %}
+                        {% bw_js_modal modal_css_id="createTaskModal" modal_size="sm" modal_title="Create new task" is_submit_btn_enabled=True is_form_modal=True form_object=task_form is_upload_form=True form_id="createTaskForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:task:api:task-api-router-list" %}
+                        <div class="text-right">
+                            {% bw_create_btn_js_modal js_create_btn_css_id="createTaskBtn" modal_css_id="createTaskModal" app_name="task" %}
+                        </div>
 
                         {% include "bw_components/task/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at is_show_create_btn=False app_label="task" pagination_list_url_name="dashboard:task:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete" actions_app_name="task" actions_base_url="dashboard:task" base_url_name="dashboard:task" filter_form=filter_form filter_cancel_url="dashboard:task:list" object_list=object.tasks.all is_show_job_column=False is_show_manager_column=True is_show_type_column=True is_show_status_column=True %}
 
@@ -138,13 +142,10 @@
                         <!-- <p class="text-gray-500 dark:text-gray-400">
                             This is the <em class="font-semibold text-gray-800 dark:text-gray-200">second</em> item's tab body.
 </p> -->
-                        
-                        {% with object.pk as jobID %}
-                        {% bw_js_modal modal_css_id="createDocumentModal" modal_size="md" modal_title="Create new document" is_submit_btn_enabled=True is_form_modal=True form_object=document_form is_upload_form=True form_id="createDocumentForm" form_submit_text="Create" extra_hidden_inputs=jobID|add:'doeooeooo' %}
-                        {% bw_create_btn_js_modal js_create_btn_css_id="createDocumentBtn" modal_css_id="createDocumentModal" app_name="document" %}
-                        {% endwith %}
-                            
-                        
+                        {% bw_js_modal modal_css_id="createDocumentModal" modal_size="sm" modal_title="Create new document" is_submit_btn_enabled=True is_form_modal=True form_object=document_form is_upload_form=True form_id="createDocumentForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:document:api:document-api-router-list" %}
+                        <div class="text-right">
+                            {% bw_create_btn_js_modal js_create_btn_css_id="createDocumentBtn" modal_css_id="createDocumentModal" app_name="document" %}
+                        </div>
 
                         {% include "bw_components/document/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at is_show_create_btn=False app_label="document" pagination_list_url_name="dashboard:document:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete" actions_app_name="document" actions_base_url="dashboard:document" base_url_name="dashboard:document" filter_form=filter_form filter_cancel_url="dashboard:document:list" object_list=object.documents.all is_show_section=False %}
 
@@ -156,8 +157,11 @@
                         <!-- <p class="text-gray-500 dark:text-gray-400">
                             This is the <em class="font-semibold text-gray-800 dark:text-gray-200">third</em> item's tab body.
 </p> -->
-                        {% bw_js_modal modal_css_id="createNoteModal" modal_size="md" modal_title="Create new note" is_submit_btn_enabled=True is_form_modal=True form_object=note_form is_upload_form=False form_id="createNoteForm" form_submit_text="Create" %}
-                        {% bw_create_btn_js_modal js_create_btn_css_id="createNoteBtn" modal_css_id="createNoteModal" app_name="note" %}
+                        {% convert_dict_to_str job=object.pk as extra_hidden_inputs %}
+                        {% bw_js_modal modal_css_id="createNoteModal" modal_size="sm" modal_title="Create new note" is_submit_btn_enabled=True is_form_modal=True form_object=note_form is_upload_form=False form_id="createNoteForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:note:api:note-api-router-list" %}
+                        <div class="text-right">
+                            {% bw_create_btn_js_modal js_create_btn_css_id="createNoteBtn" modal_css_id="createNoteModal" app_name="note" %}
+                        </div>
 
                         {% include "bw_components/note/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Notes" is_show_create_btn=False app_label="note" pagination_list_url_name="dashboard:note:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete" actions_app_name="note" actions_base_url="dashboard:note" base_url_name="dashboard:note" filter_form=filter_form filter_cancel_url="dashboard:note:list" object_list=object.notes.all is_show_section=False %}
 
@@ -345,6 +349,6 @@
         </div>
     </div>
     {# Start Update Job Modal #}
-    {% bw_js_modal modal_css_id="update-job-details-modal" modal_size="sm" modal_title="Update job" is_submit_btn_enabled=True is_form_modal=True form_object=job_update_form is_upload_form=False form_id="updateJobForm" form_submit_text="Update" action_url="dashboard:job:api:job-api-router-detail" action_url_pk=object.pk form_method="post" %}
+    {% bw_js_modal modal_css_id="update-job-details-modal" modal_size="sm" modal_title="Update job" is_submit_btn_enabled=True is_form_modal=True form_object=job_update_form is_upload_form=False form_id="updateJobForm" form_submit_text="Update" action_url="dashboard:job:api:job-api-router-detail" action_url_pk=object.pk form_method="post" enable_hidden_method=True %}
     {# End Update Job Modal #}
 {% endblock dashboard_content_block %}
