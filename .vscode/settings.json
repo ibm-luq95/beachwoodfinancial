@@ -25,6 +25,7 @@
   "autoDocstring.docstringFormat": "numpy",
   "autoDocstring.includeName": true,
   "cSpell.words": [
+    "CSRFINPUTNAME",
     "externalcss",
     "filterset",
     "fullname"
