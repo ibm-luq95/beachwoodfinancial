@@ -10,7 +10,7 @@ class DiscussionSerializer(serializers.ModelSerializer):
         queryset=SpecialAssignment.objects.all(), many=False
     )
     replies = serializers.PrimaryKeyRelatedField(
-        queryset=DiscussionProxy.objects.all(), many=False
+        queryset=DiscussionProxy.objects.all(), many=False, required=False
     )
 
     class Meta:
