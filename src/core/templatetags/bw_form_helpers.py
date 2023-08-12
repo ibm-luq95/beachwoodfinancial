@@ -1,10 +1,12 @@
 # -*- coding: utf-8 -*-#
+
+import json
+
 from django import template
-from django import forms
-from django.forms import BoundField, Field, Widget
-from django.forms.models import ModelMultipleChoiceField
+from django.forms import BoundField, Field
 from django.utils.safestring import SafeString
 
+from core.config.bwcustom_jsonencoder import BWCustomJSONEncoder
 from core.utils import debugging_print
 
 register = template.Library()
@@ -34,6 +36,16 @@ def bw_add_state_css_class(input_bound_field: BoundField, state: str) -> SafeStr
         css_classes.append("focus:border-green-500")
         css_classes.append("focus:ring-green-500")
     return input_bound_field.as_widget(attrs={"class": " ".join(css_classes)})
+
+
+@register.simple_tag
+def convert_dict_to_str(**kwargs):
+    data = dict()
+    for key, value in kwargs.items():
+        data.setdefault(key, value)
+    data = json.dumps(data, cls=BWCustomJSONEncoder)
+    # debugging_print(data)
+    return data
 
 
 @register.simple_tag(takes_context=True)
