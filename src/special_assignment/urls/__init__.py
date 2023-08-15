@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-#
-from django.urls import path
+from django.urls import path, include
 
 from special_assignment.views import (
     SpecialAssignmentDetailsView,
@@ -17,4 +17,5 @@ urlpatterns = [
     path("<uuid:pk>", SpecialAssignmentDetailsView.as_view(), name="details"),
     path("update/<uuid:pk>", SpecialAssignmentUpdateView.as_view(), name="update"),
     path("delete/<uuid:pk>", SpecialAssignmentDeleteView.as_view(), name="delete"),
+    path("api/", include("special_assignment.urls.api"), name="api"),
 ]
