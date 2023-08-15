@@ -153,6 +153,19 @@
                     <a href="{% url base_url_name|add:':details' object.pk %}">
                         <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.title|bw_truncate_titles }}</span>
                     </a>
+                    {% if object.categories.all %}
+                        <div class="my-1 text-left">
+                            {% for category in object.categories.all %}
+                                <div class="hs-tooltip inline-block mr-0.5">
+                                    <a href="#" class="hs-tooltip-toggle">
+                                        <span class="inline-flex items-center gap-1 py-0.5 px-2 rounded-full text-[10px] font-medium bg-blue-100 text-blue-800">{{ category.name }}</span>
+                                        <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                              role="tooltip">{% translate "Category" %}</span>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
             </td>
             <td class="h-px w-px whitespace-nowrap">
