@@ -11,6 +11,7 @@ from special_assignment.models import SpecialAssignmentProxy
 class SpecialAssignmentForm(BaseModelFormMixin, JoditFormMixin):
     field_order = [
         "client",
+        "job",
         "title",
         "body",
         "attachment",
