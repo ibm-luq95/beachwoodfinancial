@@ -16,6 +16,7 @@ import Chart from "chart.js/auto";
 
 import "./job/details.js";
 import "./special_assignment/details.js";
+import "./special_assignment/special_assignment.js";
 import "./task/task.js";
 import "./document/document.js";
 import "./note/note.js";
