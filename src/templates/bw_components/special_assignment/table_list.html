@@ -66,6 +66,16 @@
         <th scope="col" class="px-6 py-3 text-left">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                    {% translate "Job" %}
+                </span>
+
+                {% include "bw_components/global/table_list/sort_icon.html" %}
+
+            </div>
+        </th>
+        <th scope="col" class="px-6 py-3 text-left">
+            <div class="flex items-center gap-x-2">
+                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                     {% translate "Manager" %}
                 </span>
 
@@ -180,13 +190,31 @@
             {# Start Client #}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
-                    <a class="{{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }} text-sm"
-                       href="{% url 'dashboard:client:details' object.client.pk %}">
-                        {{ object.client.name }}
-                    </a>
+                    {% if object.client %}
+                        <a class="{{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }} text-sm"
+                           href="{% url 'dashboard:client:details' object.client.pk %}">
+                            {{ object.client.name }}
+                        </a>
+                    {% else %}
+                        ---
+                    {% endif %}
                 </div>
             </td>
             {# End Client #}
+            {# Start Job #}
+            <td class="h-px w-px whitespace-nowrap">
+                <div class="px-6 py-3">
+                    {% if object.job %}
+                        <a class="{{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }} text-sm"
+                           href="{% url 'dashboard:job:details' object.job.pk %}">
+                            {{ object.job.title|truncatechars:DEFAULT_TEMPLATE_TABLE_LIST_TRUNCATED_STRING }}
+                        </a>
+                    {% else %}
+                        ---
+                    {% endif %}
+                </div>
+            </td>
+            {# End Job #}
             {# Start Manager #}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
