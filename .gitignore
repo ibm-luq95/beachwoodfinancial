@@ -543,3 +543,4 @@ src/frontend/package-lock.json
 !**/migrations/__init__.py
 poetry.lock
 testing_sicripts
+src/local_dev.sqlite3
