@@ -96,7 +96,7 @@ class UploadFileRequest {
               resolve(response["msg"]);
             } else {
               console.error(this.ajaxObject.response);
-              reject(response["user_error_msg"]);
+              reject(response);
             }
           }
         });
