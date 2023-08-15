@@ -6,3 +6,4 @@ from .special_assignment import (
     SpecialAssignmentDetailsView,
     SpecialAssignmentListView,
 )
+from .api import SpecialAssignmentViewSet
