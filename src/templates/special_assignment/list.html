@@ -10,7 +10,7 @@
     {# End Page Heading #}
     <!-- Table Section -->
 
-    {% include "bw_components/special_assignment/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Special assignments" header_subtitle="Special assignments custom specific assignments to clients" is_show_create_btn=True app_label=app_label page_obj=page_obj pagination_list_url_name="dashboard:special_assignment:list" is_filters_enabled=True is_actions_menu_enabled=True actions_items="show,update,delete" actions_app_name=app_label actions_base_url="dashboard:special_assignment" base_url_name="dashboard:special_assignment" filter_form=filter_form filter_cancel_url="dashboard:special_assignment:list" object_list=object_list %}
+    {% include "bw_components/special_assignment/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Special assignments" header_subtitle="Special assignments custom specific assignments to clients" is_show_create_btn=True app_label=app_label page_obj=page_obj pagination_list_url_name="dashboard:special_assignment:list" is_filters_enabled=True is_actions_menu_enabled=True actions_items="show,update,delete" actions_app_name=app_label actions_base_url="dashboard:special_assignment" base_url_name="dashboard:special_assignment" filter_form=filter_form filter_cancel_url="dashboard:special_assignment:list" object_list=object_list is_header_enabled=True is_footer_enabled=True %}
 
     <!-- End Table Section -->
 {% endblock dashboard_content_block %}
