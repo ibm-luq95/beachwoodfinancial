@@ -28,6 +28,7 @@ from job.forms import JobForm
 from job.models import JobProxy
 from note.forms import NoteForm
 from note.models import Note
+from special_assignment.forms import SpecialAssignmentForm, MiniSpecialAssignmentForm
 from task.forms import TaskForm
 from task.models import TaskProxy
 
@@ -124,11 +125,15 @@ class JobDetailsView(
             initial={"job": self.get_object(), "note_section": "note"},
             removed_fields=["client", "task", "note_section", "job"],
         )
+        special_assignment_form = MiniSpecialAssignmentForm(
+            renderer=BWFormRenderer(), initial={"assigned_by": self.request.user.pk}
+        )
         context.setdefault("job_update_form", job_update_form)
         context.setdefault("job_status_choices", JobStatusEnum.choices)
         context.setdefault("task_form", task_form)
         context.setdefault("document_form", document_form)
         context.setdefault("note_form", note_form)
+        context.setdefault("special_assignment_form", special_assignment_form)
         return context
 
 
