@@ -19,6 +19,7 @@ from client.filters import ClientFilter
 from client.forms import ClientForm
 from client.models import ClientProxy
 from core.cache import BWCacheViewMixin
+from core.config.forms import BWFormRenderer
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.status_labels import CON_ARCHIVED
 from core.utils import get_trans_txt, debugging_print
@@ -29,9 +30,14 @@ from core.views.mixins import (
     BWArchiveListViewMixin,
     BWManagerAccessMixin,
 )
+from document.forms import DocumentForm
 
 # from documents.forms import DocumentForm
 from important_contact.forms import ImportantContactForm
+from job.forms import JobForm
+from note.forms import NoteForm
+from special_assignment.forms import MiniSpecialAssignmentForm
+from task.forms import TaskForm
 
 
 # from jobs.forms import JobForm
@@ -154,10 +160,7 @@ class ClientDeleteView(
 
 
 class ClientDetailsView(
-    BWLoginRequiredMixin,
-    BWManagerAccessMixin,
-    BWCacheViewMixin,
-    DetailView,
+    BWLoginRequiredMixin, BWManagerAccessMixin, BWCacheViewMixin, DetailView
 ):
     template_name = "client/details.html"
     # form_class = ClientCategoryForm
@@ -167,4 +170,36 @@ class ClientDetailsView(
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context.setdefault("title", _("Client details"))
+        # job_update_form = JobForm(
+        #     instance=self.get_object(),
+        #     is_updated=True,
+        #     renderer=BWFormRenderer(),
+        #     client=self.get_object().client,
+        #     # removed_fields=["job"],
+        # )
+        task_form = TaskForm(
+            initial={"client": self.get_object()},
+            # removed_fields=["job"],
+            hidden_fields=["job"],
+            renderer=BWFormRenderer(),
+        )
+        document_form = DocumentForm(
+            initial={"client": self.get_object(), "document_section": "client"},
+            renderer=BWFormRenderer(),
+            removed_fields=["task", "status", "job", "document_section"],
+        )
+        note_form = NoteForm(
+            renderer=BWFormRenderer(),
+            initial={"client": self.get_object(), "note_section": "client"},
+            removed_fields=["task", "note_section", "job"],
+        )
+        special_assignment_form = MiniSpecialAssignmentForm(
+            renderer=BWFormRenderer(), initial={"assigned_by": self.request.user.pk}
+        )
+        # context.setdefault("job_update_form", job_update_form)
+        # context.setdefault("job_status_choices", JobStatusEnum.choices)
+        context.setdefault("task_form", task_form)
+        context.setdefault("document_form", document_form)
+        context.setdefault("note_form", note_form)
+        context.setdefault("special_assignment_form", special_assignment_form)
         return context
