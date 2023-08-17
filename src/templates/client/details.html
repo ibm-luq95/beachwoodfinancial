@@ -64,8 +64,12 @@
                            href="#">{% translate "Document" %}</a>
                     </div>
                 </div>
-                <a class="py-2 px-3 flex items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800 ml-4"
-                   href="{% url 'dashboard:client:update' object.pk %}">{% translate "Edit Client" %}</a>
+                {% bw_js_modal modal_css_id="update-client-modal" modal_size="sm" modal_title="Update client" is_submit_btn_enabled=True is_form_modal=True form_object=client_form is_upload_form=True form_id="updateClientForm" form_submit_text="Update" action_url="dashboard:client:api:client-api-router-detail" enable_hidden_method=True action_url_pk=object.pk form_method="post" %}
+                <button class="py-2 px-3 flex items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800 ml-4"
+                        type="button"
+                        data-hs-overlay="#update-client-modal">
+                    {% translate "Edit Client" %}
+                </button>
             </div>
         </div>
     </div>
@@ -84,7 +88,7 @@
                         role="tab">
                     <i class="fa-solid fa-house hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 w-3.5 h-3.5 text-gray-400 dark:text-gray-600"></i>
                     {% translate "Overview" %}
-                    <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">99+</span>
+                    <!-- <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">99+</span> -->
                 </button>
                 <button type="button"
                         class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-2 border-b-[3px] border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 flex-auto justify-center text-center font-medium dark:hover:text-gray-400"
@@ -94,7 +98,7 @@
                         role="tab">
                     <i class="fa-solid fa-user-gear hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 w-3.5 h-3.5 text-gray-400 dark:text-gray-600"></i>
                     {% translate "Details" %}
-                    <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">5+</span>
+                    <!-- <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">5+</span> -->
                 </button>
                 <button type="button"
                         class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-2 border-b-[3px] border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 flex-auto justify-center text-center font-medium dark:hover:text-gray-400"
@@ -104,7 +108,7 @@
                         role="tab">
                     <i class="fa-solid fa-suitcase hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 w-3.5 h-3.5 text-gray-400 dark:text-gray-600"></i>
                     {% translate "Jobs" %}
-                    <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">2+</span>
+                    <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">{{ object.jobs.count }}</span>
                 </button>
                 <button type="button"
                         class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-2 border-b-[3px] border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 flex-auto justify-center text-center font-medium dark:hover:text-gray-400"
@@ -134,7 +138,7 @@
                         role="tab">
                     <i class="fa-solid fa-list-ol hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 w-3.5 h-3.5 text-gray-400 dark:text-gray-600"></i>
                     {% translate "Assignments" %}
-                    <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">5+</span>
+                    <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">{{ object.special_assignments.count }}</span>
                 </button>
                 <button type="button"
                         class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-2 border-b-[3px] border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 flex-auto justify-center text-center font-medium dark:hover:text-gray-400"
@@ -364,15 +368,25 @@
                  aria-labelledby="tabs-with-icons-item-3">
                 <p class="text-gray-500 dark:text-gray-400">Contacts tab</p>
                 <hr />
+                {% if object.important_contacts.all %}
 
-                {% include "client/details_segments/important_contacts.html" with client_object=object %}
+                    {% include "client/details_segments/important_contacts.html" with client_object=object %}
 
+                {% else %}
+
+                    {% include "bw_ui_components/global/empty_card.html" with label="contacts" %}
+
+                {% endif %}
             </div>
             <div id="client-details-tab"
                  class="hidden"
                  role="tabpanel"
                  aria-labelledby="tabs-with-icons-item-3">
                 <p class="text-gray-500 dark:text-gray-400">Client details tab</p>
+                <hr class="my-4" />
+                <form>
+                    {{ client_mini_form }}
+                </form>
             </div>
             <div id="accounts-tab"
                  class="hidden"
@@ -380,9 +394,15 @@
                  aria-labelledby="tabs-with-icons-item-3">
                 <p class="text-gray-500 dark:text-gray-400">Account tab</p>
                 <hr />
+                {% if object.client_accounts.all %}
 
-                {% include "client/details_segments/client_accounts.html" with client_object=object %}
+                    {% include "client/details_segments/client_accounts.html" with client_object=object %}
 
+                {% else %}
+
+                    {% include "bw_ui_components/global/empty_card.html" with label="accounts" %}
+
+                {% endif %}
             </div>
             <div id="assignments-tab"
                  class="hidden"
