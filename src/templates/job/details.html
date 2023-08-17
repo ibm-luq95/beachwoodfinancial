@@ -2,6 +2,7 @@
 
 {% load i18n %}
 
+{% load humanize %}
 {% load bw_form_helpers %}
 {% load tailwind_filters %}
 
@@ -214,6 +215,7 @@
                         </div>
                         {% bw_js_modal modal_css_id="createAssignmentModal" modal_size="sm" modal_title="Create new assignment" is_submit_btn_enabled=True is_form_modal=True form_object=special_assignment_form is_upload_form=True form_id="createAssignmentForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:special_assignment:api:special-assignment-api-router-list" %}
                         {% if object.special_assignments.all %}
+
                             {% include "bw_components/special_assignment/mini_table_list.html" with is_checkbox_enabled=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Special assignments" header_subtitle="Special assignments custom specific assignments to clients" app_label=app_label pagination_list_url_name="dashboard:special_assignment:list" is_actions_menu_enabled=False actions_items="show,update,delete" actions_app_name=app_label actions_base_url="dashboard:special_assignment" base_url_name="dashboard:special_assignment" filter_form=filter_form filter_cancel_url="dashboard:special_assignment:list" page_obj=object.special_assignments.all %}
 
                         {% else %}
@@ -227,21 +229,17 @@
             {# End Tabs Block #}
         </div>
         <div class="p-5 flex flex-col gap-4 rounded">
-            <div class="main flex flex-col my-4 gap-4">
+            <div class="main flex flex-col gap-4">
                 <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
                     <label for="job-status-input" class="sr-only">{% translate "Status" %}</label>
                     <div class="flex rounded-md shadow-sm">
-                        <input list="job-status-datalist"
-                               id="job-status-input"
-                               name="job-status-input"
-                               class="{{ BW_FULL_INPUT_CSS_CLASSES }} py-3 px-4 block w-full border-gray-200 shadow-sm rounded-l-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
-                               disabled
-                               value="{{ object.get_status_display }}" />
-                        <datalist id="job-status-datalist">
+                        <select id="jobStatusInput" class="{{ BW_FULL_INPUT_CSS_CLASSES }} py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                                disabled>
                             {% for choice in job_status_choices %}
-                                <option value="{{ choice.0|safe }}">{{ choice.1|safe }}</option>
+                                <option value="{{ choice.0|safe }}"
+                                        {% if object.status == choice.0 %}selected{% endif %}>{{ choice.1|safe }}</option>
                             {% endfor %}
-                        </datalist>
+                        </select>
                         <button type="button"
                                 class="{{ BW_FULL_INPUT_CSS_CLASSES }} hs-tooltip -ml-px py-3 px-4 inline-flex justify-center items-center gap-2 border font-medium bg-blue-100 border-transparent text-blue-500 hover:text-white hover:bg-blue-100 focus:outline-none focus:ring-2 ring-offset-white focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                                 disabled
@@ -299,6 +297,111 @@
                                    readonly
                                    disabled />
                         </div>
+                    </div>
+                </div>
+                <div class="-mt-2">
+                    {% if object.discussions.all %}
+                        <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+                            <div class="h-80 overflow-y-auto p-4 md:p-5">
+                                <h3 class="text-lg font-bold text-gray-800 dark:text-white border-b-gray-400">
+                                    {% translate "Discussions" %} ({{ object.discussions.count }})
+                                </h3>
+                                {# Start Content #}
+                                <section class="discussions-wrapper mt-3">
+                                    {% for discussion in object.discussions.get_only_discussions_without_replies.all %}
+                                        <div class="grid grid-cols-12 gap-2 mb-3">
+                                            <div class="col-span-1 text-center">
+                                                <img class="inline-block h-[2rem] w-[2rem] rounded-full"
+                                                     src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
+                                                     alt="Image Description" />
+                                            </div>
+                                            <div class="col-span-10">
+                                                <section class="main-discussion-wrapper">
+                                                    <p>
+                                                        <h3 class="font-semibold text-gray-800 dark:text-white text-sm inline-block">
+                                                            {{ discussion.get_managed_user }}
+                                                        </h3>
+                                                        <span class="font-semibold text-gray-400 dark:text-white text-xs italic inline-block ml-2">{{ discussion.created_at|naturaltime }}</span>
+                                                    </p>
+                                                    <details class="text-sm font-medium text-gray-700 relative">
+                                                        <summary>
+                                                            <input type="radio"
+                                                                   name="discussionID"
+                                                                   disabled
+                                                                   class="{{ BW_FULL_INPUT_CSS_CLASSES }} mr-3 shrink-0 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                                                   id="discussionID-{{ discussion.pk }}"
+                                                                   value="{{ discussion.pk }}" />
+                                                            <span class="inline-block relative top-0.5">{{ discussion.body|safe|truncatechars:30 }} ({{ discussion.discussion_replies.count }})</span>
+                                                            {% if discussion.attachment %}
+                                                                <a href="{{ discussion.attachment.url }}"
+                                                                   download="{{ discussion.attachment.url }}"
+                                                                   class="relative inline-block top-0.5">
+                                                                    <i class="fa-solid fa-paperclip inline-block ml-2 h-3 w-3"></i>
+                                                                </a>
+                                                            {% endif %}
+                                                        </summary>
+                                                        <p class="mt-2">{{ discussion.body|safe }}</p>
+                                                        {% if discussion.discussion_replies.all %}
+                                                            {% for reply in discussion.discussion_replies.all %}
+                                                                <section class="replies-wrapper mt-2 ml-5">
+                                                                    <p>
+                                                                        <h3 class="font-semibold text-gray-800 dark:text-white text-sm inline-block">
+                                                                            {{ reply.get_managed_user }}
+                                                                        </h3>
+                                                                        <span class="font-semibold text-gray-400 dark:text-white text-xs italic inline-block ml-2">{{ reply.created_at|naturaltime }}</span>
+                                                                    </p>
+                                                                    <details class="text-sm font-medium text-gray-700 relative">
+                                                                        <summary>
+                                                                            <input type="radio"
+                                                                                   name="discussionID"
+                                                                                   disabled
+                                                                                   class="{{ BW_FULL_INPUT_CSS_CLASSES }} mr-3 shrink-0 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                                                                   id="discussionID-{{ reply.pk }}"
+                                                                                   value="{{ reply.pk }}" />
+                                                                            <span class="inline-block relative top-0.5">{{ reply.body|safe|truncatechars:30 }}</span>
+                                                                            {% if reply.attachment %}
+                                                                                <a download="{{ reply.attachment.url }}"
+                                                                                   href="{{ reply.attachment.url }}"
+                                                                                   class="relative inline-block top-0.5">
+                                                                                    <i class="fa-solid fa-paperclip inline-block ml-2 h-3 w-3"></i>
+                                                                                </a>
+                                                                            {% endif %}
+                                                                        </summary>
+                                                                        {{ reply.body|safe }}
+                                                                    </details>
+                                                                </section>
+                                                            {% endfor %}
+                                                        {% endif %}
+                                                    </details>
+                                                </section>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </section>
+                                {# End Content #}
+                            </div>
+                        </div>
+                    {% else %}
+
+                        {% include "bw_ui_components/global/empty_card.html" with label="discussions or replies" %}
+
+                    {% endif %}
+                </div>
+                <div class="-mt-3">
+                    <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
+                        {% bw_js_modal modal_css_id="add-discussion-model-form" modal_size="sm" modal_title="Post discussion or reply" is_submit_btn_enabled=True is_form_modal=True form_object=discussion_form is_upload_form=True form_id="createDiscussionForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:discussion:api:discussion-api-router-list" %}
+                        <button type="button"
+                                data-hs-overlay="#add-discussion-model-form"
+                                disabled
+                                class="{{ BW_FULL_INPUT_CSS_CLASSES }} w-full m-1 ml-0 py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md bg-blue-100 border border-transparent font-semibold text-blue-500 hover:text-white hover:bg-blue-500 focus:outline-none focus:ring-2 ring-offset-white focus:ring-blue-100 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                            {% translate "Submit reply" %}
+                        </button>
+                        <button type="button"
+                                id="discussionsResetBtn"
+                                disabled
+                                class="{{ BW_FULL_INPUT_CSS_CLASSES }} w-full m-1 ml-0 py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md bg-gray-100 border border-transparent font-semibold text-gray-500 hover:text-white hover:bg-gray-500 focus:outline-none focus:ring-2 ring-offset-white focus:ring-gray-100 focus:ring-offset-2 transition-all text-sm dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-600 dark:text-white dark:focus:ring-offset-gray-800">
+                            {% translate "Reset" %}
+                        </button>
                     </div>
                 </div>
             </div>
