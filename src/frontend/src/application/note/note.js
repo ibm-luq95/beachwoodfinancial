@@ -4,7 +4,7 @@
 
 import { sendRequest } from "../../utils/apis/apis";
 import { UploadFileRequest } from "../../utils/apis/upload_file";
-import { CSRFINPUTNAME } from "../../utils/constants";
+import { CSRFINPUTNAME, SUCCESSTIMEOUTSECS } from "../../utils/constants";
 import {
   disableAndEnableFieldsetItems,
   formInputSerializer,
@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
             showToastNotification("Note created successfully", "success");
             setTimeout(() => {
               window.location.reload();
-            }, 1500);
+            }, SUCCESSTIMEOUTSECS);
           })
           .catch((error) => {
             console.error(error);

@@ -1,7 +1,7 @@
 "use strict";
 
 import { UploadFileRequest } from "../../utils/apis/upload_file.js";
-import { CSRFINPUTNAME } from "../../utils/constants.js";
+import { CSRFINPUTNAME, SUCCESSTIMEOUTSECS } from "../../utils/constants.js";
 import { getCookie } from "../../utils/cookie.js";
 import { formInputSerializer } from "../../utils/form_helpers.js";
 import { showToastNotification } from "../../utils/toasts";
@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
       replyForm.addEventListener("submit", (event) => {
         event.preventDefault();
         const currentTarget = event.currentTarget;
-        const isReplyCheckboxElement = currentTarget.elements["isReplyCheckbox"];
+        let submitType = "Discussion";
         const replyInputElement = document.querySelector("input[name='replies']:checked");
 
         const formInputs = formInputSerializer({
@@ -25,9 +25,8 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
         });
         // check if isReply checkbox checked
         if (replyInputElement) {
-          if (isReplyCheckboxElement.checked === true) {
-            formInputs.append("replies", replyInputElement.value);
-          }
+          formInputs.append("replies", replyInputElement.value);
+          submitType = "Reply";
         }
 
         fieldset.disabled = true;
@@ -43,10 +42,10 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
         request
           .then((data) => {
             console.log(data);
-            showToastNotification(data, "success");
+            showToastNotification(`${submitType} submitted successfully!`, "success");
             setTimeout(() => {
-                window.location.reload();
-            }, 1500);
+              window.location.reload();
+            }, SUCCESSTIMEOUTSECS);
           })
           .catch((error) => {
             console.error(error);

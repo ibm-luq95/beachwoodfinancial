@@ -1,7 +1,7 @@
 "use strict";
 
 import { sendRequest } from "../../utils/apis/apis";
-import { CSRFINPUTNAME } from "../../utils/constants";
+import { CSRFINPUTNAME, SUCCESSTIMEOUTSECS } from "../../utils/constants";
 import {
   disableAndEnableFieldsetItems,
   formInputSerializer,
@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
   const updateJobForm = document.querySelector("form#updateJobForm");
   if (updateJobStatusBtn) {
     updateJobStatusBtn.addEventListener("click", (event) => {
-      const jobStatusInput = document.querySelector("input#job-status-input");
+      const jobStatusInput = document.querySelector("select#job-status-input");
       // console.log(jobStatusInput.value);
     });
 
@@ -52,7 +52,7 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
             showToastNotification("Job updated successfully", "success");
             setTimeout(() => {
               window.location.reload();
-            }, 1500);
+            }, SUCCESSTIMEOUTSECS);
           })
           .catch((error) => {
             console.error(error);

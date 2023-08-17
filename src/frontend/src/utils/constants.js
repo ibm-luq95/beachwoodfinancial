@@ -12,6 +12,8 @@ const isDisabledCssClass = "is-disabled";
 const CSRFINPUTNAME = "csrfmiddlewaretoken";
 const eyeSlashIconHTMLCode = `<i class="fa-solid fa-eye-slash"></i>`;
 const eyeIconHTMLCode = `<i class="fa-solid fa-eye"></i>`;
+const SUCCESSTIMEOUTSECS = 1000;
+const TOASTSTIMEOUTSECS = 1500;
 // console.log(global.window.settings);
 // const DEBUG = window.settings["DEBUG"];
 const DEBUG = true;
@@ -28,4 +30,6 @@ export {
   FETCHURLNAMEURL,
   CURRENTUSER,
   CSRFINPUTNAME,
+  SUCCESSTIMEOUTSECS,
+  TOASTSTIMEOUTSECS,
 };

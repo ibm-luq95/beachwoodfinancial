@@ -1,7 +1,7 @@
 "use strict";
 
 import { UploadFileRequest } from "../../utils/apis/upload_file";
-import { CSRFINPUTNAME } from "../../utils/constants";
+import { CSRFINPUTNAME, SUCCESSTIMEOUTSECS } from "../../utils/constants";
 import { formInputSerializer } from "../../utils/form_helpers";
 import { showToastNotification } from "../../utils/toasts";
 
@@ -37,7 +37,7 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
             showToastNotification(data, "success");
             setTimeout(() => {
               window.location.reload();
-            }, 1500);
+            }, SUCCESSTIMEOUTSECS);
           })
           .catch((error) => {
             console.error(error);

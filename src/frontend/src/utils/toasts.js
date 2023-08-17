@@ -1,5 +1,6 @@
 "use strict";
 
+import { TOASTSTIMEOUTSECS } from "./constants";
 import { getIconForToasts } from "./icons";
 
 /**
@@ -21,7 +22,7 @@ const showToastNotification = (msg, notificationType = "success") => {
   );
   setTimeout(() => {
     toastsWrapperElement.classList.add(...["animate__fadeOutRight", "animate__faster"]);
-  }, 1500);
+  }, TOASTSTIMEOUTSECS);
 };
 
 export { showToastNotification };
