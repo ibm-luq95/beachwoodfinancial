@@ -35,7 +35,3 @@ class Assistant(BaseModelMixin, StaffMemberMixin):
             ),
             ("can_edit_users", "Can edit users"),
         ]
-
-    def __str__(self) -> str:
-        # return f"Assistant - {self.user.first_name} {self.user.last_name}"
-        return f"{self.user.fullname}"

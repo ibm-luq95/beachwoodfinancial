@@ -9,12 +9,6 @@ class Manager(BaseModelMixin, StaffMemberMixin):
         CustomUser (User): Django custom user model
     """
 
-    def __str__(self) -> str:
-        # return f"Assistant - {self.user.first_name} {self.user.last_name}"
-        return f"{self.user.fullname}"
-
     class Meta:
         # proxy = True
-        permissions = [
-            ("manager_user", "Manager User"),
-        ]
+        permissions = [("manager_user", "Manager User")]

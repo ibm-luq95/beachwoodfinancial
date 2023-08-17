@@ -25,6 +25,10 @@ class StaffMemberMixin(models.Model):
         blank=True,
     )
 
+    def __str__(self) -> str:
+        # return f"Assistant - {self.user.first_name} {self.user.last_name}"
+        return f"{self.user.fullname}"
+
     class Meta:
         abstract = True
 

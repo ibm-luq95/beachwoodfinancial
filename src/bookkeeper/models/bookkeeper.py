@@ -19,7 +19,3 @@ class Bookkeeper(BaseModelMixin, StaffMemberMixin):
                 "Bookkeeper can delete special assignment",
             ),
         ]
-
-    def __str__(self):
-        # return f"Bookkeeper -> {self.user.fullname}"
-        return getattr(self.user, "fullname")
