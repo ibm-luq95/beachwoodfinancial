@@ -24,12 +24,7 @@
   "python.linting.pycodestyleEnabled": false,
   "autoDocstring.docstringFormat": "numpy",
   "autoDocstring.includeName": true,
-  "cSpell.words": [
-    "CSRFINPUTNAME",
-    "externalcss",
-    "filterset",
-    "fullname"
-  ],
+  "cSpell.words": ["CSRFINPUTNAME", "externalcss", "filterset", "fullname"],
   // OLD
   // "workbench.colorCustomizations": {
   //   "titleBar.activeForeground": "#fff",
@@ -57,6 +52,7 @@
   "isort.importStrategy": "fromEnvironment",
   "isort.logLevel": "warn",
   "isort.check": true,
+  "stylelint.stylelintPath": "./src/frontend/node_modules/stylelint/bin/stylelint.js"
   // "isort.interpreter": [
   //   "${userHome}/.virtualenvs/beach_wood_financial_dev_venv_3.11.4/bin/python3"
   // ],
