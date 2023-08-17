@@ -12,6 +12,7 @@ from django.views.generic import (
 )
 from django.utils.translation import gettext as _
 
+from beach_wood_user.models import BWUser
 from core.cache import BWCacheViewMixin
 from core.choices import JobStatusEnum
 from core.config.forms import BWFormRenderer
@@ -22,6 +23,7 @@ from core.views.mixins import (
     BWBaseListViewMixin,
     BWManagerAccessMixin,
 )
+from discussion.forms import DiscussionForm, DiscussionMiniForm
 from document.forms import DocumentForm
 from job.filters import JobFilter
 from job.forms import JobForm
@@ -126,13 +128,29 @@ class JobDetailsView(
             removed_fields=["client", "task", "note_section", "job"],
         )
         special_assignment_form = MiniSpecialAssignmentForm(
-            renderer=BWFormRenderer(), initial={"assigned_by": self.request.user.pk}
+            initial={"assigned_by": self.request.user.pk}
+        )
+        current_user = self.request.user
+        # current_user = BWUser.objects.get(pk="907c039a-b151-4faf-aed2-6c30ce4da3a9")
+        discussion_initial_data = {
+            "job": self.get_object(),
+            # "user": self.request.user.pk,
+            current_user.get_staff_member_object.get(
+                "user_type"
+            ): current_user.get_staff_member_object.get("staff_object"),
+        }
+        # debugging_print(self.request.user.get_staff_member_object)
+        # debugging_print(discussion_initial_data)
+        discussion_form = DiscussionMiniForm(
+            initial=discussion_initial_data,
+            # removed_fields=["special_assignment", "replies"],
         )
         context.setdefault("job_update_form", job_update_form)
         context.setdefault("job_status_choices", JobStatusEnum.choices)
         context.setdefault("task_form", task_form)
         context.setdefault("document_form", document_form)
         context.setdefault("note_form", note_form)
+        context.setdefault("discussion_form", discussion_form)
         context.setdefault("special_assignment_form", special_assignment_form)
         return context
 
