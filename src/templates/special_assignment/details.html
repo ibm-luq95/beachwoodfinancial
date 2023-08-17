@@ -107,19 +107,39 @@
         <div class="col-span-3">
             {# Start Client #}
             <section class="mb-3">
-                <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
-                    <div class="flex-shrink-0 group block">
-                        <div class="flex items-center">
-                            <img class="inline-block flex-shrink-0 h-[3.875rem] w-[3.875rem] rounded-full"
-                                 src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
-                                 alt="Image Description" />
-                            <div class="ml-3">
-                                <h3 class="font-semibold text-gray-800 dark:text-white">{{ object.client.name }}</h3>
-                                <p class="text-sm font-medium text-gray-400">{% translate "Client Name" %}</p>
+                {% if object.client %}
+                    <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
+                        <div class="flex-shrink-0 group block">
+                            <div class="flex items-center">
+                                <img class="inline-block flex-shrink-0 w-[46px] h-[46px] rounded-full"
+                                     src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
+                                     alt="Image Description" />
+                                <div class="ml-3">
+                                    <h3 class="font-semibold text-gray-800 dark:text-white">{{ object.client.name }}</h3>
+                                    <p class="text-sm font-medium text-gray-400">{% translate "Client name" %}</p>
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
+                {% elif object.job %}
+                    <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
+                        <div class="flex-shrink-0 group block">
+                            <div class="flex items-center">
+                                <span class="m-1 inline-flex justify-center items-center w-[46px] h-[46px] rounded-full bg-blue-100 text-blue-600">
+                                    <i class="fa-solid fa-briefcase w-5 h-5"></i>
+                                </span>
+                                <div class="ml-3">
+                                    <h3 class="font-semibold text-gray-800 dark:text-white">
+                                        <a href="{% url 'dashboard:job:details' object.job.pk %}">
+                                            {{ object.job.title|safe|truncatechars:25 }}
+                                        </a>
+                                    </h3>
+                                    <p class="text-sm font-medium text-gray-400">{% translate "Job title" %}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
             </section>
             {# End Client #}
             {# Start Start Client Job #}
@@ -127,7 +147,7 @@
                 <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
                     <div class="flex-shrink-0 group block">
                         <div class="flex items-center">
-                            <img class="inline-block flex-shrink-0 h-[3.875rem] w-[3.875rem] rounded-full"
+                            <img class="inline-block flex-shrink-0 w-[46px] h-[46px] rounded-full"
                                  src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
                                  alt="Image Description" />
                             <div class="ml-3">
@@ -144,7 +164,7 @@
                 <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
                     <div class="flex-shrink-0 group block">
                         <div class="flex items-center">
-                            <img class="inline-block flex-shrink-0 h-[3.875rem] w-[3.875rem] rounded-full"
+                            <img class="inline-block flex-shrink-0 w-[46px] h-[46px] rounded-full"
                                  src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
                                  alt="Image Description" />
                             <div class="ml-3">
@@ -166,7 +186,7 @@
                 <div class="p-4 md:p-5">
                     <h3 class="text-lg font-bold text-gray-800 dark:text-white">{% translate "Post new reply" %}</h3>
                     <section id="reply-form-wrapper">
-                        <form action="{% url 'dashboard:discussion:api:create' %}"
+                        <form action="{% url 'dashboard:discussion:api:discussion-api-router-list' %}"
                               enctype="multipart/form-data"
                               id="replyForm"
                               method="post">
@@ -204,23 +224,6 @@
                                                name="attachment"
                                                id="attachment" />
                                     </label>
-                                </div>
-                                <div class="my-3">
-                                    <div class="relative flex items-start">
-                                        <div class="flex items-center h-5 mt-1">
-                                            <input id="isReplyCheckbox"
-                                                   disabled
-                                                   name="isReplyCheckbox"
-                                                   type="checkbox"
-                                                   class="{{ BW_FULL_INPUT_CSS_CLASSES }} border-gray-200 rounded text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                                   aria-describedby="isReplyCheckbox-description" />
-                                        </div>
-                                        <label for="isReplyCheckbox" class="ml-3">
-                                            <span class="block text-sm font-semibold text-gray-800 dark:text-gray-300">{% translate "Reply" %}</span>
-                                            <span id="isReplyCheckbox-description"
-                                                  class="block text-sm text-gray-600 dark:text-gray-500">Notify me when this action happens.</span>
-                                        </label>
-                                    </div>
                                 </div>
                                 <div class="mt-5">
                                     <button type="submit"
