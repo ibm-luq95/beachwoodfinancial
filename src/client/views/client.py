@@ -16,7 +16,7 @@ from django.utils.translation import gettext as _
 
 from bookkeeper.models import BookkeeperProxy
 from client.filters import ClientFilter
-from client.forms import ClientForm
+from client.forms import ClientForm, ClientMiniForm
 from client.models import ClientProxy
 from core.cache import BWCacheViewMixin
 from core.config.forms import BWFormRenderer
@@ -177,6 +177,12 @@ class ClientDetailsView(
         #     client=self.get_object().client,
         #     # removed_fields=["job"],
         # )
+        client_form = ClientForm(
+            instance=self.get_object(),
+            renderer=BWFormRenderer(),
+            removed_fields=["categories", "bookkeepers", "important_contacts", "status"],
+        )
+        client_mini_form = ClientMiniForm()
         task_form = TaskForm(
             initial={"client": self.get_object()},
             # removed_fields=["job"],
@@ -200,6 +206,8 @@ class ClientDetailsView(
         # context.setdefault("job_status_choices", JobStatusEnum.choices)
         context.setdefault("task_form", task_form)
         context.setdefault("document_form", document_form)
+        context.setdefault("client_form", client_form)
         context.setdefault("note_form", note_form)
+        context.setdefault("client_mini_form", client_mini_form)
         context.setdefault("special_assignment_form", special_assignment_form)
         return context
