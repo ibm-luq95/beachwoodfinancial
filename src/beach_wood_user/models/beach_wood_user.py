@@ -74,3 +74,16 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin):
     @property
     def fullname(self):
         return f"{self.first_name} {self.last_name}"
+
+    @property
+    def get_staff_member_object(self) -> dict:
+        user_dict = dict()
+        user_dict["user_type"] = self.user_type
+        if hasattr(self, "bookkeeper"):
+            user_dict["staff_object"] = getattr(self, "bookkeeper")
+        elif hasattr(self, "manager"):
+            user_dict["staff_object"] = getattr(self, "manager")
+        elif hasattr(self, "assistant"):
+            user_dict["staff_object"] = getattr(self, "assistant")
+
+        return user_dict
