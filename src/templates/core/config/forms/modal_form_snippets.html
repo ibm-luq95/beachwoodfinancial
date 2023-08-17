@@ -5,11 +5,13 @@
 <div class="grid sm:grid-cols-12 gap-2 sm:gap-4 first:pt-0 last:pb-0 first:border-transparent">
     {% for field in form %}
         <div class="sm:col-span-2">
-            <label for="af-submit-application-full-name"
-                   class="inline-block text-sm font-medium text-gray-500 mt-2.5">
-                {# {{ field.label }} - {{ field|field_type }} #}
-                {{ field.label }}
-            </label>
+            {% if field.is_hidden is False %}
+                <label for="af-submit-application-full-name"
+                       class="inline-block text-sm font-medium text-gray-500 mt-2.5">
+                    {# {{ field.label }} - {{ field|field_type }} #}
+                    {{ field.label }}
+                </label>
+            {% endif %}
         </div>
         <!-- End Col -->
         <div class="sm:col-span-10">
@@ -43,24 +45,25 @@
                             {% endfor %}
                         </div>
                     {% else %}
-                        <p class="text-yellow-500 font-semibold text-[14px] relative top-2">
-                            {% translate "No data" %}
-                        </p>
+                        <p class="text-yellow-500 font-semibold text-[14px] relative top-2">{% translate "No data" %}</p>
                     {% endif %}
                 {% elif field|field_type == "modelchoicefield" or field|field_type == "typedchoicefield" %}
                     {# {{ field.field.widget.choices }} #}
-                    {% if field.field.widget.choices %} 
-                    <select id="{{ field.id_for_label }}"
-                            name="{{ field.name }}"
-                            class="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
-                        <!-- <option selected>Open this select menu</option> -->
-                        {% for choice in field %}
-                            <option value="{{ choice.data.value }}"
-                                    {% if choice.data.selected is True %}selected{% endif %}>{{ choice.choice_label }}</option>
-                        {% endfor %}
-                    </select>
+                    {% if field.is_hidden is False %}
+                        {% if field.field.widget.choices %}
+                            <select id="{{ field.id_for_label }}"
+                                    name="{{ field.name }}"
+                                    class="py-2 px-3 pr-9 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                                <!-- <option selected>Open this select menu</option> -->
+                                {% for choice in field %}
+                                    <option value="{{ choice.data.value }}"
+                                            {% if choice.data.selected is True %}selected{% endif %}>{{ choice.choice_label }}</option>
+                                {% endfor %}
+                            </select>
+                        {% endif %}
+                    {% else %}
+                        {{ field }}
                     {% endif %}
-                    
                 {% elif field|field_type == "filefield" or field|field_type == "imagefield" %}
                     {{ field|add_class:"block w-full border border-gray-200 shadow-sm rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 file:bg-transparent file:border-0 file:bg-gray-100 file:mr-4 file:py-2 file:px-4 dark:file:bg-gray-700 dark:file:text-gray-400"|attr:"placeholder:" }}
                 {% else %}
