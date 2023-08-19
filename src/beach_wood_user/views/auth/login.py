@@ -46,7 +46,7 @@ class BWLoginViewBW(SuccessMessageMixin, BWCacheViewMixin, FormView):
         kwargs = super().get_form_kwargs()
         config = grab_env_file()
         environment = config("STAGE_ENVIRONMENT", cast=str)
-        if environment == "DEV" or environment == "STAGE":
+        if environment == "DEV" or environment == "STAGE" or environment == "LOCAL_DEV":
             kwargs.update({"initial": {"user_type": "manager"}})
         return kwargs
 

@@ -21,6 +21,9 @@ import "./task/task.js";
 import "./document/document.js";
 import "./note/note.js";
 import "./discussion/discussion.js";
+import "./job/job.js";
+import "./important_contact/important_contact.js";
+import "./client/client.js";
 
 window.document.addEventListener("DOMContentLoaded", function () {
   const bwfInputs = document.querySelectorAll(".bw-input");
@@ -34,7 +37,7 @@ window.document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
-  
+
   bwfInputs.forEach((input) => {
     const dataAttrs = input.dataset;
     const checkKeepDisabled = Object.prototype.hasOwnProperty.call(

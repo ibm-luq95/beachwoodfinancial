@@ -4,6 +4,7 @@ import json
 
 from django import template
 from django.forms import BoundField, Field
+from django.forms.widgets import Widget
 from django.utils.safestring import SafeString
 
 from core.config.bwcustom_jsonencoder import BWCustomJSONEncoder
@@ -17,6 +18,20 @@ def bw_get_form_field_type(field) -> str:
     # if isinstance(field, forms.ChoiceField):
     #     return "ChoiceField"
     return type(field).__name__
+
+
+@register.simple_tag
+def bw_get_form_widget_attrs_as_dict(input_bound_field: BoundField | Field) -> dict:
+    data = dict()
+    input_type = type(input_bound_field).__name__
+    if input_type == "BoundField":
+        widget: Widget = input_bound_field.field.widget
+    else:
+        widget: Widget = input_bound_field.widget
+    data = widget.attrs
+    if data.get("placeholder") is None:
+        data["placeholder"] = ""
+    return data
 
 
 @register.filter(name="bw_add_state_css_class")

@@ -1,10 +1,9 @@
 {% load i18n %}
-{% load crispy_forms_tags %}
 
 <div id="{{ modal_css_id }}"
      class="bw-js-modal hs-overlay hidden w-full h-full fixed top-0 left-0 z-[60] overflow-x-hidden overflow-y-auto [--overlay-backdrop:static]"
      data-hs-overlay-keyboard="false">
-    <div class="m-3 hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all {{ modal_size_css_classes }}">
+    <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all {{ modal_size_css_classes }}">
         <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
             <div class="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700">
                 <h3 class="font-bold text-gray-800 dark:text-white">{% translate modal_title %}</h3>

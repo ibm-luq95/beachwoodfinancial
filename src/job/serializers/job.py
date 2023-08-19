@@ -10,7 +10,7 @@ from task.serializers import TaskSerializer
 
 
 class JobSerializer(serializers.ModelSerializer):
-    tasks = TaskSerializer(many=True, read_only=True)
+    tasks = TaskSerializer(many=True, read_only=True, required=False)
     client = serializers.PrimaryKeyRelatedField(
         queryset=ClientProxy.objects.all(), many=False
     )

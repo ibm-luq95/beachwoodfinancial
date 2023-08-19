@@ -9,6 +9,7 @@ django-filter
 django-maintenance-mode
 django-session-timeout
 djangorestframework
+drf-standardized-errors
 django-log-viewer
 django-import-export
 django-extensions

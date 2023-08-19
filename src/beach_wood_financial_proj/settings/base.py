@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "import_export",
     "django_filters",
     "rest_framework",
+    "drf_standardized_errors",
     "widget_tweaks",
     "rangefilter",
     "core.apps.CoreConfig",
@@ -198,7 +199,7 @@ LANGUAGES = (("en", "English"),)
 
 # Django rest framework configs
 REST_FRAMEWORK = {
-    # "EXCEPTION_HANDLER": "core.errors.api_exception_handler",
+    "EXCEPTION_HANDLER": "drf_standardized_errors.handler.exception_handler",
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",

@@ -53,16 +53,18 @@
 
             </div>
         </th>
-        <th scope="col" class="px-6 py-3 text-left">
-            <div class="flex items-center gap-x-2">
-                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "Client" %}
-                </span>
+        {% if is_show_client is True %}
+            <th scope="col" class="px-6 py-3 text-left">
+                <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                        {% translate "Client" %}
+                    </span>
 
-                {% include "bw_components/global/table_list/sort_icon.html" %}
+                    {% include "bw_components/global/table_list/sort_icon.html" %}
 
-            </div>
-        </th>
+                </div>
+            </th>
+        {% endif %}
         <th scope="col" class="px-6 py-3 text-left">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
@@ -168,12 +170,14 @@
                     {% endif %}
                 </div>
             </td>
-            <td class="h-px w-px whitespace-nowrap">
-                <div class="px-5 py-3">
-                    <a href="{% url 'dashboard:client:details' object.pk %}"
-                       class="text-sm text-gray-600 dark:text-gray-400">{{ object.client }}</a>
-                </div>
-            </td>
+            {% if is_show_client is True %}
+                <td class="h-px w-px whitespace-nowrap">
+                    <div class="px-5 py-3">
+                        <a href="{% url 'dashboard:client:details' object.pk %}"
+                           class="text-sm text-gray-600 dark:text-gray-400">{{ object.client }}</a>
+                    </div>
+                </td>
+            {% endif %}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-5 py-3">
                     <a href="" class="text-sm text-gray-600 dark:text-gray-400">{{ object.managed_by }}</a>

@@ -2,6 +2,8 @@
 
 {% load i18n %}
 
+{% load crispy_forms_tags %}
+
 {% block dashboard_content_block %}
     {# Start client summary #}
     <div class="border-b-2 border-gray-200 dark:border-gray-700">
@@ -50,18 +52,30 @@
                     </button>
                     <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 w-56 hidden z-10 mt-2 min-w-[15rem] bg-white shadow-md rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700 dark:divide-gray-700"
                          aria-labelledby="hs-dropdown-basic">
-                        <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                           href="#">{% translate "Contact" %}</a>
-                        <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                           href="#">{% translate "Account" %}</a>
-                        <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                           href="#">{% translate "Job" %}</a>
-                        <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                           href="#">{% translate "Assignments" %}</a>
-                        <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                           href="#">{% translate "Note" %}</a>
-                        <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                           href="#">{% translate "Document" %}</a>
+                        <a data-modal-name="contact"
+                           data-hs-overlay="#createJobModal"
+                           class="flex client-details-dropdown-item items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                           href="javascript:;">{% translate "Contact" %}</a>
+                        <a data-hs-overlay="#createJobModal"
+                           data-modal-name="clientAccount"
+                           class="flex client-details-dropdown-item items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                           href="javascript:;">{% translate "Account" %}</a>
+                        <a data-modal-name="job"
+                           data-hs-overlay="#createJobModal"
+                           class="flex client-details-dropdown-item items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                           href="javascript:;">{% translate "Job" %}</a>
+                        <a data-modal-name="assignment"
+                           data-hs-overlay="#createAssignmentModal"
+                           class="flex client-details-dropdown-item items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                           href="javascript:;">{% translate "Assignments" %}</a>
+                        <a data-modal-name="note"
+                           data-hs-overlay="#createNoteModal"
+                           class="flex client-details-dropdown-item items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                           href="javascript:;">{% translate "Note" %}</a>
+                        <a data-modal-name="document"
+                           data-hs-overlay="#createDocumentModal"
+                           class="flex client-details-dropdown-item items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                           href="javascript:;">{% translate "Document" %}</a>
                     </div>
                 </div>
                 {% bw_js_modal modal_css_id="update-client-modal" modal_size="sm" modal_title="Update client" is_submit_btn_enabled=True is_form_modal=True form_object=client_form is_upload_form=True form_id="updateClientForm" form_submit_text="Update" action_url="dashboard:client:api:client-api-router-detail" enable_hidden_method=True action_url_pk=object.pk form_method="post" %}
@@ -183,7 +197,7 @@
                                 <div>
                                     <p class="text-xs tracking-wide text-gray-500 uppercase">{% translate "Total Jobs" %}</p>
                                     <div class="flex items-center mt-1 gap-x-1">
-                                        <h3 class="text-xl font-medium text-gray-800 sm:text-2xl dark:text-gray-200">5</h3>
+                                        <h3 class="text-xl font-medium text-gray-800 sm:text-2xl dark:text-gray-200">{{ object.jobs.count }}</h3>
                                     </div>
                                 </div>
                                 <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px] bg-blue-600 text-white rounded-full dark:bg-blue-900 dark:text-blue-200">
@@ -271,33 +285,33 @@
                 {# Start Second Row #}
                 <section id="second-row-block">
                     <div class="grid grid-cols-4 gap-4">
+                        
+                        
+                        
+                        {% if object.bookkeepers.all %}
                         <div>
                             <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
                                 <div class="p-6">
                                     <h3 class="text-lg font-bold text-gray-800 dark:text-white">
                                         <i class="fa-solid fa-users mr-2"></i>
-                                        {% translate "Bookkeepers" %}
+                                        {% translate "Bookkeepers" %} ({{ object.bookkeepers.count }})
                                     </h3>
                                     <ul class="max-w-xs flex flex-col divide-y divide-gray-200 dark:divide-gray-700 mt-2">
+                                        
+                                        {% for bookkeeper in object.bookkeepers.all %}
                                         <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white">
-                                            <a href="">Pam Zboncak</a>
+                                            <a href="">{{ bookkeeper.user.fullname }}</a>
                                         </li>
-                                        <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white">
-                                            <a href="">Marvin Yost</a>
-                                        </li>
-                                        <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white">
-                                            <a href="">Lora Kuphal</a>
-                                        </li>
-                                        <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white">
-                                            <a href="">Dr. Shawna Rodriguez</a>
-                                        </li>
-                                        <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white">
-                                            <a href="">Mr. Leticia Johnston</a>
-                                        </li>
+                                        {% endfor %}
                                     </ul>
                                 </div>
                             </div>
                         </div>
+                        {% else %}
+                        {% include "bw_ui_components/global/empty_card.html" with label="bookkeepers" %}
+                        {% endif %}
+                            
+                            
                         <!-- ... -->
                         <div>
                             <section id="tasks-table-block">
@@ -343,31 +357,28 @@
                     quas laborum ea suscipit voluptas dolore molestias voluptate quaerat reprehenderit,
                     eius quos amet esse quidem illum soluta neque!
                 </p>
-                <div class="min-h-[15rem] flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-                    <div class="flex flex-auto flex-col justify-center items-center p-4 md:p-5">
-                        <svg class="max-w-[5rem]"
-                             viewBox="0 0 375 428"
-                             fill="none"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path d="M254.509 253.872L226.509 226.872" class="stroke-gray-400 dark:stroke-white" stroke="currentColor" stroke-width="7" stroke-linecap="round" />
-                            <path d="M237.219 54.3721C254.387 76.4666 264.609 104.226 264.609 134.372C264.609 206.445 206.182 264.872 134.109 264.872C62.0355 264.872 3.60864 206.445 3.60864 134.372C3.60864 62.2989 62.0355 3.87207 134.109 3.87207C160.463 3.87207 184.993 11.6844 205.509 25.1196" class="stroke-gray-400 dark:stroke-white" stroke="currentColor" stroke-width="7" stroke-linecap="round" />
-                            <rect x="270.524" y="221.872" width="137.404" height="73.2425" rx="36.6212" transform="rotate(40.8596 270.524 221.872)" class="fill-gray-400 dark:fill-white" fill="currentColor" />
-                            <ellipse cx="133.109" cy="404.372" rx="121.5" ry="23.5" class="fill-gray-400 dark:fill-white" fill="currentColor" />
-                            <path d="M111.608 188.872C120.959 177.043 141.18 171.616 156.608 188.872" class="stroke-gray-400 dark:stroke-white" stroke="currentColor" stroke-width="7" stroke-linecap="round" />
-                            <ellipse cx="96.6084" cy="116.872" rx="9" ry="12" class="fill-gray-400 dark:fill-white" fill="currentColor" />
-                            <ellipse cx="172.608" cy="117.872" rx="9" ry="12" class="fill-gray-400 dark:fill-white" fill="currentColor" />
-                            <path d="M194.339 147.588C189.547 148.866 189.114 142.999 189.728 138.038C189.918 136.501 191.738 135.958 192.749 137.131C196.12 141.047 199.165 146.301 194.339 147.588Z" class="fill-gray-400 dark:fill-white" fill="currentColor" />
-                        </svg>
-                        <p class="mt-5 text-sm text-gray-500 dark:text-gray-500">No data to show</p>
-                    </div>
+                <div class="text-right">
+                    {% bw_create_btn_js_modal js_create_btn_css_id="createJobBtn" modal_css_id="createJobModal" app_name="job" %}
                 </div>
+                {% if object.jobs.all %}
+
+                    {% include "bw_components/job/table_list.html" with is_checkbox_enabled=False is_show_create_btn=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Jobs" header_subtitle="" app_label="job" pagination_list_url_name="dashboard:job:list" is_actions_menu_enabled=False actions_items="show,update,delete" actions_app_name="job" actions_base_url="dashboard:job" base_url_name="dashboard:job" object_list=object.jobs.all is_show_client=False %}
+
+                {% else %}
+
+                    {% include "bw_ui_components/global/empty_card.html" with label="jobs" %}
+
+                {% endif %}
             </div>
             <div id="contact-tab"
                  class="hidden"
                  role="tabpanel"
                  aria-labelledby="tabs-with-icons-item-3">
                 <p class="text-gray-500 dark:text-gray-400">Contacts tab</p>
-                <hr />
+                <hr class="my-5" />
+                <div class="text-right">
+                    {% bw_create_btn_js_modal js_create_btn_css_id="createImportantContactBtn" modal_css_id="createImportantContactModal" app_name="important_contact" %}
+                </div>
                 {% if object.important_contacts.all %}
 
                     {% include "client/details_segments/important_contacts.html" with client_object=object %}
@@ -384,9 +395,9 @@
                  aria-labelledby="tabs-with-icons-item-3">
                 <p class="text-gray-500 dark:text-gray-400">Client details tab</p>
                 <hr class="my-4" />
-                <form>
-                    {{ client_mini_form }}
-                </form>
+                <section id="formWrapper">
+                    {% component "bw_form" form=client_form perms=perms form_id="clientDetailsMiniForm" submit_btn_text="Update" form_title="Update client - "|add:object.name form_subtitle="" is_upload_form=True %}
+                </section>
             </div>
             <div id="accounts-tab"
                  class="hidden"
@@ -412,7 +423,6 @@
                 <div class="text-right">
                     {% bw_create_btn_js_modal js_create_btn_css_id="createAssignmentBtn" modal_css_id="createAssignmentModal" app_name="special_assignment" %}
                 </div>
-                {% bw_js_modal modal_css_id="createAssignmentModal" modal_size="sm" modal_title="Create new assignment" is_submit_btn_enabled=True is_form_modal=True form_object=special_assignment_form is_upload_form=True form_id="createAssignmentForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:special_assignment:api:special-assignment-api-router-list" %}
                 {% if object.special_assignments.all %}
 
                     {% include "bw_components/special_assignment/mini_table_list.html" with is_checkbox_enabled=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Special assignments" header_subtitle="Special assignments custom specific assignments to clients" app_label=app_label pagination_list_url_name="dashboard:special_assignment:list" is_actions_menu_enabled=False actions_items="show,update,delete" actions_app_name=app_label actions_base_url="dashboard:special_assignment" base_url_name="dashboard:special_assignment" filter_form=filter_form filter_cancel_url="dashboard:special_assignment:list" page_obj=object.special_assignments.all %}
@@ -429,7 +439,6 @@
                  aria-labelledby="tabs-with-icons-item-3">
                 <p class="text-gray-500 dark:text-gray-400">Notes tab</p>
                 <hr />
-                {% bw_js_modal modal_css_id="createNoteModal" modal_size="sm" modal_title="Create new note" is_submit_btn_enabled=True is_form_modal=True form_object=note_form is_upload_form=False form_id="createNoteForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:note:api:note-api-router-list" %}
                 <div class="text-right">
                     {% bw_create_btn_js_modal js_create_btn_css_id="createNoteBtn" modal_css_id="createNoteModal" app_name="note" %}
                 </div>
@@ -449,7 +458,6 @@
                  aria-labelledby="tabs-with-icons-item-3">
                 <p class="text-gray-500 dark:text-gray-400">Documents tab</p>
                 <hr />
-                {% bw_js_modal modal_css_id="createDocumentModal" modal_size="sm" modal_title="Create new document" is_submit_btn_enabled=True is_form_modal=True form_object=document_form is_upload_form=True form_id="createDocumentForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:document:api:document-api-router-list" %}
                 <div class="text-right">
                     {% bw_create_btn_js_modal js_create_btn_css_id="createDocumentBtn" modal_css_id="createDocumentModal" app_name="document" %}
                 </div>
@@ -465,5 +473,20 @@
             </div>
         </div>
     </section>
+    {# Start Create job modal #}
+    {% bw_js_modal modal_css_id="createJobModal" modal_size="sm" modal_title="Create new job" is_submit_btn_enabled=True is_form_modal=True form_object=job_form is_upload_form=False form_id="createJobForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:job:api:job-api-router-list" %}
+    {# End Create job modal #}
+    {# Start create document modal #}
+    {% bw_js_modal modal_css_id="createDocumentModal" modal_size="sm" modal_title="Create new document" is_submit_btn_enabled=True is_form_modal=True form_object=document_form is_upload_form=True form_id="createDocumentForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:document:api:document-api-router-list" %}
+    {# End create document modal #}
+    {# Start create note modal #}
+    {% bw_js_modal modal_css_id="createNoteModal" modal_size="sm" modal_title="Create new note" is_submit_btn_enabled=True is_form_modal=True form_object=note_form is_upload_form=False form_id="createNoteForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:note:api:note-api-router-list" %}
+    {# End create note modal #}
+    {# Start create assignment modal #}
+    {% bw_js_modal modal_css_id="createAssignmentModal" modal_size="sm" modal_title="Create new assignment" is_submit_btn_enabled=True is_form_modal=True form_object=special_assignment_form is_upload_form=True form_id="createAssignmentForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:special_assignment:api:special-assignment-api-router-list" %}
+    {# End create assignment modal #}
+    {# Start create important contact modal #}
+    {% bw_js_modal modal_css_id="createImportantContactModal" modal_size="lg" modal_title="Create new contact" is_submit_btn_enabled=True is_form_modal=True form_object=important_contact_form is_upload_form=False form_id="createImportantContactForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:job:api:job-api-router-list" %}
+    {# End create important contact modal #}
     {# End tabs #}
 {% endblock dashboard_content_block %}

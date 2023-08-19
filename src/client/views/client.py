@@ -33,8 +33,8 @@ from core.views.mixins import (
 from document.forms import DocumentForm
 
 # from documents.forms import DocumentForm
-from important_contact.forms import ImportantContactForm
-from job.forms import JobForm
+from important_contact.forms import ImportantContactForm, ImportantContactMiniForm
+from job.forms import JobForm, JobMiniForm
 from note.forms import NoteForm
 from special_assignment.forms import MiniSpecialAssignmentForm
 from task.forms import TaskForm
@@ -170,13 +170,10 @@ class ClientDetailsView(
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context.setdefault("title", _("Client details"))
-        # job_update_form = JobForm(
-        #     instance=self.get_object(),
-        #     is_updated=True,
-        #     renderer=BWFormRenderer(),
-        #     client=self.get_object().client,
-        #     # removed_fields=["job"],
-        # )
+        job_form = JobMiniForm(initial={"client": self.get_object().pk})
+        important_contact_form = ImportantContactForm(
+            initial={"client": self.get_object()}, renderer=BWFormRenderer()
+        )
         client_form = ClientForm(
             instance=self.get_object(),
             renderer=BWFormRenderer(),
@@ -193,6 +190,7 @@ class ClientDetailsView(
             initial={"client": self.get_object(), "document_section": "client"},
             renderer=BWFormRenderer(),
             removed_fields=["task", "status", "job", "document_section"],
+            hidden_inputs={"field_names": ["client"]}
         )
         note_form = NoteForm(
             renderer=BWFormRenderer(),
@@ -202,11 +200,12 @@ class ClientDetailsView(
         special_assignment_form = MiniSpecialAssignmentForm(
             renderer=BWFormRenderer(), initial={"assigned_by": self.request.user.pk}
         )
-        # context.setdefault("job_update_form", job_update_form)
+        context.setdefault("job_form", job_form)
         # context.setdefault("job_status_choices", JobStatusEnum.choices)
         context.setdefault("task_form", task_form)
         context.setdefault("document_form", document_form)
         context.setdefault("client_form", client_form)
+        context.setdefault("important_contact_form", important_contact_form)
         context.setdefault("note_form", note_form)
         context.setdefault("client_mini_form", client_mini_form)
         context.setdefault("special_assignment_form", special_assignment_form)
