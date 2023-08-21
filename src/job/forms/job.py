@@ -7,14 +7,13 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
 from beach_wood_user.models import BWUser
-from core.forms import (
-    BaseModelFormMixin,
-    JoditFormMixin,
-)
+from core.forms import BaseModelFormMixin, JoditFormMixin
+from core.forms.mixins.js_modal_form_renderer_mixin import BWJSModalFormRendererMixin
+from core.utils import debugging_print
 from job.models import JobProxy
 
 
-class JobForm(BaseModelFormMixin, JoditFormMixin):
+class JobForm(BWJSModalFormRendererMixin, BaseModelFormMixin, JoditFormMixin):
     field_order = [
         "title",
         "client",
@@ -41,9 +40,9 @@ class JobForm(BaseModelFormMixin, JoditFormMixin):
         JoditFormMixin.__init__(self, add_jodit_css_class=add_jodit_css_class)
         if client is not None:
             self.fields["client"].initial = client
-            self.fields["client"].widget.attrs.update(
-                {"class": "readonly-select cursor-not-allowed"}
-            )
+        #     self.fields["client"].widget.attrs.update(
+        #         {"class": "readonly-select cursor-not-allowed"}
+        #     )
         # debugging_print(type(self.initial.get("client")))
         # debugging_print(type(self.initial.get("client").bookkeepers.all()))
         if self.initial.get("client", None) is not None:
@@ -61,9 +60,6 @@ class JobForm(BaseModelFormMixin, JoditFormMixin):
                 self.fields["managed_by"].help_text = mark_safe(
                     "<strong>Bookkeepers who assigned for this client</strong>"
                 )
-
-        if created_by is not None:
-            self.created_by = created_by
 
         self.is_update = is_updated
 

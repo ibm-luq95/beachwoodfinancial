@@ -6,3 +6,4 @@ from .client import (
     ClientDeleteView,
     ClientDetailsView,
 )
+from .api import ClientViewSet

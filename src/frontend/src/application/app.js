@@ -4,6 +4,9 @@ import "../styles/dashboard.scss";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 import "preline";
+import "animate.css";
+// import tinymce from 'tinymce';
+
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // import "css.gg/icons/all.css";
 // import "css.gg/icons/css/al"
@@ -12,11 +15,30 @@ import tableSort from "table-sort-js/table-sort.js";
 import Chart from "chart.js/auto";
 
 import "./job/details.js";
+import "./special_assignment/details.js";
+import "./special_assignment/special_assignment.js";
+import "./task/task.js";
+import "./document/document.js";
+import "./note/note.js";
+import "./discussion/discussion.js";
+import "./job/job.js";
+import "./important_contact/important_contact.js";
+import "./client/client.js";
+import "./client_account/client_account.js";
 
 window.document.addEventListener("DOMContentLoaded", function () {
   const bwfInputs = document.querySelectorAll(".bw-input");
   const bwDisabledLinks = document.querySelectorAll("a.bw-disabled-anchor");
   const allDisabledCssClassed = ["disabled:opacity-75", "cursor-not-allowed"];
+  const readonlySelectElements = document.querySelectorAll(".readonly-select");
+  if (readonlySelectElements.length > 0) {
+    readonlySelectElements.forEach((element) => {
+      element.addEventListener("change", (event) => {
+        return false;
+      });
+    });
+  }
+
   bwfInputs.forEach((input) => {
     const dataAttrs = input.dataset;
     const checkKeepDisabled = Object.prototype.hasOwnProperty.call(
@@ -46,24 +68,31 @@ window.document.addEventListener("DOMContentLoaded", function () {
     //   console.log(pl);
     // });
     allRichEditors.forEach((editor) => {
-      ClassicEditor.create(editor, {
-        toolbar: [
-          "heading",
-          "|",
-          "alignment", // <--- ADDED
-          "bold",
-          "italic",
-          "link",
-          "bulletedList",
-          "numberedList",
-          // "uploadImage",
-          "blockQuote",
-          "undo",
-          "redo",
-        ],
-      }).catch((error) => {
-        console.error(error);
-      });
+      console.log(editor);
+      if (editor) {
+        // tinymce.init({
+        //   selector: 'textarea',  // change this value according to your HTML
+        //   menubar: 'file edit view'
+        // });
+        ClassicEditor.create(editor, {
+          // toolbar: [
+          //   "heading",
+          //   "|",
+          //   "alignment", // <--- ADDED
+          //   "bold",
+          //   "italic",
+          //   "link",
+          //   "bulletedList",
+          //   "numberedList",
+          //   // "uploadImage",
+          //   "blockQuote",
+          //   "undo",
+          //   "redo",
+          // ],
+        }).catch((error) => {
+          console.error(error);
+        });
+      }
     });
   }
   const jobsChart = document.querySelector("canvas#jobsChart");
@@ -115,4 +144,15 @@ window.document.addEventListener("DOMContentLoaded", function () {
       },
     });
   }
+
+  // Modal Events
+  /* const mo = document.querySelector("#hs-static-backdrop-modal");
+  mo.addEventListener("open.hs.overlay", (evt) => {
+    // console.log(evt);
+    console.log("open");
+  });
+  mo.addEventListener("close.hs.overlay", (evt) => {
+    // console.log(evt);
+    console.log("Close");
+  }); */
 });

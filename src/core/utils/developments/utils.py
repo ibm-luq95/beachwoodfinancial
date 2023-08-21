@@ -3,7 +3,10 @@ from collections.abc import Iterable
 
 from django.core import serializers
 from django.core.exceptions import ObjectDoesNotExist
+from django.db.models import TextChoices
 from django.db.models.query import QuerySet
+
+from core.utils.developments import debugging_print
 
 
 class Colors:
@@ -22,7 +25,8 @@ def print_dict_keys_values(data: dict) -> None:
     for key, value in data.items():
         # cprint_print(f"Key:-> {key}, Value:-> {value}", "yellow")
         print(
-            f"{Colors.WARNING}Key:-> {key}{Colors.OKBLUE}, {Colors.HEADER}Value:->{Colors.OKGREEN} {value}"
+            f"{Colors.WARNING}Key:-> {key}{Colors.OKBLUE},"
+            f" {Colors.HEADER}Value:->{Colors.OKGREEN} {value}"
         )
 
 
@@ -68,23 +72,37 @@ def dd(request, data=""):
         msg = f"""
             <html>
                 <span style="color: red;"><b>Scheme</b></span>        : <span style="color: blue;">{scheme}</span><br>
-                <span style="color: red;"><b>Server Name</b></span>   : <span style="color: blue;">{server_name}</span><br>
-                <span style="color: red;"><b>Server Port</b></span>   : <span style="color: blue;">{server_port}</span><br>
-                <span style="color: red;"><b>Remote Address</b></span>: <span style="color: blue;">{remote_addr}</span><br>
-                <span style="color: red;"><b>User Agent</b></span>    : <span style="color: blue;">{user_agent}</span><br>
+                <span style="color: red;"><b>Server Name</b></span>   : <span style="color: blue;">
+{server_name}</span><br>
+                <span style="color: red;"><b>Server Port</b></span>   : <span style="color: blue;">
+{server_port}</span><br>
+                <span style="color: red;"><b>Remote Address</b></span>: <span style="color: blue;">
+{remote_addr}</span><br>
+                <span style="color: red;"><b>User Agent</b></span>    : <span style="color: blue;">
+{user_agent}</span><br>
                 <span style="color: red;"><b>Path</b></span>          : <span style="color: blue;">{path}</span><br>
                 <span style="color: red;"><b>Method</b></span>        : <span style="color: blue;">{method}</span><br>
                 <span style="color: red;"><b>Session</b></span>       : <span style="color: blue;">{session}</span><br>
                 <span style="color: red;"><b>Cookies</b></span>       : <span style="color: blue;">{cookies}</span><br>
                 <span style="color: red;"><b>Get Data</b></span>      : <span style="color: blue;">{get_data}</span><br>
-                <span style="color: red;"><b>Post Data</b></span>     : <span style="color: blue;">{post_data}</span><br>
+                <span style="color: red;"><b>Post Data</b></span>     : <span style="color: blue;">
+{post_data}</span><br>
                 <span style="color: red;"><b>Files</b></span>         : <span style="color: blue;">{files}</span><br>
-                <span style="color: red;"><b>Executed Query</b></span>: <span style="color: blue;"><br>{executed_query}</span><br>
-                <span style="color: red;"><b>Query Data</b></span>    : <span style="color: blue;"><br>{query_data}</span><br>
-                <span style="color: red;"><b>Dump Data</b></span>     : <span style="color: blue;"><br>{dump_data}</span><br>
+                <span style="color: red;"><b>Executed Query</b></span>: <span style="color: blue;"><br>
+{executed_query}</span><br>
+                <span style="color: red;"><b>Query Data</b></span>    : <span style="color: blue;"><br>
+{query_data}</span><br>
+                <span style="color: red;"><b>Dump Data</b></span>     : <span style="color: blue;"><br>
+{dump_data}</span><br>
             </html>
         """
 
         return msg
     except ObjectDoesNotExist:
         return False
+
+
+def get_list_from_text_choices(txt_choices: TextChoices) -> list:
+    # debugging_print(dir(txt_choices))
+
+    return txt_choices.values

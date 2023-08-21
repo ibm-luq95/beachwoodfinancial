@@ -25,3 +25,5 @@ elif environment == "LOCAL":
     from .local import *
 elif environment == "STAGE":
     from .stage import *
+elif environment == "LOCAL_DEV":
+    from .local_dev import *

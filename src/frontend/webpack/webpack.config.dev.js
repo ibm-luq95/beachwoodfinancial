@@ -30,6 +30,9 @@ module.exports = merge(common, {
       writeToDisk: true,
     },
   },
+  // node: {
+  //   global: true,
+  // },
   plugins: [
     new Webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("development"),

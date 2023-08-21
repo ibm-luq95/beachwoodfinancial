@@ -58,3 +58,26 @@ BW_PRELINE_CHECKBOX_CSS_CLASSES = (
     " dark:focus:ring-offset-gray-800"
 )
 BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR = "text-blue-500"
+
+BW_PRELINE_CORE_BG_COLORS = {
+    "red": {"soft": " bg-red-100 text-red-800 ", "solid": " bg-red-500 text-white "},
+    "green": {"soft": " bg-green-100 text-green-800 ", "solid": " bg-green-500 text-white "},
+    "yellow": {
+        "soft": " bg-yellow-100 text-yellow-800 ",
+        "solid": " bg-yellow-500 text-white ",
+    },
+    "blue": {"soft": " bg-blue-100 text-blue-800 ", "solid": " bg-blue-500 text-white "},
+    "purple": {
+        "soft": " bg-purple-100 text-purple-800 ",
+        "solid": " bg-purple-500 text-white ",
+    },
+    "white": {"soft": "bg-white/[.1] text-gray-600", "solid": "bg-white text-gray-600"},
+    "indigo": {
+        "soft": " bg-indigo-100 text-indigo-800 ",
+        "solid": "bg-indigo-500 text-white",
+    },
+    "gray": {"soft": " bg-gray-100 text-gray-800 ", "solid": " bg-gray-500 text-white "},
+}
+BW_PRELINE_BASE_BADGE_CLASSES = (
+    "uppercase inline-flex items-center gap-1.5 rounded-full font-medium m-0.5"
+)

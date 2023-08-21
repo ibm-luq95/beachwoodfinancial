@@ -14,8 +14,8 @@ class Bookkeeper(BaseModelMixin, StaffMemberMixin):
     class Meta:
         permissions = [
             ("bookkeeper_user", "Bookkeeper User"),
+            (
+                "bookkeeper_can_delete_special_assignment",
+                "Bookkeeper can delete special assignment",
+            ),
         ]
-
-    def __str__(self):
-        # return f"Bookkeeper -> {self.user.fullname}"
-        return getattr(self.user, "fullname")

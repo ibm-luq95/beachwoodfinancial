@@ -54,11 +54,17 @@
                         <div class="relative">
                             {# ModelMultipleChoiceField #}
                             {% with placeholder=input.field.widget.attrs.placeholder|default:input.label WIDGET_ERROR_CLASS=BW_PRELINE_INPUT_ERROR_CLASSES %}
-                                {% if input.field|bw_get_form_field_type == "ModelMultipleChoiceField" %}
+                                {% if input.field|bw_get_form_field_type == "ModelMultipleChoiceField" or input.field|bw_get_form_field_type == "ModelChoiceField" %}
                                     {% if input.field.widget.choices %}
-                                        {% for checkbox_field in input %}
-                                            {% bw_checkbox checkbox_txt=choice_label field=checkbox_field %}
-                                        {% endfor %}
+                                        {% if input.field.widget|bw_get_form_field_type == "Select" or input.field.widget|bw_get_form_field_type == "SelectMultiple" %}
+                                            {% with select_multiple=input.field.widget|bw_get_form_field_type %}
+                                                {% render_field input class+=BW_PRELINE_TEXT_INPUT_CSS_CLASSES placeholder=placeholder %}
+                                            {% endwith %}
+                                        {% elif input.field.widget|bw_get_form_field_type == "CheckboxSelectMultiple" %}
+                                            {% for checkbox_field in input %}
+                                                {% bw_checkbox field=checkbox_field %}
+                                            {% endfor %}
+                                        {% endif %}
                                     {% else %}
                                         <p class="text-yellow-500 font-semibold text-[14px] relative top-2">
                                             {% translate "No "|add:input.label %}
@@ -75,7 +81,9 @@
                             {% endwith %}
                             {% if input.help_text %}
                                 <p class="text-sm text-gray-500 mt-2"
-                                   id="{{ input.auto_id|add:'helper' }}">{{ input.help_text }}</p>
+                                   id="{{ input.id_for_label|add:'helper' }}">
+                                    {{ input.help_text }}
+                                </p>
                             {% endif %}
                             {% if input.errors %}
                                 {% for error in input.errors %}
@@ -98,9 +106,9 @@
             <!-- End Grid -->
             <div class="mt-5 flex justify-end gap-x-2">
                 {% comment  %}
-                        <button type="button" class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
-                            Cancel
-                        </button>
+                <button type="button" class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                    Cancel
+                </button>
                 {% endcomment %}
                 <button type="submit"
                         form="{{ form_id }}"

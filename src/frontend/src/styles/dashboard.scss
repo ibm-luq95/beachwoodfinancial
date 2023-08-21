@@ -13,3 +13,60 @@ div.scrollable-wrapper {
   overflow-x: hidden;
   overflow-y: auto;
 }
+
+.linkedin-social-icon-link {
+  &:hover {
+    color: #0072b1;
+  }
+}
+
+.github-social-icon-link {
+  &:hover {
+    color: #333;
+  }
+}
+
+.instagram-social-icon-link {
+  &:hover {
+    // color: #833ab4;
+    color: #c13584;
+  }
+}
+
+.facebook-social-icon-link {
+  &:hover {
+    color: #4267b2;
+  }
+}
+
+.twitter-social-icon-link {
+  &:hover {
+    color: #1da1f2;
+  }
+}
+
+.discussion-wrapper {
+  margin-bottom: 15px;
+  border-bottom: 1px solid #dad9d9;
+  padding-bottom: 5px;
+}
+
+.bw-js-modal {
+  background-color: rgba(0 0 0 / 50%);
+}
+
+#toasts-wrapper {
+  z-index: 100 !important;
+}
+
+.bw-js-modal-lg {
+  max-width: 100rem !important;
+}
+
+.bw-js-modal-md {
+  max-width: 50rem !important;
+}
+
+.bw-js-modal-sm {
+  max-width: 40rem !important;
+}

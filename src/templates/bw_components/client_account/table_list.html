@@ -22,11 +22,13 @@
     client-account-table-list
 {% endblock custom_css_class_name %}
 {# End Custom Css Class #}
-{# Start Create Button Block #}
-{% block create_btn_block %}
-    {% component "tl_create_btn" app_name=app_label actions_base_url=actions_base_url %}
-{% endblock create_btn_block %}
-{# End Create Button Block #}
+{% if is_show_create_btn is True %}
+    {# Start Create Button Block #}
+    {% block create_btn_block %}
+        {% component "tl_create_btn" app_name=app_label actions_base_url=actions_base_url %}
+    {% endblock create_btn_block %}
+    {# End Create Button Block #}
+{% endif %}
 {# Start Table Header Columns #}
 {% block thead_block %}
     <tr>
@@ -47,17 +49,9 @@
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                         {% translate "Client" %}
                     </span>
-                    <div class="flex justify-center items-center w-5 h-5 border border-gray-200 group-hover:bg-gray-200 text-gray-500 rounded dark:border-gray-700 dark:group-hover:bg-gray-700 dark:text-gray-400">
-                        <svg class="w-2.5 h-2.5"
-                             width="16"
-                             height="16"
-                             viewBox="0 0 16 16"
-                             fill="none"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7.55921 0.287451C7.86808 -0.0958171 8.40096 -0.0958167 8.70982 0.287451L12.9295 5.52367C13.3857 6.08979 13.031 7 12.3542 7H3.91488C3.23806 7 2.88336 6.08979 3.33957 5.52367L7.55921 0.287451Z" fill="currentColor" />
-                            <path d="M8.70983 15.7125C8.40096 16.0958 7.86808 16.0958 7.55921 15.7125L3.33957 10.4763C2.88336 9.9102 3.23806 9 3.91488 9H12.3542C13.031 9 13.3857 9.9102 12.9295 10.4763L8.70983 15.7125Z" fill="currentColor" />
-                        </svg>
-                    </div>
+
+                    {% include "bw_components/global/table_list/sort_icon.html" %}
+
                 </div>
             </th>
         {% endif %}
@@ -66,17 +60,9 @@
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                     {% translate "Name" %}
                 </span>
-                <div class="flex justify-center items-center w-5 h-5 border border-gray-200 group-hover:bg-gray-200 text-gray-500 rounded dark:border-gray-700 dark:group-hover:bg-gray-700 dark:text-gray-400">
-                    <svg class="w-2.5 h-2.5"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7.55921 0.287451C7.86808 -0.0958171 8.40096 -0.0958167 8.70982 0.287451L12.9295 5.52367C13.3857 6.08979 13.031 7 12.3542 7H3.91488C3.23806 7 2.88336 6.08979 3.33957 5.52367L7.55921 0.287451Z" fill="currentColor" />
-                        <path d="M8.70983 15.7125C8.40096 16.0958 7.86808 16.0958 7.55921 15.7125L3.33957 10.4763C2.88336 9.9102 3.23806 9 3.91488 9H12.3542C13.031 9 13.3857 9.9102 12.9295 10.4763L8.70983 15.7125Z" fill="currentColor" />
-                    </svg>
-                </div>
+
+                {% include "bw_components/global/table_list/sort_icon.html" %}
+
             </div>
         </th>
         <th scope="col" class="px-6 py-3 text-left">
@@ -84,17 +70,9 @@
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                     {% translate "Email" %}
                 </span>
-                <div class="flex justify-center items-center w-5 h-5 border border-gray-200 group-hover:bg-gray-200 text-gray-500 rounded dark:border-gray-700 dark:group-hover:bg-gray-700 dark:text-gray-400">
-                    <svg class="w-2.5 h-2.5"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7.55921 0.287451C7.86808 -0.0958171 8.40096 -0.0958167 8.70982 0.287451L12.9295 5.52367C13.3857 6.08979 13.031 7 12.3542 7H3.91488C3.23806 7 2.88336 6.08979 3.33957 5.52367L7.55921 0.287451Z" fill="currentColor" />
-                        <path d="M8.70983 15.7125C8.40096 16.0958 7.86808 16.0958 7.55921 15.7125L3.33957 10.4763C2.88336 9.9102 3.23806 9 3.91488 9H12.3542C13.031 9 13.3857 9.9102 12.9295 10.4763L8.70983 15.7125Z" fill="currentColor" />
-                    </svg>
-                </div>
+
+                {% include "bw_components/global/table_list/sort_icon.html" %}
+
             </div>
         </th>
         <th scope="col" class="px-6 py-3 text-left">
@@ -102,35 +80,31 @@
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                     {% translate "URL" %}
                 </span>
-                <div class="flex justify-center items-center w-5 h-5 border border-gray-200 group-hover:bg-gray-200 text-gray-500 rounded dark:border-gray-700 dark:group-hover:bg-gray-700 dark:text-gray-400">
-                    <svg class="w-2.5 h-2.5"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7.55921 0.287451C7.86808 -0.0958171 8.40096 -0.0958167 8.70982 0.287451L12.9295 5.52367C13.3857 6.08979 13.031 7 12.3542 7H3.91488C3.23806 7 2.88336 6.08979 3.33957 5.52367L7.55921 0.287451Z" fill="currentColor" />
-                        <path d="M8.70983 15.7125C8.40096 16.0958 7.86808 16.0958 7.55921 15.7125L3.33957 10.4763C2.88336 9.9102 3.23806 9 3.91488 9H12.3542C13.031 9 13.3857 9.9102 12.9295 10.4763L8.70983 15.7125Z" fill="currentColor" />
-                    </svg>
-                </div>
+
+                {% include "bw_components/global/table_list/sort_icon.html" %}
+
             </div>
         </th>
+        {% if is_show_is_service is True %}
+            <th scope="col" class="px-6 py-3 text-left">
+                <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                        {% translate "Service?" %}
+                    </span>
+
+                    {% include "bw_components/global/table_list/sort_icon.html" %}
+
+                </div>
+            </th>
+        {% endif %}
         <th scope="col" class="px-6 py-3 text-left">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                     {% translate "Username" %}
                 </span>
-                <div class="flex justify-center items-center w-5 h-5 border border-gray-200 group-hover:bg-gray-200 text-gray-500 rounded dark:border-gray-700 dark:group-hover:bg-gray-700 dark:text-gray-400">
-                    <svg class="w-2.5 h-2.5"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7.55921 0.287451C7.86808 -0.0958171 8.40096 -0.0958167 8.70982 0.287451L12.9295 5.52367C13.3857 6.08979 13.031 7 12.3542 7H3.91488C3.23806 7 2.88336 6.08979 3.33957 5.52367L7.55921 0.287451Z" fill="currentColor" />
-                        <path d="M8.70983 15.7125C8.40096 16.0958 7.86808 16.0958 7.55921 15.7125L3.33957 10.4763C2.88336 9.9102 3.23806 9 3.91488 9H12.3542C13.031 9 13.3857 9.9102 12.9295 10.4763L8.70983 15.7125Z" fill="currentColor" />
-                    </svg>
-                </div>
+
+                {% include "bw_components/global/table_list/sort_icon.html" %}
+
             </div>
         </th>
         <th scope="col" class="px-6 py-3 text-left disable-sort">
@@ -140,41 +114,27 @@
                 </span>
             </div>
         </th>
-        <th scope="col" class="px-6 py-3 text-left">
-            <div class="flex items-center gap-x-2">
-                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "Status" %}
-                </span>
-                <div class="flex justify-center items-center w-5 h-5 border border-gray-200 group-hover:bg-gray-200 text-gray-500 rounded dark:border-gray-700 dark:group-hover:bg-gray-700 dark:text-gray-400">
-                    <svg class="w-2.5 h-2.5"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M7.55921 0.287451C7.86808 -0.0958171 8.40096 -0.0958167 8.70982 0.287451L12.9295 5.52367C13.3857 6.08979 13.031 7 12.3542 7H3.91488C3.23806 7 2.88336 6.08979 3.33957 5.52367L7.55921 0.287451Z" fill="currentColor" />
-                        <path d="M8.70983 15.7125C8.40096 16.0958 7.86808 16.0958 7.55921 15.7125L3.33957 10.4763C2.88336 9.9102 3.23806 9 3.91488 9H12.3542C13.031 9 13.3857 9.9102 12.9295 10.4763L8.70983 15.7125Z" fill="currentColor" />
-                    </svg>
+        {% if is_status_enabled is True %}
+            <th scope="col" class="px-6 py-3 text-left">
+                <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                        {% translate "Status" %}
+                    </span>
+
+                    {% include "bw_components/global/table_list/sort_icon.html" %}
+
                 </div>
-            </div>
-        </th>
+            </th>
+        {% endif %}
         {% if is_show_created_at is True %}
             <th scope="col" class="px-6 py-3 text-left">
                 <div class="flex items-center gap-x-2">
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                         {% translate "Created" %}
                     </span>
-                    <div class="flex justify-center items-center w-5 h-5 border border-gray-200 group-hover:bg-gray-200 text-gray-500 rounded dark:border-gray-700 dark:group-hover:bg-gray-700 dark:text-gray-400">
-                        <svg class="w-2.5 h-2.5"
-                             width="16"
-                             height="16"
-                             viewBox="0 0 16 16"
-                             fill="none"
-                             xmlns="http://www.w3.org/2000/svg">
-                            <path d="M7.55921 0.287451C7.86808 -0.0958171 8.40096 -0.0958167 8.70982 0.287451L12.9295 5.52367C13.3857 6.08979 13.031 7 12.3542 7H3.91488C3.23806 7 2.88336 6.08979 3.33957 5.52367L7.55921 0.287451Z" fill="currentColor" />
-                            <path d="M8.70983 15.7125C8.40096 16.0958 7.86808 16.0958 7.55921 15.7125L3.33957 10.4763C2.88336 9.9102 3.23806 9 3.91488 9H12.3542C13.031 9 13.3857 9.9102 12.9295 10.4763L8.70983 15.7125Z" fill="currentColor" />
-                        </svg>
-                    </div>
+
+                    {% include "bw_components/global/table_list/sort_icon.html" %}
+
                 </div>
             </th>
         {% endif %}
@@ -218,6 +178,15 @@
                     <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.account_url }}</span>
                 </div>
             </td>
+            {% if is_show_is_service is True %}
+                <td class="h-px w-px whitespace-nowrap">
+                    <div class="px-6 py-3">
+
+                        {% include "bw_components/global/check_times_icon.html" with status=object.is_service %}
+
+                    </div>
+                </td>
+            {% endif %}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
                     <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.account_username }}</span>
@@ -253,11 +222,13 @@
                     </div>
                 </div>
             </td>
-            <td class="h-px w-px whitespace-nowrap">
-                <div class="px-6 py-3">
-                    <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.get_status_display }}</span>
-                </div>
-            </td>
+            {% if is_status_enabled is True %}
+                <td class="h-px w-px whitespace-nowrap">
+                    <div class="px-6 py-3">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.get_status_display }}</span>
+                    </div>
+                </td>
+            {% endif %}
             {% if is_show_created_at is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     {% bw_date date_txt=object.created_at is_in_table_list=True %}

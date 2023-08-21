@@ -1,10 +1,14 @@
 # -*- coding: utf-8 -*-#
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
-from django.db import models
+from django.db import models, transaction
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
-from core.choices import BeachWoodUserTypeEnum, BeachWoodUserStatusEnum, BeachWoodUserTypesEnum
+from core.choices import (
+    BeachWoodUserTypeEnum,
+    BeachWoodUserStatusEnum,
+    BeachWoodUserTypesEnum,
+)
 from core.models.mixins import BaseModelMixin
 from core.utils import get_formatted_logger
 from .manager import BeachWoodUserManager
@@ -53,7 +57,7 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin):
     )
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ["user_type"]
+    REQUIRED_FIELDS = ["user_type", "user_genre"]
 
     objects = BeachWoodUserManager()
 
@@ -61,9 +65,7 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin):
         verbose_name = _("Beach wood user")
         verbose_name_plural = _("Beach wood users")
         ordering = ["-created_at", "-updated_at"]
-        permissions = [
-            ("developer_user", "Developer User"),
-        ]
+        permissions = [("developer_user", "Developer User")]
 
     def __str__(self):
         full_info = self.fullname
@@ -72,3 +74,16 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin):
     @property
     def fullname(self):
         return f"{self.first_name} {self.last_name}"
+
+    @property
+    def get_staff_member_object(self) -> dict:
+        user_dict = dict()
+        user_dict["user_type"] = self.user_type
+        if hasattr(self, "bookkeeper"):
+            user_dict["staff_object"] = getattr(self, "bookkeeper")
+        elif hasattr(self, "manager"):
+            user_dict["staff_object"] = getattr(self, "manager")
+        elif hasattr(self, "assistant"):
+            user_dict["staff_object"] = getattr(self, "assistant")
+
+        return user_dict

@@ -11,3 +11,9 @@ CON_ASSISTANT = "assistant"
 CON_MANAGER = "manager"
 CON_DEVELOPER = "developer"
 CON_USER = "user"
+
+# Permission names
+ASSISTANT_FULL_MANAGER_PERMISSION_WITH_MODEL_NAME = (
+    "assistant.assistant_has_full_manager_permissions"
+)
+ASSISTANT_FULL_MANAGER_PERMISSION_SHORT_NAME = "assistant_has_full_manager_permissions"

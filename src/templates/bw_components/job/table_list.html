@@ -22,14 +22,13 @@
     job-table-list
 {% endblock custom_css_class_name %}
 {# End Custom Css Class #}
-{# Start Create Button Block #}
-{% block create_btn_block %}
-    {% component "tl_create_btn" app_name=app_label actions_base_url=actions_base_url %}
-    {% comment %}
-    {% bw_button btn_text="Click" btn_variant="success" btn_size="small" data_pk="eee" data_title="ddlel" is_disabled=True btn_type="button" %}
-    {% endcomment %}
-{% endblock create_btn_block %}
-{# End Create Button Block #}
+{% if is_show_create_btn is True %}
+    {# Start Create Button Block #}
+    {% block create_btn_block %}
+        {% component "tl_create_btn" app_name=app_label actions_base_url=actions_base_url %}
+    {% endblock create_btn_block %}
+    {# End Create Button Block #}
+{% endif %}
 {# Start Table Header Columns #}
 {% block thead_block %}
     <tr>
@@ -54,16 +53,18 @@
 
             </div>
         </th>
-        <th scope="col" class="px-6 py-3 text-left">
-            <div class="flex items-center gap-x-2">
-                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "Client" %}
-                </span>
+        {% if is_show_client is True %}
+            <th scope="col" class="px-6 py-3 text-left">
+                <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                        {% translate "Client" %}
+                    </span>
 
-                {% include "bw_components/global/table_list/sort_icon.html" %}
+                    {% include "bw_components/global/table_list/sort_icon.html" %}
 
-            </div>
-        </th>
+                </div>
+            </th>
+        {% endif %}
         <th scope="col" class="px-6 py-3 text-left">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
@@ -154,14 +155,29 @@
                     <a href="{% url base_url_name|add:':details' object.pk %}">
                         <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.title|bw_truncate_titles }}</span>
                     </a>
+                    {% if object.categories.all %}
+                        <div class="my-1 text-left">
+                            {% for category in object.categories.all %}
+                                <div class="hs-tooltip inline-block mr-0.5">
+                                    <a href="#" class="hs-tooltip-toggle">
+                                        <span class="inline-flex items-center gap-1 py-0.5 px-2 rounded-full text-[10px] font-medium bg-blue-100 text-blue-800">{{ category.name }}</span>
+                                        <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                              role="tooltip">{% translate "Category" %}</span>
+                                    </a>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
                 </div>
             </td>
-            <td class="h-px w-px whitespace-nowrap">
-                <div class="px-5 py-3">
-                    <a href="{% url 'dashboard:client:details' object.pk %}"
-                       class="text-sm text-gray-600 dark:text-gray-400">{{ object.client }}</a>
-                </div>
-            </td>
+            {% if is_show_client is True %}
+                <td class="h-px w-px whitespace-nowrap">
+                    <div class="px-5 py-3">
+                        <a href="{% url 'dashboard:client:details' object.pk %}"
+                           class="text-sm text-gray-600 dark:text-gray-400">{{ object.client }}</a>
+                    </div>
+                </td>
+            {% endif %}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-5 py-3">
                     <a href="" class="text-sm text-gray-600 dark:text-gray-400">{{ object.managed_by }}</a>

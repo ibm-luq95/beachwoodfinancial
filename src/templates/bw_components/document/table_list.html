@@ -22,14 +22,13 @@
     document-table-list
 {% endblock custom_css_class_name %}
 {# End Custom Css Class #}
-{# Start Create Button Block #}
-{% block create_btn_block %}
-    {% component "tl_create_btn" app_name=app_label actions_base_url=actions_base_url %}
-    {% comment %}
-    {% bw_button btn_text="Click" btn_variant="success" btn_size="small" data_pk="eee" data_title="ddlel" is_disabled=True btn_type="button" %}
-    {% endcomment %}
-{% endblock create_btn_block %}
-{# End Create Button Block #}
+{% if is_show_create_btn is True %}
+    {# Start Create Button Block #}
+    {% block create_btn_block %}
+        {% component "tl_create_btn" app_name=app_label actions_base_url=actions_base_url %}
+    {% endblock create_btn_block %}
+    {# End Create Button Block #}
+{% endif %}
 {# Start Table Header Columns #}
 {% block thead_block %}
     <tr>
@@ -135,8 +134,8 @@
                     <a href="{{ object.document_file.url }}"
                        download="{{ object.document_file.url }}">
                         <!-- Icon -->
-                        <span class="inline-flex justify-center items-center w-[38px] h-[38px] rounded-full bg-blue-600 text-white">
-                            <svg class="w-5 h-5"
+                        <span class="inline-flex justify-center items-center w-[28px] h-[28px] rounded-full bg-blue-600 text-white">
+                            <svg class="w-4 h-4"
                                  xmlns="http://www.w3.org/2000/svg"
                                  width="16"
                                  height="16"

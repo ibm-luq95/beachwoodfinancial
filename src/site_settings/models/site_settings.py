@@ -104,28 +104,16 @@ class SiteSettings(BaseModelMixin):
         db_index=True,
     )
     facebook = models.URLField(
-        _("facebook"),
-        null=True,
-        blank=True,
-        help_text=HELP_MESSAGES.get("facebook"),
+        _("facebook"), null=True, blank=True, help_text=HELP_MESSAGES.get("facebook")
     )
     twitter = models.URLField(
-        _("twitter"),
-        null=True,
-        blank=True,
-        help_text=HELP_MESSAGES.get("twitter"),
+        _("twitter"), null=True, blank=True, help_text=HELP_MESSAGES.get("twitter")
     )
     youtube = models.URLField(
-        _("youtube"),
-        null=True,
-        blank=True,
-        help_text=HELP_MESSAGES.get("youtube"),
+        _("youtube"), null=True, blank=True, help_text=HELP_MESSAGES.get("youtube")
     )
     instagram = models.URLField(
-        _("instagram"),
-        null=True,
-        blank=True,
-        help_text=HELP_MESSAGES.get("instagram"),
+        _("instagram"), null=True, blank=True, help_text=HELP_MESSAGES.get("instagram")
     )
     author = models.CharField(
         _("author"), max_length=50, default="Ibrahim Luqman", editable=False

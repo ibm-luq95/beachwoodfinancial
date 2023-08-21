@@ -1,0 +1,216 @@
+{% load i18n %}
+
+<!-- Card -->
+<div class="flex flex-col mt-5">
+    <div class="-m-1.5 overflow-x-auto">
+        <div class="p-1.5 min-w-full inline-block align-middle">
+            <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
+                <!-- Table -->
+                <table class="{{ BW_PRELINE_BASE_TABLE }} {{ BW_TABLE_LIST_COMPONENT_CLASS }} min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                    <thead>
+                        <tr>
+                            {% if is_checkbox_col_enabled is True %}
+                                <th scope="col" class="pl-6 py-2 text-left">
+                                    <label for="hs-at-with-checkboxes-main" class="flex">
+                                        <input type="checkbox"
+                                               class="shrink-0 border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                               id="hs-at-with-checkboxes-main" />
+                                        <span class="sr-only">Checkbox</span>
+                                    </label>
+                                </th>
+                            {% endif %}
+                            <th scope="col" class="px-4 py-2 text-left">
+                                <div class="flex items-center gap-x-2">
+                                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                                        {% translate "Title" %}
+                                    </span>
+
+                                    {% include "bw_components/global/table_list/sort_icon.html" %}
+
+                                </div>
+                            </th>
+                            <th scope="col" class="px-4 py-2 text-left">
+                                <div class="flex items-center gap-x-2">
+                                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                                        {% translate "Manager" %}
+                                    </span>
+
+                                    {% include "bw_components/global/table_list/sort_icon.html" %}
+
+                                </div>
+                            </th>
+                            <th scope="col" class="px-4 py-2 text-left">
+                                <div class="flex items-center gap-x-2">
+                                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                                        {% translate "Replies" %}
+                                    </span>
+
+                                    {% include "bw_components/global/table_list/sort_icon.html" %}
+
+                                </div>
+                            </th>
+                            <th scope="col" class="px-4 py-2 text-left">
+                                <div class="flex items-center gap-x-2">
+                                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                                        {% translate "Status" %}
+                                    </span>
+
+                                    {% include "bw_components/global/table_list/sort_icon.html" %}
+
+                                </div>
+                            </th>
+                            <th scope="col" class="px-4 py-2 text-left">
+                                <div class="flex items-center gap-x-2">
+                                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                                        {% translate "Assigned by" %}
+                                    </span>
+
+                                    {% include "bw_components/global/table_list/sort_icon.html" %}
+
+                                </div>
+                            </th>
+                            {% if is_show_created_at is True %}
+                                <th scope="col" class="px-4 py-2 text-left">
+                                    <div class="flex items-center gap-x-2">
+                                        <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                                            {% translate "Created" %}
+                                        </span>
+
+                                        {% include "bw_components/global/table_list/sort_icon.html" %}
+
+                                    </div>
+                                </th>
+                            {% endif %}
+                            {% if is_actions_menu_enabled is True %}
+                                <th scope="col" class="px-4 py-2 text-right disable-sort"></th>
+                            {% endif %}
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                        {% for object in page_obj %}
+                            <tr>
+                                {% if is_checkbox_col_enabled is True %}
+                                    <td class="h-px w-px whitespace-nowrap">
+                                        <div class="pl-4 py-2">
+                                            <label for="hs-at-with-checkboxes-1" class="flex">
+                                                <input type="checkbox"
+                                                       class="shrink-0 border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                                       id="hs-at-with-checkboxes-1" />
+                                                <span class="sr-only">Checkbox</span>
+                                            </label>
+                                        </div>
+                                    </td>
+                                {% endif %}
+                                <td class="h-px w-px whitespace-nowrap">
+                                    <div class="px-4 py-2">
+                                        <a href="{% url base_url_name|add:':details' object.pk %}">
+                                            {% if object.attachment %}
+                                                <div class="hs-tooltip inline-block mr-1 [--placement:right]">
+                                                    <button type="button"
+                                                            class="hs-tooltip-toggle text-sm text-gray-600 dark:text-gray-400">
+                                                        <i class="fa-solid fa-paperclip"></i>
+                                                        <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                                              role="tooltip">
+                                                            {% translate "Assignment contains attachment file" %}
+                                                        </span>
+                                                    </button>
+                                                </div>
+                                            {% endif %}
+                                            <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.title|truncatechars:DEFAULT_TEMPLATE_TABLE_LIST_TRUNCATED_STRING }}</span>
+                                        </a>
+                                    </div>
+                                </td>
+                                <td class="h-px w-px whitespace-nowrap">
+                                    <div class="px-4 py-2">
+                                        {% if object.get_managed_user %}
+                                            <div class="flex items-center gap-x-2">
+                                                <img class="inline-block h-5 w-5 rounded-full"
+                                                     src="https://images.unsplash.com/photo-1531927557220-a9e23c1e4794?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
+                                                     alt="Image Description" />
+                                                <div class="grow">
+                                                    <span class="text-xs text-gray-600 dark:text-gray-400">{{ object.get_managed_user }}</span>
+                                                </div>
+                                            </div>
+                                        {% else %}
+                                            <span class="text-xs text-gray-600 dark:text-gray-400">{% translate "N/A" %}</span>
+                                        {% endif %}
+                                    </div>
+                                </td>
+                                <td class="h-px w-px whitespace-nowrap text-left">
+                                    <div class="px-4 py-2">
+                                        <span class="text-xs text-gray-600 dark:text-gray-400">{{ object.discussions.count }}</span>
+                                    </div>
+                                </td>
+                                <td class="h-px w-px whitespace-nowrap">
+                                    <div class="px-4 py-2">
+                                        {% comment %}
+                                        <span class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                            <svg class="w-2.5 h-2.5" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                <path d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+                                            </svg>
+                                            Completed
+                                        </span>
+                                        {% endcomment %}
+                                        {% bw_badge code=object.status text=object.get_status_display is_solid=False size="sm" %}
+                                    </div>
+                                </td>
+                                <td class="h-px w-px whitespace-nowrap">
+                                    <div class="px-4 py-2">
+                                        <div class="flex items-center gap-x-2">
+                                            <img class="inline-block h-5 w-5 rounded-full"
+                                                 src="https://images.unsplash.com/photo-1531927557220-a9e23c1e4794?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
+                                                 alt="Image Description" />
+                                            <div class="grow">
+                                                <span class="text-xs text-gray-600 dark:text-gray-400">{{ object.assigned_by.fullname }}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                {% if is_show_created_at is True %}
+                                    <td class="h-px w-px whitespace-nowrap">
+                                        <div class="px-4 py-2">{% bw_date date_txt=object.created_at is_in_table_list=True %}</div>
+                                    </td>
+                                {% endif %}
+                                {% if is_actions_menu_enabled is True %}
+                                    <td class="h-px w-px whitespace-nowrap">
+                                        <div class="px-6 py-1.5">
+                                            {% bw_actions_dropdown actions_items=actions_items actions_base_url=actions_base_url actions_app_name=actions_app_name object=object %}
+                                        </div>
+                                    </td>
+                                {% endif %}
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <!-- End Table -->
+                <!-- Footer -->
+                <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-gray-700">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-gray-400">
+                            <span class="font-semibold text-gray-800 dark:text-gray-200 mr-1">{{ page_obj.count }}</span>
+                            {% translate "results" %}
+                        </p>
+                    </div>
+                    <div>
+                        <div class="inline-flex gap-x-2">
+                            <!-- <button type="button" class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                                <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z" />
+                                </svg>
+                                Prev
+                            </button> -->
+                            <!-- <button type="button" class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                                Next
+                                <svg class="w-3 h-3" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                    <path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z" />
+                                </svg>
+                            </button> -->
+                        </div>
+                    </div>
+                </div>
+                <!-- End Footer -->
+            </div>
+        </div>
+    </div>
+</div>
+<!-- End Card -->

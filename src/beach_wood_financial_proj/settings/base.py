@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     "import_export",
     "django_filters",
     "rest_framework",
+    "drf_standardized_errors",
     "widget_tweaks",
     "rangefilter",
     "core.apps.CoreConfig",
@@ -73,6 +74,8 @@ INSTALLED_APPS = [
     "job.apps.JobConfig",
     "task.apps.TaskConfig",
     "site_settings.apps.SiteSettingsConfig",
+    "special_assignment.apps.SpecialAssignmentConfig",
+    "discussion.apps.DiscussionConfig",
 ]
 
 MIDDLEWARE = [
@@ -105,9 +108,12 @@ UI_COMPONENTS_TEMPLATETAGS = [
     "bw_ui_components.templatetags.inputs.checkbox",
     "bw_ui_components.templatetags.inputs.file_input",
     "bw_ui_components.templatetags.inputs.switch",
+    "bw_ui_components.templatetags.inputs._method",
     "bw_ui_components.templatetags.elements.anchor",
     "bw_ui_components.templatetags.elements.date",
     "bw_ui_components.templatetags.elements.icon",
+    "bw_ui_components.templatetags.elements.js_modal",
+    "bw_ui_components.templatetags.elements.create_btn_js_modal",
     "bw_ui_components.templatetags.table_list.table",
     "bw_ui_components.templatetags.table_list.actions_dropdown",
     "bw_ui_components.templatetags.table_list.filters",
@@ -118,10 +124,7 @@ UI_COMPONENTS_TEMPLATETAGS = [
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-            BASE_DIR / "templates",
-            BASE_DIR / "components",
-        ],
+        "DIRS": [BASE_DIR / "templates", BASE_DIR / "components"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -140,10 +143,11 @@ TEMPLATES = [
             "builtins": [
                 *UI_COMPONENTS_TEMPLATETAGS,
                 "core.templatetags.string_helpers_tags",
+                "core.templatetags.url_helpers",
                 "django_components.templatetags.component_tags",
             ],
         },
-    },
+    }
 ]
 
 # FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
@@ -159,21 +163,13 @@ WSGI_APPLICATION = "beach_wood_financial_proj.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
     {
         "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-        "OPTIONS": {
-            "min_length": 7,
-        },
+        "OPTIONS": {"min_length": 7},
     },
-    {
-        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
-    },
-    {
-        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
-    },
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 # Set login and logout urls
@@ -197,28 +193,31 @@ USE_I18N = config("USE_I18N", cast=bool)
 
 USE_TZ = config("USE_TZ", cast=bool)
 
-LOCALE_PATHS = [
-    BASE_DIR / "locale/",
-]
+LOCALE_PATHS = [BASE_DIR / "locale/"]
 
 LANGUAGES = (("en", "English"),)
 
 # Django rest framework configs
 REST_FRAMEWORK = {
-    # "EXCEPTION_HANDLER": "core.errors.api_exception_handler",
+    "EXCEPTION_HANDLER": "drf_standardized_errors.handler.exception_handler",
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
         # "rest_framework.authentication.TokenAuthentication",
     ],
-    "DEFAULT_PERMISSION_CLASSES": [
-        "rest_framework.permissions.IsAuthenticated",
-    ],
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
     "DEFAULT_PARSER_CLASSES": [
         "rest_framework.parsers.JSONParser",
         # "rest_framework.parsers.FormParser",
     ],
     "DATETIME_FORMAT": "%Y-%m-%d",
+}
+# drf-standardized-errors config
+DRF_STANDARDIZED_ERRORS = {
+    # enable the standardized errors when DEBUG=True for unhandled exceptions.
+    # By default, this is set to False so you're able to view the traceback in
+    # the terminal and get more information about the exception.
+    "ENABLE_IN_DEBUG_FOR_UNHANDLED_EXCEPTIONS": True
 }
 
 # Django maintenance mode configs
@@ -299,10 +298,7 @@ ENCRYPT_KEY = bytes(config("ENCRYPT_KEY", cast=str), "ascii")
 # Webpack configs
 WEBPACK_LOADER = {
     # 'MANIFEST_FILE': BASE_DIR / "frontend/build/manifest.json",
-    "MANIFEST_FILE": BASE_DIR
-    / "frontend"
-    / "build"
-    / "manifest.json",
+    "MANIFEST_FILE": BASE_DIR / "frontend" / "build" / "manifest.json"
 }
 
 # Django log viewer package config
@@ -327,12 +323,7 @@ MESSAGE_TAGS = {
 }
 
 # Django-filter configs
-FILTERS_VERBOSE_LOOKUPS = {
-    "exact": "",
-    "iexact": "",
-    "contains": "",
-    "icontains": "",
-}
+FILTERS_VERBOSE_LOOKUPS = {"exact": "", "iexact": "", "contains": "", "icontains": ""}
 FILTERS_EMPTY_CHOICE_LABEL = ""
 # FILTERS_NULL_CHOICE_LABEL = ""
 
@@ -400,7 +391,10 @@ LOGGING = {
     "disable_existing_loggers": False,
     "formatters": {
         "large": {
-            "format": "%(asctime)s  %(levelname)s  %(process)d  %(pathname)s  %(funcName)s  %(lineno)d  %(message)s  "
+            "format": (
+                "%(asctime)s  %(levelname)s  %(process)d  %(pathname)s  %(funcName)s "
+                " %(lineno)d  %(message)s  "
+            )
         },
         "tiny": {"format": "%(asctime)s  %(message)s  "},
         "verbose": {
@@ -410,12 +404,8 @@ LOGGING = {
         },
     },
     "filters": {
-        "require_debug_false": {
-            "()": "django.utils.log.RequireDebugFalse",
-        },
-        "require_debug_true": {
-            "()": "django.utils.log.RequireDebugTrue",
-        },
+        "require_debug_false": {"()": "django.utils.log.RequireDebugFalse"},
+        "require_debug_true": {"()": "django.utils.log.RequireDebugTrue"},
     },
     # django uses some of its own loggers for internal operations. In case you want to disable them just replace the
     # False above with true.

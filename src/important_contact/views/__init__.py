@@ -5,3 +5,4 @@ from .important_contact import (
     ImportantContactUpdateView,
     ImportantContactDeleteView,
 )
+from .api import ImportantContactViewSet

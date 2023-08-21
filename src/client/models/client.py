@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-#
 from PIL import Image
 from django.core import validators
-from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext as _
 
@@ -50,6 +49,7 @@ class Client(BaseModelMixin):
         validators=[validators.integer_validator],
     )
     is_active = models.BooleanField(_("is active"), default=True)
+    description = models.TextField(_("description"), null=True, blank=True)
     company_logo = models.ImageField(
         _("company logo"),
         upload_to="logos/",

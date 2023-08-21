@@ -83,7 +83,12 @@ class Job(BaseModelMixin, StartAndDueDateMixin, StrModelMixin):
         null=True,
         blank=True,
     )
-    categories = models.ManyToManyField(to=JobCategory, related_name="jobs", blank=True)
+    categories = models.ManyToManyField(
+        to=JobCategory,
+        related_name="jobs",
+        blank=True,
+        help_text=JOB_HELP_MESSAGES.get("categories"),
+    )
 
     # tasks = models.ManyToManyField(to=Task, help_text=JOB_HELP_MESSAGES.get("tasks"))
     note = models.TextField(

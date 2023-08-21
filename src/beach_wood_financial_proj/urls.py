@@ -32,6 +32,7 @@ urlpatterns = [
     path("logs/", include("log_viewer.urls")),
     path("", RedirectView.as_view(url=reverse_lazy("auth:login")), name="home-url"),
     path("js-settings/", js_settings, name="js_settings"),
+    path("core/", include("core.urls"), name="core-urls"),
     path("auth/", include("beach_wood_user.urls.auth"), name="auth-urls"),
     path("dashboard/", include("dashboard.urls"), name="dashboard-urls"),
 ]
