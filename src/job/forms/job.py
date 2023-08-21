@@ -8,11 +8,12 @@ from django.utils.translation import gettext as _
 
 from beach_wood_user.models import BWUser
 from core.forms import BaseModelFormMixin, JoditFormMixin
+from core.forms.mixins.js_modal_form_renderer_mixin import BWJSModalFormRendererMixin
 from core.utils import debugging_print
 from job.models import JobProxy
 
 
-class JobForm(BaseModelFormMixin, JoditFormMixin):
+class JobForm(BWJSModalFormRendererMixin, BaseModelFormMixin, JoditFormMixin):
     field_order = [
         "title",
         "client",
