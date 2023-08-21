@@ -29,11 +29,14 @@ def bw_js_modal(context, *args, **kwargs) -> dict:
     modal_size_css_classes = ""
     match modal_size:
         case "sm":
-            modal_size_css_classes = " sm:max-w-lg sm:w-full m-3 sm:mx-auto "
+            # modal_size_css_classes = " sm:max-w-lg sm:w-full m-3 sm:mx-auto "
+            modal_size_css_classes = " bw-js-modal-sm mx-auto "
         case "md":
-            modal_size_css_classes = " md:max-w-2xl md:w-full m-3 md:mx-auto "
+            # modal_size_css_classes = " md:max-w-2xl md:w-full m-3 md:mx-auto "
+            modal_size_css_classes = " bw-js-modal-md mx-auto "
         case "lg":
-            modal_size_css_classes = " lg:max-w-4xl lg:w-full m-3 lg:mx-auto "
+            # modal_size_css_classes = " lg:max-w-4xl lg:w-full m-3 lg:mx-auto "
+            modal_size_css_classes = " bw-js-modal-lg mx-auto "
 
     if action_url is not None:
         url = reverse_lazy(action_url)
