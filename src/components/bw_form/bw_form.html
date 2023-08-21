@@ -56,9 +56,15 @@
                             {% with placeholder=input.field.widget.attrs.placeholder|default:input.label WIDGET_ERROR_CLASS=BW_PRELINE_INPUT_ERROR_CLASSES %}
                                 {% if input.field|bw_get_form_field_type == "ModelMultipleChoiceField" or input.field|bw_get_form_field_type == "ModelChoiceField" %}
                                     {% if input.field.widget.choices %}
-                                        {% for checkbox_field in input %}
-                                            {% bw_checkbox field=checkbox_field %}
-                                        {% endfor %}
+                                        {% if input.field.widget|bw_get_form_field_type == "Select" or input.field.widget|bw_get_form_field_type == "SelectMultiple" %}
+                                            {% with select_multiple=input.field.widget|bw_get_form_field_type %}
+                                                {% render_field input class+=BW_PRELINE_TEXT_INPUT_CSS_CLASSES placeholder=placeholder %}
+                                            {% endwith %}
+                                        {% elif input.field.widget|bw_get_form_field_type == "CheckboxSelectMultiple" %}
+                                            {% for checkbox_field in input %}
+                                                {% bw_checkbox field=checkbox_field %}
+                                            {% endfor %}
+                                        {% endif %}
                                     {% else %}
                                         <p class="text-yellow-500 font-semibold text-[14px] relative top-2">
                                             {% translate "No "|add:input.label %}
@@ -75,7 +81,9 @@
                             {% endwith %}
                             {% if input.help_text %}
                                 <p class="text-sm text-gray-500 mt-2"
-                                   id="{{ input.id_for_label|add:'helper' }}">{{ input.help_text }}</p>
+                                   id="{{ input.id_for_label|add:'helper' }}">
+                                    {{ input.help_text }}
+                                </p>
                             {% endif %}
                             {% if input.errors %}
                                 {% for error in input.errors %}

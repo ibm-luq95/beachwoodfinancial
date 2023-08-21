@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-#
 # In a file called [project root]/components/calendar/calendar.py
+from django.urls import reverse_lazy
 from django_components import component
+
+from core.utils import debugging_print
 
 
 @component.register("bw_form")
@@ -19,11 +22,21 @@ class BWForm(component.Component):
         form_id="",
         form_method="post",
         form_action_url="",
+        form_action_kwargs={},
         is_upload_form=False,
         submit_btn_text="Create",
         perms="",
         current_password=None,
     ):
+        # form_action_url syntax: app_name:endpoint: client:details
+        # if form_action_url is not None:
+        #
+        #     if form_action_kwargs:
+        #         form_action_url = reverse_lazy(form_action_url, kwargs=form_action_kwargs)
+        #     else:
+        #         form_action_url = reverse_lazy(form_action_url)
+        #
+        #     debugging_print(form_action_url)
         return {
             "form": form,
             "form_subtitle": form_subtitle,
