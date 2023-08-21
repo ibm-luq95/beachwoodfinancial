@@ -3,7 +3,7 @@
 import json
 
 from django import template
-from django.forms import BoundField, Field
+from django.forms import BoundField, Field, BaseModelForm, BaseForm
 from django.forms.widgets import Widget
 from django.utils.safestring import SafeString
 
@@ -61,6 +61,17 @@ def convert_dict_to_str(**kwargs):
     data = json.dumps(data, cls=BWCustomJSONEncoder)
     # debugging_print(data)
     return data
+
+
+@register.simple_tag
+def bw_split_form_hidden_and_not_inputs(form_object: BaseForm | BaseModelForm) -> dict:
+    inputs = {"hidden_inputs": [], "normal_inputs": []}
+    for field in form_object:
+        if field.is_hidden is True:
+            inputs["hidden_inputs"].append(field)
+        else:
+            inputs["normal_inputs"].append(field)
+    return inputs
 
 
 @register.simple_tag(takes_context=True)
