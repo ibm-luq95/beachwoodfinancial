@@ -273,11 +273,11 @@
                     {% bw_date date_txt=object.created_at is_in_table_list=True %}
                 </td>
             {% endif %}
-            <td class="h-px w-px whitespace-nowrap text-center">
-                {% if is_actions_menu_enabled is True %}
+            {% if is_actions_menu_enabled is True %}
+                <td class="h-px w-px whitespace-nowrap text-center">
                     {% bw_actions_dropdown actions_items=actions_items actions_base_url=actions_base_url actions_app_name=actions_app_name object=object %}
-                {% endif %}
-            </td>
+                </td>
+            {% endif %}
         </tr>
     {% endfor %}
 {% endblock tbody_block %}
