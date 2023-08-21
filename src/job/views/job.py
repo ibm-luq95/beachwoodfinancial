@@ -128,7 +128,7 @@ class JobDetailsView(
             removed_fields=["client", "task", "note_section", "job"],
         )
         special_assignment_form = MiniSpecialAssignmentForm(
-            initial={"assigned_by": self.request.user.pk}
+            initial={"assigned_by": self.request.user.pk, "job": self.get_object().pk}
         )
         current_user = self.request.user
         # current_user = BWUser.objects.get(pk="907c039a-b151-4faf-aed2-6c30ce4da3a9")
