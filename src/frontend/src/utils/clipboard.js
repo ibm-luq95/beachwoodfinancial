@@ -21,10 +21,10 @@ const addTxtToClipboardWithNotification = ({
   notificationType = "success",
 }) => {
   navigator.clipboard.writeText(textWillCopy);
+  const msg = notificationMsg
+    ? capitalizedFirstLetter(notificationMsg)
+    : capitalizedFirstLetter(`${label} copied successfully!`);
   if (isNotify === true) {
-    const msg = notificationMsg
-      ? capitalizedFirstLetter(notificationMsg)
-      : capitalizedFirstLetter(`${label} copied successfully!`);
     showToastNotification(msg, notificationType);
   }
 };
