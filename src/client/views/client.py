@@ -18,10 +18,11 @@ from bookkeeper.models import BookkeeperProxy
 from client.filters import ClientFilter
 from client.forms import ClientForm, ClientMiniForm
 from client.models import ClientProxy
+from client_account.forms import ClientAccountForm
 from core.cache import BWCacheViewMixin
 from core.config.forms import BWFormRenderer
 from core.constants import LIST_VIEW_PAGINATE_BY
-from core.constants.status_labels import CON_ARCHIVED
+from core.constants.status_labels import CON_ARCHIVED, CON_ENABLED
 from core.utils import get_trans_txt, debugging_print
 from core.views.mixins import (
     BWBaseListViewMixin,
@@ -190,15 +191,22 @@ class ClientDetailsView(
             initial={"client": self.get_object(), "document_section": "client"},
             renderer=BWFormRenderer(),
             removed_fields=["task", "status", "job", "document_section"],
-            hidden_inputs={"field_names": ["client"]}
+            hidden_inputs={"field_names": ["client"]},
         )
         note_form = NoteForm(
             renderer=BWFormRenderer(),
             initial={"client": self.get_object(), "note_section": "client"},
             removed_fields=["task", "note_section", "job"],
+            hidden_inputs={"field_names": ["client"]}
         )
         special_assignment_form = MiniSpecialAssignmentForm(
-            renderer=BWFormRenderer(), initial={"assigned_by": self.request.user.pk}
+            renderer=BWFormRenderer(),
+            initial={"assigned_by": self.request.user.pk, "client": self.get_object().pk},
+        )
+        client_account_form = ClientAccountForm(
+            initial={"client": self.get_object(), "status": CON_ENABLED},
+            renderer=BWFormRenderer(),
+            hidden_inputs={"field_names": ["client", "status"]},
         )
         context.setdefault("job_form", job_form)
         # context.setdefault("job_status_choices", JobStatusEnum.choices)
@@ -209,4 +217,5 @@ class ClientDetailsView(
         context.setdefault("note_form", note_form)
         context.setdefault("client_mini_form", client_mini_form)
         context.setdefault("special_assignment_form", special_assignment_form)
+        context.setdefault("client_account_form", client_account_form)
         return context
