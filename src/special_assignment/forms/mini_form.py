@@ -21,3 +21,5 @@ class MiniSpecialAssignmentForm(BWJSModalFormRendererMixin, BWBaseFormMixin):
         label=_("Attachment"), required=False, validators=[file_validator]
     )
     assigned_by = forms.UUIDField(widget=forms.HiddenInput)
+    client = forms.UUIDField(widget=forms.HiddenInput, required=False)
+    job = forms.UUIDField(widget=forms.HiddenInput, required=False)
