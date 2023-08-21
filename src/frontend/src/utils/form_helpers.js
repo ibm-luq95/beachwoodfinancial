@@ -4,6 +4,38 @@ import { DEBUG } from "./constants";
 import { orderObjectItems } from "./helpers";
 
 /**
+ * Enable or disable form fieldset items with form's submit button
+ * @typedef param
+ * @param {Object} param - this is object param
+ * @param {HTMLFormElement} param.formElement HTML form element
+ * @param {string} param.state this will enable or disable
+ */
+const removeBGInputsColors = ({ formElement, state }) => {};
+
+/**
+ * Enable or disable form fieldset items with form's submit button
+ * @param {HTMLInputElement} param.input HTML checkbox input element
+ */
+const castBooleanCheckboxElement = (input) => {
+  // const trueArray = [/true/i, /on/i];
+  /* const booleanMap = new Map();
+  booleanMap.set("true", /\b(on|true)\b/i);
+  booleanMap.set("false", /\b(off|false)\b/i);
+  if(booleanMap.get("true").test(input.value) === true){
+    console.warn(booleanMap.get("true").match(input.value));
+    return true;
+  } */
+  const inputValue = input.value.toLowerCase();
+  if (input.value === "on" || input.value === "true") {
+    return true;
+  } else if (input.value === "false" || input.value === "off") {
+    return false;
+  } else {
+    return input.value;
+  }
+};
+
+/**
  * This will serialize form inputs
  * @typedef param
  * @param {Object} param - this is object param
@@ -39,6 +71,17 @@ const formInputSerializer = ({
     }
   });
   if (checkboxArray.size > 0) {
+    // check if checkboxArray contains only one element
+    // if (checkboxArray.size === 1) {
+    //   checkboxArray.forEach((ele) => {
+    //     const checkboxElement = formElement.querySelector(`input[name='${ele}']:checked`);
+    //     console.log(checkboxElement);
+    //     if(checkboxElement){
+    //       const vvv = castBooleanCheckboxElement(checkboxElement);
+    //       console.log(vvv);
+    //     }
+    //   });
+    // }
     for (const checkboxName of checkboxArray) {
       const checkedElementArray = new Array();
       const checkboxElements = formElement.querySelectorAll(
@@ -46,6 +89,7 @@ const formInputSerializer = ({
       );
       if (checkboxElements.length > 0) {
         checkboxElements.forEach((element) => {
+          // checkedElementArray.push(castBooleanCheckboxElement(element));
           checkedElementArray.push(element.value);
         });
         serializedObject[checkboxName] = checkedElementArray;
@@ -127,10 +171,19 @@ const disableAndEnableFieldsetItems = ({ formElement, state }) => {
     case "en":
       fieldset.disabled = false;
       submitBtn.disabled = false;
+      submitBtn.classList.remove(...["bg-blue-400", "pointer-events-none"]);
       if (allFormInputs.length > 0) {
         allFormInputs.forEach((element) => {
           element.disabled = false;
-          element.classList.remove("not-allowed");
+          element.classList.remove(
+            ...[
+              "cursor-not-allowed",
+              "opacity-70",
+              "pointer-events-none",
+              "bg-gray-50",
+              "border-gray-200",
+            ],
+          );
         });
       }
       break;
@@ -139,10 +192,19 @@ const disableAndEnableFieldsetItems = ({ formElement, state }) => {
     case "d":
       fieldset.disabled = true;
       submitBtn.disabled = true;
+      submitBtn.classList.add(...["bg-blue-400", "pointer-events-none"]);
       if (allFormInputs.length > 0) {
         allFormInputs.forEach((element) => {
           element.disabled = true;
-          element.classList.add("not-allowed");
+          element.classList.add(
+            ...[
+              "cursor-not-allowed",
+              "opacity-70",
+              "pointer-events-none",
+              "border-gray-200",
+              "bg-gray-50",
+            ],
+          );
         });
       }
       break;
@@ -151,4 +213,9 @@ const disableAndEnableFieldsetItems = ({ formElement, state }) => {
   }
 };
 
-export { formInputSerializer, setFormInputValues, disableAndEnableFieldsetItems };
+export {
+  formInputSerializer,
+  setFormInputValues,
+  disableAndEnableFieldsetItems,
+  removeBGInputsColors,
+};

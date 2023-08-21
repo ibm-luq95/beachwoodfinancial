@@ -24,6 +24,7 @@ import "./discussion/discussion.js";
 import "./job/job.js";
 import "./important_contact/important_contact.js";
 import "./client/client.js";
+import "./client_account/client_account.js";
 
 window.document.addEventListener("DOMContentLoaded", function () {
   const bwfInputs = document.querySelectorAll(".bw-input");
