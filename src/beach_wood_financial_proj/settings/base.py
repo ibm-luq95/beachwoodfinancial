@@ -212,6 +212,13 @@ REST_FRAMEWORK = {
     ],
     "DATETIME_FORMAT": "%Y-%m-%d",
 }
+# drf-standardized-errors config
+DRF_STANDARDIZED_ERRORS = {
+    # enable the standardized errors when DEBUG=True for unhandled exceptions.
+    # By default, this is set to False so you're able to view the traceback in
+    # the terminal and get more information about the exception.
+    "ENABLE_IN_DEBUG_FOR_UNHANDLED_EXCEPTIONS": True
+}
 
 # Django maintenance mode configs
 MAINTENANCE_MODE_STATE_FILE_PATH = BASE_DIR / "maintenance_mode_state.txt"
