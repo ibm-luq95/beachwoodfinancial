@@ -53,10 +53,10 @@
                     <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 w-56 hidden z-10 mt-2 min-w-[15rem] bg-white shadow-md rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700 dark:divide-gray-700"
                          aria-labelledby="hs-dropdown-basic">
                         <a data-modal-name="contact"
-                           data-hs-overlay="#createJobModal"
+                           data-hs-overlay="#createImportantContactModal"
                            class="flex client-details-dropdown-item items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
                            href="javascript:;">{% translate "Contact" %}</a>
-                        <a data-hs-overlay="#createJobModal"
+                        <a data-hs-overlay="#createClientAccountModal"
                            data-modal-name="clientAccount"
                            class="flex client-details-dropdown-item items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
                            href="javascript:;">{% translate "Account" %}</a>
@@ -197,7 +197,9 @@
                                 <div>
                                     <p class="text-xs tracking-wide text-gray-500 uppercase">{% translate "Total Jobs" %}</p>
                                     <div class="flex items-center mt-1 gap-x-1">
-                                        <h3 class="text-xl font-medium text-gray-800 sm:text-2xl dark:text-gray-200">{{ object.jobs.count }}</h3>
+                                        <h3 class="text-xl font-medium text-gray-800 sm:text-2xl dark:text-gray-200">
+                                            {{ object.jobs.count }}
+                                        </h3>
                                     </div>
                                 </div>
                                 <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px] bg-blue-600 text-white rounded-full dark:bg-blue-900 dark:text-blue-200">
@@ -216,7 +218,9 @@
                                 <div>
                                     <p class="text-xs tracking-wide text-gray-500 uppercase">{% translate "Total Tasks" %}</p>
                                     <div class="flex items-center mt-1 gap-x-1">
-                                        <h3 class="mt-1 text-xl font-medium text-gray-800 dark:text-gray-200">29.4%</h3>
+                                        <h3 class="mt-1 text-xl font-medium text-gray-800 dark:text-gray-200">
+                                            {{ object.get_total_tasks_for_all_jobs }}
+                                        </h3>
                                     </div>
                                 </div>
                                 <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px] bg-blue-600 text-white rounded-full dark:bg-blue-900 dark:text-blue-200">
@@ -235,7 +239,9 @@
                                 <div>
                                     <p class="text-xs tracking-wide text-gray-500 uppercase">{% translate "Total Assignments" %}</p>
                                     <div class="flex items-center mt-1 gap-x-1">
-                                        <h3 class="text-xl font-medium text-gray-800 sm:text-2xl dark:text-gray-200">56.8%</h3>
+                                        <h3 class="text-xl font-medium text-gray-800 sm:text-2xl dark:text-gray-200">
+                                            {{ object.special_assignments.count }}
+                                        </h3>
                                         <span class="flex items-center text-red-600">
                                             <svg class="self-center inline-block w-7 h-7"
                                                  xmlns="http://www.w3.org/2000/svg"
@@ -265,7 +271,9 @@
                                 <div>
                                     <p class="text-xs tracking-wide text-red-500 uppercase">{% translate "Past Due Jobs" %}</p>
                                     <div class="flex items-center mt-1 gap-x-1">
-                                        <h3 class="mt-1 text-xl font-medium text-red-600 dark:text-gray-200">92,913</h3>
+                                        <h3 class="mt-1 text-xl font-medium text-red-600 dark:text-gray-200">
+                                            {{ object.get_all_past_due_jobs.count }}
+                                        </h3>
                                     </div>
                                 </div>
                                 <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px] bg-red-100 text-red-500 rounded-full dark:bg-blue-900 dark:text-blue-200">
@@ -285,33 +293,29 @@
                 {# Start Second Row #}
                 <section id="second-row-block">
                     <div class="grid grid-cols-4 gap-4">
-                        
-                        
-                        
                         {% if object.bookkeepers.all %}
-                        <div>
-                            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-                                <div class="p-6">
-                                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-                                        <i class="fa-solid fa-users mr-2"></i>
-                                        {% translate "Bookkeepers" %} ({{ object.bookkeepers.count }})
-                                    </h3>
-                                    <ul class="max-w-xs flex flex-col divide-y divide-gray-200 dark:divide-gray-700 mt-2">
-                                        
-                                        {% for bookkeeper in object.bookkeepers.all %}
-                                        <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white">
-                                            <a href="">{{ bookkeeper.user.fullname }}</a>
-                                        </li>
-                                        {% endfor %}
-                                    </ul>
+                            <div>
+                                <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+                                    <div class="p-6">
+                                        <h3 class="text-lg font-bold text-gray-800 dark:text-white">
+                                            <i class="fa-solid fa-users mr-2"></i>
+                                            {% translate "Bookkeepers" %} ({{ object.bookkeepers.count }})
+                                        </h3>
+                                        <ul class="max-w-xs flex flex-col divide-y divide-gray-200 dark:divide-gray-700 mt-2">
+                                            {% for bookkeeper in object.bookkeepers.all %}
+                                                <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white">
+                                                    <a href="">{{ bookkeeper.user.fullname }}</a>
+                                                </li>
+                                            {% endfor %}
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
                         {% else %}
-                        {% include "bw_ui_components/global/empty_card.html" with label="bookkeepers" %}
+
+                            {% include "bw_ui_components/global/empty_card.html" with label="bookkeepers" %}
+
                         {% endif %}
-                            
-                            
                         <!-- ... -->
                         <div>
                             <section id="tasks-table-block">
@@ -322,23 +326,19 @@
                                                 <i class="fa-solid fa-business-time mr-2 text-red-500"></i>
                                                 {% translate "Last past due jobs" %}
                                             </h3>
-                                            <ul class="max-w-xs flex flex-col divide-y divide-gray-200 dark:divide-gray-700 mt-2">
-                                                <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white">
-                                                    <a href="">Pam Zboncak</a>
-                                                </li>
-                                                <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white">
-                                                    <a href="">Marvin Yost</a>
-                                                </li>
-                                                <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white">
-                                                    <a href="">Lora Kuphal</a>
-                                                </li>
-                                                <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white">
-                                                    <a href="">Dr. Shawna Rodriguez</a>
-                                                </li>
-                                                <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white">
-                                                    <a href="">Mr. Leticia Johnston</a>
-                                                </li>
-                                            </ul>
+                                            {% if object.get_all_past_due_jobs %}
+                                                <ul class="max-w-xs flex flex-col divide-y divide-gray-200 dark:divide-gray-700 mt-2">
+                                                    {% for past_due_job in object.get_all_past_due_jobs|slice:":5" %}
+                                                        <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white">
+                                                            <a href="">{{ past_due_job.title|truncatechars:20 }}</a>
+                                                        </li>
+                                                    {% endfor %}
+                                                </ul>
+                                            {% else %}
+
+                                                {% include "bw_ui_components/global/empty_card.html" with label="past due jobs" %}
+
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </div>
@@ -396,7 +396,7 @@
                 <p class="text-gray-500 dark:text-gray-400">Client details tab</p>
                 <hr class="my-4" />
                 <section id="formWrapper">
-                    {% component "bw_form" form=client_form perms=perms form_id="clientDetailsMiniForm" submit_btn_text="Update" form_title="Update client - "|add:object.name form_subtitle="" is_upload_form=True %}
+                    {% component "bw_form" form=client_form perms=perms form_id="clientDetailsMiniForm" submit_btn_text="Update" form_title="Update client - "|add:object.name form_subtitle="Update client details" is_upload_form=True %}
                 </section>
             </div>
             <div id="accounts-tab"
@@ -405,6 +405,9 @@
                  aria-labelledby="tabs-with-icons-item-3">
                 <p class="text-gray-500 dark:text-gray-400">Account tab</p>
                 <hr />
+                <div class="text-right">
+                    {% bw_create_btn_js_modal js_create_btn_css_id="createClientAccountBtn" modal_css_id="createClientAccountModal" app_name="client_account" %}
+                </div>
                 {% if object.client_accounts.all %}
 
                     {% include "client/details_segments/client_accounts.html" with client_object=object %}
@@ -425,7 +428,7 @@
                 </div>
                 {% if object.special_assignments.all %}
 
-                    {% include "bw_components/special_assignment/mini_table_list.html" with is_checkbox_enabled=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Special assignments" header_subtitle="Special assignments custom specific assignments to clients" app_label=app_label pagination_list_url_name="dashboard:special_assignment:list" is_actions_menu_enabled=False actions_items="show,update,delete" actions_app_name=app_label actions_base_url="dashboard:special_assignment" base_url_name="dashboard:special_assignment" filter_form=filter_form filter_cancel_url="dashboard:special_assignment:list" page_obj=object.special_assignments.all %}
+                    {% include "bw_components/special_assignment/mini_table_list.html" with is_checkbox_enabled=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Special assignments" header_subtitle="Special assignments custom specific assignments to clients" app_label="special_assignment" pagination_list_url_name="dashboard:special_assignment:list" is_actions_menu_enabled=True actions_items="show,update,delete" actions_app_name="special_assignment" actions_base_url="dashboard:special_assignment" base_url_name="dashboard:special_assignment" filter_cancel_url="dashboard:special_assignment:list" page_obj=object.special_assignments.all %}
 
                 {% else %}
 
@@ -486,7 +489,10 @@
     {% bw_js_modal modal_css_id="createAssignmentModal" modal_size="sm" modal_title="Create new assignment" is_submit_btn_enabled=True is_form_modal=True form_object=special_assignment_form is_upload_form=True form_id="createAssignmentForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:special_assignment:api:special-assignment-api-router-list" %}
     {# End create assignment modal #}
     {# Start create important contact modal #}
-    {% bw_js_modal modal_css_id="createImportantContactModal" modal_size="lg" modal_title="Create new contact" is_submit_btn_enabled=True is_form_modal=True form_object=important_contact_form is_upload_form=False form_id="createImportantContactForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:job:api:job-api-router-list" %}
+    {% bw_js_modal modal_css_id="createImportantContactModal" modal_size="md" modal_title="Create new contact" is_submit_btn_enabled=True is_form_modal=True form_object=important_contact_form is_upload_form=False form_id="createImportantContactForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:important_contact:api:contacts-api-router-list" %}
     {# End create important contact modal #}
+    {# Start create client account modal #}
+    {% bw_js_modal modal_css_id="createClientAccountModal" modal_size="md" modal_title="Create new account" is_submit_btn_enabled=True is_form_modal=True form_object=client_account_form is_upload_form=False form_id="createClientAccountForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:client_account:api:client-account-api-router-list" %}
+    {# End create client account modal #}
     {# End tabs #}
 {% endblock dashboard_content_block %}
