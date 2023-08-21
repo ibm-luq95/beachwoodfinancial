@@ -2,6 +2,7 @@
 from rest_framework import serializers
 
 from beach_wood_user.models import BWUser
+from client.models import ClientProxy
 from job.models import JobProxy
 from special_assignment.models import SpecialAssignmentProxy
 
@@ -11,7 +12,13 @@ class SpecialAssignmentSerializer(serializers.ModelSerializer):
         default="assigned_by", queryset=BWUser.objects.all()
     )
     job = serializers.PrimaryKeyRelatedField(
-        default="job", queryset=JobProxy.objects.all()
+        default="job", queryset=JobProxy.objects.all(), required=False, allow_null=True
+    )
+    client = serializers.PrimaryKeyRelatedField(
+        default="client",
+        queryset=ClientProxy.objects.all(),
+        required=False,
+        allow_null=True,
     )
 
     class Meta:
@@ -19,4 +26,4 @@ class SpecialAssignmentSerializer(serializers.ModelSerializer):
         exclude = ("metadata", "is_deleted", "deleted_at")
         # fields = ("title", "body", "attachment", "assigned_by")
         # read_only_fields = ("assigned_by",)
-        depth = 1
+        # depth = 1
