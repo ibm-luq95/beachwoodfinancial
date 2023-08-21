@@ -9,7 +9,9 @@ from core.constants.status_labels import (
     CON_DISABLED,
     CON_ENABLED,
     CON_NOT_STARTED,
+    CON_PAST_DUE,
 )
+from core.models.querysets import BaseQuerySetMixin
 
 
 class ClientProxy(Client):
@@ -109,3 +111,7 @@ class ClientProxy(Client):
 
     def get_jobs_count(self) -> int | None:
         return self.jobs.count()
+
+    def get_all_past_due_jobs(self) -> BaseQuerySetMixin:
+        jobs = self.jobs.filter(status=CON_PAST_DUE)
+        return jobs
