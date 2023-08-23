@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-#
 from django.contrib import messages
-from django.views.generic import TemplateView
 from django.utils.translation import gettext as _
+from django.views.generic import TemplateView
 
 from core.cache import BWCacheViewMixin
 from core.utils import get_formatted_logger

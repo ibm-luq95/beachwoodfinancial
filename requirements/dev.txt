@@ -29,7 +29,6 @@ phone-gen
 pip-chill
 pipdeptree
 prettyprinter
-prettytable
 pycodestyle
 pydocstyle
 pygraphviz

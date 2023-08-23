@@ -3,5 +3,6 @@ from .manager import Manager
 
 
 class ManagerProxy(Manager):
-    class Meta:
+    class Meta(Manager.Meta):
         proxy = True
+        permissions = [("manager_user", "Manager User")]

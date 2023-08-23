@@ -9,6 +9,3 @@ class Manager(BaseModelMixin, StaffMemberMixin):
         CustomUser (User): Django custom user model
     """
 
-    class Meta:
-        # proxy = True
-        permissions = [("manager_user", "Manager User")]

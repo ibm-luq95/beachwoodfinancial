@@ -7,7 +7,7 @@ from special_assignment.models.special_assignment import SpecialAssignment
 
 
 class SpecialAssignmentProxy(SpecialAssignment):
-    class Meta:
+    class Meta(SpecialAssignment.Meta):
         proxy = True
 
     def get_is_seen_label(self) -> str:

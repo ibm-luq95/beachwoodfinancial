@@ -6,7 +6,7 @@ from task.models import Task
 
 
 class TaskProxy(Task):
-    class Meta:
+    class Meta(Task.Meta):
         proxy = True
 
     def get_is_completed_label(self) -> str:

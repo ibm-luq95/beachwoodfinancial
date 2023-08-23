@@ -15,7 +15,7 @@ from core.models.querysets import BaseQuerySetMixin
 
 
 class ClientProxy(Client):
-    class Meta:
+    class Meta(Client.Meta):
         proxy = True
 
     def get_managed_bookkeepers(self) -> set | None:
