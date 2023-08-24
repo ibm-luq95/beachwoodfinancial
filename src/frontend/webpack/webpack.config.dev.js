@@ -4,6 +4,7 @@ const { merge } = require("webpack-merge");
 const StylelintPlugin = require("stylelint-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
+const WebpackNotifierPlugin = require("webpack-notifier");
 
 const common = require("./webpack.common.js");
 
@@ -34,6 +35,7 @@ module.exports = merge(common, {
   //   global: true,
   // },
   plugins: [
+    new WebpackNotifierPlugin({ emoji: true, timeout: 2, wait: false }),
     new Webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("development"),
     }),
