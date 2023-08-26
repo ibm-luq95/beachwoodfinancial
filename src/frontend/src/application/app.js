@@ -1,13 +1,16 @@
 // This is the scss entry file
+
 import "../styles/index.scss";
 import "../styles/dashboard.scss";
-import "@fortawesome/fontawesome-free/css/all.min.css";
-import "@fortawesome/fontawesome-free/js/all.js";
 import "preline";
+// import "../styles/tinymce.scss";
+// import * as editor from "../utils/rich_editor.js";
+import "../utils/rich_editor.js";
 import "animate.css";
-// import tinymce from 'tinymce';
+import "@fortawesome/fontawesome-free/js/all.js";
+import "@fortawesome/fontawesome-free/css/all.min.css";
 
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // import "css.gg/icons/all.css";
 // import "css.gg/icons/css/al"
 import tableSort from "table-sort-js/table-sort.js";
@@ -62,38 +65,10 @@ window.document.addEventListener("DOMContentLoaded", function () {
       event.preventDefault();
     });
   });
-  // rich editor
-  const allRichEditors = document.querySelectorAll("textarea.rich-editor");
-  if (allRichEditors.length > 0) {
-    // ClassicEditor.builtinPlugins.forEach((pl) => {
-    //   console.log(pl);
-    // });
-    allRichEditors.forEach((editor) => {
-      console.log(editor);
-      if (editor) {
-        // tinymce.init({
-        //   selector: 'textarea',  // change this value according to your HTML
-        //   menubar: 'file edit view'
-        // });
-        ClassicEditor.create(editor, {
-          // toolbar: [
-          //   "heading",
-          //   "|",
-          //   "alignment", // <--- ADDED
-          //   "bold",
-          //   "italic",
-          //   "link",
-          //   "bulletedList",
-          //   "numberedList",
-          //   // "uploadImage",
-          //   "blockQuote",
-          //   "undo",
-          //   "redo",
-          // ],
-        }).catch((error) => {
-          console.error(error);
-        });
-      }
+  const formBackBtn = document.querySelector("button#formBackBtn");
+  if (formBackBtn) {
+    formBackBtn.addEventListener("click", (event) => {
+      window.history.back();
     });
   }
   const jobsChart = document.querySelector("canvas#jobsChart");
