@@ -4,6 +4,7 @@ from typing import Optional
 from core.forms import BaseModelFormMixin, JoditFormMixin
 from core.forms.mixins.remove_fields_mixin import RemoveFieldsMixin
 from core.forms.mixins.set_field_to_hidden import SetFieldsInputsHiddenMixin
+from core.forms.widgets import RichHTMLEditorWidget
 from note.models import Note
 from django import forms
 
@@ -29,12 +30,11 @@ class NoteForm(
             self.fields["client"].initial = client
             self.fields.pop("task")
             self.fields.pop("job")
-        if note_section is not None:
-            self.fields["note_section"].initial = note_section
 
         self.fields.pop("status")
 
     class Meta(BaseModelFormMixin.Meta):
         model = Note
         # fields = "__all__"
-        widgets = {"body": forms.Textarea(attrs={"class": "rich-editor"})}
+        exclude = ("note_section",)
+        widgets = {"body": RichHTMLEditorWidget(required=False)}

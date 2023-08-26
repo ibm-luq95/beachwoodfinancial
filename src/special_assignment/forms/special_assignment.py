@@ -4,6 +4,7 @@ from django.db import transaction
 
 from core.constants.form import EXCLUDED_FIELDS
 from core.forms import BaseModelFormMixin, JoditFormMixin
+from core.forms.widgets import RichHTMLEditorWidget
 from core.utils import debugging_print
 from special_assignment.models import SpecialAssignmentProxy
 
@@ -33,6 +34,7 @@ class SpecialAssignmentForm(BaseModelFormMixin, JoditFormMixin):
     class Meta(BaseModelFormMixin.Meta):
         model = SpecialAssignmentProxy
         exclude = EXCLUDED_FIELDS + ["is_seen"]
+        widgets = {"body": RichHTMLEditorWidget, "notes": RichHTMLEditorWidget}
 
     def save(self, commit=True):
         sa = super().save(commit=False)

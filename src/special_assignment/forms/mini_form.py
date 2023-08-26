@@ -5,6 +5,7 @@ from django.utils.translation import gettext as _
 from core.constants.file_types_validation import IMAGES_AND_DOCS_FT
 from core.forms.mixins.base_form_mixin import BWBaseFormMixin
 from core.forms.mixins.js_modal_form_renderer_mixin import BWJSModalFormRendererMixin
+from core.forms.widgets import RichHTMLEditorWidget
 from core.utils import FileValidator
 
 file_validator = FileValidator(max_size=1024 * 1000, content_types=IMAGES_AND_DOCS_FT)
@@ -16,7 +17,7 @@ class MiniSpecialAssignmentForm(BWJSModalFormRendererMixin, BWBaseFormMixin):
         self.fields["assigned_by"].label = ""
 
     title = forms.CharField(label=_("Title"), required=True)
-    body = forms.CharField(label=_("Body"), required=True, widget=forms.Textarea)
+    body = forms.CharField(label=_("Body"), required=True, widget=RichHTMLEditorWidget)
     attachment = forms.FileField(
         label=_("Attachment"), required=False, validators=[file_validator]
     )

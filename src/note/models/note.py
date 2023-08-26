@@ -45,6 +45,8 @@ class Note(BaseModelMixin, GetObjectSectionMixin, GeneralStatusFieldMixin, StrMo
         null=True,
         blank=True,
         choices=NoteTypesEnum.choices,
+        editable=False,
+        db_index=True,
     )
 
     class Meta(BaseModelMixin.Meta):

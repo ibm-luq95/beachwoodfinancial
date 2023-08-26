@@ -4,6 +4,7 @@ from typing import Optional
 from core.constants import EXCLUDED_FIELDS
 from core.forms import BaseModelFormMixin, JoditFormMixin
 from core.forms.mixins.remove_fields_mixin import RemoveFieldsMixin
+from core.forms.widgets import RichHTMLEditorWidget
 from discussion.models import DiscussionProxy
 
 
@@ -23,3 +24,4 @@ class DiscussionForm(BaseModelFormMixin, RemoveFieldsMixin, JoditFormMixin):
     class Meta(BaseModelFormMixin.Meta):
         model = DiscussionProxy
         exclude = EXCLUDED_FIELDS + ["is_seen"]
+        widgets = {"body": RichHTMLEditorWidget}

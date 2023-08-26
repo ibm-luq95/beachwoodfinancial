@@ -4,6 +4,7 @@ from django import forms
 
 from core.forms import BaseModelFormMixin, JoditFormMixin
 from core.forms.mixins.remove_fields_mixin import RemoveFieldsMixin
+from core.forms.widgets import RichHTMLEditorWidget
 from core.utils import debugging_print
 from job.models import JobProxy
 from task.models import TaskProxy
@@ -21,8 +22,6 @@ class TaskForm(BaseModelFormMixin):
         "hints",
     ]
 
-    # additional_notes = SummernoteTextFormField(required=False)
-
     def __init__(self, hidden_fields: Optional[list] = None, *args, **kwargs):
         super(TaskForm, self).__init__(*args, **kwargs)
         # JoditFormMixin.__init__(self, add_jodit_css_class=add_jodit_css_class)
@@ -34,7 +33,4 @@ class TaskForm(BaseModelFormMixin):
 
     class Meta(BaseModelFormMixin.Meta):
         model = TaskProxy
-        # widgets = {
-        # "additional_notes": forms.TextInput()
-        # "job": forms.HiddenInput()
-        # }
+        widgets = {"additional_notes": RichHTMLEditorWidget}

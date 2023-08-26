@@ -9,6 +9,7 @@ from django.utils.translation import gettext as _
 from beach_wood_user.models import BWUser
 from core.forms import BaseModelFormMixin, JoditFormMixin
 from core.forms.mixins.js_modal_form_renderer_mixin import BWJSModalFormRendererMixin
+from core.forms.widgets import RichHTMLEditorWidget
 from core.utils import debugging_print
 from job.models import JobProxy
 
@@ -86,4 +87,8 @@ class JobForm(BWJSModalFormRendererMixin, BaseModelFormMixin, JoditFormMixin):
 
     class Meta(BaseModelFormMixin.Meta):
         model = JobProxy
-        widgets = {"categories": forms.CheckboxSelectMultiple}
+        widgets = {
+            "categories": forms.CheckboxSelectMultiple,
+            "description": RichHTMLEditorWidget,
+            "note": RichHTMLEditorWidget,
+        }
