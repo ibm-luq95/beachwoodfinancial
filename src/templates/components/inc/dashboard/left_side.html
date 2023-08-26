@@ -124,14 +124,14 @@
                                 <ul class="pt-2 pl-2">
                                     <li>
                                         <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                           href="javascript:;">
+                                           href="{% url 'dashboard:managers:list' %}">
                                             <i class="fa-solid fa-list"></i>
                                             {% translate "List" %}
                                         </a>
                                     </li>
                                     <li>
                                         <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                           href="javascript:;">
+                                           href="{% url 'dashboard:managers:create' %}">
                                             <i class="fa-solid fa-plus"></i>
                                             {% translate "Add new" %}
                                         </a>
@@ -217,7 +217,7 @@
                                     </li>
                                     <li>
                                         <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                           href="{% url 'dashboard:management_bookkeeper:create' %}"">
+                                            href="{% url 'dashboard:management_bookkeeper:create' %}"">
                                             <i class="fa-solid fa-plus"></i>
                                             {% translate "Add new" %}
                                         </a>
@@ -862,16 +862,17 @@
                         </path>
                     </svg>
                 </a>
-                    <div id="archive-accordion-child" class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
+                <div id="archive-accordion-child"
+                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
                     <ul class="pt-2 pl-2">
                         <li>
-                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white" href="javascript:;">
+                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
+                               href="javascript:;">
                                 <i class="fa-solid fa-sliders w-3.5 h-3.5"></i>
                                 Coming soon
                                 <span class="inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium bg-indigo-800 text-white">5</span>
                             </a>
                         </li>
-                        
                     </ul>
                 </div>
             </li>
