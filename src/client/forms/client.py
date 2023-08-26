@@ -14,6 +14,7 @@ from core.forms import BaseModelFormMixin
 from django.utils.html import format_html, format_html_join
 
 from core.forms.mixins.remove_fields_mixin import RemoveFieldsMixin
+from core.forms.widgets import RichHTMLEditorWidget
 from core.utils import debugging_print
 
 
@@ -105,6 +106,7 @@ class ClientForm(BaseModelFormMixin, RemoveFieldsMixin):
             "important_contacts": forms.CheckboxSelectMultiple(),
             # "categories": CustomCheckboxSelectMultiple(),
             "categories": forms.CheckboxSelectMultiple(),
+            "description": RichHTMLEditorWidget()
         }
 
     def save(self, commit=True):
