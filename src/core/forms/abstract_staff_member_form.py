@@ -3,6 +3,7 @@ from django import forms
 from django.utils.translation import gettext as _
 
 from core.choices import BeachWoodUserTypeEnum
+from core.forms.widgets import RichHTMLEditorWidget
 
 
 class AbstractStaffMemberForm(forms.Form):
@@ -17,7 +18,7 @@ class AbstractStaffMemberForm(forms.Form):
     profile_picture = forms.ImageField(label=_("Profile Picture"), required=False)
     address = forms.CharField(label=_("Address"), required=False)
     phone_number = forms.CharField(label=_("Phone number"), required=False)
-    bio = forms.CharField(label=_("BIO"), widget=forms.Textarea, required=False)
+    bio = forms.CharField(label=_("BIO"), widget=RichHTMLEditorWidget, required=False)
     user_type = forms.CharField(label="", widget=forms.HiddenInput, required=False)
     facebook = forms.URLField(label=_("Facebook"), required=False)
     twitter = forms.URLField(label=_("Twitter"), required=False)
