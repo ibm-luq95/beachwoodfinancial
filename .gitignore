@@ -541,6 +541,7 @@ src/frontend/!.yarn/patches
 src/frontend/!.yarn/plugins
 src/frontend/!.yarn/sdks
 src/frontend/!.yarn/versions
+.unotes
 
 # if you are NOT using Zero-installs, then:
 # comment the following lines
