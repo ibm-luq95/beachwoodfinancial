@@ -61,7 +61,10 @@ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR = "text-blue-500"
 
 BW_PRELINE_CORE_BG_COLORS = {
     "red": {"soft": " bg-red-100 text-red-800 ", "solid": " bg-red-500 text-white "},
-    "green": {"soft": " bg-green-100 text-green-800 ", "solid": " bg-green-500 text-white "},
+    "green": {
+        "soft": " bg-green-100 text-green-800 ",
+        "solid": " bg-green-500 text-white ",
+    },
     "yellow": {
         "soft": " bg-yellow-100 text-yellow-800 ",
         "solid": " bg-yellow-500 text-white ",
