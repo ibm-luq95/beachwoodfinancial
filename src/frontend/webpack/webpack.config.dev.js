@@ -1,10 +1,11 @@
 const Path = require("path");
 const Webpack = require("webpack");
+const WebpackNotifierPlugin = require("webpack-notifier");
 const { merge } = require("webpack-merge");
 const StylelintPlugin = require("stylelint-webpack-plugin");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const ESLintPlugin = require("eslint-webpack-plugin");
-const WebpackNotifierPlugin = require("webpack-notifier");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const common = require("./webpack.common.js");
 
@@ -19,6 +20,7 @@ module.exports = merge(common, {
   output: {
     chunkFilename: "js/[name].chunk.js",
     publicPath: "http://localhost:9091/",
+    clean: true,
   },
   devServer: {
     hot: true,
@@ -35,7 +37,11 @@ module.exports = merge(common, {
   //   global: true,
   // },
   plugins: [
-    new WebpackNotifierPlugin({ emoji: true, timeout: 2, wait: false }),
+    new WebpackNotifierPlugin({ emoji: true }),
+    new HtmlWebpackPlugin({
+      title: "TinyMCE Webpack Demo",
+      meta: { viewport: "width=device-width, initial-scale=1" },
+    }),
     new Webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("development"),
     }),
@@ -58,10 +64,19 @@ module.exports = merge(common, {
         test: /\.html$/i,
         loader: "html-loader",
       },
-      {
+      /* {
         test: /\.js$/,
         include: Path.resolve(__dirname, "../src"),
         loader: "babel-loader",
+      }, */
+      {
+        test: /\.js$/,
+        include: Path.resolve(__dirname, "../src"),
+        loader: "esbuild-loader", // replace loader for the js files
+        options: {
+          // we can pass options as we like
+          target: ["es2017"],
+        },
       },
       {
         test: /\.s?css$/i,
