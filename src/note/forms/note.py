@@ -36,5 +36,5 @@ class NoteForm(
     class Meta(BaseModelFormMixin.Meta):
         model = Note
         # fields = "__all__"
-        exclude = ("note_section",)
+        # exclude = ("note_section",)
         widgets = {"body": RichHTMLEditorWidget(required=False)}

@@ -124,8 +124,8 @@ class JobDetailsView(
         )
         note_form = NoteForm(
             renderer=BWFormRenderer(),
-            initial={"job": self.get_object(), "note_section": "note"},
-            removed_fields=["client", "task", "note_section", "job"],
+            initial={"job": self.get_object()},
+            removed_fields=["client", "task", "job"],
         )
         special_assignment_form = MiniSpecialAssignmentForm(
             initial={"assigned_by": self.request.user.pk, "job": self.get_object().pk}

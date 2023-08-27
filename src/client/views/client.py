@@ -195,8 +195,8 @@ class ClientDetailsView(
         )
         note_form = NoteForm(
             renderer=BWFormRenderer(),
-            initial={"client": self.get_object(), "note_section": "client"},
-            removed_fields=["task", "note_section", "job"],
+            initial={"client": self.get_object()},
+            removed_fields=["task", "job"],
             hidden_inputs={"field_names": ["client"]}
         )
         special_assignment_form = MiniSpecialAssignmentForm(
