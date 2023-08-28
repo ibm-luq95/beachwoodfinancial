@@ -95,6 +95,9 @@ class BookkeeperCreateView(
                 "user_type": form.STAFF_MEMBER_TYPE,
             }
             new_user = BWUser.objects.create(**user_details)
+            debugging_print(form.cleaned_data.get("password"))
+            new_user.set_password(form.cleaned_data.get("password"))
+            new_user.save()
             new_user.bookkeeper.profile_picture = form.cleaned_data.get("profile_picture")
             new_user.bookkeeper.bio = form.cleaned_data.get("bio")
             new_user.bookkeeper.save()
