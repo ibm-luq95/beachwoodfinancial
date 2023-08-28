@@ -29,6 +29,7 @@ import "./important_contact/important_contact.js";
 import "./client/client.js";
 import "./client_account/client_account.js";
 import "./client_account/credentials_inputs.js";
+import "./beach_wood_user/details.js";
 
 window.document.addEventListener("DOMContentLoaded", function () {
   const bwfInputs = document.querySelectorAll(".bw-input");

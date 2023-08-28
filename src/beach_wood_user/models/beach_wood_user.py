@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models, transaction
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from guardian.mixins import GuardianUserMixin
 
 from core.choices import (
     BeachWoodUserTypeEnum,
@@ -21,7 +22,7 @@ logger = get_formatted_logger()
 # ###### [Custom Logger] #########
 
 
-class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin):
+class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin, GuardianUserMixin):
     """BWUser, it used instead of default django user model
 
     Args:

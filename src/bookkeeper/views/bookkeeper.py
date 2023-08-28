@@ -113,6 +113,7 @@ class BookkeeperDetailsView(
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
+        debugging_print(self.get_object())
         context.setdefault("title", f"{self.object.user.fullname}" + _("Bookkeeper"))
         return context
 

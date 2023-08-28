@@ -130,7 +130,7 @@
             {% endif %}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
-                    <a href="{% url base_url_name|add:':details' object.pk %}">
+                    <a href="{% url 'dashboard:staff:member-details' object.user.pk %}">
                         <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.user.fullname }}</span>
                     </a>
                 </div>

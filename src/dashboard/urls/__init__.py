@@ -29,4 +29,5 @@ urlpatterns = [
     ),
     path("management/assistant/", include("assistant.urls"), name="management_assistants"),
     path("management/manager/", include("manager.urls"), name="management_managers"),
+    path("staff/", include("beach_wood_user.urls.staff"), name="staff"),
 ]

@@ -112,3 +112,22 @@ def fetch_drf_route_api_by_name(app_name: str, url_kwargs: dict) -> str:
     else:
         url = reverse_lazy(app_name)
     return url
+
+
+@register.simple_tag
+def get_staff_member_update_url(user: BWUser) -> str:
+    url_path = ""
+    management_section = ""
+    pk = ""
+    match user.user_type:
+        case "bookkeeper":
+            management_section = "management_bookkeeper"
+            pk = user.bookkeeper.pk
+        case "assistant":
+            management_section = "management_assistant"
+            pk = user.assistant.pk
+        case "manager":
+            management_section = "management_manager"
+            pk = user.manager.pk
+    url_path = reverse_lazy(f"dashboard:{management_section}:update", kwargs={"pk": pk})
+    return url_path
