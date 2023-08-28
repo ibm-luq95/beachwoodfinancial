@@ -96,6 +96,7 @@ class AssistantCreateView(
                     "profile_picture": form.cleaned_data.get("profile_picture"),
                 }
                 new_user = BWUser.objects.create(**user_details)
+                new_user.set_password(form.cleaned_data.get("password"))
                 new_user.assistant.assistant_type = form.cleaned_data.get("assistant_type")
                 new_user.assistant.save()
                 for attr, value in profile_details.items():
