@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-#
-# -*- coding: utf-8 -*-#
 from django.contrib import messages
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db import transaction
@@ -108,6 +107,8 @@ class ManagerCreateView(
                     "profile_picture": form.cleaned_data.get("profile_picture"),
                 }
                 new_user = BWUser.objects.create(**user_details)
+                new_user.set_password(form.cleaned_data.get("password"))
+                new_user.save()
                 new_user.manager.save()
                 for attr, value in profile_details.items():
                     setattr(new_user.manager.profile, attr, value)

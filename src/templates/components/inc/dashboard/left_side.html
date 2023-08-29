@@ -69,6 +69,8 @@
                     {% translate "Dashboard" %}
                 </a>
             </li>
+            
+            {% if perms.assistant.assistant_has_full_manager_permissions or request.user.is_superuser is True %}
             <li class="hs-accordion" id="users-accordion">
                 <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
                    href="javascript:;">
@@ -228,6 +230,9 @@
                     </ul>
                 </div>
             </li>
+            {% endif %}
+                
+            
             <li class="hs-accordion" id="clients-accordion">
                 <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
                    href="javascript:;">
@@ -746,6 +751,8 @@
                 </div>
             </li>
             {% endcomment %}
+            
+            {% if perms.assistant.assistant_has_full_manager_permissions or request.user.is_superuser is True %}
             <li class="hs-accordion" id="site-settings-accordion">
                 <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
                    href="javascript:;">
@@ -876,6 +883,9 @@
                     </ul>
                 </div>
             </li>
+            {% endif %}
+              
+            
             {% comment %}
             <li>
                 <a class="flex items-center gap-x-3.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white-300" href="javascript:;">
