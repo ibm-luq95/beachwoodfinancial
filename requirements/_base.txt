@@ -12,6 +12,7 @@ django-log-viewer
 django-maintenance-mode
 django-redis
 django-session-timeout
+django-guardian
 django-widget-tweaks
 djangorestframework
 drf-standardized-errors
