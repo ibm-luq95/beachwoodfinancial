@@ -213,9 +213,24 @@ const disableAndEnableFieldsetItems = ({ formElement, state }) => {
   }
 };
 
+/**
+ * Set all form elements to read only
+ * @param {string} formID HTML form id
+ */
+const setFormInputsReadOnly = (formID) => {
+  const readOnlyFormElement = document.querySelector(`form#${formID}`);
+  if (readOnlyFormElement) {
+    const inputsArray = Array.from(readOnlyFormElement.elements);
+    inputsArray.forEach((input) => {
+      input.setAttribute("readonly", "readonly");
+    });
+  }
+};
+
 export {
   formInputSerializer,
   setFormInputValues,
   disableAndEnableFieldsetItems,
   removeBGInputsColors,
+  setFormInputsReadOnly,
 };
