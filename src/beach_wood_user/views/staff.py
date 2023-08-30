@@ -1,15 +1,18 @@
 # -*- coding: utf-8 -*-#
 
 from django.contrib.messages.views import SuccessMessageMixin
-from django.utils.translation import gettext as _
 from django.views.generic import DetailView
 
+from assistant.forms import AssistantForm
 from beach_wood_user.models import BWUser
+from bookkeeper.forms import BookkeeperForm
 from client.models import ClientProxy
 from core.choices import JobStatusEnum, JobStateEnum
 from core.config.forms import BWFormRenderer
+from core.utils import debugging_print
 from core.utils.developments.utils import get_list_from_text_choices
 from core.views.mixins import BWManagerAccessMixin, BWLoginRequiredMixin
+from manager.forms import ManagerForm
 from special_assignment.forms import MiniSpecialAssignmentForm
 
 
@@ -18,11 +21,14 @@ class StaffMemberDetailsView(
 ):
     template_name = "beach_wood_user/details.html"
     model = BWUser
+    http_method_names = ["get"]
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context.setdefault("title", f"{self.object.fullname} - " + self.object.user_type.title())
+        context.setdefault(
+            "title", f"{self.object.fullname} - " + self.object.user_type.title()
+        )
         stats_list = get_list_from_text_choices(JobStateEnum)
         status_list = get_list_from_text_choices(JobStatusEnum)
         clients = ClientProxy.objects.all()
@@ -30,8 +36,26 @@ class StaffMemberDetailsView(
             renderer=BWFormRenderer(),
             initial={"assigned_by": self.request.user.pk, "client": self.get_object().pk},
         )
+        # staff form
+        staff_form = None
+        staff_form_initial = self.get_object().get_staff_details()
+        removed_fields = ["password", "profile_picture", "confirm_password"]
+        # debugging_print(self.get_object().get_staff_details())
+        if self.get_object().user_type == "bookkeeper":
+            staff_form = BookkeeperForm(
+                initial=staff_form_initial, removed_fields=removed_fields
+            )
+        elif self.get_object().user_type == "assistant":
+            staff_form = AssistantForm(
+                initial=staff_form_initial, removed_fields=removed_fields
+            )
+        elif self.get_object().user_type == "manager":
+            staff_form = ManagerForm(
+                initial=staff_form_initial, removed_fields=removed_fields
+            )
         context.setdefault("stats_list", stats_list)
         context.setdefault("status_list", status_list)
         context.setdefault("clients", clients)
         context.setdefault("special_assignment_form", special_assignment_form)
+        context.setdefault("staff_form", staff_form)
         return context
