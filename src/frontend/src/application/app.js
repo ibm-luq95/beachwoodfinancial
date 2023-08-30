@@ -30,6 +30,7 @@ import "./client/client.js";
 import "./client_account/client_account.js";
 import "./client_account/credentials_inputs.js";
 import "./beach_wood_user/details.js";
+import { setFormInputsReadOnly } from "../utils/form_helpers";
 
 window.document.addEventListener("DOMContentLoaded", function () {
   const bwfInputs = document.querySelectorAll(".bw-input");
@@ -43,6 +44,8 @@ window.document.addEventListener("DOMContentLoaded", function () {
       });
     });
   }
+  // TODO: temporary set it to readonly
+  setFormInputsReadOnly("staffUpdateMiniForm");
 
   bwfInputs.forEach((input) => {
     const dataAttrs = input.dataset;
