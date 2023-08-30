@@ -2,6 +2,8 @@
 
 {% load i18n %}
 
+{% load static %}
+
 {% load bw_guardian_tags %}
 
 {% block dashboard_content_block %}
@@ -22,8 +24,8 @@
                     {# End Ribbon #}
                     <div class="flex gap-x-2">
                         <img class="rounded-full w-20 h-20"
-                             src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=900&h=900&q=80"
-                             alt="Image Description" />
+                             src="{% if object.get_staff_member_object.staff_object.profile.profile_picture %} {{ object.get_staff_member_object.staff_object.profile.profile_picture.url }} {% else %} {% static 'img/default_staff.png' %} {% endif %}"
+                             alt="{{ object.fullname }}" />
                         <div class="grow">
                             <h3 class="font-medium text-gray-800 dark:text-gray-200">
                                 {{ object.fullname|safe }}
@@ -63,7 +65,7 @@
                                 <p class="text-xs uppercase text-gray-500">
                                     <div class="hs-tooltip inline-block">
                                         <div class="hs-tooltip-toggle text-xs uppercase text-gray-500">
-                                            {{ object.get_assistant_type_display }}
+                                            {{ object.assistant.get_assistant_type_display }}
                                             <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
                                                   role="tooltip">{% translate "Assistant type" %}</span>
                                         </div>
@@ -183,16 +185,13 @@
                 </div>
                 <!-- End Col -->
                 <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] mt-1">
-                    <div class="p-4 md:p-5">
+                    <div class="h-80 overflow-y-auto p-4 md:p-5">
                         <h3 class="text-xl font-bold text-gray-800 dark:text-white text-[22px]">
                             {% translate "Biography" %}
                         </h3>
                         <article class="mt-4">
-                            <p class="mt-3 text-gray-500 dark:text-gray-400">
-                                {{ object.get_staff_member_object.staff_object.profile.bio|safe }}
-                            </p>
                             <!-- Social Brands -->
-                            <div class="mt-3 space-x-1">
+                            <div class="space-x-1">
                                 {% if object.get_staff_member_object.staff_object.profile.linkedin %}
                                     <a class="inline-flex justify-center items-center text-gray-500 border border-gray-200 w-8 h-8 rounded-md hover:text-gray-800 hover:shadow-sm dark:hover:text-gray-200 dark:border-gray-700 dark:hover:shadow-slate-700/[.7] linkedin-social-icon-link"
                                        href="{{ object.get_staff_member_object.staff_object.profile.linkedin }}"
@@ -230,24 +229,39 @@
                                 {% endif %}
                             </div>
                             <!-- End Social Brands -->
+                            <p class="mt-3 text-gray-500 dark:text-gray-400">
+                                {{ object.get_staff_member_object.staff_object.profile.bio|safe }}
+                            </p>
+
                         </article>
                     </div>
                 </div>
                 <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400 mt-1">
                     {# Start Grid #}
-                    <div class="grid sm:grid-cols-2 lg:grid-cols-2 gap-1 sm:gap-1">
-                        <!-- Card -->
-                        <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
-                            <div class="py-4 md:py-5 px-3">
-                                <div class="flex items-center gap-x-2">
-                                    <p class="text-xs uppercase tracking-wide text-gray-500">{% translate "Tasks" %}</p>
-                                </div>
-                                <div class="mt-1 flex items-center">
-                                    <h3 class="text-lg sm:text-lg font-medium text-gray-800 dark:text-gray-200">72,540</h3>
+                    <div class="grid
+                                {% if object.user_type == "bookkeeper" %}
+                                    sm:grid-cols-2 lg:grid-cols-2
+                                {% else %}
+                                    sm:grid-cols-1 lg:grid-cols-1
+                                {% endif %}
+                                gap-1 sm:gap-1">
+                        {% if object.user_type == "bookkeeper" %}
+                            <!-- Card -->
+                            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
+                                <div class="py-4 md:py-5 px-3">
+                                    <div class="flex items-center gap-x-2">
+                                        <p class="text-xs uppercase tracking-wide text-gray-500">{% translate "Clients" %}</p>
+                                    </div>
+                                    <div class="mt-1 flex items-center">
+                                        <h3 class="text-lg sm:text-lg font-medium text-gray-800 dark:text-gray-200">
+                                            {{ object.get_staff_member_object.staff_object.get_proxy_model.clients.count }}
+                                        </h3>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- End Card -->
+                            <!-- End Card -->
+                        {% endif %}
+ 
                         <!-- Card -->
                         <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
                             <div class="py-4 md:py-5 px-3">
@@ -255,7 +269,9 @@
                                     <p class="text-xs uppercase tracking-wide text-gray-500">{% translate "Jobs" %}</p>
                                 </div>
                                 <div class="mt-1 flex items-center">
-                                    <h3 class="text-lg sm:text-lg font-medium text-gray-800 dark:text-gray-200">21,32</h3>
+                                    <h3 class="text-lg sm:text-lg font-medium text-gray-800 dark:text-gray-200">
+                                        {{ object.jobs.count }}
+                                    </h3>
                                 </div>
                             </div>
                         </div>
@@ -263,19 +279,31 @@
                     </div>
                     {# End Grid #}
                     {# Start Grid #}
-                    <div class="grid sm:grid-cols-2 lg:grid-cols-2 gap-1 sm:gap-1 mt-1">
-                        <!-- Card -->
-                        <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
-                            <div class="py-4 md:py-5 px-3">
-                                <div class="flex items-center gap-x-2">
-                                    <p class="text-xs uppercase tracking-wide text-gray-500">{% translate "Clients" %}</p>
-                                </div>
-                                <div class="mt-1 flex items-center">
-                                    <h3 class="text-lg sm:text-lg font-medium text-gray-800 dark:text-gray-200">1,444</h3>
+                    <div class="grid
+                                {% if object.user_type == "bookkeeper" %}
+                                    sm:grid-cols-2 lg:grid-cols-2
+                                {% else %}
+                                    sm:grid-cols-1 lg:grid-cols-1
+                                {% endif %}
+                                gap-1 sm:gap-1 mt-1">
+ 
+ 
+                        {% if object.user_type == "bookkeeper" %}
+                            <!-- Card -->
+                            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
+                                <div class="py-4 md:py-5 px-3">
+                                    <div class="flex items-center gap-x-2">
+                                        <p class="text-xs uppercase tracking-wide text-gray-500">{% translate "Tasks" %}</p>
+                                    </div>
+                                    <div class="mt-1 flex items-center">
+                                        <h3 class="text-lg sm:text-lg font-medium text-gray-800 dark:text-gray-200">72,540</h3>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <!-- End Card -->
+                            <!-- End Card -->
+                        {% endif %}
+ 
+ 
                         <!-- Card -->
                         <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
                             <div class="py-4 md:py-5 px-3">
@@ -283,7 +311,9 @@
                                     <p class="text-xs uppercase tracking-wide text-gray-500">{% translate "Assignments" %}</p>
                                 </div>
                                 <div class="mt-1 flex items-center">
-                                    <h3 class="text-lg sm:text-lg font-medium text-gray-800 dark:text-gray-200">2,540</h3>
+                                    <h3 class="text-lg sm:text-lg font-medium text-gray-800 dark:text-gray-200">
+                                        {{ object.get_staff_member_object.staff_object.special_assignments.count }}
+                                    </h3>
                                 </div>
                             </div>
                         </div>
@@ -303,6 +333,10 @@
                                         {% translate "Past due jobs" %}
                                     </h3>
                                     <div class="mt-5">
+                                        {% comment  %}
+                                            {{ object.jobs.all.0|get_var_type }}
+                                        {{ object.jobs.all.0.get_proxy_model|get_var_type }}
+                                        {% endcomment %}
                                         <div class="flex flex-col">
                                             <div class="-m-1.5 overflow-x-auto">
                                                 <div class="p-1.5 min-w-full inline-block align-middle">
@@ -511,17 +545,28 @@
                                  aria-label="Tabs"
                                  role="tablist">
                                 <button type="button"
-                                        class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400 active"
-                                        id="bar-with-underline-item-1"
-                                        data-hs-tab="#clients-tab"
-                                        aria-controls="clients-tab"
-                                        role="tab">{% translate "Clients" %}</button>
-                                <button type="button"
-                                        class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400"
-                                        id="bar-with-underline-item-2"
-                                        data-hs-tab="#jobs-tab"
-                                        aria-controls="jobs-tab"
-                                        role="tab">{% translate "Jobs" %}</button>
+                                        class="active hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400"
+                                        id="user-details-tab-underline"
+                                        data-hs-tab="#user-details-tab"
+                                        aria-controls="user-details-tab"
+                                        role="tab">{% translate "Details" %}</button>
+                                {% if object.user_type == "bookkeeper" %}
+                                    <button type="button"
+                                            class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400"
+                                            id="bar-with-underline-item-1"
+                                            data-hs-tab="#clients-tab"
+                                            aria-controls="clients-tab"
+                                            role="tab">{% translate "Clients" %}</button>
+                                {% endif %}
+                                {% if object.user_type == "bookkeeper" %}
+                                    <button type="button"
+                                            class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400"
+                                            id="bar-with-underline-item-2"
+                                            data-hs-tab="#jobs-tab"
+                                            aria-controls="jobs-tab"
+                                            role="tab">{% translate "Jobs" %}</button>
+                                {% endif %}
+ 
                                 <button type="button"
                                         class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400"
                                         id="bar-with-underline-item-3"
@@ -538,277 +583,43 @@
                                 {% endif %}
                             </nav>
                             <div class="mt-3">
-                                <div id="clients-tab"
+                                <div id="user-details-tab"
                                      role="tabpanel"
-                                     aria-labelledby="bar-with-underline-item-1">
-                                    <!-- Table Section -->
-                                    <div>
-                                        <!-- Card -->
-                                        <div class="flex flex-col">
-                                            <div class="-m-1.5 overflow-x-auto">
-                                                <div class="p-1.5 min-w-full inline-block align-middle">
-                                                    <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
-                                                        <!-- Header -->
-                                                        <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-gray-700">
-                                                            <div>
-                                                                <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">{% translate "Clients" %}</h2>
-                                                                {% comment  %}
-                              <p class="text-sm text-gray-600 dark:text-gray-400">
-                                Create teams, edit, download and more.
-                              </p>
-                                                                {% endcomment %}
-                                                            </div>
-                                                        </div>
-                                                        <!-- End Header -->
-                                                        <!-- Table -->
-                                                        <table class="{{ BW_TABLE_LIST_SORT_CLASS }} min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                                            <thead class="bg-gray-50 dark:bg-slate-800">
-                                                                <tr>
-                                                                    <th scope="col" class="px-6 py-3 text-left">
-                                                                        <a class="group inline-flex items-center gap-x-2" href="#">
-                                                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                                                                                {% translate "Name" %}
-                                                                            </span>
-                                                                            <div class="flex justify-center items-center w-5 h-5 border border-gray-200 group-hover:bg-gray-200 text-gray-400 rounded dark:border-gray-700 dark:group-hover:bg-gray-700 dark:text-gray-400">
-                                                                                <svg class="w-2.5 h-2.5"
-                                                                                     width="16"
-                                                                                     height="16"
-                                                                                     viewBox="0 0 16 16"
-                                                                                     fill="none"
-                                                                                     xmlns="http://www.w3.org/2000/svg">
-                                                                                    <path d="M7.55921 0.287451C7.86808 -0.0958171 8.40096 -0.0958167 8.70982 0.287451L12.9295 5.52367C13.3857 6.08979 13.031 7 12.3542 7H3.91488C3.23806 7 2.88336 6.08979 3.33957 5.52367L7.55921 0.287451Z" fill="currentColor" />
-                                                                                    <path d="M8.70983 15.7125C8.40096 16.0958 7.86808 16.0958 7.55921 15.7125L3.33957 10.4763C2.88336 9.9102 3.23806 9 3.91488 9H12.3542C13.031 9 13.3857 9.9102 12.9295 10.4763L8.70983 15.7125Z" fill="currentColor" />
-                                                                                </svg>
-                                                                            </div>
-                                                                        </a>
-                                                                    </th>
-                                                                    <th scope="col" class="px-6 py-3 text-left">
-                                                                        <a class="group inline-flex items-center gap-x-2" href="#">
-                                                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                                                                                {% translate "Description" %}
-                                                                            </span>
-                                                                            <div class="flex justify-center items-center w-5 h-5 border border-gray-200 group-hover:bg-gray-200 text-gray-400 rounded dark:border-gray-700 dark:group-hover:bg-gray-700 dark:text-gray-400">
-                                                                                <svg class="w-2.5 h-2.5"
-                                                                                     width="16"
-                                                                                     height="16"
-                                                                                     viewBox="0 0 16 16"
-                                                                                     fill="none"
-                                                                                     xmlns="http://www.w3.org/2000/svg">
-                                                                                    <path d="M7.55921 0.287451C7.86808 -0.0958171 8.40096 -0.0958167 8.70982 0.287451L12.9295 5.52367C13.3857 6.08979 13.031 7 12.3542 7H3.91488C3.23806 7 2.88336 6.08979 3.33957 5.52367L7.55921 0.287451Z" fill="currentColor" />
-                                                                                    <path d="M8.70983 15.7125C8.40096 16.0958 7.86808 16.0958 7.55921 15.7125L3.33957 10.4763C2.88336 9.9102 3.23806 9 3.91488 9H12.3542C13.031 9 13.3857 9.9102 12.9295 10.4763L8.70983 15.7125Z" fill="currentColor" />
-                                                                                </svg>
-                                                                            </div>
-                                                                        </a>
-                                                                    </th>
-                                                                    <th scope="col" class="px-6 py-3 text-left">
-                                                                        <a class="group inline-flex items-center gap-x-2" href="#">
-                                                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                                                                                {% translate "Industry" %}
-                                                                            </span>
-                                                                            <div class="flex justify-center items-center w-5 h-5 border border-gray-200 group-hover:bg-gray-200 text-gray-400 rounded dark:border-gray-700 dark:group-hover:bg-gray-700 dark:text-gray-400">
-                                                                                <svg class="w-2.5 h-2.5"
-                                                                                     width="16"
-                                                                                     height="16"
-                                                                                     viewBox="0 0 16 16"
-                                                                                     fill="none"
-                                                                                     xmlns="http://www.w3.org/2000/svg">
-                                                                                    <path d="M7.55921 0.287451C7.86808 -0.0958171 8.40096 -0.0958167 8.70982 0.287451L12.9295 5.52367C13.3857 6.08979 13.031 7 12.3542 7H3.91488C3.23806 7 2.88336 6.08979 3.33957 5.52367L7.55921 0.287451Z" fill="currentColor" />
-                                                                                    <path d="M8.70983 15.7125C8.40096 16.0958 7.86808 16.0958 7.55921 15.7125L3.33957 10.4763C2.88336 9.9102 3.23806 9 3.91488 9H12.3542C13.031 9 13.3857 9.9102 12.9295 10.4763L8.70983 15.7125Z" fill="currentColor" />
-                                                                                </svg>
-                                                                            </div>
-                                                                        </a>
-                                                                    </th>
-                                                                    <th scope="col" class="px-6 py-3 text-left">
-                                                                        <a class="group inline-flex items-center gap-x-2" href="#">
-                                                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                                                                                {% translate "Jobs" %}
-                                                                            </span>
-                                                                            <div class="flex justify-center items-center w-5 h-5 border border-gray-200 group-hover:bg-gray-200 text-gray-400 rounded dark:border-gray-700 dark:group-hover:bg-gray-700 dark:text-gray-400">
-                                                                                <svg class="w-2.5 h-2.5"
-                                                                                     width="16"
-                                                                                     height="16"
-                                                                                     viewBox="0 0 16 16"
-                                                                                     fill="none"
-                                                                                     xmlns="http://www.w3.org/2000/svg">
-                                                                                    <path d="M7.55921 0.287451C7.86808 -0.0958171 8.40096 -0.0958167 8.70982 0.287451L12.9295 5.52367C13.3857 6.08979 13.031 7 12.3542 7H3.91488C3.23806 7 2.88336 6.08979 3.33957 5.52367L7.55921 0.287451Z" fill="currentColor" />
-                                                                                    <path d="M8.70983 15.7125C8.40096 16.0958 7.86808 16.0958 7.55921 15.7125L3.33957 10.4763C2.88336 9.9102 3.23806 9 3.91488 9H12.3542C13.031 9 13.3857 9.9102 12.9295 10.4763L8.70983 15.7125Z" fill="currentColor" />
-                                                                                </svg>
-                                                                            </div>
-                                                                        </a>
-                                                                    </th>
-                                                                    <th scope="col" class="px-6 py-3 text-left">
-                                                                        <a class="group inline-flex items-center gap-x-2" href="#">
-                                                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                                                                                {% translate "Tasks" %}
-                                                                            </span>
-                                                                            <div class="flex justify-center items-center w-5 h-5 border border-gray-200 group-hover:bg-gray-200 text-gray-400 rounded dark:border-gray-700 dark:group-hover:bg-gray-700 dark:text-gray-400">
-                                                                                <svg class="w-2.5 h-2.5"
-                                                                                     width="16"
-                                                                                     height="16"
-                                                                                     viewBox="0 0 16 16"
-                                                                                     fill="none"
-                                                                                     xmlns="http://www.w3.org/2000/svg">
-                                                                                    <path d="M7.55921 0.287451C7.86808 -0.0958171 8.40096 -0.0958167 8.70982 0.287451L12.9295 5.52367C13.3857 6.08979 13.031 7 12.3542 7H3.91488C3.23806 7 2.88336 6.08979 3.33957 5.52367L7.55921 0.287451Z" fill="currentColor" />
-                                                                                    <path d="M8.70983 15.7125C8.40096 16.0958 7.86808 16.0958 7.55921 15.7125L3.33957 10.4763C2.88336 9.9102 3.23806 9 3.91488 9H12.3542C13.031 9 13.3857 9.9102 12.9295 10.4763L8.70983 15.7125Z" fill="currentColor" />
-                                                                                </svg>
-                                                                            </div>
-                                                                        </a>
-                                                                    </th>
-                                                                    <th scope="col" class="px-6 py-3 text-left">
-                                                                        <a class="group inline-flex items-center gap-x-2" href="#">
-                                                                            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                                                                                {% translate "Logo" %}
-                                                                            </span>
-                                                                            <div class="flex justify-center items-center w-5 h-5 border border-gray-200 group-hover:bg-gray-200 text-gray-400 rounded dark:border-gray-700 dark:group-hover:bg-gray-700 dark:text-gray-400">
-                                                                                <svg class="w-2.5 h-2.5"
-                                                                                     width="16"
-                                                                                     height="16"
-                                                                                     viewBox="0 0 16 16"
-                                                                                     fill="none"
-                                                                                     xmlns="http://www.w3.org/2000/svg">
-                                                                                    <path d="M7.55921 0.287451C7.86808 -0.0958171 8.40096 -0.0958167 8.70982 0.287451L12.9295 5.52367C13.3857 6.08979 13.031 7 12.3542 7H3.91488C3.23806 7 2.88336 6.08979 3.33957 5.52367L7.55921 0.287451Z" fill="currentColor" />
-                                                                                    <path d="M8.70983 15.7125C8.40096 16.0958 7.86808 16.0958 7.55921 15.7125L3.33957 10.4763C2.88336 9.9102 3.23806 9 3.91488 9H12.3542C13.031 9 13.3857 9.9102 12.9295 10.4763L8.70983 15.7125Z" fill="currentColor" />
-                                                                                </svg>
-                                                                            </div>
-                                                                        </a>
-                                                                    </th>
-                                                                    <th scope="col" class="px-6 py-3 text-right"></th>
-                                                                </tr>
-                                                            </thead>
-                                                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                                                                <tr class="bg-white hover:bg-gray-50 dark:bg-slate-900 dark:hover:bg-slate-800">
-                                                                    <td class="h-px w-px whitespace-nowrap">
-                                                                        <a class="block relative z-10" href="#">
-                                                                            <div class="px-6 py-2">
-                                                                                <a href="#"
-                                                                                   class="block text-sm text-blue-600 decoration-2 hover:underline dark:text-blue-500">
-                                                                                digitalmarketing</a>
-                                                                            </div>
-                                                                        </a>
-                                                                    </td>
-                                                                    <td class="h-px w-72 min-w-[18rem]">
-                                                                        <div class="px-6 py-2">
-                                                                            <p class="text-sm text-gray-500">
-                                                                                Our
-                                                                                group promotes and sells products and
-                                                                                services by leveraging online
-                                                                                marketing tactics
-                                                                            </p>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td class="h-px w-px whitespace-nowrap">
-                                                                        <a class="block relative z-10" href="#">
-                                                                            <div class="px-6 py-2">
-                                                                                <span class="inline-flex items-center gap-1.5 py-1 px-2 rounded-md text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-900 dark:text-gray-200">
-                                                                                    Marketing team
-                                                                                </span>
-                                                                            </div>
-                                                                        </a>
-                                                                    </td>
-                                                                    <td class="h-px w-px whitespace-nowrap">
-                                                                        <div class="px-6 py-2">
-                                                                            <p class="text-sm text-gray-500">2</p>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td class="h-px w-px whitespace-nowrap">
-                                                                        <div class="px-6 py-2">
-                                                                            <p class="text-sm text-gray-500">33</p>
-                                                                        </div>
-                                                                    </td>
-                                                                    <td class="h-px w-px whitespace-nowrap">
-                                                                        <a class="block relative z-10" href="#">
-                                                                            <div class="px-6 py-2 flex -space-x-2">
-                                                                                <div class="hs-tooltip inline-flex">
-                                                                                    <img class="hs-tooltip-toggle inline-block h-6 w-6 rounded-full ring-2 ring-white dark:ring-gray-800"
-                                                                                         src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
-                                                                                         alt="Image Description" />
-                                                                                    <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
-                                                                                          role="tooltip">David Harrison</span>
-                                                                                </div>
-                                                                            </div>
-                                                                        </a>
-                                                                    </td>
-                                                                    <td class="h-px w-px whitespace-nowrap">
-                                                                        <div class="px-6 py-2">
-                                                                            <div class="hs-dropdown relative inline-block [--placement:bottom-right]">
-                                                                                <button id="hs-table-dropdown-1"
-                                                                                        type="button"
-                                                                                        class="hs-dropdown-toggle py-1.5 px-2 inline-flex justify-center items-center gap-2 rounded-md text-gray-700 align-middle focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
-                                                                                    <svg class="w-4 h-4"
-                                                                                         xmlns="http://www.w3.org/2000/svg"
-                                                                                         width="16"
-                                                                                         height="16"
-                                                                                         fill="currentColor"
-                                                                                         viewBox="0 0 16 16">
-                                                                                        <path d="M3 9.5a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3zm5 0a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3z" />
-                                                                                    </svg>
-                                                                                </button>
-                                                                                <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden mt-2 divide-y divide-gray-200 min-w-[10rem] z-20 bg-white shadow-2xl rounded-lg p-2 dark:divide-gray-700 dark:bg-gray-800 dark:border dark:border-gray-700"
-                                                                                     aria-labelledby="hs-table-dropdown-1">
-                                                                                    <div class="py-2 first:pt-0 last:pb-0">
-                                                                                        <span class="block py-2 px-3 text-xs font-medium uppercase text-gray-400 dark:text-gray-600">
-                                                                                            Actions
-                                                                                        </span>
-                                                                                        <a class="flex items-center gap-x-3 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                                                                                           href="#">{% translate "Details" %}</a>
-                                                                                    </div>
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </td>
-                                                                </tr>
-                                                            </tbody>
-                                                        </table>
-                                                        <!-- End Table -->
-                                                        <!-- Footer -->
-                                                        <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-gray-700">
-                                                            <div>
-                                                                <p class="text-sm text-gray-600 dark:text-gray-400">
-                                                                    <span class="font-semibold text-gray-800 dark:text-gray-200">6</span>
-                                                                    {% translate "results" %}
-                                                                </p>
-                                                            </div>
-                                                            <div>
-                                                                <div class="inline-flex gap-x-2">
-                                                                    <a href="{% url 'dashboard:client:list' %}"
-                                                                       class="py-2 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
-                                                                        {% translate "All" %}
-                                                                    </a>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- End Footer -->
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- End Card -->
-                                    </div>
-                                    <!-- End Table Section -->
+                                     aria-labelledby="user-details-tab-underline">
+                                    <section id="formWrapper">
+                                        {% component "bw_form" form=staff_form perms=perms form_id="staffUpdateMiniForm" submit_btn_text="Update" form_title="Update staff - "|add:object.fullname form_subtitle="Update staff details" is_upload_form=True hide_back_btn=True hide_submit_btn=True %}
+                                    </section>
                                 </div>
-                                <div id="jobs-tab"
-                                     class="hidden"
-                                     role="tabpanel"
-                                     aria-labelledby="bar-with-underline-item-2">
-                                    <div class="min-h-[15rem] flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-                                        <div class="flex flex-auto flex-col justify-center items-center p-4 md:p-5">
-                                            <svg class="max-w-[5rem]"
-                                                 viewBox="0 0 375 428"
-                                                 fill="none"
-                                                 xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M254.509 253.872L226.509 226.872" class="stroke-gray-400 dark:stroke-white" stroke="currentColor" stroke-width="7" stroke-linecap="round" />
-                                                <path d="M237.219 54.3721C254.387 76.4666 264.609 104.226 264.609 134.372C264.609 206.445 206.182 264.872 134.109 264.872C62.0355 264.872 3.60864 206.445 3.60864 134.372C3.60864 62.2989 62.0355 3.87207 134.109 3.87207C160.463 3.87207 184.993 11.6844 205.509 25.1196" class="stroke-gray-400 dark:stroke-white" stroke="currentColor" stroke-width="7" stroke-linecap="round" />
-                                                <rect x="270.524" y="221.872" width="137.404" height="73.2425" rx="36.6212" transform="rotate(40.8596 270.524 221.872)" class="fill-gray-400 dark:fill-white" fill="currentColor" />
-                                                <ellipse cx="133.109" cy="404.372" rx="121.5" ry="23.5" class="fill-gray-400 dark:fill-white" fill="currentColor" />
-                                                <path d="M111.608 188.872C120.959 177.043 141.18 171.616 156.608 188.872" class="stroke-gray-400 dark:stroke-white" stroke="currentColor" stroke-width="7" stroke-linecap="round" />
-                                                <ellipse cx="96.6084" cy="116.872" rx="9" ry="12" class="fill-gray-400 dark:fill-white" fill="currentColor" />
-                                                <ellipse cx="172.608" cy="117.872" rx="9" ry="12" class="fill-gray-400 dark:fill-white" fill="currentColor" />
-                                                <path d="M194.339 147.588C189.547 148.866 189.114 142.999 189.728 138.038C189.918 136.501 191.738 135.958 192.749 137.131C196.12 141.047 199.165 146.301 194.339 147.588Z" class="fill-gray-400 dark:fill-white" fill="currentColor" />
-                                            </svg>
-                                            <p class="mt-5 text-sm text-gray-500 dark:text-gray-500">No data to show</p>
-                                        </div>
+                                {% if object.user_type == "bookkeeper" %}
+                                    <div id="clients-tab"
+                                         role="tabpanel"
+                                         class="hidden"
+                                         aria-labelledby="bar-with-underline-item-1">
+                                        <!-- Table Section -->
+                                        <div></div>
+                                        <!-- End Table Section -->
                                     </div>
-                                </div>
+                                {% endif %}
+                                {% if object.user_type == "bookkeeper" %}
+                                    <div id="jobs-tab"
+                                         class="hidden"
+                                         role="tabpanel"
+                                         aria-labelledby="bar-with-underline-item-2">
+                                        {% if object.jobs.all %}
+
+                                            {% include "bw_components/job/table_list.html" with is_checkbox_enabled=False is_show_create_btn=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Jobs" header_subtitle="" app_label="job" pagination_list_url_name="dashboard:job:list" is_actions_menu_enabled=False actions_items="show,update,delete" actions_app_name="job" actions_base_url="dashboard:job" base_url_name="dashboard:job" object_list=object.jobs.all is_show_client=False %}
+
+ 
+                                        {% else %}
+ 
+
+                                            {% include "bw_ui_components/global/empty_card.html" with label="jobs" %}
+
+ 
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+ 
                                 <div id="assignments-tab"
                                      class="hidden"
                                      role="tabpanel"
@@ -818,7 +629,7 @@
                                     </div>
                                     {% if object.get_staff_member_object.staff_object.special_assignments.all %}
 
-                                        {% include "bw_components/special_assignment/mini_table_list.html" with is_checkbox_enabled=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Special assignments" header_subtitle="Special assignments custom specific assignments to clients" app_label="special_assignment" pagination_list_url_name="dashboard:special_assignment:list" is_actions_menu_enabled=True actions_items="show,update,delete" actions_app_name="special_assignment" actions_base_url="dashboard:special_assignment" base_url_name="dashboard:special_assignment" filter_cancel_url="dashboard:special_assignment:list" page_obj=object.get_staff_member_object.staff_object.special_assignments.all %}
+                                        {% include "bw_components/special_assignment/mini_table_list.html" with is_checkbox_enabled=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Special assignments" header_subtitle="Special assignments custom specific assignments to clients" app_label="special_assignment" pagination_list_url_name="dashboard:special_assignment:list" is_actions_menu_enabled=True actions_items="show,update,delete" actions_app_name="special_assignment" actions_base_url="dashboard:special_assignment" base_url_name="dashboard:special_assignment" page_obj=object.get_staff_member_object.staff_object.special_assignments.all %}
 
                                     {% else %}
 
