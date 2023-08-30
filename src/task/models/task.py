@@ -5,11 +5,12 @@ from django.utils.translation import gettext as _
 
 from core.choices import TaskStatusEnum, TaskTypeEnum
 from core.models.mixins import BaseModelMixin, StrModelMixin
+from core.models.mixins.access_proxy_models_mixin import AccessProxyModelMixin
 from job.models.job_proxy import JobProxy
 
 
 # class Task(BaseModelMixin, StartAndDueDateMixin, StrModelMixin, CreatedByMixin):
-class Task(BaseModelMixin, StrModelMixin):
+class Task(BaseModelMixin, AccessProxyModelMixin, StrModelMixin):
     """Tasks for every job
 
     Args:
