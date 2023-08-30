@@ -138,7 +138,7 @@
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
                     <a class="text-sm text-blue-500 dark:text-blue-400"
-                       href="mailto:{{ object.user.email }}">{{ object.user.email }}</a>
+                       href="mailto:{{ object.user.email|safe }}">{{ object.user.email|safe }}</a>
                 </div>
             </td>
             <td class="h-px w-px whitespace-nowrap">
@@ -147,6 +147,7 @@
                     {% translate "No" as false_tooltip_txt %}
 
                     {% include "bw_components/global/check_times_icon.html" with status=object.user.is_superuser is_tooltip_enabled=True true_tooltip_txt=true_tooltip_txt false_tooltip_txt=false_tooltip_txt %}
+
                 </div>
             </td>
             <td class="h-px w-px whitespace-nowrap">
@@ -154,7 +155,7 @@
                     {% translate "Has manager permissions" as true_tooltip_txt %}
                     {% translate "Has not manager permissions" as false_tooltip_txt %}
 
-                    {% include "bw_components/global/check_times_icon.html" with status=object.is_has_manager_permissions is_tooltip_enabled=True true_tooltip_txt=true_tooltip_txt false_tooltip_txt=false_tooltip_txt %}
+                    {% include "bw_components/global/check_times_icon.html" with status=object.user.is_active is_tooltip_enabled=True true_tooltip_txt=true_tooltip_txt false_tooltip_txt=false_tooltip_txt %}
 
                 </div>
             </td>
