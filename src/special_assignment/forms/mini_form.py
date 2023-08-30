@@ -3,6 +3,19 @@ from django import forms
 from django.utils.translation import gettext as _
 
 from core.constants.file_types_validation import IMAGES_AND_DOCS_FT
+from core.constants.form import (
+    PDF_MIME_TYPE,
+    DOCX_MIME_TYPE,
+    DOC_MIME_TYPE,
+    CSV_MIME_TYPE,
+    PNG_MIME_TYPE,
+    JPEG_MIME_TYPE,
+    JPG_MIME_TYPE,
+    WEBP_MIME_TYPE,
+    AVIF_MIME_TYPE,
+    PPT_MIME_TYPE,
+    PPTX_MIME_TYPE,
+)
 from core.forms.mixins.base_form_mixin import BWBaseFormMixin
 from core.forms.mixins.js_modal_form_renderer_mixin import BWJSModalFormRendererMixin
 from core.forms.widgets import RichHTMLEditorWidget
@@ -15,6 +28,16 @@ class MiniSpecialAssignmentForm(BWJSModalFormRendererMixin, BWBaseFormMixin):
     def __init__(self, *args, **kwargs):
         super(BWBaseFormMixin, self).__init__(*args, **kwargs)
         self.fields["assigned_by"].label = ""
+        self.fields.get("attachment").widget.attrs.update(
+            {
+                "accept": (
+                    f"{PDF_MIME_TYPE}, {DOCX_MIME_TYPE}, {DOC_MIME_TYPE}, {CSV_MIME_TYPE},"
+                    f" {PNG_MIME_TYPE}, {JPEG_MIME_TYPE}, {JPG_MIME_TYPE},"
+                    f" {PPTX_MIME_TYPE}, {PPT_MIME_TYPE}, {AVIF_MIME_TYPE},"
+                    f" {WEBP_MIME_TYPE}"
+                )
+            }
+        )
 
     title = forms.CharField(label=_("Title"), required=True)
     body = forms.CharField(label=_("Body"), required=True, widget=RichHTMLEditorWidget)
