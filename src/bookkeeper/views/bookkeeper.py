@@ -168,9 +168,8 @@ class BookkeeperUpdateView(
         initial["email"] = self.object.user.email
         initial["first_name"] = self.object.user.first_name
         initial["last_name"] = self.object.user.last_name
-        initial["bio"] = self.object.bio
-        initial["profile_picture"] = self.object.profile_picture
-
+        initial["bio"] = self.object.profile.bio
+        initial["profile_picture"] = self.object.profile.profile_picture
         return initial
 
     def post(self, request, *args, **kwargs):
@@ -181,6 +180,7 @@ class BookkeeperUpdateView(
         self.object = self.get_object()
         form = self.get_form()
         if form.is_valid():
+            # form.split_user_profiles_inputs(excluded_fields=["password", "confirm_password"])
             return self.form_valid(form)
         else:
             return self.form_invalid(form)
