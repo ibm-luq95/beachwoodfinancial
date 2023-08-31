@@ -53,6 +53,7 @@
 
             </div>
         </th>
+        {% if is_show_bookkeeper is True %}
         <th scope="col" class="px-6 py-3 text-left">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
@@ -63,6 +64,8 @@
 
             </div>
         </th>
+        {% endif %}
+        
         <th scope="col" class="px-6 py-3 text-left">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
@@ -155,6 +158,8 @@
                     {% endif %}
                 </div>
             </td>
+            
+            {% if is_show_bookkeeper is True %}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
                     <div class="scrollable-wrapper">
@@ -179,6 +184,8 @@
                     </div>
                 </div>
             </td>
+            {% endif %}
+                
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
                     <span class="text-sm text-gray-600 dark:text-gray-400 italic hover:not-italic">{{ object.industry|truncatechars:DEFAULT_TEMPLATE_TABLE_LIST_TRUNCATED_STRING }}</span>
