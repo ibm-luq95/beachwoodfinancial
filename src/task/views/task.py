@@ -6,6 +6,8 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
+from core.constants.users import CON_BOOKKEEPER
+from core.utils import debugging_print
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from task.filters import TaskFilter
 from task.forms import TaskForm
@@ -39,6 +41,14 @@ class TaskListView(
 
     def get_queryset(self):
         queryset = super().get_queryset()
+
+        if self.request.user.user_type == CON_BOOKKEEPER:
+            queryset = (
+                self.request.user.bookkeeper.get_proxy_model().get_all_related_items(
+                    "tasks"
+                )
+            )
+
         self.filterset = TaskFilter(self.request.GET, queryset=queryset)
         return self.filterset.qs
 

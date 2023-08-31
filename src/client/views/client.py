@@ -3,13 +3,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
-from django.views.generic import (
-    CreateView,
-    DeleteView,
-    DetailView,
-    ListView,
-    UpdateView,
-)
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 from client.filters import ClientFilter
 from client.forms import ClientForm, ClientMiniForm
@@ -19,11 +13,10 @@ from core.cache import BWCacheViewMixin
 from core.config.forms import BWFormRenderer
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.status_labels import CON_ENABLED
-from core.views.mixins import (
-    BWBaseListViewMixin,
-    BWLoginRequiredMixin,
-)
+from core.constants.users import CON_BOOKKEEPER
+from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 from document.forms import DocumentForm
+
 # from documents.forms import DocumentForm
 from important_contact.forms import ImportantContactForm
 from job.forms import JobMiniForm
@@ -70,10 +63,8 @@ class ClientListView(
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        # if self.request.user.user_type == "bookkeeper":
-        #     queryset = BookkeeperProxy.objects.get(
-        #         pk=self.request.user.bookkeeper.pk
-        #     ).clients.all()
+        if self.request.user.user_type == CON_BOOKKEEPER:
+            queryset = self.request.user.bookkeeper.get_proxy_model().clients.all()
         self.filterset = ClientFilter(self.request.GET, queryset=queryset)
         return self.filterset.qs
 
@@ -192,7 +183,7 @@ class ClientDetailsView(
             renderer=BWFormRenderer(),
             initial={"client": self.get_object()},
             removed_fields=["task", "job"],
-            hidden_inputs={"field_names": ["client"]}
+            hidden_inputs={"field_names": ["client"]},
         )
         special_assignment_form = MiniSpecialAssignmentForm(
             renderer=BWFormRenderer(),

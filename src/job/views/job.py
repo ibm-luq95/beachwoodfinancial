@@ -8,6 +8,7 @@ from core.cache import BWCacheViewMixin
 from core.choices import JobStatusEnum
 from core.config.forms import BWFormRenderer
 from core.constants import LIST_VIEW_PAGINATE_BY
+from core.constants.users import CON_BOOKKEEPER
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from discussion.forms import DiscussionMiniForm
 from document.forms import DocumentForm
@@ -47,6 +48,8 @@ class JobListView(
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        if self.request.user.user_type == CON_BOOKKEEPER:
+            queryset = self.request.user.bookkeeper.get_proxy_model().get_user_jobs()
         self.filterset = JobFilter(self.request.GET, queryset=queryset)
         return self.filterset.qs
 

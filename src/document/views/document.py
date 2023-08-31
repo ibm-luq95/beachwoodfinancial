@@ -7,6 +7,7 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
+from core.constants.users import CON_BOOKKEEPER
 from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 from document.filters import DocumentFilter
 from document.forms import DocumentForm
@@ -54,10 +55,12 @@ class DocumentListView(
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        # if self.request.user.user_type == "bookkeeper":
-        #     queryset = BookkeeperProxy.objects.get(
-        #         pk=self.request.user.bookkeeper.pk
-        #     ).clients.all()
+        if self.request.user.user_type == CON_BOOKKEEPER:
+            queryset = (
+                self.request.user.bookkeeper.get_proxy_model().get_all_related_items(
+                    "documents"
+                )
+            )
         self.filterset = DocumentFilter(self.request.GET, queryset=queryset)
         return self.filterset.qs
 

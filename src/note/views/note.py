@@ -7,6 +7,7 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
+from core.constants.users import CON_BOOKKEEPER
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from note.filters import NoteFilter
 from note.forms import NoteForm
@@ -40,6 +41,12 @@ class NoteListView(
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        if self.request.user.user_type == CON_BOOKKEEPER:
+            queryset = (
+                self.request.user.bookkeeper.get_proxy_model().get_all_related_items(
+                    "notes"
+                )
+            )
         self.filterset = NoteFilter(self.request.GET, queryset=queryset)
         return self.filterset.qs
 

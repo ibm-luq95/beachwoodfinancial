@@ -7,6 +7,7 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, U
 
 from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
+from core.constants.users import CON_BOOKKEEPER
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from special_assignment.filters import SpecialAssignmentFilter
 from special_assignment.forms import SpecialAssignmentForm
@@ -39,6 +40,10 @@ class SpecialAssignmentListView(
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        if self.request.user.user_type == CON_BOOKKEEPER:
+            queryset = (
+                self.request.user.bookkeeper.get_proxy_model().special_assignments.all()
+            )
         self.filterset = SpecialAssignmentFilter(self.request.GET, queryset=queryset)
         return self.filterset.qs
 
