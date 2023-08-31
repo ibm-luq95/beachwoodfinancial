@@ -1,22 +1,12 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
-from django.views.generic import (
-    CreateView,
-    DeleteView,
-    ListView,
-    UpdateView,
-)
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
-from core.views.mixins import (
-    BWLoginRequiredMixin,
-    BWBaseListViewMixin,
-    BWManagerAccessMixin,
-)
-from note.forms import NoteForm
-from note.models import Note
+from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from task.filters import TaskFilter
 from task.forms import TaskForm
 from task.models import TaskProxy
@@ -24,12 +14,13 @@ from task.models import TaskProxy
 
 class TaskListView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
-    # permission_required = "client.can_view_list"
+    permission_required = ["task.can_view_list"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "task/list.html"
     model = TaskProxy
     paginate_by = LIST_VIEW_PAGINATE_BY
@@ -54,12 +45,13 @@ class TaskListView(
 
 class TaskCreateView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     CreateView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = ["task.add_taskproxy", "task.add_task"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "task/create.html"
     form_class = TaskForm
     success_message = _("Task created successfully")
@@ -76,12 +68,13 @@ class TaskCreateView(
 
 class TaskUpdateView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = ["task.change_taskproxy", "task.change_task"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "task/update.html"
     form_class = TaskForm
     success_message = _("Task updated successfully")
@@ -99,12 +92,14 @@ class TaskUpdateView(
 
 class TaskDeleteView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):
+    permission_required = ["task.delete_taskproxy", "task.delete_task"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "task/delete.html"
     model = TaskProxy
     success_message = _("Task deleted successfully")

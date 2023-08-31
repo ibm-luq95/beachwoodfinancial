@@ -1,36 +1,25 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models import Q
 from django.urls import reverse_lazy
-from django.views.generic import (
-    CreateView,
-    DeleteView,
-    DetailView,
-    ListView,
-    UpdateView,
-    RedirectView,
-    FormView,
-)
 from django.utils.translation import gettext as _
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
-from core.views.mixins import (
-    BWLoginRequiredMixin,
-    BWBaseListViewMixin,
-    BWManagerAccessMixin,
-)
+from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from job_category.forms import JobCategoryForm
 from job_category.models import JobCategory
 
 
 class JobCategoryListView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
-    # permission_required = "client.can_view_list"
+    permission_required = ["job_category.can_view_list"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job_category/list.html"
     model = JobCategory
     paginate_by = LIST_VIEW_PAGINATE_BY
@@ -48,12 +37,13 @@ class JobCategoryListView(
 
 class JobCategoryCreateView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     CreateView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = ["job_category.add_jobcategory"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job_category/create.html"
     form_class = JobCategoryForm
     success_message = _("Job category created successfully")
@@ -70,12 +60,13 @@ class JobCategoryCreateView(
 
 class JobCategoryUpdateView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = ["job_category.change_jobcategory"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job_category/update.html"
     form_class = JobCategoryForm
     success_message = _("Category updated successfully")
@@ -93,12 +84,14 @@ class JobCategoryUpdateView(
 
 class JobCategoryDeleteView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):
+    permission_required = ["job_category.delete_jobcategory"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job_category/delete.html"
     model = JobCategory
     success_message = _("Job category deleted successfully")

@@ -1,23 +1,10 @@
 # -*- coding: utf-8 -*-#
-from typing import Any
-
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.core.exceptions import ImproperlyConfigured
 from django.db import transaction
-from django.http import HttpResponseRedirect
-from django.utils.translation import gettext as _
-
-from django.db.models import Q
 from django.urls import reverse_lazy
-from django.views.generic import (
-    CreateView,
-    DeleteView,
-    DetailView,
-    ListView,
-    UpdateView,
-    RedirectView,
-    FormView,
-)
+from django.utils.translation import gettext as _
+from django.views.generic import DeleteView, DetailView, ListView, FormView
 from django.views.generic.detail import SingleObjectMixin
 
 from beach_wood_user.models import BWUser
@@ -26,23 +13,18 @@ from bookkeeper.forms import BookkeeperForm
 from bookkeeper.models import BookkeeperProxy
 from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
-from core.constants.users import CON_BOOKKEEPER
 from core.utils import debugging_print
-from core.views.mixins import (
-    BWBaseListViewMixin,
-    BWManagerAccessMixin,
-    BWLoginRequiredMixin,
-)
+from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 
 
 class BookkeeperListView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
-    # permission_required = "client.can_view_list"
+    permission_required = ["bookkeeper.can_view_list"]
     template_name = "bookkeeper/list.html"
     model = BookkeeperProxy
     paginate_by = LIST_VIEW_PAGINATE_BY
@@ -69,11 +51,12 @@ class BookkeeperListView(
 class BookkeeperCreateView(
     SuccessMessageMixin,
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     FormView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = ["bookkeeper.add_bookkeeper", "bookkeeper.add_bookkeeperproxy"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "bookkeeper/create.html"
     form_class = BookkeeperForm
     success_message = _("Bookkeeper created successfully")
@@ -108,28 +91,34 @@ class BookkeeperCreateView(
 
 
 class BookkeeperDetailsView(
-    BWLoginRequiredMixin, BWManagerAccessMixin, SuccessMessageMixin, DetailView
+    BWLoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, DetailView
 ):
     template_name = "bookkeeper/details.html"
     model = BookkeeperProxy
+    permission_required = ["bookkeeper.view_bookkeeper", "bookkeeper.view_bookkeeperproxy"]
+    permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         debugging_print(self.get_object())
-        context.setdefault("title", f"{self.object.user.fullname}" + _("Bookkeeper"))
+        context.setdefault("title", f"{self.object.user.fullname} " + _("Bookkeeper"))
         return context
 
 
 class BookkeeperUpdateView(
     SuccessMessageMixin,
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SingleObjectMixin,
     FormView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = [
+        "bookkeeper.change_bookkeeper",
+        "bookkeeper.change_bookkeeperproxy",
+    ]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "bookkeeper/update.html"
     form_class = BookkeeperForm
     # success_message = _("Bookkeeper updated successfully")
@@ -207,9 +196,8 @@ class BookkeeperUpdateView(
 
 class BookkeeperDeleteView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
-    BWBaseListViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):
@@ -217,6 +205,11 @@ class BookkeeperDeleteView(
     model = BookkeeperProxy
     success_message = _("Bookkeeper deleted successfully")
     success_url = reverse_lazy("dashboard:management_bookkeeper:list")
+    permission_denied_message = _("You do not have permission to access this page.")
+    permission_required = [
+        "bookkeeper.delete_bookkeeper",
+        "bookkeeper.delete_bookkeeperproxy",
+    ]
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

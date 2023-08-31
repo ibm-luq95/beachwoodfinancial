@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-#
 from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
@@ -9,23 +10,21 @@ from client_category.filters import ClientCategoryFilter
 from client_category.forms import ClientCategoryForm
 from client_category.models import ClientCategory
 from core.cache import BWCacheViewMixin
-from core.utils import get_trans_txt, debugging_print
-from core.views.mixins import (
-    BWBaseListViewMixin,
-    BWLoginRequiredMixin,
-    BWManagerAccessMixin,
-)
+from core.utils import get_trans_txt
+from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 
 
 class ClientCategoryListViewBW(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
     template_name = "client_category/list.html"
     model = ClientCategory
+    permission_required = ["client_category.can_view_list"]
+    permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -42,7 +41,7 @@ class ClientCategoryListViewBW(
 
 class ClientCategoryCreateView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     CreateView,
@@ -52,6 +51,8 @@ class ClientCategoryCreateView(
     model = ClientCategory
     success_message = _("Category created successfully")
     success_url = reverse_lazy("dashboard:client_category:list")
+    permission_required = ["client_category.add_clientcategory"]
+    permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -63,7 +64,7 @@ class ClientCategoryCreateView(
 
 class ClientCategoryUpdateView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,
@@ -73,6 +74,8 @@ class ClientCategoryUpdateView(
     model = ClientCategory
     success_message = _("Category updated successfully")
     success_url = reverse_lazy("dashboard:client_category:list")
+    permissions_required = ["client_category.change_clientcategory"]
+    permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -84,7 +87,7 @@ class ClientCategoryUpdateView(
 
 class ClientCategoryDeleteView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     DeleteView,
@@ -93,6 +96,8 @@ class ClientCategoryDeleteView(
     model = ClientCategory
     success_message = _("Category deleted successfully")
     success_url = reverse_lazy("dashboard:client_category:list")
+    permissions_required = ["client_category.delete_clientcategory"]
+    permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

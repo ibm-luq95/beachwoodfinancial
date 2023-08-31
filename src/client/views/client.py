@@ -1,20 +1,16 @@
 # -*- coding: utf-8 -*-#
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models import Q
 from django.urls import reverse_lazy
+from django.utils.translation import gettext as _
 from django.views.generic import (
     CreateView,
     DeleteView,
     DetailView,
     ListView,
     UpdateView,
-    RedirectView,
-    FormView,
 )
-from django.utils.translation import gettext as _
 
-from bookkeeper.models import BookkeeperProxy
 from client.filters import ClientFilter
 from client.forms import ClientForm, ClientMiniForm
 from client.models import ClientProxy
@@ -22,20 +18,15 @@ from client_account.forms import ClientAccountForm
 from core.cache import BWCacheViewMixin
 from core.config.forms import BWFormRenderer
 from core.constants import LIST_VIEW_PAGINATE_BY
-from core.constants.status_labels import CON_ARCHIVED, CON_ENABLED
-from core.utils import get_trans_txt, debugging_print
+from core.constants.status_labels import CON_ENABLED
 from core.views.mixins import (
     BWBaseListViewMixin,
     BWLoginRequiredMixin,
-    BWListViewMixin,
-    BWArchiveListViewMixin,
-    BWManagerAccessMixin,
 )
 from document.forms import DocumentForm
-
 # from documents.forms import DocumentForm
-from important_contact.forms import ImportantContactForm, ImportantContactMiniForm
-from job.forms import JobForm, JobMiniForm
+from important_contact.forms import ImportantContactForm
+from job.forms import JobMiniForm
 from note.forms import NoteForm
 from special_assignment.forms import MiniSpecialAssignmentForm
 from task.forms import TaskForm
@@ -50,12 +41,13 @@ from task.forms import TaskForm
 
 class ClientListView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
-    # permission_required = "client.can_view_list"
+    permission_required = ["client.can_view_list"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "client/list.html"
     model = ClientProxy
     # queryset = Client.objects.filter(~Q(status="archive")).prefetch_related("jobs")
@@ -88,12 +80,13 @@ class ClientListView(
 
 class ClientCreateView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     CreateView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = ["client.add_client", "client.add_clientproxy"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "client/create.html"
     form_class = ClientForm
     success_message = _("Client created successfully")
@@ -114,12 +107,13 @@ class ClientCreateView(
 
 class ClientUpdateView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = ["client.change_client", "client.change_clientproxy"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "client/update.html"
     form_class = ClientForm
     success_message = _("Client updated successfully")
@@ -141,14 +135,14 @@ class ClientUpdateView(
 
 class ClientDeleteView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
-    BWBaseListViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):
     template_name = "client/delete.html"
-    # form_class = ClientCategoryForm
+    permission_required = ["client.delete_client", "client.delete_clientproxy"]
+    permission_denied_message = _("You do not have permission to access this page.")
     model = ClientProxy
     success_message = _("Client deleted successfully")
     success_url = reverse_lazy("dashboard:client:list")
@@ -161,11 +155,12 @@ class ClientDeleteView(
 
 
 class ClientDetailsView(
-    BWLoginRequiredMixin, BWManagerAccessMixin, BWCacheViewMixin, DetailView
+    BWLoginRequiredMixin, PermissionRequiredMixin, BWCacheViewMixin, DetailView
 ):
     template_name = "client/details.html"
-    # form_class = ClientCategoryForm
     model = ClientProxy
+    permission_required = ["client.view_client", "client.view_clientproxy"]
+    permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

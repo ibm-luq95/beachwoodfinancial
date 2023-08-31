@@ -1,29 +1,26 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
-from django.views.generic import (
-    UpdateView,
-)
+from django.views.generic import UpdateView
 
 from core.cache import BWCacheViewMixin
 from core.constants.site_settings import APP_CONFIGS_DB_SLUG
-from core.views.mixins import (
-    BWLoginRequiredMixin,
-    BWManagerAccessMixin,
-)
+from core.views.mixins import BWLoginRequiredMixin
 from site_settings.forms import ApplicationConfigurationsForm
 from site_settings.models import ApplicationConfigurations
 
 
 class ApplicationConfigurationsFormView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = "manager.manager_user"
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "site_settings/application_configuration.html"
     form_class = ApplicationConfigurationsForm
     success_message = _("Application configurations updated successfully")

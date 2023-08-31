@@ -1,29 +1,28 @@
 # -*- coding: utf-8 -*-#
 from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import CreateView, UpdateView, ListView, DeleteView
 
 from core.cache import BWCacheViewMixin
+from core.utils import get_trans_txt
+from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 from important_contact.filters import ImportantContactFilter
 from important_contact.forms import ImportantContactForm
 from important_contact.models import ImportantContact
-from core.utils import get_trans_txt, debugging_print
-from core.views.mixins import (
-    BWBaseListViewMixin,
-    BWLoginRequiredMixin,
-    BWManagerAccessMixin,
-)
 
 
 class ImportantContactListViewBW(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
+    permission_required = ["important_contact.can_view_list"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "important_contact/list.html"
     model = ImportantContact
 
@@ -42,12 +41,14 @@ class ImportantContactListViewBW(
 
 class ImportantContactCreateView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     SuccessMessageMixin,
     CreateView,
 ):
+    permission_required = ["important_contact.add_importantcontact"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "important_contact/create.html"
     form_class = ImportantContactForm
     model = ImportantContact
@@ -64,13 +65,14 @@ class ImportantContactCreateView(
 
 class ImportantContactUpdateView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
-    BWBaseListViewMixin,
     SuccessMessageMixin,
     UpdateView,
 ):
     template_name = "important_contact/update.html"
+    permission_required = ["important_contact.change_importantcontact"]
+    permission_denied_message = _("You do not have permission to access this page.")
     form_class = ImportantContactForm
     model = ImportantContact
     success_message = _("Contact updated successfully")
@@ -86,14 +88,14 @@ class ImportantContactUpdateView(
 
 class ImportantContactDeleteView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
-    BWBaseListViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):
     template_name = "important_contact/delete.html"
-    # form_class = ClientCategoryForm
+    permission_required = ["important_contact.delete_importantcontact"]
+    permission_denied_message = _("You do not have permission to access this page.")
     model = ImportantContact
     success_message = _("Contact deleted successfully")
     success_url = reverse_lazy("dashboard:important_contact:list")

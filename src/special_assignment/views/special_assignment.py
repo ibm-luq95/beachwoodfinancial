@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-#
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
@@ -6,11 +7,7 @@ from django.views.generic import CreateView, DeleteView, DetailView, ListView, U
 
 from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
-from core.views.mixins import (
-    BWLoginRequiredMixin,
-    BWBaseListViewMixin,
-    BWManagerAccessMixin,
-)
+from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from special_assignment.filters import SpecialAssignmentFilter
 from special_assignment.forms import SpecialAssignmentForm
 from special_assignment.models import SpecialAssignmentProxy
@@ -18,12 +15,12 @@ from special_assignment.models import SpecialAssignmentProxy
 
 class SpecialAssignmentListView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
-    # permission_required = "client.can_view_list"
+    permission_required = ["special_assignment.can_view_list"]
     template_name = "special_assignment/list.html"
     model = SpecialAssignmentProxy
     paginate_by = LIST_VIEW_PAGINATE_BY
@@ -48,12 +45,15 @@ class SpecialAssignmentListView(
 
 class SpecialAssignmentCreateView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     CreateView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = [
+        "special_assignment.add_specialassignmentproxy",
+        "special_assignment.add_specialassignment",
+    ]
     template_name = "special_assignment/create.html"
     form_class = SpecialAssignmentForm
     success_message = _("Special assignment created successfully")
@@ -76,12 +76,15 @@ class SpecialAssignmentCreateView(
 
 class SpecialAssignmentUpdateView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = [
+        "special_assignment.change_specialassignment",
+        "special_assignment.change_specialassignmentproxy",
+    ]
     template_name = "special_assignment/update.html"
     form_class = SpecialAssignmentForm
     success_message = _("Special assignment updated successfully")
@@ -99,11 +102,15 @@ class SpecialAssignmentUpdateView(
 
 class SpecialAssignmentDeleteView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):
+    permission_required = [
+        "special_assignment.delete_specialassignment",
+        "special_assignment.delete_specialassignmentproxy",
+    ]
     template_name = "special_assignment/delete.html"
     model = SpecialAssignmentProxy
     success_message = _("Special assignment deleted successfully")
@@ -117,10 +124,14 @@ class SpecialAssignmentDeleteView(
 
 
 class SpecialAssignmentDetailsView(
-    BWLoginRequiredMixin, BWManagerAccessMixin, BWCacheViewMixin, DetailView
+    BWLoginRequiredMixin, PermissionRequiredMixin, BWCacheViewMixin, DetailView
 ):
     model = SpecialAssignmentProxy
     template_name = "special_assignment/details.html"
+    permission_required = [
+        "special_assignment.view_specialassignment",
+        "special_assignment.view_specialassignmentproxy",
+    ]
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

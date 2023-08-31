@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-#
 from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
@@ -9,24 +10,21 @@ from client_account.filters import ClientAccountFilter
 from client_account.forms import ClientAccountForm
 from client_account.models import ClientAccount
 from core.cache import BWCacheViewMixin
-
-from core.utils import get_trans_txt, debugging_print
-from core.views.mixins import (
-    BWBaseListViewMixin,
-    BWLoginRequiredMixin,
-    BWManagerAccessMixin,
-)
+from core.utils import get_trans_txt
+from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 
 
 class ClientAccountListViewBW(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
     template_name = "client_account/list.html"
     model = ClientAccount
+    permission_required = ["client_account.can_view_list"]
+    permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -43,7 +41,7 @@ class ClientAccountListViewBW(
 
 class ClientAccountCreateView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     CreateView,
@@ -53,6 +51,8 @@ class ClientAccountCreateView(
     model = ClientAccount
     success_message = _("Contact created successfully")
     success_url = reverse_lazy("dashboard:client_account:list")
+    permission_required = ["client_account.add_clientaccount"]
+    permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -64,7 +64,7 @@ class ClientAccountCreateView(
 
 class ClientAccountUpdateView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,
@@ -74,6 +74,8 @@ class ClientAccountUpdateView(
     model = ClientAccount
     success_message = _("Contact updated successfully")
     success_url = reverse_lazy("dashboard:client_account:list")
+    permission_required = ["client_account.change_clientaccount"]
+    permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -90,7 +92,7 @@ class ClientAccountUpdateView(
 
 class ClientAccountDeleteView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     DeleteView,
@@ -100,6 +102,8 @@ class ClientAccountDeleteView(
     model = ClientAccount
     success_message = _("Contact deleted successfully")
     success_url = reverse_lazy("dashboard:client_account:list")
+    permission_required = ["client_account.delete_clientaccount"]
+    permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

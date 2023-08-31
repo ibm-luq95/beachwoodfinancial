@@ -1,38 +1,27 @@
 # -*- coding: utf-8 -*-#
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models import Q
 from django.urls import reverse_lazy
-from django.views.generic import (
-    CreateView,
-    DeleteView,
-    DetailView,
-    ListView,
-    UpdateView,
-    RedirectView,
-    FormView,
-)
 from django.utils.translation import gettext as _
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
-from core.views.mixins import (
-    BWLoginRequiredMixin,
-    BWBaseListViewMixin,
-    BWManagerAccessMixin,
-)
+from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
+from note.filters import NoteFilter
 from note.forms import NoteForm
 from note.models import Note
-from note.filters import NoteFilter
 
 
 class NoteListView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
-    # permission_required = "client.can_view_list"
+    permission_required = ["note.can_view_list"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "note/list.html"
     model = Note
     paginate_by = LIST_VIEW_PAGINATE_BY
@@ -57,12 +46,13 @@ class NoteListView(
 
 class NoteCreateView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     CreateView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = ["note.add_note"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "note/create.html"
     form_class = NoteForm
     success_message = _("Note created successfully")
@@ -79,12 +69,13 @@ class NoteCreateView(
 
 class NoteUpdateView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = ["note.change_note"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "note/update.html"
     form_class = NoteForm
     success_message = _("Note updated successfully")
@@ -102,14 +93,15 @@ class NoteUpdateView(
 
 class NoteDeleteView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):
     template_name = "note/delete.html"
-    # form_class = ClientCategoryForm
+    permission_required = ["note.delete_note"]
+    permission_denied_message = _("You do not have permission to access this page.")
     model = Note
     success_message = _("Note deleted successfully")
     success_url = reverse_lazy("dashboard:note:list")

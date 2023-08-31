@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-#
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.utils.translation import gettext as _
 
 from django.contrib.messages.views import SuccessMessageMixin
 from django.views.generic import DetailView
@@ -9,19 +11,25 @@ from bookkeeper.forms import BookkeeperForm
 from client.models import ClientProxy
 from core.choices import JobStatusEnum, JobStateEnum
 from core.config.forms import BWFormRenderer
-from core.utils import debugging_print
 from core.utils.developments.utils import get_list_from_text_choices
-from core.views.mixins import BWManagerAccessMixin, BWLoginRequiredMixin
+from core.views.mixins import BWLoginRequiredMixin
 from manager.forms import ManagerForm
 from special_assignment.forms import MiniSpecialAssignmentForm
 
 
 class StaffMemberDetailsView(
-    BWLoginRequiredMixin, BWManagerAccessMixin, SuccessMessageMixin, DetailView
+    BWLoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, DetailView
 ):
     template_name = "beach_wood_user/details.html"
     model = BWUser
     http_method_names = ["get"]
+    permission_required = [
+        "beach_wood_user.view_bwuser",
+        "beach_wood_user.view_profile",
+        "beach_wood_user.developer_user",
+        "assistant.assistant_has_full_manager_permissions",
+    ]
+    permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

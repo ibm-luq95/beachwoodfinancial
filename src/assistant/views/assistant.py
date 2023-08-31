@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-#
 
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db import transaction
 from django.urls import reverse_lazy
@@ -11,27 +12,22 @@ from assistant.filters import AssistantFilter
 from assistant.forms import AssistantForm
 from assistant.models import AssistantProxy
 from beach_wood_user.models import BWUser
-from bookkeeper.models import BookkeeperProxy
 from core.cache import BWCacheViewMixin
 from core.choices import JobStatusEnum, JobStateEnum
 from core.constants import LIST_VIEW_PAGINATE_BY
-from core.utils import debugging_print
 from core.utils.developments.utils import get_list_from_text_choices
-from core.views.mixins import (
-    BWBaseListViewMixin,
-    BWManagerAccessMixin,
-    BWLoginRequiredMixin,
-)
+from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 
 
 class AssistantListView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
-    # permission_required = "client.can_view_list"
+    permission_required = ["assistant.can_view_list"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "assistant/list.html"
     model = AssistantProxy
     paginate_by = LIST_VIEW_PAGINATE_BY
@@ -58,11 +54,12 @@ class AssistantListView(
 class AssistantCreateView(
     SuccessMessageMixin,
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     FormView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = ["assistant.add_assistant", "assistant.add_assistantproxy"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "assistant/create.html"
     form_class = AssistantForm
     success_message = _("Assistant created successfully")
@@ -108,10 +105,12 @@ class AssistantCreateView(
 
 
 class AssistantDetailsView(
-    BWLoginRequiredMixin, BWManagerAccessMixin, SuccessMessageMixin, DetailView
+    BWLoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, DetailView
 ):
     template_name = "assistant/details.html"
     model = AssistantProxy
+    permission_required = ["assistant.change_assistant", "assistant.change_assistantproxy"]
+    permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -127,12 +126,13 @@ class AssistantDetailsView(
 class AssistantUpdateView(
     SuccessMessageMixin,
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SingleObjectMixin,
     FormView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = ["assistant.change_assistant", "assistant.change_assistantproxy"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "assistant/update.html"
     form_class = AssistantForm
     # success_message = _("Bookkeeper updated successfully")
@@ -233,12 +233,14 @@ class AssistantUpdateView(
 
 class AssistantDeleteView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):
+    permission_required = ["assistant.delete_assistant", "assistant.delete_assistantproxy"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "assistant/delete.html"
     model = AssistantProxy
     success_message = _("Assistant deleted successfully")

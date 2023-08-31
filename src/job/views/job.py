@@ -1,48 +1,34 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models import Q
 from django.urls import reverse_lazy
-from django.views.generic import (
-    CreateView,
-    DeleteView,
-    DetailView,
-    ListView,
-    UpdateView,
-    RedirectView,
-    FormView,
-)
 from django.utils.translation import gettext as _
+from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
-from beach_wood_user.models import BWUser
 from core.cache import BWCacheViewMixin
 from core.choices import JobStatusEnum
 from core.config.forms import BWFormRenderer
 from core.constants import LIST_VIEW_PAGINATE_BY
-from core.utils import debugging_print
-from core.views.mixins import (
-    BWLoginRequiredMixin,
-    BWBaseListViewMixin,
-    BWManagerAccessMixin,
-)
-from discussion.forms import DiscussionForm, DiscussionMiniForm
+from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
+from discussion.forms import DiscussionMiniForm
 from document.forms import DocumentForm
 from job.filters import JobFilter
 from job.forms import JobForm
 from job.models import JobProxy
 from note.forms import NoteForm
-from note.models import Note
-from special_assignment.forms import SpecialAssignmentForm, MiniSpecialAssignmentForm
+from special_assignment.forms import MiniSpecialAssignmentForm
 from task.forms import TaskForm
 from task.models import TaskProxy
 
 
 class JobListView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
-    # permission_required = "client.can_view_list"
+    permission_required = ["job.can_view_list"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job/list.html"
     model = JobProxy
     paginate_by = LIST_VIEW_PAGINATE_BY
@@ -67,12 +53,13 @@ class JobListView(
 
 class JobCreateView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     CreateView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = ["job.add_job", "job.add_jobproxy"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job/create.html"
     form_class = JobForm
     success_message = _("Job created successfully")
@@ -89,12 +76,13 @@ class JobCreateView(
 
 class JobDetailsView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     DetailView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = ["job.view_job", "job.view_jobproxy"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job/details.html"
     model = JobProxy
 
@@ -157,12 +145,13 @@ class JobDetailsView(
 
 class JobUpdateView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = ["job.change_job", "job.change_jobproxy"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job/update.html"
     form_class = JobForm
     success_message = _("Job updated successfully")
@@ -180,14 +169,15 @@ class JobUpdateView(
 
 class JobDeleteView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):
     template_name = "job/delete.html"
-    # form_class = ClientCategoryForm
+    permission_required = ["job.delete_job", "job.delete_jobproxy"]
+    permission_denied_message = _("You do not have permission to access this page.")
     model = TaskProxy
     success_message = _("Job deleted successfully")
     success_url = reverse_lazy("dashboard:job:list")
