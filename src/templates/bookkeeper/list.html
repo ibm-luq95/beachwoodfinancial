@@ -8,8 +8,15 @@
     {% include "components/inc/dashboard/content_header.html" with title="Bookkeepers" subtitle="" %}
 
     {# End Page Heading #}
-    <!-- Table Section -->
-    {% include "bw_components/bookkeeper/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Bookkeepers" header_subtitle="" is_show_create_btn=True app_label=app_label page_obj=page_obj pagination_list_url_name="dashboard:management_bookkeeper:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete,details" actions_app_name=app_label actions_base_url="dashboard:management_bookkeeper" base_url_name="dashboard:management_bookkeeper" filter_form=filter_form filter_cancel_url="dashboard:management_bookkeeper:list" object_list=page_obj is_header_enabled=True is_footer_enabled=True %}
+    {% if object_list %}
+        <!-- Table Section -->
 
-    <!-- End Table Section -->
+        {% include "bw_components/bookkeeper/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Bookkeepers" header_subtitle="" is_show_create_btn=True app_label=app_label page_obj=page_obj pagination_list_url_name="dashboard:management_bookkeeper:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete,details" actions_app_name=app_label actions_base_url="dashboard:management_bookkeeper" base_url_name="dashboard:management_bookkeeper" filter_form=filter_form filter_cancel_url="dashboard:management_bookkeeper:list" object_list=page_obj is_header_enabled=True is_footer_enabled=True %}
+
+        <!-- End Table Section -->
+    {% else %}
+
+        {% include "bw_ui_components/global/empty_card.html" with label="bookkeepers" %}
+
+    {% endif %}
 {% endblock dashboard_content_block %}

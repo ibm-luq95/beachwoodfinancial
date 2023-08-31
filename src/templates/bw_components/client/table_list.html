@@ -164,7 +164,7 @@
                 <div class="px-6 py-3">
                     <div class="scrollable-wrapper">
                         {% for bookkeeper in object.bookkeepers.all %}
-                            {% if request.user.user_type == "bookkeeper" %}
+                            {% if request.user.user_type == CON_BOOKKEEPER %}
                                 <a href="" class="disabledAnchorElement text-sm">{{ bookkeeper }}</a>
                             {% else %}
                                 <a href="{% url 'dashboard:management_bookkeeper:details' bookkeeper.pk %}"
