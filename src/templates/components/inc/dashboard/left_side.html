@@ -45,7 +45,7 @@
      class="hs-overlay hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform hidden fixed top-0 left-0 bottom-0 z-[60] w-64 bg-gray-900 border-r border-gray-800 pt-7 pb-10 overflow-y-auto scrollbar-y lg:block lg:translate-x-0 lg:right-auto lg:bottom-0">
     <div class="px-6">
         <a class="flex-none text-xl font-semibold text-white"
-           href="{% if request.user.user_type == 'manager' or request.user.user_type == 'assistant' %} {% url 'dashboard:manager:home' %} {% elif request.user.user_type == 'bookkeeper' %} {% url 'dashboard:bookkeeper:home' %} {% endif %}"
+           href="{% if request.user.user_type == CON_MANAGER or request.user.user_type == CON_ASSISTANT %} {% url 'dashboard:manager:home' %} {% elif request.user.user_type == CON_BOOKKEEPER %} {% url 'dashboard:bookkeeper:home' %} {% endif %}"
            aria-label="Brand">
             <img src="{% if get_web_app_settings.logo %} {{ get_web_app_settings.logo }} {% endif %}"
                  alt="{{ get_web_app_settings.name }}" />
@@ -56,7 +56,7 @@
         <ul class="space-y-1.5">
             <li>
                 <a class="flex items-center gap-x-3 py-2 px-2.5 bg-gray-700 text-sm text-white rounded-md"
-                   href="{% if request.user.user_type == 'manager' or request.user.user_type == 'assistant' %} {% url 'dashboard:manager:home' %} {% elif request.user.user_type == 'bookkeeper' %} {% url 'dashboard:bookkeeper:home' %} {% endif %}">
+                   href="{% if request.user.user_type == CON_MANAGER or request.user.user_type == CON_ASSISTANT %} {% url 'dashboard:manager:home' %} {% elif request.user.user_type == CON_BOOKKEEPER %} {% url 'dashboard:bookkeeper:home' %} {% endif %}">
                     <svg class="w-3.5 h-3.5"
                          xmlns="http://www.w3.org/2000/svg"
                          width="16"

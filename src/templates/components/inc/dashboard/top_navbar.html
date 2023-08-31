@@ -12,7 +12,7 @@
          aria-label="Global">
         <div class="mr-5 lg:mr-0 lg:hidden">
             <a class="flex-none text-xl font-semibold dark:text-white"
-               href="{% if request.user.user_type == 'manager' or request.user.user_type == 'assistant' %} {% url 'dashboard:manager:home' %} {% elif request.user.user_type == 'bookkeeper' %} {% url 'dashboard:bookkeeper:home' %} {% endif %}"
+               href="{% if request.user.user_type == CON_MANAGER or request.user.user_type == CON_ASSISTANT %} {% url 'dashboard:manager:home' %} {% elif request.user.user_type == CON_BOOKKEEPER %} {% url 'dashboard:bookkeeper:home' %} {% endif %}"
                aria-label="{{ get_web_app_settings.name }}">{{ get_web_app_settings.name }}</a>
         </div>
         <div class="flex items-center justify-end w-full ml-auto sm:justify-between sm:gap-x-3 sm:order-3">
@@ -55,7 +55,8 @@
                     <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden min-w-[15rem] bg-white shadow-md rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700"
                          aria-labelledby="hs-dropdown-with-header">
                         <div class="px-5 py-3 -m-2 bg-gray-100 rounded-t-lg dark:bg-gray-700">
-                            <p class="text-sm text-gray-500 dark:text-gray-400">{% translate "Signed in as" %}</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400">{% translate "Signed in as:" %}</p>
+                            <p class="text-sm text-gray-500 dark:text-gray-400 italic">{{ request.user.fullname }}</p>
                             <p class="text-sm font-medium text-gray-800 dark:text-gray-300">{{ request.user.email|safe }}</p>
                         </div>
                         <div class="py-2 mt-2 first:pt-0 last:pb-0">

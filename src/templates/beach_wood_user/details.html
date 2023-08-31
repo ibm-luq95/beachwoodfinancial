@@ -41,7 +41,7 @@
                                                   role="tooltip">{% translate "Active" %}</span>
                                         </button>
                                     </div>
-                                    {% if object.user_type == "assistant" or object.user_type == "manager" %}
+                                    {% if object.user_type == CON_ASSISTANT or object.user_type == CON_MANAGER %}
                                         {% if object.is_superuser is True or object|bw_has_perm:'assistant.assistant_has_full_manager_permissions' is True %}
                                             <div class="hs-tooltip inline-block mx-1">
                                                 <button type="button" class="hs-tooltip-toggle">
@@ -60,7 +60,7 @@
                                 {# End Is active and is has manager permissions #}
                             </h3>
                             {# Start Assistant Type #}
-                            {% if object.user_type == "assistant" %}
+                            {% if object.user_type == CON_ASSISTANT %}
                                 <p class="text-xs uppercase text-gray-500">
                                     <div class="hs-tooltip inline-block">
                                         <div class="hs-tooltip-toggle text-xs uppercase text-gray-500">
@@ -237,13 +237,13 @@
                 <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400 mt-1">
                     {# Start Grid #}
                     <div class="grid
-                                {% if object.user_type == "bookkeeper" %}
+                                {% if object.user_type == CON_BOOKKEEPER %}
                                     sm:grid-cols-2 lg:grid-cols-2
                                 {% else %}
                                     sm:grid-cols-1 lg:grid-cols-1
                                 {% endif %}
                                 gap-1 sm:gap-1">
-                        {% if object.user_type == "bookkeeper" %}
+                        {% if object.user_type == CON_BOOKKEEPER %}
                             <!-- Card -->
                             <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
                                 <div class="py-4 md:py-5 px-3">
@@ -277,13 +277,13 @@
                     {# End Grid #}
                     {# Start Grid #}
                     <div class="grid
-                                {% if object.user_type == "bookkeeper" %}
+                                {% if object.user_type == CON_BOOKKEEPER %}
                                     sm:grid-cols-2 lg:grid-cols-2
                                 {% else %}
                                     sm:grid-cols-1 lg:grid-cols-1
                                 {% endif %}
                                 gap-1 sm:gap-1 mt-1">
-                        {% if object.user_type == "bookkeeper" %}
+                        {% if object.user_type == CON_BOOKKEEPER %}
                             <!-- Card -->
                             <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
                                 <div class="py-4 md:py-5 px-3">
@@ -319,7 +319,7 @@
             <div class="col-span-3">
                 <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
                     <div class="grid grid-flow-row-dense lg:grid-cols-2 md:grid-cols-1 grid-rows-1 gap-2">
-                        {% if object.user_type == "bookkeeper" %}
+                        {% if object.user_type == CON_BOOKKEEPER %}
                             <div>
                                 <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
                                     <div class="p-4 md:p-5">
@@ -496,7 +496,7 @@
                                         data-hs-tab="#user-permissions-tab"
                                         aria-controls="user-permissions-tab"
                                         role="tab">{% translate "Permissions" %}</button>
-                                {% if object.user_type == "bookkeeper" %}
+                                {% if object.user_type == CON_BOOKKEEPER %}
                                     <button type="button"
                                             class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400"
                                             id="bar-with-underline-item-1"
@@ -504,7 +504,7 @@
                                             aria-controls="clients-tab"
                                             role="tab">{% translate "Clients" %}</button>
                                 {% endif %}
-                                {% if object.user_type == "bookkeeper" %}
+                                {% if object.user_type == CON_BOOKKEEPER %}
                                     <button type="button"
                                             class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400"
                                             id="bar-with-underline-item-2"
@@ -518,7 +518,7 @@
                                         data-hs-tab="#assignments-tab"
                                         aria-controls="assignments-tab"
                                         role="tab">{% translate "Assignments" %}</button>
-                                {% if object.user_type == "bookkeeper" %}
+                                {% if object.user_type == CON_BOOKKEEPER %}
                                     <button type="button"
                                             class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400"
                                             id="bar-with-underline-item-4"
@@ -547,7 +547,7 @@
                                     </section>
                                 </div>
                                 {# End Permissions Tab #}
-                                {% if object.user_type == "bookkeeper" %}
+                                {% if object.user_type == CON_BOOKKEEPER %}
                                     <div id="clients-tab"
                                          role="tabpanel"
                                          class="hidden"
@@ -569,7 +569,7 @@
                                         {% endif %}
                                     </div>
                                 {% endif %}
-                                {% if object.user_type == "bookkeeper" %}
+                                {% if object.user_type == CON_BOOKKEEPER %}
                                     <div id="jobs-tab"
                                          class="hidden"
                                          role="tabpanel"
@@ -606,7 +606,7 @@
                                     <!-- End Card -->
                                     <!-- End Table Section -->
                                 </div>
-                                {% if object.user_type == "bookkeeper" %}
+                                {% if object.user_type == CON_BOOKKEEPER %}
                                     <div id="add-clients-tab"
                                          class="hidden"
                                          role="tabpanel"
