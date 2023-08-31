@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-#
 import traceback
 
-from core.constants.status_labels import CON_PAST_DUE
+from core.constants.status_labels import CON_PAST_DUE, CON_STALLED, CON_NEED_INFO
 from core.models.querysets import BaseQuerySetMixin
 from bookkeeper.models import Bookkeeper
 from core.utils import BeachWoodFinancialError, get_formatted_logger, debugging_print
+from django.db.models import Q
 
 logger = get_formatted_logger()
 
@@ -77,6 +78,12 @@ class BookkeeperProxy(Bookkeeper):
     def get_past_due_jobs(self) -> BaseQuerySetMixin | None:
         if hasattr(self.user, "jobs"):
             return self.user.jobs.filter(status=CON_PAST_DUE)
+        else:
+            return None
+
+    def get_stats_jobs(self) -> BaseQuerySetMixin | None:
+        if hasattr(self.user, "jobs"):
+            return self.user.jobs.filter(Q(state=CON_STALLED) | Q(state=CON_NEED_INFO))
         else:
             return None
 
