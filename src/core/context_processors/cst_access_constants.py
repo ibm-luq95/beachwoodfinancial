@@ -23,6 +23,7 @@ from core.constants.status_labels import (
     CON_STALLED,
     CON_ONGOING,
 )
+from core.constants.users import CON_BOOKKEEPER, CON_ASSISTANT, CON_MANAGER
 
 
 def access_constants(request) -> dict:
@@ -47,6 +48,9 @@ def access_constants(request) -> dict:
         "CON_STALLED": CON_STALLED,
         "CON_ONGOING": CON_ONGOING,
         "IS_SHOW_CREATED_AT": IS_SHOW_CREATED_AT,
+        "CON_BOOKKEEPER": CON_BOOKKEEPER,
+        "CON_ASSISTANT": CON_ASSISTANT,
+        "CON_MANAGER": CON_MANAGER,
         "DEFAULT_TEMPLATE_TABLE_LIST_TRUNCATED_STRING": (
             DEFAULT_TEMPLATE_TABLE_LIST_TRUNCATED_STRING
         ),
