@@ -5,7 +5,7 @@ from django.db import models
 from django.utils.translation import gettext as _
 
 from client.models import ClientProxy
-from core.choices import DocumentTypesEnum
+from core.choices import DocumentSectionEnum
 from core.models.mixins import BaseModelMixin, GeneralStatusFieldMixin, StrModelMixin
 from job.models import JobProxy
 from task.models import TaskProxy
@@ -25,8 +25,9 @@ class Document(BaseModelMixin, GeneralStatusFieldMixin, StrModelMixin):
         max_length=15,
         null=True,
         blank=True,
-        choices=DocumentTypesEnum.choices,
+        choices=DocumentSectionEnum.choices,
         db_index=True,
+        editable=False,
     )
     document_file = models.FileField(
         _("document file"), upload_to=saved_document_file_path
@@ -53,6 +54,15 @@ class Document(BaseModelMixin, GeneralStatusFieldMixin, StrModelMixin):
         blank=True,
         related_name="documents",
     )
+
+    def save(self, *args, **kwargs):
+        if self.job:
+            self.document_section = DocumentSectionEnum.JOB
+        elif self.task:
+            self.document_section = DocumentSectionEnum.TASK
+        elif self.client:
+            self.document_section = DocumentSectionEnum.CLIENT
+        super().save(*args, **kwargs)
 
     # def delete(self, *args, **kwargs):
     #     self.document_file.storage.delete(self.document_file.name)
