@@ -64,17 +64,17 @@ class JobForm(BWJSModalFormRendererMixin, BaseModelFormMixin, JoditFormMixin):
 
         self.is_update = is_updated
 
-    def clean_due_date(self):
-        data = self.cleaned_data["due_date"]
-        now = timezone.now().date()
-
-        if self.is_update is False:
-            if data < now:
-                raise ValidationError(_("Due date not valid!"), code="invalid")
-
-        # Always return a value to use as the new cleaned data, even if
-        # this method didn't change it.
-        return data
+    # def clean_due_date(self):
+    #     data = self.cleaned_data["due_date"]
+    #     now = timezone.now().date()
+    #
+    #     if self.is_update is False:
+    #         if data < now:
+    #             raise ValidationError(_("Due date not valid!"), code="invalid")
+    #
+    #     # Always return a value to use as the new cleaned data, even if
+    #     # this method didn't change it.
+    #     return data
 
     def save(self, commit=True):
         # Save the provided password in hashed format
