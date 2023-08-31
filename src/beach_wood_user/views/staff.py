@@ -1,17 +1,15 @@
 # -*- coding: utf-8 -*-#
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.utils.translation import gettext as _
-
 from django.contrib.messages.views import SuccessMessageMixin
+from django.utils.translation import gettext as _
 from django.views.generic import DetailView
 
 from assistant.forms import AssistantForm
+from beach_wood_user.forms import BWPermissionsForm
 from beach_wood_user.models import BWUser
 from bookkeeper.forms import BookkeeperForm
 from client.models import ClientProxy
-from core.choices import JobStatusEnum, JobStateEnum
 from core.config.forms import BWFormRenderer
-from core.utils.developments.utils import get_list_from_text_choices
 from core.views.mixins import BWLoginRequiredMixin
 from manager.forms import ManagerForm
 from special_assignment.forms import MiniSpecialAssignmentForm
@@ -37,9 +35,8 @@ class StaffMemberDetailsView(
         context.setdefault(
             "title", f"{self.object.fullname} - " + self.object.user_type.title()
         )
-        stats_list = get_list_from_text_choices(JobStateEnum)
-        status_list = get_list_from_text_choices(JobStatusEnum)
         clients = ClientProxy.objects.all()
+        permissions_form = BWPermissionsForm(staff_user=self.get_object())
         special_assignment_form = MiniSpecialAssignmentForm(
             renderer=BWFormRenderer(),
             initial={"assigned_by": self.request.user.pk, "client": self.get_object().pk},
@@ -61,9 +58,8 @@ class StaffMemberDetailsView(
             staff_form = ManagerForm(
                 initial=staff_form_initial, removed_fields=removed_fields
             )
-        context.setdefault("stats_list", stats_list)
-        context.setdefault("status_list", status_list)
         context.setdefault("clients", clients)
         context.setdefault("special_assignment_form", special_assignment_form)
         context.setdefault("staff_form", staff_form)
+        context.setdefault("permissions_form", permissions_form)
         return context
