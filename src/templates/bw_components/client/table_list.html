@@ -54,18 +54,17 @@
             </div>
         </th>
         {% if is_show_bookkeeper is True %}
-        <th scope="col" class="px-6 py-3 text-left">
-            <div class="flex items-center gap-x-2">
-                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "Managed By" %}
-                </span>
+            <th scope="col" class="px-6 py-3 text-left">
+                <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                        {% translate "Managed By" %}
+                    </span>
 
-                {% include "bw_components/global/table_list/sort_icon.html" %}
+                    {% include "bw_components/global/table_list/sort_icon.html" %}
 
-            </div>
-        </th>
+                </div>
+            </th>
         {% endif %}
-        
         <th scope="col" class="px-6 py-3 text-left">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
@@ -158,34 +157,32 @@
                     {% endif %}
                 </div>
             </td>
-            
             {% if is_show_bookkeeper is True %}
-            <td class="h-px w-px whitespace-nowrap">
-                <div class="px-6 py-3">
-                    <div class="scrollable-wrapper">
-                        {% for bookkeeper in object.bookkeepers.all %}
-                            {% if request.user.user_type == CON_BOOKKEEPER %}
-                                <a href="" class="disabledAnchorElement text-sm">{{ bookkeeper }}</a>
-                            {% else %}
-                                <a href="{% url 'dashboard:management_bookkeeper:details' bookkeeper.pk %}"
-                                   class="text-sm {{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }}">{{ bookkeeper }}</a>
-                            {% endif %}
-                            <br />
-                        {% empty %}
-                            {% translate "No Bookkeepers" %}
-                            {% comment  %}
+                <td class="h-px w-px whitespace-nowrap">
+                    <div class="px-6 py-3">
+                        <div class="scrollable-wrapper">
+                            {% for bookkeeper in object.bookkeepers.all %}
+                                {% if request.user.user_type == CON_BOOKKEEPER %}
+                                    <a href="javascript:;" class="disabledAnchorElement text-sm">{{ bookkeeper }}</a>
+                                {% else %}
+                                    <a href="{% url 'dashboard:staff:member-details' bookkeeper.user.pk %}"
+                                       class="text-sm {{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }}">{{ bookkeeper }}</a>
+                                {% endif %}
+                                <br />
+                            {% empty %}
+                                {% translate "No Bookkeepers" %}
+                                {% comment  %}
                     {# {% fetch_user_details_url base_user=user_type user_object=bookkeeper.user %} #}
                         {% translate "No staff member for this client" as red_text %}
                         {% include "components/core/red_text.html" with text=red_text %}
 
 
-                            {% endcomment %}
-                        {% endfor %}
+                                {% endcomment %}
+                            {% endfor %}
+                        </div>
                     </div>
-                </div>
-            </td>
+                </td>
             {% endif %}
-                
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
                     <span class="text-sm text-gray-600 dark:text-gray-400 italic hover:not-italic">{{ object.industry|truncatechars:DEFAULT_TEMPLATE_TABLE_LIST_TRUNCATED_STRING }}</span>
