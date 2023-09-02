@@ -169,7 +169,7 @@ class ClientDetailsView(
         document_form = DocumentForm(
             initial={"client": self.get_object(), "document_section": "client"},
             renderer=BWFormRenderer(),
-            removed_fields=["task", "status", "job", "document_section"],
+            removed_fields=["task", "status", "job"],
             hidden_inputs={"field_names": ["client"]},
         )
         note_form = NoteForm(

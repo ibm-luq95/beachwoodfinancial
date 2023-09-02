@@ -111,7 +111,7 @@ class JobDetailsView(
         document_form = DocumentForm(
             initial={"job": self.get_object(), "document_section": "job"},
             renderer=BWFormRenderer(),
-            removed_fields=["client", "task", "status", "job", "document_section"],
+            removed_fields=["client", "task", "status", "job"],
         )
         note_form = NoteForm(
             renderer=BWFormRenderer(),
