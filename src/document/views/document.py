@@ -14,19 +14,9 @@ from document.forms import DocumentForm
 from document.models import Document
 
 
-# from documents.forms import DocumentForm
-
-
-# from jobs.forms import JobForm
-# from manager.views.mixins import BWManagerAccessMixin, ManagerAssistantAccessMixin
-# from notes.forms import NoteForm
-# from special_assignment.forms import SpecialAssignmentForm
-# from task.forms import TaskForm
-
-
 class DocumentListView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
@@ -66,8 +56,8 @@ class DocumentListView(
 
 
 class DocumentCreateView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     CreateView,
@@ -98,8 +88,8 @@ class DocumentCreateView(
 
 
 class DocumentUpdateView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,
@@ -134,8 +124,8 @@ class DocumentUpdateView(
 
 
 class DocumentDeleteView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     DeleteView,

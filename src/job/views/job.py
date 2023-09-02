@@ -22,8 +22,8 @@ from task.models import TaskProxy
 
 
 class JobListView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
@@ -55,8 +55,8 @@ class JobListView(
 
 
 class JobCreateView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     CreateView,
@@ -78,8 +78,8 @@ class JobCreateView(
 
 
 class JobDetailsView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     DetailView,
@@ -147,8 +147,8 @@ class JobDetailsView(
 
 
 class JobUpdateView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,
@@ -171,8 +171,8 @@ class JobUpdateView(
 
 
 class JobDeleteView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     SuccessMessageMixin,

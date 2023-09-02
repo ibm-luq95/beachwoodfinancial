@@ -15,8 +15,8 @@ from important_contact.models import ImportantContact
 
 
 class ImportantContactListViewBW(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
@@ -40,8 +40,8 @@ class ImportantContactListViewBW(
 
 
 class ImportantContactCreateView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     SuccessMessageMixin,
@@ -64,8 +64,8 @@ class ImportantContactCreateView(
 
 
 class ImportantContactUpdateView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,
@@ -87,8 +87,8 @@ class ImportantContactUpdateView(
 
 
 class ImportantContactDeleteView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     DeleteView,

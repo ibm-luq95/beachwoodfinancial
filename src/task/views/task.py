@@ -7,7 +7,6 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.users import CON_BOOKKEEPER
-from core.utils import debugging_print
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from task.filters import TaskFilter
 from task.forms import TaskForm
@@ -15,8 +14,8 @@ from task.models import TaskProxy
 
 
 class TaskListView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
@@ -54,8 +53,8 @@ class TaskListView(
 
 
 class TaskCreateView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     CreateView,
@@ -77,8 +76,8 @@ class TaskCreateView(
 
 
 class TaskUpdateView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,
@@ -101,8 +100,8 @@ class TaskUpdateView(
 
 
 class TaskDeleteView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     SuccessMessageMixin,

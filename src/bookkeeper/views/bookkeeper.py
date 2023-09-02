@@ -18,8 +18,8 @@ from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 
 
 class BookkeeperListView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
@@ -49,9 +49,9 @@ class BookkeeperListView(
 
 
 class BookkeeperCreateView(
+    PermissionRequiredMixin,
     SuccessMessageMixin,
     BWLoginRequiredMixin,
-    PermissionRequiredMixin,
     BWCacheViewMixin,
     FormView,
 ):
@@ -90,26 +90,10 @@ class BookkeeperCreateView(
     #     return {"user_type": CON_BOOKKEEPER}
 
 
-class BookkeeperDetailsView(
-    BWLoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, DetailView
-):
-    template_name = "bookkeeper/details.html"
-    model = BookkeeperProxy
-    permission_required = ["bookkeeper.view_bookkeeper", "bookkeeper.view_bookkeeperproxy"]
-    permission_denied_message = _("You do not have permission to access this page.")
-
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
-        debugging_print(self.get_object())
-        context.setdefault("title", f"{self.object.user.fullname} " + _("Bookkeeper"))
-        return context
-
-
 class BookkeeperUpdateView(
-    SuccessMessageMixin,
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
+    SuccessMessageMixin,
     BWCacheViewMixin,
     SingleObjectMixin,
     FormView,
@@ -195,8 +179,8 @@ class BookkeeperUpdateView(
 
 
 class BookkeeperDeleteView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     DeleteView,

@@ -16,7 +16,7 @@ from special_assignment.forms import MiniSpecialAssignmentForm
 
 
 class StaffMemberDetailsView(
-    BWLoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, DetailView
+    PermissionRequiredMixin, BWLoginRequiredMixin, SuccessMessageMixin, DetailView
 ):
     template_name = "beach_wood_user/details.html"
     model = BWUser

@@ -5,7 +5,6 @@ from bookkeeper.views import (
     BookkeeperListView,
     BookkeeperCreateView,
     BookkeeperDeleteView,
-    BookkeeperDetailsView,
     BookkeeperUpdateView,
 )
 
@@ -16,5 +15,5 @@ urlpatterns = [
     path("create", BookkeeperCreateView.as_view(), name="create"),
     path("update/<uuid:pk>", BookkeeperUpdateView.as_view(), name="update"),
     path("delete/<uuid:pk>", BookkeeperDeleteView.as_view(), name="delete"),
-    path("<uuid:pk>", BookkeeperDetailsView.as_view(), name="details"),
+    # path("<uuid:pk>", BookkeeperDetailsView.as_view(), name="details"),
 ]

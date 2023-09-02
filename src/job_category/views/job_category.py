@@ -12,8 +12,8 @@ from job_category.models import JobCategory
 
 
 class JobCategoryListView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
@@ -36,8 +36,8 @@ class JobCategoryListView(
 
 
 class JobCategoryCreateView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     CreateView,
@@ -59,8 +59,8 @@ class JobCategoryCreateView(
 
 
 class JobCategoryUpdateView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,
@@ -83,10 +83,9 @@ class JobCategoryUpdateView(
 
 
 class JobCategoryDeleteView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
-    BWBaseListViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):

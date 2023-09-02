@@ -15,8 +15,8 @@ from special_assignment.models import SpecialAssignmentProxy
 
 
 class SpecialAssignmentListView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
@@ -49,8 +49,8 @@ class SpecialAssignmentListView(
 
 
 class SpecialAssignmentCreateView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     CreateView,
@@ -80,8 +80,8 @@ class SpecialAssignmentCreateView(
 
 
 class SpecialAssignmentUpdateView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,
@@ -106,8 +106,8 @@ class SpecialAssignmentUpdateView(
 
 
 class SpecialAssignmentDeleteView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     DeleteView,
@@ -129,7 +129,7 @@ class SpecialAssignmentDeleteView(
 
 
 class SpecialAssignmentDetailsView(
-    BWLoginRequiredMixin, PermissionRequiredMixin, BWCacheViewMixin, DetailView
+    PermissionRequiredMixin, BWLoginRequiredMixin, BWCacheViewMixin, DetailView
 ):
     model = SpecialAssignmentProxy
     template_name = "special_assignment/details.html"

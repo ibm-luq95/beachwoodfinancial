@@ -25,16 +25,9 @@ from special_assignment.forms import MiniSpecialAssignmentForm
 from task.forms import TaskForm
 
 
-# from jobs.forms import JobForm
-# from manager.views.mixins import BWManagerAccessMixin, ManagerAssistantAccessMixin
-# from notes.forms import NoteForm
-# from special_assignment.forms import SpecialAssignmentForm
-# from task.forms import TaskForm
-
-
 class ClientListView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
@@ -70,8 +63,8 @@ class ClientListView(
 
 
 class ClientCreateView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     CreateView,
@@ -97,8 +90,8 @@ class ClientCreateView(
 
 
 class ClientUpdateView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,
@@ -125,8 +118,8 @@ class ClientUpdateView(
 
 
 class ClientDeleteView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     DeleteView,
@@ -146,7 +139,7 @@ class ClientDeleteView(
 
 
 class ClientDetailsView(
-    BWLoginRequiredMixin, PermissionRequiredMixin, BWCacheViewMixin, DetailView
+    PermissionRequiredMixin, BWLoginRequiredMixin, BWCacheViewMixin, DetailView
 ):
     template_name = "client/details.html"
     model = ClientProxy

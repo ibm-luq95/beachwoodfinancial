@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-#
 from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.db import transaction
 from django.db.models import Q
@@ -32,13 +33,13 @@ from manager.models import ManagerProxy
 
 
 class ManagerListView(
+    PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
-    # permission_required =
+    permission_required = ["manager.can_view_list", "manager.manager_user"]
     template_name = "manager/list.html"
     model = ManagerProxy
     paginate_by = LIST_VIEW_PAGINATE_BY
@@ -63,13 +64,18 @@ class ManagerListView(
 
 
 class ManagerCreateView(
+    PermissionRequiredMixin,
     BWLoginRequiredMixin,
     BWManagerAccessMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     FormView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = [
+        "manager.add_managerproxy",
+        "manager.add_manager",
+        "manager.manager_user",
+    ]
     template_name = "manager/create.html"
     form_class = ManagerForm
     success_message = _("Manager created successfully")
@@ -119,14 +125,18 @@ class ManagerCreateView(
 
 
 class ManagerUpdateView(
-    SuccessMessageMixin,
+    PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    SuccessMessageMixin,
     BWCacheViewMixin,
     SingleObjectMixin,
     FormView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = [
+        "manager.change_managerproxy",
+        "manager.change_manager",
+        "manager.manager_user",
+    ]
     template_name = "manager/update.html"
     form_class = ManagerForm
     success_message = _("Manager updated successfully")
@@ -227,30 +237,37 @@ class ManagerUpdateView(
         return queryset.get(pk=self.kwargs["pk"])
 
 
-class ManagerDetailsView(
-    BWLoginRequiredMixin, BWManagerAccessMixin, SuccessMessageMixin, DetailView
-):
-    template_name = "manager/details.html"
-    model = ManagerProxy
-
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
-        # context.setdefault("title", f"{self.object.user.fullname} " + _("Manager"))
-        stats_list = get_list_from_text_choices(JobStateEnum)
-        status_list = get_list_from_text_choices(JobStatusEnum)
-        context.setdefault("stats_list", stats_list)
-        context.setdefault("status_list", status_list)
-        return context
+# class ManagerDetailsView(
+#     PermissionRequiredMixin, BWLoginRequiredMixin, SuccessMessageMixin, DetailView
+# ):
+#     template_name = "manager/details.html"
+#     model = ManagerProxy
+#     permission_required = []
+#
+#     def get_context_data(self, **kwargs):
+#         # Call the base implementation first to get a context
+#         context = super().get_context_data(**kwargs)
+#         # context.setdefault("title", f"{self.object.user.fullname} " + _("Manager"))
+#         stats_list = get_list_from_text_choices(JobStateEnum)
+#         status_list = get_list_from_text_choices(JobStatusEnum)
+#         context.setdefault("stats_list", stats_list)
+#         context.setdefault("status_list", status_list)
+#         return context
 
 
 class ManagerDeleteView(
+    PermissionRequiredMixin,
     BWLoginRequiredMixin,
     BWManagerAccessMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):
+    permission_required = [
+        "manager.delete_manager",
+        "manager.delete_managerproxy",
+        "manager.manager_user",
+    ]
     template_name = "manager/delete.html"
     model = ManagerProxy
     success_message = _("Manager deleted successfully")

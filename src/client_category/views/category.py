@@ -15,8 +15,8 @@ from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 
 
 class ClientCategoryListViewBW(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
@@ -40,8 +40,8 @@ class ClientCategoryListViewBW(
 
 
 class ClientCategoryCreateView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     CreateView,
@@ -63,8 +63,8 @@ class ClientCategoryCreateView(
 
 
 class ClientCategoryUpdateView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,
@@ -74,7 +74,7 @@ class ClientCategoryUpdateView(
     model = ClientCategory
     success_message = _("Category updated successfully")
     success_url = reverse_lazy("dashboard:client_category:list")
-    permissions_required = ["client_category.change_clientcategory"]
+    permission_required = ["client_category.change_clientcategory"]
     permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):
@@ -86,18 +86,18 @@ class ClientCategoryUpdateView(
 
 
 class ClientCategoryDeleteView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):
+    permission_required = ["client_category.delete_clientcategory"]
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "client_category/delete.html"
     model = ClientCategory
     success_message = _("Category deleted successfully")
     success_url = reverse_lazy("dashboard:client_category:list")
-    permissions_required = ["client_category.delete_clientcategory"]
-    permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

@@ -20,8 +20,8 @@ from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 
 
 class AssistantListView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
@@ -52,9 +52,9 @@ class AssistantListView(
 
 
 class AssistantCreateView(
+    PermissionRequiredMixin,
     SuccessMessageMixin,
     BWLoginRequiredMixin,
-    PermissionRequiredMixin,
     BWCacheViewMixin,
     FormView,
 ):
@@ -104,29 +104,10 @@ class AssistantCreateView(
             raise Exception(str(ex))
 
 
-class AssistantDetailsView(
-    BWLoginRequiredMixin, PermissionRequiredMixin, SuccessMessageMixin, DetailView
-):
-    template_name = "assistant/details.html"
-    model = AssistantProxy
-    permission_required = ["assistant.change_assistant", "assistant.change_assistantproxy"]
-    permission_denied_message = _("You do not have permission to access this page.")
-
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
-        context.setdefault("title", f"{self.object.user.fullname} " + _("Assistant"))
-        stats_list = get_list_from_text_choices(JobStateEnum)
-        status_list = get_list_from_text_choices(JobStatusEnum)
-        context.setdefault("stats_list", stats_list)
-        context.setdefault("status_list", status_list)
-        return context
-
-
 class AssistantUpdateView(
-    SuccessMessageMixin,
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
+    SuccessMessageMixin,
     BWCacheViewMixin,
     SingleObjectMixin,
     FormView,
@@ -232,10 +213,9 @@ class AssistantUpdateView(
 
 
 class AssistantDeleteView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
-    BWBaseListViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):

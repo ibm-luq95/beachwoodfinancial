@@ -5,7 +5,6 @@ from manager.views import (
     ManagerUpdateView,
     ManagerCreateView,
     ManagerListView,
-    ManagerDetailsView,
 )
 
 app_name = "managers"
@@ -15,5 +14,5 @@ urlpatterns = [
     path("create", ManagerCreateView.as_view(), name="create"),
     path("update/<uuid:pk>", ManagerUpdateView.as_view(), name="update"),
     path("delete/<uuid:pk>", ManagerDeleteView.as_view(), name="delete"),
-    path("<uuid:pk>", ManagerDetailsView.as_view(), name="details"),
+    # path("<uuid:pk>", ManagerDetailsView.as_view(), name="details"),
 ]

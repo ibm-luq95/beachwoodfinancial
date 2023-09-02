@@ -15,8 +15,8 @@ from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 
 
 class ClientAccountListViewBW(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
@@ -40,8 +40,8 @@ class ClientAccountListViewBW(
 
 
 class ClientAccountCreateView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     CreateView,
@@ -63,8 +63,8 @@ class ClientAccountCreateView(
 
 
 class ClientAccountUpdateView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,
@@ -91,8 +91,8 @@ class ClientAccountUpdateView(
 
 
 class ClientAccountDeleteView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     DeleteView,
