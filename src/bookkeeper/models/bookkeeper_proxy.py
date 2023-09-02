@@ -134,12 +134,18 @@ class BookkeeperProxy(Bookkeeper):
         if items_dict["notes"]:
             notes_pks = [note.pk for note in items_dict["notes"]]
             items_dict["notes"] = Note.objects.filter(pk__in=notes_pks)
+        else:
+            items_dict["notes"] = Note.objects.none()
         if items_dict["tasks"]:
             tasks_pks = [task.pk for task in items_dict["tasks"]]
             items_dict["tasks"] = TaskProxy.objects.filter(pk__in=tasks_pks)
+        else:
+            items_dict["tasks"] = TaskProxy.objects.none()
         if items_dict["documents"]:
             documents_pks = [doc.pk for doc in items_dict["documents"]]
             items_dict["documents"] = Document.objects.filter(pk__in=documents_pks)
+        else:
+            items_dict["documents"] = Document.objects.none()
         if custom_item_name is not None:
             return items_dict.get(custom_item_name)
         else:
