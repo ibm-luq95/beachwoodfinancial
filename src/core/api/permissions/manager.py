@@ -9,5 +9,5 @@ class ManagerApiPermission(permissions.BasePermission):
         # from pprint import pprint
         # pprint(request.user.has_perm("bookkeeper.bookkeeper_user"))
         # print(bool(request.user and request.user.is_staff))
-        if request.user.user_type == "manager":
+        if request.user.user_type == "manager" or request.user.user_type == "assistant":
             return True
