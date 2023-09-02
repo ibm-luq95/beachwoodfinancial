@@ -6,4 +6,5 @@ app_name = "manager"
 
 urlpatterns = [
     path("", DashboardViewBW.as_view(), name="home"),
+    path("api/", include("dashboard.urls.api"), name="dashboard-manager-api-urls"),
 ]
