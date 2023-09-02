@@ -66,7 +66,6 @@ class ManagerListView(
 class ManagerCreateView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     FormView,
@@ -237,28 +236,9 @@ class ManagerUpdateView(
         return queryset.get(pk=self.kwargs["pk"])
 
 
-# class ManagerDetailsView(
-#     PermissionRequiredMixin, BWLoginRequiredMixin, SuccessMessageMixin, DetailView
-# ):
-#     template_name = "manager/details.html"
-#     model = ManagerProxy
-#     permission_required = []
-#
-#     def get_context_data(self, **kwargs):
-#         # Call the base implementation first to get a context
-#         context = super().get_context_data(**kwargs)
-#         # context.setdefault("title", f"{self.object.user.fullname} " + _("Manager"))
-#         stats_list = get_list_from_text_choices(JobStateEnum)
-#         status_list = get_list_from_text_choices(JobStatusEnum)
-#         context.setdefault("stats_list", stats_list)
-#         context.setdefault("status_list", status_list)
-#         return context
-
-
 class ManagerDeleteView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     DeleteView,
