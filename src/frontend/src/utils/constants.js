@@ -8,6 +8,8 @@ Object.prototype.getConstructorName = function () {
   return aliases.indexOf(cname) > -1 ? "Function" : cname;
 };
 
+const baseUrl = window.location.origin;
+
 const isDisabledCssClass = "is-disabled";
 const CSRFINPUTNAME = "csrfmiddlewaretoken";
 const eyeSlashIconHTMLCode = `<i class="fa-solid fa-eye-slash"></i>`;
@@ -18,7 +20,7 @@ const TOASTSTIMEOUTSECS = 1500;
 // const DEBUG = window.settings["DEBUG"];
 const DEBUG = true;
 // const FETCHURLNAMEURL = window.settings["FETCHURLNAMEURL"];
-const FETCHURLNAMEURL = "";
+const FETCHURLNAMEURL = new URL(process.env.FETCHURLNAMEURL, baseUrl);
 // const CURRENTUSER = window.settings["CURRENTUSER"];
 const CURRENTUSER = "";
 
