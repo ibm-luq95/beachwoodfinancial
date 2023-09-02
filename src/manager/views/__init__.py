@@ -4,5 +4,4 @@ from .manager import (
     ManagerCreateView,
     ManagerUpdateView,
     ManagerListView,
-    ManagerDetailsView,
 )

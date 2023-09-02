@@ -4,5 +4,4 @@ from .assistant import (
     AssistantCreateView,
     AssistantDeleteView,
     AssistantUpdateView,
-    AssistantDetailsView,
 )

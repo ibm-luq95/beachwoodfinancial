@@ -4,5 +4,4 @@ from .bookkeeper import (
     BookkeeperCreateView,
     BookkeeperDeleteView,
     BookkeeperUpdateView,
-    BookkeeperDetailsView,
 )
