@@ -116,11 +116,16 @@ class BookkeeperProxy(Bookkeeper):
                             # documents += [doc for doc in docs]
                             documents += docs
                             items_dict["documents"] = documents
+
                         notes = task.notes.all()
                         if notes:
                             # notes_list += [note for note in notes]
                             notes_list += notes
                             items_dict["notes"] = notes_list
+                job_documents = job.documents.all()
+                if job_documents:
+                    documents += job_documents
+                    items_dict["documents"] = documents
 
         clients = self.clients.all()
         if clients:
