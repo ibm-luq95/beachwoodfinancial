@@ -36,7 +36,9 @@ class StaffMemberDetailsView(
             "title", f"{self.object.fullname} - " + self.object.user_type.title()
         )
         clients = ClientProxy.objects.all()
-        permissions_form = BWPermissionsForm(staff_user=self.get_object())
+        permissions_form = BWPermissionsForm(
+            staff_user=self.get_object(), initial={"user": self.get_object().pk}
+        )
         special_assignment_form = MiniSpecialAssignmentForm(
             renderer=BWFormRenderer(),
             initial={"assigned_by": self.request.user.pk, "client": self.get_object().pk},

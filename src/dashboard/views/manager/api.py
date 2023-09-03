@@ -1,19 +1,17 @@
 # -*- coding: utf-8 -*-#
 import traceback
 
-from rest_framework import parsers
 from rest_framework import permissions
 from rest_framework import status
-from rest_framework.exceptions import APIException
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from beach_wood_user.models import BWUser
 from client.models import ClientProxy
-from core.api.permissions import ManagerApiPermission, BaseApiPermissionMixin
+from core.api.permissions import ManagerApiPermission
 from core.constants.status_labels import CON_COMPLETED, CON_PAST_DUE, CON_IN_PROGRESS
-from core.utils import get_formatted_logger, debugging_print
+from core.utils import get_formatted_logger
 from job.models import JobProxy
 from special_assignment.models import SpecialAssignmentProxy
 

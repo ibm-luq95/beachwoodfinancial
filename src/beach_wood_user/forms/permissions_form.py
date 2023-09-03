@@ -39,3 +39,4 @@ class BWPermissionsForm(forms.Form):
         required=False,
         widget=forms.CheckboxSelectMultiple,
     )
+    user = forms.UUIDField(widget=forms.HiddenInput)

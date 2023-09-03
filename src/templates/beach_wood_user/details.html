@@ -543,7 +543,7 @@
                                      class="hidden"
                                      aria-labelledby="user-permissions-tab-underline">
                                     <section id="permissionsFormWrapper">
-                                        {% component "bw_form" form=permissions_form perms=perms form_id="permissionsUpdateMiniForm" submit_btn_text="Update" form_title="Update permissions - "|add:object.fullname form_subtitle="Update permissions" is_upload_form=True hide_back_btn=True hide_submit_btn=True %}
+                                        {% component "bw_form" form=permissions_form perms=perms form_id="permissionsUpdateMiniForm" submit_btn_text="Update" form_title="Update permissions - "|add:object.fullname form_subtitle="Update permissions" is_upload_form=False hide_back_btn=True hide_submit_btn=False %}
                                     </section>
                                 </div>
                                 {# End Permissions Tab #}
