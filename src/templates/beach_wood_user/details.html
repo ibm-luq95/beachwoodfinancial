@@ -291,7 +291,9 @@
                                         <p class="text-xs uppercase tracking-wide text-gray-500">{% translate "Tasks" %}</p>
                                     </div>
                                     <div class="mt-1 flex items-center">
-                                        <h3 class="text-lg sm:text-lg font-medium text-gray-800 dark:text-gray-200">72,540</h3>
+                                        <h3 class="text-lg sm:text-lg font-medium text-gray-800 dark:text-gray-200">
+                                            {{ object.get_staff_member_object.staff_object.get_proxy_model.get_tasks_count }}
+                                        </h3>
                                     </div>
                                 </div>
                             </div>
