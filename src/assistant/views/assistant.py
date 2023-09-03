@@ -58,7 +58,8 @@ class AssistantCreateView(
     BWCacheViewMixin,
     FormView,
 ):
-    permission_required = ["assistant.add_assistant", "assistant.add_assistantproxy"]
+    # permission_required = ["assistant.add_assistant", "assistant.add_assistantproxy"]
+    permission_required = "assistant.add_assistantproxy"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "assistant/create.html"
     form_class = AssistantForm
@@ -112,7 +113,8 @@ class AssistantUpdateView(
     SingleObjectMixin,
     FormView,
 ):
-    permission_required = ["assistant.change_assistant", "assistant.change_assistantproxy"]
+    # permission_required = ["assistant.change_assistant", "assistant.change_assistantproxy"]
+    permission_required = "assistant.change_assistantproxy"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "assistant/update.html"
     form_class = AssistantForm
@@ -219,7 +221,8 @@ class AssistantDeleteView(
     SuccessMessageMixin,
     DeleteView,
 ):
-    permission_required = ["assistant.delete_assistant", "assistant.delete_assistantproxy"]
+    # permission_required = ["assistant.delete_assistant", "assistant.delete_assistantproxy"]
+    permission_required = "assistant.delete_assistantproxy"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "assistant/delete.html"
     model = AssistantProxy

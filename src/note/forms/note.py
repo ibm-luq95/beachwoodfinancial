@@ -3,6 +3,7 @@ from typing import Optional
 
 from core.forms import BaseModelFormMixin, JoditFormMixin
 from core.forms.mixins.remove_fields_mixin import RemoveFieldsMixin
+from core.forms.mixins.set_bookkeeper_related_mixin import InitBookkeeperRelatedFieldsMixin
 from core.forms.mixins.set_field_to_hidden import SetFieldsInputsHiddenMixin
 from core.forms.widgets import RichHTMLEditorWidget
 from note.models import Note
@@ -19,6 +20,7 @@ class NoteForm(
         add_jodit_css_class=False,
         removed_fields: Optional[list] = None,
         hidden_inputs: Optional[dict] = None,
+        bookkeeper=None,
         *args,
         **kwargs,
     ):
@@ -26,6 +28,7 @@ class NoteForm(
         RemoveFieldsMixin.__init__(self, removed_fields=removed_fields)
         JoditFormMixin.__init__(self, add_jodit_css_class=add_jodit_css_class)
         SetFieldsInputsHiddenMixin.__init__(self, hidden_inputs=hidden_inputs)
+        InitBookkeeperRelatedFieldsMixin.__init__(self, bookkeeper=bookkeeper)
         if client is not None:
             self.fields["client"].initial = client
             self.fields.pop("task")

@@ -593,7 +593,7 @@
                                 </a>
                             </li>
                         {% endif %}
-                        {% if perms.task.can_create %}
+                        {% if perms.task.can_create or perms.task.add_taskproxy %}
                             <li>
                                 <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
                                    href="{% url 'dashboard:task:create' %}">

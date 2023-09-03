@@ -55,7 +55,8 @@ class BookkeeperCreateView(
     BWCacheViewMixin,
     FormView,
 ):
-    permission_required = ["bookkeeper.add_bookkeeper", "bookkeeper.add_bookkeeperproxy"]
+    # permission_required = ["bookkeeper.add_bookkeeper", "bookkeeper.add_bookkeeperproxy"]
+    permission_required = "bookkeeper.add_bookkeeperproxy"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "bookkeeper/create.html"
     form_class = BookkeeperForm
@@ -98,10 +99,11 @@ class BookkeeperUpdateView(
     SingleObjectMixin,
     FormView,
 ):
-    permission_required = [
-        "bookkeeper.change_bookkeeper",
-        "bookkeeper.change_bookkeeperproxy",
-    ]
+    # permission_required = [
+    #     "bookkeeper.change_bookkeeper",
+    #     "bookkeeper.change_bookkeeperproxy",
+    # ]
+    permission_required = "bookkeeper.change_bookkeeperproxy"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "bookkeeper/update.html"
     form_class = BookkeeperForm
@@ -190,10 +192,11 @@ class BookkeeperDeleteView(
     success_message = _("Bookkeeper deleted successfully")
     success_url = reverse_lazy("dashboard:management_bookkeeper:list")
     permission_denied_message = _("You do not have permission to access this page.")
-    permission_required = [
-        "bookkeeper.delete_bookkeeper",
-        "bookkeeper.delete_bookkeeperproxy",
-    ]
+    # permission_required = [
+    #     "bookkeeper.delete_bookkeeper",
+    #     "bookkeeper.delete_bookkeeperproxy",
+    # ]
+    permission_required = "bookkeeper.delete_bookkeeperproxy"
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

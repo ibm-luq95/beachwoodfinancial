@@ -21,7 +21,7 @@ class SpecialAssignmentListView(
     BWBaseListViewMixin,
     ListView,
 ):
-    permission_required = ["special_assignment.can_view_list"]
+    permission_required = "special_assignment.can_view_list"
     template_name = "special_assignment/list.html"
     model = SpecialAssignmentProxy
     paginate_by = LIST_VIEW_PAGINATE_BY
@@ -55,10 +55,11 @@ class SpecialAssignmentCreateView(
     SuccessMessageMixin,
     CreateView,
 ):
-    permission_required = [
-        "special_assignment.add_specialassignmentproxy",
-        "special_assignment.add_specialassignment",
-    ]
+    # permission_required = [
+    #     "special_assignment.add_specialassignmentproxy",
+    #     "special_assignment.add_specialassignment",
+    # ]
+    permission_required = "special_assignment.add_specialassignment"
     template_name = "special_assignment/create.html"
     form_class = SpecialAssignmentForm
     success_message = _("Special assignment created successfully")
@@ -86,10 +87,11 @@ class SpecialAssignmentUpdateView(
     SuccessMessageMixin,
     UpdateView,
 ):
-    permission_required = [
-        "special_assignment.change_specialassignment",
-        "special_assignment.change_specialassignmentproxy",
-    ]
+    # permission_required = [
+    #     "special_assignment.change_specialassignment",
+    #     "special_assignment.change_specialassignmentproxy",
+    # ]
+    permission_required = "special_assignment.change_specialassignmentproxy"
     template_name = "special_assignment/update.html"
     form_class = SpecialAssignmentForm
     success_message = _("Special assignment updated successfully")
@@ -112,10 +114,11 @@ class SpecialAssignmentDeleteView(
     SuccessMessageMixin,
     DeleteView,
 ):
-    permission_required = [
-        "special_assignment.delete_specialassignment",
-        "special_assignment.delete_specialassignmentproxy",
-    ]
+    # permission_required = [
+    #     "special_assignment.delete_specialassignment",
+    #     "special_assignment.delete_specialassignmentproxy",
+    # ]
+    permission_required = "special_assignment.delete_specialassignmentproxy"
     template_name = "special_assignment/delete.html"
     model = SpecialAssignmentProxy
     success_message = _("Special assignment deleted successfully")
@@ -133,10 +136,11 @@ class SpecialAssignmentDetailsView(
 ):
     model = SpecialAssignmentProxy
     template_name = "special_assignment/details.html"
-    permission_required = [
-        "special_assignment.view_specialassignment",
-        "special_assignment.view_specialassignmentproxy",
-    ]
+    # permission_required = [
+    #     "special_assignment.view_specialassignment",
+    #     "special_assignment.view_specialassignmentproxy",
+    # ]
+    permission_required = "special_assignment.view_specialassignmentproxy",
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

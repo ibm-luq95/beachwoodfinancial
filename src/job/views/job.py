@@ -29,6 +29,7 @@ class JobListView(
     ListView,
 ):
     permission_required = ["job.can_view_list"]
+
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job/list.html"
     model = JobProxy
@@ -61,7 +62,8 @@ class JobCreateView(
     SuccessMessageMixin,
     CreateView,
 ):
-    permission_required = ["job.add_job", "job.add_jobproxy"]
+    # permission_required = ["job.add_job", "job.add_jobproxy"]
+    permission_required = "job.add_jobproxy"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job/create.html"
     form_class = JobForm
@@ -84,7 +86,8 @@ class JobDetailsView(
     SuccessMessageMixin,
     DetailView,
 ):
-    permission_required = ["job.view_job", "job.view_jobproxy"]
+    # permission_required = ["job.view_job", "job.view_jobproxy"]
+    permission_required = "job.view_jobproxy"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job/details.html"
     model = JobProxy
@@ -153,7 +156,8 @@ class JobUpdateView(
     SuccessMessageMixin,
     UpdateView,
 ):
-    permission_required = ["job.change_job", "job.change_jobproxy"]
+    # permission_required = ["job.change_job", "job.change_jobproxy"]
+    permission_required = "job.change_jobproxy"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job/update.html"
     form_class = JobForm
@@ -179,7 +183,8 @@ class JobDeleteView(
     DeleteView,
 ):
     template_name = "job/delete.html"
-    permission_required = ["job.delete_job", "job.delete_jobproxy"]
+    # permission_required = ["job.delete_job", "job.delete_jobproxy"]
+    permission_required = "job.delete_jobproxy"
     permission_denied_message = _("You do not have permission to access this page.")
     model = TaskProxy
     success_message = _("Job deleted successfully")

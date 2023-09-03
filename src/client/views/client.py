@@ -69,7 +69,8 @@ class ClientCreateView(
     SuccessMessageMixin,
     CreateView,
 ):
-    permission_required = ["client.add_client", "client.add_clientproxy"]
+    # permission_required = ("client.add_client", "client.add_clientproxy")
+    permission_required = "client.add_clientproxy"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "client/create.html"
     form_class = ClientForm
@@ -96,7 +97,8 @@ class ClientUpdateView(
     SuccessMessageMixin,
     UpdateView,
 ):
-    permission_required = ["client.change_client", "client.change_clientproxy"]
+    # permission_required = ["client.change_client", "client.change_clientproxy"]
+    permission_required = "client.change_clientproxy"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "client/update.html"
     form_class = ClientForm
@@ -125,7 +127,8 @@ class ClientDeleteView(
     DeleteView,
 ):
     template_name = "client/delete.html"
-    permission_required = ["client.delete_client", "client.delete_clientproxy"]
+    # permission_required = ["client.delete_client", "client.delete_clientproxy"]
+    permission_required = "client.delete_clientproxy"
     permission_denied_message = _("You do not have permission to access this page.")
     model = ClientProxy
     success_message = _("Client deleted successfully")
@@ -143,7 +146,8 @@ class ClientDetailsView(
 ):
     template_name = "client/details.html"
     model = ClientProxy
-    permission_required = ["client.view_client", "client.view_clientproxy"]
+    # permission_required = ["client.view_client", "client.view_clientproxy"]
+    permission_required = "client.view_clientproxy"
     permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):

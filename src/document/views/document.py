@@ -9,6 +9,7 @@ from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.users import CON_BOOKKEEPER
 from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
+from core.views.mixins.bookkeeper_pass_related_mixin import BookkeeperPassRelatedMixin
 from document.filters import DocumentFilter
 from document.forms import DocumentForm
 from document.models import Document
@@ -21,7 +22,7 @@ class DocumentListView(
     BWBaseListViewMixin,
     ListView,
 ):
-    permission_required = ["document.can_view_list"]
+    permission_required = "document.can_view_list"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "document/list.html"
     model = Document
@@ -60,9 +61,10 @@ class DocumentCreateView(
     BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
+    BookkeeperPassRelatedMixin,
     CreateView,
 ):
-    permission_required = ["document.add_document"]
+    permission_required = "document.add_document"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "document/create.html"
     form_class = DocumentForm
@@ -92,9 +94,10 @@ class DocumentUpdateView(
     BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
+    BookkeeperPassRelatedMixin,
     UpdateView,
 ):
-    permission_required = ["document.change_document"]
+    permission_required = "document.change_document"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "document/update.html"
     form_class = DocumentForm
@@ -130,7 +133,7 @@ class DocumentDeleteView(
     SuccessMessageMixin,
     DeleteView,
 ):
-    permission_required = ["document.delete_document"]
+    permission_required = "document.delete_document"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "document/delete.html"
     model = Document

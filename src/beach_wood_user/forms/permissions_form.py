@@ -30,7 +30,7 @@ class BWPermissionsForm(forms.Form):
                 if permissions:
                     for permission in permissions:
                         self.all_init_permissions.append(permission)
-            debugging_print(self.all_init_permissions)
+            # debugging_print(self.all_init_permissions)
             self.fields.get("permissions").initial = self.all_init_permissions
 
     permissions = forms.ModelMultipleChoiceField(

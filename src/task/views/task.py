@@ -8,6 +8,7 @@ from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.users import CON_BOOKKEEPER
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
+from core.views.mixins.bookkeeper_pass_related_mixin import BookkeeperPassRelatedMixin
 from task.filters import TaskFilter
 from task.forms import TaskForm
 from task.models import TaskProxy
@@ -20,7 +21,7 @@ class TaskListView(
     BWBaseListViewMixin,
     ListView,
 ):
-    permission_required = ["task.can_view_list"]
+    permission_required = "task.can_view_list"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "task/list.html"
     model = TaskProxy
@@ -57,9 +58,11 @@ class TaskCreateView(
     BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
+    BookkeeperPassRelatedMixin,
     CreateView,
 ):
-    permission_required = ["task.add_taskproxy", "task.add_task"]
+    # permission_required = ["task.add_taskproxy", "task.add_task"]
+    permission_required = "task.add_taskproxy"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "task/create.html"
     form_class = TaskForm
@@ -80,9 +83,11 @@ class TaskUpdateView(
     BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
+    BookkeeperPassRelatedMixin,
     UpdateView,
 ):
-    permission_required = ["task.change_taskproxy", "task.change_task"]
+    # permission_required = ["task.change_taskproxy", "task.change_task"]
+    permission_required = "task.change_taskproxy"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "task/update.html"
     form_class = TaskForm
@@ -107,7 +112,8 @@ class TaskDeleteView(
     SuccessMessageMixin,
     DeleteView,
 ):
-    permission_required = ["task.delete_taskproxy", "task.delete_task"]
+    # permission_required = ["task.delete_taskproxy", "task.delete_task"]
+    permission_required = "task.delete_taskproxy"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "task/delete.html"
     model = TaskProxy

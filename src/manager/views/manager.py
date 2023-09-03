@@ -39,7 +39,8 @@ class ManagerListView(
     BWBaseListViewMixin,
     ListView,
 ):
-    permission_required = ["manager.can_view_list", "manager.manager_user"]
+    # permission_required = ["manager.can_view_list", "manager.manager_user"]
+    permission_required = "manager.can_view_list"
     template_name = "manager/list.html"
     model = ManagerProxy
     paginate_by = LIST_VIEW_PAGINATE_BY
@@ -70,11 +71,12 @@ class ManagerCreateView(
     SuccessMessageMixin,
     FormView,
 ):
-    permission_required = [
-        "manager.add_managerproxy",
-        "manager.add_manager",
-        "manager.manager_user",
-    ]
+    # permission_required = [
+    #     "manager.add_managerproxy",
+    #     "manager.add_manager",
+    #     "manager.manager_user",
+    # ]
+    permission_required = "manager.add_managerproxy"
     template_name = "manager/create.html"
     form_class = ManagerForm
     success_message = _("Manager created successfully")
@@ -131,11 +133,12 @@ class ManagerUpdateView(
     SingleObjectMixin,
     FormView,
 ):
-    permission_required = [
-        "manager.change_managerproxy",
-        "manager.change_manager",
-        "manager.manager_user",
-    ]
+    # permission_required = [
+    #     "manager.change_managerproxy",
+    #     "manager.change_manager",
+    #     "manager.manager_user",
+    # ]
+    permission_required = "manager.change_managerproxy"
     template_name = "manager/update.html"
     form_class = ManagerForm
     success_message = _("Manager updated successfully")
@@ -243,11 +246,12 @@ class ManagerDeleteView(
     SuccessMessageMixin,
     DeleteView,
 ):
-    permission_required = [
-        "manager.delete_manager",
-        "manager.delete_managerproxy",
-        "manager.manager_user",
-    ]
+    # permission_required = [
+    #     "manager.delete_manager",
+    #     "manager.delete_managerproxy",
+    #     "manager.manager_user",
+    # ]
+    permission_required = "manager.delete_managerproxy"
     template_name = "manager/delete.html"
     model = ManagerProxy
     success_message = _("Manager deleted successfully")

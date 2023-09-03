@@ -9,6 +9,7 @@ from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.users import CON_BOOKKEEPER
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
+from core.views.mixins.bookkeeper_pass_related_mixin import BookkeeperPassRelatedMixin
 from note.filters import NoteFilter
 from note.forms import NoteForm
 from note.models import Note
@@ -21,7 +22,7 @@ class NoteListView(
     BWBaseListViewMixin,
     ListView,
 ):
-    permission_required = ["note.can_view_list"]
+    permission_required = "note.can_view_list"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "note/list.html"
     model = Note
@@ -56,9 +57,10 @@ class NoteCreateView(
     BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
+    BookkeeperPassRelatedMixin,
     CreateView,
 ):
-    permission_required = ["note.add_note"]
+    permission_required = "note.add_note"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "note/create.html"
     form_class = NoteForm
@@ -79,9 +81,10 @@ class NoteUpdateView(
     BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
+    BookkeeperPassRelatedMixin,
     UpdateView,
 ):
-    permission_required = ["note.change_note"]
+    permission_required = "note.change_note"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "note/update.html"
     form_class = NoteForm
@@ -107,7 +110,7 @@ class NoteDeleteView(
     DeleteView,
 ):
     template_name = "note/delete.html"
-    permission_required = ["note.delete_note"]
+    permission_required = "note.delete_note"
     permission_denied_message = _("You do not have permission to access this page.")
     model = Note
     success_message = _("Note deleted successfully")
