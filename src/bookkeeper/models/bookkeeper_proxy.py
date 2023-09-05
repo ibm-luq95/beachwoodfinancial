@@ -1,15 +1,26 @@
 # -*- coding: utf-8 -*-#
 import traceback
+from typing import Optional
+
+from core.constants.status_labels import CON_PAST_DUE, CON_STALLED, CON_NEED_INFO
 from core.models.querysets import BaseQuerySetMixin
 from bookkeeper.models import Bookkeeper
 from core.utils import BeachWoodFinancialError, get_formatted_logger, debugging_print
+from django.db.models import Q
 
 logger = get_formatted_logger()
 
 
 class BookkeeperProxy(Bookkeeper):
-    class Meta:
+    class Meta(Bookkeeper.Meta):
         proxy = True
+        permissions = [
+            ("bookkeeper_user", "Bookkeeper User"),
+            (
+                "bookkeeper_can_delete_special_assignment",
+                "Bookkeeper can delete special assignment",
+            ),
+        ]
 
     @property
     def get_bookkeeper(self) -> Bookkeeper:
@@ -64,6 +75,86 @@ class BookkeeperProxy(Bookkeeper):
             return self.user.jobs.all()
         else:
             return None
+
+    def get_past_due_jobs(self) -> BaseQuerySetMixin | None:
+        if hasattr(self.user, "jobs"):
+            return self.user.jobs.filter(status=CON_PAST_DUE)
+        else:
+            return None
+
+    def get_stats_jobs(self) -> BaseQuerySetMixin | None:
+        if hasattr(self.user, "jobs"):
+            return self.user.jobs.filter(Q(state=CON_STALLED) | Q(state=CON_NEED_INFO))
+        else:
+            return None
+
+    def get_all_related_items(self, custom_item_name: Optional[str] = None) -> dict | list:
+        from job.models.job_proxy import JobProxy
+        from note.models import Note
+        from task.models.proxy_model import TaskProxy
+        from document.models.document import Document
+
+        items_dict = dict()
+        items_dict["tasks"] = []
+        items_dict["documents"] = []
+        items_dict["notes"] = []
+        items_dict["jobs"] = []
+        documents = []
+        notes_list = []
+        # get tasks from jobs
+        jobs = self.get_user_jobs()
+        if jobs:
+            jobs_pks = [job.pk for job in jobs]
+            items_dict["jobs"] = JobProxy.objects.filter(pk__in=jobs_pks)
+            for job in jobs:
+                tasks = job.tasks.all()
+                if tasks:
+                    items_dict["tasks"] = tasks
+                    for task in tasks:
+                        docs = task.documents.all()
+                        if docs:
+                            # documents += [doc for doc in docs]
+                            documents += docs
+                            items_dict["documents"] = documents
+
+                        notes = task.notes.all()
+                        if notes:
+                            # notes_list += [note for note in notes]
+                            notes_list += notes
+                            items_dict["notes"] = notes_list
+                job_documents = job.documents.all()
+                if job_documents:
+                    documents += job_documents
+                    items_dict["documents"] = documents
+
+        clients = self.clients.all()
+        if clients:
+            for client in clients:
+                notes = client.notes.all()
+                if notes:
+                    items_dict["notes"] += notes
+                documents = client.documents.all()
+                if documents:
+                    items_dict["documents"] += documents
+        if items_dict["notes"]:
+            notes_pks = [note.pk for note in items_dict["notes"]]
+            items_dict["notes"] = Note.objects.filter(pk__in=notes_pks)
+        else:
+            items_dict["notes"] = Note.objects.none()
+        if items_dict["tasks"]:
+            tasks_pks = [task.pk for task in items_dict["tasks"]]
+            items_dict["tasks"] = TaskProxy.objects.filter(pk__in=tasks_pks)
+        else:
+            items_dict["tasks"] = TaskProxy.objects.none()
+        if items_dict["documents"]:
+            documents_pks = [doc.pk for doc in items_dict["documents"]]
+            items_dict["documents"] = Document.objects.filter(pk__in=documents_pks)
+        else:
+            items_dict["documents"] = Document.objects.none()
+        if custom_item_name is not None:
+            return items_dict.get(custom_item_name)
+        else:
+            return items_dict
 
     def get_last_tasks(self, task_limit: int = 5) -> list:
         """Retrieve last tasks for bookkeeper

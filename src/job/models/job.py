@@ -10,6 +10,7 @@ from django.utils.translation import gettext as _
 from client.models import ClientProxy
 from core.choices import JobStatusEnum, JobTypeEnum, JobStateEnum
 from core.models.mixins import BaseModelMixin, StartAndDueDateMixin, StrModelMixin
+from core.models.mixins.access_proxy_models_mixin import AccessProxyModelMixin
 from core.utils import debugging_print
 from django.core.exceptions import ValidationError
 
@@ -19,7 +20,7 @@ from job_category.models import JobCategory
 from .help_messages import JOB_HELP_MESSAGES
 
 
-class Job(BaseModelMixin, StartAndDueDateMixin, StrModelMixin):
+class Job(BaseModelMixin, StartAndDueDateMixin, AccessProxyModelMixin, StrModelMixin):
     """This is the job for every bookkeeper and assistant
 
     Args:

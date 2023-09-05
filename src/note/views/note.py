@@ -1,38 +1,29 @@
 # -*- coding: utf-8 -*-#
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models import Q
 from django.urls import reverse_lazy
-from django.views.generic import (
-    CreateView,
-    DeleteView,
-    DetailView,
-    ListView,
-    UpdateView,
-    RedirectView,
-    FormView,
-)
 from django.utils.translation import gettext as _
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
-from core.views.mixins import (
-    BWLoginRequiredMixin,
-    BWBaseListViewMixin,
-    BWManagerAccessMixin,
-)
+from core.constants.users import CON_BOOKKEEPER
+from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
+from core.views.mixins.bookkeeper_pass_related_mixin import BookkeeperPassRelatedMixin
+from note.filters import NoteFilter
 from note.forms import NoteForm
 from note.models import Note
-from note.filters import NoteFilter
 
 
 class NoteListView(
+    PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
-    # permission_required = "client.can_view_list"
+    permission_required = "note.can_view_list"
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "note/list.html"
     model = Note
     paginate_by = LIST_VIEW_PAGINATE_BY
@@ -51,18 +42,26 @@ class NoteListView(
 
     def get_queryset(self):
         queryset = super().get_queryset()
+        if self.request.user.user_type == CON_BOOKKEEPER:
+            queryset = (
+                self.request.user.bookkeeper.get_proxy_model().get_all_related_items(
+                    "notes"
+                )
+            )
         self.filterset = NoteFilter(self.request.GET, queryset=queryset)
         return self.filterset.qs
 
 
 class NoteCreateView(
+    PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
+    BookkeeperPassRelatedMixin,
     CreateView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = "note.add_note"
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "note/create.html"
     form_class = NoteForm
     success_message = _("Note created successfully")
@@ -78,13 +77,15 @@ class NoteCreateView(
 
 
 class NoteUpdateView(
+    PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
+    BookkeeperPassRelatedMixin,
     UpdateView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = "note.change_note"
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "note/update.html"
     form_class = NoteForm
     success_message = _("Note updated successfully")
@@ -101,15 +102,16 @@ class NoteUpdateView(
 
 
 class NoteDeleteView(
+    PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):
     template_name = "note/delete.html"
-    # form_class = ClientCategoryForm
+    permission_required = "note.delete_note"
+    permission_denied_message = _("You do not have permission to access this page.")
     model = Note
     success_message = _("Note deleted successfully")
     success_url = reverse_lazy("dashboard:note:list")

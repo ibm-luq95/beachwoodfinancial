@@ -4,8 +4,24 @@ from django.contrib.auth.views import redirect_to_login
 from django.core.exceptions import PermissionDenied
 
 
+# class BWManagerAccessMixin(PermissionRequiredMixin):
+#     permission_required = ["manager.manager_user", "assistant.assistant_user"]
+#
+#     def dispatch(self, request, *args, **kwargs):
+#         if not self.request.user.is_authenticated:
+#             return redirect_to_login(
+#                 self.request.get_full_path(),
+#                 self.get_login_url(),
+#                 self.get_redirect_field_name(),
+#             )
+#         if not self.has_permission():
+#             raise PermissionDenied
+#
+#         return super(BWManagerAccessMixin, self).dispatch(request, *args, **kwargs)
+
+
 class BWManagerAccessMixin(PermissionRequiredMixin):
-    permission_required = ["manager.manager_user"]
+    permission_required = ["manager.manager_user", "assistant.assistant_user"]
 
     def dispatch(self, request, *args, **kwargs):
         if not self.request.user.is_authenticated:
@@ -14,11 +30,16 @@ class BWManagerAccessMixin(PermissionRequiredMixin):
                 self.get_login_url(),
                 self.get_redirect_field_name(),
             )
-
         if not self.has_permission():
             raise PermissionDenied
 
         return super(BWManagerAccessMixin, self).dispatch(request, *args, **kwargs)
+
+    def has_permission(self) -> bool:
+        user = self.request.user
+        return user.has_perm("manager.manager_user") or user.has_perm(
+            "assistant.assistant_user"
+        )
 
 
 class BWManagerAssistantAccessMixin(UserPassesTestMixin):

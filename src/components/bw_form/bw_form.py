@@ -27,6 +27,8 @@ class BWForm(component.Component):
         submit_btn_text="Create",
         perms="",
         current_password=None,
+        hide_back_btn=False,
+        hide_submit_btn=False,
     ):
         # form_action_url syntax: app_name:endpoint: client:details
         # if form_action_url is not None:
@@ -48,6 +50,8 @@ class BWForm(component.Component):
             "submit_btn_text": submit_btn_text,
             "perms": perms,
             "current_password": current_password,
+            "hide_back_btn": hide_back_btn,
+            "hide_submit_btn": hide_submit_btn,
         }
 
     class Media:

@@ -1,8 +1,12 @@
 const glob = require("glob");
+const { VueLoaderPlugin } = require("vue-loader");
+const Webpack = require("webpack");
 const Path = require("path");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const WebpackAssetsManifest = require("webpack-assets-manifest");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
 
 const getEntryObject = () => {
   const entries = {};
@@ -21,19 +25,20 @@ module.exports = {
     publicPath: "/static/",
     assetModuleFilename: "[path][name][ext]",
   },
-  optimization: {
-    splitChunks: {
-      chunks: "all",
-    },
 
-    runtimeChunk: "single",
-  },
   plugins: [
+    new Webpack.ProgressPlugin(),
+    new Webpack.EnvironmentPlugin({
+      FETCHURLNAMEURL: "/core/api/fetch_url"
+    }),
+
+    /* new Webpack.ProvidePlugin({
+      $: "jquery",
+      jQuery: "jquery",
+    }), */
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin({
-      patterns: [
-        { from: Path.resolve(__dirname, "../vendors"), to: "vendors" },
-      ],
+      patterns: [{ from: Path.resolve(__dirname, "../vendors"), to: "vendors" }],
     }),
     new WebpackAssetsManifest({
       entrypoints: true,
@@ -41,10 +46,12 @@ module.exports = {
       writeToDisk: true,
       publicPath: true,
     }),
+    new VueLoaderPlugin(),
   ],
   resolve: {
     alias: {
       "~": Path.resolve(__dirname, "../src"),
+      // jQuery: Path.resolve(__dirname, "../node_modules/jquery"),
     },
   },
   module: {
@@ -57,6 +64,10 @@ module.exports = {
       {
         test: /\.(ico|jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2)(\?.*)?$/,
         type: "asset",
+      },
+      {
+        test: /\.vue$/,
+        loader: "vue-loader",
       },
     ],
   },

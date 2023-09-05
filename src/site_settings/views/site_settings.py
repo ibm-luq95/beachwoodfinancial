@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
@@ -11,7 +12,6 @@ from core.constants.site_settings import SITE_SETTINGS_DB_SLUG
 from core.utils import debugging_print
 from core.views.mixins import (
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
 )
 from site_settings.forms import SiteSettingsForm
 from site_settings.models import SiteSettings
@@ -19,12 +19,13 @@ from site_settings.models import SiteSettings
 
 class SiteSettingsFormView(
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
+    PermissionRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = "manager.manager_user"
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "site_settings/site_settings.html"
     form_class = SiteSettingsForm
     success_message = _("Site settings updated successfully")

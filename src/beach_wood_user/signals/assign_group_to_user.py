@@ -11,7 +11,12 @@ from assistant.models import AssistantProxy
 from beach_wood_user.models import Profile
 from beach_wood_user.models.beach_wood_user import BWUser
 from bookkeeper.models import BookkeeperProxy
-from core.constants import BOOKKEEPER_GROUP_NAME, MANAGER_GROUP_NAME, ASSISTANT_GROUP_NAME
+from core.constants.users import (
+    BOOKKEEPER_GROUP_NAME,
+    MANAGER_GROUP_NAME,
+    ASSISTANT_GROUP_NAME,
+    READONLY_NEW_STAFF_MEMBER_GROUP_NAME,
+)
 from core.utils import get_formatted_logger, debugging_print, colored_output_with_logging
 from manager.models import ManagerProxy
 
@@ -59,34 +64,23 @@ def assign_groups(sender, instance: BWUser, created: bool, **kwargs):
                         # # Create profile for new user
                         # manager.profile = Profile()
                         # manager.save()
-                # fetch user group
-                group_object = Group.objects.filter(name=group)
-                if not group_object:
-                    # raise ProjectError("USER", message=f"The group {group} not exists!")
-                    # raise Exception(_(f"The group {group} not exists!"))
-                    colored_output_with_logging(
-                        is_logged=True,
-                        text=_(f"The group {group} not exists!"),
-                        log_level="warning",
-                        color="yellow",
-                    )
-                else:
-                    group_object = group_object.first()
-                    created_user.groups.add(group_object)
-
-                # fetch user permissions
-                permission_object = Permission.objects.filter(codename=permission_codename)
-                if not permission_object:
-                    colored_output_with_logging(
-                        is_logged=True,
-                        text=_(f"The permission {permission_codename} not exists!"),
-                        log_level="warning",
-                        color="yellow",
-                    )
-                else:
-                    permission_object = permission_object.first()
-                    created_user.user_permissions.add(permission_object)
-
+                readonly_group = Group.objects.get(
+                    name=READONLY_NEW_STAFF_MEMBER_GROUP_NAME
+                )
+                if (
+                    created_user.user_type == "bookkeeper"
+                    or created_user.user_type == "assistant"
+                ):
+                    created_user.groups.add(readonly_group)
+                if created_user.user_type == "bookkeeper":
+                    group_obj = Group.objects.get(name=BOOKKEEPER_GROUP_NAME)
+                    created_user.groups.add(group_obj)
+                if created_user.user_type == "assistant":
+                    group_obj = Group.objects.get(name=ASSISTANT_GROUP_NAME)
+                    created_user.groups.add(group_obj)
+                if created_user.user_type == "manager":
+                    group_obj = Group.objects.get(name=MANAGER_GROUP_NAME)
+                    created_user.groups.add(group_obj)
                 created_user.save()
 
     except Exception as ex:

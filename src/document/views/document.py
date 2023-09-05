@@ -1,54 +1,29 @@
 # -*- coding: utf-8 -*-#
-from django.contrib.auth.mixins import LoginRequiredMixin, PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models import Q
-from django.forms import BaseForm
 from django.urls import reverse_lazy
-from django.views.generic import (
-    CreateView,
-    DeleteView,
-    DetailView,
-    ListView,
-    UpdateView,
-    RedirectView,
-    FormView,
-)
 from django.utils.translation import gettext as _
+from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
-from client.models import ClientProxy
 from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
-from core.utils import debugging_print
-from core.views.mixins import (
-    BWBaseListViewMixin,
-    BWLoginRequiredMixin,
-    BWListViewMixin,
-    BWArchiveListViewMixin,
-    BWManagerAccessMixin,
-)
+from core.constants.users import CON_BOOKKEEPER
+from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
+from core.views.mixins.bookkeeper_pass_related_mixin import BookkeeperPassRelatedMixin
 from document.filters import DocumentFilter
 from document.forms import DocumentForm
 from document.models import Document
 
-# from documents.forms import DocumentForm
-from important_contact.forms import ImportantContactForm
-
-
-# from jobs.forms import JobForm
-# from manager.views.mixins import BWManagerAccessMixin, ManagerAssistantAccessMixin
-# from notes.forms import NoteForm
-# from special_assignment.forms import SpecialAssignmentForm
-# from task.forms import TaskForm
-
 
 class DocumentListView(
+    PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
     BWCacheViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
-    # permission_required = "client.can_view_list"
+    permission_required = "document.can_view_list"
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "document/list.html"
     model = Document
     # queryset = Client.objects.filter(~Q(status="archive")).prefetch_related("jobs")
@@ -71,22 +46,26 @@ class DocumentListView(
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        # if self.request.user.user_type == "bookkeeper":
-        #     queryset = BookkeeperProxy.objects.get(
-        #         pk=self.request.user.bookkeeper.pk
-        #     ).clients.all()
+        if self.request.user.user_type == CON_BOOKKEEPER:
+            queryset = (
+                self.request.user.bookkeeper.get_proxy_model().get_all_related_items(
+                    "documents"
+                )
+            )
         self.filterset = DocumentFilter(self.request.GET, queryset=queryset)
         return self.filterset.qs
 
 
 class DocumentCreateView(
+    PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
+    BookkeeperPassRelatedMixin,
     CreateView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = "document.add_document"
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "document/create.html"
     form_class = DocumentForm
     success_message = _("Document created successfully")
@@ -111,13 +90,15 @@ class DocumentCreateView(
 
 
 class DocumentUpdateView(
+    PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
+    BookkeeperPassRelatedMixin,
     UpdateView,
 ):
-    # permission_required = "client.add_client"
+    permission_required = "document.change_document"
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "document/update.html"
     form_class = DocumentForm
     success_message = _("Document updated successfully")
@@ -146,13 +127,14 @@ class DocumentUpdateView(
 
 
 class DocumentDeleteView(
+    PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWManagerAccessMixin,
     BWCacheViewMixin,
-    BWBaseListViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):
+    permission_required = "document.delete_document"
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "document/delete.html"
     model = Document
     success_message = _("Document deleted successfully")

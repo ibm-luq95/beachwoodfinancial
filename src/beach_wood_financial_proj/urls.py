@@ -14,11 +14,12 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib import admin
 from django.urls import path, include, reverse_lazy
 from django.views.generic import RedirectView
+from django.views.i18n import JavaScriptCatalog
 
 from core.views import js_settings
 
@@ -28,6 +29,7 @@ static_and_media_path_urls = static(
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     # path("", include("home.urls"), name="home-urls"),
     path("logs/", include("log_viewer.urls")),
     path("", RedirectView.as_view(url=reverse_lazy("auth:login")), name="home-url"),

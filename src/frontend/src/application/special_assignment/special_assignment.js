@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
           returnAsFormData: true,
           filesArray: ["attachment"],
         });
-        console.log(formInputs);
+        // console.log(formInputs);
         fieldset.disabled = true;
         // console.log(getCookie("csrftoken"));
         const uploadRequest = new UploadFileRequest(

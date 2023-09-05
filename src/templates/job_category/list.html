@@ -8,9 +8,15 @@
     {% include "components/inc/dashboard/content_header.html" with title="Job categories" subtitle="Subtitle" %}
 
     {# End Page Heading #}
-    <!-- Table Section -->
+    {% if object_list %}
+        <!-- Table Section -->
 
-    {% include "bw_components/job_category/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Job categories" header_subtitle="Subtitle" is_show_create_btn=True app_label=app_label page_obj=page_obj pagination_list_url_name="dashboard:job_category:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete" actions_app_name=app_label actions_base_url="dashboard:job_category" base_url_name="dashboard:job_category" filter_form=filter_form filter_cancel_url="dashboard:job_category:list" object_list=object_list is_header_enabled=True is_footer_enabled=True %}
+        {% include "bw_components/job_category/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Job categories" header_subtitle="Subtitle" is_show_create_btn=True app_label=app_label page_obj=page_obj pagination_list_url_name="dashboard:job_category:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete" actions_app_name=app_label actions_base_url="dashboard:job_category" base_url_name="dashboard:job_category" filter_form=filter_form filter_cancel_url="dashboard:job_category:list" object_list=object_list is_header_enabled=True is_footer_enabled=True %}
 
-    <!-- End Table Section -->
+        <!-- End Table Section -->
+    {% else %}
+
+        {% include "bw_ui_components/global/empty_card.html" with label="job categories" %}
+
+    {% endif %}
 {% endblock dashboard_content_block %}

@@ -6,6 +6,7 @@ from django.utils.translation import gettext as _
 
 from core.choices import ClientStatusEnum
 from core.models.mixins import BaseModelMixin
+from core.models.mixins.access_proxy_models_mixin import AccessProxyModelMixin
 from core.utils import FileValidator
 from client_category.models import ClientCategory
 from important_contact.models import ImportantContact
@@ -15,7 +16,7 @@ file_validator = FileValidator(
 )
 
 
-class Client(BaseModelMixin):
+class Client(BaseModelMixin, AccessProxyModelMixin):
     """This is client model
 
     Args:

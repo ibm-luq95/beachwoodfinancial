@@ -1,4 +1,5 @@
 const Webpack = require("webpack");
+const Path = require("path");
 const { merge } = require("webpack-merge");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const common = require("./webpack.common.js");
@@ -6,6 +7,7 @@ const common = require("./webpack.common.js");
 module.exports = merge(common, {
   mode: "production",
   devtool: "source-map",
+
   bail: true,
   output: {
     filename: "js/[name].[chunkhash:8].js",
@@ -22,19 +24,23 @@ module.exports = merge(common, {
   ],
   module: {
     rules: [
-      {
+      /* {
         test: /\.js$/,
         exclude: /node_modules/,
         use: "babel-loader",
+      }, */
+      {
+        test: /\.js$/,
+        include: Path.resolve(__dirname, "../src"),
+        loader: "esbuild-loader",
+        options: {
+          // we can pass options as we like
+          target: ["es2017"],
+        },
       },
       {
         test: /\.s?css/i,
-        use: [
-          MiniCssExtractPlugin.loader,
-          "css-loader",
-          "postcss-loader",
-          "sass-loader",
-        ],
+        use: [MiniCssExtractPlugin.loader, "css-loader", "postcss-loader", "sass-loader"],
       },
     ],
   },

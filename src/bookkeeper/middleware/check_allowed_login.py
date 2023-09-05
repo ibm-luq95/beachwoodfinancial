@@ -8,6 +8,7 @@ from django.utils.translation import gettext as _
 
 from core.cache import BWCacheHandler
 from core.constants.site_settings import WEB_APP_SITE_SETTINGS_KEY
+from core.utils import debugging_print
 
 
 class CheckAllowedLoginMiddleware:
@@ -39,8 +40,8 @@ class CheckAllowedLoginMiddleware:
                     request.get_host(), WEB_APP_SITE_SETTINGS_KEY
                 )
                 if (
-                    site_settings.can_bookkeepers_login is False
-                    or site_settings.can_assistants_login is False
+                    site_settings.get("can_bookkeepers_login") is False
+                    or site_settings.get("can_assistants_login") is False
                 ):
                     messages.error(
                         request,

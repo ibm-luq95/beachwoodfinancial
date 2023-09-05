@@ -14,7 +14,7 @@ from job.models import Job
 
 
 class JobProxy(Job):
-    class Meta:
+    class Meta(Job.Meta):
         proxy = True
 
     def unplug_bookkeeper_for_client_finished_job(self):

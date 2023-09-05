@@ -42,4 +42,5 @@ max_line_length=100
 format_attribute_template_tags=true
 format_js=true
 format_css=true
+ignore="H006"
 

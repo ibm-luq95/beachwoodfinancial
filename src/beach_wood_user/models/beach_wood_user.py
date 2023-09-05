@@ -3,6 +3,7 @@ from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.db import models, transaction
 from django.utils import timezone
 from django.utils.translation import gettext as _
+from guardian.mixins import GuardianUserMixin
 
 from core.choices import (
     BeachWoodUserTypeEnum,
@@ -21,7 +22,7 @@ logger = get_formatted_logger()
 # ###### [Custom Logger] #########
 
 
-class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin):
+class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin, GuardianUserMixin):
     """BWUser, it used instead of default django user model
 
     Args:
@@ -75,15 +76,64 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin):
     def fullname(self):
         return f"{self.first_name} {self.last_name}"
 
+    def save(self, *args, **kwargs):
+        self.email = self.email.lower()
+        super(BWUser, self).save(*args, **kwargs)
+
     @property
     def get_staff_member_object(self) -> dict:
         user_dict = dict()
         user_dict["user_type"] = self.user_type
         if hasattr(self, "bookkeeper"):
+            # user_dict["staff_object"] = getattr(self, "bookkeeper")
             user_dict["staff_object"] = getattr(self, "bookkeeper")
         elif hasattr(self, "manager"):
             user_dict["staff_object"] = getattr(self, "manager")
         elif hasattr(self, "assistant"):
             user_dict["staff_object"] = getattr(self, "assistant")
 
+        return user_dict
+
+    def get_staff_details(self) -> dict:
+        user_dict = dict()
+        user_dict.update(
+            {
+                "linkedin": self.get_staff_member_object.get(
+                    "staff_object"
+                ).profile.linkedin,
+                "instagram": self.get_staff_member_object.get(
+                    "staff_object"
+                ).profile.instagram,
+                "github": self.get_staff_member_object.get("staff_object").profile.github,
+                "profile_picture": self.get_staff_member_object.get(
+                    "staff_object"
+                ).profile.profile_picture,
+                "facebook": self.get_staff_member_object.get(
+                    "staff_object"
+                ).profile.facebook,
+                "twitter": self.get_staff_member_object.get(
+                    "staff_object"
+                ).profile.twitter,
+                "bio": self.get_staff_member_object.get("staff_object").profile.bio,
+                "first_name": self.first_name,
+                "last_name": self.last_name,
+                "email": self.email,
+                "phone_number": self.get_staff_member_object.get(
+                    "staff_object"
+                ).profile.phone_number,
+                "address": self.get_staff_member_object.get(
+                    "staff_object"
+                ).profile.address,
+            }
+        )
+        if self.user_type == "assistant":
+            user_dict.update(
+                {
+                    "assistant_type": self.get_staff_member_object.get(
+                        "staff_object"
+                    ).assistant_type
+                }
+            )
+        if self.user_type == "manager":
+            user_dict.update({"is_superuser": self.is_superuser})
         return user_dict

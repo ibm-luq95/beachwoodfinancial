@@ -12,6 +12,7 @@ from core.constants.status_labels import CON_NOT_STARTED
 from core.forms.mixins.base_form_mixin import BWBaseFormMixin
 from core.forms.mixins.js_modal_form_renderer_mixin import BWJSModalFormRendererMixin
 from core.forms.mixins.remove_fields_mixin import RemoveFieldsMixin
+from core.forms.widgets import RichHTMLEditorWidget
 from core.utils import FileValidator
 from job.models.help_messages import JOB_HELP_MESSAGES
 from job_category.models import JobCategory
@@ -32,7 +33,7 @@ class JobMiniForm(RemoveFieldsMixin, BWJSModalFormRendererMixin, BWBaseFormMixin
     due_date = forms.DateField(label=_("Due Date"), required=True)
     description = forms.CharField(
         label=_("Description"),
-        widget=forms.Textarea(attrs={"placeholder": _("Job content")}),
+        widget=RichHTMLEditorWidget,
         required=True,
         help_text=JOB_HELP_MESSAGES.get("description"),
     )

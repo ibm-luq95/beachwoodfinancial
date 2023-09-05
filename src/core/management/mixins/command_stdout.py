@@ -9,5 +9,5 @@ class CommandStdOutputMixin:
             self.stdout.write(self.style.SUCCESS(msg))
         elif output_type == "info":
             self.stdout.write(self.style.NOTICE(msg))
-        elif output_type == "warn":
+        elif output_type == "warn" or output_type == "warning":
             self.stdout.write(self.style.WARNING(msg))

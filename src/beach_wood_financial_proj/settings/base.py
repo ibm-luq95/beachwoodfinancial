@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.humanize",
     "django.forms",
     "django.contrib.sites",
+    "guardian",
     "django_extensions",
     "webpack_boilerplate",
     "django_components",
@@ -197,6 +198,13 @@ LOCALE_PATHS = [BASE_DIR / "locale/"]
 
 LANGUAGES = (("en", "English"),)
 
+# Django guardian configs
+GUARDIAN_MONKEY_PATCH = False
+AUTHENTICATION_BACKENDS = (
+    "django.contrib.auth.backends.ModelBackend",  # this is default
+    "guardian.backends.ObjectPermissionBackend",
+)
+
 # Django rest framework configs
 REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "drf_standardized_errors.handler.exception_handler",
@@ -335,7 +343,7 @@ if config("IS_CACHE_ENABLED", cast=bool) is True:
             "LOCATION": f"redis://{config('REDIS_HOST')}/1",
             "OPTIONS": {
                 "PASSWORD": config("REDIS_PASSWORD"),
-                "PARSER_CLASS": "redis.connection.HiredisParser",
+                # "PARSER_CLASS": "redis.connection.HiredisParser",
                 "CLIENT_CLASS": "django_redis.client.DefaultClient",
                 "PICKLE_VERSION": -1,
                 "SERIALIZER": "django_redis.serializers.json.JSONSerializer",
