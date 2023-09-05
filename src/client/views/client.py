@@ -32,7 +32,7 @@ class ClientListView(
     BWBaseListViewMixin,
     ListView,
 ):
-    permission_required = ["client.can_view_list"]
+    permission_required = "client.can_view_list"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "client/list.html"
     model = ClientProxy

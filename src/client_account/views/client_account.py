@@ -23,7 +23,7 @@ class ClientAccountListViewBW(
 ):
     template_name = "client_account/list.html"
     model = ClientAccount
-    permission_required = ["client_account.can_view_list"]
+    permission_required = "client_account.can_view_list"
     permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):
@@ -51,7 +51,7 @@ class ClientAccountCreateView(
     model = ClientAccount
     success_message = _("Contact created successfully")
     success_url = reverse_lazy("dashboard:client_account:list")
-    permission_required = ["client_account.add_clientaccount"]
+    permission_required = "client_account.add_clientaccount"
     permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):
@@ -74,7 +74,7 @@ class ClientAccountUpdateView(
     model = ClientAccount
     success_message = _("Contact updated successfully")
     success_url = reverse_lazy("dashboard:client_account:list")
-    permission_required = ["client_account.change_clientaccount"]
+    permission_required = "client_account.change_clientaccount"
     permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):
@@ -102,7 +102,7 @@ class ClientAccountDeleteView(
     model = ClientAccount
     success_message = _("Contact deleted successfully")
     success_url = reverse_lazy("dashboard:client_account:list")
-    permission_required = ["client_account.delete_clientaccount"]
+    permission_required = "client_account.delete_clientaccount"
     permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):

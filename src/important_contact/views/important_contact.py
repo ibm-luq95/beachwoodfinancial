@@ -21,7 +21,7 @@ class ImportantContactListViewBW(
     BWBaseListViewMixin,
     ListView,
 ):
-    permission_required = ["important_contact.can_view_list"]
+    permission_required = "important_contact.can_view_list"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "important_contact/list.html"
     model = ImportantContact
@@ -47,7 +47,7 @@ class ImportantContactCreateView(
     SuccessMessageMixin,
     CreateView,
 ):
-    permission_required = ["important_contact.add_importantcontact"]
+    permission_required = "important_contact.add_importantcontact"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "important_contact/create.html"
     form_class = ImportantContactForm
@@ -71,7 +71,7 @@ class ImportantContactUpdateView(
     UpdateView,
 ):
     template_name = "important_contact/update.html"
-    permission_required = ["important_contact.change_importantcontact"]
+    permission_required = "important_contact.change_importantcontact"
     permission_denied_message = _("You do not have permission to access this page.")
     form_class = ImportantContactForm
     model = ImportantContact
@@ -94,7 +94,7 @@ class ImportantContactDeleteView(
     DeleteView,
 ):
     template_name = "important_contact/delete.html"
-    permission_required = ["important_contact.delete_importantcontact"]
+    permission_required = "important_contact.delete_importantcontact"
     permission_denied_message = _("You do not have permission to access this page.")
     model = ImportantContact
     success_message = _("Contact deleted successfully")

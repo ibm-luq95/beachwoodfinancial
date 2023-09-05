@@ -24,7 +24,7 @@ class BookkeeperListView(
     BWBaseListViewMixin,
     ListView,
 ):
-    permission_required = ["bookkeeper.can_view_list"]
+    permission_required = "bookkeeper.can_view_list"
     template_name = "bookkeeper/list.html"
     model = BookkeeperProxy
     paginate_by = LIST_VIEW_PAGINATE_BY

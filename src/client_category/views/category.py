@@ -23,7 +23,7 @@ class ClientCategoryListViewBW(
 ):
     template_name = "client_category/list.html"
     model = ClientCategory
-    permission_required = ["client_category.can_view_list"]
+    permission_required = "client_category.can_view_list"
     permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):
@@ -51,7 +51,7 @@ class ClientCategoryCreateView(
     model = ClientCategory
     success_message = _("Category created successfully")
     success_url = reverse_lazy("dashboard:client_category:list")
-    permission_required = ["client_category.add_clientcategory"]
+    permission_required = "client_category.add_clientcategory"
     permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):
@@ -74,7 +74,7 @@ class ClientCategoryUpdateView(
     model = ClientCategory
     success_message = _("Category updated successfully")
     success_url = reverse_lazy("dashboard:client_category:list")
-    permission_required = ["client_category.change_clientcategory"]
+    permission_required = "client_category.change_clientcategory"
     permission_denied_message = _("You do not have permission to access this page.")
 
     def get_context_data(self, **kwargs):
@@ -92,7 +92,7 @@ class ClientCategoryDeleteView(
     SuccessMessageMixin,
     DeleteView,
 ):
-    permission_required = ["client_category.delete_clientcategory"]
+    permission_required = "client_category.delete_clientcategory"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "client_category/delete.html"
     model = ClientCategory

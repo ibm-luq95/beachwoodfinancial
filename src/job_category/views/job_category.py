@@ -18,7 +18,7 @@ class JobCategoryListView(
     BWBaseListViewMixin,
     ListView,
 ):
-    permission_required = ["job_category.can_view_list"]
+    permission_required = "job_category.can_view_list"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job_category/list.html"
     model = JobCategory
@@ -42,7 +42,7 @@ class JobCategoryCreateView(
     SuccessMessageMixin,
     CreateView,
 ):
-    permission_required = ["job_category.add_jobcategory"]
+    permission_required = "job_category.add_jobcategory"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job_category/create.html"
     form_class = JobCategoryForm
@@ -65,7 +65,7 @@ class JobCategoryUpdateView(
     SuccessMessageMixin,
     UpdateView,
 ):
-    permission_required = ["job_category.change_jobcategory"]
+    permission_required = "job_category.change_jobcategory"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job_category/update.html"
     form_class = JobCategoryForm
@@ -89,7 +89,7 @@ class JobCategoryDeleteView(
     SuccessMessageMixin,
     DeleteView,
 ):
-    permission_required = ["job_category.delete_jobcategory"]
+    permission_required = "job_category.delete_jobcategory"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job_category/delete.html"
     model = JobCategory
