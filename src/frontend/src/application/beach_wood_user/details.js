@@ -1,0 +1,73 @@
+"use strict";
+
+import { fetchUrlPathByName, sendRequest } from "../../utils/apis/apis";
+import { CSRFINPUTNAME, SUCCESSTIMEOUTSECS } from "../../utils/constants";
+import {
+  disableAndEnableFieldsetItems,
+  formInputSerializer,
+} from "../../utils/form_helpers";
+import { showToastNotification } from "../../utils/toasts";
+
+document.addEventListener("DOMContentLoaded", (readyEvent) => {
+  const assignedClientsForm = document.querySelector("form#assignedClientsForm");
+  const permissionsUpdateMiniForm = document.querySelector(
+    "form#permissionsUpdateMiniForm",
+  );
+  if (assignedClientsForm) {
+    assignedClientsForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const currentTarget = event.currentTarget;
+    });
+  }
+
+  if (permissionsUpdateMiniForm) {
+    permissionsUpdateMiniForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const currentTarget = event.currentTarget;
+      const formInputs = formInputSerializer({
+        formElement: currentTarget,
+        excludedFields: ["_method"],
+      });
+      console.log(formInputs);
+      disableAndEnableFieldsetItems({
+        formElement: permissionsUpdateMiniForm,
+        state: "disable",
+      });
+      const urlName = fetchUrlPathByName("dashboard:staff:update-permissions");
+      urlName
+        .then((urlData) => {
+          const requestOptions = {
+            method: currentTarget["_method"]
+              ? currentTarget["_method"].value.toUpperCase()
+              : currentTarget.method,
+            dataToSend: formInputs,
+            url: urlData["urlPath"],
+            token: currentTarget[CSRFINPUTNAME].value,
+          };
+          const request = sendRequest(requestOptions);
+          request
+            .then((data) => {
+              console.log(data);
+              showToastNotification("Permissions update successfully", "success");
+              setTimeout(() => {
+                window.location.reload();
+              }, SUCCESSTIMEOUTSECS);
+            })
+            .catch((requestError) => {
+              console.error(requestError);
+              disableAndEnableFieldsetItems({
+                formElement: permissionsUpdateMiniForm,
+                state: "enable",
+              });
+            });
+        })
+        .catch((error) => {
+          console.error(error);
+          disableAndEnableFieldsetItems({
+            formElement: permissionsUpdateMiniForm,
+            state: "enable",
+          });
+        });
+    });
+  }
+});

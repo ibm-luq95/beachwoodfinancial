@@ -534,6 +534,22 @@ pyrightconfig.json
 .history
 .ionide
 
+# Yarn
+src/frontend/.yarn/*
+src/frontend/!.yarn/releases
+src/frontend/!.yarn/patches
+src/frontend/!.yarn/plugins
+src/frontend/!.yarn/sdks
+src/frontend/!.yarn/versions
+.unotes
+
+# if you are NOT using Zero-installs, then:
+# comment the following lines
+src/frontend/!.yarn/cache
+
+# and uncomment the following lines
+.pnp.*
+
 # End of https://www.toptal.com/developers/gitignore/api/pycharm+all,python,django,node,pythonvanilla,visualstudiocode
 docs/
 src/frontend/package-lock.json
@@ -542,3 +558,5 @@ src/frontend/package-lock.json
 !**/migrations
 !**/migrations/__init__.py
 poetry.lock
+testing_sicripts
+src/local_dev.sqlite3

@@ -1,17 +1,19 @@
 # -*- coding: utf-8 -*-#
-from decouple import config
-from django.core.management.base import BaseCommand
-from django.contrib.sites.models import Site
-from django.db import transaction
-
 # import colorama
 from colorama import Fore
+from decouple import Config, RepositoryEnv
+from django.conf import settings
+from django.contrib.sites.models import Site
+from django.core.management.base import BaseCommand
+from django.db import transaction
+from django.utils.translation import gettext as _
 
 from core.management.mixins import CommandStdOutputMixin
+from core.utils.grab_env_file import grab_env_file
 
 
 class Command(BaseCommand, CommandStdOutputMixin):
-    help = "Initiate django site, django site framework"
+    help = _("Initiate django site, django site framework")
 
     def add_arguments(self, parser):
         parser.add_argument(
@@ -21,7 +23,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
             action="store",
             const=True,
             type=str,
-            help="Set django site settings",
+            help=_("Set django site settings"),
             required=False,
         )
         parser.add_argument(
@@ -31,7 +33,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
             action="store",
             const=True,
             type=str,
-            help="Clear all current site for django",
+            help=_("Clear all current site for django"),
             required=False,
         )
 
@@ -46,28 +48,31 @@ class Command(BaseCommand, CommandStdOutputMixin):
 
                     if all_sites:
                         confirm = input(
-                            Fore.YELLOW + f"Do you want to delete all sites {all_sites}? "
+                            Fore.YELLOW
+                            + _(f"Do you want to delete all sites {all_sites}? ")
                         )
                         if confirm == "Y" or confirm == "y":
                             self.stdout_output(
-                                "warn", f"Clear all exists sites ({all_sites.count()}) ..."
+                                "warn",
+                                _(f"Clear all exists sites ({all_sites.count()}) ..."),
                             )
                             for site in all_sites:
-                                self.stdout_output("warn", f"Deleting - ({site.name})")
+                                self.stdout_output("warn", _(f"Deleting - ({site.name})"))
                                 site.delete()
                         else:
-                            self.stdout_output("warn", "Quiting...")
+                            self.stdout_output("warn", _("Quiting..."))
                             return
                     else:
-                        self.stdout_output("warn", "No sites to delete")
+                        self.stdout_output("warn", _("No sites to delete"))
                 # else:
                 #     self.stdout_output("error", "You have to pass -i option!")
 
                 if init_set_site is True:
+                    config = grab_env_file()
                     site_domain = config("SITE_DOMAIN", cast=str)
                     site_name = config("SITE_NAME", cast=str)
-                    self.stdout_output("warn", f"Site domain - {site_domain}")
-                    self.stdout_output("warn", f"Site name - {site_name}")
+                    self.stdout_output("warn", _(f"Site domain - {site_domain}"))
+                    self.stdout_output("warn", _(f"Site name - {site_name}"))
                     site_data = {
                         "name": site_name,
                         "domain": site_domain,
@@ -76,10 +81,10 @@ class Command(BaseCommand, CommandStdOutputMixin):
                     site_obj, created = Site.objects.get_or_create(**site_data)
                     if created is True:
                         self.stdout_output(
-                            "success", f"Site created successfully - {site_obj}"
+                            "success", _(f"Site created successfully - {site_obj}")
                         )
                     else:
-                        self.stdout_output("warn", f"Site already exists - {site_obj}")
+                        self.stdout_output("warn", _(f"Site already exists - {site_obj}"))
 
         except Exception as ex:
             self.stdout_output("error", str(ex))

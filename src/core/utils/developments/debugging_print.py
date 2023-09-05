@@ -34,7 +34,8 @@ def debugging_print(txt_object, **kwargs):
             elif kwargs.get("is_inspect") is True:
                 inspect(
                     txt_object,
-                    methods=kwargs.get("methods"),
+                    methods=True,
+                    all=True,
                     sort=True,
                     help=kwargs.get("help"),
                     private=kwargs.get("private"),

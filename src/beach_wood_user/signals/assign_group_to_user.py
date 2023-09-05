@@ -5,10 +5,20 @@ from django.contrib.auth.models import Group, Permission
 from django.db import transaction
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+from django.utils.translation import gettext as _
 
+from assistant.models import AssistantProxy
+from beach_wood_user.models import Profile
 from beach_wood_user.models.beach_wood_user import BWUser
-from core.constants import BOOKKEEPER_GROUP_NAME, MANAGER_GROUP_NAME, ASSISTANT_GROUP_NAME
-from core.utils import get_formatted_logger
+from bookkeeper.models import BookkeeperProxy
+from core.constants.users import (
+    BOOKKEEPER_GROUP_NAME,
+    MANAGER_GROUP_NAME,
+    ASSISTANT_GROUP_NAME,
+    READONLY_NEW_STAFF_MEMBER_GROUP_NAME,
+)
+from core.utils import get_formatted_logger, debugging_print, colored_output_with_logging
+from manager.models import ManagerProxy
 
 # TODO: remove the custom logger before push (only for development)
 # ###### [Custom Logger] #########
@@ -19,83 +29,62 @@ logger = get_formatted_logger()
 
 
 @receiver(post_save, sender=BWUser)
-def assign_groups(sender, instance, created, **kwargs):
+def assign_groups(sender, instance: BWUser, created: bool, **kwargs):
     try:
-        # raise Exception("D")
-        if created is True:
+        if created:
+            created_user = instance
+            user_type = created_user.user_type
+
             with transaction.atomic():
-                # print("create group")
-                group = None
-                permission_codename = None
-                user = instance
-                user_type = user.user_type
-
                 match user_type:
-                    case "bookkeeper":
-                        group = BOOKKEEPER_GROUP_NAME
-                        permission_codename = "bookkeeper_user"
-                        # bookkeeper = BookkeeperProxy.objects.create(user=user)
-
                     case "assistant":
                         group = ASSISTANT_GROUP_NAME
                         permission_codename = "assistant_user"
-                        # assistant = Assistant.objects.create(user=user)
+                        assistant = AssistantProxy.objects.create(
+                            user=created_user, profile=Profile.objects.create()
+                        )
+                        # # Create profile for new user
+                        # assistant.profile = Profile()
+                        # assistant.save()
+                    case "bookkeeper":
+                        group = BOOKKEEPER_GROUP_NAME
+                        permission_codename = "bookkeeper_user"
+                        bookkeeper = BookkeeperProxy.objects.create(
+                            user=created_user, profile=Profile.objects.create()
+                        )
+                        # # Create profile for new user
+                        # bookkeeper.profile = Profile()
+                        # bookkeeper.save()
                     case "manager":
                         group = MANAGER_GROUP_NAME
                         permission_codename = "manager_user"
-                        # manager = Manager.objects.create(user=user)
-                    case _:
-                        if user.is_staff is True and user.is_superuser is True:
-                            group = MANAGER_GROUP_NAME
-                            user.user_type = "manager"
-                            user.save()
-                group_object = Group.objects.filter(name=group)
-
-                if not group_object:
-                    # raise ProjectError("USER", message=f"The group {group} not exists!")
-                    raise Exception(f"The group {group} not exists!")
-                group_object = group_object.first()
-                # print(group_object)
-                user.user_permissions.add(
-                    Permission.objects.get(codename=permission_codename)
+                        manager = ManagerProxy.objects.create(
+                            user=created_user, profile=Profile.objects.create()
+                        )
+                        # # Create profile for new user
+                        # manager.profile = Profile()
+                        # manager.save()
+                readonly_group = Group.objects.get(
+                    name=READONLY_NEW_STAFF_MEMBER_GROUP_NAME
                 )
-                user.groups.add(group_object)
-                user.save()
-        # else:
-        #     # check if the user is deleted, this will use here instead of using post_delete signal
-        #     # because I used soft delete functionality
-        #     if (
-        #             instance.is_deleted is True
-        #             and instance.get_changed_columns().get("is_deleted") is False
-        #     ):
-        #         user_type = instance.user_type
-        #         if user_type == "bookkeeper":
-        #             check_if_bookkeeper = hasattr(instance, "bookkeeper")
-        #             if check_if_bookkeeper is True:
-        #                 bookkeeper_obj = instance.bookkeeper
-        #                 bookkeeper_proxy_obj = BookkeeperProxy.objects.get(
-        #                     pk=bookkeeper_obj.pk
-        #                 )
-        #                 if hasattr(bookkeeper_proxy_obj, "clients"):
-        #                     clients = bookkeeper_proxy_obj.clients.all()
-        #                     if clients:
-        #                         for client in clients:
-        #                             # check if the bookkeeper exists in the client bookkeepers,
-        #                             # this step just in case
-        #                             contains = client.bookkeepers.contains(
-        #                                 bookkeeper_proxy_obj
-        #                             )
-        #                             if contains is True:
-        #                                 client.bookkeepers.remove(bookkeeper_proxy_obj)
-        #                                 client.save()
-        #                 bookkeeper_obj.delete()
-        #         if user_type == "assistant":
-        #             assistant_obj = instance.assistant
-        #             assistant_obj.delete()
-        #         if user_type == "manager":
-        #             manager_obj = instance.manager
-        #             manager_obj.delete()
+                if (
+                    created_user.user_type == "bookkeeper"
+                    or created_user.user_type == "assistant"
+                ):
+                    created_user.groups.add(readonly_group)
+                if created_user.user_type == "bookkeeper":
+                    group_obj = Group.objects.get(name=BOOKKEEPER_GROUP_NAME)
+                    created_user.groups.add(group_obj)
+                if created_user.user_type == "assistant":
+                    group_obj = Group.objects.get(name=ASSISTANT_GROUP_NAME)
+                    created_user.groups.add(group_obj)
+                if created_user.user_type == "manager":
+                    group_obj = Group.objects.get(name=MANAGER_GROUP_NAME)
+                    created_user.groups.add(group_obj)
+                created_user.save()
 
     except Exception as ex:
-        logger.error(traceback.format_exc())
+        colored_output_with_logging(
+            is_logged=True, text=traceback.format_exc(), log_level="error", color="red"
+        )
         raise Exception(str(ex))

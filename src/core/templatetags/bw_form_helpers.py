@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-#
+
+import json
+
 from django import template
-from django import forms
-from django.forms import BoundField, Field, Widget
-from django.forms.models import ModelMultipleChoiceField
+from django.forms import BoundField, Field, BaseModelForm, BaseForm
+from django.forms.widgets import Widget
 from django.utils.safestring import SafeString
 
+from core.config.bwcustom_jsonencoder import BWCustomJSONEncoder
 from core.utils import debugging_print
 
 register = template.Library()
@@ -15,6 +18,20 @@ def bw_get_form_field_type(field) -> str:
     # if isinstance(field, forms.ChoiceField):
     #     return "ChoiceField"
     return type(field).__name__
+
+
+@register.simple_tag
+def bw_get_form_widget_attrs_as_dict(input_bound_field: BoundField | Field) -> dict:
+    data = dict()
+    input_type = type(input_bound_field).__name__
+    if input_type == "BoundField":
+        widget: Widget = input_bound_field.field.widget
+    else:
+        widget: Widget = input_bound_field.widget
+    data = widget.attrs
+    if data.get("placeholder") is None:
+        data["placeholder"] = ""
+    return data
 
 
 @register.filter(name="bw_add_state_css_class")
@@ -36,13 +53,41 @@ def bw_add_state_css_class(input_bound_field: BoundField, state: str) -> SafeStr
     return input_bound_field.as_widget(attrs={"class": " ".join(css_classes)})
 
 
+@register.simple_tag
+def convert_dict_to_str(**kwargs):
+    data = dict()
+    for key, value in kwargs.items():
+        data.setdefault(key, value)
+    data = json.dumps(data, cls=BWCustomJSONEncoder)
+    # debugging_print(data)
+    return data
+
+
+@register.simple_tag
+def bw_split_form_hidden_and_not_inputs(form_object: BaseForm | BaseModelForm) -> dict:
+    inputs = {"hidden_inputs": [], "normal_inputs": []}
+    for field in form_object:
+        if field.is_hidden is True:
+            inputs["hidden_inputs"].append(field)
+        else:
+            inputs["normal_inputs"].append(field)
+    return inputs
+
+
 @register.simple_tag(takes_context=True)
 def bw_testing_form_field(context, input_bound_field: BoundField) -> None:
     # debugging_print(dir(input_bound_field))
     # debugging_print(input_bound_field, is_inspect=True)
     # debugging_print(input_bound_field.data)
     # debugging_print(input_bound_field.value())
-    # debugging_print(type(input_bound_field))
+    debugging_print(type(input_bound_field))
+    debugging_print(input_bound_field.label)
+    # debugging_print(input_bound_field.value())
+    # debugging_print(input_bound_field.field.widget)
+    # debugging_print(input_bound_field.field.widget, is_inspect=True)
+    debugging_print(input_bound_field.widget, is_inspect=True)
+    # debugging_print(input_bound_field.field)
+    # debugging_print(input_bound_field.field.show_hidden_initial)
     # debugging_print(dir(input_bound_field.widget))
     # checkboxselectmultiple
     # widget_type = input_bound_field.widget_type

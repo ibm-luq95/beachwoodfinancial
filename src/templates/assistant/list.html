@@ -1,0 +1,22 @@
+{% extends "core/layouts/dashboard_content_base.html" %}
+
+{% load development_tags %}
+
+{% block dashboard_content_block %}
+    {# Page Heading #}
+
+    {% include "components/inc/dashboard/content_header.html" with title="Assistants" subtitle="" %}
+
+    {# End Page Heading #}
+    {% if object_list %}
+        <!-- Table Section -->
+
+        {% include "bw_components/assistant/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Assistants" header_subtitle="" is_show_create_btn=True app_label=app_label page_obj=page_obj pagination_list_url_name="dashboard:management_assistant:list" is_filters_enabled=True is_actions_menu_enabled=True actions_items="update,delete" actions_app_name=app_label actions_base_url="dashboard:management_assistant" base_url_name="dashboard:management_assistant" filter_form=filter_form filter_cancel_url="dashboard:management_assistant:list" object_list=page_obj is_header_enabled=True is_footer_enabled=True %}
+
+        <!-- End Table Section -->
+    {% else %}
+
+        {% include "bw_ui_components/global/empty_card.html" with label="assistant" %}
+
+    {% endif %}
+{% endblock dashboard_content_block %}

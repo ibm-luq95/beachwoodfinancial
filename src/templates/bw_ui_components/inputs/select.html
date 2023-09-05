@@ -14,13 +14,12 @@
     <div class="relative">
         <select id="{{ input_id }}"
                 name="{{ input_name }}"
-                class="{{ BW_PRELINE_TEXT_INPUT_CSS_CLASSES }} {{ input_state_css_classes }}"
+                class="{{ BW_PRELINE_SELECT_INPUT_CSS_CLASSES }} {{ input_state_css_classes }}"
                 disabled
                 aria-describedby="{{ aria_describedby }}">
-                
-                {% for key, value in options.items %}
-                <option value="{{ key }}" {% if key == selected_option %} selected {% endif %}>{{ value }}</option>
-                {% endfor %}
+            {% for key, value in options.items %}
+                <option value="{{ key }}" {% if key == selected_option %}selected{% endif %}>{{ value }}</option>
+            {% endfor %}
         </select>
         {% if input_state == "error" %}
 
@@ -42,4 +41,3 @@
 {% if helper_text %}
     <p class="text-sm text-gray-500 mt-2" id="{{ aria_describedby }}">{{ helper_text }}</p>
 {% endif %}
-</div>

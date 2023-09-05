@@ -1,26 +1,22 @@
 # -*- coding: utf-8 -*-#
 from PIL import Image
 from django.core import validators
-from django.contrib.auth import get_user_model
 from django.db import models
 from django.utils.translation import gettext as _
 
 from core.choices import ClientStatusEnum
 from core.models.mixins import BaseModelMixin
+from core.models.mixins.access_proxy_models_mixin import AccessProxyModelMixin
 from core.utils import FileValidator
 from client_category.models import ClientCategory
 from important_contact.models import ImportantContact
 
 file_validator = FileValidator(
-    max_size=1024 * 1000,
-    content_types=(
-        "image/png",
-        "image/jpeg",
-    ),
+    max_size=1024 * 1000, content_types=("image/png", "image/jpeg")
 )
 
 
-class Client(BaseModelMixin):
+class Client(BaseModelMixin, AccessProxyModelMixin):
     """This is client model
 
     Args:
@@ -54,6 +50,7 @@ class Client(BaseModelMixin):
         validators=[validators.integer_validator],
     )
     is_active = models.BooleanField(_("is active"), default=True)
+    description = models.TextField(_("description"), null=True, blank=True)
     company_logo = models.ImageField(
         _("company logo"),
         upload_to="logos/",
@@ -79,15 +76,3 @@ class Client(BaseModelMixin):
                 output_size = (150, 150)
                 image.thumbnail(output_size)
                 image.save(self.company_logo.path)
-
-    def get_total_tasks_for_all_jobs(self) -> int:
-        all_tasks_count = []
-        if self.jobs.count() <= 0:
-            return 0
-        for job in self.jobs.all():
-            all_tasks_count.append(job.tasks.count())
-
-        return sum(all_tasks_count)  # TODO: check if sum or len to use
-
-    def get_tasks_count(self):
-        return self.jobs.all()

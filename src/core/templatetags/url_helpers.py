@@ -4,10 +4,7 @@ from uuid import UUID
 
 from django import template
 from django.template import RequestContext
-from django.urls import (
-    reverse_lazy,
-    resolvers,
-)
+from django.urls import reverse_lazy, resolvers
 
 from beach_wood_user.models import BWUser
 
@@ -52,11 +49,11 @@ def collect_urls(urls=None, namespace=None, prefix=None) -> list | None:
 
 @register.simple_tag(takes_context=True)
 def fetch_url_by_name_pk(
-        context: RequestContext,
-        details_url: Optional[str] = None,
-        action_urls_pattern: Optional[str] = None,
-        url_name: Optional[str] = None,
-        object_pk: Optional[UUID] = None,
+    context: RequestContext,
+    details_url: Optional[str] = None,
+    action_urls_pattern: Optional[str] = None,
+    url_name: Optional[str] = None,
+    object_pk: Optional[UUID] = None,
 ) -> str | None:
     url_path = ""
 
@@ -75,11 +72,11 @@ def fetch_url_by_name_pk(
 
 @register.simple_tag(takes_context=True)
 def fetch_app_url_for_user(
-        context: RequestContext,
-        app_name: str,
-        path_name: str,
-        user_type: Optional[str] = None,
-        object_pk: Optional[UUID] = None,
+    context: RequestContext,
+    app_name: str,
+    path_name: str,
+    user_type: Optional[str] = None,
+    object_pk: Optional[UUID] = None,
 ) -> str:
     url_path = ""
     if user_type is not None:
@@ -96,9 +93,7 @@ def fetch_app_url_for_user(
 
 @register.simple_tag
 def fetch_user_details_url(
-        base_user: str,
-        user_object: BWUser,
-        details_name: Optional[str] = "details",
+    base_user: str, user_object: BWUser, details_name: Optional[str] = "details"
 ) -> str:
     url_path = ""
     user_type = user_object.user_type
@@ -107,4 +102,32 @@ def fetch_user_details_url(
         url_pattern = f"{base_user}:{user_type}:{details_name}"
         url_path = reverse_lazy(url_pattern, kwargs={"pk": get_user_object.pk})
     # debugging_print(locals())
+    return url_path
+
+
+@register.simple_tag
+def fetch_drf_route_api_by_name(app_name: str, url_kwargs: dict) -> str:
+    if not url_kwargs:
+        url = reverse_lazy(app_name, kwargs={"pk": url_kwargs.get("pk")})
+    else:
+        url = reverse_lazy(app_name)
+    return url
+
+
+@register.simple_tag
+def get_staff_member_update_url(user: BWUser) -> str:
+    url_path = ""
+    management_section = ""
+    pk = ""
+    match user.user_type:
+        case "bookkeeper":
+            management_section = "management_bookkeeper"
+            pk = user.bookkeeper.pk
+        case "assistant":
+            management_section = "management_assistant"
+            pk = user.assistant.pk
+        case "manager":
+            management_section = "managers"
+            pk = user.manager.pk
+    url_path = reverse_lazy(f"dashboard:{management_section}:update", kwargs={"pk": pk})
     return url_path

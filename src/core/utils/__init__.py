@@ -9,3 +9,4 @@ from .utils import (
 from .exceptions import BeachWoodFinancialError
 from .file_upload_validator import FileValidator
 from .hasher import PasswordHasher
+from .color_output import colored_output_with_logging

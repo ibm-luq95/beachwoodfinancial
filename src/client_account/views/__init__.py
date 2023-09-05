@@ -5,3 +5,4 @@ from .client_account import (
     ClientAccountDeleteView,
     ClientAccountUpdateView,
 )
+from .api import ClientAccountViewSet

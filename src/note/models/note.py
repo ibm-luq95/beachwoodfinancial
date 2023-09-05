@@ -2,17 +2,15 @@ from django.db import models
 from django.utils.translation import gettext as _
 
 from client.models import ClientProxy
-from core.choices import NoteTypesEnum
+from core.choices import NoteSectionEnum
 from core.models.mixins import (
     BaseModelMixin,
     GetObjectSectionMixin,
     GeneralStatusFieldMixin,
     StrModelMixin,
 )
-
-
-# from jobs.models import JobProxy
-# from task.models import TaskProxy
+from job.models import JobProxy
+from task.models import TaskProxy
 
 
 class Note(BaseModelMixin, GetObjectSectionMixin, GeneralStatusFieldMixin, StrModelMixin):
@@ -31,23 +29,34 @@ class Note(BaseModelMixin, GetObjectSectionMixin, GeneralStatusFieldMixin, StrMo
         blank=True,
         related_name="notes",
     )
-    # job = models.ForeignKey(
-    #     to=JobProxy, on_delete=models.SET_NULL, null=True, blank=True, related_name="notes"
-    # )
-    # task = models.ForeignKey(
-    #     to=TaskProxy,
-    #     on_delete=models.SET_NULL,
-    #     null=True,
-    #     blank=True,
-    #     related_name="notes",
-    # )
+    job = models.ForeignKey(
+        to=JobProxy, on_delete=models.SET_NULL, null=True, blank=True, related_name="notes"
+    )
+    task = models.ForeignKey(
+        to=TaskProxy,
+        on_delete=models.SET_NULL,
+        null=True,
+        blank=True,
+        related_name="notes",
+    )
     note_section = models.CharField(
         _("note section"),
         max_length=15,
         null=True,
         blank=True,
-        choices=NoteTypesEnum.choices,
+        choices=NoteSectionEnum.choices,
+        editable=False,
+        db_index=True,
     )
 
     class Meta(BaseModelMixin.Meta):
         verbose_name_plural = "notes"
+
+    def save(self, *args, **kwargs):
+        if self.job:
+            self.note_section = NoteSectionEnum.JOB
+        elif self.task:
+            self.note_section = NoteSectionEnum.TASK
+        elif self.client:
+            self.note_section = NoteSectionEnum.CLIENT
+        super().save(*args, **kwargs)

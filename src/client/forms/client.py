@@ -13,6 +13,8 @@ from core.forms import BaseModelFormMixin
 
 from django.utils.html import format_html, format_html_join
 
+from core.forms.mixins.remove_fields_mixin import RemoveFieldsMixin
+from core.forms.widgets import RichHTMLEditorWidget
 from core.utils import debugging_print
 
 
@@ -72,11 +74,12 @@ class CustomCheckboxSelectMultiple(CheckboxSelectMultiple):
         return final_code
 
 
-class ClientForm(BaseModelFormMixin):
+class ClientForm(BaseModelFormMixin, RemoveFieldsMixin):
     field_order = ["name", "email", "categories", "bookkeepers", "important_contacts"]
 
-    def __init__(self, *args, **kwargs):
+    def __init__(self, removed_fields: Optional[list] = None, *args, **kwargs):
         super(ClientForm, self).__init__(*args, **kwargs)
+        RemoveFieldsMixin.__init__(self, removed_fields=removed_fields)
         self.fields.pop("is_active")
 
         # if user:
@@ -103,6 +106,7 @@ class ClientForm(BaseModelFormMixin):
             "important_contacts": forms.CheckboxSelectMultiple(),
             # "categories": CustomCheckboxSelectMultiple(),
             "categories": forms.CheckboxSelectMultiple(),
+            "description": RichHTMLEditorWidget()
         }
 
     def save(self, commit=True):

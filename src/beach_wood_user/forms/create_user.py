@@ -12,5 +12,5 @@ class BWUserCreationForm(UserCreationForm):
             "first_name",
             "last_name",
             "user_type",
-            "password",
+            # "password",
         )

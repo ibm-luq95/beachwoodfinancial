@@ -32,19 +32,6 @@ DATABASES = {
     }
 }
 
-# Set Cache Configurations
-# Cache Redis
-CACHES = {
-    "default": {
-        # "BACKEND": os.environ.get("CACHE_BACKEND_ENGINE"),
-        "BACKEND": config("CACHE_BACKEND_ENGINE", cast=str),
-        # "LOCATION": f"redis://:{os.environ.get('REDIS_PASSWORD')}@{os.environ.get('REDIS_HOST')}:{os.environ.get(
-        # 'REDIS_PORT')}",
-        "LOCATION": f"redis://:{config('REDIS_PASSWORD')}@{config('REDIS_HOST')}:{config('REDIS_PORT')}",
-        "TIMEOUT": None,
-    }
-}
-
 # Djagno Debug Toolbar
 INTERNAL_IPS = config("INTERNAL_IPS", cast=str).split(", ")
 DISABLE_PANELS = {}

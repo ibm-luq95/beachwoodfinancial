@@ -6,8 +6,7 @@ from core.choices import ClientAccountStatusEnum, ServiceNameEnum
 from core.models.mixins import BaseModelMixin
 from core.utils import PasswordHasher
 
-
-# from client.models import ClientProxy
+from client.models import ClientProxy
 
 
 class ClientAccount(BaseModelMixin):
@@ -17,14 +16,14 @@ class ClientAccount(BaseModelMixin):
         BaseModelMixin (models.Model): Django base model mixin
     """
 
-    # client = models.ForeignKey(
-    #     to=ClientProxy,
-    #     on_delete=models.RESTRICT,
-    #     null=True,
-    #     related_name="client_accounts",
-    #     blank=True,
-    # )
-    is_services = models.BooleanField(_("is services"), default=False)
+    client = models.ForeignKey(
+        to=ClientProxy,
+        on_delete=models.RESTRICT,
+        null=True,
+        related_name="client_accounts",
+        blank=True,
+    )
+    is_services = models.BooleanField(_("is services"), default=False, editable=False)
     account_name = models.CharField(_("account name"), max_length=50, null=True)
     account_email = models.EmailField(_("account email"), max_length=50, null=True)
     account_url = models.URLField(_("account url"), max_length=50, null=True)
@@ -59,3 +58,8 @@ class ClientAccount(BaseModelMixin):
         else:
             # debugging_print(self.password)
             return PasswordHasher.decrypt(self.account_password)
+
+    def save(self, *args, **kwargs):
+        if self.service_name != "":
+            self.is_services = True
+        super(ClientAccount, self).save(*args, **kwargs)

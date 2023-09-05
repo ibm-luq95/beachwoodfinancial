@@ -9,11 +9,13 @@ from core.constants.status_labels import (
     CON_DISABLED,
     CON_ENABLED,
     CON_NOT_STARTED,
+    CON_PAST_DUE,
 )
+from core.models.querysets import BaseQuerySetMixin
 
 
 class ClientProxy(Client):
-    class Meta:
+    class Meta(Client.Meta):
         proxy = True
 
     def get_managed_bookkeepers(self) -> set | None:
@@ -97,3 +99,19 @@ class ClientProxy(Client):
                     special_assignments.filter(Q(status=CON_ARCHIVED)).update(
                         status=CON_NOT_STARTED
                     )
+
+    def get_total_tasks_for_all_jobs(self) -> int:
+        all_tasks_count = []
+        if self.jobs.count() <= 0:
+            return 0
+        for job in self.jobs.all():
+            all_tasks_count.append(job.tasks.count())
+
+        return sum(all_tasks_count)  # TODO: check if sum or len to use
+
+    def get_jobs_count(self) -> int | None:
+        return self.jobs.count()
+
+    def get_all_past_due_jobs(self) -> BaseQuerySetMixin:
+        jobs = self.jobs.filter(status=CON_PAST_DUE)
+        return jobs

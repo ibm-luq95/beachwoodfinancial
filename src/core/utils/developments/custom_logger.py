@@ -28,8 +28,9 @@ class CustomFormatter(logging.Formatter):
         return formatter.format(record)
 
 
-def get_formatted_logger(logger_name: Optional[str] = None) -> Logger:
-    logger = logging.getLogger("django" or logger_name)
+def get_formatted_logger(logger_name: Optional[str] = "bw_logger") -> Logger:
+    logger = logging.getLogger(logger_name)
+    # print(logger_name)
     # logger.setLevel(logging.DEBUG)
 
     # create console handler with a higher log level

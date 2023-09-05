@@ -1,0 +1,17 @@
+autopep8
+bandit
+black
+djlint
+curlylint
+docformatter
+flake8
+isort
+mypy
+mypy-extensions
+pep8
+pycodestyle
+pydocstyle
+pylama
+pylint
+pylint-django
+yapf

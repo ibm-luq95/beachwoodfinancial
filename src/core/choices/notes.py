@@ -2,13 +2,15 @@
 import stringcase
 from django.db import models
 from django.utils.translation import gettext as _
+
+from core.constants.general import CON_TASK, CON_CLIENT, CON_JOB
 from core.constants.status_labels import CON_ENABLED, CON_DISABLED, CON_ARCHIVED
 
 
-class NoteTypesEnum(models.TextChoices):
-    CLIENT = "client", _("Client")
-    JOB = "job", _("Job")
-    TASK = "task", _("Task")
+class NoteSectionEnum(models.TextChoices):
+    CLIENT = CON_CLIENT, _(stringcase.sentencecase(CON_CLIENT))
+    JOB = CON_JOB, _(stringcase.sentencecase(CON_JOB))
+    TASK = CON_TASK, _(stringcase.sentencecase(CON_TASK))
 
 
 class NoteStatusEnum(models.TextChoices):

@@ -4,3 +4,4 @@ from .document import (
     DocumentUpdateView,
     DocumentDeleteView,
 )
+from .api import DocumentViewSet

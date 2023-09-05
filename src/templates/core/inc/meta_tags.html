@@ -5,13 +5,14 @@
 <meta name="robots" content="index, follow" />
 <meta name="description" content="{{ get_web_app_settings.description }}" />
 <meta name="keywords" content="{{ get_web_app_settings.keywords }}" />
-<meta name="author" content="Ibrahim Luqman" />
+<meta name="author" content="{{ get_web_app_settings.author }}" />
 <meta name="title" content="{{ get_web_app_settings.title }}" />
 <meta name="language" content="English" />
 <link rel="canonical" href="URL" />
-<meta name="subject" content="WEBSITE PAGE SUBJECT" />
+<meta name="subject" content="{{ get_web_app_settings.subject }}" />
 <meta name="copyright" content="COPYRIGHT_HOLDERS" />
 <meta name="revised" content="REVISION_DATE" />
-<meta name="classification" content="Business" />
+<meta name="classification"
+      content="{{ get_web_app_settings.classification }}" />
 <meta name="url" content="{{ get_web_app_settings.url }}" />
 {% endnospaces %}

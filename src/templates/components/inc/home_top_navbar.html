@@ -6,7 +6,10 @@
         <div class="flex items-center justify-between">
             <a class="flex-none text-white text-xl font-semibold dark:text-white"
                href="#"
-               aria-label="Beach Wood Financial">BWF</a>
+               aria-label="Beach Wood Financial">
+               <img src="{% if get_web_app_settings.logo %} {{ get_web_app_settings.logo }} {% endif %}"
+               alt="{{ get_web_app_settings.name }}" class="w-auto h-16" />
+            </a>
             <div class="sm:hidden">
                 <button type="button"
                         class="hs-collapse-toggle p-2 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-slate-900 text-white shadow-sm align-middle focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"

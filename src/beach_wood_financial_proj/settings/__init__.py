@@ -1,11 +1,15 @@
-import os
+from pathlib import Path
 
 from decouple import Config, RepositoryEnv
 
-cwd = os.getcwd()
-full_env_file_path = os.path.join(cwd, ".env", ".env_dev")
+cwd = Path.cwd()
+env_path = cwd / ".env" / ".env"
 
-config = Config(RepositoryEnv(full_env_file_path))
+# check if .env file not exists
+if env_path.exists() is False:
+    raise Exception(".env file not exists!!!")
+
+config = Config(RepositoryEnv(env_path))
 
 environment = config("STAGE_ENVIRONMENT", cast=str)
 
@@ -21,3 +25,5 @@ elif environment == "LOCAL":
     from .local import *
 elif environment == "STAGE":
     from .stage import *
+elif environment == "LOCAL_DEV":
+    from .local_dev import *
