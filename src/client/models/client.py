@@ -70,9 +70,12 @@ class Client(BaseModelMixin, AccessProxyModelMixin):
 
     def save(self, *args, **kwargs):
         super(Client, self).save(*args, **kwargs)
-        if self.company_logo:
-            image = Image.open(self.company_logo.path)
-            if image.height > 150 or image.width > 150:
-                output_size = (150, 150)
-                image.thumbnail(output_size)
-                image.save(self.company_logo.path)
+        try:
+            if self.company_logo:
+                image = Image.open(self.company_logo.path)
+                if image.height > 150 or image.width > 150:
+                    output_size = (150, 150)
+                    image.thumbnail(output_size)
+                    image.save(self.company_logo.path)
+        except FileNotFoundError:
+            pass
