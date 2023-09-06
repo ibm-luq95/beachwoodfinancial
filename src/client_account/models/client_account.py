@@ -26,7 +26,7 @@ class ClientAccount(BaseModelMixin):
     is_services = models.BooleanField(_("is services"), default=False, editable=False)
     account_name = models.CharField(_("account name"), max_length=50, null=True)
     account_email = models.EmailField(_("account email"), max_length=50, null=True)
-    account_url = models.URLField(_("account url"), max_length=50, null=True)
+    account_url = models.URLField(_("account url"), max_length=250, null=True)
     account_username = models.CharField(_("account username"), max_length=30, null=True)
     account_password = models.CharField(_("account password"), max_length=250, null=True)
     status = models.CharField(
