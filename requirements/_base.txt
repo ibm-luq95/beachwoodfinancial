@@ -30,5 +30,7 @@ python-webpack-boilerplate
 PyYAML
 redis
 requests
+pandas
+numpy
 stringcase
 Whitenoise
