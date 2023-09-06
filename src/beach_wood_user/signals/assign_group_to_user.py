@@ -64,9 +64,11 @@ def assign_groups(sender, instance: BWUser, created: bool, **kwargs):
                         # # Create profile for new user
                         # manager.profile = Profile()
                         # manager.save()
-                readonly_group = Group.objects.get(
+                readonly_group = Group.objects.filter(
                     name=READONLY_NEW_STAFF_MEMBER_GROUP_NAME
                 )
+                if readonly_group:
+                    readonly_group = readonly_group.first()
                 if (
                     created_user.user_type == "bookkeeper"
                     or created_user.user_type == "assistant"
