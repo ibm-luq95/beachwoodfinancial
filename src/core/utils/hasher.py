@@ -41,7 +41,7 @@ class PasswordHasher:
             return None
 
     @staticmethod
-    def decrypt(pas: str) -> str:
+    def decrypt(pas: str, env_key=None) -> str:
         """Decrypt password
 
         Parameters
@@ -61,7 +61,10 @@ class PasswordHasher:
         try:
             pas = base64.urlsafe_b64decode(pas)
             # debugging_print(pas)
-            cipher_pass = Fernet(settings.ENCRYPT_KEY)
+            if env_key is not None:
+                cipher_pass = Fernet(env_key)
+            else:
+                cipher_pass = Fernet(settings.ENCRYPT_KEY)
             decod_pass = cipher_pass.decrypt(pas).decode()
             return decod_pass
         except Exception as e:

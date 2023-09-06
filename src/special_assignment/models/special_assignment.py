@@ -59,6 +59,8 @@ class SpecialAssignment(
         related_name="requested_assignments",
         help_text=_("readonly, you cant modified it"),
         editable=False,
+        null=True,
+        blank=True
     )
 
     objects = SpecialAssignmentsManager()

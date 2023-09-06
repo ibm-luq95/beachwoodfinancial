@@ -18,6 +18,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include, reverse_lazy
+from django.utils.translation import gettext as _
 from django.views.generic import RedirectView
 from django.views.i18n import JavaScriptCatalog
 
@@ -38,6 +39,10 @@ urlpatterns = [
     path("auth/", include("beach_wood_user.urls.auth"), name="auth-urls"),
     path("dashboard/", include("dashboard.urls"), name="dashboard-urls"),
 ]
+
+admin.site.index_title = _("Beachwood Financial Administrator")
+admin.site.site_header = _("Beachwood Financial Solutions")
+admin.site.site_title = _("Beachwood Financial Administrator")
 
 if settings.DEBUG:
     urlpatterns += static_and_media_path_urls

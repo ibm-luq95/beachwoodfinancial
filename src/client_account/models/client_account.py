@@ -4,7 +4,7 @@ from django.utils.translation import gettext as _
 
 from core.choices import ClientAccountStatusEnum, ServiceNameEnum
 from core.models.mixins import BaseModelMixin
-from core.utils import PasswordHasher
+from core.utils import PasswordHasher, debugging_print
 
 from client.models import ClientProxy
 
@@ -26,7 +26,7 @@ class ClientAccount(BaseModelMixin):
     is_services = models.BooleanField(_("is services"), default=False, editable=False)
     account_name = models.CharField(_("account name"), max_length=50, null=True)
     account_email = models.EmailField(_("account email"), max_length=50, null=True)
-    account_url = models.URLField(_("account url"), max_length=50, null=True)
+    account_url = models.URLField(_("account url"), max_length=250, null=True)
     account_username = models.CharField(_("account username"), max_length=30, null=True)
     account_password = models.CharField(_("account password"), max_length=250, null=True)
     status = models.CharField(
@@ -48,9 +48,6 @@ class ClientAccount(BaseModelMixin):
     def __str__(self) -> str:
         return f"{self.account_name}"
 
-    # def get_absolute_url(self):
-    #     return reverse("manager:client_account:details", kwargs={"pk": self.pk})
-
     @property
     def decrypted_account_password(self) -> str | None:
         if not self.account_password:
@@ -62,4 +59,8 @@ class ClientAccount(BaseModelMixin):
     def save(self, *args, **kwargs):
         if self.service_name != "":
             self.is_services = True
+        if self.decrypted_account_password:
+            self.account_password = PasswordHasher.encrypt(self.decrypted_account_password)
+        else:
+            self.account_password = PasswordHasher.encrypt(self.account_password)
         super(ClientAccount, self).save(*args, **kwargs)

@@ -40,23 +40,23 @@ class ClientAccountForm(BaseModelFormMixin, SetFieldsInputsHiddenMixin):
 
     account_password = forms.CharField(widget=BWPasswordInputWidget, required=False)
 
-    def clean_account_password(self):
-        data = self.cleaned_data["account_password"]
-        if self.is_update is True:
-            if not data:
-                # debugging_print("No password")
-                data = PasswordHasher.encrypt(
-                    self.updated_object.decrypted_account_password
-                )
-            else:
-                data = PasswordHasher.encrypt(data)
-            # debugging_print(data)
-        else:
-            data = PasswordHasher.encrypt(data)
-        # Always return a value to use as the new cleaned data, even if
-        # this method didn't change it.
-
-        return data
+    # def clean_account_password(self):
+    #     data = self.cleaned_data["account_password"]
+    #     if self.is_update is True:
+    #         if not data:
+    #             # debugging_print("No password")
+    #             data = PasswordHasher.encrypt(
+    #                 self.updated_object.decrypted_account_password
+    #             )
+    #         else:
+    #             data = PasswordHasher.encrypt(data)
+    #         # debugging_print(data)
+    #     else:
+    #         data = PasswordHasher.encrypt(data)
+    #     # Always return a value to use as the new cleaned data, even if
+    #     # this method didn't change it.
+    #
+    #     return data
 
     class Meta(BaseModelFormMixin.Meta):
         model = ClientAccount
