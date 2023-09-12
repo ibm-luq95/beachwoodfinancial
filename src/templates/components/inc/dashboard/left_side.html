@@ -466,6 +466,15 @@
                                 </a>
                             </li>
                         {% endif %}
+                        {% if perms.job.can_view_report or job.can_view_report %}
+                            <li>
+                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
+                                   href="{% url 'dashboard:job:report' %}">
+                                    <i class="fa-solid fa-filter"></i>
+                                    {% translate "Report" %}
+                                </a>
+                            </li>
+                        {% endif %}
                         {% if perms.assistant.assistant_has_full_manager_permissions or request.user.is_superuser is True %}
                             <li class="hs-accordion" id="jobs-categories-accordion">
                                 <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"

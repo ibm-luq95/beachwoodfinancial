@@ -52,8 +52,9 @@
   "isort.importStrategy": "fromEnvironment",
   "isort.logLevel": "warn",
   "isort.check": true,
-  "stylelint.stylelintPath": "./src/frontend/node_modules/stylelint/bin/stylelint.js"
+  "stylelint.stylelintPath": "./src/frontend/node_modules/stylelint/bin/stylelint.js",
   // "isort.interpreter": [
   //   "${userHome}/.virtualenvs/beach_wood_financial_dev_venv_3.11.4/bin/python3"
   // ],
+  "typescript.tsdk": "./src/frontend/node_modules/typescript/lib"
 }

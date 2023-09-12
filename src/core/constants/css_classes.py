@@ -5,6 +5,11 @@ BW_DISABLED_DISABLED_INPUTS_CSS_CLASSES = "disabled:opacity-75 cursor-not-allowe
 BW_FULL_INPUT_CSS_CLASSES = (
     f"{BW_BASE_INPUT_CSS_CLASSES} {BW_DISABLED_DISABLED_INPUTS_CSS_CLASSES}"
 )
+BW_TRAILING_ICON_CSS_CLASSES = (
+    f"{BW_FULL_INPUT_CSS_CLASSES} py-2 px-3 pl-11 block w-full border-gray-200 shadow-sm"
+    " rounded-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500"
+    " dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+)
 BW_TABLE_LIST_COMPONENT_CLASS = "table-list-component"
 BW_TABLE_CONTAINER = "bw-table-container"
 BW_TABLE_LIST_SORT_CLASS = "table-sort"

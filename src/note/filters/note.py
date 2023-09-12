@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-#
-import django_filters
+
+from core.filters.filter_help_text import HelpfulFilterSet
 from note.models import Note
 
 
-class NoteFilter(django_filters.FilterSet):
+class NoteFilter(HelpfulFilterSet):
     class Meta:
         model = Note
         fields = {

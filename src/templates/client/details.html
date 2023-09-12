@@ -396,7 +396,7 @@
                 <p class="text-gray-500 dark:text-gray-400">Client details tab</p>
                 <hr class="my-4" />
                 <section id="formWrapper">
-                    {% component "bw_form" form=client_form perms=perms form_id="clientDetailsMiniForm" submit_btn_text="Update" form_title="Update client - "|add:object.name form_subtitle="Update client details" is_upload_form=True %}
+                    {% component "bw_form" form=client_form perms=perms form_id="clientDetailsMiniForm" submit_btn_text="Update" form_title="Update client - "|add:object.name form_subtitle="Update client details" is_upload_form=True hide_submit_btn=True hide_back_btn=True %}
                 </section>
             </div>
             <div id="accounts-tab"

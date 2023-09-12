@@ -23,14 +23,17 @@ def bw_get_form_field_type(field) -> str:
 @register.simple_tag
 def bw_get_form_widget_attrs_as_dict(input_bound_field: BoundField | Field) -> dict:
     data = dict()
+    # debugging_print(dir(input_bound_field))
     input_type = type(input_bound_field).__name__
     if input_type == "BoundField":
         widget: Widget = input_bound_field.field.widget
     else:
         widget: Widget = input_bound_field.widget
+
     data = widget.attrs
     if data.get("placeholder") is None:
         data["placeholder"] = ""
+    data["input_type"] = widget.input_type if hasattr(widget, "input_type") else None
     return data
 
 

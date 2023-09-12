@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-#
+from core.filters.filter_help_text import HelpfulFilterSet
 from special_assignment.models import SpecialAssignmentProxy
-import django_filters
 
 
-class SpecialAssignmentFilter(django_filters.FilterSet):
+class SpecialAssignmentFilter(HelpfulFilterSet):
     class Meta:
         model = SpecialAssignmentProxy
         fields = {

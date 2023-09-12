@@ -21,7 +21,7 @@ logger = get_formatted_logger()
 class JobViewSet(ModelViewSet):
     serializer_class = JobSerializer
     permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
-    perm_slug = "job.job"
+    perm_slug = "job.jobproxy"
     queryset = JobProxy.objects.all()
 
 

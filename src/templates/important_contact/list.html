@@ -5,7 +5,7 @@
 {% block dashboard_content_block %}
     {# Page Heading #}
 
-    {% include "components/inc/dashboard/content_header.html" with title="Important Contacts" subtitle="Contacts for all clients" %}
+    {% include "components/inc/dashboard/content_header.html" with title="Important Contacts" subtitle="Contacts for all clients" is_show_create_btn=True app_label=app_label actions_base_url="dashboard:important_contact" %}
 
     {# End Page Heading #}
     {% if object_list %}

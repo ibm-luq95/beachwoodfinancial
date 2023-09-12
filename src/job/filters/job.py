@@ -2,11 +2,12 @@
 import django_filters
 from django import forms
 
+from core.filters.filter_help_text import HelpfulFilterSet
 from job.models import JobProxy
 from job_category.models import JobCategory
 
 
-class JobFilter(django_filters.FilterSet):
+class JobFilter(HelpfulFilterSet):
     due_date = django_filters.DateFilter(
         field_name="due_date", widget=forms.DateInput(attrs={"type": "date"})
     )

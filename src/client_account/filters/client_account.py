@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-#
-import django_filters
 from client_account.models import ClientAccount
+from core.filters.filter_help_text import HelpfulFilterSet
 
 
-class ClientAccountFilter(django_filters.FilterSet):
+class ClientAccountFilter(HelpfulFilterSet):
     class Meta:
         model = ClientAccount
         fields = {
