@@ -9,6 +9,8 @@ from client_category.models import ClientCategory
 from core.choices import ImportantContactLabelsEnum
 from django.db import models
 
+from core.filters.filter_help_text import HelpfulFilterSet
+
 
 class DateFiltersEnum(models.TextChoices):
     PAYROLL = "today", _("Today")
@@ -16,7 +18,7 @@ class DateFiltersEnum(models.TextChoices):
     OTHER = "this_month", _("This month")
 
 
-class ClientFilter(django_filters.FilterSet):
+class ClientFilter(HelpfulFilterSet):
     form_prefix = "client-filter"
     contact_label = django_filters.ChoiceFilter(
         field_name="important_contacts__contact_label",

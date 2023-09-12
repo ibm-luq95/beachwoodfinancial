@@ -1,12 +1,9 @@
 # -*- coding: utf-8 -*-#
-import django_filters
 from client_category.models import ClientCategory
+from core.filters.filter_help_text import HelpfulFilterSet
 
 
-class ClientCategoryFilter(django_filters.FilterSet):
+class ClientCategoryFilter(HelpfulFilterSet):
     class Meta:
         model = ClientCategory
-        fields = {
-            "name": ["icontains"],
-            "status": ["exact"],
-        }
+        fields = {"name": ["icontains"], "status": ["exact"]}

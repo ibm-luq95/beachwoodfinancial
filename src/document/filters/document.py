@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-#
-import django_filters
+
+from core.filters.filter_help_text import HelpfulFilterSet
 from document.models import Document
 
 
-class DocumentFilter(django_filters.FilterSet):
+class DocumentFilter(HelpfulFilterSet):
     class Meta:
         model = Document
         fields = {
