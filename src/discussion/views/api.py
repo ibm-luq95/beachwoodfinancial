@@ -1,16 +1,12 @@
 # -*- coding: utf-8 -*-#
 
-from core.utils import get_formatted_logger
-from discussion.models import DiscussionProxy
-from discussion.serializers import DiscussionSerializer
-
-logger = get_formatted_logger()
-
 from rest_framework import permissions, parsers
 from rest_framework.viewsets import ModelViewSet
 
 from core.api.permissions import BaseApiPermissionMixin
 from core.utils import get_formatted_logger
+from discussion.models import DiscussionProxy
+from discussion.serializers import DiscussionSerializer
 
 logger = get_formatted_logger()
 
@@ -19,8 +15,9 @@ class DiscussionViewSet(ModelViewSet):
     serializer_class = DiscussionSerializer
     permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
     parser_classes = [parsers.FormParser, parsers.MultiPartParser]
-    perm_slug = "discussion.discussion"
+    perm_slug = "discussion.discussionproxy"
     queryset = DiscussionProxy.objects.all()
+
 
 # class CreateDiscussionApiView(APIView):
 #     parser_classes = [parsers.FormParser, parsers.MultiPartParser]
