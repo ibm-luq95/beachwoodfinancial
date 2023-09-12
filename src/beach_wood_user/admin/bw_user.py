@@ -96,4 +96,4 @@ class BWUserAdmin(UserAdmin):
             },
         ),
     )
-    search_fields = ("email", "first_name", "last_name", "email")
+    search_fields = ("email", "first_name", "last_name")

@@ -16,5 +16,5 @@ class SpecialAssignmentViewSet(ModelViewSet):
     serializer_class = SpecialAssignmentSerializer
     permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
     parser_classes = [parsers.FormParser, parsers.MultiPartParser]
-    perm_slug = "special_assignment.special_assignment"
+    perm_slug = "special_assignment.special_assignmentproxy"
     queryset = SpecialAssignmentProxy.objects.all()

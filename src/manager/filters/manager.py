@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-#
-import django_filters
+
+from core.filters.filter_help_text import HelpfulFilterSet
 from manager.models import ManagerProxy
 
 
-class ManagerFilter(django_filters.FilterSet):
+class ManagerFilter(HelpfulFilterSet):
     class Meta:
         model = ManagerProxy
         fields = {

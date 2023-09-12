@@ -12,7 +12,7 @@ from core.constants.users import CON_BOOKKEEPER
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from discussion.forms import DiscussionMiniForm
 from document.forms import DocumentForm
-from job.filters import JobFilter
+from job.filters import JobFilter, JobReportFilter
 from job.forms import JobForm
 from job.models import JobProxy
 from note.forms import NoteForm
@@ -42,7 +42,6 @@ class JobListView(
         context["title"] = _("Jobs")
         context.setdefault("filter_form", self.filterset.form)
         context.setdefault("list_type", self.list_type)
-        context.setdefault("page_header", "Tasks".title())
 
         # debugging_print(self.filterset.form["name"])
         return context
@@ -52,6 +51,38 @@ class JobListView(
         if self.request.user.user_type == CON_BOOKKEEPER:
             queryset = self.request.user.bookkeeper.get_proxy_model().get_user_jobs()
         self.filterset = JobFilter(self.request.GET, queryset=queryset)
+        return self.filterset.qs
+
+
+class JobReportView(
+    PermissionRequiredMixin,
+    BWLoginRequiredMixin,
+    BWCacheViewMixin,
+    BWBaseListViewMixin,
+    ListView,
+):
+    permission_required = "job.can_view_report"
+
+    permission_denied_message = _("You do not have permission to access this page.")
+    template_name = "job/report.html"
+    model = JobProxy
+    paginate_by = LIST_VIEW_PAGINATE_BY
+    list_type = "list"
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        context["title"] = _("Jobs Report")
+        context.setdefault("filter_form", self.filterset.form)
+        context.setdefault("list_type", self.list_type)
+        context.setdefault("page_header", "Reports".title())
+
+        # debugging_print(self.filterset.form["name"])
+        return context
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        self.filterset = JobReportFilter(self.request.GET, queryset=queryset)
         return self.filterset.qs
 
 

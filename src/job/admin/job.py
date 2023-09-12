@@ -7,4 +7,4 @@ from core.admin import BWBaseAdminModelMixin
 
 @admin.register(JobProxy)
 class JobAdmin(BWBaseAdminModelMixin):
-    pass
+    list_display = ("title", "client", "status", "created_at")

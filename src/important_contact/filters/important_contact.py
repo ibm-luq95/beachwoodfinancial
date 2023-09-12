@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-#
-import django_filters
+
+from core.filters.filter_help_text import HelpfulFilterSet
 from important_contact.models import ImportantContact
 
 
-class ImportantContactFilter(django_filters.FilterSet):
+class ImportantContactFilter(HelpfulFilterSet):
     class Meta:
         model = ImportantContact
         fields = {

@@ -3,12 +3,13 @@ import stringcase
 from django.forms import model_to_dict
 
 from core.constants import LIST_VIEW_PAGINATE_BY
-from core.constants.general import IS_SHOW_CREATED_AT
+from core.constants.general import IS_SHOW_CREATED_AT, IS_SHOW_LABELS_IN_FILTER_FORM
 from core.utils import debugging_print
 
 
 class BWBaseListViewMixin:
     paginate_by = LIST_VIEW_PAGINATE_BY
+    is_show_labels_in_filter_form = IS_SHOW_LABELS_IN_FILTER_FORM
 
     # def get_queryset(self) -> dict:
     #     queryset = super().get_queryset()
