@@ -5,7 +5,7 @@
 {% block dashboard_content_block %}
     {# Page Heading #}
 
-    {% include "components/inc/dashboard/content_header.html" with title="Client Accounts" subtitle="Client accounts for all services" %}
+    {% include "components/inc/dashboard/content_header.html" with title="Client Accounts" subtitle="Client accounts for all services" is_show_create_btn=True app_label=app_label actions_base_url="dashboard:client_account" %}
 
     {# End Page Heading #}
     {% if object_list %}
