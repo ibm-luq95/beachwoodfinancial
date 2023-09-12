@@ -1,29 +1,26 @@
 {% load development_tags widget_tweaks bw_form_helpers %}
 
-<div class="">
+<div>
+
     <!-- Card -->
     <div class="flex flex-col">
         <div class="-m-1.5 overflow-x-auto mt-5">
+            
             <div class="p-1.5 min-w-full inline-block align-middle">
+                
                 <div class="bg-white border border-gray-200 rounded-xl shadow-sm overflow-hidden dark:bg-slate-900 dark:border-gray-700">
+                    
                     {% if is_header_enabled is True %}
                         <!-- Header -->
                         <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-gray-700">
                             {# Start Filter Form #}
-                            <div>
+                            <div class="w-full">
                                 {% if is_filters_enabled is True %}
                                     {% bw_tl_filter_form filter_form=filter_form filter_cancel_url=filter_cancel_url object_list=object_list %}
                                 {% endif %}
                             </div>
                             {# End Filter Form #}
-                            <div>
-                                <div class="inline-flex gap-x-2">
-                                    {% if is_show_create_btn is True %}
-                                        {% block create_btn_block %}
-                                        {% endblock create_btn_block %}
-                                    {% endif %}
-                                </div>
-                            </div>
+                            
                         </div>
                         <!-- End Header -->
                     {% endif %}
