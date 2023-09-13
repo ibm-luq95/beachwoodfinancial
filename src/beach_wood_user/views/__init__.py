@@ -1,4 +1,4 @@
 # -*- coding: utf-8 -*-#
 from .auth import BWLoginViewBW, BWForgetPasswordView
 from .staff import StaffMemberDetailsView
-from .api import UpdateStaffPermissionsApiView
+from .api import UpdateStaffPermissionsApiView, AssignClientToBookkeeperApiView

@@ -10,6 +10,8 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from beach_wood_user.models import BWUser
+from bookkeeper.models import BookkeeperProxy
+from client.models import ClientProxy
 from core.api.permissions import ManagerApiPermission
 from core.utils import get_formatted_logger, debugging_print
 
@@ -35,6 +37,28 @@ class UpdateStaffPermissionsApiView(APIView):
                 permissions_list = [perm for perm in permissions_objs]
                 user.user_permissions.add(*permissions_list)
                 user.save()
+                return Response(status=status.HTTP_200_OK, data=data)
+        except Exception as e:
+            logger.error(traceback.format_exc())
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data=str(e))
+
+
+class AssignClientToBookkeeperApiView(APIView):
+    permission_classes = (permissions.IsAuthenticated, ManagerApiPermission)
+    http_method_names = ["post"]
+
+    def post(self, request: Request, *args, **kwargs):
+        try:
+            with atomic():
+                data = dict()
+                post_data = request.data
+                bookkeeper = BookkeeperProxy.objects.get(pk=post_data["bookkeeper"])
+                clients = ClientProxy.objects.filter(pk__in=post_data["client"])
+                clients_list = [cl for cl in clients]
+                bookkeeper.clients.clear()
+                bookkeeper.clients.add(*clients_list)
+                bookkeeper.save()
+
                 return Response(status=status.HTTP_200_OK, data=data)
         except Exception as e:
             logger.error(traceback.format_exc())

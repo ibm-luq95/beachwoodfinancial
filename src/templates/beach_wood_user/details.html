@@ -617,28 +617,26 @@
                                         <!-- Card -->
                                         <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900">
                                             <div class="mb-8">
-                                                <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">Assign</h2>
+                                                <h2 class="text-xl font-bold text-gray-800 dark:text-gray-200">{% translate "Assign" %}</h2>
                                                 <p class="text-sm text-gray-600 dark:text-gray-400">
                                                     {% translate "Assign this bookkeeper to clients-tab" %}
                                                 </p>
                                             </div>
                                             {% if clients %}
-                                                <form id="assignedClientsForm" method="post" action="">
+                                                <form id="assignedClientsForm"
+                                                      method="post"
+                                                      action="{% url 'dashboard:staff:assign-client' %}">
                                                     <fieldset form="assignedClientsForm">
                                                         {% csrf_token %}
+                                                        <input type="hidden"
+                                                               name="bookkeeper"
+                                                               value="{{ object.get_staff_member_object.staff_object.pk }}" />
                                                         <!-- Grid -->
-                                                        <div class="grid space-y-3">
+                                                        <div class="grid sm:grid-cols-3 gap-2">
                                                             {% for client in clients %}
-                                                                <div class="relative flex items-start">
-                                                                    <div class="flex items-center h-5 mt-1">
-                                                                        <input id="client-{{ client.pk }}"
-                                                                               name="assignedClients"
-                                                                               type="checkbox"
-                                                                               disabled
-                                                                               class="{{ BW_FULL_INPUT_CSS_CLASSES }} border-gray-200 rounded text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                                                               aria-describedby="client-{{ client.pk }}-description" />
-                                                                    </div>
-                                                                    <label for="client-{{ client.pk }}" class="ml-3">
+                                                                <label for="client-{{ client.pk }}"
+                                                                       class="flex p-3 block w-full bg-white border border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                                                                    <div>
                                                                         <span class="block text-sm font-semibold text-gray-800 dark:text-gray-300">{{ client.name|safe }}</span>
                                                                         <span id="client-{{ client.pk }}-description"
                                                                               class="block text-sm text-gray-600 dark:text-gray-500">
@@ -646,12 +644,21 @@
                                                                             <!-- <br /> -->
                                                                             {% if client.categories.all %}
                                                                                 {% for category in client.categories.all %}
-                                                                                    <span class="inline-flex items-center gap-1 py-1 px-3 rounded-full text-xs font-medium bg-gray-100 text-gray-600 mx-2">{{ category.name }}</span>
+                                                                                    <span class="inline-flex items-center gap-1 py-0.5 px-2 rounded-full text-[11px] font-medium bg-gray-100 text-gray-600 mx-2">{{ category.name }}</span>
                                                                                 {% endfor %}
                                                                             {% endif %}
                                                                         </span>
-                                                                    </label>
-                                                                </div>
+                                                                    </div>
+                                                                    <input type="checkbox"
+                                                                           name="client"
+                                                                           class="{{ BW_FULL_INPUT_CSS_CLASSES }} shrink-0 ml-auto mt-0.5 border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                                                                           id="client-{{ client.pk }}"
+                                                                           disabled
+                                                                           {% if client in object.get_staff_member_object.staff_object.get_proxy_model.clients.all %}
+                                                                               checked
+                                                                           {% endif %}
+                                                                           value="{{ client.pk }}" />
+                                                                </label>
                                                             {% endfor %}
                                                         </div>
                                                         <!-- End Grid -->
