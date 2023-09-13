@@ -17,6 +17,49 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
     assignedClientsForm.addEventListener("submit", (event) => {
       event.preventDefault();
       const currentTarget = event.currentTarget;
+      try {
+        const assignedClientsInputs = document.querySelectorAll(
+          "input[name='assignedClients']:checked",
+        );
+        const formInputs = formInputSerializer({
+          formElement: currentTarget,
+          excludedFields: ["_method"],
+        });
+        const requestOptions = {
+          method: currentTarget.method,
+          dataToSend: formInputs,
+          url: currentTarget.action,
+          token: currentTarget[CSRFINPUTNAME].value,
+        };
+        const request = sendRequest(requestOptions);
+        request
+          .then((data) => {
+            // console.log(bwI18Helper.t("jobs"));
+            // showToastNotification(bwI18Helper.t("key"), "success");
+            showToastNotification("Clients assigned successfully", "success");
+            setTimeout(() => {
+              window.location.reload();
+            }, SUCCESSTIMEOUTSECS);
+          })
+          .catch((error) => {
+            console.error(error);
+            showToastNotification(`Error while assign client to bookkeeper`, "danger");
+          })
+          .finally(() => {
+            disableAndEnableFieldsetItems({
+              formElement: assignedClientsForm,
+              state: "enable",
+            });
+          });
+      } catch (error) {
+        console.error(error);
+        showToastNotification("Error while assign client to bookkeeper!");
+      } finally {
+        disableAndEnableFieldsetItems({
+          formElement: assignedClientsForm,
+          state: "enable",
+        });
+      }
     });
   }
 
