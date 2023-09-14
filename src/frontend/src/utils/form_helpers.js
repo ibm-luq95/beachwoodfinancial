@@ -162,7 +162,7 @@ const setFormInputValues = (formElement, objectOfValues) => {
  * @param {string} param.state this will enable or disable
  */
 const disableAndEnableFieldsetItems = ({ formElement, state }) => {
-  // SessionStorageManagement.clear();
+  SessionStorageManagement.clear();
   const stateLower = state.toLowerCase();
   const fieldset = formElement.querySelector("fieldset");
   const disabledInputCssClasses = [
@@ -175,8 +175,9 @@ const disableAndEnableFieldsetItems = ({ formElement, state }) => {
   // const allFormInputs = document.querySelectorAll(`[data-form-id=${formElement.id}]`);
   // const allFormInputs = Array.from(formElement.elements);
   const allFormInputs = formElement.querySelectorAll(
-    "input, select, textarea, button, label",
+    "input, select, textarea, button",
   );
+  // console.log(allFormInputs);
   const submitBtn = document.querySelector(`button[form=${formElement.id}]`);
   switch (stateLower) {
     case "enable":
@@ -184,14 +185,14 @@ const disableAndEnableFieldsetItems = ({ formElement, state }) => {
     case "en":
       fieldset.disabled = false;
       submitBtn.disabled = false;
-      submitBtn.classList.remove(...["bg-blue-400", "pointer-events-none"]);
+      // submitBtn.classList.remove(...["bg-blue-400"]);
       if (allFormInputs.length > 0) {
         allFormInputs.forEach((element) => {
           element.disabled = false;
-          element.classList.remove(...disabledInputCssClasses);
-          const inputCssClass = SessionStorageManagement.getItem(element.id);
-          element.className = inputCssClass;
-          SessionStorageManagement.deleteItem(element.id);
+          // element.classList.remove(...disabledInputCssClasses);
+          // const inputCssClass = SessionStorageManagement.getItem(element.id);
+          // element.className = inputCssClass;
+          // SessionStorageManagement.deleteItem(element.id);
         });
       }
       break;
@@ -203,16 +204,16 @@ const disableAndEnableFieldsetItems = ({ formElement, state }) => {
       // submitBtn.classList.add(...["bg-blue-400", "pointer-events-none"]);
       if (allFormInputs.length > 0) {
         allFormInputs.forEach((element) => {
-          SessionStorageManagement.setItem(element.id, element.className);
+          // SessionStorageManagement.setItem(element.id, element.className);
           const bgClassesArray = new Array();
-          element.classList.forEach((cName) => {
-            if (cName.startsWith("bg")) {
-              bgClassesArray.push(cName);
-            }
-          });
-          if (bgClassesArray.length > 0) {
-            element.classList.remove(...bgClassesArray);
-          }
+          // element.classList.forEach((cName) => {
+          //   if (cName.startsWith("bg")) {
+          //     bgClassesArray.push(cName);
+          //   }
+          // });
+          // if (bgClassesArray.length > 0) {
+          //   element.classList.remove(...bgClassesArray);
+          // }
           element.disabled = true;
           element.classList.add(...disabledInputCssClasses);
         });

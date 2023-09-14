@@ -14,3 +14,4 @@ class SiteSettingsForm(BaseModelFormMixin):
     class Meta(BaseModelFormMixin.Meta):
         model = SiteSettings
         exclude = EXCLUDED_FIELDS
+        # fieldsets = ("SEO", {"fields": ("title", "description", "keywords")})
