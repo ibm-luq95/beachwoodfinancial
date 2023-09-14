@@ -2,6 +2,7 @@
 
 import { DEBUG } from "./constants";
 import { orderObjectItems } from "./helpers";
+import { StorageManagement } from "./storage";
 
 /**
  * Enable or disable form fieldset items with form's submit button
@@ -161,9 +162,12 @@ const setFormInputValues = (formElement, objectOfValues) => {
  * @param {string} param.state this will enable or disable
  */
 const disableAndEnableFieldsetItems = ({ formElement, state }) => {
+  console.log(`Call disableAndEnableFieldsetItems: ${state}`);
   const stateLower = state.toLowerCase();
   const fieldset = formElement.querySelector("fieldset");
-  const allFormInputs = document.querySelectorAll(`[data-form-id=${formElement.id}]`);
+  // const allFormInputs = document.querySelectorAll(`[data-form-id=${formElement.id}]`);
+  const allFormInputs = Array.from(formElement.elements);
+  console.log(allFormInputs);
   const submitBtn = document.querySelector(`button[form=${formElement.id}]`);
   switch (stateLower) {
     case "enable":
@@ -192,9 +196,10 @@ const disableAndEnableFieldsetItems = ({ formElement, state }) => {
     case "d":
       fieldset.disabled = true;
       submitBtn.disabled = true;
-      submitBtn.classList.add(...["bg-blue-400", "pointer-events-none"]);
+      // submitBtn.classList.add(...["bg-blue-400", "pointer-events-none"]);
       if (allFormInputs.length > 0) {
         allFormInputs.forEach((element) => {
+          // StorageManagement.setItem(element.id, element.classList);
           element.disabled = true;
           element.classList.add(
             ...[
@@ -209,6 +214,7 @@ const disableAndEnableFieldsetItems = ({ formElement, state }) => {
       }
       break;
     default:
+      console.warn(`${stateLower} not defined!`);
       break;
   }
 };

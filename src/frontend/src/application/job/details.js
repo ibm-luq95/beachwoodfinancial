@@ -10,12 +10,53 @@ import {
 import { showToastNotification } from "../../utils/toasts";
 
 document.addEventListener("DOMContentLoaded", (readyEvent) => {
-  const updateJobStatusBtn = document.querySelector("button#updateJobStatusBtn");
+  const updateJobStatusStateForm = document.querySelector(
+    "form#updateJobStatusStateForm",
+  );
   const addDiscussionFormInJob = document.querySelector("form#addDiscussionFormInJob");
   const updateJobForm = document.querySelector("form#updateJobForm");
-  if (updateJobStatusBtn) {
-    updateJobStatusBtn.addEventListener("click", (event) => {
-      const jobStatusInput = document.querySelector("select#job-status-input");
+  if (updateJobStatusStateForm) {
+    updateJobStatusStateForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const currentTarget = event.currentTarget;
+      const formInputs = formInputSerializer({
+        formElement: currentTarget,
+        excludedFields: ["_method"],
+      });
+      disableAndEnableFieldsetItems({
+        formElement: updateJobStatusStateForm,
+        state: "disable",
+      });
+      
+      const requestOptions = {
+        method: currentTarget["_method"].value.toUpperCase(),
+        dataToSend: formInputs,
+        url: currentTarget.action,
+        token: currentTarget[CSRFINPUTNAME].value,
+      };
+      // throw new Error("Wait");
+      try {
+        const request = sendRequest(requestOptions);
+        request
+          .then((data) => {
+            showToastNotification("Job status/state updated successfully", "success");
+            setTimeout(() => {
+              window.location.reload();
+            }, SUCCESSTIMEOUTSECS);
+          })
+          .catch((error) => {
+            console.error(error);
+            throw new Error(error.message);
+          });
+      } catch (error) {
+        showToastNotification("Error while update job!", "danger");
+      } finally {
+        disableAndEnableFieldsetItems({
+          formElement: updateJobStatusStateForm,
+          state: "enable",
+        });
+      }
+
       // console.log(jobStatusInput.value);
     });
 
@@ -56,7 +97,7 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
           })
           .catch((error) => {
             console.error(error);
-            showToastNotification(`${JSON.stringify(error["user_error_msg"])}`, "danger");
+            showToastNotification(`Error while update job!`, "danger");
           })
           .finally(() => {
             disableAndEnableFieldsetItems({
