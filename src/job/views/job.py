@@ -5,7 +5,7 @@ from django.utils.translation import gettext as _
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
 from core.cache import BWCacheViewMixin
-from core.choices import JobStatusEnum
+from core.choices import JobStatusEnum, JobStateEnum
 from core.config.forms import BWFormRenderer
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.users import CON_BOOKKEEPER
@@ -172,6 +172,7 @@ class JobDetailsView(
         )
         context.setdefault("job_update_form", job_update_form)
         context.setdefault("job_status_choices", JobStatusEnum.choices)
+        context.setdefault("job_stats_choices", JobStateEnum.choices)
         context.setdefault("task_form", task_form)
         context.setdefault("document_form", document_form)
         context.setdefault("note_form", note_form)

@@ -1,35 +1,59 @@
 "use strict";
 
+/**
+ * Object to handle localstorage in js
+ */
 class StorageManagement {
+  /**
+   * Clear localstorage all keys
+   */
   static clear() {
-    window.localStorage.clear();
+    sessionStorage.clear();
   }
 
+  /**
+   * Check if key exists in localstorage
+   * @param {string} keyName kes name
+   */
   static checkExists(keyName) {
-    if (window.localStorage.getItem(keyName) !== null) {
+    if (sessionStorage.getItem(keyName) !== null) {
       return true;
     } else {
       return false;
     }
   }
+  /**
+   * Get the value saved in localstorage
+   * @param {string} keyName key name
+   */
   static getItem(keyName) {
     if (StorageManagement.checkExists(keyName) === true) {
-      return window.localStorage.getItem(keyName);
+      return sessionStorage.getItem(keyName);
     } else {
       return null;
     }
   }
 
+  /**
+   * Delete item from localstorage
+   * @param {string} keyName key name
+   */
   static deleteItem(keyName) {
     if (StorageManagement.checkExists(keyName) === true) {
-      window.localStorage.removeItem(keyName);
+      sessionStorage.removeItem(keyName);
     } else {
       console.warn(`Item ${keyName} not exists in storage!`);
     }
   }
 
+  /**
+   * Set or update item in localStorage
+   * @param {string} keyName key name
+   * @param {*} keyValue value will saved
+   * @param {boolean} replace if true will replace or update exist item
+   */
   static setItem(keyName, keyValue, replace = true) {
-    window.localStorage.setItem(keyName, keyValue);
+    sessionStorage.setItem(keyName, keyValue);
   }
 }
 

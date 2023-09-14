@@ -1,4 +1,5 @@
 from django.utils import timezone
+from django.utils.translation import gettext as _
 from rest_framework import serializers
 
 from beach_wood_user.models import BWUser
@@ -37,9 +38,9 @@ class JobSerializer(serializers.ModelSerializer):
         Check that start is before finish.
         """
         now = timezone.now().date()
-        if self.context.get("request").method != "PUT":
+        if self.context.get("request").method != "PATCH":
             if data["due_date"] < now:
-                raise serializers.ValidationError({"due_date": "Due date old!"})
+                raise serializers.ValidationError({"due_date": _("Due date old!")})
         return data
 
     def update(self, instance, validated_data):
