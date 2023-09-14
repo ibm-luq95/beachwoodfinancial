@@ -29,6 +29,7 @@
     "externalcss",
     "filterset",
     "fullname",
+    "localstorage",
     "SUCCESSTIMEOUTSECS"
   ],
   // OLD
