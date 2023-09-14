@@ -2,7 +2,7 @@
 
 import { DEBUG } from "./constants";
 import { orderObjectItems } from "./helpers";
-import { StorageManagement } from "./storage";
+import { SessionStorageManagement } from "./storage";
 
 /**
  * Enable or disable form fieldset items with form's submit button
@@ -162,12 +162,21 @@ const setFormInputValues = (formElement, objectOfValues) => {
  * @param {string} param.state this will enable or disable
  */
 const disableAndEnableFieldsetItems = ({ formElement, state }) => {
-  console.log(`Call disableAndEnableFieldsetItems: ${state}`);
+  // SessionStorageManagement.clear();
   const stateLower = state.toLowerCase();
   const fieldset = formElement.querySelector("fieldset");
+  const disabledInputCssClasses = [
+    "cursor-not-allowed",
+    "opacity-70",
+    // "pointer-events-none",
+    "border-gray-200",
+    "bg-gray-100",
+  ];
   // const allFormInputs = document.querySelectorAll(`[data-form-id=${formElement.id}]`);
-  const allFormInputs = Array.from(formElement.elements);
-  console.log(allFormInputs);
+  // const allFormInputs = Array.from(formElement.elements);
+  const allFormInputs = formElement.querySelectorAll(
+    "input, select, textarea, button, label",
+  );
   const submitBtn = document.querySelector(`button[form=${formElement.id}]`);
   switch (stateLower) {
     case "enable":
@@ -179,15 +188,10 @@ const disableAndEnableFieldsetItems = ({ formElement, state }) => {
       if (allFormInputs.length > 0) {
         allFormInputs.forEach((element) => {
           element.disabled = false;
-          element.classList.remove(
-            ...[
-              "cursor-not-allowed",
-              "opacity-70",
-              "pointer-events-none",
-              "bg-gray-50",
-              "border-gray-200",
-            ],
-          );
+          element.classList.remove(...disabledInputCssClasses);
+          const inputCssClass = SessionStorageManagement.getItem(element.id);
+          element.className = inputCssClass;
+          SessionStorageManagement.deleteItem(element.id);
         });
       }
       break;
@@ -199,17 +203,18 @@ const disableAndEnableFieldsetItems = ({ formElement, state }) => {
       // submitBtn.classList.add(...["bg-blue-400", "pointer-events-none"]);
       if (allFormInputs.length > 0) {
         allFormInputs.forEach((element) => {
-          // StorageManagement.setItem(element.id, element.classList);
+          SessionStorageManagement.setItem(element.id, element.className);
+          const bgClassesArray = new Array();
+          element.classList.forEach((cName) => {
+            if (cName.startsWith("bg")) {
+              bgClassesArray.push(cName);
+            }
+          });
+          if (bgClassesArray.length > 0) {
+            element.classList.remove(...bgClassesArray);
+          }
           element.disabled = true;
-          element.classList.add(
-            ...[
-              "cursor-not-allowed",
-              "opacity-70",
-              "pointer-events-none",
-              "border-gray-200",
-              "bg-gray-50",
-            ],
-          );
+          element.classList.add(...disabledInputCssClasses);
         });
       }
       break;
