@@ -27,7 +27,6 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
         formElement: updateJobStatusStateForm,
         state: "disable",
       });
-      
       const requestOptions = {
         method: currentTarget["_method"].value.toUpperCase(),
         dataToSend: formInputs,

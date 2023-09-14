@@ -3,7 +3,7 @@
 /**
  * Object to handle localstorage in js
  */
-class StorageManagement {
+class SessionStorageManagement {
   /**
    * Clear localstorage all keys
    */
@@ -27,7 +27,7 @@ class StorageManagement {
    * @param {string} keyName key name
    */
   static getItem(keyName) {
-    if (StorageManagement.checkExists(keyName) === true) {
+    if (SessionStorageManagement.checkExists(keyName) === true) {
       return sessionStorage.getItem(keyName);
     } else {
       return null;
@@ -39,7 +39,7 @@ class StorageManagement {
    * @param {string} keyName key name
    */
   static deleteItem(keyName) {
-    if (StorageManagement.checkExists(keyName) === true) {
+    if (SessionStorageManagement.checkExists(keyName) === true) {
       sessionStorage.removeItem(keyName);
     } else {
       console.warn(`Item ${keyName} not exists in storage!`);
@@ -57,4 +57,4 @@ class StorageManagement {
   }
 }
 
-export { StorageManagement };
+export { SessionStorageManagement };
