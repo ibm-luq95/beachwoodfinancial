@@ -35,7 +35,7 @@ class StaffMemberDetailsView(
         context.setdefault(
             "title", f"{self.object.fullname} - " + self.object.user_type.title()
         )
-        clients = ClientProxy.objects.all()
+        clients = ClientProxy.objects.order_by("name")
         permissions_form = BWPermissionsForm(
             staff_user=self.get_object(), initial={"user": self.get_object().pk}
         )
