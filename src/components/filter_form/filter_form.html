@@ -1,0 +1,106 @@
+{% load development_tags widget_tweaks bw_form_helpers %}
+{% load i18n %}
+
+<div class="mt-3 flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+    <div class="p-4 md:p-5">
+        <h3 class="text-lg border-b mb-3 pb-2 font-bold text-gray-800 dark:text-white">
+            {{ filter_form_title }}
+        </h3>
+        <form method="{{ filter_form_method }}" id="{{ filter_form_id }}">
+            <fieldset form="{{ filter_form_id }}"
+                      {% if is_disabled is True %}disabled{% endif %}>
+                <div class="flex flex-wrap">
+                    <!-- Input -->
+                    {% for filter_field in filter_form %}
+                        {% bw_get_form_widget_attrs_as_dict filter_field.field as widget_attrs %}
+                        {# {{ filter_field.field|bw_get_form_field_type }} #}
+                        {% if filter_field|field_type == "datefield" or filter_field|field_type == "emailfield" or filter_field|field_type == "passwordfield" or filter_field|field_type == "charfield" or filter_field|field_type == 'datetimefield' or filter_field|field_type == "urlfield" or filter_field|field_type == "decimalfield" or filter_field|field_type == "integerfield" or filter_field|field_type == "slugfield" or filter_field|field_type == "uuidfield" %}
+                            <div class="mr-3 mb-1">
+                                {% with placeholder="placeholder:"|add:widget_attrs.placeholder %}
+                                    <div>
+                                        <label for="{{ filter_field.id_for_label }}"
+                                               class="block text-[13px] font-medium mb-2 dark:text-white">
+                                            {{ filter_field.field.label }}
+                                        </label>
+                                        <div class="relative">
+                                            {% render_field filter_field class+=BW_TRAILING_ICON_CSS_CLASSES placeholder=widget_attrs.placeholder disabled="disabled" %}
+                                            {% if widget_attrs.input_type != "date" %}
+                                                <div class="absolute inset-y-0 left-0 flex items-center pointer-events-none z-20 pl-4">
+                                                    <svg class="h-4 w-4 text-gray-400"
+                                                         xmlns="http://www.w3.org/2000/svg"
+                                                         width="16"
+                                                         height="16"
+                                                         fill="currentColor"
+                                                         viewBox="0 0 16 16">
+                                                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                                    </svg>
+                                                </div>
+                                            {% endif %}
+                                        </div>
+                                        {% if filter_field.help_text %}
+                                            <p class="text-xs text-gray-500 mt-2"
+                                               id="{{ filter_field.id_for_label }}">
+                                                {{ filter_field.help_text }}
+                                            </p>
+                                        {% endif %}
+                                    </div>
+                                {% endwith %}
+                            </div>
+                        {% elif filter_field.field|bw_get_form_field_type == "ChoiceField" %}
+                            <div class="mr-3 mb-1">
+                                <label for="{{ filter_field.id_for_label }}"
+                                       class="block text-[13px] font-medium mb-2 dark:text-white">
+                                    {{ filter_field.field.label }}
+                                </label>
+                                <div class="relative">
+                                    {% render_field filter_field class+=BW_PRELINE_FILTER_SELECT_INPUT_DEFAULT placeholder=filter_field.field.label disabled="disabled" %}
+                                    <p class="text-xs text-gray-500 mt-2"
+                                       id="{{ filter_field.id_for_label }}">
+                                        {{ filter_field.help_text }}
+                                    </p>
+                                </div>
+                            </div>
+                        {% else %}
+                            <div class="mr-3 mb-1">
+                                <label for="{{ filter_field.id_for_label }}"
+                                       class="block text-[13px] font-medium mb-2 dark:text-white">
+                                    {{ filter_field.field.label }}
+                                </label>
+                                <div class="relative">
+                                    {% render_field filter_field class+=BW_PRELINE_FILTER_SELECT_INPUT_DEFAULT placeholder=filter_field.field.label disabled="disabled" %}
+                                    <p class="text-xs text-gray-500 mt-2"
+                                       id="{{ filter_field.id_for_label }}">
+                                        {{ filter_field.help_text }}
+                                    </p>
+                                </div>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <!-- End Input -->
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="bg-gray-100 border-t rounded-b-xl py-2 px-4 md:py-2 md:px-5 dark:bg-gray-800 dark:border-gray-700">
+        <div class="flex flex-row-reverse">
+            <div class="hs-tooltip inline-block">
+                <button type="submit"
+                        {% if is_disabled is True %}disabled{% endif %}
+                        form="{{ filter_form_id }}"
+                        class="hs-tooltip-toggle inline-flex flex-shrink-0 h-[2.375rem] w-[2.375rem] py-3 px-4 justify-center items-center gap-2 rounded-md bg-blue-100 border border-transparent font-semibold text-blue-500 hover:text-white hover:bg-blue-500 focus:outline-none focus:ring-2 ring-offset-white focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800 mx-1">
+                    <i class="fa-solid fa-filter"></i>
+                    <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                          role="tooltip">{% translate "Filter" %}</span>
+                </button>
+            </div>
+            <div class="hs-tooltip inline-block">
+                <a href="{{ filter_cancel_url }}"
+                   class="hs-tooltip-toggle inline-flex flex-shrink-0 h-[2.375rem] w-[2.375rem] justify-center items-center gap-2 rounded-md py-3 px-4inline-flex bg-gray-300 border border-transparent font-semibold text-gray-800 hover:text-white hover:bg-gray-800 focus:outline-none focus:ring-2 ring-offset-white focus:ring-gray-800 focus:ring-offset-2 transition-all text-sm dark:bg-gray-700 dark:hover:bg-gray-900 dark:hover:border-gray-900 dark:text-white dark:focus:ring-gray-900 dark:focus:ring-offset-gray-800">
+                    <i class="fa-solid fa-eraser"></i>
+                    <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                          role="tooltip">{% translate "Reset filter" %}</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

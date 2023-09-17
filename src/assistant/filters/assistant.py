@@ -2,9 +2,10 @@
 import django_filters
 
 from assistant.models import AssistantProxy
+from core.filters.filter_created_mixin import FilterCreatedMixin
 
 
-class AssistantFilter(django_filters.FilterSet):
+class AssistantFilter(FilterCreatedMixin):
     class Meta:
         model = AssistantProxy
         fields = {

@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-#
-
-from core.filters.filter_help_text import HelpfulFilterSet
+from core.filters.filter_created_mixin import FilterCreatedMixin
 from manager.models import ManagerProxy
 
 
-class ManagerFilter(HelpfulFilterSet):
+class ManagerFilter(FilterCreatedMixin):
     class Meta:
         model = ManagerProxy
         fields = {
