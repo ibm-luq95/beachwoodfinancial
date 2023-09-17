@@ -2,9 +2,10 @@
 import django_filters
 
 from bookkeeper.models import BookkeeperProxy
+from core.filters.filter_created_mixin import FilterCreatedMixin
 
 
-class BookkeeperFilter(django_filters.FilterSet):
+class BookkeeperFilter(FilterCreatedMixin):
     class Meta:
         model = BookkeeperProxy
         fields = {

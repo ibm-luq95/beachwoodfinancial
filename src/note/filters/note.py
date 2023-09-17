@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-#
-
-from core.filters.filter_help_text import HelpfulFilterSet
+from core.filters.filter_created_mixin import FilterCreatedMixin
 from note.models import Note
 
 
-class NoteFilter(HelpfulFilterSet):
+class NoteFilter(FilterCreatedMixin):
     class Meta:
         model = Note
         fields = {
