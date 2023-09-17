@@ -8,6 +8,11 @@
     {% include "components/inc/dashboard/content_header.html" with title="Job categories" subtitle="Subtitle" is_show_create_btn=True app_label=app_label actions_base_url="dashboard:job_category" %}
 
     {# End Page Heading #}
+    {# Start Filter Form #}
+    {% if filter_form %}
+        {% component "bw_filter_form" filter_form=filter_form filter_cancel_url="dashboard:job_category:list" %}
+    {% endif %}
+    {# End Filter Form #}
     {% if object_list %}
         <!-- Table Section -->
 

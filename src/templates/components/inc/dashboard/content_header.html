@@ -1,15 +1,17 @@
 {% load i18n %}
 
-<div class="flex justify-between">
-    <header>
-        <h1 class="block text-2xl font-bold text-gray-800 sm:text-3xl dark:text-white">{{ title }}</h1>
-        <p class="mt-2 text-lg text-gray-800 dark:text-gray-400">{{ subtitle }}</p>
-    </header>
-    <div>
-        <div class="relative top-2">
-            {% if is_show_create_btn is True %}
-                {% component "tl_create_btn" app_name=app_label actions_base_url=actions_base_url %}
-            {% endif %}
+<div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
+    <div class="flex justify-between">
+        <header>
+            <h1 class="block text-2xl font-bold text-gray-800 sm:text-3xl dark:text-white">{{ title }}</h1>
+            <p class="mt-2 text-lg text-gray-800 dark:text-gray-400">{{ subtitle }}</p>
+        </header>
+        <div>
+            <div class="relative top-2">
+                {% if is_show_create_btn is True %}
+                    {% component "tl_create_btn" app_name=app_label actions_base_url=actions_base_url %}
+                {% endif %}
+            </div>
         </div>
     </div>
 </div>

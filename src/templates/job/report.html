@@ -8,6 +8,10 @@
     {% include "components/inc/dashboard/content_header.html" with title="Jobs report" subtitle="" is_show_create_btn=True app_label=app_label actions_base_url="dashboard:job" %}
 
     {# End Page Heading #}
+    
+    {# Start Filter Form #}
+    {% component "bw_filter_form" filter_form=filter_form filter_cancel_url="dashboard:job:report" %}
+    {# End Filter Form #}
     {% if object_list %}
         <!-- Table Section -->
 
