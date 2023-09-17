@@ -8,6 +8,11 @@
     {% include "components/inc/dashboard/content_header.html" with title="Notes" subtitle="Notes, helping organize your clients and work" is_show_create_btn=True app_label=app_label actions_base_url="dashboard:note" %}
 
     {# End Page Heading #}
+    {# Start Filter Form #}
+    {% if filter_form %}
+        {% component "bw_filter_form" filter_form=filter_form filter_cancel_url="dashboard:note:list" %}
+    {% endif %}
+    {# End Filter Form #}
     {% if object_list %}
         <!-- Table Section -->
 

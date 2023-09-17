@@ -8,6 +8,11 @@
     {% include "components/inc/dashboard/content_header.html" with title="Assistants" subtitle="" is_show_create_btn=True app_label=app_label actions_base_url="dashboard:management_assistant" %}
 
     {# End Page Heading #}
+    {# Start Filter Form #}
+    {% if filter_form %}
+        {% component "bw_filter_form" filter_form=filter_form filter_cancel_url="dashboard:management_assistant:list" %}
+    {% endif %}
+    {# End Filter Form #}
     {% if object_list %}
         <!-- Table Section -->
 
