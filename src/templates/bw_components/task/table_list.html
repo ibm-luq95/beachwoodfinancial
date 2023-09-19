@@ -56,7 +56,7 @@
 
             </div>
         </th>
-        {% if is_show_job_column is True %}
+        {% if extra_context.is_show_job_column is True %}
             <th scope="col" class="px-6 py-3 text-left">
                 <div class="flex items-center gap-x-2">
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
@@ -68,7 +68,7 @@
                 </div>
             </th>
         {% endif %}
-        {% if is_show_manager_column is True %}
+        {% if extra_context.is_show_manager_column is True %}
             <th scope="col" class="px-6 py-3 text-left">
                 <div class="flex items-center gap-x-2">
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
@@ -80,7 +80,7 @@
                 </div>
             </th>
         {% endif %}
-        {% if is_show_type_column is True %}
+        {% if extra_context.is_show_type_column is True %}
             <th scope="col" class="px-6 py-3 text-left">
                 <div class="flex items-center gap-x-2">
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
@@ -92,7 +92,7 @@
                 </div>
             </th>
         {% endif %}
-        {% if is_show_status_column is True %}
+        {% if extra_context.is_show_status_column is True %}
             <th scope="col" class="px-6 py-3 text-left">
                 <div class="flex items-center gap-x-2">
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
@@ -146,31 +146,49 @@
                     </a>
                 </div>
             </td>
-            {% if is_show_job_column is True %}
+            {% if extra_context.is_show_job_column is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     <div class="px-6 py-3">
-                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.job }}</span>
+                        {% if object.job %}
+                            <a href="{% url 'dashboard:job:details' object.job.pk %}"
+                               class="text-sm {{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }} dark:text-gray-400">
+                                {{ object.job }}
+                            </a>
+                        {% else %}
+                            <span class="text-sm text-yellow-600 dark:text-gray-400 italic font-semibold">
+                                {% translate "No job" %}
+                            </span>
+                        {% endif %}
                     </div>
                 </td>
             {% endif %}
-            {% if is_show_manager_column is True %}
+            {% if extra_context.is_show_manager_column is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     <div class="px-6 py-3">
-                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.job.managed_by }}</span>
+                        {% if object.job.managed_by %}
+                            {% if request.user.user_type == CON_BOOKKEEPER %}
+                                <a href="javascript:;" class="disabledAnchorElement text-sm">{{ object.job.managed_by }}</a>
+                            {% else %}
+                                <a href="{% url 'dashboard:staff:member-details' object.job.managed_by.pk %}"
+                                   class="text-sm {{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }}">{{ object.job.managed_by }}</a>
+                            {% endif %}
+                        {% else %}
+                            <span class="text-sm text-yellow-600 font-semibold italic dark:text-gray-400">{% translate "No manager" %}</span>
+                        {% endif %}
                     </div>
                 </td>
             {% endif %}
-            {% if is_show_type_column is True %}
+            {% if extra_context.is_show_type_column is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     <div class="px-6 py-3">
                         <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.get_task_type_display }}</span>
                     </div>
                 </td>
             {% endif %}
-            {% if is_show_status_column is True %}
+            {% if extra_context.is_show_status_column is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     <div class="px-6 py-3">
-                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.get_status_display }}</span>
+                        {% bw_badge code=object.status text=object.get_status_display size="sm" %}
                     </div>
                 </td>
             {% endif %}

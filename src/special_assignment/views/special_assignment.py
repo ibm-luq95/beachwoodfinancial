@@ -22,7 +22,7 @@ class SpecialAssignmentListView(
     ListView,
 ):
     permission_required = "special_assignment.can_view_list"
-    template_name = "special_assignment/list.html"
+    template_name = "core/crudl/list.html"
     model = SpecialAssignmentProxy
     paginate_by = LIST_VIEW_PAGINATE_BY
     list_type = "list"
@@ -33,7 +33,28 @@ class SpecialAssignmentListView(
         context["title"] = _("Special assignments")
         context.setdefault("filter_form", self.filterset.form)
         context.setdefault("list_type", self.list_type)
-        context.setdefault("page_header", "Special assignments".title())
+        context.setdefault("page_header", _("Special assignments".title()))
+        context.setdefault(
+            "component_path", "bw_components/special_assignment/table_list.html"
+        )
+        context.setdefault(
+            "subtitle",
+            _("Special assignments custom specific assignments to clients".title()),
+        )
+        context.setdefault("actions_base_url", "dashboard:special_assignment")
+        context.setdefault("filter_cancel_url", "dashboard:special_assignment:list")
+        context.setdefault("table_header_title", _("C"))
+        context.setdefault("table_header_subtitle", _("Jobs subtitle"))
+        context.setdefault("is_show_create_btn", True)
+        context.setdefault("pagination_list_url_name", "dashboard:special_assignment:list")
+        context.setdefault("is_filters_enabled", True)
+        context.setdefault("is_actions_menu_enabled", True)
+        context.setdefault("is_header_enabled", True)
+        context.setdefault("is_footer_enabled", True)
+        context.setdefault("actions_items", "details,update,delete")
+        context.setdefault("base_url_name", "dashboard:special_assignment")
+        context.setdefault("empty_label", _("assignments"))
+        context.setdefault("extra_context", {})
 
         # debugging_print(self.filterset.form["name"])
         return context
@@ -140,7 +161,7 @@ class SpecialAssignmentDetailsView(
     #     "special_assignment.view_specialassignment",
     #     "special_assignment.view_specialassignmentproxy",
     # ]
-    permission_required = "special_assignment.view_specialassignmentproxy",
+    permission_required = ("special_assignment.view_specialassignmentproxy",)
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

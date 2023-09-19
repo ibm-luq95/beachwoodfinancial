@@ -53,7 +53,7 @@
 
             </div>
         </th>
-        {% if is_show_section is True %}
+        {% if extra_context.is_show_section is True %}
             <th scope="col" class="px-6 py-3 text-left">
                 <div class="flex items-center gap-x-2">
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
@@ -107,7 +107,7 @@
                     </a>
                 </div>
             </td>
-            {% if is_show_section is True %}
+            {% if extra_context.is_show_section is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     <div class="px-10 py-3">
                         <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.get_note_section_display }}</span>

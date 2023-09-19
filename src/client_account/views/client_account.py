@@ -21,7 +21,7 @@ class ClientAccountListViewBW(
     BWBaseListViewMixin,
     ListView,
 ):
-    template_name = "client_account/list.html"
+    template_name = "core/crudl/list.html"
     model = ClientAccount
     permission_required = "client_account.can_view_list"
     permission_denied_message = _("You do not have permission to access this page.")
@@ -31,6 +31,25 @@ class ClientAccountListViewBW(
         context = super().get_context_data(**kwargs)
         context.setdefault("title", get_trans_txt("Client Accounts"))
         context.setdefault("filter_form", self.filterset.form)
+        context.setdefault("page_header", _("client accounts".capitalize()))
+        context.setdefault(
+            "component_path", "bw_components/client_account/table_list.html"
+        )
+        context.setdefault("subtitle", _("client accounts".title()))
+        context.setdefault("actions_base_url", "dashboard:client_account")
+        context.setdefault("filter_cancel_url", "dashboard:client_account:list")
+        context.setdefault("table_header_title", _("C"))
+        context.setdefault("table_header_subtitle", _("client_account subtitle"))
+        context.setdefault("is_show_create_btn", True)
+        context.setdefault("pagination_list_url_name", "dashboard:client_account:list")
+        context.setdefault("is_filters_enabled", True)
+        context.setdefault("is_actions_menu_enabled", True)
+        context.setdefault("is_header_enabled", True)
+        context.setdefault("is_footer_enabled", True)
+        context.setdefault("actions_items", "update,delete")
+        context.setdefault("base_url_name", "dashboard:client_account")
+        context.setdefault("empty_label", _("accounts"))
+        context.setdefault("extra_context", {})
         return context
 
     def get_queryset(self):

@@ -34,7 +34,7 @@ class ClientListView(
 ):
     permission_required = "client.can_view_list"
     permission_denied_message = _("You do not have permission to access this page.")
-    template_name = "client/list.html"
+    template_name = "core/crudl/list.html"
     model = ClientProxy
     # queryset = Client.objects.filter(~Q(status="archive")).prefetch_related("jobs")
     # queryset = Client.objects.prefetch_related(
@@ -47,9 +47,25 @@ class ClientListView(
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context["title"] = _("Clients")
+        context.setdefault("component_path", "bw_components/client/table_list.html")
         context.setdefault("filter_form", self.filterset.form)
         context.setdefault("list_type", self.list_type)
-        context.setdefault("page_header", "clients".title())
+        context.setdefault("page_header", "client".title())
+        context.setdefault("subtitle", "Client costumers".title())
+        context.setdefault("actions_base_url", "dashboard:client")
+        context.setdefault("filter_cancel_url", "dashboard:client:list")
+        context.setdefault("table_header_title", _("C"))
+        context.setdefault("table_header_subtitle", _("Client accounts for all services"))
+        context.setdefault("is_show_create_btn", True)
+        context.setdefault("pagination_list_url_name", "dashboard:client:list")
+        context.setdefault("is_filters_enabled", True)
+        context.setdefault("is_actions_menu_enabled", True)
+        context.setdefault("is_header_enabled", True)
+        context.setdefault("is_footer_enabled", True)
+        context.setdefault("actions_items", "details,update,delete")
+        context.setdefault("base_url_name", "dashboard:client")
+        context.setdefault("empty_label", _("client"))
+        context.setdefault("extra_context", {"is_show_bookkeeper": True})
 
         # debugging_print(self.filterset.form["name"])
         return context

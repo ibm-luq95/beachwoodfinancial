@@ -2,7 +2,6 @@
 const Path = require("path");
 // const fs = require("fs");
 const chalk = require("chalk");
-const log = console.log;
 const pwd = process.env.PWD;
 const pwdParent = Path.dirname(pwd);
 
