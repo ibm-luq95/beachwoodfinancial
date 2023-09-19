@@ -7,4 +7,4 @@ from core.admin import BWBaseAdminModelMixin
 
 @admin.register(TaskProxy)
 class TaskAdmin(BWBaseAdminModelMixin):
-    pass
+    list_display = ("title", "status", "task_type", "created_at")

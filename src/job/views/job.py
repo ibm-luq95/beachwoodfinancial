@@ -31,7 +31,7 @@ class JobListView(
     permission_required = "job.can_view_list"
 
     permission_denied_message = _("You do not have permission to access this page.")
-    template_name = "job/list.html"
+    template_name = "core/crudl/list.html"
     model = JobProxy
     paginate_by = LIST_VIEW_PAGINATE_BY
     list_type = "list"
@@ -42,6 +42,23 @@ class JobListView(
         context["title"] = _("Jobs")
         context.setdefault("filter_form", self.filterset.form)
         context.setdefault("list_type", self.list_type)
+        context.setdefault("component_path", "bw_components/job/table_list.html")
+        context.setdefault("page_header", _("jobs".title()))
+        context.setdefault("subtitle", "Client costumers".title())
+        context.setdefault("actions_base_url", "dashboard:job")
+        context.setdefault("filter_cancel_url", "dashboard:job:list")
+        context.setdefault("table_header_title", _("C"))
+        context.setdefault("table_header_subtitle", _("Jobs subtitle"))
+        context.setdefault("is_show_create_btn", True)
+        context.setdefault("pagination_list_url_name", "dashboard:job:list")
+        context.setdefault("is_filters_enabled", True)
+        context.setdefault("is_actions_menu_enabled", True)
+        context.setdefault("is_header_enabled", True)
+        context.setdefault("is_footer_enabled", True)
+        context.setdefault("actions_items", "details,update,delete")
+        context.setdefault("base_url_name", "dashboard:job")
+        context.setdefault("empty_label", _("client"))
+        context.setdefault("extra_context", {"is_show_client": True})
 
         # debugging_print(self.filterset.form["name"])
         return context

@@ -24,32 +24,56 @@ DEFAULT_PERMISSIONS_NEW_STAFF_MEMBER = [
     {
         "app_label": "special_assignment",
         "model_label": "SpecialAssignmentProxy".lower(),
-        "permissions_codename_labels": ["can_view_list", "view_specialassignmentproxy"],
+        "permissions_codename_labels": [
+            "can_view_list",
+            "view_specialassignmentproxy",
+            # "special_assignment.add_specialassignment",
+            "special_assignment.add_specialassignmentproxy",
+        ],
     },
     {
         "app_label": "task",
         "model_label": "TaskProxy".lower(),
-        "permissions_codename_labels": ["can_view_list", "view_taskproxy"],
+        "permissions_codename_labels": [
+            "can_view_list",
+            # "view_taskproxy",
+            "task.add_taskproxy",
+            "task.add_task",
+        ],
     },
     {
         "app_label": "job",
         "model_label": "JobProxy".lower(),
-        "permissions_codename_labels": ["can_view_list", "view_jobproxy"],
+        "permissions_codename_labels": [
+            "can_view_list",
+            # "view_jobproxy",
+            "job.add_jobproxy",
+            "job.add_job",
+        ],
     },
     {
         "app_label": "discussion",
         "model_label": "DiscussionProxy".lower(),
-        "permissions_codename_labels": ["can_view_list", "view_discussionproxy"],
+        "permissions_codename_labels": [
+            "can_view_list",
+            "view_discussionproxy",
+            # "discussion.add_discussion",
+            "discussion.add_discussionproxy",
+        ],
     },
     {
         "app_label": "note",
         "model_label": "Note".lower(),
-        "permissions_codename_labels": ["can_view_list", "view_note"],
+        "permissions_codename_labels": ["can_view_list", "view_note", "note.add_note"],
     },
     {
         "app_label": "document",
         "model_label": "Document".lower(),
-        "permissions_codename_labels": ["can_view_list", "view_document"],
+        "permissions_codename_labels": [
+            "can_view_list",
+            "view_document",
+            "note.add_document",
+        ],
     },
     {
         "app_label": "important_contact",

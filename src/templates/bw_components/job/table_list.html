@@ -53,7 +53,7 @@
 
             </div>
         </th>
-        {% if is_show_client is True %}
+        {% if extra_context.is_show_client is True %}
             <th scope="col" class="px-6 py-3 text-left">
                 <div class="flex items-center gap-x-2">
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
@@ -170,7 +170,7 @@
                     {% endif %}
                 </div>
             </td>
-            {% if is_show_client is True %}
+            {% if extra_context.is_show_client is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     <div class="px-5 py-3">
                         <a href="{% url 'dashboard:client:details' object.pk %}"
@@ -180,7 +180,16 @@
             {% endif %}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-5 py-3">
-                    <a href="" class="text-sm text-gray-600 dark:text-gray-400">{{ object.managed_by }}</a>
+                    {% if object.managed_by %}
+                        {% if request.user.user_type == CON_BOOKKEEPER %}
+                            <a href="javascript:;" class="disabledAnchorElement text-sm">{{ object.managed_by }}</a>
+                        {% else %}
+                            <a href="{% url 'dashboard:staff:member-details' object.managed_by.pk %}"
+                               class="text-sm {{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }}">{{ object.managed_by }}</a>
+                        {% endif %}
+                    {% else %}
+                        <span class="text-sm text-yellow-600 font-semibold italic">{% translate "No manager" %}</span>
+                    {% endif %}
                 </div>
             </td>
             <td class="h-px w-px whitespace-nowrap">

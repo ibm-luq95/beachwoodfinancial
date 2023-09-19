@@ -1,0 +1,26 @@
+{% extends "core/layouts/dashboard_content_base.html" %}
+
+{% load development_tags %}
+
+{% block dashboard_content_block %}
+    {# Page Heading #}
+
+    {% include "components/inc/dashboard/content_header.html" with title=page_header subtitle=subtitle is_show_create_btn=True app_label=app_label actions_base_url=actions_base_url %}
+
+    {# End Page Heading #}
+    {# Start Filter Form #}
+    {% if filter_form %}
+        {% component "bw_filter_form" filter_form=filter_form filter_cancel_url=filter_cancel_url %}
+    {% endif %}
+    {# End Filter Form #}
+    {% if object_list %}
+        <!-- Table Section -->
+        {% include component_path with is_checkbox_enabled=is_checkbox_enabled is_show_created_at=is_show_created_at header_title=table_header_title header_subtitle=table_header_subtitle app_label=app_label page_obj=page_obj pagination_list_url_name=pagination_list_url_name is_filters_enabled=is_filters_enabled is_actions_menu_enabled=is_actions_menu_enabled actions_items=actions_items actions_app_name=app_label actions_base_url=actions_base_url base_url_name=base_url_name object_list=object_list is_header_enabled=is_header_enabled is_footer_enabled=is_footer_enabled extra_context=extra_context %}
+
+        <!-- End Table Section -->
+    {% else %}
+
+        {% include "bw_ui_components/global/empty_card.html" with label=empty_label %}
+
+    {% endif %}
+{% endblock dashboard_content_block %}

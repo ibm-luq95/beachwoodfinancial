@@ -21,7 +21,7 @@ class ClientCategoryListViewBW(
     BWBaseListViewMixin,
     ListView,
 ):
-    template_name = "client_category/list.html"
+    template_name = "core/crudl/list.html"
     model = ClientCategory
     permission_required = "client_category.can_view_list"
     permission_denied_message = _("You do not have permission to access this page.")
@@ -31,6 +31,25 @@ class ClientCategoryListViewBW(
         context = super().get_context_data(**kwargs)
         context.setdefault("title", get_trans_txt("Client Categories"))
         context.setdefault("filter_form", self.filterset.form)
+        context.setdefault("page_header", _("clients categories".capitalize()))
+        context.setdefault(
+            "component_path", "bw_components/client_category/table_list.html"
+        )
+        context.setdefault("subtitle", _("client categories".title()))
+        context.setdefault("actions_base_url", "dashboard:client_category")
+        context.setdefault("filter_cancel_url", "dashboard:client_category:list")
+        context.setdefault("table_header_title", _("C"))
+        context.setdefault("table_header_subtitle", _("client_category subtitle"))
+        context.setdefault("is_show_create_btn", True)
+        context.setdefault("pagination_list_url_name", "dashboard:client_category:list")
+        context.setdefault("is_filters_enabled", True)
+        context.setdefault("is_actions_menu_enabled", True)
+        context.setdefault("is_header_enabled", True)
+        context.setdefault("is_footer_enabled", True)
+        context.setdefault("actions_items", "update,delete")
+        context.setdefault("base_url_name", "dashboard:client_category")
+        context.setdefault("empty_label", _("categories"))
+        context.setdefault("extra_context", {})
         return context
 
     def get_queryset(self):
