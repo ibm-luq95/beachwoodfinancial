@@ -26,21 +26,19 @@ class BWPermissionsForm(forms.Form):
         self.all_initial_permissions_qs = Permission.objects.filter(
             content_type__in=all_content_types
         )
+
+        # this field will create in __init__ method to prevent any problem for migration when init the project
+        self.fields["permissions"] = forms.ModelMultipleChoiceField(
+            label=_("Permissions"),
+            required=False,
+            widget=forms.CheckboxSelectMultiple,
+            queryset=self.all_initial_permissions_qs,
+            # initial=self.all_init_permissions,
+        )
         if staff_user is not None:
-            for group in staff_user.groups.all():
-                permissions = group.permissions.all()
-                if permissions:
-                    for permission in permissions:
-                        self.all_init_permissions.append(permission)
+            for permissions in staff_user.user_permissions.all():
+                self.all_init_permissions.append(permissions)
             # debugging_print(self.all_init_permissions)
-            # this field will create in __init__ method to prevent any problem for migration when init the project
-            self.fields["permissions"] = forms.ModelMultipleChoiceField(
-                label=_("Permissions"),
-                required=False,
-                widget=forms.CheckboxSelectMultiple,
-                queryset=self.all_initial_permissions_qs,
-                initial=self.all_init_permissions,
-            )
-            # self.fields.get("permissions").initial = self.all_init_permissions
+        self.fields.get("permissions").initial = self.all_init_permissions
 
     user = forms.UUIDField(widget=forms.HiddenInput)

@@ -23,7 +23,7 @@ class TaskListView(
 ):
     permission_required = "task.can_view_list"
     permission_denied_message = _("You do not have permission to access this page.")
-    template_name = "task/list.html"
+    template_name = "core/crudl/list.html"
     model = TaskProxy
     paginate_by = LIST_VIEW_PAGINATE_BY
     list_type = "list"
@@ -34,7 +34,31 @@ class TaskListView(
         context["title"] = _("Tasks")
         context.setdefault("filter_form", self.filterset.form)
         context.setdefault("list_type", self.list_type)
-        context.setdefault("page_header", "Tasks".title())
+        context.setdefault("page_header", _("Tasks".title()))
+        context.setdefault("component_path", "bw_components/task/table_list.html")
+        context.setdefault("subtitle", _("tasks".title()))
+        context.setdefault("actions_base_url", "dashboard:task")
+        context.setdefault("filter_cancel_url", "dashboard:task:list")
+        context.setdefault("table_header_title", _("C"))
+        context.setdefault("table_header_subtitle", _("Tasks subtitle"))
+        context.setdefault("is_show_create_btn", True)
+        context.setdefault("pagination_list_url_name", "dashboard:task:list")
+        context.setdefault("is_filters_enabled", True)
+        context.setdefault("is_actions_menu_enabled", True)
+        context.setdefault("is_header_enabled", True)
+        context.setdefault("is_footer_enabled", True)
+        context.setdefault("actions_items", "update,delete")
+        context.setdefault("base_url_name", "dashboard:task")
+        context.setdefault("empty_label", _("task"))
+        context.setdefault(
+            "extra_context",
+            {
+                "is_show_status_column": True,
+                "is_show_type_column": True,
+                "is_show_manager_column": True,
+                "is_show_job_column": True,
+            },
+        )
 
         # debugging_print(self.filterset.form["name"])
         return context

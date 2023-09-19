@@ -68,3 +68,9 @@
                  {% endif %}
                  {% if extra_css_classes %}{{ extra_css_classes }}{% endif %}">{{ text }}</span>
 {% endif %}
+{# Check if code is None #}
+
+{% if code == "" or code == None %}
+    {{ text }}
+{% endif %}
+    

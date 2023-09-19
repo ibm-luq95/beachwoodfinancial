@@ -20,7 +20,7 @@ class JobCategoryListView(
 ):
     permission_required = "job_category.can_view_list"
     permission_denied_message = _("You do not have permission to access this page.")
-    template_name = "job_category/list.html"
+    template_name = "core/crudl/list.html"
     model = JobCategory
     paginate_by = LIST_VIEW_PAGINATE_BY
     list_type = "list"
@@ -30,7 +30,23 @@ class JobCategoryListView(
         context = super().get_context_data(**kwargs)
         context["title"] = _("Job categories")
         context.setdefault("list_type", self.list_type)
-        context.setdefault("page_header", "notes".title())
+        context.setdefault("page_header", _("Jobs categories".title()))
+        context.setdefault("component_path", "bw_components/job_category/table_list.html")
+        context.setdefault("subtitle", _("job_category".title()))
+        context.setdefault("actions_base_url", "dashboard:job_category")
+        context.setdefault("filter_cancel_url", "dashboard:job_category:list")
+        context.setdefault("table_header_title", _("C"))
+        context.setdefault("table_header_subtitle", _("job_categorys subtitle"))
+        context.setdefault("is_show_create_btn", True)
+        context.setdefault("pagination_list_url_name", "dashboard:job_category:list")
+        context.setdefault("is_filters_enabled", True)
+        context.setdefault("is_actions_menu_enabled", True)
+        context.setdefault("is_header_enabled", True)
+        context.setdefault("is_footer_enabled", True)
+        context.setdefault("actions_items", "update,delete")
+        context.setdefault("base_url_name", "dashboard:job_category")
+        context.setdefault("empty_label", _("categories"))
+        context.setdefault("extra_context", {})
 
         return context
 

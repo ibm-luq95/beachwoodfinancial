@@ -24,7 +24,7 @@ class DocumentListView(
 ):
     permission_required = "document.can_view_list"
     permission_denied_message = _("You do not have permission to access this page.")
-    template_name = "document/list.html"
+    template_name = "core/crudl/list.html"
     model = Document
     # queryset = Client.objects.filter(~Q(status="archive")).prefetch_related("jobs")
     # queryset = Client.objects.prefetch_related(
@@ -39,7 +39,23 @@ class DocumentListView(
         context["title"] = _("Documents")
         context.setdefault("filter_form", self.filterset.form)
         context.setdefault("list_type", self.list_type)
-        context.setdefault("page_header", "documents".title())
+        context.setdefault("page_header", _("Documents".title()))
+        context.setdefault("component_path", "bw_components/document/table_list.html")
+        context.setdefault("subtitle", _("documents".title()))
+        context.setdefault("actions_base_url", "dashboard:document")
+        context.setdefault("filter_cancel_url", "dashboard:document:list")
+        context.setdefault("table_header_title", _("C"))
+        context.setdefault("table_header_subtitle", _("documents subtitle"))
+        context.setdefault("is_show_create_btn", True)
+        context.setdefault("pagination_list_url_name", "dashboard:document:list")
+        context.setdefault("is_filters_enabled", True)
+        context.setdefault("is_actions_menu_enabled", True)
+        context.setdefault("is_header_enabled", True)
+        context.setdefault("is_footer_enabled", True)
+        context.setdefault("actions_items", "update,delete")
+        context.setdefault("base_url_name", "dashboard:document")
+        context.setdefault("empty_label", _("documents"))
+        context.setdefault("extra_context", {})
 
         # debugging_print(self.filterset.form["name"])
         return context
