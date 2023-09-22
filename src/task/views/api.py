@@ -14,5 +14,5 @@ logger = get_formatted_logger()
 class TaskViewSet(ModelViewSet):
     serializer_class = TaskSerializer
     permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
-    perm_slug = "task.taskproxy"
+    perm_slug = "task.task"
     queryset = TaskProxy.objects.all()

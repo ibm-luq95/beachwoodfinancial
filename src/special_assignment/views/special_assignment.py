@@ -112,7 +112,7 @@ class SpecialAssignmentUpdateView(
     #     "special_assignment.change_specialassignment",
     #     "special_assignment.change_specialassignmentproxy",
     # ]
-    permission_required = "special_assignment.change_specialassignmentproxy"
+    permission_required = "special_assignment.change_specialassignment"
     template_name = "special_assignment/update.html"
     form_class = SpecialAssignmentForm
     success_message = _("Special assignment updated successfully")
@@ -139,7 +139,7 @@ class SpecialAssignmentDeleteView(
     #     "special_assignment.delete_specialassignment",
     #     "special_assignment.delete_specialassignmentproxy",
     # ]
-    permission_required = "special_assignment.delete_specialassignmentproxy"
+    permission_required = "special_assignment.delete_specialassignment"
     template_name = "special_assignment/delete.html"
     model = SpecialAssignmentProxy
     success_message = _("Special assignment deleted successfully")
@@ -161,7 +161,7 @@ class SpecialAssignmentDetailsView(
     #     "special_assignment.view_specialassignment",
     #     "special_assignment.view_specialassignmentproxy",
     # ]
-    permission_required = ("special_assignment.view_specialassignmentproxy",)
+    permission_required = "special_assignment.view_specialassignment"
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
