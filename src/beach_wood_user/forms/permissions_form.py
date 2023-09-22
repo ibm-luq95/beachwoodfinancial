@@ -2,14 +2,10 @@
 from typing import Optional
 
 from django import forms
-from django.contrib.auth.models import Permission
-from django.contrib.contenttypes.models import ContentType
 from django.utils.translation import gettext as _
 
 from beach_wood_user.helpers.permission_helper import PermissionHelper
 from beach_wood_user.models import BWUser
-from core.constants.users import DEFAULT_PERMISSIONS_NEW_STAFF_MEMBER
-from core.utils import debugging_print
 
 
 class BWPermissionsForm(forms.Form):
