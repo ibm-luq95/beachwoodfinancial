@@ -19,52 +19,74 @@ ASSISTANT_FULL_MANAGER_PERMISSION_WITH_MODEL_NAME = (
 )
 ASSISTANT_FULL_MANAGER_PERMISSION_SHORT_NAME = "assistant_has_full_manager_permissions"
 
+BOOKKEEPER_PERMISSION = "bookkeeper_user"
+ASSISTANT_PERMISSION = "assistant_user"
+MANAGER_PERMISSION = "manager_user"
+
 # Default permissions for new created staff member
 DEFAULT_PERMISSIONS_NEW_STAFF_MEMBER = [
     {
         "app_label": "special_assignment",
-        "model_label": "SpecialAssignmentProxy".lower(),
+        "model_label": "SpecialAssignment".lower(),
         "permissions_codename_labels": [
             "can_view_list",
-            "view_specialassignmentproxy",
+            "view_specialassignment",
             # "special_assignment.add_specialassignment",
-            "special_assignment.add_specialassignmentproxy",
+            "add_specialassignment",
+            "view_specialassignment",
+            "change_specialassignment",
+            "delete_specialassignment",
         ],
     },
     {
         "app_label": "task",
-        "model_label": "TaskProxy".lower(),
+        "model_label": "Task".lower(),
         "permissions_codename_labels": [
             "can_view_list",
             # "view_taskproxy",
-            "task.add_taskproxy",
-            "task.add_task",
+            "add_task",
+            "view_task",
+            "change_task",
+            "delete_task",
+            # "task.add_task",
         ],
     },
     {
         "app_label": "job",
-        "model_label": "JobProxy".lower(),
+        "model_label": "Job".lower(),
         "permissions_codename_labels": [
             "can_view_list",
             # "view_jobproxy",
-            "job.add_jobproxy",
-            "job.add_job",
+            # "job.add_job",
+            "add_job",
+            "view_job",
+            "change_job",
+            "delete_job",
         ],
     },
     {
         "app_label": "discussion",
-        "model_label": "DiscussionProxy".lower(),
+        "model_label": "Discussion".lower(),
         "permissions_codename_labels": [
             "can_view_list",
-            "view_discussionproxy",
+            "view_discussion",
             # "discussion.add_discussion",
-            "discussion.add_discussionproxy",
+            "add_discussion",
+            "view_discussion",
+            "change_discussion",
+            "delete_discussion",
         ],
     },
     {
         "app_label": "note",
         "model_label": "Note".lower(),
-        "permissions_codename_labels": ["can_view_list", "view_note", "note.add_note"],
+        "permissions_codename_labels": [
+            "can_view_list",
+            "view_note",
+            "add_note",
+            "delete_note",
+            "change_note",
+        ],
     },
     {
         "app_label": "document",
@@ -72,22 +94,39 @@ DEFAULT_PERMISSIONS_NEW_STAFF_MEMBER = [
         "permissions_codename_labels": [
             "can_view_list",
             "view_document",
-            "note.add_document",
+            "add_document",
+            "delete_document",
+            "change_document",
         ],
     },
     {
         "app_label": "important_contact",
         "model_label": "ImportantContact".lower(),
-        "permissions_codename_labels": ["can_view_list", "view_importantcontact"],
+        "permissions_codename_labels": [
+            "can_view_list",
+            "view_importantcontact",
+            "add_importantcontact",
+            "change_importantcontact",
+            "delete_importantcontact",
+        ],
     },
     {
         "app_label": "client_account",
         "model_label": "ClientAccount".lower(),
-        "permissions_codename_labels": ["can_view_list", "view_clientaccount"],
+        "permissions_codename_labels": [
+            "can_view_list",
+            "view_clientaccount",
+            "add_clientaccount",
+            "change_clientaccount",
+            "delete_clientaccount",
+        ],
     },
     {
         "app_label": "client",
-        "model_label": "ClientProxy".lower(),
-        "permissions_codename_labels": ["can_view_list", "view_clientproxy"],
+        "model_label": "Client".lower(),
+        "permissions_codename_labels": ["can_view_list", "view_client"],
+        "extra_permissions": {
+            "codename_labels": ["add_client", "change_client", "delete_client"]
+        },
     },
 ]
