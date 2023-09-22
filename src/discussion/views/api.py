@@ -15,7 +15,7 @@ class DiscussionViewSet(ModelViewSet):
     serializer_class = DiscussionSerializer
     permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
     parser_classes = [parsers.FormParser, parsers.MultiPartParser]
-    perm_slug = "discussion.discussionproxy"
+    perm_slug = "discussion.discussion"
     queryset = DiscussionProxy.objects.all()
 
 

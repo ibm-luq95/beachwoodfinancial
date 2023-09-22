@@ -12,4 +12,11 @@ class Bookkeeper(BaseModelMixin, StaffMemberMixin, AccessProxyModelMixin):
         BaseModelMixin (models.Model): Django base model mixin
     """
 
-
+    class Meta:
+        permissions = [
+            ("bookkeeper_user", "Bookkeeper User"),
+            (
+                "bookkeeper_can_delete_special_assignment",
+                "Bookkeeper can delete special assignment",
+            ),
+        ]

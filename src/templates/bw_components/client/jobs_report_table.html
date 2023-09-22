@@ -31,6 +31,7 @@
 {% endif %}
 {# Start Table Header Columns #}
 {% block thead_block %}
+    {{ months_list }}
     <tr>
         {% if is_checkbox_enabled is True %}
             <th scope="col" class="pl-6 py-3 text-left">
@@ -46,69 +47,7 @@
         <th scope="col" class="px-6 py-3 text-left">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "Title" %}
-                </span>
-
-                {% include "bw_components/global/table_list/sort_icon.html" %}
-
-            </div>
-        </th>
-        {% if is_show_client is True %}
-            <th scope="col" class="px-6 py-3 text-left">
-                <div class="flex items-center gap-x-2">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                        {% translate "Client" %}
-                    </span>
-
-                    {% include "bw_components/global/table_list/sort_icon.html" %}
-
-                </div>
-            </th>
-        {% endif %}
-        <th scope="col" class="px-6 py-3 text-left">
-            <div class="flex items-center gap-x-2">
-                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "Manager" %}
-                </span>
-
-                {% include "bw_components/global/table_list/sort_icon.html" %}
-
-            </div>
-        </th>
-        <th scope="col" class="px-6 py-3 text-left">
-            <div class="flex items-center gap-x-2">
-                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "Status" %}
-                </span>
-
-                {% include "bw_components/global/table_list/sort_icon.html" %}
-
-            </div>
-        </th>
-        <th scope="col" class="px-6 py-3 text-left">
-            <div class="flex items-center gap-x-2">
-                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "State" %}
-                </span>
-
-                {% include "bw_components/global/table_list/sort_icon.html" %}
-
-            </div>
-        </th>
-        <th scope="col" class="px-6 py-3 text-left">
-            <div class="flex items-center gap-x-2">
-                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "Start Date" %}
-                </span>
-
-                {% include "bw_components/global/table_list/sort_icon.html" %}
-
-            </div>
-        </th>
-        <th scope="col" class="px-6 py-3 text-left">
-            <div class="flex items-center gap-x-2">
-                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "Due Date" %}
+                    {% translate "Client Name" %}
                 </span>
 
                 {% include "bw_components/global/table_list/sort_icon.html" %}
@@ -168,39 +107,6 @@
                             {% endfor %}
                         </div>
                     {% endif %}
-                </div>
-            </td>
-            {% if is_show_client is True %}
-                <td class="h-px w-px whitespace-nowrap">
-                    <div class="px-5 py-3">
-                        <a href="{% url 'dashboard:client:details' object.pk %}"
-                           class="text-sm text-gray-600 dark:text-gray-400">{{ object.client }}</a>
-                    </div>
-                </td>
-            {% endif %}
-            <td class="h-px w-px whitespace-nowrap">
-                <div class="px-5 py-3">
-                    <a href="" class="text-sm text-gray-600 dark:text-gray-400">{{ object.managed_by }}</a>
-                </div>
-            </td>
-            <td class="h-px w-px whitespace-nowrap">
-                <div class="px-5 py-3">
-                    {% bw_badge code=object.status text=object.get_status_display is_solid=False size="sm" %}
-                </div>
-            </td>
-            <td class="h-px w-px whitespace-nowrap">
-                <div class="px-5 py-3">
-                    {% bw_badge code=object.state text=object.get_state_display is_solid=False size="sm" %}
-                </div>
-            </td>
-            <td class="h-px w-px whitespace-nowrap">
-                <div class="px-5 py-3">
-                    <p class="text-sm text-gray-600 dark:text-gray-400">{{ object.start_date|date }}</p>
-                </div>
-            </td>
-            <td class="h-px w-px whitespace-nowrap">
-                <div class="px-5 py-3">
-                    <p class="text-sm text-gray-600 dark:text-gray-400">{{ object.due_date|date }}</p>
                 </div>
             </td>
             {% if is_show_created_at is True %}

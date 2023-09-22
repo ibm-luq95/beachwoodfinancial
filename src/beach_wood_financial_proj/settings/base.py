@@ -476,3 +476,6 @@ LOGGING = {
         # },
     },
 }
+
+SESSION_TIMEOUT_REDIRECT = "/auth/login"
+ANONYMOUS_USER_NAME = None

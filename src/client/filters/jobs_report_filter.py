@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-#
 import django_filters
+from django import forms
 from django.utils.translation import gettext as _
 
-from django import forms
-
-from core.filters.filter_help_text import HelpfulFilterSet
+from core.filters.filter_created_mixin import FilterCreatedMixin
 from job.models import JobProxy
 from job_category.models import JobCategory
 
 
-class JobReportFilter(HelpfulFilterSet):
+class JobReportFilter(FilterCreatedMixin):
     categories = django_filters.ModelMultipleChoiceFilter(
         field_name="categories",
         queryset=JobCategory.objects.all(),
@@ -21,13 +20,13 @@ class JobReportFilter(HelpfulFilterSet):
         field_name="due_date",
         widget=forms.DateInput(attrs={"type": "date"}),
         lookup_expr="gt",
-        label=_("Due date greater than")
+        label=_("Due date greater than"),
     )
     due_date__lt = django_filters.DateFilter(
         field_name="due_date",
         widget=forms.DateInput(attrs={"type": "date"}),
         lookup_expr="lt",
-        label=_("Due date less than")
+        label=_("Due date less than"),
     )
     created_at = django_filters.DateFilter(
         field_name="created_at", widget=forms.DateInput(attrs={"type": "date"})
@@ -43,5 +42,13 @@ class JobReportFilter(HelpfulFilterSet):
             "job_type": ["exact"],
             "state": ["exact"],
             "description": ["icontains"],
-            # "created_at": ["exact"]
         }
+        # fields = {
+        #     "name": ["icontains"],
+        #     "bookkeepers": ["exact"],
+        #     "email": ["exact"],
+        #     "city": ["exact"],
+        #     "state": ["exact"],
+        #     "street": ["icontains"],
+        #     "status": ["exact"],
+        # }
