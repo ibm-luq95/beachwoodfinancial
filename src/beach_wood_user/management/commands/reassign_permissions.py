@@ -28,7 +28,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
             if confirm.lower() == "y":
                 with transaction.atomic():
                     permissions_codename_list_objs = (
-                        PermissionHelper.get_bw_default_permissions(as_form_choices=True)
+                        PermissionHelper.get_bw_default_permissions(as_list=True)
                     )
                     # return
                     users = BWUser.objects.all()
