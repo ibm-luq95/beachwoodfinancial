@@ -14,13 +14,6 @@ logger = get_formatted_logger()
 class BookkeeperProxy(Bookkeeper):
     class Meta(Bookkeeper.Meta):
         proxy = True
-        permissions = [
-            ("bookkeeper_user", "Bookkeeper User"),
-            (
-                "bookkeeper_can_delete_special_assignment",
-                "Bookkeeper can delete special assignment",
-            ),
-        ]
 
     @property
     def get_bookkeeper(self) -> Bookkeeper:

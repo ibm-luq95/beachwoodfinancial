@@ -5,5 +5,6 @@ from .client import (
     ClientUpdateView,
     ClientDeleteView,
     ClientDetailsView,
+    ClientReportView,
 )
 from .api import ClientViewSet

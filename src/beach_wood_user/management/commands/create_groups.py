@@ -27,7 +27,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
         "Create groups for manager, bookkeeper, assistant, and default readonly for new"
         " staff member"
     )
-    apps_name = ("managerproxy", "bookkeeperproxy", "assistantproxy")
+    apps_name = ("manager", "bookkeeper", "assistant")
     groups_names = (
         BOOKKEEPER_GROUP_NAME,
         ASSISTANT_GROUP_NAME,
@@ -94,17 +94,17 @@ class Command(BaseCommand, CommandStdOutputMixin):
                         )
                     models = [passed_app]
                 else:
-                    models = ["managerproxy", "bookkeeperproxy", "assistantproxy"]
+                    models = ["manager", "bookkeeper", "assistant"]
 
                 for model in models:
                     group_obj = None
                     match model:
-                        case "bookkeeperproxy":
+                        case "bookkeeper":
                             group_obj, created = Group.objects.get_or_create(
                                 name=BOOKKEEPER_GROUP_NAME
                             )
                             content_type = ContentType.objects.get(
-                                app_label="bookkeeper", model="BookkeeperProxy".lower()
+                                app_label="bookkeeper", model="Bookkeeper".lower()
                             )
                             # debugging_print(content_type)
                             bookkeeper_permission = Permission.objects.get(
@@ -112,12 +112,12 @@ class Command(BaseCommand, CommandStdOutputMixin):
                             )
                             group_obj.permissions.add(bookkeeper_permission)
                             group_obj.save()
-                        case "assistantproxy":
+                        case "assistant":
                             group_obj, created = Group.objects.get_or_create(
                                 name=ASSISTANT_GROUP_NAME
                             )
                             content_type = ContentType.objects.get(
-                                app_label="assistant", model="AssistantProxy".lower()
+                                app_label="assistant", model="Assistant".lower()
                             )
                             # debugging_print(content_type)
                             assistant_permission = Permission.objects.get(
@@ -125,12 +125,12 @@ class Command(BaseCommand, CommandStdOutputMixin):
                             )
                             group_obj.permissions.add(assistant_permission)
                             group_obj.save()
-                        case "managerproxy":
+                        case "manager":
                             group_obj, created = Group.objects.get_or_create(
                                 name=MANAGER_GROUP_NAME
                             )
                             content_type = ContentType.objects.get(
-                                app_label="manager", model="ManagerProxy".lower()
+                                app_label="manager", model="Manager".lower()
                             )
                             # debugging_print(content_type)
                             manager_permission = Permission.objects.get(
@@ -154,10 +154,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
                 if created:
                     self.stdout_output(
                         "warning",
-                        _(
-                            "Creating new group"
-                            f" {READONLY_NEW_STAFF_MEMBER_GROUP_NAME}"
-                        ),
+                        _(f"Creating new group {READONLY_NEW_STAFF_MEMBER_GROUP_NAME}"),
                     )
                 else:
                     self.stdout_output(

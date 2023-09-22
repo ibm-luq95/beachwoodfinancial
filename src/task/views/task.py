@@ -86,7 +86,7 @@ class TaskCreateView(
     CreateView,
 ):
     # permission_required = ["task.add_taskproxy", "task.add_task"]
-    permission_required = "task.add_taskproxy"
+    permission_required = "task.add_task"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "task/create.html"
     form_class = TaskForm
@@ -111,7 +111,7 @@ class TaskUpdateView(
     UpdateView,
 ):
     # permission_required = ["task.change_taskproxy", "task.change_task"]
-    permission_required = "task.change_taskproxy"
+    permission_required = "task.change_task"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "task/update.html"
     form_class = TaskForm
@@ -137,7 +137,7 @@ class TaskDeleteView(
     DeleteView,
 ):
     # permission_required = ["task.delete_taskproxy", "task.delete_task"]
-    permission_required = "task.delete_taskproxy"
+    permission_required = "task.delete_task"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "task/delete.html"
     model = TaskProxy

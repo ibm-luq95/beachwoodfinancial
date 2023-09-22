@@ -12,7 +12,7 @@ from core.constants.users import CON_BOOKKEEPER
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from discussion.forms import DiscussionMiniForm
 from document.forms import DocumentForm
-from job.filters import JobFilter, JobReportFilter
+from job.filters import JobFilter
 from job.forms import JobForm
 from job.models import JobProxy
 from note.forms import NoteForm
@@ -71,38 +71,6 @@ class JobListView(
         return self.filterset.qs
 
 
-class JobReportView(
-    PermissionRequiredMixin,
-    BWLoginRequiredMixin,
-    BWCacheViewMixin,
-    BWBaseListViewMixin,
-    ListView,
-):
-    permission_required = "job.can_view_report"
-
-    permission_denied_message = _("You do not have permission to access this page.")
-    template_name = "job/report.html"
-    model = JobProxy
-    paginate_by = LIST_VIEW_PAGINATE_BY
-    list_type = "list"
-
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
-        context["title"] = _("Jobs Report")
-        context.setdefault("filter_form", self.filterset.form)
-        context.setdefault("list_type", self.list_type)
-        context.setdefault("page_header", "Reports".title())
-
-        # debugging_print(self.filterset.form["name"])
-        return context
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        self.filterset = JobReportFilter(self.request.GET, queryset=queryset)
-        return self.filterset.qs
-
-
 class JobCreateView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
@@ -111,7 +79,7 @@ class JobCreateView(
     CreateView,
 ):
     # permission_required = ["job.add_job", "job.add_jobproxy"]
-    permission_required = "job.add_jobproxy"
+    permission_required = "job.add_job"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job/create.html"
     form_class = JobForm
@@ -135,7 +103,7 @@ class JobDetailsView(
     DetailView,
 ):
     # permission_required = ["job.view_job", "job.view_jobproxy"]
-    permission_required = "job.view_jobproxy"
+    permission_required = "job.view_job"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job/details.html"
     model = JobProxy
@@ -206,7 +174,7 @@ class JobUpdateView(
     UpdateView,
 ):
     # permission_required = ["job.change_job", "job.change_jobproxy"]
-    permission_required = "job.change_jobproxy"
+    permission_required = "job.change_job"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job/update.html"
     form_class = JobForm
@@ -233,7 +201,7 @@ class JobDeleteView(
 ):
     template_name = "job/delete.html"
     # permission_required = ["job.delete_job", "job.delete_jobproxy"]
-    permission_required = "job.delete_jobproxy"
+    permission_required = "job.delete_job"
     permission_denied_message = _("You do not have permission to access this page.")
     model = TaskProxy
     success_message = _("Job deleted successfully")

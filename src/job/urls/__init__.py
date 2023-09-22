@@ -5,7 +5,6 @@ from job.views import (
     JobListView,
     JobDeleteView,
     JobUpdateView,
-    JobReportView
 )
 
 app_name = "job"
@@ -16,6 +15,5 @@ urlpatterns = [
     path("update/<uuid:pk>", JobUpdateView.as_view(), name="update"),
     path("delete/<uuid:pk>", JobDeleteView.as_view(), name="delete"),
     path("<uuid:pk>", JobDetailsView.as_view(), name="details"),
-    path("report", JobReportView.as_view(), name="report"),
     path("api/", include("job.urls.api"), name="api"),
 ]

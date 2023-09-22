@@ -48,9 +48,9 @@ class BeachWoodUserManager(BaseUserManager):
             development_admin_emails = ["admin@admin.com", "admin@admin.dev"]
 
             # create admin names for superuser in case it is admin
-            if (
-                email in development_admin_emails
-                and config("STAGE_ENVIRONMENT", cast=str) == "DEV"
+            if email in development_admin_emails and (
+                config("STAGE_ENVIRONMENT", cast=str) == "DEV"
+                or config("STAGE_ENVIRONMENT", cast=str) == "LOCAL_DEV"
             ):
                 extra_fields.setdefault("first_name", "Administrator")
                 extra_fields.setdefault("last_name", "Account")
