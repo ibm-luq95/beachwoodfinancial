@@ -3,6 +3,7 @@ from django.db import transaction
 from django.db.models import Q
 
 from client.models import Client
+from client.models.managers.reports_manager import ClientReportsManager
 from core.constants.status_labels import (
     CON_ARCHIVED,
     CON_COMPLETED,
@@ -15,6 +16,8 @@ from core.models.querysets import BaseQuerySetMixin
 
 
 class ClientProxy(Client):
+    reports_manager = ClientReportsManager()
+
     class Meta(Client.Meta):
         proxy = True
 
