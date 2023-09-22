@@ -21,3 +21,17 @@ class Assistant(BaseModelMixin, StaffMemberMixin, AccessProxyModelMixin):
         choices=AssistantTypeEnum.choices,
         default=AssistantTypeEnum.ALL,
     )
+
+    class Meta:
+        permissions = [
+            ("assistant_user", "Assistant User"),
+            ("can_access_bookkeeper", _("Can access bookkeeper account details")),
+            ("can_edit_bookkeeper", _("Can edit bookkeeper account details")),
+            ("can_access_client", _("Can access client(s) account details")),
+            ("can_assign_bookkeeper_to_client", _("Assign bookkeeper to client")),
+            (
+                ASSISTANT_FULL_MANAGER_PERMISSION_SHORT_NAME,
+                "Assistant has full manager permissions",
+            ),
+            ("can_edit_users", "Can edit users"),
+        ]
