@@ -8,6 +8,7 @@ from django.dispatch import receiver
 from django.utils.translation import gettext as _
 
 from assistant.models import AssistantProxy
+from beach_wood_user.helpers.permission_helper import PermissionHelper
 from beach_wood_user.models import Profile
 from beach_wood_user.models.beach_wood_user import BWUser
 from bookkeeper.models import BookkeeperProxy
@@ -83,6 +84,10 @@ def assign_groups(sender, instance: BWUser, created: bool, **kwargs):
                 if created_user.user_type == "manager":
                     group_obj = Group.objects.get(name=MANAGER_GROUP_NAME)
                     created_user.groups.add(group_obj)
+                permissions_list = PermissionHelper.get_bw_default_permissions(
+                    as_list=True
+                )
+                created_user.user_permissions.add(*permissions_list)
                 created_user.save()
 
     except Exception as ex:
