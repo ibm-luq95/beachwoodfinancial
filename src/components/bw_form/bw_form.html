@@ -30,6 +30,7 @@
         </div>
     </div>
 {% endif %}
+{% bw_split_form_hidden_and_not_inputs form_object=form as all_form_inputs %}
 <!-- Card -->
 <div class="bg-white rounded-xl shadow p-4 sm:p-7 dark:bg-slate-900">
     <div class="mb-8">
@@ -47,53 +48,49 @@
             {% endcomment %}
             <!-- Grid -->
             <div class="grid grid-cols-12 gap-4 sm:gap-6">
-                {% for input in form %}
+                {% for field in all_form_inputs.normal_inputs %}
                     <div class="col-span-2">
-                        {% if input.is_hidden is False %}
-                            {% bw_label html_for=input.auto_id lbl_text=input.label is_required=input.field.required %}
-                        {% endif %}
+                        {% bw_label html_for=field.auto_id lbl_text=field.label is_required=field.field.required %}
                     </div>
                     <!-- End Col -->
                     <div class="col-span-10">
+                        {% bw_get_form_widget_attrs_as_dict field.field as widget_attrs %}
                         {# {{ input.field|bw_get_form_field_type }} #}
                         <div class="relative">
-                            {# ModelMultipleChoiceField #}
-                            {% with placeholder=input.field.widget.attrs.placeholder|default:input.label WIDGET_ERROR_CLASS=BW_PRELINE_INPUT_ERROR_CLASSES %}
-                                {% if input.field|bw_get_form_field_type == "ModelMultipleChoiceField" or input.field|bw_get_form_field_type == "ModelChoiceField" %}
-                                    {% if input.field.widget.choices %}
-                                        {% if input.field.widget|bw_get_form_field_type == "Select" or input.field.widget|bw_get_form_field_type == "SelectMultiple" %}
-                                            {% with select_multiple=input.field.widget|bw_get_form_field_type %}
-                                                {% render_field input class+=BW_PRELINE_TEXT_INPUT_CSS_CLASSES placeholder=placeholder %}
-                                            {% endwith %}
-                                        {% elif input.field.widget|bw_get_form_field_type == "CheckboxSelectMultiple" %}
-                                            {% for checkbox_field in input %}
-                                                {% bw_checkbox field=checkbox_field %}
-                                            {% endfor %}
-                                        {% endif %}
-                                    {% else %}
-                                        <p class="text-yellow-500 font-semibold text-[14px] relative top-2">
-                                            {% translate "No "|add:input.label %}
-                                        </p>
+                            <!-- Boolean Field -->
+                            {% if field|field_type == 'booleanfield' %}
+                                {% bw_switch bound_field=field %}
+                            {% elif field|field_type == 'datefield' or field|field_type == 'emailfield' or field|field_type == "passwordfield" or field|field_type == "charfield" or field|field_type == 'datetimefield' or field|field_type == 'urlfield' or field|field_type == "decimalfield" or field|field_type == "integerfield" or field|field_type == "slugfield" or field|field_type == "uuidfield" or field|field_type == "urlfield" %}
+                                {% render_field field class+=BW_PRELINE_TEXT_INPUT_CSS_CLASSES placeholder=widget_attrs.placeholder %}
+                            {% elif field|field_type == "modelmultiplechoicefield" or field|field_type == "multiplechoicefield" or field|field_type == "modelchoicefield" %}
+                                {% if field.field.widget.choices %}
+                                    {% if field.field.widget|bw_get_form_field_type == "Select" or field.field.widget|bw_get_form_field_type == "SelectMultiple" %}
+                                        {% with select_multiple=field.field.widget|bw_get_form_field_type %}
+                                            {% render_field field class+=BW_PRELINE_TEXT_INPUT_CSS_CLASSES placeholder=widget_attrs.placeholder %}
+                                        {% endwith %}
+                                    {% elif field.field.widget|bw_get_form_field_type == "CheckboxSelectMultiple" or field.field|bw_get_form_field_type == "MultipleChoiceField" %}
+                                        {% for checkbox_field in field %}
+                                            {% bw_checkbox field=checkbox_field %}
+                                        {% endfor %}
                                     {% endif %}
-                                {% elif input.field|bw_get_form_field_type == "BooleanField" %}
-                                    {# {% bw_checkbox checkbox_txt=input.field.label field=input %} #}
-                                    {# {{ input }} #}
-                                    {# {% bw_testing_form_field input.field %} #}
-                                    {% bw_switch bound_field=input %}
                                 {% else %}
-                                    {% render_field input class+=BW_PRELINE_TEXT_INPUT_CSS_CLASSES placeholder=placeholder %}
+                                    <p class="text-yellow-500 font-semibold text-[14px] relative top-2">
+                                        {% translate "No - "|add:field.label %}
+                                    </p>
                                 {% endif %}
-                            {% endwith %}
-                            {% if input.help_text %}
+                            {% else %}
+                                {% render_field field class+=BW_PRELINE_TEXT_INPUT_CSS_CLASSES placeholder=widget_attrs.placeholder %}
+                            {% endif %}
+                            {% if field.help_text %}
                                 <p class="text-sm text-gray-500 mt-2"
-                                   id="{{ input.id_for_label|add:'helper' }}">
-                                    {{ input.help_text }}
+                                   id="{{ field.id_for_label|add:'helper' }}">
+                                    {{ field.help_text|safe }}
                                 </p>
                             {% endif %}
-                            {% if input.errors %}
-                                {% for error in input.errors %}
+                            {% if field.errors %}
+                                {% for error in field.errors %}
                                     <p class="text-sm text-red-600 mt-2"
-                                       id="{{ input.id_for_label|add:'error' }}">{{ error }}</p>
+                                       id="{{ field.id_for_label|add:'error' }}">{{ error }}</p>
                                 {% endfor %}
                             {% endif %}
                         </div>
@@ -108,6 +105,9 @@
                     </div>
                 {% endif %}
             </div>
+            {% if all_form_inputs.hidden_inputs %}
+                {% for hidden_input in all_form_inputs.hidden_inputs %}{{ hidden_input }}{% endfor %}
+            {% endif %}
             <!-- End Grid -->
             <div class="mt-5 flex justify-end gap-x-2">
                 <div class="hs-tooltip inline-block">
