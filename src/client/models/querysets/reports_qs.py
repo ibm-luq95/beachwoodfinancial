@@ -1,42 +1,33 @@
 # -*- coding: utf-8 -*-#
-from django.db.models import Q
+import traceback
+from typing import Optional
 
-from core.constants.status_labels import (
-    CON_ARCHIVED,
-    CON_PAST_DUE,
-    CON_COMPLETED,
-    CON_IN_PROGRESS,
-)
+from django.db import transaction
+from django.forms import model_to_dict
+
+from client.models.querysets.types import ClientJobsFilterTypes
 from core.models.querysets import BaseQuerySetMixin
-from core.utils import debugging_print
+from core.utils import debugging_print, colored_output_with_logging
+from reports.models import ClientJobsReportsDBView
 
 
 class ClientReportsQuerySet(BaseQuerySetMixin):
-    def get_all_past_due_jobs(self) -> BaseQuerySetMixin:
-        jobs = self.jobs.filter(Q(status=CON_PAST_DUE))
-        return jobs
-
-    def get_all_archived_jobs(self) -> BaseQuerySetMixin:
-        jobs = self.jobs.filter(Q(status=CON_ARCHIVED))
-        return jobs
-
-    def get_completed_jobs(self) -> BaseQuerySetMixin:
-        jobs = self.jobs.filter(Q(status=CON_COMPLETED))
-        return jobs
-
-    def get_in_progress_jobs(self) -> BaseQuerySetMixin:
-        jobs = self.jobs.filter(Q(status=CON_IN_PROGRESS))
-        return jobs
-
-    def get_all_jobs_as_dict(self) -> dict:
-        jobs_data = dict()
-        clients_jobs = []
-        all_clients = self.filter().all()
-        for client in all_clients:
-            jobs = client.jobs.all()
-            clients_jobs.append(
-                {"client": client, "jobs": {"count": jobs.count(), "jobs": jobs}}
-            )
-
-        debugging_print(clients_jobs)
-        return jobs_data
+    def get_all_jobs_as_list(
+        self, filter_params: Optional[ClientJobsFilterTypes] = None
+    ) -> list:
+        with transaction.atomic():
+            try:
+                reports = ClientJobsReportsDBView.objects.filter(job_year=2020)
+                for r in reports:
+                    dd = model_to_dict(r)
+                    #     dd.update({"id": r.client})
+                    debugging_print(dd)
+                return reports
+            except Exception as e:
+                print(traceback.format_exc())
+                colored_output_with_logging(
+                    is_logged=True,
+                    text=traceback.format_exc(),
+                    log_level="error",
+                    color="red",
+                )
