@@ -7,7 +7,6 @@ from client.views import (
     ClientUpdateView,
     ClientDeleteView,
     ClientDetailsView,
-    ClientReportView,
 )
 
 app_name = "client"
@@ -19,5 +18,4 @@ urlpatterns = [
     path("delete/<uuid:pk>", ClientDeleteView.as_view(), name="delete"),
     path("<uuid:pk>", ClientDetailsView.as_view(), name="details"),
     path("api/", include("client.urls.api"), name="api"),
-    path("jobs-report", ClientReportView.as_view(), name="jobs_report"),
 ]
