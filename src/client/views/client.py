@@ -87,42 +87,7 @@ class ClientListView(
         return self.filterset.qs
 
 
-class ClientReportView(
-    PermissionRequiredMixin,
-    BWLoginRequiredMixin,
-    BWCacheViewMixin,
-    BWBaseListViewMixin,
-    ListView,
-):
-    permission_required = "client.can_view_jobs_report"
 
-    permission_denied_message = _("You do not have permission to access this page.")
-    template_name = "client/report.html"
-    model = JobProxy
-    paginate_by = LIST_VIEW_PAGINATE_BY
-    list_type = "list"
-
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
-        context["title"] = _("Clients job report")
-        context.setdefault("filter_form", self.filterset.form)
-        context.setdefault("list_type", self.list_type)
-        context.setdefault("page_header", "Reports".title())
-        from calendar import month_name
-
-        months_list = [mon[:3] for mon in list(month_name) if mon != ""]
-        context.setdefault("months_list", months_list)
-        debugging_print(list(month_name))
-        debugging_print(ClientProxy.reports_manager.get_all_jobs_as_dict())
-
-        # debugging_print(self.filterset.form["name"])
-        return context
-
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        self.filterset = JobReportFilter(self.request.GET, queryset=queryset)
-        return self.filterset.qs
 
 
 class ClientCreateView(

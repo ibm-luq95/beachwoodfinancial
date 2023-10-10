@@ -1,0 +1,76 @@
+{
+  "name": "",
+  "isOrdered": true,
+  "folders": {
+    "commands": {
+      "name": "commands",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "docs": {
+      "name": "docs",
+      "isOrdered": true,
+      "folders": {
+        "Changelogs": {
+          "name": "Changelogs",
+          "isOrdered": true,
+          "folders": {},
+          "files": {}
+        },
+        "Diagrams": {
+          "name": "Diagrams",
+          "isOrdered": true,
+          "folders": {},
+          "files": {}
+        },
+        "Frontend": {
+          "name": "Frontend",
+          "isOrdered": true,
+          "folders": {},
+          "files": {}
+        },
+        "Usage": {
+          "name": "Usage",
+          "isOrdered": true,
+          "folders": {},
+          "files": {}
+        }
+      },
+      "files": {
+        "init": 0
+      }
+    },
+    "logs": {
+      "name": "logs",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "nginx": {
+      "name": "nginx",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "requirements": {
+      "name": "requirements",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "src": {
+      "name": "src",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    },
+    "testing_sicripts": {
+      "name": "testing_sicripts",
+      "isOrdered": true,
+      "folders": {},
+      "files": {}
+    }
+  },
+  "files": {}
+}

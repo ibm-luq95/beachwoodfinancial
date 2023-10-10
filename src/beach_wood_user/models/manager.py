@@ -4,6 +4,7 @@ from random import randint
 from django.contrib.auth.base_user import BaseUserManager
 from django.contrib.auth.models import Permission
 from django.db import transaction
+from django.db.models import Q
 from django.db.models.aggregates import Count
 from django.utils.translation import gettext as _
 
@@ -20,6 +21,10 @@ class BeachWoodUserManager(BaseUserManager):
     def get_queryset(self) -> BaseQuerySetMixin:
         queryset = BaseQuerySetMixin(self.model, using=self._db).filter(is_deleted=False)
         return queryset
+
+    def all(self) -> BaseQuerySetMixin:
+        qs = self.get_queryset()
+        return qs.filter(~Q(email="anonymoususer")).order_by("first_name")
 
     def create_user(self, email, password, **extra_fields):
         """

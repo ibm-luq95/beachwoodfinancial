@@ -33,6 +33,5 @@ def colored_output_with_logging(**kwargs) -> None:
     text = kwargs.get("text", None)
     if is_logged is True:
         getattr(logger, log_level)(fg_colors_map.get(color) + text)
-    else:
-        print(fg_colors_map.get(color) + text)
+    print(fg_colors_map.get(color) + text)
     print(Style.RESET_ALL)

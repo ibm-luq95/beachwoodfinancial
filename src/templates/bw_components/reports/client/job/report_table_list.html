@@ -19,7 +19,7 @@
 {# End Table ID Block #}
 {# Start Custom Css Class #}
 {% block custom_css_class_name %}
-    job-table-list
+    client-jobs-report-table-list
 {% endblock custom_css_class_name %}
 {# End Custom Css Class #}
 {% if is_show_create_btn is True %}
@@ -31,7 +31,6 @@
 {% endif %}
 {# Start Table Header Columns #}
 {% block thead_block %}
-    {{ months_list }}
     <tr>
         {% if is_checkbox_enabled is True %}
             <th scope="col" class="pl-6 py-3 text-left">
@@ -44,7 +43,7 @@
                 </label>
             </th>
         {% endif %}
-        <th scope="col" class="px-6 py-3 text-left">
+        <th scope="col" class="px-6 py-3 text-left" width="1%">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                     {% translate "Client Name" %}
@@ -54,19 +53,27 @@
 
             </div>
         </th>
+        {% for month in months_list %}
+            <th scope="col" class="px-6 py-3 text-left disable-sort" width="15%">
+                <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                        {% translate month %}
+                    </span>
+                    {# {% include "bw_components/global/table_list/sort_icon.html" %} #}
+                </div>
+            </th>
+        {% endfor %}
         {% if is_show_created_at is True %}
             <th scope="col" class="px-6 py-3 text-left">
                 <div class="flex items-center gap-x-2">
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                         {% translate "Created" %}
                     </span>
-
-                    {% include "bw_components/global/table_list/sort_icon.html" %}
-
+                    {# {% include "bw_components/global/table_list/sort_icon.html" %} #}
                 </div>
             </th>
         {% endif %}
-        <th scope="col" class="px-6 py-3 text-left disable-sort">
+        <th scope="col" class="px-6 py-3 text-left disable-sort" width="1%">
             <div class="flex items-center gap-x-2"></div>
         </th>
     </tr>
@@ -74,7 +81,7 @@
 {# End Table Header Columns #}
 {# Start Table Body #}
 {% block tbody_block %}
-    {% for object in object_list %}
+    {% for object in page_obj.object_list %}
         <tr>
             {% if is_checkbox_enabled is True %}
                 <td class="h-px w-px whitespace-nowrap">
@@ -91,8 +98,8 @@
             {% endif %}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
-                    <a href="{% url base_url_name|add:':details' object.pk %}">
-                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.title|bw_truncate_titles }}</span>
+                    <a href="{# {% url base_url_name|add:':details' object.pk %} #}">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.name|bw_truncate_titles }}</span>
                     </a>
                     {% if object.categories.all %}
                         <div class="my-1 text-left">
@@ -109,6 +116,36 @@
                     {% endif %}
                 </div>
             </td>
+            {% for month in months_list %}
+                <td class="h-px w-px whitespace-nowrap">
+                    <div class="px-6 py-3">
+                        {# Start Completed #}
+                        <div class="block">
+                            <span class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200">
+                                <span class="inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium bg-green-800 text-white">5</span>
+                                {% translate "Completed" %}
+                            </span>
+                        </div>
+                        {# End Completed #}
+                        {# Start In progress #}
+                        <div class="block my-1">
+                            <span class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-orange-100 text-orange-800 dark:bg-orange-900 dark:text-orange-200">
+                                <span class="inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium bg-yellow-800 text-white">5</span>
+                                {% translate "In progress" %}
+                            </span>
+                        </div>
+                        {# End In progress #}
+                        {# Start Past due #}
+                        <div class="block">
+                            <span class="inline-flex items-center gap-1.5 py-0.5 px-2 rounded-full text-xs font-medium bg-red-100 text-red-800 dark:bg-red-900 dark:text-red-200">
+                                <span class="inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium bg-red-800 text-white">5</span>
+                                {% translate "Past due" %}
+                            </span>
+                        </div>
+                        {# End Past due #}
+                    </div>
+                </td>
+            {% endfor %}
             {% if is_show_created_at is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     {% bw_date date_txt=object.created_at is_in_table_list=True %}
@@ -125,7 +162,7 @@
 {# End Table Body #}
 {# Start Table Results #}
 {% block results_block %}
-    {{ object_list.count }}
+    {{ page_obj.count }}
 {% endblock results_block %}
 {# End Table Results #}
 {# Start Table Pagination #}
