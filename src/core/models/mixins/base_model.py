@@ -4,16 +4,15 @@ import uuid
 from typing import Optional
 
 from django.db import models
-from django.forms.models import model_to_dict
 from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from core.models.managers import SoftDeleteManager
-from core.utils import sort_dict, debugging_print
 from .diffing import DiffingMixin
+from .get_model_instance_as_dict import GetModelInstanceAsDictMixin
 
 
-class BaseModelMixin(DiffingMixin, models.Model):
+class BaseModelMixin(DiffingMixin, GetModelInstanceAsDictMixin, models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     metadata = models.JSONField(
         _("metadata"), null=True, blank=True, default=dict, editable=False
@@ -70,11 +69,3 @@ class BaseModelMixin(DiffingMixin, models.Model):
         self.is_deleted = False
         self.deleted_at = None
         self.save()
-
-    @property
-    def get_instance_as_dict(self) -> dict:
-        data = model_to_dict(self)
-        data.setdefault("id", self.id)
-        data.setdefault("created_at", self.created_at)
-        data.setdefault("updated_at", self.updated_at)
-        return sort_dict(data)

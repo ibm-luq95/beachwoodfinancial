@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-#
 from re import sub
+import calendar
+from typing import Optional
 
 from django.utils.translation import gettext as _
 
@@ -67,3 +69,31 @@ def get_request_context(context, kwargs_element) -> dict:
     data_aria_attributes = data_aria_attributes.strip()
     full_dict.update({"data_aria_attributes": data_aria_attributes})
     return full_dict
+
+
+def get_months_abbr(
+    year: Optional[int | str] = None, return_months_idxs: bool = False
+) -> tuple:
+    """
+    Get months abbreviations as tuple of months abbreviations or indexes
+    Parameters
+    ----------
+    year: int | str = Year passed
+    return_months_idxs: bool = if true will return tuple of indexes
+
+    Returns
+    -------
+    tuple
+    """
+    data = []
+    base_months = tuple(calendar.month_abbr)
+    for month in base_months:
+        if month != "":
+            if year is not None:
+                data.append(f"{month} - {year}")
+            else:
+                data.append(month)
+    if return_months_idxs is False:
+        return tuple(data)
+    else:
+        return tuple(range(1, 13))

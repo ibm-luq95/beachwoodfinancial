@@ -70,3 +70,47 @@ div.scrollable-wrapper {
 .bw-js-modal-sm {
   max-width: 40rem !important;
 }
+
+.multi-selectbox {
+  position: relative;
+  overflow: hidden;
+  margin: 15px auto;
+  height: 100px;
+  width: 100%;
+  max-width: 300px;
+  background: #ddd;
+  border: 1px solid #ddd;
+}
+
+.selectbox-scrollable {
+  overflow-y: scroll;
+  position: absolute;
+  padding: 0 7px 0 0;
+  width: calc(100% + 17px);
+  height: 100%;
+  border: 0;
+}
+
+.selectbox-scrollbar-rail {
+  position: absolute;
+  overflow: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  background: #ddd;
+  width: 5px;
+  border-radius: 0;
+}
+
+.selectbox-scrollbar {
+  cursor: n-resize;
+  position: absolute;
+  overflow: auto;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  background: #444;
+  width: 5px;
+  border-radius: px;
+}

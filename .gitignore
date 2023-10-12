@@ -541,7 +541,7 @@ src/frontend/!.yarn/patches
 src/frontend/!.yarn/plugins
 src/frontend/!.yarn/sdks
 src/frontend/!.yarn/versions
-.unotes
+#.unotes
 
 # if you are NOT using Zero-installs, then:
 # comment the following lines
@@ -557,7 +557,13 @@ src/frontend/package-lock.json
 **/migrations/**
 !**/migrations
 !**/migrations/__init__.py
+# Custom migration files
+**.pyc
+!src/reports/migrations/**
 poetry.lock
 testing_sicripts
 src/local_dev.sqlite3
 src/core/management/commands/migrated_data/.~lock.CompanyService-2023-09-05.csv#
+src/staticfiles
+
+src/reports/migrations/__pycache__/

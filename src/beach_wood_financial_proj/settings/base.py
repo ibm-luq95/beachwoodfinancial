@@ -77,6 +77,7 @@ INSTALLED_APPS = [
     "site_settings.apps.SiteSettingsConfig",
     "special_assignment.apps.SpecialAssignmentConfig",
     "discussion.apps.DiscussionConfig",
+    "reports.apps.ReportsConfig",
 ]
 
 MIDDLEWARE = [
@@ -469,6 +470,7 @@ LOGGING = {
             "level": "WARNING",
             "propagate": False,
         },
+        # "django.db.backends": {"level": "DEBUG", "handlers": ["console"]},
         # "bw_info_logger": {
         #     "handlers": ["info_file"],
         #     "level": "INFO",

@@ -33,6 +33,7 @@ class JobListView(
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "core/crudl/list.html"
     model = JobProxy
+    queryset = JobProxy.objects.order_by("created_at")
     paginate_by = LIST_VIEW_PAGINATE_BY
     list_type = "list"
 
@@ -44,7 +45,7 @@ class JobListView(
         context.setdefault("list_type", self.list_type)
         context.setdefault("component_path", "bw_components/job/table_list.html")
         context.setdefault("page_header", _("jobs".title()))
-        context.setdefault("subtitle", "Client costumers".title())
+        context.setdefault("subtitle", _("Jobs for clients".capitalize()))
         context.setdefault("actions_base_url", "dashboard:job")
         context.setdefault("filter_cancel_url", "dashboard:job:list")
         context.setdefault("table_header_title", _("C"))
@@ -53,6 +54,7 @@ class JobListView(
         context.setdefault("pagination_list_url_name", "dashboard:job:list")
         context.setdefault("is_filters_enabled", True)
         context.setdefault("is_actions_menu_enabled", True)
+        context.setdefault("total_records", JobProxy.objects.count())
         context.setdefault("is_header_enabled", True)
         context.setdefault("is_footer_enabled", True)
         context.setdefault("actions_items", "details,update,delete")
@@ -93,6 +95,12 @@ class JobCreateView(
         context = super().get_context_data(**kwargs)
         context.setdefault("title", _("Create job"))
         return context
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({"user_type": self.request.user.user_type})
+        kwargs.update({"user": self.request.user})
+        return kwargs
 
 
 class JobDetailsView(
