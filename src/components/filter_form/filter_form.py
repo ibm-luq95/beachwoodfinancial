@@ -26,12 +26,15 @@ class BWFilterForm(component.Component):
         filter_form: Form,
         filter_cancel_url: str,
         filter_form_id: Optional[str] = None,
+        filter_form_action="",
         is_disabled: bool = False,
         filter_form_method: str = "GET",
         filter_form_title: str = _("Filters"),
     ) -> dict:
         try:
             filter_cancel_url = reverse_lazy(filter_cancel_url)
+            if filter_form_action != "":
+                filter_form_action = reverse_lazy(filter_form_action)
         except:
             logger.warning(f"{traceback.format_exc()}")
 
@@ -42,6 +45,7 @@ class BWFilterForm(component.Component):
             "is_disabled": is_disabled,
             "filter_form_method": filter_form_method,
             "filter_form_title": filter_form_title,
+            "filter_form_action": filter_form_action,
         }
 
     class Media:

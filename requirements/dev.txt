@@ -10,7 +10,9 @@ djangorestframework-stubs
 djangorestframework-stubs[compatible-mypy]
 django-debug-permissions
 django-request-viewer
+django-silk
 djipsum
+gprof2dot
 faker
 factory_boy
 inquirer

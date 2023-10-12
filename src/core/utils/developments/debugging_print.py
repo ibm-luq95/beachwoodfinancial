@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-#
 
 import traceback
+import logging
 from typing import Any, Optional
 
 from .custom_logger import get_formatted_logger
 from ..grab_env_file import grab_env_file
+from rich.console import Console
+from rich.logging import RichHandler
 
 config = grab_env_file()
 
@@ -71,10 +74,10 @@ def get_all_methods(object, is_with_dunder=False) -> list:
 
 
 def debugging_colored_print(
-        txt: str,
-        fg_color: Optional[str] = "white",
-        bg_color: Optional[str] = "white",
-        mark: Optional[str] = None,
+    txt: str,
+    fg_color: Optional[str] = "white",
+    bg_color: Optional[str] = "white",
+    mark: Optional[str] = None,
 ) -> None:
     # debugging_print(locals())
     try:
@@ -108,14 +111,31 @@ def debugging_colored_print(
         if mark is not None:
             mark = mark * 5
             output_txt = (
-                    fg_colors_map.get(fg_color)
-                    + mark
-                    + "  "
-                    + txt
-                    + "  "
-                    + mark
-                    + bg_colors_map.get(bg_color)
+                fg_colors_map.get(fg_color)
+                + mark
+                + "  "
+                + txt
+                + "  "
+                + mark
+                + bg_colors_map.get(bg_color)
             )
         print(output_txt)
     except ImportError:
         logger.error("The package colorama not installed!")
+
+
+def bw_log() -> Console:
+    console = Console(stderr=True)
+    return console
+
+
+# def bw_custom_logger(msg) -> logging.Logger:
+FORMAT2 = "%(message)s"
+logging.basicConfig(
+    level="INFO",
+    format=FORMAT2,
+    datefmt="[%X]",
+    handlers=[RichHandler(rich_tracebacks=True)],
+)
+
+bw_custom_logger = logging.getLogger("rich")

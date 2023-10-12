@@ -1,0 +1,25 @@
+{% extends "core/layouts/dashboard_content_base.html" %}
+
+{% load development_tags %}
+
+{% block dashboard_content_block %}
+    {# Page Heading #}
+
+    {% include "components/inc/dashboard/content_header.html" with title="Jobs report" subtitle="" is_show_create_btn=False app_label=app_label actions_base_url="dashboard:job" %}
+
+    {# End Page Heading #}
+    {# Start Filter Form #}
+    {% component "bw_filter_form" filter_form_id="clientJobsReportFilterForm" filter_form=form filter_cancel_url="dashboard:reports:clients_reports:job_reports_list" filter_form_action="dashboard:reports:clients_reports:job_reports_list" %}
+    {# End Filter Form #}
+    {% if page_obj %}
+        <!-- Table Section -->
+
+        {% include "bw_components/reports/client/job/report_table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Jobs" header_subtitle="" app_label=app_label page_obj=page_obj pagination_list_url_name="dashboard:reports:clients_reports:job_reports_list" is_actions_menu_enabled=False actions_items="details" actions_app_name=app_label actions_base_url="dashboard:job" base_url_name="dashboard:job" filter_form=filter_form filter_cancel_url="dashboard:client:jobs_report" object_list=object_list is_header_enabled=True is_footer_enabled=True is_show_client=True months_list=months_list %}
+
+        <!-- End Table Section -->
+    {% else %}
+
+        {% include "bw_ui_components/global/empty_card.html" with label="jobs" %}
+
+    {% endif %}
+{% endblock dashboard_content_block %}

@@ -13,6 +13,7 @@ INSTALLED_APPS = INSTALLED_APPS + [
     "debugtools",
     "debug_permissions",
     "django_model_info.apps.DjangoModelInfoConfig",
+    "silk",
     # "django_pdb",
     # "request_viewer",
 ]
@@ -26,6 +27,7 @@ MIDDLEWARE = MIDDLEWARE + [
     "debugtools.middleware.XViewMiddleware",
     "django.contrib.admindocs.middleware.XViewMiddleware",
     "django_pdb.middleware.PdbMiddleware",
+    "silk.middleware.SilkyMiddleware",
 ]
 
 # Database configurations
@@ -37,9 +39,8 @@ DATABASES = {
         "PASSWORD": config("DB_PASSWORD", cast=str),
         "HOST": config("DB_HOST", cast=str),
         "PORT": config("DB_PORT", cast=str),
-        "OPTIONS": {
-            "init_command": "SET default_storage_engine=INNODB",
-        },
+        "CONN_MAX_AGE": None,
+        "OPTIONS": {"init_command": "SET default_storage_engine=INNODB"},
     }
 }
 # check if the code run locally or on the host
@@ -80,19 +81,26 @@ def show_toolbar(request):
     return True
 
 
-DEBUG_TOOLBAR_CONFIG = {
-    "SHOW_TOOLBAR_CALLBACK": show_toolbar,
-}
+DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": show_toolbar}
 
-GRAPH_MODELS = {
-    "all_applications": True,
-    "group_models": True,
-}
+GRAPH_MODELS = {"all_applications": True, "group_models": True}
 
 # django-request-viewer configs
 REQUEST_VIEWER = {"LIVE_MONITORING": False, "WHITELISTED_PATH": []}
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
+
+# django-silk settings
+SILKY_PYTHON_PROFILER = True
+SILKY_PYTHON_PROFILER_BINARY = True
+SILKY_META = True
+# SILKY_ANALYZE_QUERIES = True
+# SILKY_EXPLAIN_FLAGS = {'format':'JSON', 'costs': True}
+SILKY_PERMISSIONS = lambda user: user.is_superuser
+SILKY_AUTHENTICATION = True  # User must login
+SILKY_AUTHORISATION = True  # User must have permissions
+SILKY_PYTHON_PROFILER_EXTENDED_FILE_NAME = True
+SILKY_PYTHON_PROFILER_RESULT_PATH = BASE_DIR / "media" / "profiles"
 
 # Logging configs
 # LOGGING = {
@@ -122,4 +130,3 @@ X_FRAME_OPTIONS = "SAMEORIGIN"
 #         },
 #     },
 # }
-
