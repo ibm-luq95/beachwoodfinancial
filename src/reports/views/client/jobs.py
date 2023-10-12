@@ -6,7 +6,6 @@ from django.urls import reverse_lazy
 from django.views.generic import ListView, FormView
 from django.utils.translation import gettext as _
 from calendar import month_name
-from silk.profiling.profiler import silk_profile
 from django.utils import timezone
 
 from client.models import ClientProxy
@@ -18,6 +17,10 @@ from job.models import JobProxy
 from reports.filters.client import ClientJobsFilter
 from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
+from django.conf import settings
+
+if settings.DEBUG is True:
+    from silk.profiling.profiler import silk_profile
 
 
 @method_decorator(csrf_exempt, name="dispatch")
