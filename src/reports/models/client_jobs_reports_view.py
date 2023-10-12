@@ -5,10 +5,12 @@ from django.db import models
 from django.utils.translation import gettext as _
 
 from core.constants.db import CONST_CLIENT_JOBS_REPORTS_VIEW
+from core.models.mixins.get_model_instance_as_dict import GetModelInstanceAsDictMixin
 
 
-class ClientJobsReportsDBView(models.Model):
+class ClientJobsReportsDBView(GetModelInstanceAsDictMixin, models.Model):
     """Client jobs reports db view, this model like readonly model."""
+    ID_FIELD = "client_id"
 
     client_id = models.UUIDField(primary_key=True, editable=False)
     client_name = models.CharField(max_length=50, null=True, blank=True)

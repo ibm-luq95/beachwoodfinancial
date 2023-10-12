@@ -470,7 +470,7 @@ LOGGING = {
             "level": "WARNING",
             "propagate": False,
         },
-        "django.db.backends": {"level": "DEBUG", "handlers": ["console"]},
+        # "django.db.backends": {"level": "DEBUG", "handlers": ["console"]},
         # "bw_info_logger": {
         #     "handlers": ["info_file"],
         #     "level": "INFO",
