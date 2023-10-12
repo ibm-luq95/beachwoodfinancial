@@ -33,6 +33,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
             required=False,
             default=1,
         )
+        parser.add_argument("--client", "-c", type=str, help=_("Client"), required=False)
         # parser.add_argument(
         #     "--",
         #     "-",
@@ -49,14 +50,17 @@ class Command(BaseCommand, CommandStdOutputMixin):
         try:
             with transaction.atomic():
                 number = options.get("number")
+                client = options.get("client")
                 # seeder = Seed.seeder("en_US")
                 faker = Faker(locale="en_US")
                 all_clients = ClientProxy.objects.all()
                 all_job_categories = JobCategory.objects.all()
                 all_users = BWUser.objects.all()
+                if client is not None:
+                    self.stdout_output("warn", _(f"Seed jobs for client {client}"))
                 for i in range(0, number, 1):
                     fake_data = {
-                        "client": random.choice(all_clients),
+                        # "client": random.choice(all_clients),
                         "managed_by": random.choice(all_users),
                         "title": faker.job(),
                         "description": faker.paragraph(nb_sentences=30),
@@ -72,6 +76,10 @@ class Command(BaseCommand, CommandStdOutputMixin):
                         ),
                         "due_date": faker.date_between(start_date="-2y", end_date="today"),
                     }
+                    if client is not None:
+                        fake_data["client"] = ClientProxy.objects.get(pk=client)
+                    else:
+                        fake_data["client"] = random.choice(all_clients)
                     new_job = JobProxy.objects.create(**fake_data)
                     cats = random.sample(list(all_job_categories), 2)
                     new_job.categories.add(*cats)
