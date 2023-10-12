@@ -565,3 +565,5 @@ testing_sicripts
 src/local_dev.sqlite3
 src/core/management/commands/migrated_data/.~lock.CompanyService-2023-09-05.csv#
 src/staticfiles
+
+src/reports/migrations/__pycache__/
