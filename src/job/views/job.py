@@ -96,6 +96,12 @@ class JobCreateView(
         context.setdefault("title", _("Create job"))
         return context
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs.update({"user_type": self.request.user.user_type})
+        kwargs.update({"user": self.request.user})
+        return kwargs
+
 
 class JobDetailsView(
     PermissionRequiredMixin,

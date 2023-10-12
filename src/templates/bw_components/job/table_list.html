@@ -173,7 +173,7 @@
             {% if extra_context.is_show_client is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     <div class="px-5 py-3">
-                        <a href="{% url 'dashboard:client:details' object.pk %}"
+                        <a href="{% url 'dashboard:client:details' object.client.pk %}"
                            class="text-sm text-gray-600 dark:text-gray-400">{{ object.client }}</a>
                     </div>
                 </td>
