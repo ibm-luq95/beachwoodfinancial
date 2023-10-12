@@ -558,6 +558,7 @@ src/frontend/package-lock.json
 !**/migrations
 !**/migrations/__init__.py
 # Custom migration files
+**.pyc
 !src/reports/migrations/**
 poetry.lock
 testing_sicripts
