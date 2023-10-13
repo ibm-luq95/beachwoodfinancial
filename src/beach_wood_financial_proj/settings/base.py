@@ -93,6 +93,7 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "bookkeeper.middleware.CheckAllowedLoginMiddleware",  # TODO: Enable it
+    "core.middleware.MultiHostMiddleware",
     "maintenance_mode.middleware.MaintenanceModeMiddleware",
     # "django.middleware.cache.FetchFromCacheMiddleware",  # new for the cache, not working with django-redis package
 ]

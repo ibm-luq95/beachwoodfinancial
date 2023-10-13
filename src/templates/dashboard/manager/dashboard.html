@@ -174,10 +174,10 @@
     <div class="grid grid-cols-3 gap-2">
         {% if clients %}
             <div>
-                <div class="bg-white shadow-md rounded-md overflow-hidden max-w-lg mx-auto">
+                <div class="bg-white shadow-md rounded-md overflow-hidden max-w-lg mx-auto dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
                     <div class="h-80 overflow-y-auto">
-                        <div class="bg-gray-100 py-2 px-4">
-                            <h2 class="text-xl font-semibold text-gray-800">{% translate "Clients" %}</h2>
+                        <div class="bg-gray-100 py-2 px-4 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
+                            <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-400 ">{% translate "Clients" %}</h2>
                         </div>
                         <ul class="divide-y divide-gray-200">
                             {% for client in clients %}
@@ -187,10 +187,10 @@
                                              src="{{ client.logo.url }}"
                                              alt="{{ client.name|safe }}" />
                                     {% else %}
-                                        <i class="fa-solid fa-building-user w-9 h-9 rounded-full mr-4 object-cover"></i>
+                                        <i class="fa-solid fa-building-user w-9 h-9 rounded-full mr-4 object-cover dark:text-gray-400"></i>
                                     {% endif %}
                                     <div class="flex-1">
-                                        <h3 class="text-[14px] font-medium text-gray-800">
+                                        <h3 class="text-[14px] font-medium text-gray-800 dark:text-gray-300">
                                             <a href="{% url 'dashboard:client:details' client.pk %}">{{ client.name|safe }}</a>
                                         </h3>
                                         <p class="text-gray-600 text-xs">{{ client.jobs.count }} {% translate "Jobs" %}</p>
