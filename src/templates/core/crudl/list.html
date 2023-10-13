@@ -9,7 +9,7 @@
 
     {# End Page Heading #}
     {# Start Filter Form #}
-    {% if filter_form %}
+    {% if is_filters_enabled is True %}
         {% component "bw_filter_form" filter_form=filter_form filter_cancel_url=filter_cancel_url %}
     {% endif %}
     {# End Filter Form #}
