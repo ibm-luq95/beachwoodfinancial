@@ -86,10 +86,7 @@ class BWCacheHandler:
 
     @staticmethod
     def set_item(
-        site_domain: str,
-        key: str,
-        value: Any,
-        timeout: Optional[int] = None,
+        site_domain: str, key: str, value: Any, timeout: Optional[int] = None
     ) -> None:
         """
         Set cache item value based on key
@@ -117,10 +114,7 @@ class BWCacheHandler:
         except Exception as ex:
             logger.error(str(ex))
             colored_output_with_logging(
-                is_logged=True,
-                text=str(ex),
-                log_level="error",
-                color="red",
+                is_logged=True, text=str(ex), log_level="error", color="red"
             )
             raise Exception(str(ex))
 
@@ -150,18 +144,12 @@ class BWCacheHandler:
                     logger.error(_(f"The key {key} not exists!, cant delete!"))
         except Exception as ex:
             colored_output_with_logging(
-                is_logged=True,
-                text=str(ex),
-                log_level="error",
-                color="red",
+                is_logged=True, text=str(ex), log_level="error", color="red"
             )
 
     @staticmethod
     def update_item(
-        site_domain: str,
-        key: str,
-        value: Any,
-        timeout: Optional[int] = None,
+        site_domain: str, key: str, value: Any, timeout: Optional[int] = None
     ) -> None:
         """
         Update cache item value based on key
@@ -177,8 +165,5 @@ class BWCacheHandler:
             BWCacheHandler.set_item(site_domain, key, value, timeout)
         except Exception as ex:
             colored_output_with_logging(
-                is_logged=True,
-                text=str(ex),
-                log_level="error",
-                color="red",
+                is_logged=True, text=str(ex), log_level="error", color="red"
             )

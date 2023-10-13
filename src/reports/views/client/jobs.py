@@ -50,14 +50,14 @@ class JobsReportView(
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context["title"] = _("Clients jobs report")
-        object_list = ClientProxy.objects.order_by("name")
-        object_list = Paginator(object_list=object_list, per_page=10)
-        context.setdefault("page_obj", object_list)
+        # object_list = ClientProxy.objects.order_by("name")
+        # object_list = Paginator(object_list=object_list, per_page=10)
+        # context.setdefault("page_obj", object_list)
         form = self.get_form()
         # debugging_print(form.serialize_inputs())
         context.setdefault("page_header", _("Reports".title()))
 
-        months_list = get_months_abbr(year=self.request.GET.get("created_year", "All"))
+        months_list = get_months_abbr(return_months_idxs=True)
         # months_list = [str(m) for m in months_list]
         context.setdefault("months_list", months_list)
         # debugging_print(list(month_name))

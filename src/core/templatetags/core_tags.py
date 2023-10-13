@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-#
 from datetime import datetime
 from typing import Optional
+import calendar
 import re
 
 from django import template
@@ -60,3 +61,8 @@ def setvar(parser, token):
             "%r tag's argument should be in quotes" % tag_name
         )
     return SetVarNode(new_val[1:-1], var_name)
+
+
+@register.filter("get_month_abbrev")
+def get_month_abbrev(month_index: int) -> str:
+    return calendar.month_abbr[month_index]
