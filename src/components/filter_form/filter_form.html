@@ -1,4 +1,4 @@
-{% load development_tags widget_tweaks bw_form_helpers %}
+{% load widget_tweaks bw_form_helpers %}
 {% load i18n %}
 
 <div class="mt-3 flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
@@ -14,7 +14,6 @@
                 <div class="flex flex-wrap">
                     <!-- Input -->
                     {% for filter_field in filter_form %}
-                        <!-- {{ filter_field }} -->
                         {# {{ filter_field|field_type }} #}
                         {% bw_get_form_widget_attrs_as_dict filter_field.field as widget_attrs %}
                         {# {{ filter_field.field|bw_get_form_field_type }} #}
