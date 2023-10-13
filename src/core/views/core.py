@@ -18,7 +18,7 @@ def js_settings(request):
         # "STATIC_URL": settings.STATIC_URL,
         "DEBUG": settings.DEBUG,
         "FETCHURLNAMEURL": str(reverse_lazy("core:api:fetch-url")),
-        # "CURRENTUSER": str(request.user.pk),
+        "CURRENTUSER": str(request.user.pk),
         # "LANGUAGES": settings.LANGUAGES,
         # "DEFAULT_LANGUAGE_CODE": settings.LANGUAGE_CODE,
         # "CURRENT_LANGUAGE_CODE": request.LANGUAGE_CODE,
