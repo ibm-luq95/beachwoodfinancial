@@ -19,8 +19,8 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.conf import settings
 
-if settings.DEBUG is True:
-    from silk.profiling.profiler import silk_profile
+# if settings.DEBUG is True:
+#     from silk.profiling.profiler import silk_profile
 
 
 @method_decorator(csrf_exempt, name="dispatch")
