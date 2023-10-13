@@ -52,7 +52,7 @@ class JobListView(
         context.setdefault("table_header_subtitle", _("Jobs subtitle"))
         context.setdefault("is_show_create_btn", True)
         context.setdefault("pagination_list_url_name", "dashboard:job:list")
-        context.setdefault("is_filters_enabled", True)
+        context.setdefault("is_filters_enabled", False)
         context.setdefault("is_actions_menu_enabled", True)
         context.setdefault("total_records", JobProxy.objects.count())
         context.setdefault("is_header_enabled", True)
