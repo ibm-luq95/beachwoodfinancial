@@ -130,12 +130,13 @@ def bw_log() -> Console:
 
 
 # def bw_custom_logger(msg) -> logging.Logger:
-FORMAT2 = "%(message)s"
-logging.basicConfig(
-    level="INFO",
-    format=FORMAT2,
-    datefmt="[%X]",
-    handlers=[RichHandler(rich_tracebacks=True)],
-)
+# FORMAT2 = "%(message)s"
+# logging.basicConfig(
+#     level="INFO",
+#     format=FORMAT2,
+#     datefmt="[%X]",
+#     handlers=[RichHandler(rich_tracebacks=True)],
+# )
 
-bw_custom_logger = logging.getLogger("rich")
+# bw_custom_logger = logging.getLogger("rich")
+bw_custom_logger = ""
