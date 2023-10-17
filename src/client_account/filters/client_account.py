@@ -9,7 +9,7 @@ class ClientAccountFilter(HelpfulFilterSet):
         fields = {
             # "client__name": ["icontains"],
             "account_name": ["icontains"],
-            "account_email": ["icontains"],
+            # "account_email": ["icontains"],
             "account_url": ["icontains"],
             "status": ["exact"],
         }

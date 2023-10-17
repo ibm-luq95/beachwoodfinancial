@@ -474,7 +474,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
                                     client_account_obj.service_name,
                                     client_account_obj.account_name,
                                     client_account_obj.account_url,
-                                    client_account_obj.account_email,
+                                    # client_account_obj.account_email,
                                     client_account_obj.account_password,
                                     client_account_obj.is_deleted,
                                     client_account_obj.created_at,
