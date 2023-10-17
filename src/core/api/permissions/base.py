@@ -2,11 +2,13 @@
 from rest_framework.exceptions import MethodNotAllowed
 from rest_framework.permissions import BasePermission
 
-from core.utils import get_trans_txt
+from django.utils.translation import gettext as _
+
+from core.utils import debugging_print
 
 
 class BaseApiPermissionMixin(BasePermission):
-    message = get_trans_txt("You do not have permission to perform action")
+    message = _("You do not have permission to perform action")
     permission_map = {
         "GET": "{app_label}.view_{model_name}",
         "POST": "{app_label}.add_{model_name}",
@@ -24,9 +26,7 @@ class BaseApiPermissionMixin(BasePermission):
 
     def has_permission(self, request, view):
         perm = self._get_permission(method=request.method, perm_slug=view.perm_slug)
+
         if request.user.has_perm(perm):
             return True
         return False
-
-
-# -*- coding: utf-8 -*-#
