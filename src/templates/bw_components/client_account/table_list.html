@@ -55,7 +55,7 @@
                 </div>
             </th>
         {% endif %}
-        <th scope="col" class="px-6 py-3 text-left">
+        <th scope="col" class="px-6 py-3 text-left" width="10%">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                     {% translate "Name" %}
@@ -65,10 +65,10 @@
 
             </div>
         </th>
-        <th scope="col" class="px-6 py-3 text-left">
+        <th scope="col" class="px-6 py-3 text-left" width="10%">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "Email" %}
+                    {% translate "Client" %}
                 </span>
 
                 {% include "bw_components/global/table_list/sort_icon.html" %}
@@ -170,24 +170,9 @@
             </td>
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
-                    <div>
-                        <div class="flex rounded-md shadow-sm">
-                            <input type="email"
-                                   id="email-input-{{ object.pk }}"
-                                   disabled
-                                   readonly
-                                   data-label="email address"
-                                   value="{{ object.account_email }}"
-                                   name="email-input-{{ object.pk }}"
-                                   class="{{ BW_FULL_INPUT_CSS_CLASSES }} ca-credentials-input py-1 px-2 block w-full border-gray-200 shadow-sm rounded-l-md text-xs focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400" />
-                            <button type="button"
-                                    disabled
-                                    data-credentials-id="email-input-{{ object.pk }}"
-                                    class="{{ BW_FULL_INPUT_CSS_CLASSES }} ca-credentials-btn inline-flex flex-shrink-0 justify-center items-center w-[2rem] hover:text-white rounded-r-md border border-transparent font-semibold bg-blue-100 text-blue-500 hover:bg-blue-500 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all text-sm dark:focus:ring-offset-gray-800">
-                                <i class="fa-solid fa-clipboard w-4 h-4"></i>
-                            </button>
-                        </div>
-                    </div>
+                    <a href="{% url 'dashboard:client:details' object.client.pk %}">
+                        <span class="text-sm {{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }} dark:text-gray-400">{{ object.client.name }}</span>
+                    </a>
                 </div>
             </td>
             <td class="h-px w-px whitespace-nowrap">
