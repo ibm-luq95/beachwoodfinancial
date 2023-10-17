@@ -15,7 +15,6 @@ class ClientAccountForm(BaseModelFormMixin, SetFieldsInputsHiddenMixin):
     field_order = [
         "service_name",
         "account_name",
-        # "account_email",
         "account_url",
         "account_username",
         "account_password",

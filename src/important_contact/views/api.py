@@ -14,5 +14,5 @@ class ImportantContactViewSet(ModelViewSet):
     serializer_class = ImportantContactSerializer
     permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
     # parser_classes = [parsers.FormParser, parsers.MultiPartParser]
-    perm_slug = "important_contact.important_contact"
+    perm_slug = "important_contact.importantcontact"
     queryset = ImportantContact.objects.all()
