@@ -14,5 +14,5 @@ class ClientAccountViewSet(ModelViewSet):
     serializer_class = ClientAccountSerializer
     permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
     # parser_classes = [parsers.FormParser, parsers.MultiPartParser]
-    perm_slug = "client_account.client_account"
+    perm_slug = "client_account.clientaccount"
     queryset = ClientAccount.objects.all()
