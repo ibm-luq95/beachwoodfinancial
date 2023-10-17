@@ -2,6 +2,7 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import QuerySet
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import CreateView, UpdateView, ListView, DeleteView
@@ -10,6 +11,7 @@ from client_account.filters import ClientAccountFilter
 from client_account.forms import ClientAccountForm
 from client_account.models import ClientAccount
 from core.cache import BWCacheViewMixin
+from core.constants.users import CON_BOOKKEEPER
 from core.utils import get_trans_txt
 from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 
@@ -54,7 +56,15 @@ class ClientAccountListViewBW(
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        self.filterset = ClientAccountFilter(self.request.GET, queryset=queryset)
+        if self.request.user.user_type == CON_BOOKKEEPER:
+            clients = self.request.user.bookkeeper.get_proxy_model().clients.all()
+            services = ClientAccount.objects.none()
+            for client in clients:
+                services |= client.client_accounts.all()
+            qs = services
+        else:
+            qs = queryset
+        self.filterset = ClientAccountFilter(self.request.GET, queryset=qs)
         return self.filterset.qs
 
 
@@ -68,7 +78,7 @@ class ClientAccountCreateView(
     template_name = "client_account/create.html"
     form_class = ClientAccountForm
     model = ClientAccount
-    success_message = _("Contact created successfully")
+    success_message = _("Client account created successfully")
     success_url = reverse_lazy("dashboard:client_account:list")
     permission_required = "client_account.add_clientaccount"
     permission_denied_message = _("You do not have permission to access this page.")
