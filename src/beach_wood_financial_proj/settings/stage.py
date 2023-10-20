@@ -7,14 +7,9 @@ import mimetypes
 
 DEBUG = config("DEBUG", cast=bool)
 
-INSTALLED_APPS = INSTALLED_APPS + [
-    "debug_toolbar",
-    "request_viewer",
-]
+INSTALLED_APPS = INSTALLED_APPS + ["debug_toolbar", "request_viewer"]
 
-MIDDLEWARE = MIDDLEWARE + [
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
-]
+MIDDLEWARE = MIDDLEWARE + ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 
 # Database configurations
 DATABASES = {
@@ -27,7 +22,7 @@ DATABASES = {
         "PORT": config("DB_PORT", cast=str),
         "OPTIONS": {
             # "read_default_file": "/opt/lampp/etc/my.cnf",
-            "init_command": "SET default_storage_engine=INNODB",
+            "init_command": "SET default_storage_engine=INNODB"
         },
     }
 }
@@ -60,9 +55,7 @@ def show_toolbar(request):
     return True
 
 
-DEBUG_TOOLBAR_CONFIG = {
-    "SHOW_TOOLBAR_CALLBACK": show_toolbar,
-}
+DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": show_toolbar}
 
 mimetypes.add_type("application/javascript", ".js", True)
 
