@@ -89,3 +89,9 @@ BW_PRELINE_CORE_BG_COLORS = {
 BW_PRELINE_BASE_BADGE_CLASSES = (
     "uppercase inline-flex items-center gap-1.5 rounded-full font-medium m-0.5"
 )
+BW_PRELINE_SPAN_TOOLTIP_CSS_CLASSES = (
+    "hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible "
+    "opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 "
+    "bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm "
+    "dark:bg-slate-700"
+)
