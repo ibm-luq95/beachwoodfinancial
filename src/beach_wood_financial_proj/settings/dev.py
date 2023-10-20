@@ -102,6 +102,7 @@ SILKY_AUTHORISATION = True  # User must have permissions
 SILKY_PYTHON_PROFILER_EXTENDED_FILE_NAME = True
 SILKY_PYTHON_PROFILER_RESULT_PATH = BASE_DIR / "media" / "profiles"
 
+
 # Logging configs
 # LOGGING = {
 #     "version": 1,

@@ -19,6 +19,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.utils.decorators import method_decorator
 from django.conf import settings
 
+
 # if settings.DEBUG is True:
 #     from silk.profiling.profiler import silk_profile
 
@@ -65,6 +66,13 @@ class JobsReportView(
             form.serialize_inputs()
         )
         context.setdefault("object_list", object_list)
+        if form.serialize_inputs().get("created_year") is not None:
+            created_year = form.serialize_inputs().get("created_year")
+
+        else:
+            # created_year = _("All")
+            created_year = 2020
+        context.setdefault("created_year", created_year)
 
         # debugging_print(self.filterset.form["name"])
         return context

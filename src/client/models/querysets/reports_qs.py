@@ -1,9 +1,10 @@
 # -*- coding: utf-8 -*-#
 from django.contrib.sites.models import Site
 from django.core import serializers
+from django.core.paginator import Paginator
 import traceback
 from collections import defaultdict
-from typing import Optional
+from typing import Optional, List
 import click
 
 from django.db import transaction
@@ -14,8 +15,8 @@ from client.models.querysets.types import ClientJobsFilterTypes
 from core.cache import BWCacheHandler
 from core.models.querysets import BaseQuerySetMixin
 from core.utils import debugging_print, colored_output_with_logging, get_months_abbr
-from core.utils.developments import bw_log, bw_custom_logger
-from reports.models import ClientJobsReportsDBView
+from core.utils import bw_log
+from reports.models import ClientJobsReportsDBViewProxy
 import calendar
 
 
@@ -26,9 +27,10 @@ class ClientDetailsMap:
 
     def __init__(self, client):
         self.client = client
+        self.pk = self.client.pk
 
     def __repr__(self):
-        return f"Client: {self.client.name}, Years: {self.ALL_YEARS}"
+        return f"Client: PK: {self.pk}, Name: {self.client.name}, Years: {self.ALL_YEARS}"
 
     def organize_jobs_by_years(self) -> list | None:
         try:
@@ -78,13 +80,19 @@ class ClientDetailsMap:
                             for job_view_row in jobs_data:
                                 job_dict = job_view_row.get_instance_as_dict
                                 if job_dict.get("job_month") in months_list:
-                                    org_years[calendar.month_abbr[job_dict.get("job_month")]] = list()
-                                    org_years[calendar.month_abbr[job_dict.get("job_month")]].append(job_dict)
+                                    # org_years[
+                                    #     calendar.month_abbr[job_dict.get("job_month")]
+                                    # ] = list()
+                                    org_years[
+                                        calendar.month_abbr[job_dict.get("job_month")]
+                                    ] = job_dict
                                 else:
-                                    org_years[calendar.month_abbr[job_dict.get("job_month")]] = None
-                                tmp_data.update({"jobs_months": org_years})
+                                    org_years[
+                                        calendar.month_abbr[job_dict.get("job_month")]
+                                    ] = None
+                            tmp_data.update({"jobs_months": org_years})
                     full_years_data_list.append(tmp_data)
-                debugging_print(full_years_data_list)
+                # debugging_print(full_years_data_list)
                 return full_years_data_list
                 # return []
             else:
@@ -92,11 +100,37 @@ class ClientDetailsMap:
         except Exception as ex:
             bw_log().print_exception(suppress=[click], show_locals=False)
 
+    def organize_jobs_years_months(self, is_all_years: bool = False) -> dict:
+        try:
+            months_list = self.organize_jobs_by_months()
+            years_list = list()
+            clients_dict = dict()
+            if is_all_years is False:
+                for item in months_list:
+                    clients_dict.setdefault("client", item.get("client"))
+                    years_dict = dict()
+                    for month_name, job_dicts in item.get("jobs_months").items():
+                        # years_list.append(item)
+                        job_year = job_dicts.get("job_year")
+                        if job_year in years_dict.keys():
+                            years_dict[job_year].append(job_dicts)
+                        else:
+                            years_dict[job_year] = list()
+                            years_dict[job_year].append(job_dicts)
+                    clients_dict.setdefault("jobs", years_dict)
+            else:
+                for item in months_list:
+                    debugging_print(item)
+
+            return clients_dict
+        except Exception as ex:
+            bw_log().print_exception(suppress=[click], show_locals=False)
+
 
 class ClientReportsQuerySet(BaseQuerySetMixin):
     def get_all_jobs_as_list(
         self, filter_params: Optional[ClientJobsFilterTypes] = None
-    ) -> defaultdict:
+    ) -> dict:
         from client.models.client_proxy import ClientProxy
 
         with transaction.atomic():
@@ -109,17 +143,19 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
             years_list = set()
 
             try:
-                reports = ClientJobsReportsDBView.objects.select_related().all()
+                reports = ClientJobsReportsDBViewProxy.objects.select_related().all()
                 for r in reports:
                     years_list.add(r.job_year)
-                details_dict = list()
-                data2 = defaultdict(dict)
+                details_dict = dict()
                 bw_log().log(years_list)
                 clients = ClientProxy.objects.select_related().all()
-                bw_log().log(clients.count())
-                for client in clients:
+                details_dict.setdefault("total_rows_count", len(clients))
+                page_object = Paginator(clients, 5)
+                details_dict.setdefault("page_obj", page_object)
+                # debugging_print(clients.page(1).object_list)
+                for client in page_object.page(1).object_list:
                     client_view_results = (
-                        ClientJobsReportsDBView.objects.select_related().filter(
+                        ClientJobsReportsDBViewProxy.objects.select_related().filter(
                             client_id=client.pk
                         )
                     )
@@ -142,13 +178,19 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
                 debugging_print(
                     "######################################################################"
                 )
-                data_list[0].organize_jobs_by_months()
-                data_list[3].organize_jobs_by_months()
-                debugging_print(
-                    "######################################################################"
-                )
+                # debugging_print(data_list[0].organize_jobs_by_years())
+                # debugging_print(data_list[0].organize_jobs_by_months())
+                # debugging_print(data_list[0].organize_jobs_years_months())
+                # for kk in data_list[0:1]:
+                #     debugging_print(kk.organize_jobs_years_months(is_all_years=False))
+                #     debugging_print("*************************************************")
+                # # data_list[3].organize_jobs_by_months()
+                # debugging_print(
+                #     "######################################################################"
+                # )
                 # debugging_print()
-                return data_list
+                details_dict.setdefault("object_list", data_list)
+                return details_dict
             except Exception as e:
                 bw_log().print_exception(suppress=[click], show_locals=False)
                 # colored_output_with_logging(
