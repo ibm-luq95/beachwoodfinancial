@@ -64,5 +64,8 @@ def setvar(parser, token):
 
 
 @register.filter("get_month_abbrev")
-def get_month_abbrev(month_index: int) -> str:
-    return calendar.month_abbr[month_index]
+def get_month_abbrev(month_index: int) -> str | int:
+    try:
+        return calendar.month_abbr[month_index]
+    except IndexError:
+        return month_index
