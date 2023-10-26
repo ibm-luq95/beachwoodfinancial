@@ -13,8 +13,7 @@
     {# End Filter Form #}
     {% if object_list %}
         <!-- Table Section -->
-
-        {% include "bw_components/reports/client/job/report_table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Jobs" header_subtitle="" app_label=app_label object_list=object_list pagination_list_url_name="dashboard:reports:clients_reports:job_reports_list" is_actions_menu_enabled=False actions_items="details" actions_app_name=app_label actions_base_url="dashboard:client" base_url_name="dashboard:client" filter_form=filter_form filter_cancel_url="dashboard:client:jobs_report" object_list=object_list is_header_enabled=True is_footer_enabled=True is_show_client=True months_list=months_list %}
+        {% include "bw_components/reports/client/job/report_table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Jobs" header_subtitle="" app_label=app_label object_list=object_list pagination_list_url_name="dashboard:reports:clients_reports:job_reports_list" is_actions_menu_enabled=False actions_items="details" actions_app_name=app_label actions_base_url="dashboard:client" base_url_name="dashboard:client" filter_form=filter_form filter_cancel_url="dashboard:client:jobs_report" is_header_enabled=True is_footer_enabled=True is_show_client=True months_list=months_list %}
 
         <!-- End Table Section -->
     {% else %}

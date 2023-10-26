@@ -1,6 +1,8 @@
 # -*- coding: utf-8 -*-#
 from django.contrib.sites.models import Site
 from django.core import serializers
+from django.utils.translation import gettext as _
+
 from django.core.paginator import Paginator
 import traceback
 from collections import defaultdict
@@ -8,11 +10,12 @@ from typing import Optional, List
 import click
 
 from django.db import transaction
-from django.db.models import QuerySet
+from django.db.models import QuerySet, Q
 from django.conf import settings
 
 from client.models.querysets.types import ClientJobsFilterTypes
 from core.cache import BWCacheHandler
+from core.constants import LIST_VIEW_PAGINATE_BY
 from core.models.querysets import BaseQuerySetMixin
 from core.utils import debugging_print, colored_output_with_logging, get_months_abbr
 from core.utils import bw_log
@@ -28,6 +31,7 @@ class ClientDetailsMap:
     def __init__(self, client):
         self.client = client
         self.pk = self.client.pk
+        self.categories = self.client.categories.all()
 
     def __repr__(self):
         return f"Client: PK: {self.pk}, Name: {self.client.name}, Years: {self.ALL_YEARS}"
@@ -129,18 +133,16 @@ class ClientDetailsMap:
 
 class ClientReportsQuerySet(BaseQuerySetMixin):
     def get_all_jobs_as_list(
-        self, filter_params: Optional[ClientJobsFilterTypes] = None
+        self,
+        filter_params: Optional[ClientJobsFilterTypes] = None,
+        page: Optional[int] = None,
     ) -> dict:
         from client.models.client_proxy import ClientProxy
 
         with transaction.atomic():
-            year_clients = defaultdict(set)
-            data = defaultdict(list)
             data_list = list()
-            months_data = defaultdict(list)
-            full_data = defaultdict(defaultdict)
-            months_list = get_months_abbr(return_months_idxs=True)
             years_list = set()
+            created_year = filter_params.get("created_year")
 
             try:
                 reports = ClientJobsReportsDBViewProxy.objects.select_related().all()
@@ -150,13 +152,16 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
                 bw_log().log(years_list)
                 clients = ClientProxy.objects.select_related().all()
                 details_dict.setdefault("total_rows_count", len(clients))
-                page_object = Paginator(clients, 5)
-                details_dict.setdefault("page_obj", page_object)
+                page_object = Paginator(clients, 4)
+                details_dict.setdefault("page_obj", page_object.get_page(page))
                 # debugging_print(clients.page(1).object_list)
-                for client in page_object.page(1).object_list:
+                for client in page_object.page(page).object_list:
+                    q_objects = Q(client_id=client.pk)
+                    if created_year is not None and created_year != _("all"):
+                        q_objects &= Q(job_year=created_year)
                     client_view_results = (
                         ClientJobsReportsDBViewProxy.objects.select_related().filter(
-                            client_id=client.pk
+                            q_objects
                         )
                     )
                     client_details_map = ClientDetailsMap(client)
