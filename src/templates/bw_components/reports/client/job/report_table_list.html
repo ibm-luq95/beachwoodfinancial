@@ -85,10 +85,10 @@
 {# Start Table Body #}
 {% block tbody_block %}
     {% for object in object_list.object_list %}
-    {% comment  %}
+        {% comment  %}
         {% print created_year %}
     {% print object.organize_jobs_years_months %}
-    {% endcomment %}
+        {% endcomment %}
         <tr>
             {% if is_checkbox_enabled is True %}
                 <td class="h-px w-px whitespace-nowrap">
@@ -126,11 +126,13 @@
             {% for month in months_list %}
                 <td class="h-px w-px whitespace-nowrap">
                     {% extract_jobs_by_years object created_year as extracted_jobs %}
-                    {% extract_months_from_jobs extracted_jobs as extracted_months %}
+                    {# {% print extracted_jobs %} #}
+                    {% extract_months_from_jobs extracted_jobs created_year as extracted_months %}
                     {# {% print extracted_months %} #}
                     {# {% print extracted_jobs %} #}
                     {% if month in extracted_months %}
-                        {% extract_job_from_month extracted_jobs month as job_dict %}
+                        {% extract_job_from_month extracted_jobs month created_year as job_dict %}
+                        {# {% print job_dict %} #}
                         <div class="px-6 py-3">
                             {# Start Completed #}
                             <div class="block">

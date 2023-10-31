@@ -1,41 +1,32 @@
 # -*- coding: utf-8 -*-#
+from collections import defaultdict
+
 from django.utils.translation import gettext as _
 
 from django import template
 
+from client.models.helpers.map_helper import ClientDetailsMap
 from core.utils import debugging_print
 
 register = template.Library()
 
 
 @register.simple_tag
-def extract_jobs_by_years(client_jobs_dict: dict, year: int | str) -> list | None:
+def extract_jobs_by_years(
+    client_jobs_dict: ClientDetailsMap, year: int | str
+) -> list | None:
     """Extract jobs by years."""
-    years_months_jobs = client_jobs_dict.organize_jobs_years_months()
+    is_all = False
+    if year == _("All"):
+        is_all = True
+    years_months_jobs = client_jobs_dict.organize_jobs_years_months(is_all_years=is_all)
     if years_months_jobs is not None:
         jobs = years_months_jobs.get("jobs")
         if jobs is not None:
-            if year != _("All"):
-                """
-                {
-│   │   'client_name': 'The Idagency',
-│   │   'id': UUID('5320dd6f-c3ac-4c87-a62a-2476a5b3a48d'),
-│   │   'job_archived_count': 0,
-│   │   'job_completed_count': 0,
-│   │   'job_draft_count': 0,
-│   │   'job_in_progress_count': 0,
-│   │   'job_month': 1,
-│   │   'job_not_completed_count': 0,
-│   │   'job_not_started_count': 1,
-│   │   'job_past_due_count': 0,
-│   │   'job_year': 2020
-│   }
-                """
-                # debugging_print(jobs.get(year))
-                return jobs.get(year)
+            if is_all is True:
+                return jobs
             else:
-                print("ESSE@@@")
-                return [jobs]
+                return jobs.get(year)
         else:
             return None
     else:
@@ -43,17 +34,38 @@ def extract_jobs_by_years(client_jobs_dict: dict, year: int | str) -> list | Non
 
 
 @register.simple_tag
-def extract_months_from_jobs(jobs: list) -> list | None:
+def extract_months_from_jobs(jobs: list | dict, year: str | int) -> list | set | None:
     """Extract months from jobs."""
     if jobs is not None:
-        return [job.get("job_month") for job in jobs]
+        if year != _("All"):
+            return [job.get("job_month") for job in jobs]
+        else:
+            months = []
+            # debugging_print(jobs)
+            for key in jobs:
+                # debugging_print(type(item))
+                for k, v in key.items():
+                    months.append(k)
+                # for j in item:
+                #     debugging_print(j.keys())
+            # debugging_print(jobs)
+            return set(months)
     else:
         return None
 
 
 @register.simple_tag
-def extract_job_from_month(jobs: list, month: str | int) -> dict:
+def extract_job_from_month(jobs: list, month: str | int, year: str | int) -> dict:
     """Extract job from month."""
-    for job in jobs:
-        if job.get("job_month") == month:
-            return job
+    jobs_month = dict()
+    if year != _("All"):
+        for job in jobs:
+            if job.get("job_month") == month:
+                return job
+    else:
+        for job in jobs:
+            if job.get(month) is not None:
+                jobs_month = job.get(month)
+        # debugging_print(jobs_month)
+
+    return jobs_month
