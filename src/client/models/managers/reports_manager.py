@@ -20,8 +20,10 @@ class ClientReportsManager(SoftDeleteManager):
         return self.get_queryset().order_by("name")
 
     def get_all_jobs_as_list(
-        self, filter_params: Optional[ClientJobsFilterTypes] = None
+        self,
+        filter_params: Optional[ClientJobsFilterTypes] = None,
+        page: Optional[int] = None,
     ) -> dict:
         qs = self.get_queryset()
 
-        return qs.get_all_jobs_as_list(filter_params)
+        return qs.get_all_jobs_as_list(filter_params, page)

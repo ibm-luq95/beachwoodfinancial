@@ -7,13 +7,16 @@ from core.admin import BWBaseAdminModelMixin
 
 @admin.register(JobProxy)
 class JobAdmin(BWBaseAdminModelMixin):
+    search_fields = ("title", "client", "status", "managed_by", "state", "job_type")
     list_display = (
         "title",
         "client",
+        "job_type",
         "status",
         "start_date",
         "due_date",
-        "job_type",
+        "state",
         "managed_by",
+        "updated_by_cron",
         "created_at",
     )

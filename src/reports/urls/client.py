@@ -5,4 +5,4 @@ from reports.views.client import JobsReportView
 
 app_name = "clients_reports"
 
-urlpatterns = [path("jobs-report", JobsReportView.as_view(), name="job_reports_list")]
+urlpatterns = [path("jobs-report/", JobsReportView.as_view(), name="job_reports_list")]

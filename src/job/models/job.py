@@ -67,6 +67,7 @@ class Job(BaseModelMixin, StartAndDueDateMixin, AccessProxyModelMixin, StrModelM
         # default=JobTypeEnum.NO_TYPE,
         max_length=20,
         help_text=JOB_HELP_MESSAGES.get("job_type"),
+        db_index=True,
     )
     status = models.CharField(
         _("status"),
@@ -74,6 +75,7 @@ class Job(BaseModelMixin, StartAndDueDateMixin, AccessProxyModelMixin, StrModelM
         choices=JobStatusEnum.choices,
         # default=JobStatusEnum.NOT_STARTED,
         help_text=JOB_HELP_MESSAGES.get("status"),
+        db_index=True,
     )
     state = models.CharField(
         _("state"),
@@ -83,12 +85,14 @@ class Job(BaseModelMixin, StartAndDueDateMixin, AccessProxyModelMixin, StrModelM
         help_text=JOB_HELP_MESSAGES.get("state"),
         null=True,
         blank=True,
+        db_index=True,
     )
     categories = models.ManyToManyField(
         to=JobCategory,
         related_name="jobs",
         blank=True,
         help_text=JOB_HELP_MESSAGES.get("categories"),
+        db_index=True,
     )
 
     # tasks = models.ManyToManyField(to=Task, help_text=JOB_HELP_MESSAGES.get("tasks"))
@@ -97,6 +101,13 @@ class Job(BaseModelMixin, StartAndDueDateMixin, AccessProxyModelMixin, StrModelM
     )
     is_created_from_template = models.BooleanField(
         _("is_created_from_template"), default=False, editable=False
+    )
+    updated_by_cron = models.BooleanField(
+        _("updated by cron"),
+        default=False,
+        editable=False,
+        db_index=True,
+        help_text=_("This will indicate if the job is updated by cron"),
     )
 
     # not_filtered_objects = JobManager()

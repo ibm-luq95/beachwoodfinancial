@@ -85,6 +85,10 @@
 {# Start Table Body #}
 {% block tbody_block %}
     {% for object in object_list.object_list %}
+        {% comment  %}
+        {% print created_year %}
+    {% print object.organize_jobs_years_months %}
+        {% endcomment %}
         <tr>
             {% if is_checkbox_enabled is True %}
                 <td class="h-px w-px whitespace-nowrap">
@@ -101,7 +105,7 @@
             {% endif %}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
-                    <a href="{% url base_url_name|add:':details' object.client.pk %}">
+                    <a href="{# {% url base_url_name|add:':details' object.client.pk %} #}">
                         <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.client.name|bw_truncate_titles }}</span>
                     </a>
                     {% if object.client.categories.all %}
@@ -121,10 +125,14 @@
             </td>
             {% for month in months_list %}
                 <td class="h-px w-px whitespace-nowrap">
-                    {% extract_jobs_by_years object.organize_jobs_years_months created_year as extracted_jobs %}
-                    {% extract_months_from_jobs extracted_jobs as extracted_months %}
+                    {% extract_jobs_by_years object created_year as extracted_jobs %}
+                    {# {% print extracted_jobs %} #}
+                    {% extract_months_from_jobs extracted_jobs created_year as extracted_months %}
+                    {# {% print extracted_months %} #}
+                    {# {% print extracted_jobs %} #}
                     {% if month in extracted_months %}
-                        {% extract_job_from_month extracted_jobs month as job_dict %}
+                        {% extract_job_from_month extracted_jobs month created_year as job_dict %}
+                        {# {% print job_dict %} #}
                         <div class="px-6 py-3">
                             {# Start Completed #}
                             <div class="block">
