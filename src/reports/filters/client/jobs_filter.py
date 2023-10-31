@@ -35,6 +35,7 @@ class ClientJobsFilter(
         self.fields["created_at"].help_text = _("Client created at")
         self.fields["created_at"].label = _("Client created at")
         self.fields.pop("quick_created_at")
+        self.fields.pop("created_at")
 
     clients = forms.ModelMultipleChoiceField(
         label=_("Client"),
