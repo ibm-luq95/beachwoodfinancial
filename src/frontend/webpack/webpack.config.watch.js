@@ -31,7 +31,7 @@ module.exports = merge(common, {
     clean: true,
   },
   plugins: [
-    new WebpackNotifierPlugin({ emoji: true }),
+    new WebpackNotifierPlugin({ emoji: true, excludeWarnings: true, onlyOnError: true }),
 
     new Webpack.DefinePlugin({
       "process.env.NODE_ENV": JSON.stringify("development"),
@@ -51,7 +51,6 @@ module.exports = merge(common, {
   ],
   module: {
     rules: [
-    
       {
         test: /\.html$/i,
         loader: "html-loader",
