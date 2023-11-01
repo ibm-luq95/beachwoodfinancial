@@ -1,10 +1,27 @@
 # -*- coding: utf-8 -*-#
 import stringcase
+from django.contrib.sites.models import Site
 from django.forms import model_to_dict
 
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.general import IS_SHOW_CREATED_AT, IS_SHOW_LABELS_IN_FILTER_FORM
 from core.utils import debugging_print
+from site_settings.models import SectionDescription
+
+
+class BWSectionDescriptionHelperMixin:
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        domain = self.request.get_host()
+        site_object = Site.objects.filter(domain=domain).first()
+        if site_object:
+            bw_section_description = SectionDescription.objects.filter(site=site_object)
+            bw_section_description_data = dict()
+            for item in bw_section_description:
+                bw_section_description_data.update({item.section_title: item.description})
+            context.setdefault("bw_section_description", bw_section_description_data)
+        return context
 
 
 class BWBaseListViewMixin:
