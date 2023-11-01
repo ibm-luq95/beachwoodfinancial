@@ -4,7 +4,6 @@ from typing import Optional
 
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
-
 from django_components import component
 
 
