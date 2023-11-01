@@ -23,6 +23,7 @@ from core.constants.status_labels import CON_ENABLED
 from core.constants.users import CON_BOOKKEEPER
 from core.utils import debugging_print
 from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
+from core.views.mixins.base_list_view import BWSectionDescriptionHelperMixin
 from document.forms import DocumentForm
 
 # from documents.forms import DocumentForm
@@ -167,7 +168,11 @@ class ClientDeleteView(
 
 
 class ClientDetailsView(
-    PermissionRequiredMixin, BWLoginRequiredMixin, BWCacheViewMixin, DetailView
+    PermissionRequiredMixin,
+    BWLoginRequiredMixin,
+    BWCacheViewMixin,
+    BWSectionDescriptionHelperMixin,
+    DetailView,
 ):
     template_name = "client/details.html"
     model = ClientProxy

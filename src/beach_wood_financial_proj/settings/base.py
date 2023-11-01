@@ -115,6 +115,7 @@ UI_COMPONENTS_TEMPLATETAGS = [
     "bw_ui_components.templatetags.inputs._method",
     "bw_ui_components.templatetags.elements.anchor",
     "bw_ui_components.templatetags.elements.date",
+    "bw_ui_components.templatetags.elements.blockquote",
     "bw_ui_components.templatetags.elements.icon",
     "bw_ui_components.templatetags.elements.js_modal",
     "bw_ui_components.templatetags.elements.create_btn_js_modal",

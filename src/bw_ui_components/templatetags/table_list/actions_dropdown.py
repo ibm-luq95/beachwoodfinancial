@@ -20,13 +20,19 @@ def bw_actions_dropdown(context, *args, **kwargs) -> dict:
     actions_base_url = kwargs.get("actions_base_url")
     actions_app_name = kwargs.get("actions_app_name")
     object_var = kwargs.get("object")
+    pk_url_kwarg = kwargs.get("pk_url_kwarg", "pk")
     all_actions_urls_dict = dict()
     try:
+        pk_kwargs = dict()
+        if pk_url_kwarg == "slug":
+            pk_kwargs.update({"slug": object_var.slug})
+        elif pk_url_kwarg == "pk":
+            pk_kwargs.update({"pk": object_var.pk})
         if "update" in actions_items:
             all_actions_urls_dict.update(
                 {
                     "update": reverse_lazy(
-                        f"{actions_base_url}:update", kwargs={"pk": object_var.pk}
+                        f"{actions_base_url}:update", kwargs=pk_kwargs
                     )
                 }
             )
@@ -34,7 +40,7 @@ def bw_actions_dropdown(context, *args, **kwargs) -> dict:
             all_actions_urls_dict.update(
                 {
                     "details": reverse_lazy(
-                        f"{actions_base_url}:details", kwargs={"pk": object_var.pk}
+                        f"{actions_base_url}:details", kwargs=pk_kwargs
                     )
                 }
             )
@@ -43,7 +49,7 @@ def bw_actions_dropdown(context, *args, **kwargs) -> dict:
             all_actions_urls_dict.update(
                 {
                     "delete": reverse_lazy(
-                        f"{actions_base_url}:delete", kwargs={"pk": object_var.pk}
+                        f"{actions_base_url}:delete", kwargs=pk_kwargs
                     )
                 }
             )

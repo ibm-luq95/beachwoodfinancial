@@ -13,8 +13,8 @@ from site_settings.models import ApplicationConfigurations
 
 
 class ApplicationConfigurationsFormView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,

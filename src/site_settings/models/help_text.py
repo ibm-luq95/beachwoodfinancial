@@ -45,3 +45,10 @@ APPLICATION_CONFIGURATIONS_HELP_MESSAGES = {
         "Default string long truncate string (for template)"
     ),
 }
+
+
+SECTION_DESCRIPTIONS_HELP_MESSAGES = {
+    "section_title": _("Section title"),
+    "description": _("Describe the section functionality"),
+    "site": _("The site this settings related to."),
+}
