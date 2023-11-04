@@ -5,5 +5,6 @@ from .special_assignment import (
     SpecialAssignmentUpdateView,
     SpecialAssignmentDetailsView,
     SpecialAssignmentListView,
+    RequestedSpecialAssignmentsListView,
 )
 from .api import SpecialAssignmentViewSet

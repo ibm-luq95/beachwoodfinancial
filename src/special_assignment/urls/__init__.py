@@ -7,12 +7,14 @@ from special_assignment.views import (
     SpecialAssignmentUpdateView,
     SpecialAssignmentDeleteView,
     SpecialAssignmentListView,
+    RequestedSpecialAssignmentsListView,
 )
 
 app_name = "special_assignment"
 
 urlpatterns = [
     path("", SpecialAssignmentListView.as_view(), name="list"),
+    path("requested", RequestedSpecialAssignmentsListView.as_view(), name="requested"),
     path("create", SpecialAssignmentCreateView.as_view(), name="create"),
     path("<uuid:pk>", SpecialAssignmentDetailsView.as_view(), name="details"),
     path("update/<uuid:pk>", SpecialAssignmentUpdateView.as_view(), name="update"),
