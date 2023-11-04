@@ -7,6 +7,7 @@ from django.utils.translation import gettext as _
 from django.views.generic import CreateView, UpdateView, ListView, DeleteView
 
 from core.cache import BWCacheViewMixin
+from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.utils import get_trans_txt
 from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 from important_contact.filters import ImportantContactFilter
@@ -50,6 +51,18 @@ class ImportantContactListViewBW(
         context.setdefault("base_url_name", "dashboard:important_contact")
         context.setdefault("empty_label", _("contacts"))
         context.setdefault("extra_context", {})
+        context.setdefault("show_info_icon", True)
+        context.setdefault(
+            "info_details",
+            {
+                "tooltip_txt": BW_INFO_MODAL_CSS_CLASSES.get("important_contact").get(
+                    "tooltip_txt"
+                ),
+                "modal_css_id": BW_INFO_MODAL_CSS_CLASSES.get("important_contact").get(
+                    "cssID"
+                ),
+            },
+        )
         return context
 
     def get_queryset(self):

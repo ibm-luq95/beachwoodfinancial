@@ -11,6 +11,7 @@ from client_account.filters import ClientAccountFilter
 from client_account.forms import ClientAccountForm
 from client_account.models import ClientAccount
 from core.cache import BWCacheViewMixin
+from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.users import CON_BOOKKEEPER
 from core.utils import get_trans_txt
 from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
@@ -52,6 +53,18 @@ class ClientAccountListViewBW(
         context.setdefault("base_url_name", "dashboard:client_account")
         context.setdefault("empty_label", _("accounts"))
         context.setdefault("extra_context", {})
+        context.setdefault("show_info_icon", True)
+        context.setdefault(
+            "info_details",
+            {
+                "tooltip_txt": BW_INFO_MODAL_CSS_CLASSES.get("client_account").get(
+                    "tooltip_txt"
+                ),
+                "modal_css_id": BW_INFO_MODAL_CSS_CLASSES.get("client_account").get(
+                    "cssID"
+                ),
+            },
+        )
         return context
 
     def get_queryset(self):

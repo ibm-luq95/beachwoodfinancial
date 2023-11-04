@@ -21,6 +21,7 @@ from beach_wood_user.models import BWUser
 from core.cache import BWCacheViewMixin
 from core.choices import JobStateEnum, JobStatusEnum
 from core.constants import LIST_VIEW_PAGINATE_BY
+from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.utils.developments.utils import get_list_from_text_choices
 from core.views.mixins import (
     BWLoginRequiredMixin,
@@ -70,6 +71,14 @@ class ManagerListView(
         context.setdefault("base_url_name", "dashboard:managers")
         context.setdefault("empty_label", _("managers"))
         context.setdefault("extra_context", {})
+        context.setdefault("show_info_icon", True)
+        context.setdefault(
+            "info_details",
+            {
+                "tooltip_txt": BW_INFO_MODAL_CSS_CLASSES.get("manager").get("tooltip_txt"),
+                "modal_css_id": BW_INFO_MODAL_CSS_CLASSES.get("manager").get("cssID"),
+            },
+        )
 
         # debugging_print(self.filterset.form["name"])
         return context
