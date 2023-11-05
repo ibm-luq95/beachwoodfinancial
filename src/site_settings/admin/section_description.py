@@ -7,4 +7,4 @@ from core.admin import BWBaseAdminModelMixin
 
 @admin.register(SectionDescription)
 class SectionDescriptionAdmin(BWBaseAdminModelMixin):
-    pass
+    list_display = ("section_title", "slug", "site")
