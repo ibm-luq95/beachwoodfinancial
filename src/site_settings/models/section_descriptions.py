@@ -24,7 +24,7 @@ class SectionDescription(BaseModelMixin, GeneralStatusFieldMixin):
         blank=True,
         help_text=SECTION_DESCRIPTIONS_HELP_MESSAGES.get("site"),
         db_index=True,
-        # editable=False,
+        editable=False,
     )
     slug = models.SlugField(
         _("slug"),
