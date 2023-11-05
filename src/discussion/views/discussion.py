@@ -47,7 +47,7 @@ class DiscussionListView(
         context.setdefault("is_show_create_btn", False)
         context.setdefault("pagination_list_url_name", "dashboard:discussion:list")
         context.setdefault("is_filters_enabled", False)
-        context.setdefault("is_actions_menu_enabled", True)
+        context.setdefault("is_actions_menu_enabled", False)
         context.setdefault("is_header_enabled", True)
         context.setdefault("is_footer_enabled", True)
         context.setdefault("actions_items", "details,update,delete")
