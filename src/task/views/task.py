@@ -6,6 +6,7 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
+from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.users import CON_BOOKKEEPER
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from core.views.mixins.bookkeeper_pass_related_mixin import BookkeeperPassRelatedMixin
@@ -57,6 +58,14 @@ class TaskListView(
                 "is_show_type_column": True,
                 "is_show_manager_column": True,
                 "is_show_job_column": True,
+            },
+        )
+        context.setdefault("show_info_icon", True)
+        context.setdefault(
+            "info_details",
+            {
+                "tooltip_txt": BW_INFO_MODAL_CSS_CLASSES.get("task").get("tooltip_txt"),
+                "modal_css_id": BW_INFO_MODAL_CSS_CLASSES.get("task").get("cssID"),
             },
         )
 

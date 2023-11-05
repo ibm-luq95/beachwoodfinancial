@@ -7,6 +7,7 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
+from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.users import CON_BOOKKEEPER
 from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 from core.views.mixins.bookkeeper_pass_related_mixin import BookkeeperPassRelatedMixin
@@ -56,6 +57,16 @@ class DocumentListView(
         context.setdefault("base_url_name", "dashboard:document")
         context.setdefault("empty_label", _("documents"))
         context.setdefault("extra_context", {})
+        context.setdefault("show_info_icon", True)
+        context.setdefault(
+            "info_details",
+            {
+                "tooltip_txt": BW_INFO_MODAL_CSS_CLASSES.get("document").get(
+                    "tooltip_txt"
+                ),
+                "modal_css_id": BW_INFO_MODAL_CSS_CLASSES.get("document").get("cssID"),
+            },
+        )
 
         # debugging_print(self.filterset.form["name"])
         return context

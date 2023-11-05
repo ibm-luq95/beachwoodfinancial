@@ -69,6 +69,7 @@ class SectionDescriptionListView(
     template_name = "core/crudl/list.html"
     model = SectionDescription
     list_type = "list"
+    queryset = SectionDescription.objects.all().order_by("section_title")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

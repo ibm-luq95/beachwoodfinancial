@@ -10,6 +10,7 @@ from client_category.filters import ClientCategoryFilter
 from client_category.forms import ClientCategoryForm
 from client_category.models import ClientCategory
 from core.cache import BWCacheViewMixin
+from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.utils import get_trans_txt
 from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 
@@ -50,6 +51,18 @@ class ClientCategoryListViewBW(
         context.setdefault("base_url_name", "dashboard:client_category")
         context.setdefault("empty_label", _("categories"))
         context.setdefault("extra_context", {})
+        context.setdefault("show_info_icon", True)
+        context.setdefault(
+            "info_details",
+            {
+                "tooltip_txt": BW_INFO_MODAL_CSS_CLASSES.get("client_category").get(
+                    "tooltip_txt"
+                ),
+                "modal_css_id": BW_INFO_MODAL_CSS_CLASSES.get("client_category").get(
+                    "cssID"
+                ),
+            },
+        )
         return context
 
     def get_queryset(self):

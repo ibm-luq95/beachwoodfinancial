@@ -6,6 +6,7 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
 from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
+from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from job_category.forms import JobCategoryForm
 from job_category.models import JobCategory
@@ -39,7 +40,7 @@ class JobCategoryListView(
         context.setdefault("table_header_subtitle", _("job_categorys subtitle"))
         context.setdefault("is_show_create_btn", True)
         context.setdefault("pagination_list_url_name", "dashboard:job_category:list")
-        context.setdefault("is_filters_enabled", True)
+        context.setdefault("is_filters_enabled", False)
         context.setdefault("is_actions_menu_enabled", True)
         context.setdefault("is_header_enabled", True)
         context.setdefault("is_footer_enabled", True)
@@ -47,6 +48,16 @@ class JobCategoryListView(
         context.setdefault("base_url_name", "dashboard:job_category")
         context.setdefault("empty_label", _("categories"))
         context.setdefault("extra_context", {})
+        context.setdefault("show_info_icon", True)
+        context.setdefault(
+            "info_details",
+            {
+                "tooltip_txt": BW_INFO_MODAL_CSS_CLASSES.get("job_category").get(
+                    "tooltip_txt"
+                ),
+                "modal_css_id": BW_INFO_MODAL_CSS_CLASSES.get("job_category").get("cssID"),
+            },
+        )
 
         return context
 

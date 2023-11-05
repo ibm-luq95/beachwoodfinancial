@@ -181,12 +181,6 @@
             <div id="overview-tab"
                  role="tabpanel"
                  aria-labelledby="tabs-with-icons-item-1">
-                <p class="text-gray-500 dark:text-gray-400 mb-2 mt-4">
-                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Autem eligendi
-                    exercitationem magnam facilis non vel natus repellat quos provident pariatur
-                    inventore, numquam fugit sapiente illo ut itaque, obcaecati corrupti consectetur!
-                </p>
-                <hr />
                 {# Start Widget Ros #}
                 <section id="grid-widget-block" class="my-5">
                     <!-- Grid -->
@@ -352,9 +346,11 @@
                  class="hidden"
                  role="tabpanel"
                  aria-labelledby="tabs-with-icons-item-2">
-                {% bw_blockquote quote_txt=bw_section_description.job %}
                 <div class="text-right">
                     {% bw_create_btn_js_modal js_create_btn_css_id="createJobBtn" modal_css_id="createJobModal" app_name="job" %}
+
+                    {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt="What is jobs" modal_css_id="infoJobModal" %}
+
                 </div>
                 {% if object.jobs.all %}
 
@@ -370,10 +366,11 @@
                  class="hidden"
                  role="tabpanel"
                  aria-labelledby="tabs-with-icons-item-3">
-                <p class="text-gray-500 dark:text-gray-400">Contacts tab</p>
-                <hr class="my-5" />
                 <div class="text-right">
                     {% bw_create_btn_js_modal js_create_btn_css_id="createImportantContactBtn" modal_css_id="createImportantContactModal" app_name="important_contact" %}
+
+                    {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt="What is client contacts" modal_css_id="infoClientContactModal" %}
+
                 </div>
                 {% if object.important_contacts.all %}
 
@@ -389,8 +386,6 @@
                  class="hidden"
                  role="tabpanel"
                  aria-labelledby="tabs-with-icons-item-3">
-                <p class="text-gray-500 dark:text-gray-400">Client details tab</p>
-                <hr class="my-4" />
                 <section id="formWrapper">
                     {% component "bw_form" form=client_form perms=perms form_id="clientDetailsMiniForm" submit_btn_text="Update" form_title="Update client - "|add:object.name form_subtitle="Update client details" is_upload_form=True hide_submit_btn=True hide_back_btn=True %}
                 </section>
@@ -399,10 +394,11 @@
                  class="hidden"
                  role="tabpanel"
                  aria-labelledby="tabs-with-icons-item-3">
-                <p class="text-gray-500 dark:text-gray-400">Account tab</p>
-                <hr />
                 <div class="text-right">
                     {% bw_create_btn_js_modal js_create_btn_css_id="createClientAccountBtn" modal_css_id="createClientAccountModal" app_name="client_account" %}
+
+                    {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt="What is client accounts" modal_css_id="infoClientAccountsModal" %}
+
                 </div>
                 {% if object.client_accounts.all %}
 
@@ -418,9 +414,11 @@
                  class="hidden"
                  role="tabpanel"
                  aria-labelledby="tabs-with-icons-item-3">
-                <p class="text-gray-500 dark:text-gray-400">Assignments tab</p>
                 <div class="text-right">
                     {% bw_create_btn_js_modal js_create_btn_css_id="createAssignmentBtn" modal_css_id="createAssignmentModal" app_name="special_assignment" %}
+
+                    {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt="What special assignment in beachwoodfinancial" modal_css_id="infoSpecialAssignmentModal" %}
+
                 </div>
                 {% if object.special_assignments.all %}
 
@@ -436,10 +434,11 @@
                  class="hidden"
                  role="tabpanel"
                  aria-labelledby="tabs-with-icons-item-3">
-                <p class="text-gray-500 dark:text-gray-400">Notes tab</p>
-                <hr />
                 <div class="text-right">
                     {% bw_create_btn_js_modal js_create_btn_css_id="createNoteBtn" modal_css_id="createNoteModal" app_name="note" %}
+
+                    {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt="What notes in beachwoodfinancial" modal_css_id="infoNoteModal" %}
+
                 </div>
                 {% if object.notes.all %}
 
@@ -455,10 +454,11 @@
                  class="hidden"
                  role="tabpanel"
                  aria-labelledby="tabs-with-icons-item-3">
-                <p class="text-gray-500 dark:text-gray-400">Documents tab</p>
-                <hr />
                 <div class="text-right">
                     {% bw_create_btn_js_modal js_create_btn_css_id="createDocumentBtn" modal_css_id="createDocumentModal" app_name="document" %}
+
+                    {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt="What documents in beachwoodfinancial" modal_css_id="infoDocumentModal" %}
+
                 </div>
                 {% if object.documents.all %}
 

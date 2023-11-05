@@ -46,29 +46,61 @@
         <th scope="col" class="px-6 py-3 text-left">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "Title" %}
+                    {% translate "Body" %}
                 </span>
 
                 {% include "bw_components/global/table_list/sort_icon.html" %}
 
             </div>
         </th>
-        {% if is_show_section is True %}
-            <th scope="col" class="px-6 py-3 text-left">
-                <div class="flex items-center gap-x-2">
-                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                        {% translate "Section" %}
-                    </span>
-
-                    {% include "bw_components/global/table_list/sort_icon.html" %}
-
-                </div>
-            </th>
-        {% endif %}
         <th scope="col" class="px-6 py-3 text-left">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "Download" %}
+                    {% translate "Special Assignment" %}
+                </span>
+
+                {% include "bw_components/global/table_list/sort_icon.html" %}
+
+            </div>
+        </th>
+        
+        <th scope="col" class="px-6 py-3 text-left">
+            <div class="flex items-center gap-x-2">
+                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                    {% translate "Job" %}
+                </span>
+
+                {% include "bw_components/global/table_list/sort_icon.html" %}
+
+            </div>
+        </th>
+        
+        <th scope="col" class="px-6 py-3 text-left">
+            <div class="flex items-center gap-x-2">
+                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                    {% translate "Replies" %}
+                </span>
+
+                {% include "bw_components/global/table_list/sort_icon.html" %}
+
+            </div>
+        </th>
+        
+        <th scope="col" class="px-6 py-3 text-left">
+            <div class="flex items-center gap-x-2">
+                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                    {% translate "Is Seen" %}
+                </span>
+
+                {% include "bw_components/global/table_list/sort_icon.html" %}
+
+            </div>
+        </th>
+        
+        <th scope="col" class="px-6 py-3 text-left">
+            <div class="flex items-center gap-x-2">
+                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                    {% translate "Attachment" %}
                 </span>
             </div>
         </th>
@@ -107,18 +139,18 @@
             {% endif %}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
-                    <a href="{% url base_url_name|add:':update' object.pk %}">
-                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.title|bw_truncate_titles }}</span>
+                    <a href="javascript:;">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.body|bw_truncate_titles }}</span>
                     </a>
                 </div>
             </td>
-            {% if is_show_section is True %}
-                <td class="h-px w-px whitespace-nowrap">
-                    <div class="px-10 py-3">
-                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.get_document_section_display }}</span>
-                    </div>
-                </td>
-            {% endif %}
+            <td class="h-px w-px whitespace-nowrap">
+                <div class="px-6 py-3">
+                    <a href="javascript:;">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.body|bw_truncate_titles }}</span>
+                    </a>
+                </div>
+            </td>
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-10 py-3">
                     <a href="{{ object.document_file.url }}"

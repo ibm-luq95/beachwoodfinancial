@@ -21,6 +21,7 @@ from core.constants.site_settings import (
     SEC_DESC_SPECIAL_ASSIGNMENT,
     SEC_DESC_JOB_CATEGORY,
     SEC_DESC_DOCUMENT,
+    SEC_DESC_REQUESTED_ASSIGNMENT,
 )
 
 
@@ -30,6 +31,9 @@ class SectionDescriptionEnum(models.TextChoices):
     TASK = SEC_DESC_TASK, _(stringcase.sentencecase(SEC_DESC_TASK))
     SPECIAL_ASSIGNMENT = SEC_DESC_SPECIAL_ASSIGNMENT, _(
         stringcase.sentencecase(SEC_DESC_SPECIAL_ASSIGNMENT)
+    )
+    REQUESTED_ASSIGNMENT = SEC_DESC_REQUESTED_ASSIGNMENT, _(
+        stringcase.sentencecase(SEC_DESC_REQUESTED_ASSIGNMENT)
     )
     CLIENT_ACCOUNT = SEC_DESC_CLIENT_ACCOUNT, _(
         stringcase.sentencecase(SEC_DESC_CLIENT_ACCOUNT)

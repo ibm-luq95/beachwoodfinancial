@@ -5,7 +5,7 @@
 {% block dashboard_content_block %}
     {# Page Heading #}
 
-    {% include "components/inc/dashboard/content_header.html" with title=page_header subtitle=subtitle is_show_create_btn=True app_label=app_label actions_base_url=actions_base_url %}
+    {% include "components/inc/dashboard/content_header.html" with title=page_header subtitle=subtitle is_show_create_btn=is_show_create_btn app_label=app_label actions_base_url=actions_base_url %}
 
     {# End Page Heading #}
     {# Start Filter Form #}

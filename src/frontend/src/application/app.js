@@ -9,6 +9,7 @@ import "../utils/rich_editor.js";
 import "animate.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";
+import hljs from 'highlight.js';
 
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // import "css.gg/icons/all.css";
@@ -34,6 +35,7 @@ import "./beach_wood_user/details.js";
 import { setFormInputsReadOnly } from "../utils/form_helpers";
 
 window.document.addEventListener("DOMContentLoaded", function () {
+  hljs.highlightAll();
   const bwfInputs = document.querySelectorAll(".bw-input");
   const bwDisabledLinks = document.querySelectorAll("a.bw-disabled-anchor");
   const allDisabledCssClassed = ["disabled:opacity-75", "cursor-not-allowed"];
