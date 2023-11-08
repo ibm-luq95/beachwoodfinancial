@@ -1,4 +1,13 @@
 {
+  // "css.validate": false,
+  // "less.validate": false,
+  // "scss.validate": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true,
+    "source.fixAll.stylelint": true
+  },
+  // "eslint.validate": ["javascript"],
+  "editor.formatOnSave": false,
   "black-formatter.args": ["--config", "${workspaceFolder}/pyproject.toml"],
   "black-formatter.trace": "info",
   "black-formatter.showNotification": "on",
@@ -63,5 +72,7 @@
   // "isort.interpreter": [
   //   "${userHome}/.virtualenvs/beach_wood_financial_dev_venv_3.11.4/bin/python3"
   // ],
-  "typescript.tsdk": "./src/frontend/node_modules/typescript/lib"
+  "typescript.tsdk": "./src/frontend/node_modules/typescript/lib",
+  "stylelint.configFile": "${workspaceFolder}/.stylelintrc.json",
+  "stylelint.configBasedir": "./src/frontend/node_modules"
 }
