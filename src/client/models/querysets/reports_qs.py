@@ -28,14 +28,39 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
             data_list = list()
             years_list = set()
             created_year = filter_params.get("created_year")
+            clients_pks = filter_params.get("clients")
+            client_categories = filter_params.get("categories")
+            job_categories = filter_params.get("job_categories")
+            job_status = filter_params.get("job_status")
+            job_type = filter_params.get("job_type")
+            job_stats = filter_params.get("job_stats")
+            jobs_managed_by = filter_params.get("managed_by")
+            # debugging_print(filter_params)
+            clients_q = Q()
+            if client_categories is not None:
+                clients_q &= Q(categories__in=client_categories)
+            if clients_pks is not None:
+                clients_q &= Q(pk__in=clients_pks)
+            if job_categories is not None:
+                clients_q &= Q(jobs__categories__in=job_categories)
+            if job_stats is not None:
+                clients_q &= Q(jobs__stats__in=job_stats)
+            if job_type is not None:
+                clients_q &= Q(jobs__type__in=job_type)
+            if job_status is not None:
+                clients_q &= Q(jobs__status__in=job_status)
+            if jobs_managed_by is not None:
+                clients_q &= Q(jobs__managed_by__in=jobs_managed_by)
 
             try:
                 reports = ClientJobsReportsDBViewProxy.objects.select_related().all()
                 for r in reports:
                     years_list.add(r.job_year)
                 details_dict = dict()
-                bw_log().log(years_list)
-                clients = ClientProxy.objects.select_related().all()
+                # bw_log().log(years_list)
+                clients = ClientProxy.objects.select_related().filter(clients_q)
+                # debugging_print(len(clients))
+                # debugging_print(clients.first().jobs.all())
                 details_dict.setdefault("total_rows_count", len(clients))
                 page_object = Paginator(clients, 5)
                 details_dict.setdefault("page_obj", page_object.get_page(page))
