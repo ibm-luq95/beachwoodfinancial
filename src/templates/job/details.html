@@ -10,18 +10,18 @@
     <div class="grid grid-cols-3 gap-4">
         <div class="col-span-2 bg-slate-50 p-5 shadow-md rounded">
             {# Start Job Title #}
-            <h2 class="text-lg font-bold tracking-wider border-b border-slate-950 pb-2">{{ object.title }}</h2>
+            <h2 class="text-lg font-bold tracking-wider border-b border-slate-950 pb-2">{{ object.title|capfirst }}</h2>
             {# End Job Title #}
             <div class="flex flex-col rounded-md p-3">
                 <!-- <span class="text-sm text-gray-500 dark:text-gray-400">Desciption :</span> -->
-                <article>
+                <article class="text-sm md:text-base lg:text-lg">
                     <p>{{ object.description|safe }}</p>
                 </article>
                 {# Start categories badges #}
                 {% if object.categories.all %}
                     <article class="my-3">
                         {% for category in object.categories.all %}
-                            <span class="inline-flex items-center gap-1 py-1 px-3 rounded-full text-[10px] font-medium bg-blue-100 text-blue-800">{{ category.name|capfirst }}</span>
+                            <span class="inline-flex items-center gap-1 py-1 px-3 mr-1 rounded-full text-[10px] font-medium bg-blue-100 text-blue-800">{{ category.name|capfirst }}</span>
                         {% endfor %}
                     </article>
                 {% endif %}
@@ -88,7 +88,11 @@
                     <span class="px-4 inline-flex items-center min-w-fit rounded-md border border-r-0 border-gray-200 bg-gray-50 text-sm dark:bg-gray-700 dark:border-gray-700">
                         <span class="text-sm text-gray-500 dark:text-gray-400">{% translate "Notes:" %}</span>
                     </span>
-                    <p class="mx-2">{{ object.note|safe }}</p>
+                    <p class="mx-2 italic">
+                        <small>
+                            {{ object.note|safe }}
+                        </small>
+                    </p>
                 </div>
             </div>
             {# Start Tabs Block #}
