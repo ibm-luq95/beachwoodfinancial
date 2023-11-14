@@ -1,5 +1,6 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.db.models import Q
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
@@ -9,6 +10,7 @@ from core.choices import JobStatusEnum, JobStateEnum
 from core.config.forms import BWFormRenderer
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
+from core.constants.status_labels import CON_DRAFT, CON_COMPLETED, CON_ARCHIVED
 from core.constants.users import CON_BOOKKEEPER
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from discussion.forms import DiscussionMiniForm
@@ -34,7 +36,9 @@ class JobListView(
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "core/crudl/list.html"
     model = JobProxy
-    queryset = JobProxy.objects.order_by("created_at")
+    queryset = JobProxy.objects.filter(
+        ~Q(status__in=[CON_ARCHIVED, CON_COMPLETED, CON_DRAFT])
+    ).order_by("created_at")
     paginate_by = LIST_VIEW_PAGINATE_BY
     list_type = "list"
 
