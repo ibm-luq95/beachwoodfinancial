@@ -43,6 +43,18 @@
                 </label>
             </th>
         {% endif %}
+        <th scope="col" class="px-2 py-3 text-right">
+            <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                <div class="hs-tooltip inline-block [--placement:right]">
+                    <button type="button"
+                            class="hs-tooltip-toggle text-sm text-gray-600 dark:text-gray-400">
+                        <i class="fa-solid fa-paperclip"></i>
+                        <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                              role="tooltip">{% translate "Contains attachment file" %}</span>
+                    </button>
+                </div>
+            </span>
+        </th>
         <th scope="col" class="px-6 py-3 text-left">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
@@ -166,22 +178,35 @@
                     </div>
                 </td>
             {% endif %}
+            <td class="h-px w-px whitespace-nowrap text-right">
+                <div class="px-1 py-2">
+                    {% if object.attachment %}
+                        <div class="hs-tooltip inline-block mx-1 [--placement:right]">
+                            <button type="button"
+                                    class="hs-tooltip-toggle text-sm text-gray-600 dark:text-gray-400">
+                                <i class="fa-solid fa-paperclip"></i>
+                                <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                      role="tooltip">
+                                    {% translate "Assignment contains attachment file" %}
+                                </span>
+                            </button>
+                        </div>
+                    {% else %}
+                        <div class="hs-tooltip inline-block mx-1 [--placement:right]">
+                            <button type="button"
+                                    class="hs-tooltip-toggle text-sm text-gray-600 dark:text-gray-400">
+                                <i class="fa-solid fa-ban text-red-500"></i>
+                                <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                      role="tooltip">{% translate "No attachment" %}</span>
+                            </button>
+                        </div>
+                    {% endif %}
+                </div>
+            </td>
             {# Start Title #}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
                     <a href="{% url base_url_name|add:':details' object.pk %}">
-                        {% if object.attachment %}
-                            <div class="hs-tooltip inline-block mr-1 [--placement:right]">
-                                <button type="button"
-                                        class="hs-tooltip-toggle text-sm text-gray-600 dark:text-gray-400">
-                                    <i class="fa-solid fa-paperclip"></i>
-                                    <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
-                                          role="tooltip">
-                                        {% translate "Assignment contains attachment file" %}
-                                    </span>
-                                </button>
-                            </div>
-                        {% endif %}
                         <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.title|truncatechars:DEFAULT_TEMPLATE_TABLE_LIST_TRUNCATED_STRING }}</span>
                     </a>
                 </div>
@@ -218,7 +243,11 @@
             {# Start Manager #}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
-                    <a href="#" class="{{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }} text-sm">{{ object.get_managed_user }}</a>
+                    {% if object.get_managed_user %}
+                        <a href="#" class="{{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }} text-sm">{{ object.get_managed_user }}</a>
+                    {% else %}
+                        ---
+                    {% endif %}
                 </div>
             </td>
             {# End Manager #}
