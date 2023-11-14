@@ -72,9 +72,11 @@ class Command(BaseCommand, CommandStdOutputMixin):
                             datetime_start="-7y", datetime_end="-2y"
                         ),
                         "start_date": faker.date_between(
-                            start_date="-2y", end_date="today"
+                            # start_date="-1y", end_date="today"
+                            start_date="-2d", end_date="-1d"
                         ),
-                        "due_date": faker.date_between(start_date="-2y", end_date="today"),
+                        # "due_date": faker.date_between(start_date="-1y", end_date="today"),
+                        "due_date": faker.date_between(start_date="+4d", end_date="+5d"),
                     }
                     if client is not None:
                         fake_data["client"] = ClientProxy.objects.get(pk=client)

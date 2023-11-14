@@ -11,6 +11,7 @@ from client.models import ClientProxy
 from core.choices import JobStatusEnum, JobTypeEnum, JobStateEnum
 from core.models.mixins import BaseModelMixin, StartAndDueDateMixin, StrModelMixin
 from core.models.mixins.access_proxy_models_mixin import AccessProxyModelMixin
+from core.models.mixins.cron_column_mixin import CronColumnMixin
 from core.utils import debugging_print
 from django.core.exceptions import ValidationError
 
@@ -20,7 +21,13 @@ from job_category.models import JobCategory
 from .help_messages import JOB_HELP_MESSAGES
 
 
-class Job(BaseModelMixin, StartAndDueDateMixin, AccessProxyModelMixin, StrModelMixin):
+class Job(
+    BaseModelMixin,
+    StartAndDueDateMixin,
+    AccessProxyModelMixin,
+    CronColumnMixin,
+    StrModelMixin,
+):
     """This is the job for every bookkeeper and assistant
 
     Args:
@@ -67,6 +74,7 @@ class Job(BaseModelMixin, StartAndDueDateMixin, AccessProxyModelMixin, StrModelM
         # default=JobTypeEnum.NO_TYPE,
         max_length=20,
         help_text=JOB_HELP_MESSAGES.get("job_type"),
+        db_index=True,
     )
     status = models.CharField(
         _("status"),
@@ -74,6 +82,7 @@ class Job(BaseModelMixin, StartAndDueDateMixin, AccessProxyModelMixin, StrModelM
         choices=JobStatusEnum.choices,
         # default=JobStatusEnum.NOT_STARTED,
         help_text=JOB_HELP_MESSAGES.get("status"),
+        db_index=True,
     )
     state = models.CharField(
         _("state"),
@@ -83,12 +92,14 @@ class Job(BaseModelMixin, StartAndDueDateMixin, AccessProxyModelMixin, StrModelM
         help_text=JOB_HELP_MESSAGES.get("state"),
         null=True,
         blank=True,
+        db_index=True,
     )
     categories = models.ManyToManyField(
         to=JobCategory,
         related_name="jobs",
         blank=True,
         help_text=JOB_HELP_MESSAGES.get("categories"),
+        db_index=True,
     )
 
     # tasks = models.ManyToManyField(to=Task, help_text=JOB_HELP_MESSAGES.get("tasks"))

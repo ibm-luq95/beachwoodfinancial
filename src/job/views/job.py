@@ -8,6 +8,7 @@ from core.cache import BWCacheViewMixin
 from core.choices import JobStatusEnum, JobStateEnum
 from core.config.forms import BWFormRenderer
 from core.constants import LIST_VIEW_PAGINATE_BY
+from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.users import CON_BOOKKEEPER
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from discussion.forms import DiscussionMiniForm
@@ -61,6 +62,14 @@ class JobListView(
         context.setdefault("base_url_name", "dashboard:job")
         context.setdefault("empty_label", _("client"))
         context.setdefault("extra_context", {"is_show_client": True})
+        context.setdefault("show_info_icon", True)
+        context.setdefault(
+            "info_details",
+            {
+                "tooltip_txt": BW_INFO_MODAL_CSS_CLASSES.get("job").get("tooltip_txt"),
+                "modal_css_id": BW_INFO_MODAL_CSS_CLASSES.get("job").get("cssID"),
+            },
+        )
 
         # debugging_print(self.filterset.form["name"])
         return context

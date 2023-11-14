@@ -11,9 +11,7 @@ DATABASES = {
         "PASSWORD": config("DB_PASSWORD", cast=str),
         "HOST": config("DB_HOST", cast=str),
         "PORT": config("DB_PORT", cast=str),
-        "OPTIONS": {
-            "client_encoding": config("DB_CLIENT_ENCODING", cast=str),
-        },
+        "OPTIONS": {"client_encoding": config("DB_CLIENT_ENCODING", cast=str)},
     }
 }
 

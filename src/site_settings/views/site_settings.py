@@ -18,8 +18,8 @@ from site_settings.models import SiteSettings
 
 
 class SiteSettingsFormView(
-    BWLoginRequiredMixin,
     PermissionRequiredMixin,
+    BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
     UpdateView,

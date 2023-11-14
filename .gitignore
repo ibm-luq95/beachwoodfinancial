@@ -559,7 +559,8 @@ src/frontend/package-lock.json
 !**/migrations/__init__.py
 # Custom migration files
 **.pyc
-!src/reports/migrations/**
+src/reports/migrations/**
+!src/reports/migrations/0001_create_client_jobs_db_view.py
 poetry.lock
 testing_sicripts
 src/local_dev.sqlite3

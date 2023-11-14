@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+import sys
 from pathlib import Path
 from decouple import Config, RepositoryEnv, Csv
 from django.contrib.messages import constants as messages
@@ -114,6 +115,7 @@ UI_COMPONENTS_TEMPLATETAGS = [
     "bw_ui_components.templatetags.inputs._method",
     "bw_ui_components.templatetags.elements.anchor",
     "bw_ui_components.templatetags.elements.date",
+    "bw_ui_components.templatetags.elements.blockquote",
     "bw_ui_components.templatetags.elements.icon",
     "bw_ui_components.templatetags.elements.js_modal",
     "bw_ui_components.templatetags.elements.create_btn_js_modal",
@@ -138,6 +140,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 # "django.template.context_processors.i18n",
                 "site_settings.context_processors.site_settings.return_site_settings_context",
+                "site_settings.context_processors.section_descriptions.return_section_description_context",
                 "core.context_processors.access_constants",
                 "core.context_processors.access_css_classes_constants",
                 "core.context_processors.access_constants_as_group",

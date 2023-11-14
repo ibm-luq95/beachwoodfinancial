@@ -19,10 +19,13 @@ from client_account.forms import ClientAccountForm
 from core.cache import BWCacheViewMixin
 from core.config.forms import BWFormRenderer
 from core.constants import LIST_VIEW_PAGINATE_BY
+from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
+from core.constants.identity import BWIdentity
 from core.constants.status_labels import CON_ENABLED
 from core.constants.users import CON_BOOKKEEPER
 from core.utils import debugging_print
 from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
+from core.views.mixins.base_list_view import BWSectionDescriptionHelperMixin
 from document.forms import DocumentForm
 
 # from documents.forms import DocumentForm
@@ -75,6 +78,14 @@ class ClientListView(
         context.setdefault("base_url_name", "dashboard:client")
         context.setdefault("empty_label", _("client"))
         context.setdefault("extra_context", {"is_show_bookkeeper": True})
+        context.setdefault("show_info_icon", True)
+        context.setdefault(
+            "info_details",
+            {
+                "tooltip_txt": BW_INFO_MODAL_CSS_CLASSES.get("client").get("tooltip_txt"),
+                "modal_css_id": BW_INFO_MODAL_CSS_CLASSES.get("client").get("cssID"),
+            },
+        )
 
         # debugging_print(self.filterset.form["name"])
         return context
@@ -167,7 +178,11 @@ class ClientDeleteView(
 
 
 class ClientDetailsView(
-    PermissionRequiredMixin, BWLoginRequiredMixin, BWCacheViewMixin, DetailView
+    PermissionRequiredMixin,
+    BWLoginRequiredMixin,
+    BWCacheViewMixin,
+    BWSectionDescriptionHelperMixin,
+    DetailView,
 ):
     template_name = "client/details.html"
     model = ClientProxy
@@ -178,7 +193,7 @@ class ClientDetailsView(
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context.setdefault("title", _("Client details"))
+        context.setdefault("title", _(f"Client - {self.get_object().name}"))
         job_form = JobMiniForm(initial={"client": self.get_object().pk})
         important_contact_form = ImportantContactForm(
             initial={"client": self.get_object()}, renderer=BWFormRenderer()

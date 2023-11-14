@@ -1,127 +1,78 @@
 # -*- coding: utf-8 -*-#
-from django.contrib.sites.models import Site
-from django.core import serializers
-import traceback
-from collections import defaultdict
 from typing import Optional
+
 import click
-
+from django.core.paginator import Paginator
 from django.db import transaction
-from django.db.models import QuerySet
-from django.conf import settings
+from django.db.models import Q
+from django.utils.translation import gettext as _
+import random
 
+from client.models.helpers.map_helper import ClientDetailsMap
 from client.models.querysets.types import ClientJobsFilterTypes
-from core.cache import BWCacheHandler
 from core.models.querysets import BaseQuerySetMixin
-from core.utils import debugging_print, colored_output_with_logging, get_months_abbr
-from core.utils.developments import bw_log, bw_custom_logger
+from core.utils import bw_log
+from core.utils import debugging_print
 from reports.models import ClientJobsReportsDBView
-import calendar
-
-
-class ClientDetailsMap:
-    ALL_YEARS: Optional[set] = None
-    ALL_VIEWS_QS: Optional[QuerySet] = None
-    ALL_DB_VIEWS_JOBS: Optional[QuerySet] = None
-
-    def __init__(self, client):
-        self.client = client
-
-    def __repr__(self):
-        return f"Client: {self.client.name}, Years: {self.ALL_YEARS}"
-
-    def organize_jobs_by_years(self) -> list | None:
-        try:
-            if self.ALL_VIEWS_QS is not None:
-                data_list = list()
-
-                if self.ALL_YEARS is not None:
-                    years_dict = defaultdict(dict)
-                    for year in self.ALL_YEARS:
-                        if year not in years_dict.keys():
-                            years_dict[year].update(
-                                {
-                                    "jobs": self.ALL_VIEWS_QS.select_related().filter(
-                                        job_year=year
-                                    )
-                                }
-                            )
-                    data_list.append({"client": self.client, "years_dict": years_dict})
-                    return data_list
-                else:
-                    return None
-            else:
-                return None
-        except Exception as ex:
-            bw_log().print_exception(suppress=[click], show_locals=True)
-
-    def organize_jobs_by_months(self) -> list | None:
-        try:
-            years_jobs = self.organize_jobs_by_years()
-            # debugging_print(years_jobs)
-            # return []
-            months_list = get_months_abbr(return_months_idxs=True)
-            if years_jobs is not None:
-                full_years_data_list = list()
-                months_data = dict()
-                for item in years_jobs:
-                    tmp_data = dict()
-                    client = item.get("client")
-                    tmp_data.update({"client": client})
-                    client_years_dict = item.get("years_dict")
-                    org_years = dict()
-
-                    for year, jobs in client_years_dict.items():
-                        jobs_data = jobs.get("jobs")
-                        if jobs_data:
-                            # for month in months_list:
-                            for job_view_row in jobs_data:
-                                job_dict = job_view_row.get_instance_as_dict
-                                if job_dict.get("job_month") in months_list:
-                                    org_years[calendar.month_abbr[job_dict.get("job_month")]] = list()
-                                    org_years[calendar.month_abbr[job_dict.get("job_month")]].append(job_dict)
-                                else:
-                                    org_years[calendar.month_abbr[job_dict.get("job_month")]] = None
-                                tmp_data.update({"jobs_months": org_years})
-                    full_years_data_list.append(tmp_data)
-                debugging_print(full_years_data_list)
-                return full_years_data_list
-                # return []
-            else:
-                return None
-        except Exception as ex:
-            bw_log().print_exception(suppress=[click], show_locals=False)
 
 
 class ClientReportsQuerySet(BaseQuerySetMixin):
     def get_all_jobs_as_list(
-        self, filter_params: Optional[ClientJobsFilterTypes] = None
-    ) -> defaultdict:
+        self,
+        filter_params: Optional[ClientJobsFilterTypes] = None,
+        page: Optional[int] = None,
+    ) -> dict:
         from client.models.client_proxy import ClientProxy
 
         with transaction.atomic():
-            year_clients = defaultdict(set)
-            data = defaultdict(list)
             data_list = list()
-            months_data = defaultdict(list)
-            full_data = defaultdict(defaultdict)
-            months_list = get_months_abbr(return_months_idxs=True)
             years_list = set()
+            created_year = filter_params.get("created_year")
+            clients_pks = filter_params.get("clients")
+            client_categories = filter_params.get("categories")
+            job_categories = filter_params.get("job_categories")
+            job_status = filter_params.get("job_status")
+            job_type = filter_params.get("job_type")
+            job_stats = filter_params.get("job_stats")
+            jobs_managed_by = filter_params.get("managed_by")
+            # debugging_print(filter_params)
+            clients_q = Q()
+            if client_categories is not None:
+                clients_q &= Q(categories__in=client_categories)
+            if clients_pks is not None:
+                clients_q &= Q(pk__in=clients_pks)
+            if job_categories is not None:
+                clients_q &= Q(jobs__categories__in=job_categories)
+            if job_stats is not None:
+                clients_q &= Q(jobs__stats__in=job_stats)
+            if job_type is not None:
+                clients_q &= Q(jobs__type__in=job_type)
+            if job_status is not None:
+                clients_q &= Q(jobs__status__in=job_status)
+            if jobs_managed_by is not None:
+                clients_q &= Q(jobs__managed_by__in=jobs_managed_by)
 
             try:
                 reports = ClientJobsReportsDBView.objects.select_related().all()
                 for r in reports:
                     years_list.add(r.job_year)
-                details_dict = list()
-                data2 = defaultdict(dict)
-                bw_log().log(years_list)
-                clients = ClientProxy.objects.select_related().all()
-                bw_log().log(clients.count())
-                for client in clients:
+                details_dict = dict()
+                # bw_log().log(years_list)
+                clients = ClientProxy.objects.select_related().filter(clients_q)
+                # debugging_print(len(clients))
+                # debugging_print(clients.first().jobs.all())
+                details_dict.setdefault("total_rows_count", len(clients))
+                page_object = Paginator(clients, 5)
+                details_dict.setdefault("page_obj", page_object.get_page(page))
+                # debugging_print(clients.page(1).object_list)
+                for client in page_object.page(page).object_list:
+                    q_objects = Q(client_id=client.pk)
+                    if created_year is not None and created_year != _(
+                        "all"
+                    ):  # it should be letter case
+                        q_objects &= Q(job_year=created_year)
                     client_view_results = (
-                        ClientJobsReportsDBView.objects.select_related().filter(
-                            client_id=client.pk
-                        )
+                        ClientJobsReportsDBView.objects.select_related().filter(q_objects)
                     )
                     client_details_map = ClientDetailsMap(client)
                     client_details_map.ALL_VIEWS_QS = client_view_results
@@ -139,16 +90,24 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
                 # BWCacheHandler.set_item(
                 #     site_object.domain, "clients_job_reports", data_list
                 # )
-                debugging_print(
-                    "######################################################################"
-                )
-                data_list[0].organize_jobs_by_months()
-                data_list[3].organize_jobs_by_months()
-                debugging_print(
-                    "######################################################################"
-                )
+                # debugging_print(
+                #     "######################################################################"
+                # )
+                # debugging_print(data_list[0].organize_jobs_by_years())
+                # debugging_print(data_list[0].organize_jobs_by_months())
+                # debugging_print(data_list[0].organize_jobs_years_months())
+
+                # for kk in data_list[:5]:
+                # kk.organize_jobs_years_months(is_all_years=False)
+                # kk.organize_jobs_years_months(is_all_years=True)
+                #     debugging_print("*************************************************")
+                # # data_list[3].organize_jobs_by_months()
+                # debugging_print(
+                #     "######################################################################"
+                # )
                 # debugging_print()
-                return data_list
+                details_dict.setdefault("object_list", data_list)
+                return details_dict
             except Exception as e:
                 bw_log().print_exception(suppress=[click], show_locals=False)
                 # colored_output_with_logging(

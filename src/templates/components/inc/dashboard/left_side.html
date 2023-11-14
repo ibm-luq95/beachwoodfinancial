@@ -729,9 +729,16 @@
                         {% endif %}
                         <li>
                             <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                               href="javascript:;">
+                               href="{% url 'dashboard:special_assignment:requested' %}">
                                 <i class="fa-solid fa-person-circle-question"></i>
                                 {% translate "Requested assignments" %}
+                            </a>
+                        </li>
+                        <li>
+                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
+                               href="{% url 'dashboard:discussion:list' %}">
+                                <i class="fa-solid fa-comments"></i>
+                                {% translate "Discussions" %}
                             </a>
                         </li>
                     </ul>
@@ -907,6 +914,15 @@
                                     {% translate "Configurations" %}
                                 </a>
                             </li>
+                            {% if request.user.is_superuser is True and request.user.user_genre == "developer" %} 
+                            <li>
+                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
+                                   href="{% url 'dashboard:site_settings:section_description:list' %}">
+                                    <i class="fa-solid fa-gears"></i>
+                                    {% translate "Section descriptions" %}
+                                </a>
+                            </li>
+                            {% endif %}
                             <li>
                                 <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
                                    href="javascript:;">

@@ -13,6 +13,7 @@ from bookkeeper.forms import BookkeeperForm
 from bookkeeper.models import BookkeeperProxy
 from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
+from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.utils import debugging_print
 from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 
@@ -56,6 +57,18 @@ class BookkeeperListView(
         context.setdefault("base_url_name", "dashboard:management_bookkeeper")
         context.setdefault("empty_label", _("bookkeepers"))
         context.setdefault("extra_context", {})
+        context.setdefault("show_info_icon", True)
+        context.setdefault(
+            "info_details",
+            {
+                "tooltip_txt": BW_INFO_MODAL_CSS_CLASSES.get("bookkeeper").get(
+                    "tooltip_txt"
+                ),
+                "modal_css_id": BW_INFO_MODAL_CSS_CLASSES.get("bookkeeper").get(
+                    "cssID"
+                ),
+            },
+        )
 
         # debugging_print(self.filterset.form["name"])
         return context
