@@ -74,5 +74,6 @@
   // ],
   "typescript.tsdk": "./src/frontend/node_modules/typescript/lib",
   "stylelint.configFile": "${workspaceFolder}/.stylelintrc.json",
-  "stylelint.configBasedir": "./src/frontend/node_modules"
+  "stylelint.configBasedir": "./src/frontend/node_modules",
+  "tailwind-fold.autoFold": false
 }

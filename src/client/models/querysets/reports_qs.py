@@ -13,7 +13,7 @@ from client.models.querysets.types import ClientJobsFilterTypes
 from core.models.querysets import BaseQuerySetMixin
 from core.utils import bw_log
 from core.utils import debugging_print
-from reports.models import ClientJobsReportsDBViewProxy
+from reports.models import ClientJobsReportsDBView
 
 
 class ClientReportsQuerySet(BaseQuerySetMixin):
@@ -53,7 +53,7 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
                 clients_q &= Q(jobs__managed_by__in=jobs_managed_by)
 
             try:
-                reports = ClientJobsReportsDBViewProxy.objects.select_related().all()
+                reports = ClientJobsReportsDBView.objects.select_related().all()
                 for r in reports:
                     years_list.add(r.job_year)
                 details_dict = dict()
@@ -72,9 +72,7 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
                     ):  # it should be letter case
                         q_objects &= Q(job_year=created_year)
                     client_view_results = (
-                        ClientJobsReportsDBViewProxy.objects.select_related().filter(
-                            q_objects
-                        )
+                        ClientJobsReportsDBView.objects.select_related().filter(q_objects)
                     )
                     client_details_map = ClientDetailsMap(client)
                     client_details_map.ALL_VIEWS_QS = client_view_results

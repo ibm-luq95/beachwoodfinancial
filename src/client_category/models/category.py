@@ -7,4 +7,4 @@ from core.models.mixins import BaseModelMixin, StrModelMixin, GeneralStatusField
 
 
 class ClientCategory(BaseModelMixin, GeneralStatusFieldMixin, StrModelMixin):
-    name = models.CharField(_("name"), max_length=50, db_index=True)
+    name = models.CharField(_("name"), max_length=50, db_index=True, unique=True)
