@@ -97,7 +97,7 @@
     "i18next": "^23.7.6",
     "pinia": "^2.1.7",
     "preline": "^2.0.0",
-    "sweetalert2": "^11.9.1",
+    "sweetalert2": "^11.10.0",
     "table-sort-js": "^1.18.1",
     "uuid": "^9.0.1",
     "validator": "^13.11.0",
