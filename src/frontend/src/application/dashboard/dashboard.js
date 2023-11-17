@@ -56,41 +56,47 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
             // console.log(chartLoader);
             // console.log(jobChartWrapper);
             chartLoader.classList.add("hidden");
-            jobChartWrapper.classList.remove("hidden");
+            const emptyJobsCard = document.querySelector("#emptyJobsCard");
+
             const jobsChart = document.querySelector("canvas#jobsChart");
-            if (jobsChart) {
-              const chart = new Chart(jobsChart, {
-                type: "doughnut",
+            if (newData["jobs_count"] > 0) {
+              jobChartWrapper.classList.remove("hidden");
+              if (jobsChart) {
+                const chart = new Chart(jobsChart, {
+                  type: "doughnut",
 
-                data: {
-                  labels: ["Past due", "Completed", "In progress"],
-                  datasets: [
-                    {
-                      backgroundColor: ["#EF4444", "#22C55E", "#EAB308"],
-                      data: [
-                        newData["jobs_statistics"]["past_due_jobs_count"],
-                        newData["jobs_statistics"]["completed_jobs_count"],
-                        newData["jobs_statistics"]["in_progress_jobs_count"],
-                      ],
-                    },
-                  ],
-                },
-                options: {
-                  maintainAspectRation: true,
-                  responsive: true,
-                  aspectRatio: 2,
+                  data: {
+                    labels: ["Past due", "Completed", "In progress"],
+                    datasets: [
+                      {
+                        backgroundColor: ["#EF4444", "#22C55E", "#EAB308"],
+                        data: [
+                          newData["jobs_statistics"]["past_due_jobs_count"],
+                          newData["jobs_statistics"]["completed_jobs_count"],
+                          newData["jobs_statistics"]["in_progress_jobs_count"],
+                        ],
+                      },
+                    ],
+                  },
+                  options: {
+                    maintainAspectRation: true,
+                    responsive: true,
+                    aspectRatio: 2,
 
-                  plugins: {
-                    title: {
-                      display: true,
-                      text: "Jobs",
-                    },
-                    legend: {
-                      display: false,
+                    plugins: {
+                      title: {
+                        display: true,
+                        text: "Jobs",
+                      },
+                      legend: {
+                        display: false,
+                      },
                     },
                   },
-                },
-              });
+                });
+              }
+            } else {
+              emptyJobsCard.classList.remove("hidden");
             }
           })
           .catch((error) => {

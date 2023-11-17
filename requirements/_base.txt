@@ -23,7 +23,7 @@ mysql-connector-python
 mysqlclient
 Pillow
 prettytable
-psycopg2-binary
+psycopg[binary]
 pyminizip
 python-decouple
 python-magic
