@@ -41,6 +41,7 @@ DATABASES = {
         "PORT": config("DB_PORT", cast=str),
         "CONN_MAX_AGE": None,
         "OPTIONS": {"init_command": "SET default_storage_engine=INNODB"},
+        # "OPTIONS": {"client_encoding": config("DB_CLIENT_ENCODING", cast=str), "server_side_binding": True},
     }
 }
 # check if the code run locally or on the host
@@ -101,7 +102,6 @@ SILKY_AUTHENTICATION = True  # User must login
 SILKY_AUTHORISATION = True  # User must have permissions
 SILKY_PYTHON_PROFILER_EXTENDED_FILE_NAME = True
 SILKY_PYTHON_PROFILER_RESULT_PATH = BASE_DIR / "media" / "profiles"
-
 
 # Logging configs
 # LOGGING = {
