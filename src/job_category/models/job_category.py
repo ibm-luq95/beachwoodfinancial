@@ -6,7 +6,7 @@ from core.models.mixins import BaseModelMixin, StrModelMixin
 
 
 class JobCategory(BaseModelMixin, StrModelMixin):
-    name = models.CharField(_("name"), max_length=20, db_index=True)
+    name = models.CharField(_("name"), max_length=60, db_index=True)
 
     # class Meta(BaseModelMixin.Meta):
     #     constraints = [
