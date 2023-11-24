@@ -76,6 +76,16 @@
         <th scope="col" class="px-6 py-3 text-left">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                    {% translate "Status" %}
+                </span>
+
+                {% include "bw_components/global/table_list/sort_icon.html" %}
+
+            </div>
+        </th>
+        <th scope="col" class="px-6 py-3 text-left">
+            <div class="flex items-center gap-x-2">
+                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                     {% translate "Active" %}
                 </span>
 
@@ -154,6 +164,21 @@
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
                     <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.get_assistant_type_display }}</span>
+                </div>
+            </td>
+            <td class="h-px w-px whitespace-nowrap">
+                <div class="px-6 py-3">
+                    {% if object.user.status == CON_PENDING %}
+                        <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-yellow-200 shadow-sm  bg-yellow-100 text-yellow-800 dark:bg-yellow-800/30 dark:text-yellow-500">{{ object.user.get_status_display }}</span>
+                    {% elif object.user.status == CON_ENABLED %}
+                        <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-green-200 shadow-sm  bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-500">{{ object.user.get_status_display }}</span>
+                    {% elif object.user.status == CON_CANCELED %}
+                        <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-red-200 shadow-sm  bg-red-100 text-red-800 dark:bg-red-800/30 dark:text-red-500">{{ object.user.get_status_display }}</span>
+                    {% elif object.user.status == CON_DISABLED %}
+                        <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-gray-500 text-white">{{ object.user.get_status_display }}</span>
+                    {% elif object.user.status == CON_ARCHIVED %}
+                        <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">{{ object.user.get_status_display }}</span>
+                    {% endif %}
                 </div>
             </td>
             <td class="h-px w-px whitespace-nowrap">
