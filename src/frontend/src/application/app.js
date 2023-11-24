@@ -2,14 +2,15 @@
 
 import "../styles/index.scss";
 import "../styles/dashboard.scss";
-import "preline";
+// import "preline";
+import "../../node_modules/preline/dist/preline.js";
 // import "../styles/tinymce.scss";
 // import * as editor from "../utils/rich_editor.js";
 import "../utils/rich_editor.js";
 import "animate.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";
-import hljs from 'highlight.js';
+import hljs from "highlight.js";
 
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // import "css.gg/icons/all.css";
@@ -78,7 +79,6 @@ window.document.addEventListener("DOMContentLoaded", function () {
       window.history.back();
     });
   }
-
 
   // Modal Events
   /* const mo = document.querySelector("#hs-static-backdrop-modal");
