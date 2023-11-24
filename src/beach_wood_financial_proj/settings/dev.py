@@ -1,5 +1,4 @@
 import mimetypes
-import os
 
 from .base import *
 
