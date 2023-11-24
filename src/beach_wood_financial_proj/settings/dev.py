@@ -46,7 +46,8 @@ DATABASES = {
 }
 # check if the code run locally or on the host
 if config("WHEREAMI", cast=str) == "LOCAL":
-    DATABASES["default"]["OPTIONS"].update({"read_default_file": "/opt/lampp/etc/my.cnf"})
+    # DATABASES["default"]["OPTIONS"].update({"read_default_file": "/opt/lampp/etc/my.cnf"})
+    DATABASES["default"]["OPTIONS"].update({"read_default_file": "/etc/my.cnf"})
 
 TEMPLATES[0]["OPTIONS"]["builtins"].extend(
     ["debugtools.templatetags.debugtools_tags", "core.templatetags.development_tags"]
