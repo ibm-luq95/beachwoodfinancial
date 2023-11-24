@@ -34,4 +34,5 @@ requests
 pandas
 numpy
 stringcase
+sentry-sdk[django]
 Whitenoise
