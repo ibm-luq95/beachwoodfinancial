@@ -1,27 +1,56 @@
-// "use strict";
+"use strict";
 
-// document.addEventListener("DOMContentLoaded", (readyEvent) => {
-//   const clientDetailsDropdownItems = document.querySelectorAll(
-//     "a.client-details-dropdown-item",
-//   );
+import { UploadFileRequest } from "../../utils/apis/upload_file";
+import { CSRFINPUTNAME, SUCCESSTIMEOUTSECS } from "../../utils/constants";
+import {
+  disableAndEnableFieldsetItems,
+  formInputSerializer,
+} from "../../utils/form_helpers";
+import { showToastNotification } from "../../utils/toasts";
 
-//   if (clientDetailsDropdownItems.length > 0) {
-//     clientDetailsDropdownItems.forEach((item) => {
-//       item.addEventListener("click", (event) => {
-//         const currentTarget = event.currentTarget;
-//         const modalName = currentTarget.dataset["modalName"];
-//         const $jobModal = document.querySelector("#createJobModal");
-//         switch (modalName) {
-//           case "job":
-//             console.warn("Open job modal");
-//             console.log($jobModal);
-//             window.HSOverlay.open($jobModal);
-//             break;
-
-//           default:
-//             break;
-//         }
-//       });
-//     });
-//   }
-// });
+document.addEventListener("DOMContentLoaded", (readyEvent) => {
+  const updateClientForm = document.querySelector("form#updateClientForm");
+  if (updateClientForm) {
+    updateClientForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const currentTarget = event.currentTarget;
+      const fieldset = currentTarget.querySelector("fieldset");
+      const formInputs = formInputSerializer({
+        formElement: currentTarget,
+        excludedFields: ["_method", "company_logo"],
+        returnAsFormData: true,
+        filesArray: ["company_logo"],
+      });
+      disableAndEnableFieldsetItems({
+        formElement: updateClientForm,
+        state: "disable",
+      });
+      const uploadRequest = new UploadFileRequest(
+        currentTarget.action,
+        formInputs,
+        currentTarget.elements[CSRFINPUTNAME].value,
+        currentTarget["_method"].value.toUpperCase(),
+        false,
+      );
+      const request = uploadRequest.sendRequest();
+      request
+        .then((data) => {
+          console.log(data);
+          showToastNotification(`Client updated successfully!`, "success");
+          setTimeout(() => {
+            window.location.reload();
+          }, SUCCESSTIMEOUTSECS);
+        })
+        .catch((error) => {
+          console.error(error);
+          showToastNotification("Error update client!", "error");
+        })
+        .finally(() => {
+          disableAndEnableFieldsetItems({
+            formElement: updateClientForm,
+            state: "enable",
+          });
+        });
+    });
+  }
+});
