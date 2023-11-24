@@ -13,9 +13,9 @@
         {% component "bw_filter_form" filter_form=filter_form filter_cancel_url=filter_cancel_url %}
     {% endif %}
     {# End Filter Form #}
-    {% if object_list %}
+    {% if object_list or page_obj %}
         <!-- Table Section -->
-        {% include component_path with is_checkbox_enabled=is_checkbox_enabled is_show_created_at=is_show_created_at header_title=table_header_title header_subtitle=table_header_subtitle app_label=app_label page_obj=page_obj pagination_list_url_name=pagination_list_url_name is_filters_enabled=is_filters_enabled is_actions_menu_enabled=is_actions_menu_enabled actions_items=actions_items actions_app_name=app_label actions_base_url=actions_base_url base_url_name=base_url_name object_list=object_list is_header_enabled=is_header_enabled is_footer_enabled=is_footer_enabled extra_context=extra_context %}
+        {% include component_path with is_checkbox_enabled=is_checkbox_enabled is_show_created_at=is_show_created_at header_title=table_header_title header_subtitle=table_header_subtitle app_label=app_label page_obj=page_obj pagination_list_url_name=pagination_list_url_name is_filters_enabled=is_filters_enabled is_actions_menu_enabled=is_actions_menu_enabled actions_items=actions_items actions_app_name=app_label actions_base_url=actions_base_url base_url_name=base_url_name object_list=object_list is_header_enabled=is_header_enabled is_footer_enabled=is_footer_enabled extra_context=extra_context page_obj=page_obj %}
 
         <!-- End Table Section -->
     {% else %}
