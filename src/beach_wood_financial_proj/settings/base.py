@@ -13,6 +13,8 @@ import sys
 from pathlib import Path
 from decouple import Config, RepositoryEnv, Csv
 from django.contrib.messages import constants as messages
+import sentry_sdk
+from sentry_sdk.integrations.django import DjangoIntegration
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent  # Default BASE_DIR
@@ -311,7 +313,10 @@ ENCRYPT_KEY = bytes(config("ENCRYPT_KEY", cast=str), "ascii")
 # Webpack configs
 WEBPACK_LOADER = {
     # 'MANIFEST_FILE': BASE_DIR / "frontend/build/manifest.json",
-    "MANIFEST_FILE": BASE_DIR / "frontend" / "build" / "manifest.json"
+    "MANIFEST_FILE": BASE_DIR
+    / "frontend"
+    / "build"
+    / "manifest.json"
 }
 
 # Django log viewer package config
@@ -485,3 +490,20 @@ LOGGING = {
 
 SESSION_TIMEOUT_REDIRECT = "/auth/login"
 ANONYMOUS_USER_NAME = None
+
+# SENTRY configs
+if config("SENTRY_IS_ENABLED", cast=bool) is True:
+    sentry_sdk.init(
+        dsn=config("SENTRY_SDK_DSN", cast=str),
+        integrations=[DjangoIntegration()],
+        # Set traces_sample_rate to 1.0 to capture 100%
+        # of transactions for performance monitoring.
+        traces_sample_rate=1.0,
+        # Set profiles_sample_rate to 1.0 to profile 100%
+        # of sampled transactions.
+        # We recommend adjusting this value in production.
+        profiles_sample_rate=1.0,
+        environment="dev",
+        send_default_pii=True,
+        # debug=True
+    )
