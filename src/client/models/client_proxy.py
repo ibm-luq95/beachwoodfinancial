@@ -11,6 +11,7 @@ from core.constants.status_labels import (
     CON_ENABLED,
     CON_NOT_STARTED,
     CON_PAST_DUE,
+    CON_DRAFT,
 )
 from core.models.querysets import BaseQuerySetMixin
 
@@ -20,6 +21,14 @@ class ClientProxy(Client):
 
     class Meta(Client.Meta):
         proxy = True
+
+    def active_jobs(self) -> BaseQuerySetMixin | None:
+        if hasattr(self, "jobs"):
+            return self.jobs.filter(
+                ~Q(status__in=[CON_ARCHIVED, CON_COMPLETED, CON_DRAFT])
+            ).order_by("created_at")
+        else:
+            return None
 
     def get_managed_bookkeepers(self) -> set | None:
         all_bookkeepers = []
