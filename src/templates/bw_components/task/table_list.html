@@ -181,7 +181,7 @@
             {% if extra_context.is_show_type_column is True or is_show_type_column is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     <div class="px-6 py-3">
-                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.get_task_type_display }}</span>
+                        <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">{{ object.get_task_type_display }}</span>
                     </div>
                 </td>
             {% endif %}

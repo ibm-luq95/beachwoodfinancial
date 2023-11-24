@@ -10,6 +10,7 @@ from core.choices import (
     BeachWoodUserStatusEnum,
     BeachWoodUserTypesEnum,
 )
+from core.constants.users import CON_BOOKKEEPER, CON_MANAGER
 from core.models.mixins import BaseModelMixin
 from core.utils import get_formatted_logger
 from .manager import BeachWoodUserManager

@@ -8,7 +8,7 @@ from django.dispatch import receiver
 
 from assistant.models import AssistantProxy
 from core.constants.users import ASSISTANT_FULL_MANAGER_PERMISSION_SHORT_NAME
-from core.utils import get_formatted_logger, colored_output_with_logging, debugging_print
+from core.utils import get_formatted_logger, colored_output_with_logging
 
 # TODO: remove the custom logger before push (only for development)
 # ###### [Custom Logger] #########
@@ -24,7 +24,7 @@ def assign_manager_permission(sender, instance: AssistantProxy, created: bool, *
             manager_perm = Permission.objects.get(
                 codename=ASSISTANT_FULL_MANAGER_PERMISSION_SHORT_NAME
             )
-            debugging_print(manager_perm)
+            # debugging_print(manager_perm)
             if instance.assistant_type == "admin":
                 instance.user.user_permissions.add(manager_perm)
 

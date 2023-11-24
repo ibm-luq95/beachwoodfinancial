@@ -31,7 +31,7 @@ class AccessProxyModelMixin(models.Model):
 
                 model = ClientProxy.objects.get(pk=self.pk)
             case "task":
-                from task.models.task_proxy import TaskProxy
+                from task.models.proxy_model import TaskProxy
 
                 model = TaskProxy.objects.get(pk=self.pk)
         return model

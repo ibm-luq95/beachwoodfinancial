@@ -78,12 +78,12 @@
                            href="javascript:;">{% translate "Document" %}</a>
                     </div>
                 </div>
-                {% bw_js_modal modal_css_id="update-client-modal" modal_size="sm" modal_title="Update client" is_submit_btn_enabled=True is_form_modal=True form_object=client_form is_upload_form=True form_id="updateClientForm" form_submit_text="Update" action_url="dashboard:client:api:client-api-router-detail" enable_hidden_method=True action_url_pk=object.pk form_method="post" %}
-                {% comment  %}
-                    <button class="py-2 px-3 flex items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800 ml-4" type="button" data-hs-overlay="#update-client-modal">
+                {% bw_js_modal modal_css_id="update-client-modal" modal_size="sm" modal_title="Update client" is_submit_btn_enabled=True is_form_modal=True form_object=client_form is_upload_form=True form_id="updateClientForm" form_submit_text="Update" action_url="dashboard:client:api:client-api-router-detail" enable_hidden_method=True action_url_pk=object.pk form_method="put" %}
+                <button class="py-2 px-3 flex items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800 ml-4"
+                        type="button"
+                        data-hs-overlay="#update-client-modal">
                     {% translate "Edit Client" %}
                 </button>
-                {% endcomment %}
             </div>
         </div>
     </div>
@@ -122,7 +122,13 @@
                         role="tab">
                     <i class="fa-solid fa-suitcase hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 w-3.5 h-3.5 text-gray-400 dark:text-gray-600"></i>
                     {% translate "Jobs" %}
-                    <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">{{ object.jobs.count }}</span>
+                    <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                        {% if object.active_jobs %}
+                            {{ object.active_jobs.count }}
+                        {% else %}
+                            0
+                        {% endif %}
+                    </span>
                 </button>
                 <button type="button"
                         class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-2 border-b-[3px] border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 flex-auto justify-center text-center font-medium dark:hover:text-gray-400"
@@ -352,9 +358,9 @@
                     {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt="What is jobs" modal_css_id="infoJobModal" %}
 
                 </div>
-                {% if object.jobs.all %}
+                {% if object.active_jobs %}
 
-                    {% include "bw_components/job/table_list.html" with is_checkbox_enabled=False is_show_create_btn=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Jobs" header_subtitle="" app_label="job" pagination_list_url_name="dashboard:job:list" is_actions_menu_enabled=False actions_items="show,update,delete" actions_app_name="job" actions_base_url="dashboard:job" base_url_name="dashboard:job" object_list=object.jobs.all is_show_client=False %}
+                    {% include "bw_components/job/table_list.html" with is_checkbox_enabled=False is_show_create_btn=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Jobs" header_subtitle="" app_label="job" pagination_list_url_name="dashboard:job:list" is_actions_menu_enabled=False actions_items="show,update,delete" actions_app_name="job" actions_base_url="dashboard:job" base_url_name="dashboard:job" object_list=object.active_jobs is_show_client=False %}
 
                 {% else %}
 

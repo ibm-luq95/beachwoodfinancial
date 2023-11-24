@@ -10,7 +10,9 @@
     <div class="grid grid-cols-3 gap-4">
         <div class="col-span-2 bg-slate-50 p-5 shadow-md rounded">
             {# Start Job Title #}
-            <h2 class="text-lg font-bold tracking-wider border-b border-slate-950 pb-2">{{ object.title|capfirst }}</h2>
+            <h2 class="text-lg font-bold tracking-wider border-b border-slate-950 pb-2">
+                {{ object.title|capfirst }}
+            </h2>
             {# End Job Title #}
             <div class="flex flex-col rounded-md p-3">
                 <!-- <span class="text-sm text-gray-500 dark:text-gray-400">Desciption :</span> -->
@@ -89,9 +91,7 @@
                         <span class="text-sm text-gray-500 dark:text-gray-400">{% translate "Notes:" %}</span>
                     </span>
                     <p class="mx-2 italic">
-                        <small>
-                            {{ object.note|safe }}
-                        </small>
+                        <small>{{ object.note|safe }}</small>
                     </p>
                 </div>
             </div>
@@ -267,7 +267,8 @@
                                     <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
                                           role="tooltip">{% translate "Update status" %}</span>
                                 </button>
-                                <button type="button" id="updateJobModalBtn"
+                                <button type="button"
+                                        id="updateJobModalBtn"
                                         class="{{ BW_FULL_INPUT_CSS_CLASSES }} hs-tooltip hs-tooltip-toggle py-3 px-4 inline-flex flex-shrink-0 justify-center items-center gap-2 rounded-r-md border border-transparent font-semibold bg-yellow-100 text-yellow-500 hover:text-white hover:bg-yellow-100 focus:outline-none focus:ring-2 ring-offset-white focus:ring-yellow-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                                         data-hs-overlay="#update-job-details-modal"
                                         disabled>
@@ -280,43 +281,56 @@
                     </form>
                 </div>
                 <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
-                    <div class="flex rounded-md shadow-sm">
-                        <div class="hs-tooltip px-4 inline-flex items-center min-w-fit rounded-l-md border border-r-0 border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
-                            <span class="hs-tooltip-toggle text-sm text-gray-500 dark:text-gray-400">
-                                <i class="fa-solid fa-user-circle fa-xl"></i>
-                            </span>
-                            <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
-                                  role="tooltip">{% translate "Managed by" %}</span>
-                        </div>
-                        <input type="text"
-                                   name="client_name"
-                                   id="client_name"
+                    <div>
+                        <div class="flex rounded-lg shadow-sm">
+                            <div class="hs-tooltip px-4 inline-flex items-center min-w-fit rounded-l-md border border-r-0 border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+                                <span class="hs-tooltip-toggle text-sm text-gray-500 dark:text-gray-400">
+                                    <i class="fa-solid fa-user-circle fa-xl"></i>
+                                </span>
+                                <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                      role="tooltip">{% translate "Managed by" %}</span>
+                            </div>
+                            <input type="text"
+                                   id="hs-search-box-with-loading-3"
+                                   name="hs-search-box-with-loading-3"
                                    class="{{ BW_FULL_INPUT_CSS_CLASSES }} py-3 px-4 pr-11 block w-full border-gray-200 shadow-sm rounded-r-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400 cursor-not-allowed"
                                    data-keep-disabled="true"
                                    value="{{ object.managed_by.fullname|safe }}"
                                    placeholder="{{ object.managed_by.fullname|safe }}"
-                                   readonly
-                                   disabled />
-                        {# {% bw_select options='{"one": "One", "tow": "tow", "three": "three"}' %} #}
+                                   disabled
+                                   readonly />
+                            <a href="{% url 'dashboard:staff:member-details' object.managed_by.pk %}"
+                               target="_blank"
+                               class="w-[2.875rem] h-[2.875rem] flex-shrink-0 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-e-md border border-transparent bg-blue-100 text-blue-500 hover:text-white hover:bg-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                            </a>
+                        </div>
                     </div>
                     <div class="mt-3">
-                        <div class="flex rounded-md shadow-sm">
-                            <div class="hs-tooltip px-4 inline-flex items-center min-w-fit rounded-l-md border border-r-0 border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
-                                <span class="hs-tooltip-toggle text-sm text-gray-500 dark:text-gray-400">
-                                    <i class="fa-solid fa-building fa-xl"></i>
-                                </span>
-                                <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
-                                      role="tooltip">{% translate "Client" %}</span>
+                        <div>
+                            <div class="flex rounded-lg shadow-sm">
+                                <div class="hs-tooltip px-4 inline-flex items-center min-w-fit rounded-l-md border border-r-0 border-gray-200 bg-gray-50 dark:bg-gray-700 dark:border-gray-600">
+                                    <span class="hs-tooltip-toggle text-sm text-gray-500 dark:text-gray-400">
+                                        <i class="fa-solid fa-building fa-xl"></i>
+                                    </span>
+                                    <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                          role="tooltip">{% translate "Client" %}</span>
+                                </div>
+                                <input type="text"
+                                       name="client_name"
+                                       id="client_name"
+                                       class="{{ BW_FULL_INPUT_CSS_CLASSES }} py-3 px-4 pr-11 block w-full border-gray-200 shadow-sm rounded-r-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
+                                       data-keep-disabled="true"
+                                       value="{{ object.client.name|safe }}"
+                                       placeholder="{{ object.client.name|safe }}"
+                                       readonly
+                                       disabled />
+                                <a href="{% url 'dashboard:client:details' object.client.pk %}"
+                                   target="_blank"
+                                   class="w-[2.875rem] h-[2.875rem] flex-shrink-0 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-e-md border border-transparent bg-blue-100 text-blue-500 hover:text-white hover:bg-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+                                </a>
                             </div>
-                            <input type="text"
-                                   name="client_name"
-                                   id="client_name"
-                                   class="{{ BW_FULL_INPUT_CSS_CLASSES }} py-3 px-4 pr-11 block w-full border-gray-200 shadow-sm rounded-r-md text-sm focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
-                                   data-keep-disabled="true"
-                                   value="{{ object.client.name|safe }}"
-                                   placeholder="{{ object.client.name|safe }}"
-                                   readonly
-                                   disabled />
                         </div>
                     </div>
                 </div>

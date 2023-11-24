@@ -4,6 +4,12 @@ const Path = require("path");
 const chalk = require("chalk");
 const pwd = process.env.PWD;
 const pwdParent = Path.dirname(pwd);
+const srcDir = Path.join(pwdParent, "src");
+const frontendDir = Path.join(srcDir, "frontend");
+
+console.log("#########################################################");
+console.warn(pwd);
+console.log("#########################################################");
 
 // We can add current project paths here
 const projectPaths = [

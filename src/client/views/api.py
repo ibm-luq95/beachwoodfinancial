@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-#
-from rest_framework import permissions
+from rest_framework import permissions, parsers
 from rest_framework.viewsets import ModelViewSet
 
 from client.models import ClientProxy
@@ -13,6 +13,6 @@ logger = get_formatted_logger()
 class ClientViewSet(ModelViewSet):
     serializer_class = ClientSerializer
     permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
-    # parser_classes = [parsers.FormParser, parsers.MultiPartParser]
+    parser_classes = [parsers.FormParser, parsers.MultiPartParser]
     perm_slug = "client.client"
     queryset = ClientProxy.objects.all()

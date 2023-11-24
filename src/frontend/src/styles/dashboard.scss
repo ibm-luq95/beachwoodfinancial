@@ -10,8 +10,7 @@
 
 div.scrollable-wrapper {
     height: 50px;
-    overflow-x: hidden;
-    overflow-y: auto;
+    overflow: auto;
 }
 
 .linkedin-social-icon-link {
@@ -83,7 +82,7 @@ div.scrollable-wrapper {
 }
 
 .selectbox-scrollable {
-    overflow-y: scroll;
+    overflow: scroll;
     position: absolute;
     padding: 0 7px 0 0;
     width: calc(100% + 17px);
