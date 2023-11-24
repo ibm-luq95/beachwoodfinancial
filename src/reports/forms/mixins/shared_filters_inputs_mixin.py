@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-#
+from django.utils import timezone
 from django.utils.translation import gettext as _
 
 from django import forms
@@ -25,7 +26,9 @@ class SharedFilterInputsMixin(forms.Form):
         required=False,
         choices=DateYearsFiltersEnum.choices,
         help_text=_("Creation year"),
+        initial=DateYearsFiltersEnum.Y2023,
     )
+
     # months = forms.ChoiceField(
     #     label=_("Months"),
     #     required=False,

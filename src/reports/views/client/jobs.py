@@ -79,17 +79,19 @@ class JobsReportView(
             form.serialize_inputs(), page
         )
         context.setdefault("object_list", object_list)
+        # form["created_year"].initial = timezone.now().year
+        created_year = form.serialize_inputs().get("created_year")
 
-        if form.serialize_inputs().get("created_year") is not None:
-            created_year = None
-            year = form.serialize_inputs().get("created_year")
-
-            if year != _("all"):
-                created_year = int(year)
-
-        else:
-            created_year = _("All")
-            # created_year = 2020
+        # if form.serialize_inputs().get("created_year") is not None:
+        #     created_year = None
+        #     year = form.serialize_inputs().get("created_year")
+        # 
+        #     if year != _("all"):
+        #         created_year = int(year)
+        # 
+        # else:
+        #     # created_year = _("All")
+        #     created_year = timezone.now().year
         context.setdefault("created_year", created_year)
 
         # debugging_print(self.filterset.form["name"])
