@@ -12,6 +12,7 @@ from beach_wood_user.helpers.permission_helper import PermissionHelper
 from beach_wood_user.models import Profile
 from beach_wood_user.models.beach_wood_user import BWUser
 from bookkeeper.models import BookkeeperProxy
+from core.constants.status_labels import CON_ENABLED
 from core.constants.users import (
     BOOKKEEPER_GROUP_NAME,
     MANAGER_GROUP_NAME,
@@ -88,6 +89,10 @@ def assign_groups(sender, instance: BWUser, created: bool, **kwargs):
                     as_list=True
                 )
                 created_user.user_permissions.add(*permissions_list)
+                if created_user.status == CON_ENABLED:
+                    created_user.is_active = True
+                else:
+                    created_user.is_active = False
                 created_user.save()
 
     except Exception as ex:
