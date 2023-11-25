@@ -105,7 +105,7 @@
             {% endif %}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
-                    <a href="{# {% url base_url_name|add:':details' object.client.pk %} #}">
+                    <a href="{% url 'dashboard:client:details' object.client.pk %}">
                         <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.client.name|bw_truncate_titles }}</span>
                     </a>
                     {% if object.client.categories.all %}
