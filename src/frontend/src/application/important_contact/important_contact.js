@@ -48,7 +48,11 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
           })
           .catch((error) => {
             console.error(error);
-            showToastNotification(`${error['errors'].toString()}`, "error");
+            showToastNotification(`${error["errors"].toString()}`, "error");
+            disableAndEnableFieldsetItems({
+              formElement: createImportantContactForm,
+              state: "enable",
+            });
           })
           .finally(() => {
             disableAndEnableFieldsetItems({
