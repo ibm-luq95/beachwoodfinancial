@@ -2,6 +2,8 @@
 
 import "../styles/index.scss";
 import "../styles/dashboard.scss";
+import "simplelightbox/dist/simple-lightbox.css";
+import SimpleLightbox from "simplelightbox";
 // import "preline";
 import "../../node_modules/preline/dist/preline.js";
 // import "../styles/tinymce.scss";
@@ -37,6 +39,10 @@ import { setFormInputsReadOnly } from "../utils/form_helpers";
 
 window.document.addEventListener("DOMContentLoaded", function () {
   hljs.highlightAll();
+  let gallery = new SimpleLightbox(".gallery a", {
+    overlayOpacity: 0.9,
+    download: true,
+  });
   const bwfInputs = document.querySelectorAll(".bw-input");
   const bwDisabledLinks = document.querySelectorAll("a.bw-disabled-anchor");
   const allDisabledCssClassed = ["disabled:opacity-75", "cursor-not-allowed"];
