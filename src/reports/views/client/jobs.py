@@ -85,10 +85,10 @@ class JobsReportView(
         # if form.serialize_inputs().get("created_year") is not None:
         #     created_year = None
         #     year = form.serialize_inputs().get("created_year")
-        # 
+        #
         #     if year != _("all"):
         #         created_year = int(year)
-        # 
+        #
         # else:
         #     # created_year = _("All")
         #     created_year = timezone.now().year

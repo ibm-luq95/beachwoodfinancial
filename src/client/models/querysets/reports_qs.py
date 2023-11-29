@@ -13,6 +13,7 @@ from client.models.querysets.types import ClientJobsFilterTypes
 from core.models.querysets import BaseQuerySetMixin
 from core.utils import bw_log
 from core.utils import debugging_print
+from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from reports.models import ClientJobsReportsDBView
 
 
@@ -51,6 +52,7 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
                 clients_q &= Q(jobs__status__in=job_status)
             if jobs_managed_by is not None:
                 clients_q &= Q(jobs__managed_by__in=jobs_managed_by)
+            # debugging_print(created_year.isdigit())
 
             try:
                 reports = ClientJobsReportsDBView.objects.select_related().all()
@@ -62,18 +64,17 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
                 # debugging_print(len(clients))
                 # debugging_print(clients.first().jobs.all())
                 details_dict.setdefault("total_rows_count", len(clients))
-                page_object = Paginator(clients, 5)
+                page_object = Paginator(clients, 10)
                 details_dict.setdefault("page_obj", page_object.get_page(page))
                 # debugging_print(clients.page(1).object_list)
                 for client in page_object.page(page).object_list:
                     q_objects = Q(client_id=client.pk)
-                    if created_year is not None and created_year != _(
-                        "all"
-                    ):  # it should be letter case
+                    if created_year is not None and created_year.isdigit() is True:  # it should be letter case
                         q_objects &= Q(job_year=created_year)
                     client_view_results = (
                         ClientJobsReportsDBView.objects.select_related().filter(q_objects)
                     )
+                    # debugging_print(str(client_view_results.count()))
                     client_details_map = ClientDetailsMap(client)
                     client_details_map.ALL_VIEWS_QS = client_view_results
                     years_set = set()

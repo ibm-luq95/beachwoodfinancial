@@ -34,6 +34,7 @@ class ClientJobsFilter(
         SetInitialFilterFormInputsMixin.__init__(self, request=request)
         self.fields["created_at"].help_text = _("Client created at")
         self.fields["created_at"].label = _("Client created at")
+        self.fields["created_year"].help_text = _("Job created year")
         self.fields.pop("quick_created_at")
         self.fields.pop("created_at")
 

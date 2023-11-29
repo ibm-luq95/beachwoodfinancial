@@ -113,7 +113,7 @@ class ClientDetailsMap:
                     if item.get("jobs_months") is not None:
                         for month_name, job_dicts in item.get("jobs_months").items():
                             # years_list.append(item)
-                            job_year = job_dicts.get("job_year")
+                            job_year = str(job_dicts.get("job_year"))
                             if job_year in years_dict.keys():
                                 years_dict[job_year].append(job_dicts)
                             else:

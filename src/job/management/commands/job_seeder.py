@@ -69,7 +69,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
                         "state": random.choice(JobStateEnum.choices)[0],
                         "status": random.choice(JobStatusEnum.choices)[0],
                         "created_at": faker.date_time_between_dates(
-                            datetime_start="-7y", datetime_end="-2y"
+                            datetime_start="-4y", datetime_end="now"
                         ),
                         "start_date": faker.date_between(
                             # start_date="-1y", end_date="today"
