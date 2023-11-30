@@ -12,7 +12,6 @@ from core.choices import JobStatusEnum, JobTypeEnum, JobStateEnum
 from core.models.mixins import BaseModelMixin, StartAndDueDateMixin, StrModelMixin
 from core.models.mixins.access_proxy_models_mixin import AccessProxyModelMixin
 from core.models.mixins.cron_column_mixin import CronColumnMixin
-from core.utils import debugging_print
 from django.core.exceptions import ValidationError
 
 from job_category.models import JobCategory
