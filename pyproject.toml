@@ -1,6 +1,8 @@
+[project]
+requires-python = ">=3.10"
 [tool.black]
 line-length = 91
-target-version = ['py311']
+target-version = ['py312']
 include = '\.pyi?$'
 exclude = '''
 /(
@@ -22,7 +24,7 @@ exclude = '''
 '''
 
 [tool.isort]
-py_version = 311
+py_version = 312
 profile = "django"
 known_django = "django"
 line_length = 91
@@ -45,15 +47,18 @@ format_css = true
 ignore = "H006"
 
 [tool.ruff]
+ignore-init-module-imports = true
+preview = true
 line-length = 91
 show-fixes = true
-target-version = "py311"
+target-version = "py312"
 indent-width = 4
 # Exclude a variety of commonly ignored directories.
 exclude = [
     ".bzr",
     ".direnv",
     ".eggs",
+    ".env",
     ".git",
     ".git-rewrite",
     ".hg",
@@ -90,6 +95,7 @@ line-ending = "auto"
 "**/{tests,docs,tools}/*" = ["E402"]
 
 [tool.ruff.lint]
+dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 # Enable Pyflakes (`F`) and a subset of the pycodestyle (`E`)  codes by default.
 # Unlike Flake8, Ruff doesn't enable pycodestyle warnings (`W`) or
 # McCabe complexity (`C901`) by default.
@@ -98,11 +104,11 @@ ignore = []
 
 
 # Allow fix for all enabled rules (when `--fix`) is provided.
-fixable = ["ALL"]
-unfixable = []
+#fixable = ["ALL"]
+#unfixable = []
 
 # Allow unused variables when underscore-prefixed.
-dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
+#dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 # select = [
 #     # pycodestyle
 #     "E",

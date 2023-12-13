@@ -8,10 +8,11 @@ from core.models.mixins import BaseModelMixin, StrModelMixin
 from core.models.mixins.access_proxy_models_mixin import AccessProxyModelMixin
 from core.models.mixins.cron_column_mixin import CronColumnMixin
 from job.models.job_proxy import JobProxy
+from task.models.base_abstract_task import BaseTaskModel
 
 
 # class Task(BaseModelMixin, StartAndDueDateMixin, StrModelMixin, CreatedByMixin):
-class Task(BaseModelMixin, AccessProxyModelMixin, CronColumnMixin, StrModelMixin):
+class Task(BaseTaskModel):
     """Tasks for every job
 
     Args:
@@ -30,40 +31,8 @@ class Task(BaseModelMixin, AccessProxyModelMixin, CronColumnMixin, StrModelMixin
         blank=True,
         db_index=True,
     )
-    title = models.CharField(_("title"), max_length=80, null=True)
-    task_type = models.CharField(
-        _("task type"),
-        max_length=15,
-        null=True,
-        blank=True,
-        choices=TaskTypeEnum.choices,
-        db_index=True,
-    )
-    status = models.CharField(
-        _("status"),
-        max_length=15,
-        null=True,
-        blank=True,
-        choices=TaskStatusEnum.choices,
-        default=TaskStatusEnum.NOT_STARTED,
-        db_index=True
-        # db_column="status"
-    )
-    is_completed = models.BooleanField(
-        _("is completed"), default=False, editable=False, db_index=True
-    )
-    hints = models.CharField(
-        _("hints"),
-        max_length=60,
-        null=True,
-        blank=True,
-        help_text=_("Hints help to this task"),
-    )
-    additional_notes = models.TextField(
-        _("additional notes"),
-        null=True,
-        blank=True,
-        help_text=_("Additional note for the task"),
-    )
 
-    # items = models.ManyToManyField(to=TaskItem, related_name="task", blank=True)
+    class Meta:
+        indexes = [
+            models.Index(name="task_job_idx", fields=["job"]),
+        ]

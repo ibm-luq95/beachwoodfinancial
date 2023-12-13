@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-import sys
 from pathlib import Path
 from decouple import Config, RepositoryEnv, Csv
 from django.contrib.messages import constants as messages
@@ -81,6 +80,12 @@ INSTALLED_APPS = [
     "special_assignment.apps.SpecialAssignmentConfig",
     "discussion.apps.DiscussionConfig",
     "reports.apps.ReportsConfig",
+    "job_template.apps.JobTemplateConfig",
+    "task_item.apps.TaskItemConfig",
+    "task_template.apps.TaskTemplateConfig",
+    "note_template.apps.NoteTemplateConfig",
+    "document_template.apps.DocumentTemplateConfig",
+    "special_assignment_template.apps.SpecialAssignmentTemplateConfig",
 ]
 
 MIDDLEWARE = [
@@ -313,10 +318,7 @@ ENCRYPT_KEY = bytes(config("ENCRYPT_KEY", cast=str), "ascii")
 # Webpack configs
 WEBPACK_LOADER = {
     # 'MANIFEST_FILE': BASE_DIR / "frontend/build/manifest.json",
-    "MANIFEST_FILE": BASE_DIR
-    / "frontend"
-    / "build"
-    / "manifest.json"
+    "MANIFEST_FILE": BASE_DIR / "frontend" / "build" / "manifest.json"
 }
 
 # Django log viewer package config
@@ -375,9 +377,9 @@ if config("IS_CACHE_ENABLED", cast=bool) is True:
     CACHE_MIDDLEWARE_KEY_PREFIX = config(
         "CACHE_MIDDLEWARE_KEY_PREFIX", cast=str
     )  # should be used if the cache is shared across multiple sites that
-    # use the
-    # same
-    # Django instance
+# use the
+# same
+# Django instance
 
 # LOGGING = {
 #     "version": 1,

@@ -13,8 +13,8 @@ class DateFiltersEnum(models.TextChoices):
     THIS_MONTH = "this_month", _("This month")
 
 
-class DateYearsFiltersEnum(models.TextChoices):
-    ALL = "all", _("All")
+class DateYearsFiltersEnum(models.IntegerChoices):
+    ALL = 0, _("All")
     Y2020 = 2020, _("2020")
     Y2021 = 2021, _("2021")
     Y2022 = 2022, _("2022")

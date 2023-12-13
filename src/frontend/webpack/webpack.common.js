@@ -29,7 +29,7 @@ module.exports = {
   plugins: [
     new Webpack.ProgressPlugin(),
     new Webpack.EnvironmentPlugin({
-      FETCHURLNAMEURL: "/core/api/fetch_url"
+      FETCHURLNAMEURL: "/core/api/fetch_url",
     }),
 
     /* new Webpack.ProvidePlugin({

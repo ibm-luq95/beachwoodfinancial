@@ -1,5 +1,6 @@
 const Path = require("path");
 const Webpack = require("webpack");
+const vuePlugin = require("esbuild-vue");
 const WebpackNotifierPlugin = require("webpack-notifier");
 const { merge } = require("webpack-merge");
 const StylelintPlugin = require("stylelint-webpack-plugin");
@@ -52,6 +53,7 @@ module.exports = merge(common, {
       extensions: "js",
       emitWarning: true,
       files: Path.resolve(__dirname, "../src"),
+      plugins: [vuePlugin()],
     }),
     new MiniCssExtractPlugin({
       filename: "css/[name].css",
