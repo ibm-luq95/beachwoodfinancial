@@ -48,7 +48,9 @@
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                     {% translate "Name" %}
                 </span>
+
                 {% include "bw_components/global/table_list/sort_icon.html" %}
+
             </div>
         </th>
         <th scope="col" class="px-6 py-3 text-left">
@@ -56,7 +58,9 @@
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                     {% translate "Clients" %}
                 </span>
+
                 {% include "bw_components/global/table_list/sort_icon.html" %}
+
             </div>
         </th>
         {% if is_show_created_at is True %}
@@ -65,7 +69,9 @@
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                         {% translate "Created" %}
                     </span>
+
                     {% include "bw_components/global/table_list/sort_icon.html" %}
+
                 </div>
             </th>
         {% endif %}
@@ -120,7 +126,7 @@
 {# End Table Body #}
 {# Start Table Results #}
 {% block results_block %}
-    {{ object_list.count }}
+    {{ object_list.count }}/{{ total_records }}
 {% endblock results_block %}
 {# End Table Results #}
 {# Start Table Pagination #}
