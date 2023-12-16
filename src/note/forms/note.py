@@ -29,6 +29,7 @@ class NoteForm(
         JoditFormMixin.__init__(self, add_jodit_css_class=add_jodit_css_class)
         SetFieldsInputsHiddenMixin.__init__(self, hidden_inputs=hidden_inputs)
         InitBookkeeperRelatedFieldsMixin.__init__(self, bookkeeper=bookkeeper)
+        
         if client is not None:
             self.fields["client"].initial = client
             self.fields.pop("task")
