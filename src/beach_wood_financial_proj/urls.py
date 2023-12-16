@@ -51,7 +51,7 @@ if settings.DEBUG:
     #     path("request-logs/", include("request_viewer.urls")),
     # )
     urlpatterns.append(path("admin/doc/", include("django.contrib.admindocs.urls")))
-    urlpatterns.append(path("silk/", include("silk.urls", namespace="silk")))
+    # urlpatterns.append(path("silk/", include("silk.urls", namespace="silk")))
     # urlpatterns.append(path("admin/", admin.site.urls))
 else:
     urlpatterns.append(path("secret/", admin.site.urls))
