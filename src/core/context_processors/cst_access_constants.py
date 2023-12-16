@@ -26,7 +26,7 @@ from core.constants.status_labels import (
     CON_STALLED,
     CON_ONGOING,
 )
-from core.constants.users import CON_BOOKKEEPER, CON_ASSISTANT, CON_MANAGER
+from core.constants.users import CON_BOOKKEEPER, CON_ASSISTANT, CON_MANAGER, CON_DEVELOPER, CON_USER
 
 
 def access_constants(request) -> dict:
@@ -54,6 +54,8 @@ def access_constants(request) -> dict:
         "CON_BOOKKEEPER": CON_BOOKKEEPER,
         "CON_ASSISTANT": CON_ASSISTANT,
         "CON_MANAGER": CON_MANAGER,
+        "CON_DEVELOPER": CON_DEVELOPER,
+        "CON_USER": CON_USER,
         "BW_INFO_MODAL_CSS_CLASSES": BW_INFO_MODAL_CSS_CLASSES,
         "DEFAULT_TEMPLATE_TABLE_LIST_TRUNCATED_STRING": (
             DEFAULT_TEMPLATE_TABLE_LIST_TRUNCATED_STRING
