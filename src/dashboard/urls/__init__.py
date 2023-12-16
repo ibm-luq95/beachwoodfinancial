@@ -31,4 +31,5 @@ urlpatterns = [
     path("management/manager/", include("manager.urls"), name="management_managers"),
     path("reports/", include("reports.urls"), name="reports"),
     path("staff/", include("beach_wood_user.urls.staff"), name="staff"),
+    path("archive/", include("archive.urls"), name="archive"),
 ]
