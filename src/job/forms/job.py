@@ -9,10 +9,12 @@ from django.utils.safestring import mark_safe
 from django.utils.translation import gettext as _
 
 from beach_wood_user.models import BWUser
+from client.models import ClientProxy
 from core.forms import BaseModelFormMixin, JoditFormMixin
 from core.forms.mixins.js_modal_form_renderer_mixin import BWJSModalFormRendererMixin
 from core.forms.widgets import RichHTMLEditorWidget
 from core.utils import debugging_print
+from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from job.models import JobProxy
 
 
@@ -46,6 +48,10 @@ class JobForm(BWJSModalFormRendererMixin, BaseModelFormMixin, JoditFormMixin):
         self.is_update = is_updated
         if client is not None:
             self.fields["client"].initial = client
+        else:
+            self.fields["client"].queryset = ClientProxy.objects.all().order_by("name")
+
+        self.fields["managed_by"].queryset = BWUser.objects.all().order_by("first_name")
         if self.initial.get("client", None) is not None:
             if hasattr(self.instance.client, "bookkeepers"):
                 all_client_bookkeepers = self.instance.client.bookkeepers.all()
@@ -55,7 +61,7 @@ class JobForm(BWJSModalFormRendererMixin, BaseModelFormMixin, JoditFormMixin):
                 ]
                 self.fields["managed_by"].queryset = BWUser.objects.filter(
                     pk__in=bookkeepers_pks
-                )
+                ).order_by("first_name")
                 self.fields["managed_by"].help_text = mark_safe(
                     "<strong>Bookkeepers who assigned for this client</strong>"
                 )
