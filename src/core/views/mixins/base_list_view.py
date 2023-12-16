@@ -6,6 +6,7 @@ from django.forms import model_to_dict
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.general import IS_SHOW_CREATED_AT, IS_SHOW_LABELS_IN_FILTER_FORM
 from core.utils import debugging_print
+from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from site_settings.models import SectionDescription
 
 
@@ -37,6 +38,8 @@ class BWBaseListViewMixin:
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context.setdefault("is_show_created_at", IS_SHOW_CREATED_AT)
+        if hasattr(self, "object_list") is True:
+            context.setdefault("total_records", len(self.object_list))
         if hasattr(self, "modal"):
             if hasattr(self.model, "_meta"):
                 context.setdefault("app_label", self.model._meta.app_label)
