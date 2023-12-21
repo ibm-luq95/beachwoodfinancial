@@ -56,7 +56,8 @@ class BWDebuggingPrint:
         """
         self.console.print_json(obj)
 
-    def log(self, obj: Any) -> None:
+    @classmethod
+    def log(cls, obj: Any) -> None:
         """
         The log() method offers the same capabilities as print, but adds some features useful for debugging a running
         application. Logging writes the current time in a column to the left, and the file and line where the method
@@ -68,7 +69,7 @@ class BWDebuggingPrint:
         Returns:
             None
         """
-        self.console.log(obj)
+        cls.console.log(obj)
 
     def print_exception(self, is_show_locales: bool = False) -> None:
         """
@@ -76,13 +77,12 @@ class BWDebuggingPrint:
         """
         self.console.print_exception(show_locals=is_show_locales)
 
-    def print(
-        self, obj: Any, justify: Literal["left", "center", "right"] = "left"
-    ) -> None:
+    @classmethod
+    def print(cls, obj: Any, justify: Literal["left", "center", "right"] = "left") -> None:
         """
         Print the given object.
         """
-        self.console.print(obj, justify=justify)
+        cls.console.print(obj, justify=justify)
 
     def rule(self, text: str) -> None:
         """
@@ -90,14 +90,16 @@ class BWDebuggingPrint:
         """
         self.console.rule(text)
 
-    def pprint(self, obj: Any) -> None:
+    @classmethod
+    def pprint(cls, obj: Any) -> None:
         """
         Pretty print the given object.
         """
         pprint(obj)
 
+    @classmethod
     def panel(
-        self,
+        cls,
         text_content: Any,
         title: Optional[str] = None,
         subtitle: Optional[str] = None,
@@ -105,7 +107,7 @@ class BWDebuggingPrint:
         """
         Print a panel with the given text.
         """
-        print(Panel.fit(text_content, title=title, subtitle=subtitle))
+        print(Panel.fit(str(text_content), title=title, subtitle=subtitle))
 
     def table(
         self,

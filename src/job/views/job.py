@@ -40,11 +40,11 @@ class JobListView(
     paginate_by = LIST_VIEW_PAGINATE_BY
     list_type = "list"
 
-    def paginate_queryset(self, queryset, page_size):
-        queryset = JobProxy.objects.filter(
-            ~Q(status__in=[CON_ARCHIVED, CON_COMPLETED, CON_DRAFT])
-        ).order_by("created_at")
-        return super().paginate_queryset(queryset, page_size)
+    # def paginate_queryset(self, queryset, page_size):
+    #     queryset = JobProxy.objects.filter(
+    #         ~Q(status__in=[CON_ARCHIVED, CON_COMPLETED, CON_DRAFT])
+    #     ).order_by("created_at")
+    #     return super().paginate_queryset(queryset, page_size)
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

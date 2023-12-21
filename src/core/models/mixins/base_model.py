@@ -10,6 +10,7 @@ from django.utils.translation import gettext as _
 from core.models.managers import SoftDeleteManager
 from .diffing import DiffingMixin
 from .get_model_instance_as_dict import GetModelInstanceAsDictMixin
+from ..managers.archive_manager import ArchiveManager
 
 
 class BaseModelMixin(DiffingMixin, GetModelInstanceAsDictMixin, models.Model):
@@ -31,6 +32,7 @@ class BaseModelMixin(DiffingMixin, GetModelInstanceAsDictMixin, models.Model):
     objects = SoftDeleteManager()
     # objects = models.Manager()
     original_objects = models.Manager()
+    archive_objects = ArchiveManager()
 
     class Meta:
         abstract = True

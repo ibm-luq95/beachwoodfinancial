@@ -72,9 +72,9 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin, GuardianUserMix
     def __str__(self):
         full_info = self.fullname
         if full_info != "":
-            return full_info
+            return f"User - {full_info}"
         else:
-            return self.email
+            return f"User - {self.email}"
 
     @property
     def fullname(self):
@@ -82,7 +82,9 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin, GuardianUserMix
 
     def save(self, *args, **kwargs):
         self.email = self.email.lower()
+        # kwargs.update({"update_fields": ["email"]})
         super(BWUser, self).save(*args, **kwargs)
+        # super().save(*args, **kwargs)
 
     @property
     def get_staff_member_object(self) -> dict:

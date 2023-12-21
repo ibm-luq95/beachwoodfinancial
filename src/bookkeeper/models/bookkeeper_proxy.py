@@ -2,7 +2,13 @@
 import traceback
 from typing import Optional
 
-from core.constants.status_labels import CON_PAST_DUE, CON_STALLED, CON_NEED_INFO
+from core.constants.status_labels import (
+    CON_PAST_DUE,
+    CON_STALLED,
+    CON_NEED_INFO,
+    CON_ARCHIVED,
+    CON_COMPLETED,
+)
 from core.models.querysets import BaseQuerySetMixin
 from bookkeeper.models import Bookkeeper
 from core.utils import BeachWoodFinancialError, get_formatted_logger, debugging_print
@@ -63,9 +69,12 @@ class BookkeeperProxy(Bookkeeper):
                         all_lists.append(task)
         return all_lists
 
-    def get_user_jobs(self) -> BaseQuerySetMixin | None:
+    def get_user_jobs(self, is_archived: bool = False) -> BaseQuerySetMixin | None:
         if hasattr(self.user, "jobs"):
-            return self.user.jobs.all()
+            if is_archived is True:
+                return self.user.jobs.filter(status__in=[CON_ARCHIVED, CON_COMPLETED])
+            else:
+                return self.user.jobs.all()
         else:
             return None
 
@@ -81,7 +90,9 @@ class BookkeeperProxy(Bookkeeper):
         else:
             return None
 
-    def get_all_related_items(self, custom_item_name: Optional[str] = None) -> dict | list:
+    def get_all_related_items(
+        self, custom_item_name: Optional[str] = None, is_archived: bool = False
+    ) -> dict | list:
         from job.models.job_proxy import JobProxy
         from note.models import Note
         from task.models.proxy_model import TaskProxy

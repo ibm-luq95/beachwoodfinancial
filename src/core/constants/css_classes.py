@@ -66,7 +66,28 @@ BW_PRELINE_CHECKBOX_CSS_CLASSES = (
     " dark:checked:bg-blue-500 dark:checked:border-blue-500"
     " dark:focus:ring-offset-gray-800"
 )
-BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR = "text-blue-500"
+BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR = (
+    "text-blue-600 underline underline-offset-1 decoration-blue-600 hover:opacity-80"
+)
+BW_PRELINE_DARK_ANCHOR_TAG_DEFAULT_COLOR = (
+    "text-gray-800 underline decoration-gray-800 hover:opacity-80 "
+    "dark:text-white dark:decoration-white"
+)
+BW_PRELINE_SECONDARY_ANCHOR_TAG_DEFAULT_COLOR = (
+    "text-gray-500 underline decoration-gray-500 hover:opacity-80"
+)
+BW_PRELINE_PRIMARY_ANCHOR_TAG_DEFAULT_COLOR = (
+    "text-blue-600 underline decoration-blue-600 hover:opacity-80"
+)
+BW_PRELINE_SUCCESS_ANCHOR_TAG_DEFAULT_COLOR = (
+    "text-teal-500 underline decoration-teal-500 hover:opacity-80"
+)
+BW_PRELINE_DANGER_ANCHOR_TAG_DEFAULT_COLOR = (
+    "text-red-500 underline decoration-red-500 hover:opacity-80"
+)
+BW_PRELINE_WARNING_ANCHOR_TAG_DEFAULT_COLOR = (
+    "text-yellow-500 underline decoration-yellow-500 hover:opacity-80"
+)
 
 BW_PRELINE_CORE_BG_COLORS = {
     "red": {"soft": " bg-red-100 text-red-800 ", "solid": " bg-red-500 text-white "},

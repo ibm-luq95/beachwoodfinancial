@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-import sys
 from pathlib import Path
 from decouple import Config, RepositoryEnv, Csv
 from django.contrib.messages import constants as messages
@@ -81,6 +80,7 @@ INSTALLED_APPS = [
     "special_assignment.apps.SpecialAssignmentConfig",
     "discussion.apps.DiscussionConfig",
     "reports.apps.ReportsConfig",
+    "archive.apps.ArchiveConfig",
 ]
 
 MIDDLEWARE = [
@@ -375,9 +375,9 @@ if config("IS_CACHE_ENABLED", cast=bool) is True:
     CACHE_MIDDLEWARE_KEY_PREFIX = config(
         "CACHE_MIDDLEWARE_KEY_PREFIX", cast=str
     )  # should be used if the cache is shared across multiple sites that
-    # use the
-    # same
-    # Django instance
+# use the
+# same
+# Django instance
 
 # LOGGING = {
 #     "version": 1,

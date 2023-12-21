@@ -118,8 +118,10 @@ class ClientProxy(Client):
             return 0
         for job in self.jobs.all():
             all_tasks_count.append(job.tasks.count())
-
-        return sum(all_tasks_count)  # TODO: check if sum or len to use
+        if sum(all_tasks_count) > 0:
+            return sum(all_tasks_count)
+        else:
+            return 0
 
     def get_jobs_count(self) -> int | None:
         return self.jobs.count()

@@ -17,7 +17,7 @@ class BWForm(component.Component):
     def get_context_data(
         self,
         form,
-        form_title,
+        form_title="",
         form_subtitle="",
         form_id="",
         form_method="post",
@@ -29,6 +29,7 @@ class BWForm(component.Component):
         current_password=None,
         hide_back_btn=False,
         hide_submit_btn=False,
+        is_btns_enabled=True,
     ):
         # form_action_url syntax: app_name:endpoint: client:details
         # if form_action_url is not None:
@@ -52,6 +53,7 @@ class BWForm(component.Component):
             "current_password": current_password,
             "hide_back_btn": hide_back_btn,
             "hide_submit_btn": hide_submit_btn,
+            "is_btns_enabled": is_btns_enabled,
         }
 
     class Media:

@@ -3,13 +3,20 @@
   // "less.validate": false,
   // "scss.validate": false,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true,
-    "source.fixAll.stylelint": true
+    "source.fixAll.eslint": "explicit",
+    "source.fixAll.stylelint": "explicit"
   },
   // "eslint.validate": ["javascript"],
   "editor.formatOnSave": false,
-  "black-formatter.args": ["--config", "${workspaceFolder}/pyproject.toml"],
+  "black-formatter.args": [
+    "--config",
+    "${workspaceFolder}/pyproject.toml",
+    "-S",
+    "--verbose",
+    "--stdin-filename"
+  ],
   "black-formatter.trace": "info",
+  
   "black-formatter.showNotification": "on",
   "black-formatter.importStrategy": "fromEnvironment",
   "isort.args": ["--settings-path", "${workspaceFolder}/pyproject.toml"],
@@ -75,5 +82,18 @@
   "typescript.tsdk": "./src/frontend/node_modules/typescript/lib",
   "stylelint.configFile": "${workspaceFolder}/.stylelintrc.json",
   "stylelint.configBasedir": "./src/frontend/node_modules",
-  "tailwind-fold.autoFold": false
+  "tailwind-fold.autoFold": false,
+  "flake8.importStrategy": "fromEnvironment",
+  "flake8.interpreter": [
+    "/home/ibrahim-pc/miniconda3/envs/beachwoodfinancial_dev_3.11.6_venv/bin/python3"
+  ],
+  "flake8.path": [
+    "/home/ibrahim-pc/miniconda3/envs/beachwoodfinancial_dev_3.11.6_venv/bin/flake8"
+  ],
+  "black-formatter.path": [
+    "/home/ibrahim-pc/miniconda3/envs/beachwoodfinancial_dev_3.11.6_venv/bin/black"
+  ],
+  "black-formatter.interpreter": [
+    "/home/ibrahim-pc/miniconda3/envs/beachwoodfinancial_dev_3.11.6_venv/bin/python3"
+  ]
 }
