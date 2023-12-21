@@ -1,0 +1,179 @@
+{% load i18n %}
+{% load static %}
+{% load bw_guardian_tags %}
+
+<!-- Start Col -->
+<div class="relative overflow-hidden flex flex-col rounded-xl p-4 md:p-6 bg-white border border-gray-200 dark:bg-slate-900 dark:border-gray-700">
+    {# Start Ribbon #}
+    {% if object.status == CON_ARCHIVED %}
+        <div class="absolute right-0 top-0 h-10 w-10">
+            <div class="absolute transform rotate-45 bg-yellow-400 text-center text-white font-semibold py-1 right-[-40px] top-[20px] w-[150px]">
+                {% translate "Archived" %}
+            </div>
+        </div>
+    {% endif %}
+    {# End Ribbon #}
+    <div class="flex gap-x-2">
+        <img class="rounded-full w-20 h-20"
+             src="{% if object.get_staff_member_object.staff_object.profile.profile_picture %} {{ object.get_staff_member_object.staff_object.profile.profile_picture.url }} {% else %} {% static 'img/default_staff.png' %} {% endif %}"
+             alt="{{ object.fullname }}" />
+        <div class="grow">
+            <h3 class="font-medium text-gray-800 dark:text-gray-200">
+                {{ object.fullname|safe }}
+                {# Start Is active and is has manager permissions #}
+                <div class="flex">
+                    <div class="hs-tooltip inline-block ml-2 mr-1">
+                        <button type="button" class="hs-tooltip-toggle">
+                            <!-- Icon -->
+                            <span class="inline-flex justify-center items-center w-[18px] h-[18px] rounded-full bg-green-500 text-white">
+                                <i class="fa-solid fa-check h-3 w-3"></i>
+                            </span>
+                            <!-- End Icon -->
+                            <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                  role="tooltip">{% translate "Active" %}</span>
+                        </button>
+                    </div>
+                    {% if object.user_type == CON_ASSISTANT or object.user_type == CON_MANAGER %}
+                        {% if object.is_superuser is True or object|bw_has_perm:'assistant.assistant_has_full_manager_permissions' is True %}
+                            <div class="hs-tooltip inline-block mx-1">
+                                <button type="button" class="hs-tooltip-toggle">
+                                    <!-- Icon -->
+                                    <span class="inline-flex justify-center items-center w-[22px] h-[22px] rounded-full bg-blue-100 text-blue-600">
+                                        <i class="fa-solid fa-lock h-3 w-3"></i>
+                                    </span>
+                                    <!-- End Icon -->
+                                    <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                          role="tooltip">{% translate "Staff member has full manager permissions" %}</span>
+                                </button>
+                            </div>
+                        {% endif %}
+                    {% endif %}
+                </div>
+                {# End Is active and is has manager permissions #}
+            </h3>
+            {# Start Assistant Type #}
+            {% if object.user_type == CON_ASSISTANT %}
+                <p class="text-xs uppercase text-gray-500">
+                    <div class="hs-tooltip inline-block">
+                        <div class="hs-tooltip-toggle text-xs uppercase text-gray-500">
+                            {{ object.assistant.get_assistant_type_display }}
+                            <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                  role="tooltip">{% translate "Assistant type" %}</span>
+                        </div>
+                    </div>
+                </p>
+            {% endif %}
+            {# End Assistant Type #}
+            {# Start User Type #}
+            <p class="text-xs uppercase text-gray-500 mt-1">
+                <div class="hs-tooltip inline-block [--placement:right]">
+                    <div class="hs-tooltip-toggle text-xs uppercase text-gray-500">
+                        <span class="inline-flex items-center gap-1.5 py-1.5 px-2 rounded-full text-xs font-bold bg-blue-100 text-blue-800">
+                            <span class="w-1.5 h-1.5 inline-block bg-indigo-400 rounded-full"></span>
+                            {{ object.get_user_type_display }}
+                        </span>
+                        <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                              role="tooltip">{% translate "Staff type" %}</span>
+                    </div>
+                </div>
+            </p>
+            {# End User Type #}
+        </div>
+    </div>
+    <div class="flex items-center mt-4 gap-x-1">
+        <div>
+            <!-- Icon -->
+            <span class="inline-flex justify-center items-center w-[22px] h-[22px] rounded-full bg-gray-50 text-gray-800 dark:bg-gray-700 dark:text-gray-400">
+                <i class="fa-solid fa-location-dot h-3 w-3"></i>
+            </span>
+            <!-- End Icon -->
+        </div>
+        <div>
+            <p>
+                <address class="text-gray-600 text-[14px] italic">
+                    {{ object.get_staff_member_object.staff_object.profile.address|safe }}
+                </address>
+            </p>
+        </div>
+    </div>
+    <div class="flex items-center mt-1 gap-x-1">
+        <div>
+            <!-- Icon -->
+            <span class="inline-flex justify-center items-center w-[22px] h-[22px] rounded-full bg-gray-50 text-gray-800 dark:bg-gray-700 dark:text-gray-400">
+                <i class="fa-solid fa-at h-3 w-3"></i>
+            </span>
+            <!-- End Icon -->
+        </div>
+        <div>
+            <p class="text-blue-600 text-[14px] italic">
+                <a href="mailto:{{ object.email }}">{{ object.email }}</a>
+            </p>
+        </div>
+    </div>
+    <div class="flex items-center mt-1 gap-x-1">
+        <div>
+            <!-- Icon -->
+            <span class="inline-flex justify-center items-center w-[22px] h-[22px] rounded-full bg-gray-50 text-gray-800 dark:bg-gray-700 dark:text-gray-400">
+                <i class="fa-solid fa-phone h-3 w-3"></i>
+            </span>
+            <!-- End Icon -->
+        </div>
+        <div>
+            <p class="text-blue-600 text-[14px] italic">
+                <a href="">{{ object.get_staff_member_object.staff_object.profile.phone_number }}</a>
+            </p>
+        </div>
+    </div>
+    <div class="flex items-center mt-1 gap-x-1">
+        <div>
+            <div class="hs-tooltip inline-block">
+                <p class="hs-tooltip-toggle">
+                    <!-- Icon -->
+                    <span class="inline-flex justify-center items-center w-[22px] h-[22px] rounded-full bg-gray-50 text-gray-800 dark:bg-gray-700 dark:text-gray-400">
+                        <i class="fa-solid fa-calendar-days h-3 w-3"></i>
+                    </span>
+                    <!-- End Icon -->
+                    <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                          role="tooltip">{% translate "Date joined" %}</span>
+                </p>
+            </div>
+        </div>
+        <div>
+            <p class="text-gray-600 text-[14px] italic">{{ object.created_at|date }}</p>
+        </div>
+    </div>
+    <div class="flex items-center mt-1 gap-x-1">
+        <div>
+            <div class="hs-tooltip inline-block">
+                <p class="hs-tooltip-toggle">
+                    <!-- Icon -->
+                    <span class="inline-flex justify-center items-center w-[22px] h-[22px] rounded-full bg-gray-50 text-gray-800 dark:bg-gray-700 dark:text-gray-400">
+                        <i class="fa-solid fa-right-to-bracket h-3 w-3"></i>
+                    </span>
+                    <!-- End Icon -->
+                    <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                          role="tooltip">{% translate "Last login" %}</span>
+                </p>
+            </div>
+        </div>
+        <div>
+            <p class="text-gray-600 text-[14px] italic">{{ object.last_login }}</p>
+        </div>
+    </div>
+    {% if request.user.user_type == CON_MANAGER %}
+        <hr class="my-3" />
+        <div class="flex items-center mt-1">
+            <a href="{% get_staff_member_update_url user=object %}"
+               class="w-full first-letter:m-1 ml-0 py-3 px-4 inline-flex justify-center items-center gap-2 bg-blue-100 border border-transparent font-semibold text-blue-500 hover:text-white hover:bg-blue-500 focus:outline-none focus:ring-2 ring-offset-white focus:ring-blue-100 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800 mb-1 rounded-full">
+                {% translate "Edit " %} {{ object.user_type }}
+                <i class="fa-solid fa-pencil w-3.5 h-3.5"></i>
+            </a>
+            <a href="#"
+               class="m-1 ml-0 py-3 px-4 inline-flex justify-center items-center gap-2 rounded-full w-full bg-yellow-100 border border-transparent font-semibold text-yellow-500 hover:text-white hover:bg-yellow-500 focus:outline-none focus:ring-2 ring-offset-white focus:ring-yellow-100 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+                {% translate "Edit user" %}
+                <i class="fa-solid fa-user-pen w-3.5 h-3.5"></i>
+            </a>
+        </div>
+    {% endif %}
+</div>
+<!-- End Col -->

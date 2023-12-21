@@ -70,9 +70,14 @@
                                 {% translate "Assignments" %}
                             </a>
                             <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
-                               href="#">
+                               href="{% url 'dashboard:staff:staff-profile' request.user.pk %}">
                                 <i class="fa-regular fa-user"></i>
                                 {% translate "Profile" %}
+                            </a>
+                            <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-red-500 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
+                               href="{% url 'dashboard:staff:staff-update-password' request.user.pk %}">
+                                <i class="fa-solid fa-key"></i>
+                                {% translate "Change Password" %}
                             </a>
                             <a class="flex items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
                                href="{% url 'auth:logout' %}">
