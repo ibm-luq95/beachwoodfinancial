@@ -1,0 +1,84 @@
+{% load i18n %}
+
+<div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400 mt-1">
+    {# Start Grid #}
+    <div class="grid
+                {% if object.user_type == CON_BOOKKEEPER %}
+                    sm:grid-cols-2 lg:grid-cols-2
+                {% else %}
+                    sm:grid-cols-1 lg:grid-cols-1
+                {% endif %}
+                gap-1 sm:gap-1">
+        {% if object.user_type == CON_BOOKKEEPER %}
+            <!-- Card -->
+            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
+                <div class="py-4 md:py-5 px-3">
+                    <div class="flex items-center gap-x-2">
+                        <p class="text-xs uppercase tracking-wide text-gray-500">{% translate "Clients" %}</p>
+                    </div>
+                    <div class="mt-1 flex items-center">
+                        <h3 class="text-lg sm:text-lg font-medium text-gray-800 dark:text-gray-200">
+                            {{ object.get_staff_member_object.staff_object.get_proxy_model.clients.count }}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <!-- End Card -->
+        {% endif %}
+        <!-- Card -->
+        <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
+            <div class="py-4 md:py-5 px-3">
+                <div class="flex items-center gap-x-2">
+                    <p class="text-xs uppercase tracking-wide text-gray-500">{% translate "Jobs" %}</p>
+                </div>
+                <div class="mt-1 flex items-center">
+                    <h3 class="text-lg sm:text-lg font-medium text-gray-800 dark:text-gray-200">
+                        {{ object.jobs.count }}
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <!-- End Card -->
+    </div>
+    {# End Grid #}
+    {# Start Grid #}
+    <div class="grid
+                {% if object.user_type == CON_BOOKKEEPER %}
+                    sm:grid-cols-2 lg:grid-cols-2
+                {% else %}
+                    sm:grid-cols-1 lg:grid-cols-1
+                {% endif %}
+                gap-1 sm:gap-1 mt-1">
+        {% if object.user_type == CON_BOOKKEEPER %}
+            <!-- Card -->
+            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
+                <div class="py-4 md:py-5 px-3">
+                    <div class="flex items-center gap-x-2">
+                        <p class="text-xs uppercase tracking-wide text-gray-500">{% translate "Tasks" %}</p>
+                    </div>
+                    <div class="mt-1 flex items-center">
+                        <h3 class="text-lg sm:text-lg font-medium text-gray-800 dark:text-gray-200">
+                            {{ object.get_staff_member_object.staff_object.get_proxy_model.get_tasks_count }}
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <!-- End Card -->
+        {% endif %}
+        <!-- Card -->
+        <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
+            <div class="py-4 md:py-5 px-3">
+                <div class="flex items-center gap-x-2">
+                    <p class="text-xs uppercase tracking-wide text-gray-500">{% translate "Assignments" %}</p>
+                </div>
+                <div class="mt-1 flex items-center">
+                    <h3 class="text-lg sm:text-lg font-medium text-gray-800 dark:text-gray-200">
+                        {{ object.get_staff_member_object.staff_object.special_assignments.count }}
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <!-- End Card -->
+    </div>
+    {# End Grid #}
+</div>

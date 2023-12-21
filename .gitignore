@@ -569,3 +569,4 @@ src/staticfiles
 
 src/reports/migrations/__pycache__/
 pnpm-lock.yaml
+_base_app_packages

@@ -53,6 +53,18 @@
 
             </div>
         </th>
+        {% if extra_context.is_show_status is True %}
+            <th scope="col" class="px-6 py-3 text-left">
+                <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                        {% translate "Status" %}
+                    </span>
+
+                    {% include "bw_components/global/table_list/sort_icon.html" %}
+
+                </div>
+            </th>
+        {% endif %}
         {% if extra_context.is_show_bookkeeper is True %}
             <th scope="col" class="px-6 py-3 text-left">
                 <div class="flex items-center gap-x-2">
@@ -157,6 +169,13 @@
                     {% endif %}
                 </div>
             </td>
+            {% if extra_context.is_show_status is True %}
+                <td class="h-px w-px whitespace-nowrap">
+                    <div class="px-6 py-3">
+                        {% bw_badge code=object.status text=object.get_status_display is_solid=False size="sm" %}
+                    </div>
+                </td>
+            {% endif %}
             {% if extra_context.is_show_bookkeeper is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     <div class="px-6 py-3">
@@ -221,7 +240,7 @@
 {# End Table Body #}
 {# Start Table Results #}
 {% block results_block %}
-    {{ object_list.count }}
+    {{ object_list.count }} /{{ total_records }}
 {% endblock results_block %}
 {# End Table Results #}
 {# Start Table Pagination #}

@@ -12,7 +12,7 @@ INSTALLED_APPS = INSTALLED_APPS + [
     "debugtools",
     "debug_permissions",
     "django_model_info.apps.DjangoModelInfoConfig",
-    "silk",
+    # "silk",
     # "django_pdb",
     # "request_viewer",
 ]
@@ -26,7 +26,7 @@ MIDDLEWARE = MIDDLEWARE + [
     "debugtools.middleware.XViewMiddleware",
     "django.contrib.admindocs.middleware.XViewMiddleware",
     "django_pdb.middleware.PdbMiddleware",
-    "silk.middleware.SilkyMiddleware",
+    # "silk.middleware.SilkyMiddleware",
 ]
 
 # Database configurations

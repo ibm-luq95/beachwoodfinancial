@@ -1,15 +1,21 @@
 # -*- coding: utf-8 -*-#
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
+from django.http import Http404
+from django.contrib.auth import update_session_auth_hash
+from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import DetailView
+from django.views.generic import FormView
+from django.views.generic.detail import SingleObjectMixin
 
 from assistant.forms import AssistantForm
-from beach_wood_user.forms import BWPermissionsForm
+from beach_wood_user.forms import BWPermissionsForm, ProfileForm, ForceChangePasswordForm
 from beach_wood_user.models import BWUser
 from bookkeeper.forms import BookkeeperForm
 from client.models import ClientProxy
 from core.config.forms import BWFormRenderer
+from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from core.views.mixins import BWLoginRequiredMixin
 from manager.forms import ManagerForm
 from special_assignment.forms import MiniSpecialAssignmentForm
@@ -65,3 +71,116 @@ class StaffMemberDetailsView(
         context.setdefault("staff_form", staff_form)
         context.setdefault("permissions_form", permissions_form)
         return context
+
+
+class StaffProfileView(BWLoginRequiredMixin, SuccessMessageMixin, FormView, DetailView):
+    template_name = "beach_wood_user/profile.html"
+    model = BWUser
+    http_method_names = ["get", "post"]
+    # permission_required = "beach_wood_user.view_profile"
+    permission_denied_message = _("You do not have permission to access this page.")
+    form_class = ProfileForm
+    success_message = _("Profile updated successfully!")
+
+    def get_context_data(self, **kwargs):
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        context.setdefault("title", f"{self.object.fullname}")
+        return context
+
+    def get_success_url(self) -> str:
+        """Return the URL to redirect to after processing a valid form."""
+        success_url = reverse_lazy(
+            "dashboard:staff:staff-profile", kwargs={"pk": self.object.pk}
+        )
+        return str(success_url)  # success_url may be lazy
+
+    def get_form_kwargs(self):
+        # kwargs = super().get_form_kwargs()
+        kwargs = {
+            "initial": self.get_initial(),
+            "prefix": self.get_prefix(),
+        }
+        kwargs.update(
+            {
+                "instance": self.get_object()
+                .get_staff_member_object.get("staff_object")
+                .profile
+            }
+        )
+        if self.request.method in ("POST", "PUT"):
+            kwargs.update(
+                {
+                    "data": self.request.POST,
+                    "files": self.request.FILES,
+                }
+            )
+        return kwargs
+
+    def form_valid(self, form: ProfileForm):
+        """If the form is valid, save the associated model."""
+        form.save()
+        self.object = self.get_object()
+        return super().form_valid(form)
+
+    def form_invalid(self, form):
+        """If the form is invalid, render the invalid form."""
+        self.object = self.get_object()
+        return self.render_to_response(self.get_context_data(form=form))
+
+
+class StaffUpdatePasswordView(
+    BWLoginRequiredMixin, SuccessMessageMixin, SingleObjectMixin, FormView
+):
+    form_class = ForceChangePasswordForm
+    template_name = "beach_wood_user/update_password.html"
+    model = BWUser
+    http_method_names = ["get", "post"]
+    context_object_name = "object"
+    success_message = _("Password updated successfully!")
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context.setdefault(
+            "title", _(f"Force update password - {self.get_object().fullname}")
+        )
+        # Add any additional context data if needed
+        return context
+
+    def get(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        return self.render_to_response(self.get_context_data())
+
+    def form_invalid(self, form):
+        """If the form is invalid, render the invalid form."""
+        self.object = self.get_object()
+        return self.render_to_response(self.get_context_data(form=form))
+
+    def form_valid(self, form: ForceChangePasswordForm):
+        """If the form is valid, save the associated model."""
+        # form.save()
+        self.object = self.get_object()
+        self.object.set_password(form.cleaned_data["password1"])
+        self.object.save(update_fields=["password"])
+        self.object = self.get_object()
+        update_session_auth_hash(self.request, self.get_object())
+        return super().form_valid(form)
+
+    def post(self, request, *args, **kwargs):
+        """
+        Handle POST requests: instantiate a form instance with the passed
+        POST variables and then check if it's valid.
+        """
+        self.object = self.get_object()
+        form = self.get_form()
+        if form.is_valid():
+            return self.form_valid(form)
+        else:
+            return self.form_invalid(form)
+
+    def get_success_url(self) -> str:
+        """Return the URL to redirect to after processing a valid form."""
+        success_url = reverse_lazy(
+            "dashboard:staff:staff-update-password", kwargs={"pk": self.get_object().pk}
+        )
+        return str(success_url)  # success_url may be lazy

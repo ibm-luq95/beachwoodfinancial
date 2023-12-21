@@ -1,0 +1,27 @@
+{% extends "core/layouts/dashboard_content_base.html" %}
+
+{% load development_tags %}
+
+{% block dashboard_content_block %}
+    {# Page Heading #}
+
+    {% include "components/inc/dashboard/content_header.html" with title="Jobs Archive" subtitle="" is_show_create_btn=False app_label=app_label actions_base_url="dashboard:management_assistant" %}
+
+    {# End Page Heading #}
+    {# Start Filter Form #}
+    {% if filter_form %}
+        {% component "bw_filter_form" filter_form=filter_form filter_cancel_url="dashboard:archive:jobs:list" %}
+    {% endif %}
+    {# End Filter Form #}
+    {% if object_list %}
+        <!-- Table Section -->
+
+    
+
+        <!-- End Table Section -->
+    {% else %}
+
+        {% include "bw_ui_components/global/empty_card.html" with label="jobs" %}
+
+    {% endif %}
+{% endblock dashboard_content_block %}

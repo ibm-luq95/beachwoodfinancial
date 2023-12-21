@@ -11,19 +11,22 @@ class StaffMemberSocialMediaMixin(models.Model):
     linkedin = models.URLField(_("linkedin"), null=True, blank=True)
     github = models.URLField(_("github"), null=True, blank=True)
     fa_facebook_icon = models.CharField(
-        _("facebook_icon"), max_length=30, default="fa-brands fa-facebook"
+        _("facebook icon"), max_length=30, default="fa-brands fa-facebook", editable=False
     )
     fa_twitter_icon = models.CharField(
-        _("twitter_icon"), max_length=30, default="fa-brands fa-twitter"
+        _("twitter icon"), max_length=30, default="fa-brands fa-twitter", editable=False
     )
     fa_instagram_icon = models.CharField(
-        _("instagram_icon"), max_length=30, default="fa-brands fa-instagram"
+        _("instagram icon"),
+        max_length=30,
+        default="fa-brands fa-instagram",
+        editable=False,
     )
     fa_linkedin_icon = models.CharField(
-        _("linkedin_icon"), max_length=30, default="fa-brands fa-linkedin"
+        _("linkedin icon"), max_length=30, default="fa-brands fa-linkedin", editable=False
     )
     fa_github_icon = models.CharField(
-        _("github_icon"), max_length=30, default="fa-brands fa-github"
+        _("github icon"), max_length=30, default="fa-brands fa-github", editable=False
     )
 
     class Meta:

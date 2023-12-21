@@ -131,9 +131,7 @@
             </td>
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-10 py-3">
-                    <span class="text-sm text-gray-600 dark:text-gray-400">
-                        {{ object.jobs.count }}
-                    </span>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.jobs.count }}</span>
                 </div>
             </td>
             {% if is_show_created_at is True %}
@@ -152,7 +150,7 @@
 {# End Table Body #}
 {# Start Table Results #}
 {% block results_block %}
-    {{ object_list.count }}
+    {{ object_list.count }}/{{ total_records }}
 {% endblock results_block %}
 {# End Table Results #}
 {# Start Table Pagination #}

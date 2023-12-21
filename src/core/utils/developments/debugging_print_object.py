@@ -97,8 +97,9 @@ class BWDebuggingPrint:
         """
         pprint(obj)
 
+    @classmethod
     def panel(
-        self,
+        cls,
         text_content: Any,
         title: Optional[str] = None,
         subtitle: Optional[str] = None,
@@ -106,7 +107,7 @@ class BWDebuggingPrint:
         """
         Print a panel with the given text.
         """
-        print(Panel.fit(text_content, title=title, subtitle=subtitle))
+        print(Panel.fit(str(text_content), title=title, subtitle=subtitle))
 
     def table(
         self,

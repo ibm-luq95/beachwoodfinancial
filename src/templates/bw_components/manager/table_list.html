@@ -203,7 +203,7 @@
 {# End Table Body #}
 {# Start Table Results #}
 {% block results_block %}
-    {{ object_list.object_list|length }}
+    {{ object_list.count }}/{{ total_records }}
 {% endblock results_block %}
 {# End Table Results #}
 {# Start Table Pagination #}

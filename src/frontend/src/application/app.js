@@ -21,6 +21,7 @@ import tableSort from "table-sort-js/table-sort.js";
 // eslint-disable-next-line no-unused-vars
 import Chart from "chart.js/auto";
 
+
 import "./dashboard/dashboard.js";
 import "./job/details.js";
 import "./special_assignment/details.js";
