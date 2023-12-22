@@ -10,6 +10,7 @@ from core.cache import BWCacheViewMixin
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.utils import get_trans_txt
 from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
+from core.views.mixins.update_previous_mixin import UpdateReturnPreviousMixin
 from important_contact.filters import ImportantContactFilter
 from important_contact.forms import ImportantContactForm
 from important_contact.models import ImportantContact
@@ -100,6 +101,7 @@ class ImportantContactUpdateView(
     BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
+    UpdateReturnPreviousMixin,
     UpdateView,
 ):
     template_name = "important_contact/update.html"
@@ -108,7 +110,7 @@ class ImportantContactUpdateView(
     form_class = ImportantContactForm
     model = ImportantContact
     success_message = _("Contact updated successfully")
-    success_url = reverse_lazy("dashboard:important_contact:list")
+    BASE_SUCCESS_URL = "dashboard:important_contact:list"
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

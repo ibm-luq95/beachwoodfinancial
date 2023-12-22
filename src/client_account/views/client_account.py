@@ -15,6 +15,7 @@ from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.users import CON_BOOKKEEPER
 from core.utils import get_trans_txt
 from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
+from core.views.mixins.update_previous_mixin import UpdateReturnPreviousMixin
 
 
 class ClientAccountListViewBW(
@@ -109,15 +110,16 @@ class ClientAccountUpdateView(
     BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
+    UpdateReturnPreviousMixin,
     UpdateView,
 ):
     template_name = "client_account/update.html"
     form_class = ClientAccountForm
     model = ClientAccount
     success_message = _("Contact updated successfully")
-    success_url = reverse_lazy("dashboard:client_account:list")
     permission_required = "client_account.change_clientaccount"
     permission_denied_message = _("You do not have permission to access this page.")
+    BASE_SUCCESS_URL = "dashboard:client_account:list"
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
