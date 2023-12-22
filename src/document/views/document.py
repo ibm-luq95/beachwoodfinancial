@@ -11,6 +11,7 @@ from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.users import CON_BOOKKEEPER
 from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 from core.views.mixins.bookkeeper_pass_related_mixin import BookkeeperPassRelatedMixin
+from core.views.mixins.update_previous_mixin import UpdateReturnPreviousMixin
 from document.filters import DocumentFilter
 from document.forms import DocumentForm
 from document.models import Document
@@ -122,6 +123,7 @@ class DocumentUpdateView(
     BWCacheViewMixin,
     SuccessMessageMixin,
     BookkeeperPassRelatedMixin,
+    UpdateReturnPreviousMixin,
     UpdateView,
 ):
     permission_required = "document.change_document"
@@ -129,8 +131,9 @@ class DocumentUpdateView(
     template_name = "document/update.html"
     form_class = DocumentForm
     success_message = _("Document updated successfully")
-    success_url = reverse_lazy("dashboard:document:list")
+    # success_url = reverse_lazy("dashboard:document:list")
     model = Document
+    BASE_SUCCESS_URL = "dashboard:document:list"
 
     # template_name_suffix = "_create_client"
 

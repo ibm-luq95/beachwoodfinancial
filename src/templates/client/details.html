@@ -361,7 +361,7 @@
                 </div>
                 {% if object.active_jobs %}
 
-                    {% include "bw_components/job/table_list.html" with is_checkbox_enabled=False is_show_create_btn=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Jobs" header_subtitle="" app_label="job" pagination_list_url_name="dashboard:job:list" is_actions_menu_enabled=False actions_items="show,update,delete" actions_app_name="job" actions_base_url="dashboard:job" base_url_name="dashboard:job" object_list=object.active_jobs is_show_client=False %}
+                    {% include "bw_components/job/table_list.html" with is_checkbox_enabled=False is_show_create_btn=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Jobs" header_subtitle="" app_label="job" pagination_list_url_name="dashboard:job:list" is_actions_menu_enabled=True actions_items="update,delete" actions_app_name="job" actions_base_url="dashboard:job" base_url_name="dashboard:job" object_list=object.active_jobs is_show_client=False %}
 
                 {% else %}
 
