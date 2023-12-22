@@ -13,6 +13,7 @@ from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.status_labels import CON_DRAFT, CON_COMPLETED, CON_ARCHIVED
 from core.constants.users import CON_BOOKKEEPER
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
+from core.views.mixins.update_previous_mixin import UpdateReturnPreviousMixin
 from discussion.forms import DiscussionMiniForm
 from document.forms import DocumentForm
 from job.filters import JobFilter
@@ -196,6 +197,7 @@ class JobUpdateView(
     BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
+    UpdateReturnPreviousMixin,
     UpdateView,
 ):
     # permission_required = ["job.change_job", "job.change_jobproxy"]
@@ -204,8 +206,9 @@ class JobUpdateView(
     template_name = "job/update.html"
     form_class = JobForm
     success_message = _("Job updated successfully")
-    success_url = reverse_lazy("dashboard:job:list")
+    # success_url = reverse_lazy("dashboard:job:list")
     model = JobProxy
+    BASE_SUCCESS_URL = "dashboard:job:list"
 
     # template_name_suffix = "_create_client"
 

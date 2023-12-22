@@ -1,6 +1,7 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy
+from django.shortcuts import redirect
+from django.urls import reverse_lazy, resolve
 from django.utils.translation import gettext as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
@@ -8,6 +9,7 @@ from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.users import CON_BOOKKEEPER
+from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from core.views.mixins.bookkeeper_pass_related_mixin import BookkeeperPassRelatedMixin
 from task.filters import TaskFilter
@@ -125,7 +127,7 @@ class TaskUpdateView(
     template_name = "task/update.html"
     form_class = TaskForm
     success_message = _("Task updated successfully")
-    success_url = reverse_lazy("dashboard:task:list")
+    # success_url = reverse_lazy("dashboard:task:list")
     model = TaskProxy
 
     # template_name_suffix = "_create_client"
@@ -134,7 +136,21 @@ class TaskUpdateView(
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context.setdefault("title", _("Update task"))
+        prev_url = self.request.META.get("HTTP_REFERER")
+        self.request.session["prev_url"] = prev_url
+        self.request.session.modified = True
+
         return context
+
+    def get_success_url(self) -> str:
+        """Return the URL to redirect to after processing a valid form."""
+        prev_url = self.request.session.get("prev_url")
+        self.request.session.delete("prev_url")
+        self.request.session.modified = True
+        if prev_url is not None:
+            return str(prev_url)  # success_url may be lazy
+        else:
+            return reverse_lazy("dashboard:task:list")
 
 
 class TaskDeleteView(

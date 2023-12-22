@@ -12,6 +12,7 @@ from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.status_labels import CON_ARCHIVED, CON_COMPLETED
 from core.constants.users import CON_BOOKKEEPER
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
+from core.views.mixins.update_previous_mixin import UpdateReturnPreviousMixin
 from special_assignment.filters import SpecialAssignmentFilter
 from special_assignment.forms import SpecialAssignmentForm
 from special_assignment.models import SpecialAssignmentProxy
@@ -121,6 +122,7 @@ class SpecialAssignmentUpdateView(
     BWLoginRequiredMixin,
     BWCacheViewMixin,
     SuccessMessageMixin,
+    UpdateReturnPreviousMixin,
     UpdateView,
 ):
     # permission_required = [
@@ -131,8 +133,9 @@ class SpecialAssignmentUpdateView(
     template_name = "special_assignment/update.html"
     form_class = SpecialAssignmentForm
     success_message = _("Special assignment updated successfully")
-    success_url = reverse_lazy("dashboard:special_assignment:list")
+    # success_url = reverse_lazy("dashboard:special_assignment:list")
     model = SpecialAssignmentProxy
+    BASE_SUCCESS_URL = "dashboard:special_assignment:list"
 
     # template_name_suffix = "_create_client"
 
@@ -140,6 +143,7 @@ class SpecialAssignmentUpdateView(
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context.setdefault("title", _("Update special assignment"))
+
         return context
 
 

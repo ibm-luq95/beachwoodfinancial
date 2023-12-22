@@ -9,8 +9,10 @@ from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.users import CON_BOOKKEEPER
+from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from core.views.mixins.bookkeeper_pass_related_mixin import BookkeeperPassRelatedMixin
+from core.views.mixins.update_previous_mixin import UpdateReturnPreviousMixin
 from note.filters import NoteFilter
 from note.forms import NoteForm
 from note.models import Note
@@ -107,6 +109,7 @@ class NoteUpdateView(
     BWCacheViewMixin,
     SuccessMessageMixin,
     BookkeeperPassRelatedMixin,
+    UpdateReturnPreviousMixin,
     UpdateView,
 ):
     permission_required = "note.change_note"
@@ -114,8 +117,9 @@ class NoteUpdateView(
     template_name = "note/update.html"
     form_class = NoteForm
     success_message = _("Note updated successfully")
-    success_url = reverse_lazy("dashboard:note:list")
+    # success_url = reverse_lazy("dashboard:note:list")
     model = Note
+    BASE_SUCCESS_URL = "dashboard:note:list"
 
     # template_name_suffix = "_create_client"
 
