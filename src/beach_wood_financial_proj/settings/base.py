@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     "drf_standardized_errors",
     "widget_tweaks",
     "rangefilter",
+    "defender",
     "core.apps.CoreConfig",
     "beach_wood_user.apps.BeachWoodUserConfig",
     # "home.apps.HomeConfig",
@@ -93,6 +94,7 @@ MIDDLEWARE = [
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "defender.middleware.FailedLoginMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
     "bookkeeper.middleware.CheckAllowedLoginMiddleware",  # TODO: Enable it
@@ -339,6 +341,12 @@ MESSAGE_TAGS = {
     messages.WARNING: "bw-warning",
     messages.ERROR: "bw-error",
 }
+
+# django-defender configs
+DEFENDER_USERNAME_FORM_FIELD = "email"
+DEFENDER_REDIS_URL = (
+    f"redis://:{config('REDIS_PASSWORD', cast=str)}@{config('REDIS_HOST', cast=str)}/0"
+)
 
 # Django-filter configs
 FILTERS_VERBOSE_LOOKUPS = {"exact": "", "iexact": "", "contains": "", "icontains": ""}
