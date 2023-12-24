@@ -22,8 +22,7 @@ class Assistant(BaseModelMixin, StaffMemberMixin, AccessProxyModelMixin):
         default=AssistantTypeEnum.ALL,
     )
 
-    class Meta(BaseModelMixin.Meta):
-        # ordering = ["user__first_name"]
+    class Meta(BaseModelMixin.Meta, StaffMemberMixin.Meta):
         permissions = [
             ("assistant_user", "Assistant User"),
             ("can_access_bookkeeper", _("Can access bookkeeper account details")),

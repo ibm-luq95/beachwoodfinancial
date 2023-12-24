@@ -47,3 +47,6 @@ class Discussion(BaseModelMixin, TeamMembersMixin, StrModelMixin):
     is_seen = models.BooleanField(_("is_seen"), default=False)
 
     objects = RepliesManager()
+
+    class Meta(BaseModelMixin.Meta):
+        ordering = ["-created_at"]

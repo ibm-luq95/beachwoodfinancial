@@ -44,11 +44,11 @@ class SpecialAssignmentForm(BaseModelFormMixin, JoditFormMixin):
     def __init__(self, add_jodit_css_class=False, *args, **kwargs):
         super(SpecialAssignmentForm, self).__init__(*args, **kwargs)
         JoditFormMixin.__init__(self, add_jodit_css_class=add_jodit_css_class)
-        self.fields["client"].queryset = ClientProxy.objects.all().order_by("name")
-        self.fields["job"].queryset = JobProxy.objects.all().order_by("title")
-        self.fields["bookkeeper"].queryset = BookkeeperProxy.objects.all().order_by("user__first_name")
-        self.fields["assistant"].queryset = AssistantProxy.objects.all().order_by("user__first_name")
-        self.fields["manager"].queryset = ManagerProxy.objects.all().order_by("user__first_name")
+        # self.fields["client"].queryset = ClientProxy.objects.all().order_by("name")
+        # self.fields["job"].queryset = JobProxy.objects.all().order_by("title")
+        # self.fields["bookkeeper"].queryset = BookkeeperProxy.objects.all().order_by("user__first_name")
+        # self.fields["assistant"].queryset = AssistantProxy.objects.all().order_by("user__first_name")
+        # self.fields["manager"].queryset = ManagerProxy.objects.all().order_by("user__first_name")
         # self.fields["assigned_by"].initial = assigned_by
         # self.fields["assigned_by"].widget.attrs.update(
         #     {"class": "readonly-select cursor-not-allowed", "readonly": "readonly"}

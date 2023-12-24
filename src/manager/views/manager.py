@@ -46,7 +46,7 @@ class ManagerListView(
     model = ManagerProxy
     paginate_by = LIST_VIEW_PAGINATE_BY
     list_type = "list"
-    queryset = ManagerProxy.objects.get_queryset().order_by("-user__created_at")
+    # queryset = ManagerProxy.objects.get_queryset().order_by("-user__created_at")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context

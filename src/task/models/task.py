@@ -67,3 +67,6 @@ class Task(BaseModelMixin, AccessProxyModelMixin, CronColumnMixin, StrModelMixin
     )
 
     # items = models.ManyToManyField(to=TaskItem, related_name="task", blank=True)
+
+    class Meta(BaseModelMixin.Meta):
+        ordering = ["title"]

@@ -37,7 +37,7 @@ class BaseModelMixin(DiffingMixin, GetModelInstanceAsDictMixin, models.Model):
     class Meta:
         abstract = True
         # ordering = ["-created_at", "-updated_at"]
-        ordering = ["-created_at"]
+        # ordering = ["-created_at"]
         permissions = [
             ("can_view_list", "Can view list view"),
             ("view_archive", "Can view archive"),

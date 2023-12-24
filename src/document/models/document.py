@@ -55,6 +55,9 @@ class Document(BaseModelMixin, GeneralStatusFieldMixin, StrModelMixin):
         related_name="documents",
     )
 
+    class Meta(BaseModelMixin.Meta):
+        ordering = ["title"]
+
     def save(self, *args, **kwargs):
         if self.job:
             self.document_section = DocumentSectionEnum.JOB
