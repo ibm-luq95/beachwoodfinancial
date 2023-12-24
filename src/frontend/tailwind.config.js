@@ -24,6 +24,7 @@ const projectPaths = [
 const contentPaths = [...projectPaths];
 console.log(`tailwindcss will scan ${contentPaths}`);
 module.exports = {
+  darkMode: "class",
   content: contentPaths,
   theme: {
     extend: {},
@@ -31,7 +32,6 @@ module.exports = {
   corePlugins: {
     aspectRatio: false,
   },
-  // darkMode: "class",
   plugins: [
     require("@tailwindcss/typography"),
     require("@tailwindcss/forms"),
