@@ -1,1 +1,6 @@
-
+model-bakery
+Coverage
+django_coverage_plugin
+pytest
+Selenium
+pytest-django

@@ -1,0 +1,11 @@
+[run]
+plugins = django_coverage_plugin
+source = .
+omit = */node_modules/*
+
+[report]
+show_missing = True
+
+
+[django_coverage_plugin]
+template_extensions = html, txt, tex, email
