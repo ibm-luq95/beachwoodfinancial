@@ -113,6 +113,7 @@ class Job(
     # objects = JobManager()
 
     class Meta(BaseModelMixin.Meta):
+        ordering = ["title"]
         permissions = BaseModelMixin.Meta.permissions + [
             ("list_abstract_job_template", "List abstract job template")
         ]

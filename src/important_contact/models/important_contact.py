@@ -43,6 +43,9 @@ class ImportantContact(BaseModelMixin):
     contact_notes = models.TextField(_("notes"), null=True, blank=True)
     custom_fields = models.JSONField(_("custom_fields"), null=True, blank=True)
 
+    class Meta(BaseModelMixin.Meta):
+        ordering = ["contact_label"]
+
     def __str__(self):
         # return f"Contact {self.contact_label} for client {self.client}"
         return f"{self.get_contact_label_display()} - {self.company_name}"

@@ -10,5 +10,5 @@ class Manager(BaseModelMixin, StaffMemberMixin, AccessProxyModelMixin):
         CustomUser (User): Django custom user model
     """
 
-    class Meta:
+    class Meta(BaseModelMixin.Meta, StaffMemberMixin.Meta):
         permissions = [("manager_user", "Manager User")]

@@ -68,6 +68,9 @@ class Client(BaseModelMixin, AccessProxyModelMixin):
     def __str__(self) -> str:
         return self.name
 
+    class Meta(BaseModelMixin.Meta):
+        ordering = ["name"]
+
     def save(self, *args, **kwargs):
         super(Client, self).save(*args, **kwargs)
         try:

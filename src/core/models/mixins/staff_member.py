@@ -30,6 +30,7 @@ class StaffMemberMixin(models.Model):
         return f"{self.user.fullname}"
 
     class Meta:
+        ordering = ["user__first_name"]
         abstract = True
 
     @property
