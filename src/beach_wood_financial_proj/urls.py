@@ -30,6 +30,7 @@ static_and_media_path_urls = static(
 
 urlpatterns = [
     path("admin/", admin.site.urls),
+    path("admin/defender/", include("defender.urls")),  # defender admin
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     # path("", include("home.urls"), name="home-urls"),
     path("logs/", include("log_viewer.urls")),
@@ -50,6 +51,7 @@ if settings.DEBUG:
     # urlpatterns.append(
     #     path("request-logs/", include("request_viewer.urls")),
     # )
+    # urlpatterns.append(path("admin/", admin.site.urls))
     urlpatterns.append(path("admin/doc/", include("django.contrib.admindocs.urls")))
     # urlpatterns.append(path("silk/", include("silk.urls", namespace="silk")))
     # urlpatterns.append(path("admin/", admin.site.urls))
