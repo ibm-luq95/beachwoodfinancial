@@ -50,6 +50,7 @@ class Note(BaseModelMixin, GetObjectSectionMixin, GeneralStatusFieldMixin, StrMo
     )
 
     class Meta(BaseModelMixin.Meta):
+        ordering = ["title"]
         verbose_name_plural = "notes"
 
     def save(self, *args, **kwargs):

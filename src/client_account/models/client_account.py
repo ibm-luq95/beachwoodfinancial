@@ -45,6 +45,9 @@ class ClientAccount(BaseModelMixin):
     )
     last_modified_date = models.DateTimeField(_("last_modified_date"), auto_now=True)
 
+    class Meta(BaseModelMixin.Meta):
+        ordering = ["account_name"]
+
     def __str__(self) -> str:
         return f"{self.account_name}"
 

@@ -33,7 +33,7 @@ class AssistantListView(
     model = AssistantProxy
     paginate_by = LIST_VIEW_PAGINATE_BY
     list_type = "list"
-    queryset = AssistantProxy.objects.get_queryset().order_by("-user__created_at")
+    # queryset = AssistantProxy.objects.get_queryset().order_by("-user__created_at")
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
