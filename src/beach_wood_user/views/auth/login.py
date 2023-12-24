@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-#
+from defender.decorators import watch_login
 from django.contrib import messages
 from django.contrib.auth import authenticate, login
 from django.contrib.messages.views import SuccessMessageMixin
@@ -50,6 +51,7 @@ class BWLoginViewBW(SuccessMessageMixin, BWCacheViewMixin, FormView):
 			kwargs.update({"initial": {"user_type": "manager"}})
 		return kwargs
 
+	# @watch_login()
 	def form_valid(self, form):
 		# This method is called when valid form data has been POSTed.
 		# It should return an HttpResponse.
