@@ -131,3 +131,5 @@ SILKY_PYTHON_PROFILER_RESULT_PATH = BASE_DIR / "media" / "profiles"
 #         },
 #     },
 # }
+
+TEMPLATES[0]["OPTIONS"]["debug"] = DEBUG
