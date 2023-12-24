@@ -1,5 +1,4 @@
 bpython
-Coverage
 django-debug-toolbar
 django-debugtools
 django-model-info
@@ -25,9 +24,6 @@ pyparsing
 pydot
 docutils
 PyPika
-pytest
-pytest-django
 remote-pdb
 rich
-Selenium
 termcolor
