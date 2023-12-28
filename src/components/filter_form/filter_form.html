@@ -14,7 +14,8 @@
                 <div class="flex flex-nowrap">
                     {# {{ filter_form.as_p }} #}
                     {% for filter_field in filter_form %}
-                    {{ filter_field }}
+                    {% bw_get_form_widget_attrs_as_dict filter_field.field as widget_attrs %}
+                    {{ widget_attrs }}
                     {% endfor %}
                 </div>
             </fieldset>
