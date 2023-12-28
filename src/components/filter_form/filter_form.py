@@ -37,6 +37,7 @@ class BWFilterForm(component.Component):
                 filter_form_action = reverse_lazy(filter_form_action)
         except:
             logger.warning(f"{traceback.format_exc()}")
+            pass
 
         return {
             "filter_form": filter_form,
