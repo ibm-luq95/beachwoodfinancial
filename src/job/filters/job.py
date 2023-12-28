@@ -24,7 +24,7 @@ class JobFilter(HelpfulFilterSet):
     categories = django_filters.ModelMultipleChoiceFilter(
         field_name="categories",
         queryset=JobCategory.objects.all(),
-        # widget=forms.CheckboxSelectMultiple,
+        widget=forms.CheckboxSelectMultiple,
         lookup_expr="exact",
     )
 
