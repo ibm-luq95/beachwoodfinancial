@@ -11,10 +11,12 @@
               action="{{ filter_form_action }}">
             <fieldset form="{{ filter_form_id }}"
                       {% if is_disabled is True %}disabled{% endif %}>
-                <div class="flex flex-nowrap">
-                    {# {{ filter_form.as_p }} #}
+                <div class="flex flex-wrap">
+                    <!-- Input -->
                     {% for filter_field in filter_form %}
+                        {# {{ filter_field|field_type }} #}
                         {% bw_get_form_widget_attrs_as_dict filter_field.field as widget_attrs %}
+                        {# {{ filter_field.field|bw_get_form_field_type }} #}
                         {% if filter_field|field_type == "datefield" or filter_field|field_type == "emailfield" or filter_field|field_type == "passwordfield" or filter_field|field_type == "charfield" or filter_field|field_type == 'datetimefield' or filter_field|field_type == "urlfield" or filter_field|field_type == "decimalfield" or filter_field|field_type == "integerfield" or filter_field|field_type == "slugfield" or filter_field|field_type == "uuidfield" %}
                             <div class="mr-3 mb-1">
                                 {% with placeholder="placeholder:"|add:widget_attrs.placeholder %}
@@ -57,7 +59,7 @@
                                     {% if filter_field.field.widget.choices %}
                                         {% if filter_field.field.widget|bw_get_form_field_type == "Select" or filter_field.field.widget|bw_get_form_field_type == "SelectMultiple" %}
                                             {% with select_multiple=filter_field.field.widget|bw_get_form_field_type %}
-                                                {# {% render_field filter_field class+=BW_PRELINE_FILTER_SELECT_INPUT_DEFAULT placeholder=widget_attrs.placeholder disabled="disabled" %} #}
+                                                {% render_field filter_field class+=BW_PRELINE_FILTER_SELECT_INPUT_DEFAULT placeholder=widget_attrs.placeholder disabled="disabled" %}
                                             {% endwith %}
                                         {% elif filter_field.field.widget|bw_get_form_field_type == "CheckboxSelectMultiple" or filter_field.field|bw_get_form_field_type == "MultipleChoiceField" %}
                                             {% for checkbox_field in filter_field %}
@@ -66,7 +68,7 @@
                                         {% endif %}
                                     {% else %}
                                         <p class="text-yellow-500 font-semibold text-[14px] relative top-2">
-                                            {% translate "No - "|add:field.label %}
+                                            {% translate "No - "|add:filter_field.field.label %}
                                         </p>
                                     {% endif %}
                                     <p class="text-xs text-gray-500 mt-2"
@@ -75,8 +77,23 @@
                                     </p>
                                 </div>
                             </div>
+                        {% else %}
+                            <div class="mr-3 mb-1">
+                                <label for="{{ filter_field.id_for_label }}"
+                                       class="block text-[13px] font-medium mb-2 dark:text-white">
+                                    {{ filter_field.field.label }}
+                                </label>
+                                <div class="relative">
+                                    {% render_field filter_field class+=BW_PRELINE_FILTER_SELECT_INPUT_DEFAULT placeholder=filter_field.field.label disabled="disabled" %}
+                                    <p class="text-xs text-gray-500 mt-2"
+                                       id="{{ filter_field.id_for_label }}">
+                                        {{ filter_field.help_text }}
+                                    </p>
+                                </div>
+                            </div>
                         {% endif %}
                     {% endfor %}
+                    <!-- End Input -->
                 </div>
             </fieldset>
         </form>
