@@ -57,7 +57,7 @@
                                     {% if filter_field.field.widget.choices %}
                                         {% if filter_field.field.widget|bw_get_form_field_type == "Select" or filter_field.field.widget|bw_get_form_field_type == "SelectMultiple" %}
                                             {% with select_multiple=filter_field.field.widget|bw_get_form_field_type %}
-                                                {% render_field filter_field class+=BW_PRELINE_FILTER_SELECT_INPUT_DEFAULT placeholder=widget_attrs.placeholder disabled="disabled" %}
+                                                {# {% render_field filter_field class+=BW_PRELINE_FILTER_SELECT_INPUT_DEFAULT placeholder=widget_attrs.placeholder disabled="disabled" %} #}
                                             {% endwith %}
                                         {% elif filter_field.field.widget|bw_get_form_field_type == "CheckboxSelectMultiple" or filter_field.field|bw_get_form_field_type == "MultipleChoiceField" %}
                                             {% for checkbox_field in filter_field %}
