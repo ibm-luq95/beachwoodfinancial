@@ -12,7 +12,10 @@
             <fieldset form="{{ filter_form_id }}"
                       {% if is_disabled is True %}disabled{% endif %}>
                 <div class="flex flex-nowrap">
-                    {{ filter_form.as_p }}
+                    {# {{ filter_form.as_p }} #}
+                    {% for filter_field in filter_form %}
+                    {{ filter_field }}
+                    {% endfor %}
                 </div>
             </fieldset>
         </form>
