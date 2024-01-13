@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-#
 import traceback
-from pathlib import Path
+from pathlib import Path, PosixPath
 import pandas as pd
 from prettytable import PrettyTable
 import numpy as np
@@ -14,6 +14,8 @@ from client.models import ClientProxy
 from client_account.models import ClientAccount
 from core.management.mixins import CommandStdOutputMixin
 from core.utils import debugging_print, PasswordHasher
+from core.utils.developments.debugging_print_object import BWDebuggingPrint
+from core.utils.developments.debugging_print_types import DPOTableOptions
 from core.utils.grab_env_file import grab_env_file
 from job.models import JobProxy
 from special_assignment.models import SpecialAssignmentProxy
@@ -103,19 +105,22 @@ class Command(BaseCommand, CommandStdOutputMixin):
 
                         self.stdout_output("success", _("All data deleted!"))
                         return
-                migrated_data_dir = (
+                migrated_data_dir: PosixPath = (
                     settings.BASE_DIR
-                    / "core"
-                    / "management"
-                    / "commands"
-                    / "migrated_data"
+                    / settings.BASE_DIR.parent
+                    / "docs"
+                    / "Production Exported Data"
                 )
-
+                # BWDebuggingPrint.pprint(migrated_data_dir)
+                # BWDebuggingPrint.pprint(migrated_data_dir.exists())
+                # return
                 # debugging_print(migrated_data_dir)
                 if migrated_data_dir.exists() is False:
                     raise FileNotFoundError(_("Migrated old data not exists!"))
                 if apps:
-                    self.stdout_output("warn", _(f"First import client from admin panel!!"))
+                    self.stdout_output(
+                        "warn", _(f"First import client from admin panel!!")
+                    )
                     if "job" in apps:
                         job_pretty_table = PrettyTable()
                         job_pretty_table.field_names = [
@@ -392,7 +397,8 @@ class Command(BaseCommand, CommandStdOutputMixin):
                                 )
 
                     if "client_account" in apps:
-                        old_key = "i1hUQs_Y2U_UOPMYg1T6SAbJahDrirvZLvuVxsoo71I="
+                        env_config = grab_env_file()
+                        old_key = env_config("OLD_PRODUCTION_SECRET_KEY", cast=str)
                         old_key = bytes(old_key, "ascii")
                         client_account_pretty_table = PrettyTable()
                         client_account_pretty_table.field_names = [
@@ -409,7 +415,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
                         p_table_client_accounts = list()
                         new_client_accounts_list = []
                         client_account_file_path = (
-                            migrated_data_dir / "CompanyService-2023-09-05.csv"
+                            migrated_data_dir / "ClientAccount-2024-01-11.csv"
                         )
                         client_account_df = pd.read_csv(client_account_file_path)
                         client_account_df = client_account_df.replace(np.nan, None)
@@ -427,16 +433,18 @@ class Command(BaseCommand, CommandStdOutputMixin):
                                 "id": client_account_df.loc[i, "id"],
                                 "client": client_obj,
                                 "service_name": client_account_df.loc[i, "service_name"],
-                                "account_name": client_account_df.loc[i, "label"],
-                                "account_url": client_account_df.loc[i, "url"],
+                                "account_name": client_account_df.loc[i, "account_name"],
+                                "account_url": client_account_df.loc[i, "account_url"],
                                 "status": client_account_df.loc[i, "status"],
                                 # "account_email": client_account_df.loc[
                                 #     i, "account_email"
                                 # ],
-                                "account_username": client_account_df.loc[i, "username"],
+                                "account_username": client_account_df.loc[
+                                    i, "account_username"
+                                ],
                                 "is_deleted": client_account_df.loc[i, "is_deleted"],
                                 "account_password": PasswordHasher.decrypt(
-                                    client_account_df.loc[i, "password"], old_key
+                                    client_account_df.loc[i, "account_password"], old_key
                                 ),
                             }
                             if client_account_df.loc[i, "created_at"]:
@@ -464,26 +472,49 @@ class Command(BaseCommand, CommandStdOutputMixin):
                                     }
                                 )
                             new_client_accounts_list.append(new_client_account_data)
+                        # BWDebuggingPrint.pprint(new_client_accounts_list)
+                        # return
 
                         for ca in new_client_accounts_list:
                             client_account_obj = ClientAccount.objects.create(**ca)
                             p_table_client_accounts.append(
                                 [
-                                    client_account_obj.id,
-                                    client_account_obj.client,
+                                    str(client_account_obj.id),
+                                    str(client_account_obj.client),
                                     client_account_obj.service_name,
                                     client_account_obj.account_name,
                                     client_account_obj.account_url,
                                     # client_account_obj.account_email,
                                     client_account_obj.account_password,
-                                    client_account_obj.is_deleted,
-                                    client_account_obj.created_at,
+                                    str(client_account_obj.is_deleted),
+                                    str(client_account_obj.created_at),
                                 ]
                             )
-                        client_account_pretty_table.add_rows(p_table_client_accounts)
-                        print(client_account_pretty_table)
+                        table_header_cols = [
+                            "ID",
+                            "Client",
+                            "Service Name",
+                            "Account Name",
+                            "Account URL",
+                            # "Account Email",
+                            "Account Password",
+                            "Is Deleted",
+                            "Created At",
+                        ]
+                        table_options: DPOTableOptions = {
+                            "show_header": True,
+                            "highlight": True,
+                            "show_lines": True,
+                            "title": "Client Accounts",
+                        }
+                        table_obj = BWDebuggingPrint.table(
+                            columns_headers=table_header_cols,
+                            rows=p_table_client_accounts,
+                            table_options=table_options,
+                        )
 
         except KeyboardInterrupt as kerror:
             self.stdout_output("info", _("Canceled by user."))
         except Exception as ex:
-            self.stdout_output("error", traceback.format_exc())
+            # self.stdout_output("error", traceback.format_exc())
+            BWDebuggingPrint.print_exception(is_show_locales=True)
