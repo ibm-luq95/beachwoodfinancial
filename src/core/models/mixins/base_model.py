@@ -30,7 +30,6 @@ class BaseModelMixin(DiffingMixin, GetModelInstanceAsDictMixin, models.Model):
     )
 
     objects = SoftDeleteManager()
-    # objects = models.Manager()
     original_objects = models.Manager()
     archive_objects = ArchiveManager()
 
