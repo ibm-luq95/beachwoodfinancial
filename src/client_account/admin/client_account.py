@@ -7,4 +7,11 @@ from core.admin import BWBaseAdminModelMixin
 
 @admin.register(ClientAccount)
 class ClientAccountAdmin(BWBaseAdminModelMixin):
-    pass
+    list_display = [
+        "client",
+        "service_name",
+        "account_name",
+        "is_services",
+        "account_username",
+        "status",
+    ]
