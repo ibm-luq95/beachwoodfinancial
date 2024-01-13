@@ -14,14 +14,14 @@ INSTALLED_APPS = INSTALLED_APPS + [
     "django_model_info.apps.DjangoModelInfoConfig",
     # "silk",
     # "django_pdb",
-    # "request_viewer",
+    "request_viewer",
 ]
 
 # INSTALLED_APPS.insert(0, "django_pdb")
 
 MIDDLEWARE = MIDDLEWARE + [
-    # "request_viewer.middleware.RequestViewerMiddleware",
-    # "request_viewer.middleware.ExceptionMiddleware",
+    "request_viewer.middleware.RequestViewerMiddleware",
+    "request_viewer.middleware.ExceptionMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "debugtools.middleware.XViewMiddleware",
     "django.contrib.admindocs.middleware.XViewMiddleware",
@@ -92,16 +92,16 @@ REQUEST_VIEWER = {"LIVE_MONITORING": False, "WHITELISTED_PATH": []}
 X_FRAME_OPTIONS = "SAMEORIGIN"
 
 # django-silk settings
-SILKY_PYTHON_PROFILER = True
-SILKY_PYTHON_PROFILER_BINARY = True
-SILKY_META = True
-# SILKY_ANALYZE_QUERIES = True
-# SILKY_EXPLAIN_FLAGS = {'format':'JSON', 'costs': True}
-SILKY_PERMISSIONS = lambda user: user.is_superuser
-SILKY_AUTHENTICATION = True  # User must login
-SILKY_AUTHORISATION = True  # User must have permissions
-SILKY_PYTHON_PROFILER_EXTENDED_FILE_NAME = True
-SILKY_PYTHON_PROFILER_RESULT_PATH = BASE_DIR / "media" / "profiles"
+# SILKY_PYTHON_PROFILER = True
+# SILKY_PYTHON_PROFILER_BINARY = True
+# SILKY_META = True
+# # SILKY_ANALYZE_QUERIES = True
+# # SILKY_EXPLAIN_FLAGS = {'format':'JSON', 'costs': True}
+# SILKY_PERMISSIONS = lambda user: user.is_superuser
+# SILKY_AUTHENTICATION = True  # User must login
+# SILKY_AUTHORISATION = True  # User must have permissions
+# SILKY_PYTHON_PROFILER_EXTENDED_FILE_NAME = True
+# SILKY_PYTHON_PROFILER_RESULT_PATH = BASE_DIR / "media" / "profiles"
 
 # Logging configs
 # LOGGING = {
