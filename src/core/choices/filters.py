@@ -14,7 +14,7 @@ class DateFiltersEnum(models.TextChoices):
 
 
 class DateYearsFiltersEnum(models.TextChoices):
-    ALL = "all", _("All")
+    ALL = 0, _("All")
     Y2020 = 2020, _("2020")
     Y2021 = 2021, _("2021")
     Y2022 = 2022, _("2022")

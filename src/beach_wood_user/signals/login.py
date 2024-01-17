@@ -7,7 +7,7 @@ from django.dispatch import receiver
 from core.utils import debugging_print
 
 
-@receiver(user_logged_in)
+# @receiver(user_logged_in)
 def log_user_login(sender, request, user, **kwargs):
     # if user.user_type == "manager":
     debugging_print("LOGIN NOW")

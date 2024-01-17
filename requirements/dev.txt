@@ -21,9 +21,11 @@ pipdeptree
 prettyprinter
 pygraphviz
 pyparsing
+pdbpp
 pydot
 docutils
 PyPika
 remote-pdb
 rich
 termcolor
+Werkzeug

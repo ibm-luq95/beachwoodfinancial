@@ -9,6 +9,8 @@ isort
 mypy
 mypy-extensions
 pep8
+python-decouple-typed
+drf-typed
 pycodestyle
 pydocstyle
 pylama
