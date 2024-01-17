@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-#
+from core.choices import (
+    BeachWoodUserStatusEnum,
+    BeachWoodUserTypeEnum,
+    BeachWoodUserTypesEnum,
+)
+from core.models.mixins import BaseModelMixin
+from core.utils import get_formatted_logger
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
-from django.db import models, transaction
+from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext as _
 from guardian.mixins import GuardianUserMixin
 
-from core.choices import (
-    BeachWoodUserTypeEnum,
-    BeachWoodUserStatusEnum,
-    BeachWoodUserTypesEnum,
-)
-from core.constants.users import CON_BOOKKEEPER, CON_MANAGER
-from core.models.mixins import BaseModelMixin
-from core.utils import get_formatted_logger
 from .manager import BeachWoodUserManager
 
 # TODO: remove the custom logger before push (only for development)
@@ -82,9 +81,7 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin, GuardianUserMix
 
     def save(self, *args, **kwargs):
         self.email = self.email.lower()
-        # kwargs.update({"update_fields": ["email"]})
         super(BWUser, self).save(*args, **kwargs)
-        # super().save(*args, **kwargs)
 
     @property
     def get_staff_member_object(self) -> dict:

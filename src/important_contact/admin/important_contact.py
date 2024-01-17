@@ -7,4 +7,13 @@ from core.admin import BWBaseAdminModelMixin
 
 @admin.register(ImportantContact)
 class ImportantContactAdmin(BWBaseAdminModelMixin):
-    pass
+    list_display = [
+        "get_client",
+        "contact_label",
+        "company_name",
+        "contact_first_name",
+        "contact_last_name",
+    ]
+
+    def get_client(self, obj: ImportantContact):
+        return obj.client.get().name

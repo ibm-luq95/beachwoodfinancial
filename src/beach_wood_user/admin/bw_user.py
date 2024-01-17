@@ -2,6 +2,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from django.utils.translation import gettext as _
+from import_export.admin import ImportExportModelAdmin
 
 from beach_wood_user.forms import BWUserCreationForm, BWUserChangeForm
 from beach_wood_user.models import BWUser
@@ -9,7 +10,7 @@ from core.admin import BWBaseAdminModelMixin
 
 
 @admin.register(BWUser)
-class BWUserAdmin(UserAdmin):
+class BWUserAdmin(ImportExportModelAdmin, UserAdmin):
     add_form = BWUserCreationForm
     form = BWUserChangeForm
     ordering = ("email",)

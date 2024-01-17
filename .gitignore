@@ -572,3 +572,4 @@ pnpm-lock.yaml
 _base_app_packages
 src/cert.pem
 src/key.pem
+/.env_dotenv

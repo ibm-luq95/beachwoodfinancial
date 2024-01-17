@@ -1,0 +1,14 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"type": "npm",
+			"script": "watch",
+			"path": "src/frontend",
+			"group": "build",
+			"problemMatcher": [],
+			"label": "npm: watch - src/frontend",
+			"detail": "webpack --watch --config webpack/webpack.config.watch.js"
+		}
+	]
+}

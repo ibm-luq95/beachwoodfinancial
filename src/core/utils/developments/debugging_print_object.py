@@ -44,6 +44,10 @@ class BWDebuggingPrint:
         if self.is_debugging is False:
             print("Debugging is not enabled!")
 
+    @classmethod
+    def get_console_obj(cls) -> Console:
+        return cls.console
+
     def print_json(self, obj: Any) -> None:
         """
         Print the given object as JSON.
@@ -71,11 +75,12 @@ class BWDebuggingPrint:
         """
         cls.console.log(obj)
 
-    def print_exception(self, is_show_locales: bool = False) -> None:
+    @classmethod
+    def print_exception(cls, is_show_locales: bool = False) -> None:
         """
         Print the given exception.
         """
-        self.console.print_exception(show_locals=is_show_locales)
+        cls.console.print_exception(show_locals=is_show_locales)
 
     @classmethod
     def print(cls, obj: Any, justify: Literal["left", "center", "right"] = "left") -> None:
@@ -108,11 +113,12 @@ class BWDebuggingPrint:
         Print a panel with the given text.
         """
         print(Panel.fit(str(text_content), title=title, subtitle=subtitle))
-
+    
+    @classmethod
     def table(
-        self,
+        cls,
         columns_headers: list,
-        rows: List[list],
+        rows: List[str],
         table_options: Optional[DPOTableOptions] = None,
         return_table: Optional[bool] = False,
     ) -> None | Table:
@@ -124,12 +130,12 @@ class BWDebuggingPrint:
         else:
             table = Table()
         for header in columns_headers:
-            table.add_column(header, justify="center", no_wrap=True)
+            table.add_column(header)
         for row in rows:
             table.add_row(*row)
 
         if return_table is False:
-            self.console.print(table)
+            cls.console.print(table)
         else:
             return table
 

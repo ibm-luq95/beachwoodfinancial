@@ -1,6 +1,6 @@
 [tool.black]
 line-length = 91
-target-version = ['py311']
+target-version = ['py312']
 include = '\.pyi?$'
 exclude = '''
 /(
@@ -22,12 +22,13 @@ exclude = '''
 '''
 
 [tool.isort]
-py_version = 311
+py_version = 312
 profile = "django"
-known_django = "django"
+# known_django = "django"
 line_length = 91
 force_single_line = true
-known_first_party = "django_components"
+# known_first_party = "django_components"
+use_parentheses = true
 #sections = ["FUTURE", "STDLIB", "THIRDPARTY", "DJANGO", "FIRSTPARTY", "LOCALFOLDER"]
 #skip = [".tox", "docs"]
 
@@ -38,7 +39,7 @@ indent = 4
 exclude = ".venv,venv,.tox"
 blank_line_after_tag = "load,extends,include"
 blank_line_before_tag = "load,extends,include"
-max_line_length = 100
+max_line_length = 95
 format_attribute_template_tags = true
 format_js = true
 format_css = true
@@ -47,31 +48,32 @@ ignore = "H006"
 [tool.ruff]
 line-length = 91
 show-fixes = true
-target-version = "py311"
+target-version = "py312"
 indent-width = 4
 # Exclude a variety of commonly ignored directories.
 exclude = [
-    ".bzr",
-    ".direnv",
-    ".eggs",
-    ".git",
-    ".git-rewrite",
-    ".hg",
-    ".mypy_cache",
-    ".nox",
-    ".pants.d",
-    ".pytype",
-    ".ruff_cache",
-    ".svn",
-    ".tox",
-    ".venv",
-    "__pypackages__",
-    "_build",
-    "buck-out",
-    "build",
-    "dist",
-    "node_modules",
-    "venv",
+  ".bzr",
+  ".direnv",
+  ".eggs",
+  ".git",
+  ".git-rewrite",
+  ".hg",
+  ".mypy_cache",
+  ".nox",
+  ".pants.d",
+  ".pytype",
+  ".ruff_cache",
+  ".svn",
+  ".tox",
+  ".venv",
+  "__pypackages__",
+  "_build",
+  "buck-out",
+  "build",
+  "dist",
+  "node_modules",
+  "venv",
+
 ]
 
 [tool.ruff.lint.isort]
@@ -118,4 +120,10 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 #     "I",
 # ]
 
+
 [tool.bandit]
+
+
+[tool.mypy]
+warn_return_any = true
+warn_unused_configs = true
