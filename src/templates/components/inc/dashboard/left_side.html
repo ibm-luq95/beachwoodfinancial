@@ -231,6 +231,7 @@
                 </li>
             {% endif %}
             {# {% if request.user.is_superuser is True and request.user.user_genre == CON_DEVELOPER %} #}
+            {% if request.user.user_type == CON_MANAGER %}
                 <li class="hs-accordion" id="reports-accordion">
                     <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
                        href="javascript:;">
@@ -306,7 +307,7 @@
                         </ul>
                     </div>
                 </li>
-            {# {% endif %} #}
+            {% endif %}
             <li class="hs-accordion" id="clients-accordion">
                 <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
                    href="javascript:;">
