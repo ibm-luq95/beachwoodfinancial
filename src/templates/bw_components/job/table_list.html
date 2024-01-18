@@ -156,7 +156,7 @@
                         <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.title|bw_truncate_titles }}</span>
                     </a>
                     {% if object.categories.all %}
-                        <div class="my-1 text-left">
+                        <div class="my-1 text-left flex flex-wrap">
                             {% for category in object.categories.all %}
                                 <div class="hs-tooltip inline-block mr-0.5">
                                     <a href="#" class="hs-tooltip-toggle">
@@ -174,7 +174,7 @@
                 <td class="h-px w-px whitespace-nowrap">
                     <div class="px-5 py-3">
                         <a href="{% url 'dashboard:client:details' object.client.pk %}"
-                           class="text-sm text-gray-600 dark:text-gray-400">{{ object.client }}</a>
+                           class="text-sm {{ BW_PRELINE_SECONDARY_ANCHOR_TAG_DEFAULT_COLOR }} italic">{{ object.client }}</a>
                     </div>
                 </td>
             {% endif %}
