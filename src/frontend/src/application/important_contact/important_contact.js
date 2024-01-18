@@ -1,6 +1,7 @@
 "use strict";
 
 import { sendRequest } from "../../utils/apis/apis";
+import { bwCleanApiError } from "../../utils/apis/clean_errors";
 import { CSRFINPUTNAME, SUCCESSTIMEOUTSECS } from "../../utils/constants";
 import {
   disableAndEnableFieldsetItems,
@@ -47,8 +48,19 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
             }, SUCCESSTIMEOUTSECS);
           })
           .catch((error) => {
+            const er = bwCleanApiError(error);
+            if (er) {
+              er.forEach((erElement) => {
+                console.warn(erElement);
+                showToastNotification(
+                  `Error: ${erElement["detail"]} - ${erElement["attr"]}`,
+                  "danger",
+                );
+              });
+            } else {
+              showToastNotification("Error while add new contact!", "danger");
+            }
             console.error(error);
-            showToastNotification(`${error["errors"].toString()}`, "error");
             disableAndEnableFieldsetItems({
               formElement: createImportantContactForm,
               state: "enable",

@@ -3,6 +3,7 @@
 "use strict";
 
 import { sendRequest } from "../../utils/apis/apis";
+import { bwCleanApiError } from "../../utils/apis/clean_errors";
 import { UploadFileRequest } from "../../utils/apis/upload_file";
 import { CSRFINPUTNAME, SUCCESSTIMEOUTSECS } from "../../utils/constants";
 import {
@@ -46,8 +47,18 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
             }, SUCCESSTIMEOUTSECS);
           })
           .catch((error) => {
+            const er = bwCleanApiError(error);
+            if (er) {
+              er.forEach((erElement) => {
+                showToastNotification(
+                  `Error: ${erElement["detail"]} - ${erElement["attr"]}`,
+                  "danger",
+                );
+              });
+            } else {
+              showToastNotification(`Error adding note!`, "danger");
+            }
             console.error(error);
-            showToastNotification(`${JSON.stringify(error["user_error_msg"])}`, "danger");
           })
           .finally(() => {
             disableAndEnableFieldsetItems({

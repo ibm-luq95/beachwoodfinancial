@@ -1,6 +1,7 @@
 "use strict";
 
 import { fetchUrlPathByName, sendRequest } from "../../utils/apis/apis";
+import { bwCleanApiError } from "../../utils/apis/clean_errors";
 import { CSRFINPUTNAME, SUCCESSTIMEOUTSECS } from "../../utils/constants";
 import {
   disableAndEnableFieldsetItems,
@@ -43,7 +44,17 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
           })
           .catch((error) => {
             console.error(error);
-            showToastNotification(`Error while assign client to bookkeeper`, "danger");
+            const er = bwCleanApiError(error);
+            if (er) {
+              er.forEach((erElement) => {
+                showToastNotification(
+                  `Error: ${erElement["detail"]} - ${erElement["attr"]}`,
+                  "danger",
+                );
+              });
+            } else {
+              showToastNotification(`Error while assign client to bookkeeper`, "danger");
+            }
           })
           .finally(() => {
             disableAndEnableFieldsetItems({

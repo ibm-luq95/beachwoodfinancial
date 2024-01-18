@@ -1,5 +1,6 @@
 "use strict";
 
+import { bwCleanApiError } from "../../utils/apis/clean_errors";
 import { UploadFileRequest } from "../../utils/apis/upload_file";
 import { CSRFINPUTNAME, SUCCESSTIMEOUTSECS } from "../../utils/constants";
 import {
@@ -64,8 +65,18 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
             }, SUCCESSTIMEOUTSECS);
           })
           .catch((error) => {
+            const er = bwCleanApiError(error);
+            if (er) {
+              er.forEach((erElement) => {
+                showToastNotification(
+                  `Error: ${erElement["detail"]} - ${erElement["attr"]}`,
+                  "danger",
+                );
+              });
+            } else {
+              showToastNotification("Error while add new reply!", "error");
+            }
             console.error(error);
-            showToastNotification("Error while add new reply!", "error");
           })
           .finally(() => {});
       });

@@ -1,6 +1,7 @@
 "use strict";
 
 import { sendRequest } from "../../utils/apis/apis";
+import { bwCleanApiError } from "../../utils/apis/clean_errors";
 import { CSRFINPUTNAME, SUCCESSTIMEOUTSECS } from "../../utils/constants";
 import {
   disableAndEnableFieldsetItems,
@@ -44,12 +45,28 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
           })
           .catch((error) => {
             console.error(error);
-            showToastNotification(`Error while add new job`, "danger");
+            const er = bwCleanApiError(error);
+            if (er) {
+              er.forEach((erElement) => {
+                showToastNotification(
+                  `Error: ${erElement["detail"]} - ${erElement["attr"]}`,
+                  "danger",
+                );
+                const errorInput = createJobForm.elements[erElement["attr"]];
+                // if (errorInput) {
+                //   console.log(errorInput.classList);
+                //   errorInput.classList.remove("border-gray-200");
+                //   errorInput.classList.add(...["border-red-500","focus:border-red-500","focus:ring-red-500"]);
+                // }
+              });
+            } else {
+              showToastNotification(`Error while add new job `, "danger");
+            }
           })
           .finally(() => {
             disableAndEnableFieldsetItems({
               formElement: createJobForm,
-              state: "enable",
+              state: "en",
             });
           });
       });
