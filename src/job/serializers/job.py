@@ -5,12 +5,14 @@ from rest_framework import serializers
 from beach_wood_user.models import BWUser
 from client.models import ClientProxy
 from core.constants import EXCLUDED_FIELDS
+from core.serializers.validate_due_date import ValidateDueDateSerializerMixin
+from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from job.models import JobProxy
 from job_category.models import JobCategory
 from task.serializers import TaskSerializer
 
 
-class JobSerializer(serializers.ModelSerializer):
+class JobSerializer(ValidateDueDateSerializerMixin, serializers.ModelSerializer):
     tasks = TaskSerializer(many=True, read_only=True, required=False)
     client = serializers.PrimaryKeyRelatedField(
         queryset=ClientProxy.objects.all(), many=False
@@ -32,16 +34,6 @@ class JobSerializer(serializers.ModelSerializer):
         model = JobProxy
         exclude = EXCLUDED_FIELDS
         depth = 2
-
-    def validate(self, data):
-        """
-        Check that start is before finish.
-        """
-        now = timezone.now().date()
-        if self.context.get("request").method != "PATCH":
-            if data["due_date"] < now:
-                raise serializers.ValidationError({"due_date": _("Due date old!")})
-        return data
 
     def update(self, instance, validated_data):
         categories = validated_data.get("categories")
