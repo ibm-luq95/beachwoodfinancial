@@ -61,7 +61,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
                 for i in range(0, number, 1):
                     fake_data = {
                         # "client": random.choice(all_clients),
-                        "managed_by": random.choice(all_users),
+                        # "managed_by": random.choice(all_users),
                         "title": faker.job(),
                         "description": faker.paragraph(nb_sentences=30),
                         "note": faker.sentence(nb_words=15),
@@ -69,11 +69,12 @@ class Command(BaseCommand, CommandStdOutputMixin):
                         "state": random.choice(JobStateEnum.choices)[0],
                         "status": random.choice(JobStatusEnum.choices)[0],
                         "created_at": faker.date_time_between_dates(
-                            datetime_start="-4y", datetime_end="now"
+                            datetime_start="-6m", datetime_end="now"
                         ),
                         "start_date": faker.date_between(
                             # start_date="-1y", end_date="today"
-                            start_date="-2d", end_date="-1d"
+                            start_date="-2d",
+                            end_date="-1d",
                         ),
                         # "due_date": faker.date_between(start_date="-1y", end_date="today"),
                         "due_date": faker.date_between(start_date="+4d", end_date="+5d"),
@@ -82,6 +83,12 @@ class Command(BaseCommand, CommandStdOutputMixin):
                         fake_data["client"] = ClientProxy.objects.get(pk=client)
                     else:
                         fake_data["client"] = random.choice(all_clients)
+                    client_bookkeepers = fake_data["client"].bookkeepers.all()
+                    if client_bookkeepers:
+                        bookkeepers_users = [
+                            bookkeeper.user for bookkeeper in client_bookkeepers
+                        ]
+                        fake_data["managed_by"] = random.choice(bookkeepers_users)
                     new_job = JobProxy.objects.create(**fake_data)
                     cats = random.sample(list(all_job_categories), 2)
                     new_job.categories.add(*cats)
