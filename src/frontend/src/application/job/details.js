@@ -1,6 +1,7 @@
 "use strict";
 
 import { sendRequest } from "../../utils/apis/apis";
+import { bwCleanApiError } from "../../utils/apis/clean_errors";
 import { CSRFINPUTNAME, SUCCESSTIMEOUTSECS } from "../../utils/constants";
 import {
   disableAndEnableFieldsetItems,
@@ -95,8 +96,18 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
             }, SUCCESSTIMEOUTSECS);
           })
           .catch((error) => {
+            const er = bwCleanApiError(error);
+            if (er) {
+              er.forEach((erElement) => {
+                showToastNotification(
+                  `Error: ${erElement["detail"]} - ${erElement["attr"]}`,
+                  "danger",
+                );
+              });
+            } else {
+              showToastNotification(`Error while update job!`, "danger");
+            }
             console.error(error);
-            showToastNotification(`Error while update job!`, "danger");
           })
           .finally(() => {
             disableAndEnableFieldsetItems({

@@ -6,6 +6,7 @@ from django.utils import timezone
 from django.utils.dateparse import parse_date
 from django.utils.text import slugify
 from django.utils.translation import gettext as _
+from rest_framework import serializers
 
 from client.models import ClientProxy
 from core.choices import JobStatusEnum, JobTypeEnum, JobStateEnum
@@ -14,6 +15,7 @@ from core.models.mixins.access_proxy_models_mixin import AccessProxyModelMixin
 from core.models.mixins.cron_column_mixin import CronColumnMixin
 from django.core.exceptions import ValidationError
 
+from core.models.mixins.validate_due_date import ValidateDueDateMixin
 from job_category.models import JobCategory
 
 # from task.models import Task
@@ -21,6 +23,7 @@ from .help_messages import JOB_HELP_MESSAGES
 
 
 class Job(
+    ValidateDueDateMixin,
     BaseModelMixin,
     StartAndDueDateMixin,
     AccessProxyModelMixin,
@@ -123,13 +126,6 @@ class Job(
 
     def save(self, *args, **kwargs):
         self.slug = slugify(self.title)
-        if isinstance(self.due_date, str):
-            due_date = parse_date(self.due_date)
-        else:
-            due_date = self.due_date
-        if self.get_changed_columns().get("due_date") != due_date:
-            if due_date < timezone.now().date():
-                raise ValidationError("The date cannot be in the past!")
         super(Job, self).save(*args, **kwargs)
 
     def get_all_not_completed_tasks(self):
