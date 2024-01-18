@@ -165,11 +165,12 @@ const disableAndEnableFieldsetItems = ({ formElement, state }) => {
   SessionStorageManagement.clear();
   const stateLower = state.toLowerCase();
   const fieldset = formElement.querySelector("fieldset");
+  // console.log(fieldset);
   const disabledInputCssClasses = [
     "cursor-not-allowed",
     "opacity-70",
     // "pointer-events-none",
-    "border-gray-200",
+    // "border-gray-200",
     "bg-gray-100",
   ];
   // const allFormInputs = document.querySelectorAll(`[data-form-id=${formElement.id}]`);
@@ -183,13 +184,14 @@ const disableAndEnableFieldsetItems = ({ formElement, state }) => {
     case "enable":
     case "e":
     case "en":
+      // console.log("EEENNN");
       fieldset.disabled = false;
       submitBtn.disabled = false;
       // submitBtn.classList.remove(...["bg-blue-400"]);
       if (allFormInputs.length > 0) {
         allFormInputs.forEach((element) => {
           element.disabled = false;
-          // element.classList.remove(...disabledInputCssClasses);
+          element.classList.remove(...disabledInputCssClasses);
           // const inputCssClass = SessionStorageManagement.getItem(element.id);
           // element.className = inputCssClass;
           // SessionStorageManagement.deleteItem(element.id);

@@ -1,5 +1,6 @@
 "use strict";
 import { sendRequest } from "../../utils/apis/apis";
+import { bwCleanApiError } from "../../utils/apis/clean_errors";
 import { CSRFINPUTNAME } from "../../utils/constants";
 import {
   disableAndEnableFieldsetItems,
@@ -41,8 +42,18 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
           }, 1500);
         })
         .catch((error) => {
+          const er = bwCleanApiError(error);
+          if (er) {
+            er.forEach((erElement) => {
+              showToastNotification(
+                `Error: ${erElement["detail"]} - ${erElement["attr"]}`,
+                "danger",
+              );
+            });
+          } else {
+            showToastNotification(`Error adding task!`, "danger");
+          }
           console.error(error);
-          showToastNotification(`${JSON.stringify(error["user_error_msg"])}`, "danger");
         })
         .finally(() => {
           disableAndEnableFieldsetItems({

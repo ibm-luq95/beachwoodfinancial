@@ -2,6 +2,7 @@
 
 "use strict";
 
+import { bwCleanApiError } from "../../utils/apis/clean_errors";
 import { UploadFileRequest } from "../../utils/apis/upload_file";
 import { CSRFINPUTNAME, SUCCESSTIMEOUTSECS } from "../../utils/constants";
 import {
@@ -47,7 +48,17 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
           })
           .catch((error) => {
             console.error(error);
-            showToastNotification("Error while add new discussion!", "error");
+            const er = bwCleanApiError(error);
+            if (er) {
+              er.forEach((erElement) => {
+                showToastNotification(
+                  `Error: ${erElement["detail"]} - ${erElement["attr"]}`,
+                  "danger",
+                );
+              });
+            } else {
+              showToastNotification("Error adding new document!", "error");
+            }
           })
           .finally(() => {
             disableAndEnableFieldsetItems({
