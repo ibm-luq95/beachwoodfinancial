@@ -54,7 +54,8 @@
     "msgpack",
     "radiobox",
     "rangefilter",
-    "SUCCESSTIMEOUTSECS"
+    "SUCCESSTIMEOUTSECS",
+    "TOASTSTIMEOUTSECS"
   ],
   // OLD
   // "workbench.colorCustomizations": {
