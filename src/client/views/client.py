@@ -194,7 +194,9 @@ class ClientDetailsView(
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context.setdefault("title", _(f"Client - {self.get_object().name}"))
-        job_form = JobMiniForm(initial={"client": self.get_object().pk})
+        job_form = JobMiniForm(
+            initial={"client": self.get_object().pk}, client=self.get_object()
+        )
         important_contact_form = ImportantContactForm(
             initial={"client": self.get_object()}, renderer=BWFormRenderer()
         )

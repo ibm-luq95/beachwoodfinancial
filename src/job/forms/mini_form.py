@@ -14,6 +14,7 @@ from core.forms.mixins.js_modal_form_renderer_mixin import BWJSModalFormRenderer
 from core.forms.mixins.remove_fields_mixin import RemoveFieldsMixin
 from core.forms.widgets import RichHTMLEditorWidget
 from core.utils import FileValidator
+from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from job.models.help_messages import JOB_HELP_MESSAGES
 from job_category.models import JobCategory
 
@@ -21,12 +22,17 @@ file_validator = FileValidator(max_size=1024 * 1000, content_types=IMAGES_FT)
 
 
 class JobMiniForm(RemoveFieldsMixin, BWJSModalFormRendererMixin, BWBaseFormMixin):
-    def __init__(self, removed_fields: Optional[list] = None, *args, **kwargs):
+    def __init__(self, removed_fields: Optional[list] = None, client=None, *args, **kwargs):
         super(BWBaseFormMixin, self).__init__(*args, **kwargs)
         RemoveFieldsMixin.__init__(self, removed_fields=removed_fields)
         self.initial["start_date"] = timezone.now().date()
         self.initial["due_date"] = timezone.now().date()
         self.initial["status"] = CON_NOT_STARTED
+        if client is not None:
+            clients_bookkeeper = client.bookkeepers.all()
+            if clients_bookkeeper:
+                users_pk = [bookkeeper.user.pk for bookkeeper in clients_bookkeeper]
+                self.fields["managed_by"].queryset = BWUser.objects.filter(pk__in=users_pk)
 
     title = forms.CharField(label=_("Title"), required=True)
     start_date = forms.DateField(label=_("Start Date"), required=True)
