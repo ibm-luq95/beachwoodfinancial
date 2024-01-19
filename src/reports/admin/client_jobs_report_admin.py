@@ -22,3 +22,6 @@ class ClientJobsReportAdmin(ImportExportModelAdmin, admin.ModelAdmin):
         "job_year",
         "job_month",
     ]
+
+    def has_add_permission(self, request):
+        return "add" in request.path or "change" in request.path
