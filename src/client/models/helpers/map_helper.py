@@ -131,75 +131,76 @@ class ClientDetailsMap:
 					client = item.get("client")
 					client_id = item.get("id")
 					jobs_months: dict = item.get("jobs_months")
-					for y_m, jobs_data in jobs_months.items():
-						# debugging_print(y_m)
-						# bw_log().log(y_m, jobs_data)
-						tmp_month_data[jobs_data.get("job_month")].append(jobs_data)
-					tmp_month_data = dict(sorted(tmp_month_data.items()))
-					# debugging_print(tmp_month_data)
-					for month_idx, jobs_details in tmp_month_data.items():
-						# debugging_print(jobs_details)
-						# debugging_print(len(jobs_details))
-						merged_dict = dict()
-						tmp_lst = []
-						ll = [
-							"id",
-							"job_year",
-							"job_month",
-							"client_name",
-							"job_not_completed_count",
-							"job_in_progress_count",
-							"job_past_due_count",
-							"job_completed_count",
-							"job_draft_count",
-							"job_archived_count",
-							"job_not_started_count",
-						]
-						for tmp_job_item in jobs_details:
-							# bw_log().log(tmp_job_item)
-							if tmp_job_item.get("job_month") in merged_dict.keys():
-								merged_dict[tmp_job_item.get("job_month")][
-									"id"
-								] = tmp_job_item.get("id")
-								merged_dict[tmp_job_item.get("job_month")][
-									"job_month"
-								] = tmp_job_item.get("job_month")
-								# merged_dict[tmp_job_item.get("job_month")][
-								#     "client_name"
-								# ] = tmp_job_item.get("client_name")
-								merged_dict[tmp_job_item.get("job_month")][
-									"job_not_completed_count"
-								] += tmp_job_item.get("job_not_completed_count")
-								merged_dict[tmp_job_item.get("job_month")][
-									"job_in_progress_count"
-								] += tmp_job_item.get("job_in_progress_count")
-								merged_dict[tmp_job_item.get("job_month")][
-									"job_past_due_count"
-								] += tmp_job_item.get("job_past_due_count")
-								merged_dict[tmp_job_item.get("job_month")][
-									"job_completed_count"
-								] += tmp_job_item.get("job_completed_count")
-								merged_dict[tmp_job_item.get("job_month")][
-									"job_draft_count"
-								] += tmp_job_item.get("job_draft_count")
-								merged_dict[tmp_job_item.get("job_month")][
-									"job_archived_count"
-								] += tmp_job_item.get("job_archived_count")
-								merged_dict[tmp_job_item.get("job_month")][
-									"job_not_started_count"
-								] += tmp_job_item.get("job_not_started_count")
-							else:
-								merged_dict[tmp_job_item.get("job_month")] = tmp_job_item
-								merged_dict[tmp_job_item.get("job_month")].update(
-									{"job_year": _("All")}
-								)
-						# data["jobs"].append(merged_dict)
-						data.append(merged_dict)
-						# debugging_print(merged_dict)
-						# cpprint(data)
-					# full_data.update({"client": client, "jobs": data})
-					full_data["client"] = client
-					full_data["jobs"] = data
+					if jobs_months:
+						for y_m, jobs_data in jobs_months.items():
+							# debugging_print(y_m)
+							# bw_log().log(y_m, jobs_data)
+							tmp_month_data[jobs_data.get("job_month")].append(jobs_data)
+						tmp_month_data = dict(sorted(tmp_month_data.items()))
+						# debugging_print(tmp_month_data)
+						for month_idx, jobs_details in tmp_month_data.items():
+							# debugging_print(jobs_details)
+							# debugging_print(len(jobs_details))
+							merged_dict = dict()
+							tmp_lst = []
+							ll = [
+								"id",
+								"job_year",
+								"job_month",
+								"client_name",
+								"job_not_completed_count",
+								"job_in_progress_count",
+								"job_past_due_count",
+								"job_completed_count",
+								"job_draft_count",
+								"job_archived_count",
+								"job_not_started_count",
+							]
+							for tmp_job_item in jobs_details:
+								# bw_log().log(tmp_job_item)
+								if tmp_job_item.get("job_month") in merged_dict.keys():
+									merged_dict[tmp_job_item.get("job_month")][
+										"id"
+									] = tmp_job_item.get("id")
+									merged_dict[tmp_job_item.get("job_month")][
+										"job_month"
+									] = tmp_job_item.get("job_month")
+									# merged_dict[tmp_job_item.get("job_month")][
+									#     "client_name"
+									# ] = tmp_job_item.get("client_name")
+									merged_dict[tmp_job_item.get("job_month")][
+										"job_not_completed_count"
+									] += tmp_job_item.get("job_not_completed_count")
+									merged_dict[tmp_job_item.get("job_month")][
+										"job_in_progress_count"
+									] += tmp_job_item.get("job_in_progress_count")
+									merged_dict[tmp_job_item.get("job_month")][
+										"job_past_due_count"
+									] += tmp_job_item.get("job_past_due_count")
+									merged_dict[tmp_job_item.get("job_month")][
+										"job_completed_count"
+									] += tmp_job_item.get("job_completed_count")
+									merged_dict[tmp_job_item.get("job_month")][
+										"job_draft_count"
+									] += tmp_job_item.get("job_draft_count")
+									merged_dict[tmp_job_item.get("job_month")][
+										"job_archived_count"
+									] += tmp_job_item.get("job_archived_count")
+									merged_dict[tmp_job_item.get("job_month")][
+										"job_not_started_count"
+									] += tmp_job_item.get("job_not_started_count")
+								else:
+									merged_dict[tmp_job_item.get("job_month")] = tmp_job_item
+									merged_dict[tmp_job_item.get("job_month")].update(
+										{"job_year": _("All")}
+									)
+							# data["jobs"].append(merged_dict)
+							data.append(merged_dict)
+							# debugging_print(merged_dict)
+							# cpprint(data)
+						# full_data.update({"client": client, "jobs": data})
+						full_data["client"] = client
+						full_data["jobs"] = data
 				# cpprint(full_data)
 				return full_data
 		except Exception:
