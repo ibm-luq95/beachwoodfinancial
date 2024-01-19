@@ -24,4 +24,5 @@ class ClientJobsReportAdmin(ImportExportModelAdmin, admin.ModelAdmin):
     ]
 
     def has_add_permission(self, request):
-        return "add" in request.path or "change" in request.path
+        # return "add" in request.path or "change" in request.path
+        return False
