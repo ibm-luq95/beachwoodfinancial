@@ -55,12 +55,18 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
             # debugging_print(created_year.isdigit())
 
             try:
-                reports = ClientJobsReportsDBView.objects.select_related().all()
+                reports = (
+                    ClientJobsReportsDBView.objects.select_related()
+                    .all()
+                    .order_by("client_name")
+                )
                 for r in reports:
                     years_list.add(r.job_year)
                 details_dict = dict()
                 # bw_log().log(years_list)
-                clients = ClientProxy.objects.select_related().filter(clients_q)
+                clients = (
+                    ClientProxy.objects.select_related().filter(clients_q).order_by("name")
+                )
                 # debugging_print(len(clients))
                 # debugging_print(clients.first().jobs.all())
                 details_dict.setdefault("total_rows_count", len(clients))
@@ -74,7 +80,9 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
                     ):  # it should be letter case
                         q_objects &= Q(job_year=created_year)
                     client_view_results = (
-                        ClientJobsReportsDBView.objects.select_related().filter(q_objects)
+                        ClientJobsReportsDBView.objects.select_related()
+                        .filter(q_objects)
+                        .order_by("client_name")
                     )
                     # debugging_print(str(client_view_results.count()))
                     client_details_map = ClientDetailsMap(client)
