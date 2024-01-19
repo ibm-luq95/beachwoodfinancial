@@ -69,7 +69,9 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
                 # debugging_print(clients.page(1).object_list)
                 for client in page_object.page(page).object_list:
                     q_objects = Q(client_id=client.pk)
-                    if created_year is not None and created_year.isdigit() is True:  # it should be letter case
+                    if (
+                        created_year is not None and created_year.isdigit() is True
+                    ):  # it should be letter case
                         q_objects &= Q(job_year=created_year)
                     client_view_results = (
                         ClientJobsReportsDBView.objects.select_related().filter(q_objects)
