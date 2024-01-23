@@ -27,7 +27,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
 
     def add_arguments(self, parser):
         parser.add_argument(
-            "-a", "--apps", help=_("App to migrate"), action="append", required=False
+            "-a", "--apps", help=_("App to migrate"), action="append", required=True
         )
         parser.add_argument(
             "-c",
@@ -106,10 +106,10 @@ class Command(BaseCommand, CommandStdOutputMixin):
                         self.stdout_output("success", _("All data deleted!"))
                         return
                 migrated_data_dir: PosixPath = (
-                    settings.BASE_DIR
-                    / settings.BASE_DIR.parent
-                    / "docs"
-                    / "Production Exported Data"
+                        settings.BASE_DIR
+                        / settings.BASE_DIR.parent
+                        / "docs"
+                        / "Production Exported Data"
                 )
                 # BWDebuggingPrint.pprint(migrated_data_dir)
                 # BWDebuggingPrint.pprint(migrated_data_dir.exists())
@@ -312,7 +312,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
                     if "assignment" in apps:
                         new_assignment_list = []
                         assignment_file_path = (
-                            migrated_data_dir / "SpecialAssignment-2023-09-05.csv"
+                                migrated_data_dir / "SpecialAssignment-2023-09-05.csv"
                         )
                         assignment_df = pd.read_csv(assignment_file_path)
                         assignment_df = assignment_df.replace(np.nan, None)
@@ -415,7 +415,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
                         p_table_client_accounts = list()
                         new_client_accounts_list = []
                         client_account_file_path = (
-                            migrated_data_dir / "ClientAccount-2024-01-11.csv"
+                                migrated_data_dir / "ClientAccount-2024-01-11.csv"
                         )
                         client_account_df = pd.read_csv(client_account_file_path)
                         client_account_df = client_account_df.replace(np.nan, None)

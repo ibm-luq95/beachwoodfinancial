@@ -36,8 +36,9 @@ class Command(BaseCommand, CommandStdOutputMixin):
                 all_bookkeepers = BookkeeperProxy.objects.all()
                 for client in all_clients:
                     BWDebuggingPrint.panel(f"Client: {client.name} - {client.pk}")
-                    random_bookkeepers = random.choices(all_bookkeepers, k=2)
-                    BWDebuggingPrint.log(f"Random bookkeepers: {random_bookkeepers}")
+                    # random_bookkeepers = random.choices(all_bookkeepers, k=2)
+                    random_bookkeepers = random.choices(all_bookkeepers, k=random.randint(1, 10))
+                    # BWDebuggingPrint.log(f"Random bookkeepers: {random_bookkeepers}")
                     client.bookkeepers.add(*random_bookkeepers)
                     client.save()
                     BWDebuggingPrint.log(
