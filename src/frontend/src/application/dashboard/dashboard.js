@@ -79,8 +79,8 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
                     ],
                   },
                   options: {
-                    maintainAspectRation: true,
-                    responsive: true,
+                    maintainAspectRation: false,
+                    responsive: false,
                     aspectRatio: 2,
 
                     plugins: {
