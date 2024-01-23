@@ -3,7 +3,9 @@
 <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
     <div class="flex justify-between">
         <header>
-            <h1 class="text-2xl font-bold text-gray-800 sm:text-3xl dark:text-white inline">{{ title }}</h1>
+            <h1 class="text-2xl font-bold text-gray-800 sm:text-3xl dark:text-white inline">
+                {{ title }}
+            </h1>
             {% if show_info_icon is True %}
 
                 {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt=info_details.tooltip_txt modal_css_id=info_details.modal_css_id %}
