@@ -106,7 +106,7 @@ class ClientForm(BaseModelFormMixin, RemoveFieldsMixin):
             "important_contacts": forms.CheckboxSelectMultiple(),
             # "categories": CustomCheckboxSelectMultiple(),
             "categories": forms.CheckboxSelectMultiple(),
-            "description": RichHTMLEditorWidget()
+            "description": RichHTMLEditorWidget(),
         }
 
     def save(self, commit=True):

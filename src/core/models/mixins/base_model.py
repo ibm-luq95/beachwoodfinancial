@@ -44,7 +44,7 @@ class BaseModelMixin(DiffingMixin, GetModelInstanceAsDictMixin, models.Model):
 
     @classmethod
     def get_columns_names(
-        cls, fields: Optional[list | tuple] = None, excluded: Optional[list | tuple] = None
+            cls, fields: Optional[list | tuple] = None, excluded: Optional[list | tuple] = None
     ) -> list | tuple:
         columns_names = []
         excluded_fields = ["id", "metadata", "deleted_at", "updated_at", "is_deleted"]
