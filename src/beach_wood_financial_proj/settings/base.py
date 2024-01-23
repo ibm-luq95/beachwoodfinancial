@@ -36,128 +36,130 @@ ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
 # Application definition
 
 INSTALLED_APPS = [
-	"django.contrib.admin",
-	"django.contrib.auth",
-	"django.contrib.contenttypes",
-	"django.contrib.sessions",
-	"django.contrib.messages",
-	"django.contrib.staticfiles",
-	"django.contrib.humanize",
-	"django.forms",
-	"django.contrib.sites",
-	"guardian",
-	"django_extensions",
-	"webpack_boilerplate",
-	"django_components",
-	"crispy_forms",
-	"crispy_tailwind",
-	"log_viewer",
-	"maintenance_mode",
-	"import_export",
-	"django_filters",
-	"rest_framework",
-	"drf_standardized_errors",
-	"widget_tweaks",
-	"rangefilter",
-	# "defender",
-	"core.apps.CoreConfig",
-	"beach_wood_user.apps.BeachWoodUserConfig",
-	# "home.apps.HomeConfig",
-	"bookkeeper.apps.BookkeeperConfig",
-	"assistant.apps.AssistantConfig",
-	"manager.apps.ManagerConfig",
-	"dashboard.apps.DashboardConfig",
-	"bw_ui_components.apps.BwUiComponentsConfig",
-	"client_category.apps.ClientCategoryConfig",
-	"important_contact.apps.ImportantContactConfig",
-	"client_account.apps.ClientAccountConfig",
-	"client.apps.ClientConfig",
-	"note.apps.NoteConfig",
-	"document.apps.DocumentConfig",
-	"job_category.apps.JobCategoryConfig",
-	"job.apps.JobConfig",
-	"task.apps.TaskConfig",
-	"site_settings.apps.SiteSettingsConfig",
-	"special_assignment.apps.SpecialAssignmentConfig",
-	"discussion.apps.DiscussionConfig",
-	"reports.apps.ReportsConfig",
-	"archive.apps.ArchiveConfig",
+    "django.contrib.admin",
+    "django.contrib.auth",
+    "django.contrib.contenttypes",
+    "django.contrib.sessions",
+    "django.contrib.messages",
+    "django.contrib.staticfiles",
+    "django.contrib.humanize",
+    "django.forms",
+    "django.contrib.sites",
+    "guardian",
+    "django_extensions",
+    "webpack_boilerplate",
+    "django_components",
+    "crispy_forms",
+    "crispy_tailwind",
+    "log_viewer",
+    "maintenance_mode",
+    "import_export",
+    "django_filters",
+    "rest_framework",
+    "drf_standardized_errors",
+    "widget_tweaks",
+    "rangefilter",
+    "easyaudit",
+    # "defender",
+    "core.apps.CoreConfig",
+    "beach_wood_user.apps.BeachWoodUserConfig",
+    # "home.apps.HomeConfig",
+    "bookkeeper.apps.BookkeeperConfig",
+    "assistant.apps.AssistantConfig",
+    "manager.apps.ManagerConfig",
+    "dashboard.apps.DashboardConfig",
+    "bw_ui_components.apps.BwUiComponentsConfig",
+    "client_category.apps.ClientCategoryConfig",
+    "important_contact.apps.ImportantContactConfig",
+    "client_account.apps.ClientAccountConfig",
+    "client.apps.ClientConfig",
+    "note.apps.NoteConfig",
+    "document.apps.DocumentConfig",
+    "job_category.apps.JobCategoryConfig",
+    "job.apps.JobConfig",
+    "task.apps.TaskConfig",
+    "site_settings.apps.SiteSettingsConfig",
+    "special_assignment.apps.SpecialAssignmentConfig",
+    "discussion.apps.DiscussionConfig",
+    "reports.apps.ReportsConfig",
+    "archive.apps.ArchiveConfig",
 ]
 
 MIDDLEWARE = [
-	# "django.middleware.cache.UpdateCacheMiddleware",  # new for the cache, not working with django-redis package
-	"django.middleware.security.SecurityMiddleware",
-	"whitenoise.middleware.WhiteNoiseMiddleware",
-	"django.contrib.sessions.middleware.SessionMiddleware",
-	"django.middleware.locale.LocaleMiddleware",
-	"django_session_timeout.middleware.SessionTimeoutMiddleware",
-	"django.middleware.common.CommonMiddleware",
-	"django.middleware.csrf.CsrfViewMiddleware",
-	"django.contrib.auth.middleware.AuthenticationMiddleware",
-	# "defender.middleware.FailedLoginMiddleware",
-	"django.contrib.messages.middleware.MessageMiddleware",
-	"django.middleware.clickjacking.XFrameOptionsMiddleware",
-	"bookkeeper.middleware.CheckAllowedLoginMiddleware",  # TODO: Enable it
-	"core.middleware.MultiHostMiddleware",
-	"maintenance_mode.middleware.MaintenanceModeMiddleware",
-	# "django.middleware.cache.FetchFromCacheMiddleware",  # new for the cache, not working with django-redis package
+    # "django.middleware.cache.UpdateCacheMiddleware",  # new for the cache, not working with django-redis package
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
+    "django.contrib.sessions.middleware.SessionMiddleware",
+    "django.middleware.locale.LocaleMiddleware",
+    "django_session_timeout.middleware.SessionTimeoutMiddleware",
+    "django.middleware.common.CommonMiddleware",
+    "django.middleware.csrf.CsrfViewMiddleware",
+    "django.contrib.auth.middleware.AuthenticationMiddleware",
+    # "defender.middleware.FailedLoginMiddleware",
+    "django.contrib.messages.middleware.MessageMiddleware",
+    "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "bookkeeper.middleware.CheckAllowedLoginMiddleware",  # TODO: Enable it
+    "core.middleware.MultiHostMiddleware",
+    "maintenance_mode.middleware.MaintenanceModeMiddleware",
+    "easyaudit.middleware.easyaudit.EasyAuditMiddleware",
+    # "django.middleware.cache.FetchFromCacheMiddleware",  # new for the cache, not working with django-redis package
 ]
 
 ROOT_URLCONF = "beach_wood_financial_proj.urls"
 
 UI_COMPONENTS_TEMPLATETAGS = [
-	"core.templatetags.nospaces",
-	"core.templatetags.bw_form_helpers",
-	"bw_ui_components.templatetags.inputs.label",
-	"bw_ui_components.templatetags.inputs.button",
-	"bw_ui_components.templatetags.inputs.input",
-	"bw_ui_components.templatetags.inputs.select",
-	"bw_ui_components.templatetags.inputs.radiobox",
-	"bw_ui_components.templatetags.inputs.checkbox",
-	"bw_ui_components.templatetags.inputs.file_input",
-	"bw_ui_components.templatetags.inputs.switch",
-	"bw_ui_components.templatetags.inputs._method",
-	"bw_ui_components.templatetags.elements.anchor",
-	"bw_ui_components.templatetags.elements.date",
-	"bw_ui_components.templatetags.elements.blockquote",
-	"bw_ui_components.templatetags.elements.icon",
-	"bw_ui_components.templatetags.elements.js_modal",
-	"bw_ui_components.templatetags.elements.create_btn_js_modal",
-	"bw_ui_components.templatetags.table_list.table",
-	"bw_ui_components.templatetags.table_list.actions_dropdown",
-	"bw_ui_components.templatetags.table_list.filters",
-	"bw_ui_components.templatetags.forms.delete_form",
-	"bw_ui_components.templatetags.components.core.badge",
+    "core.templatetags.nospaces",
+    "core.templatetags.bw_form_helpers",
+    "bw_ui_components.templatetags.inputs.label",
+    "bw_ui_components.templatetags.inputs.button",
+    "bw_ui_components.templatetags.inputs.input",
+    "bw_ui_components.templatetags.inputs.select",
+    "bw_ui_components.templatetags.inputs.radiobox",
+    "bw_ui_components.templatetags.inputs.checkbox",
+    "bw_ui_components.templatetags.inputs.file_input",
+    "bw_ui_components.templatetags.inputs.switch",
+    "bw_ui_components.templatetags.inputs._method",
+    "bw_ui_components.templatetags.elements.anchor",
+    "bw_ui_components.templatetags.elements.date",
+    "bw_ui_components.templatetags.elements.blockquote",
+    "bw_ui_components.templatetags.elements.icon",
+    "bw_ui_components.templatetags.elements.js_modal",
+    "bw_ui_components.templatetags.elements.create_btn_js_modal",
+    "bw_ui_components.templatetags.table_list.table",
+    "bw_ui_components.templatetags.table_list.actions_dropdown",
+    "bw_ui_components.templatetags.table_list.filters",
+    "bw_ui_components.templatetags.forms.delete_form",
+    "bw_ui_components.templatetags.components.core.badge",
 ]
 
 TEMPLATES = [
-	{
-		"BACKEND": "django.template.backends.django.DjangoTemplates",
-		"DIRS": [BASE_DIR / "templates", BASE_DIR / "components"],
-		"APP_DIRS": True,
-		"OPTIONS": {
-			"context_processors": [
-				"django.template.context_processors.debug",
-				"django.template.context_processors.request",
-				"django.contrib.auth.context_processors.auth",
-				"django.contrib.messages.context_processors.messages",
-				"django.template.context_processors.request",
-				# "django.template.context_processors.i18n",
-				"site_settings.context_processors.site_settings.return_site_settings_context",
-				"site_settings.context_processors.section_descriptions.return_section_description_context",
-				"core.context_processors.access_constants",
-				"core.context_processors.access_css_classes_constants",
-				"core.context_processors.access_constants_as_group",
-				"maintenance_mode.context_processors.maintenance_mode",
-			],
-			"builtins": [
-				*UI_COMPONENTS_TEMPLATETAGS,
-				"core.templatetags.string_helpers_tags",
-				"core.templatetags.url_helpers",
-				"django_components.templatetags.component_tags",
-			],
-		},
-	}
+    {
+        "BACKEND": "django.template.backends.django.DjangoTemplates",
+        "DIRS": [BASE_DIR / "templates", BASE_DIR / "components"],
+        "APP_DIRS": True,
+        "OPTIONS": {
+            "context_processors": [
+                "django.template.context_processors.debug",
+                "django.template.context_processors.request",
+                "django.contrib.auth.context_processors.auth",
+                "django.contrib.messages.context_processors.messages",
+                "django.template.context_processors.request",
+                # "django.template.context_processors.i18n",
+                "site_settings.context_processors.site_settings.return_site_settings_context",
+                "site_settings.context_processors.section_descriptions.return_section_description_context",
+                "core.context_processors.access_constants",
+                "core.context_processors.access_css_classes_constants",
+                "core.context_processors.access_constants_as_group",
+                "maintenance_mode.context_processors.maintenance_mode",
+            ],
+            "builtins": [
+                *UI_COMPONENTS_TEMPLATETAGS,
+                "core.templatetags.string_helpers_tags",
+                "core.templatetags.url_helpers",
+                "django_components.templatetags.component_tags",
+            ],
+        },
+    }
 ]
 
 # FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
@@ -173,13 +175,13 @@ WSGI_APPLICATION = "beach_wood_financial_proj.wsgi.application"
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
-	{"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
-	{
-		"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
-		"OPTIONS": {"min_length": 7},
-	},
-	{"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
-	{"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator"},
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+        "OPTIONS": {"min_length": 7},
+    },
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
+    {"NAME": "django.contrib.auth.password_validation.NumericPasswordValidator"},
 ]
 
 # Set login and logout urls
@@ -210,31 +212,31 @@ LANGUAGES = (("en", "English"),)
 # Django guardian configs
 GUARDIAN_MONKEY_PATCH = False
 AUTHENTICATION_BACKENDS = (
-	"django.contrib.auth.backends.ModelBackend",  # this is default
-	"guardian.backends.ObjectPermissionBackend",
+    "django.contrib.auth.backends.ModelBackend",  # this is default
+    "guardian.backends.ObjectPermissionBackend",
 )
 
 # Django rest framework configs
 REST_FRAMEWORK = {
-	"EXCEPTION_HANDLER": "drf_standardized_errors.handler.exception_handler",
-	"DEFAULT_AUTHENTICATION_CLASSES": [
-		"rest_framework.authentication.BasicAuthentication",
-		"rest_framework.authentication.SessionAuthentication",
-		# "rest_framework.authentication.TokenAuthentication",
-	],
-	"DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
-	"DEFAULT_PARSER_CLASSES": [
-		"rest_framework.parsers.JSONParser",
-		# "rest_framework.parsers.FormParser",
-	],
-	"DATETIME_FORMAT": "%Y-%m-%d",
+    "EXCEPTION_HANDLER": "drf_standardized_errors.handler.exception_handler",
+    "DEFAULT_AUTHENTICATION_CLASSES": [
+        "rest_framework.authentication.BasicAuthentication",
+        "rest_framework.authentication.SessionAuthentication",
+        # "rest_framework.authentication.TokenAuthentication",
+    ],
+    "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
+    "DEFAULT_PARSER_CLASSES": [
+        "rest_framework.parsers.JSONParser",
+        # "rest_framework.parsers.FormParser",
+    ],
+    "DATETIME_FORMAT": "%Y-%m-%d",
 }
 # drf-standardized-errors config
 DRF_STANDARDIZED_ERRORS = {
-	# enable the standardized errors when DEBUG=True for unhandled exceptions.
-	# By default, this is set to False so you're able to view the traceback in
-	# the terminal and get more information about the exception.
-	"ENABLE_IN_DEBUG_FOR_UNHANDLED_EXCEPTIONS": True
+    # enable the standardized errors when DEBUG=True for unhandled exceptions.
+    # By default, this is set to False so you're able to view the traceback in
+    # the terminal and get more information about the exception.
+    "ENABLE_IN_DEBUG_FOR_UNHANDLED_EXCEPTIONS": True
 }
 
 # Django maintenance mode configs
@@ -260,9 +262,9 @@ MAINTENANCE_MODE_IGNORE_SUPERUSER = False
 
 STATIC_URL = "static/"
 STATICFILES_DIRS = [
-	BASE_DIR / "static",
-	BASE_DIR / "frontend" / "build",
-	BASE_DIR / "components",
+    BASE_DIR / "static",
+    BASE_DIR / "frontend" / "build",
+    BASE_DIR / "components",
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
@@ -282,11 +284,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 # Use new password Scrypt algorithm
 PASSWORD_HASHERS = [
-	"django.contrib.auth.hashers.ScryptPasswordHasher",
-	"django.contrib.auth.hashers.PBKDF2PasswordHasher",
-	"django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
-	"django.contrib.auth.hashers.Argon2PasswordHasher",
-	"django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
+    "django.contrib.auth.hashers.ScryptPasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2PasswordHasher",
+    "django.contrib.auth.hashers.PBKDF2SHA1PasswordHasher",
+    "django.contrib.auth.hashers.Argon2PasswordHasher",
+    "django.contrib.auth.hashers.BCryptSHA256PasswordHasher",
 ]
 
 # Crispy Configs
@@ -297,10 +299,10 @@ CRISPY_TEMPLATE_PACK = "tailwind"
 SESSION_COOKIE_AGE = config("SESSION_COOKIE_AGE", cast=int)
 SESSION_EXPIRE_SECONDS = config("SESSION_EXPIRE_SECONDS", cast=int)  # 1 hour
 SESSION_EXPIRE_AT_BROWSER_CLOSE = config(
-	"SESSION_EXPIRE_AT_BROWSER_CLOSE", cast=bool
+    "SESSION_EXPIRE_AT_BROWSER_CLOSE", cast=bool
 )  # Invalid session
 SESSION_EXPIRE_AFTER_LAST_ACTIVITY = config(
-	"SESSION_EXPIRE_AFTER_LAST_ACTIVITY", cast=bool
+    "SESSION_EXPIRE_AFTER_LAST_ACTIVITY", cast=bool
 )
 
 SESSION_EXPIRE_AFTER_LAST_ACTIVITY_GRACE_PERIOD = 60  # group by minute
@@ -314,8 +316,11 @@ ENCRYPT_KEY = bytes(config("ENCRYPT_KEY", cast=str), "ascii")  # type: ignore
 
 # Webpack configs
 WEBPACK_LOADER = {
-	# 'MANIFEST_FILE': BASE_DIR / "frontend/build/manifest.json",
-	"MANIFEST_FILE": BASE_DIR / "frontend" / "build" / "manifest.json"
+    # 'MANIFEST_FILE': BASE_DIR / "frontend/build/manifest.json",
+    "MANIFEST_FILE": BASE_DIR
+    / "frontend"
+    / "build"
+    / "manifest.json"
 }
 
 # Django log viewer package config
@@ -325,18 +330,18 @@ LOG_VIEWER_MAX_READ_LINES = 1000  # total log lines will be read
 LOG_VIEWER_FILE_LIST_MAX_ITEMS_PER_PAGE = 25  # Max log files loaded in Datatable per page
 LOG_VIEWER_PATTERNS = ["[INFO]", "[DEBUG]", "[WARNING]", "[ERROR]", "[CRITICAL]"]
 LOG_VIEWER_EXCLUDE_TEXT_PATTERN = (
-	None  # String regex expression to exclude the log from line
+    None  # String regex expression to exclude the log from line
 )
 # Optionally you can set the next variables in order to customize the admin:
 LOG_VIEWER_FILE_LIST_TITLE = "Log viewer"
 
 # Django flash messages css classes
 MESSAGE_TAGS = {
-	messages.DEBUG: "bw-debug",
-	messages.INFO: "bw-info",
-	messages.SUCCESS: "bw-success",
-	messages.WARNING: "bw-warning",
-	messages.ERROR: "bw-error",
+    messages.DEBUG: "bw-debug",
+    messages.INFO: "bw-info",
+    messages.SUCCESS: "bw-success",
+    messages.WARNING: "bw-warning",
+    messages.ERROR: "bw-error",
 }
 
 # django-defender configs
@@ -352,34 +357,34 @@ FILTERS_EMPTY_CHOICE_LABEL = ""
 
 # check if cache enabled
 if config("IS_CACHE_ENABLED", cast=bool) is True:
-	CACHES = {
-		"default": {
-			"BACKEND": config("CACHE_BACKEND_ENGINE", cast=str),
-			"LOCATION": f"redis://{config('REDIS_HOST')}/1",
-			"OPTIONS": {
-				"PASSWORD": config("REDIS_PASSWORD"),
-				# "PARSER_CLASS": "redis.connection.HiredisParser",
-				"CLIENT_CLASS": "django_redis.client.DefaultClient",
-				"PICKLE_VERSION": -1,
-				"SERIALIZER": "django_redis.serializers.json.JSONSerializer",
-				# "SERIALIZER": "django_redis.serializers.msgpack.MSGPackSerializer",
-				# "COMPRESSOR": "django_redis.compressors.lzma.LzmaCompressor",
-			},
-		}
-	}
-	# SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-	# SESSION_CACHE_ALIAS = "default"
-	DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
-	CACHE_MIDDLEWARE_ALIAS = config(
-		"CACHE_MIDDLEWARE_ALIAS", cast=str
-	)  # which cache alias to use
-	CACHE_MIDDLEWARE_SECONDS = config(
-		"CACHE_MIDDLEWARE_SECONDS", cast=int
-	)  # number of seconds to cache a page for (TTL)
+    CACHES = {
+        "default": {
+            "BACKEND": config("CACHE_BACKEND_ENGINE", cast=str),
+            "LOCATION": f"redis://{config('REDIS_HOST')}/1",
+            "OPTIONS": {
+                "PASSWORD": config("REDIS_PASSWORD"),
+                # "PARSER_CLASS": "redis.connection.HiredisParser",
+                "CLIENT_CLASS": "django_redis.client.DefaultClient",
+                "PICKLE_VERSION": -1,
+                "SERIALIZER": "django_redis.serializers.json.JSONSerializer",
+                # "SERIALIZER": "django_redis.serializers.msgpack.MSGPackSerializer",
+                # "COMPRESSOR": "django_redis.compressors.lzma.LzmaCompressor",
+            },
+        }
+    }
+    # SESSION_ENGINE = "django.contrib.sessions.backends.cache"
+    # SESSION_CACHE_ALIAS = "default"
+    DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
+    CACHE_MIDDLEWARE_ALIAS = config(
+        "CACHE_MIDDLEWARE_ALIAS", cast=str
+    )  # which cache alias to use
+    CACHE_MIDDLEWARE_SECONDS = config(
+        "CACHE_MIDDLEWARE_SECONDS", cast=int
+    )  # number of seconds to cache a page for (TTL)
 
-	CACHE_MIDDLEWARE_KEY_PREFIX = config(
-		"CACHE_MIDDLEWARE_KEY_PREFIX", cast=str
-	)  # should be used if the cache is shared across multiple sites that
+    CACHE_MIDDLEWARE_KEY_PREFIX = config(
+        "CACHE_MIDDLEWARE_KEY_PREFIX", cast=str
+    )  # should be used if the cache is shared across multiple sites that
 # use the
 # same
 # Django instance
@@ -409,88 +414,88 @@ if config("IS_CACHE_ENABLED", cast=bool) is True:
 #     },
 # }
 LOGGING = {
-	# The version number of our log
-	"version": 1,
-	"disable_existing_loggers": False,
-	"formatters": {
-		"large": {
-			"format": (
-				"%(asctime)s  %(levelname)s  %(process)d  %(pathname)s  %(funcName)s "
-				" %(lineno)d  %(message)s  "
-			)
-		},
-		"tiny": {"format": "%(asctime)s  %(message)s  "},
-		"verbose": {
-			# "format": "{levelname} {asctime} {module} {message}",
-			"format": "{name} at {asctime} ({levelname}) ({module}) :: {message}",
-			"style": "{",
-		},
-	},
-	"filters": {
-		"require_debug_false": {"()": "django.utils.log.RequireDebugFalse"},
-		"require_debug_true": {"()": "django.utils.log.RequireDebugTrue"},
-	},
-	# django uses some of its own loggers for internal operations. In case you want to disable them just replace the
-	# False above with true.
-	# A handler for WARNING. It is basically writing the WARNING messages into a file called WARNING.log
-	"handlers": {
-		"warning_file": {
-			"level": "INFO",
-			"class": "logging.FileHandler",
-			"filename": BASE_DIR.parent / "logs" / "bw_warning.log",
-			"formatter": "verbose",
-		},
-		"console": {
-			"level": "INFO",
-			"class": "logging.StreamHandler",
-			# "formatter": "verbose",
-			"filters": ["require_debug_true"],
-		},
-		"errors_file": {
-			"level": "ERROR",
-			# "class": "logging.handlers.TimedRotatingFileHandler",
-			"class": "logging.FileHandler",
-			# "when": "midnight",
-			# "interval": 1,
-			"filename": BASE_DIR.parent / "logs" / "bw_errors.log",
-			"formatter": "large",
-			# "formatter": "verbose",
-		},
-		# "info_file": {
-		#     "level": "INFO",
-		#     "class": "logging.handlers.TimedRotatingFileHandler",
-		#     "when": "midnight",
-		#     "interval": 1,
-		#     "filename": BASE_DIR.parent / "logs" / "bw_info.log",
-		#     "formatter": "large",
-		# },
-	},
-	# A logger for WARNING which has a handler called 'file'. A logger can have multiple handler
-	"loggers": {
-		# notice the blank '', Usually you would put built in loggers like django or root here based on your needs
-		# "django": {
-		#     "handlers": [
-		#         "console",
-		#     ],  # notice how file variable is called in handler which has been defined above
-		#     "level": "DEBUG",
-		# },
-		"bw_logger": {
-			"handlers": ["warning_file"],
-			"level": "INFO",
-			"propagate": False,  # required to avoid double logging with root logger
-		},
-		"bw_error_logger": {
-			"handlers": ["errors_file"],
-			"level": "WARNING",
-			"propagate": False,
-		},
-		# "django.db.backends": {"level": "DEBUG", "handlers": ["console"]},
-		# "bw_info_logger": {
-		#     "handlers": ["info_file"],
-		#     "level": "INFO",
-		#     "propagate": False,
-		# },
-	},
+    # The version number of our log
+    "version": 1,
+    "disable_existing_loggers": False,
+    "formatters": {
+        "large": {
+            "format": (
+                "%(asctime)s  %(levelname)s  %(process)d  %(pathname)s  %(funcName)s "
+                " %(lineno)d  %(message)s  "
+            )
+        },
+        "tiny": {"format": "%(asctime)s  %(message)s  "},
+        "verbose": {
+            # "format": "{levelname} {asctime} {module} {message}",
+            "format": "{name} at {asctime} ({levelname}) ({module}) :: {message}",
+            "style": "{",
+        },
+    },
+    "filters": {
+        "require_debug_false": {"()": "django.utils.log.RequireDebugFalse"},
+        "require_debug_true": {"()": "django.utils.log.RequireDebugTrue"},
+    },
+    # django uses some of its own loggers for internal operations. In case you want to disable them just replace the
+    # False above with true.
+    # A handler for WARNING. It is basically writing the WARNING messages into a file called WARNING.log
+    "handlers": {
+        "warning_file": {
+            "level": "INFO",
+            "class": "logging.FileHandler",
+            "filename": BASE_DIR.parent / "logs" / "bw_warning.log",
+            "formatter": "verbose",
+        },
+        "console": {
+            "level": "INFO",
+            "class": "logging.StreamHandler",
+            # "formatter": "verbose",
+            "filters": ["require_debug_true"],
+        },
+        "errors_file": {
+            "level": "ERROR",
+            # "class": "logging.handlers.TimedRotatingFileHandler",
+            "class": "logging.FileHandler",
+            # "when": "midnight",
+            # "interval": 1,
+            "filename": BASE_DIR.parent / "logs" / "bw_errors.log",
+            "formatter": "large",
+            # "formatter": "verbose",
+        },
+        # "info_file": {
+        #     "level": "INFO",
+        #     "class": "logging.handlers.TimedRotatingFileHandler",
+        #     "when": "midnight",
+        #     "interval": 1,
+        #     "filename": BASE_DIR.parent / "logs" / "bw_info.log",
+        #     "formatter": "large",
+        # },
+    },
+    # A logger for WARNING which has a handler called 'file'. A logger can have multiple handler
+    "loggers": {
+        # notice the blank '', Usually you would put built in loggers like django or root here based on your needs
+        # "django": {
+        #     "handlers": [
+        #         "console",
+        #     ],  # notice how file variable is called in handler which has been defined above
+        #     "level": "DEBUG",
+        # },
+        "bw_logger": {
+            "handlers": ["warning_file"],
+            "level": "INFO",
+            "propagate": False,  # required to avoid double logging with root logger
+        },
+        "bw_error_logger": {
+            "handlers": ["errors_file"],
+            "level": "WARNING",
+            "propagate": False,
+        },
+        # "django.db.backends": {"level": "DEBUG", "handlers": ["console"]},
+        # "bw_info_logger": {
+        #     "handlers": ["info_file"],
+        #     "level": "INFO",
+        #     "propagate": False,
+        # },
+    },
 }
 
 SESSION_TIMEOUT_REDIRECT = "/auth/login"
@@ -498,17 +503,17 @@ ANONYMOUS_USER_NAME = None
 
 # SENTRY configs
 if config("SENTRY_IS_ENABLED", cast=bool) is True:
-	sentry_sdk.init(
-		dsn=config("SENTRY_SDK_DSN", cast=str),
-		integrations=[DjangoIntegration()],
-		# Set traces_sample_rate to 1.0 to capture 100%
-		# of transactions for performance monitoring.
-		traces_sample_rate=1.0,
-		# Set profiles_sample_rate to 1.0 to profile 100%
-		# of sampled transactions.
-		# We recommend adjusting this value in production.
-		profiles_sample_rate=1.0,
-		environment="dev",
-		send_default_pii=True,
-		# debug=True
-	)
+    sentry_sdk.init(
+        dsn=config("SENTRY_SDK_DSN", cast=str),
+        integrations=[DjangoIntegration()],
+        # Set traces_sample_rate to 1.0 to capture 100%
+        # of transactions for performance monitoring.
+        traces_sample_rate=1.0,
+        # Set profiles_sample_rate to 1.0 to profile 100%
+        # of sampled transactions.
+        # We recommend adjusting this value in production.
+        profiles_sample_rate=1.0,
+        environment="dev",
+        send_default_pii=True,
+        # debug=True
+    )
