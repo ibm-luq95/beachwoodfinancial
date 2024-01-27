@@ -46,7 +46,7 @@
                 </label>
             </th>
         {% endif %}
-        <th scope="col" class="px-6 py-3 text-left" width="1%">
+        <th scope="col" class="px-6 py-3 text-left" width="2%">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                     {% translate "Client Name" %}
@@ -57,7 +57,7 @@
             </div>
         </th>
         {% for month in months_list %}
-            <th scope="col" class="px-6 py-3 text-left disable-sort" width="15%">
+            <th scope="col" class="px-6 py-3 text-center disable-sort" width="15%">
                 <div class="flex items-center gap-x-2">
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                         {{ month|get_month_abbrev }} - {{ created_year }}
@@ -134,6 +134,16 @@
                         {% extract_job_from_month extracted_jobs month created_year as job_dict %}
                         {# {% print job_dict %} #}
                         <div class="px-6 py-3">
+                            {# Start Not Started #}
+                            <div class="hs-tooltip inline-block justify-center items-center mr-1">
+                                <span class="hs-tooltip-toggle inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-full text-xs font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">
+                                    {{ job_dict.job_not_started_count }}
+                                    <span class="{{ BW_PRELINE_SPAN_TOOLTIP_CSS_CLASSES }}" role="tooltip">
+                                        {% translate "Not started" %}
+                                    </span>
+                                </span>
+                            </div>
+                            {# End Not Started #}
                             {# Start Completed #}
                             <div class="hs-tooltip inline-block justify-center items-center">
                                 <span class="hs-tooltip-toggle inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium bg-green-800 text-white">
@@ -167,8 +177,8 @@
                         </div>
                     {% else %}
                         <div class="hs-tooltip inline-block flex flex-auto flex-col justify-center items-center">
-                            <span class="hs-tooltip-toggle inline-flex justify-center items-center w-[28px] h-[28px] rounded-full  bg-gray-50 text-gray-800 dark:bg-gray-700 dark:text-gray-400">
-                                <i class="fa-solid fa-minus flex-shrink-0 w-5 h-5"></i>
+                            <span class="hs-tooltip-toggle inline-flex items-center gap-x-1.5 py-1 px-2 rounded-full text-xs font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">
+                                <i class="fa-solid fa-minus flex-shrink-0 w-4 h-4"></i>
                                 <span class="{{ BW_PRELINE_SPAN_TOOLTIP_CSS_CLASSES }}" role="tooltip">{% translate "No jobs in " %} {{ month|get_month_abbrev }}, {{ created_year }}</span>
                             </span>
                         </div>
