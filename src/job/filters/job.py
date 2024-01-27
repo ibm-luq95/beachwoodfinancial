@@ -38,6 +38,8 @@ class JobFilter(HelpfulFilterSet):
         fields = {
             "title": ["icontains"],
             "managed_by": ["exact"],
+            "period_year": ["exact"],
+            "period_month": ["exact"],
             # "bookkeeper": ["icontains"],
             "client__name": ["icontains"],
             # "job_type": ["exact"],
