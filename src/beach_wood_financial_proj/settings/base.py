@@ -83,6 +83,7 @@ INSTALLED_APPS = [
     "discussion.apps.DiscussionConfig",
     "reports.apps.ReportsConfig",
     "archive.apps.ArchiveConfig",
+    "fiscal_year.apps.FiscalYearConfig",
 ]
 
 MIDDLEWARE = [
