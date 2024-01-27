@@ -13,7 +13,7 @@ from django.views.generic import (
 )
 
 from client.filters import ClientFilter, JobReportFilter
-from client.forms import ClientForm, ClientMiniForm
+from client.forms import ClientForm, ClientMiniForm, AssignBookkeeperForm
 from client.models import ClientProxy
 from client_account.forms import ClientAccountForm
 from core.cache import BWCacheViewMixin
@@ -233,6 +233,9 @@ class ClientDetailsView(
             renderer=BWFormRenderer(),
             hidden_inputs={"field_names": ["client", "status"]},
         )
+        client_assign_bookkeeper_form = AssignBookkeeperForm(
+            renderer=BWFormRenderer(), client=self.get_object()
+        )
         context.setdefault("job_form", job_form)
         # context.setdefault("job_status_choices", JobStatusEnum.choices)
         context.setdefault("task_form", task_form)
@@ -243,4 +246,5 @@ class ClientDetailsView(
         context.setdefault("client_mini_form", client_mini_form)
         context.setdefault("special_assignment_form", special_assignment_form)
         context.setdefault("client_account_form", client_account_form)
+        context.setdefault("client_assign_bookkeeper_form", client_assign_bookkeeper_form)
         return context

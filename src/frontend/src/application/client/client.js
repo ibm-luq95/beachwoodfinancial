@@ -1,5 +1,5 @@
 "use strict";
-
+import { sendRequest } from "../../utils/apis/apis";
 import { bwCleanApiError } from "../../utils/apis/clean_errors";
 import { UploadFileRequest } from "../../utils/apis/upload_file";
 import { CSRFINPUTNAME, SUCCESSTIMEOUTSECS } from "../../utils/constants";
@@ -62,6 +62,76 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
             state: "enable",
           });
         });
+    });
+  }
+
+  const addBookkeeperModal = document.querySelector("#addBookkeeperModal");
+  const assignBookkeeperClientForm = addBookkeeperModal.querySelector(
+    "form#assignBookkeeperClientForm",
+  );
+  if (assignBookkeeperClientForm) {
+    assignBookkeeperClientForm.addEventListener("submit", (event) => {
+      event.preventDefault();
+      const currentTarget = event.currentTarget;
+      const checked = assignBookkeeperClientForm.querySelectorAll(
+        'input[type="checkbox"]:checked',
+      );
+      // console.warn(assignBookkeeperClientForm.action);
+      // console.warn(assignBookkeeperClientForm.method);
+      if (checked.length > 0) {
+        const bookkeepers = Array.from(checked).map((x) => x.value);
+        disableAndEnableFieldsetItems({
+          formElement: currentTarget,
+          state: "disable",
+        });
+        const requestOptions = {
+          method: currentTarget["_method"]
+            ? currentTarget["_method"].value.toUpperCase()
+            : currentTarget.method,
+          dataToSend: {
+            bookkeepers: bookkeepers,
+            client: assignBookkeeperClientForm.client.value,
+          },
+          url: currentTarget.action,
+          token: currentTarget[CSRFINPUTNAME].value,
+        };
+        const request = sendRequest(requestOptions);
+        request
+          .then((data) => {
+            showToastNotification(data["success_msg"], "success");
+            setTimeout(() => {
+              window.location.reload();
+            }, SUCCESSTIMEOUTSECS);
+          })
+          .catch((error) => {
+            const er = bwCleanApiError(error);
+            if (er) {
+              er.forEach((erElement) => {
+                showToastNotification(
+                  `Error: ${erElement["detail"]} - ${erElement["attr"]}`,
+                  "danger",
+                );
+              });
+            } else {
+              // eslint-disable-next-line no-prototype-builtins
+              if (error.hasOwnProperty("error")) {
+                showToastNotification(`Error: ${error["error"]}`, "danger");
+              } else {
+                showToastNotification(`Error assign bookkeepers!`, "danger");
+              }
+            }
+          })
+          .finally(() => {
+            disableAndEnableFieldsetItems({
+              formElement: currentTarget,
+              state: "enable",
+            });
+          });
+      } else {
+        alert("Pick bookkeeper");
+      }
+
+      // alert("Add bookkeeper to client");
     });
   }
 });

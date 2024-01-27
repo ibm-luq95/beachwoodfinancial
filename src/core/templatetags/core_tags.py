@@ -69,3 +69,8 @@ def get_month_abbrev(month_index: int) -> str | int:
         return calendar.month_abbr[month_index]
     except IndexError:
         return month_index
+
+
+@register.filter("get_var_name")
+def get_var_name(var) -> str:
+    return type(var).__name__

@@ -34,6 +34,9 @@ class Command(BaseCommand, CommandStdOutputMixin):
             default=1,
         )
         parser.add_argument("--client", "-c", type=str, help=_("Client"), required=False)
+        parser.add_argument(
+            "--created-year", "-cy", type=int, help=_("Created year"), required=False
+        )
         # parser.add_argument(
         #     "--",
         #     "-",
@@ -51,6 +54,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
             with transaction.atomic():
                 number = options.get("number")
                 client = options.get("client")
+                created_year = options.get("created_year")
                 # seeder = Seed.seeder("en_US")
                 faker = Faker(locale="en_US")
                 all_clients = ClientProxy.objects.all()
@@ -68,8 +72,11 @@ class Command(BaseCommand, CommandStdOutputMixin):
                         "job_type": random.choice(JobTypeEnum.choices)[0],
                         "state": random.choice(JobStateEnum.choices)[0],
                         "status": random.choice(JobStatusEnum.choices)[0],
-                        "created_at": faker.date_time_between_dates(
-                            datetime_start="-6m", datetime_end="now"
+                        "created_at": timezone.make_aware(
+                            faker.date_time_between_dates(
+                                datetime_start="-6m", datetime_end="now"
+                            ),
+                            timezone=timezone.get_current_timezone(),
                         ),
                         "start_date": faker.date_between(
                             # start_date="-1y", end_date="today"

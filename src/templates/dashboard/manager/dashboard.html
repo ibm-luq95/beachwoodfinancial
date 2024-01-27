@@ -8,328 +8,471 @@
 {% block dashboard_content_block %}
     {# Page Heading #}
 
-    {% include "components/inc/dashboard/content_header.html" with title="Welcome "|add:request.user.fullname subtitle="This is a simple application layout with sidebar and header examples using Tailwind CSS." %}
+    {% include "components/inc/dashboard/content_header.html" with title="Welcome "|add:request.user.fullname subtitle="" %}
 
     {# End Page Heading #}
     <!-- Start Stats Widget -->
     <!-- Card Section -->
-    <div class="max-w-[100rem] py-10 mx-auto">
-        <!-- Grid -->
-        <div class="grid gap-2 sm:gap-6 sm:grid-cols-2 lg:grid-cols-4 ">
-            <!-- Card -->
-            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
-                <div class="flex justify-between p-4 md:p-5 gap-x-3">
+    <div class="max-w-[100rem] py-5 mx-auto">
+        <div class="flex content-center justify-items-stretch items-stretch gap-2 flex-col md:flex-row">
+            <div class="h-full w-1/3">
+                <div class="grid grid-cols-2 gap-2 sm:gap-3 sm:grid-cols-2">
                     <div>
-                        <p class="text-xs tracking-wide text-gray-500 uppercase">{% translate "Total staff members" %}</p>
-                        <div class="flex items-center mt-1 gap-x-1">
-                            <h3 class="text-xl font-medium text-gray-800 sm:text-2xl dark:text-gray-200 mg-dashboard-h-widget"
-                                data-widget-name="staff"
-                                id="mgTotalStaffMembers">
-                                <div class="loader-element relative top-1 animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-gray-800 rounded-full dark:text-white"
-                                     role="status"
-                                     aria-label="loading">
-                                    <span class="sr-only">{% translate "Loading..." %}</span>
-                                </div>
-                            </h3>
-                            {% comment %}
-                            <span class="flex items-center text-green-600">
-                                <svg class="self-center inline-block w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z" />
-                                </svg>
-                                <span class="inline-block text-lg">1.7%</span>
-                            </span>
-                            {% endcomment %}
-                        </div>
-                    </div>
-                    <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px] bg-blue-600 text-white rounded-full dark:bg-blue-900 dark:text-blue-200">
-                        <i class="fa-solid fa-users w-4 h-4"></i>
-                    </div>
-                </div>
-                <a class="inline-flex items-center justify-between px-4 py-3 text-sm text-gray-600 border-t border-gray-200 md:px-5 hover:bg-gray-50 rounded-b-xl dark:border-gray-700 dark:text-gray-400 dark:hover:bg-slate-800"
-                   href="#">
-                    {% translate "View reports" %}
-                    <svg class="w-2.5 h-2.5"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none">
-                        <path d="M5.27921 2L10.9257 7.64645C11.1209 7.84171 11.1209 8.15829 10.9257 8.35355L5.27921 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                    </svg>
-                </a>
-            </div>
-            <!-- End Card -->
-            <!-- Card -->
-            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
-                <div class="flex justify-between p-4 md:p-5 gap-x-3">
-                    <div>
-                        <p class="text-xs tracking-wide text-gray-500 uppercase">{% translate "Clients" %}</p>
-                        <div class="flex items-center mt-1 gap-x-1">
-                            <h3 class="mt-1 text-xl font-medium text-gray-800 dark:text-gray-200 mg-dashboard-h-widget"
-                                data-widget-name="clients">
-                                <div class="loader-element relative top-1 animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-gray-800 rounded-full dark:text-white"
-                                     role="status"
-                                     aria-label="loading">
-                                    <span class="sr-only">{% translate "Loading..." %}</span>
-                                </div>
-                            </h3>
-                            {% comment  %}
-                                <span class="flex items-center text-red-600">
-                                <svg class="self-center inline-block w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
-                                </svg>
-                                <span class="inline-block text-lg">1.7%</span>
-                            </span>
-                            {% endcomment %}
-                        </div>
-                    </div>
-                    <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px] bg-blue-600 text-white rounded-full dark:bg-blue-900 dark:text-blue-200">
-                        <i class="fa-solid fa-building-user w-4 h-4"></i>
-                    </div>
-                </div>
-                <a class="inline-flex items-center justify-between px-4 py-3 text-sm text-gray-600 border-t border-gray-200 md:px-5 hover:bg-gray-50 rounded-b-xl dark:border-gray-700 dark:text-gray-400 dark:hover:bg-slate-800"
-                   href="{% url 'dashboard:client:list' %}">
-                    {% translate "View reports" %}
-                    <svg class="w-2.5 h-2.5"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none">
-                        <path d="M5.27921 2L10.9257 7.64645C11.1209 7.84171 11.1209 8.15829 10.9257 8.35355L5.27921 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                    </svg>
-                </a>
-            </div>
-            <!-- End Card -->
-            <!-- Card -->
-            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
-                <div class="flex justify-between p-4 md:p-5 gap-x-3">
-                    <div>
-                        <p class="text-xs tracking-wide text-gray-500 uppercase">{% translate "Jobs" %}</p>
-                        <div class="flex items-center mt-1 gap-x-1">
-                            <h3 class="mt-1 text-xl font-medium text-gray-800 dark:text-gray-200 mg-dashboard-h-widget"
-                                data-widget-name="jobs">
-                                <div class="loader-element relative top-1 animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-gray-800 rounded-full dark:text-white"
-                                     role="status"
-                                     aria-label="loading">
-                                    <span class="sr-only">{% translate "Loading..." %}</span>
-                                </div>
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px] bg-blue-600 text-white rounded-full dark:bg-blue-900 dark:text-blue-200">
-                        <i class="fa-solid fa-briefcase w-4 h-4"></i>
-                    </div>
-                </div>
-                <a class="inline-flex items-center justify-between px-4 py-3 text-sm text-gray-600 border-t border-gray-200 md:px-5 hover:bg-gray-50 rounded-b-xl dark:border-gray-700 dark:text-gray-400 dark:hover:bg-slate-800"
-                   href="{% url 'dashboard:job:list' %}">
-                    {% translate "View reports" %}
-                    <svg class="w-2.5 h-2.5"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none">
-                        <path d="M5.27921 2L10.9257 7.64645C11.1209 7.84171 11.1209 8.15829 10.9257 8.35355L5.27921 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                    </svg>
-                </a>
-            </div>
-            <!-- End Card -->
-            <!-- Card -->
-            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
-                <div class="flex justify-between p-4 md:p-5 gap-x-3">
-                    <div>
-                        <p class="text-xs tracking-wide text-gray-500 uppercase">{% translate "Assignments" %}</p>
-                        <div class="flex items-center mt-1 gap-x-1">
-                            <h3 class="mt-1 text-xl font-medium text-gray-800 dark:text-gray-200 mg-dashboard-h-widget"
-                                data-widget-name="assignments">
-                                <div class="loader-element relative top-1 animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-gray-800 rounded-full dark:text-white"
-                                     role="status"
-                                     aria-label="loading">
-                                    <span class="sr-only">{% translate "Loading..." %}</span>
-                                </div>
-                            </h3>
-                        </div>
-                    </div>
-                    <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px] bg-blue-600 text-white rounded-full dark:bg-blue-900 dark:text-blue-200">
-                        <i class="fa-solid fa-list-ol w-4 h-4"></i>
-                    </div>
-                </div>
-                <a class="inline-flex items-center justify-between px-4 py-3 text-sm text-gray-600 border-t border-gray-200 md:px-5 hover:bg-gray-50 rounded-b-xl dark:border-gray-700 dark:text-gray-400 dark:hover:bg-slate-800"
-                   href="{% url 'dashboard:special_assignment:list' %}">
-                    {% translate "View reports" %}
-                    <svg class="w-2.5 h-2.5"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none">
-                        <path d="M5.27921 2L10.9257 7.64645C11.1209 7.84171 11.1209 8.15829 10.9257 8.35355L5.27921 14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                    </svg>
-                </a>
-            </div>
-            <!-- End Card -->
-        </div>
-        <!-- End Grid -->
-    </div>
-    <!-- End Card Section -->
-    <!-- End Stats Widget -->
-    <!-- Start Lists Cards -->
-    <div class="grid grid-cols-3 gap-2">
-        {% if clients %}
-            <div>
-                <div class="bg-white shadow-md rounded-md overflow-hidden max-w-lg mx-auto dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-                    <div class="h-80 overflow-y-auto">
-                        <div class="bg-gray-100 py-2 px-4 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
-                            <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-400 ">{% translate "Clients" %}</h2>
-                        </div>
-                        <ul class="divide-y divide-gray-200">
-                            {% for client in clients %}
-                                <li class="flex items-center py-4 px-6">
-                                    {% if client.logo %}
-                                        <img class="w-9 h-9 rounded-full object-cover mr-4"
-                                             src="{{ client.logo.url }}"
-                                             alt="{{ client.name|safe }}" />
-                                    {% else %}
-                                        <i class="fa-solid fa-building-user w-9 h-9 rounded-full mr-4 object-cover dark:text-gray-400"></i>
-                                    {% endif %}
-                                    <div class="flex-1">
-                                        <h3 class="text-[14px] font-medium text-gray-800 dark:text-gray-300">
-                                            <a href="{% url 'dashboard:client:details' client.pk %}">{{ client.name|safe }}</a>
+                        <!-- Card -->
+                        <div class="flex flex-col mb-1 bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
+                            <div class="flex justify-between p-4 md:p-5 gap-x-3">
+                                <div>
+                                    <p class="text-xs tracking-wide text-gray-500 uppercase">{% translate "Staff" %}</p>
+                                    <div class="flex items-center mt-1 gap-x-1">
+                                        <h3 class="text-xl font-medium text-gray-800 sm:text-2xl dark:text-gray-200 mg-dashboard-h-widget"
+                                            data-widget-name="staff"
+                                            id="mgTotalStaffMembers">
+                                            <div class="loader-element relative top-1 animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-gray-800 rounded-full dark:text-white"
+                                                 role="status"
+                                                 aria-label="loading">
+                                                <span class="sr-only">{% translate "Loading..." %}</span>
+                                            </div>
                                         </h3>
-                                        <p class="text-gray-600 text-xs">{{ client.jobs.count }} {% translate "Jobs" %}</p>
+                                        {% comment %}
+                                    <span class="flex items-center text-green-600">
+                                        <svg class="self-center inline-block w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M8 12a.5.5 0 0 0 .5-.5V5.707l2.146 2.147a.5.5 0 0 0 .708-.708l-3-3a.5.5 0 0 0-.708 0l-3 3a.5.5 0 1 0 .708.708L7.5 5.707V11.5a.5.5 0 0 0 .5.5z" />
+                                        </svg>
+                                        <span class="inline-block text-lg">1.7%</span>
+                                    </span>
+                                        {% endcomment %}
                                     </div>
-                                </li>
-                            {% endfor %}
-                        </ul>
+                                </div>
+                                <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px] bg-blue-600 text-white rounded-full dark:bg-blue-900 dark:text-blue-200">
+                                    <i class="fa-solid fa-users w-4 h-4"></i>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- End Card -->
+                        <div>
+                            <!-- Card -->
+                            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
+                                <div class="flex justify-between p-4 md:p-5 gap-x-3">
+                                    <div>
+                                        <p class="text-xs tracking-wide text-gray-500 uppercase">{% translate "Clients" %}</p>
+                                        <div class="flex items-center mt-1 gap-x-1">
+                                            <h3 class="mt-1 text-xl font-medium text-gray-800 dark:text-gray-200 mg-dashboard-h-widget"
+                                                data-widget-name="clients">
+                                                <div class="loader-element relative top-1 animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-gray-800 rounded-full dark:text-white"
+                                                     role="status"
+                                                     aria-label="loading">
+                                                    <span class="sr-only">{% translate "Loading..." %}</span>
+                                                </div>
+                                            </h3>
+                                            {% comment  %}
+                                                <span class="flex items-center text-red-600">
+                                                <svg class="self-center inline-block w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                                    <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
+                                                </svg>
+                                                <span class="inline-block text-lg">1.7%</span>
+                                            </span>
+                                            {% endcomment %}
+                                        </div>
+                                    </div>
+                                    <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px] bg-blue-600 text-white rounded-full dark:bg-blue-900 dark:text-blue-200">
+                                        <i class="fa-solid fa-building-user w-4 h-4"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Card -->
+                        </div>
+                    </div>
+                    <div>
+                        <div>
+                            <!-- Card -->
+                            <div class="flex flex-col mb-1 bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
+                                <div class="flex justify-between p-4 md:p-5 gap-x-3">
+                                    <div>
+                                        <p class="text-xs tracking-wide text-gray-500 uppercase">{% translate "Jobs" %}</p>
+                                        <div class="flex items-center mt-1 gap-x-1">
+                                            <h3 class="mt-1 text-xl font-medium text-gray-800 dark:text-gray-200 mg-dashboard-h-widget"
+                                                data-widget-name="jobs">
+                                                <div class="loader-element relative top-1 animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-gray-800 rounded-full dark:text-white"
+                                                     role="status"
+                                                     aria-label="loading">
+                                                    <span class="sr-only">{% translate "Loading..." %}</span>
+                                                </div>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px] bg-blue-600 text-white rounded-full dark:bg-blue-900 dark:text-blue-200">
+                                        <i class="fa-solid fa-briefcase w-4 h-4"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Card -->
+                        </div>
+                        <div>
+                            <!-- Card -->
+                            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
+                                <div class="flex justify-between p-4 md:p-5 gap-x-3">
+                                    <div>
+                                        <p class="text-xs tracking-wide text-gray-500 uppercase">{% translate "Assignments" %}</p>
+                                        <div class="flex items-center mt-1 gap-x-1">
+                                            <h3 class="mt-1 text-xl font-medium text-gray-800 dark:text-gray-200 mg-dashboard-h-widget"
+                                                data-widget-name="assignments">
+                                                <div class="loader-element relative top-1 animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-gray-800 rounded-full dark:text-white"
+                                                     role="status"
+                                                     aria-label="loading">
+                                                    <span class="sr-only">{% translate "Loading..." %}</span>
+                                                </div>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px] bg-blue-600 text-white rounded-full dark:bg-blue-900 dark:text-blue-200">
+                                        <i class="fa-solid fa-list-ol w-4 h-4"></i>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- End Card -->
+                        </div>
                     </div>
                 </div>
             </div>
-        {% else %}
-
-            {% include "bw_ui_components/global/empty_card.html" with label="clients" %}
-
-        {% endif %}
-        <!-- ... -->
-        <div>
-            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-                <div class="h-80 overflow-y-auto p-4 md:p-5">
-                    <div id="chart-dashboard-wrapper" class="text-center my-auto mx-auto">
-                        <div class="loader-element relative top-28 animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-gray-800 rounded-full dark:text-white"
+            <div class="lg:w-52 md:w-52 sm:w-auto text-center h-full">
+                <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                    <div id="chart-dashboard-wrapper" class="text-center">
+                        <div class="loader-element relative  animate-spin inline-block w-6 h-6 border-[3px] border-current border-t-transparent text-gray-800 rounded-full dark:text-white"
                              role="status"
                              aria-label="loading">
                             <span class="sr-only">{% translate "Loading..." %}</span>
                         </div>
                         <div class="hidden" id="jobChartWrapper">
-                            <canvas id="jobsChart"></canvas>
+                            <canvas style="max-width: 100%;" height="150" id="jobsChart"></canvas>
                         </div>
                         <div id="emptyJobsCard" class="hidden">
+
                             {% include "bw_ui_components/global/empty_card.html" with label="jobs" %}
+
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div class="h-full grow">
+                <div class="flex flex-col h-48 bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                    <!-- Grid -->
+                    <div class="grid h-full sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+                        <!-- Card -->
+                        <div class="flex flex-col border rounded-xl dark:border-gray-800">
+                            <div class="p-4 md:p-5">
+                                <div class="flex items-center gap-x-2">
+                                    <p class="text-sm font-semibold text-gray-500">{% translate "Tasks" %}</p>
+                                    <div class="hs-tooltip">
+                                        <div class="hs-tooltip-toggle">
+                                            <svg class="flex-shrink-0 w-4 h-4 text-gray-500"
+                                                 xmlns="http://www.w3.org/2000/svg"
+                                                 width="24"
+                                                 height="24"
+                                                 viewBox="0 0 24 24"
+                                                 fill="none"
+                                                 stroke="currentColor"
+                                                 stroke-width="2"
+                                                 stroke-linecap="round"
+                                                 stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="10" />
+                                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                                <path d="M12 17h.01" />
+                                            </svg>
+                                            <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-slate-700"
+                                                  role="tooltip">{% translate "The number of tasks" %}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h3 class="mt-2 text-2xl sm:text-3xl lg:text-4xl text-gray-800 dark:text-gray-200">
+                                    <span class="font-semibold">{{ tasks_count|intcomma }}</span>
+                                </h3>
+                            </div>
+                        </div>
+                        <!-- End Card -->
+                        <!-- Card -->
+                        <div class="flex flex-col border rounded-xl dark:border-gray-800">
+                            <div class="p-4 md:p-5">
+                                <div class="flex items-center gap-x-2">
+                                    <p class="text-sm font-semibold text-gray-500">{% translate "Notes" %}</p>
+                                    <div class="hs-tooltip">
+                                        <div class="hs-tooltip-toggle">
+                                            <svg class="flex-shrink-0 w-4 h-4 text-gray-500"
+                                                 xmlns="http://www.w3.org/2000/svg"
+                                                 width="24"
+                                                 height="24"
+                                                 viewBox="0 0 24 24"
+                                                 fill="none"
+                                                 stroke="currentColor"
+                                                 stroke-width="2"
+                                                 stroke-linecap="round"
+                                                 stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="10" />
+                                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                                <path d="M12 17h.01" />
+                                            </svg>
+                                            <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-slate-700"
+                                                  role="tooltip">
+                                                {% translate "The number of notes" %}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h3 class="mt-2 text-2xl sm:text-3xl lg:text-4xl text-gray-800 dark:text-gray-200">
+                                    <span class="font-semibold">{{ notes_count|intcomma }}</span> <!-- <span class="text-gray-500">/ 10</span> -->
+                                </h3>
+                            </div>
+                        </div>
+                        <!-- End Card -->
+                        <!-- Card -->
+                        <div class="flex flex-col border rounded-xl dark:border-gray-800">
+                            <div class="p-4 md:p-5">
+                                <div class="flex items-center gap-x-2">
+                                    <p class="text-sm font-semibold text-gray-500">{% translate "Documents" %}</p>
+                                    <div class="hs-tooltip">
+                                        <div class="hs-tooltip-toggle">
+                                            <svg class="flex-shrink-0 w-4 h-4 text-gray-500"
+                                                 xmlns="http://www.w3.org/2000/svg"
+                                                 width="24"
+                                                 height="24"
+                                                 viewBox="0 0 24 24"
+                                                 fill="none"
+                                                 stroke="currentColor"
+                                                 stroke-width="2"
+                                                 stroke-linecap="round"
+                                                 stroke-linejoin="round">
+                                                <circle cx="12" cy="12" r="10" />
+                                                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" />
+                                                <path d="M12 17h.01" />
+                                            </svg>
+                                            <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded shadow-sm dark:bg-slate-700"
+                                                  role="tooltip">
+                                                {% translate "The number of documents" %}
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h3 class="mt-2 text-2xl sm:text-3xl lg:text-4xl text-gray-800 dark:text-gray-200">
+                                    <span class="font-semibold">{{ documents_count|intcomma }}</span> <!-- <span class="text-gray-500">/ 10</span> -->
+                                </h3>
+                            </div>
+                        </div>
+                        <!-- End Card -->
+                    </div>
+                    <!-- End Grid -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Card Section -->
+    <!-- End Stats Widget -->
+    <!-- Start Lists Cards -->
+    <div class="flex flex-row gap-2">
+        <div class="w-1/3">
+            {% if clients %}
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+                    <div class="px-4 pt-3 pb-3 md:px-5">
+                        <h3 class="mb-2 text-lg font-bold text-gray-800 dark:text-white">
+                            {% translate "Clients" %}
+                        </h3>
+                        <ul class="flex flex-col">
+                            {% for client in clients %}
+                                <li class="inline-flex items-center gap-x-3.5 py-3 px-4 text-sm font-medium bg-white border border-gray-200 text-gray-800 -mt-px first:rounded-t-lg first:mt-0 last:rounded-b-lg dark:bg-slate-900 dark:border-gray-700 dark:text-white hover:bg-gray-100 transition-all dark:hover:bg-white/[.05]">
+                                    <svg class="flex-shrink-0 w-4 h-4"
+                                         xmlns="http://www.w3.org/2000/svg"
+                                         width="24"
+                                         height="24"
+                                         viewBox="0 0 24 24"
+                                         fill="none"
+                                         stroke="currentColor"
+                                         stroke-width="2"
+                                         stroke-linecap="round"
+                                         stroke-linejoin="round">
+                                        <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                                        <circle cx="9" cy="7" r="4" />
+                                        <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                                        <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+                                    </svg>
+                                    <a href="{% url 'dashboard:client:details' client.pk %}">{{ client.name|safe }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                        <div class="text-right">
+                            <a class="mt-3 inline-flex items-center gap-x-1 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                               href="#">
+                                {% translate "All" %}
+                                <svg class="flex-shrink-0 w-4 h-4"
+                                     xmlns="http://www.w3.org/2000/svg"
+                                     width="24"
+                                     height="24"
+                                     viewBox="0 0 24 24"
+                                     fill="none"
+                                     stroke="currentColor"
+                                     stroke-width="2"
+                                     stroke-linecap="round"
+                                     stroke-linejoin="round">
+                                    <path d="m9 18 6-6-6-6" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+
+                {% include "bw_ui_components/global/empty_card.html" with label="clients" %}
+
+            {% endif %}
+        </div>
+        <div class="w-1/3">
+            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+                <div class="px-4 pt-3 pb-3 md:px-5">
+                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">
+                        {% translate "Last assignments" %}
+                    </h3>
+                    <div>
+                        <!-- Timeline -->
+                        <div class="mt-2">
+                            <!-- Heading -->
+                            {# Start Heading #}
+                            {% comment  %}
+                                <div class="ps-2 my-2 first:mt-0">
+                                <h3 class="text-xs font-medium uppercase text-gray-500 dark:text-gray-400">1 Aug, 2023</h3>
+                            </div>
+                            {% endcomment %}
+                            {# End Heading #}
+                            <!-- End Heading -->
+                            {% for assignment in special_assignments %}
+                                <!-- Item -->
+                                <div class="flex gap-x-3 hover:bg-gray-100 dark:hover:bg-white/10">
+                                    <!-- Icon -->
+                                    <div class="relative last:after:hidden after:absolute after:top-7 after:bottom-0 after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-200 dark:after:bg-gray-700">
+                                        <div class="relative z-10 w-7 h-7 flex justify-center items-center">
+                                            <div class="w-2 h-2 rounded-full bg-gray-400 dark:bg-gray-600"></div>
+                                        </div>
+                                    </div>
+                                    <!-- End Icon -->
+                                    <!-- Right Content -->
+                                    <div class="grow pt-0.5 pb-3">
+                                        <h3 class="flex gap-x-1.5 font-semibold text-sm
+                                                   {% if assignment.status == CON_PAST_DUE %}
+                                                       {{ BW_PRELINE_DANGER_ANCHOR_TAG_DEFAULT_COLOR }}
+                                                   {% else %}
+                                                       text-gray-800 dark:text-white
+                                                   {% endif %}">
+                                            <svg class="flex-shrink-0 w-3 h-3 mt-1"
+                                                 xmlns="http://www.w3.org/2000/svg"
+                                                 width="24"
+                                                 height="24"
+                                                 viewBox="0 0 24 24"
+                                                 fill="none"
+                                                 stroke="currentColor"
+                                                 stroke-width="2"
+                                                 stroke-linecap="round"
+                                                 stroke-linejoin="round">
+                                                <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+                                                <polyline points="14 2 14 8 20 8" /><line x1="16" x2="8" y1="13" y2="13" /><line x1="16" x2="8" y1="17" y2="17" /><line x1="10" x2="8" y1="9" y2="9" />
+                                            </svg>
+                                            <a href="{% url 'dashboard:special_assignment:details' assignment.pk %}">
+                                                {{ assignment.title|safe }}
+                                            </a>
+                                        </h3>
+                                        <a href="#"
+                                           class="mt-1 -ms-1 p-1 italic inline-flex items-center gap-x-2 text-xs rounded-lg border border-transparent text-gray-500 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                            {{ assignment.assigned_by.fullname|safe }} - {{ assignment.created_at|naturaltime }}
+                                        </a>
+                                    </div>
+                                    <!-- End Right Content -->
+                                </div>
+                                <!-- End Item -->
+                            {% empty %}
+
+                                {% include "bw_ui_components/global/empty_card.html" with label="special assignments" %}
+
+                            {% endfor %}
+                        </div>
+                        <!-- End Timeline -->
                     </div>
                 </div>
             </div>
         </div>
-        <div>
-            <!-- Card -->
-            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
-                <div class="p-4 md:p-5">
-                    <div class="flex items-center gap-x-2">
-                        <p class="text-xs uppercase tracking-wide text-gray-500">{% translate "Tasks" %}</p>
-                        <div class="hs-tooltip">
-                            <div class="hs-tooltip-toggle">
-                                <svg class="w-3.5 h-3.5 text-gray-500"
-                                     xmlns="http://www.w3.org/2000/svg"
-                                     width="16"
-                                     height="16"
-                                     fill="currentColor"
-                                     viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                    <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
-                                </svg>
-                                <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
-                                      role="tooltip">{% translate "The number of total tasks" %}</span>
+        <div class="grow">
+            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+                <div class="px-4 pt-3 pb-3 md:px-5">
+                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">
+                        {% translate "Last activities" %}
+                    </h3>
+                    <!-- Timeline -->
+                    <div class="mt-5">
+                        {% for activity in last_activities %}
+                            <!-- Item -->
+                            <div class="flex gap-x-3 hover:bg-gray-100 dark:hover:bg-white/10">
+                                <!-- Left Content -->
+                                <div class="w-16 text-end">
+                                    <span class="text-xs text-gray-500 dark:text-gray-400">{{ activity.datetime|naturaltime }}</span>
+                                </div>
+                                <!-- End Left Content -->
+                                <!-- Icon -->
+                                <div class="relative last:after:hidden after:absolute after:top-7 after:bottom-0 after:start-3.5 after:w-px after:-translate-x-[0.5px] after:bg-gray-200 dark:after:bg-gray-700">
+                                    <div class="relative z-10 w-7 h-7 flex justify-center items-center">
+                                        <div class="w-2 h-2 rounded-full bg-gray-400 dark:bg-gray-600"></div>
+                                    </div>
+                                </div>
+                                <!-- End Icon -->
+                                <!-- Right Content -->
+                                <div class="grow pt-0.5 pb-6">
+                                    {# {{ activity.get_event_type_display }} #}
+                                    <h3 class="flex gap-x-1.5 font-semibold text-sm text-gray-800 dark:text-white
+                                               {% if activity.is_custom_deleted %}line-through text-red-400{% endif %}">
+                                        {% if activity.get_event_type_display == "Create" or activity.get_event_type_display == "Many-to-Many Add" %}
+                                            <i class="inline-block text-sm mr-1 fa-solid fa-plus relative top-1 text-teal-400"></i>
+                                        {% endif %}
+                                        {% if activity.is_custom_deleted %}
+                                            <i class="fa-solid fa-trash-can text-sm relative inline-block top-1 text-red-400 mr-1"></i>
+                                        {% endif %}
+                                        {% if activity.is_custom_update %}
+                                            <i class="fa-solid fa-pen mr-1 relative text-sm top-1 text-yellow-400 inline-block"></i>
+                                        {% endif %}
+                                        {% if activity.get_event_type_display == "Update" and not activity.is_custom_deleted %}
+                                            <i class="fa-solid fa-pen mr-1 relative text-sm top-1 text-yellow-400 inline-block"></i>
+                                        {% endif %}
+                                        {{ activity.object_repr|safe }}
+                                    </h3>
+                                    <p class="my-1 text-xs italic text-gray-600 dark:text-gray-400">
+                                        {% if activity.is_update is True %}
+                                            {% if activity.is_custom_deleted %}
+                                                {% translate "Delete" %}
+                                            {% else %}
+                                                {{ activity.get_event_type_display|safe }}
+                                            {% endif %}
+                                        {% else %}
+                                            {{ activity.get_event_type_display|safe }}
+                                        {% endif %}
+                                        - {{ activity.content_type }}
+                                    </p>
+                                    {# <a href="{% url 'dashboard:staff:member-details' activity.user.pk %}" #}
+                                    <a href="#"
+                                       target="_blank"
+                                       class="mt-1 -ms-1 p-1 underline inline-flex items-center gap-x-2 text-xs rounded-lg border border-transparent text-gray-500 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                        <img class="flex-shrink-0 w-4 h-4 rounded-full"
+                                             src="https://images.unsplash.com/photo-1659482633369-9fe69af50bfb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8auto=format&fit=facearea&facepad=3&w=320&h=320&q=80"
+                                             alt="Image Description" />
+                                        {{ activity.user }}
+                                        <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
+                                    </a>
+                                </div>
+                                <!-- End Right Content -->
                             </div>
-                        </div>
+                            <!-- End Item -->
+                        {% empty %}
+                            <div class="mt-2 bg-yellow-100 border border-yellow-200 text-sm text-yellow-800 rounded-lg p-4 dark:bg-yellow-800/10 dark:border-yellow-900 dark:text-yellow-500"
+                                 role="alert">
+                                <span class="font-bold">{% translate "Warning" %}</span>{% translate "No activities" %}
+                            </div>
+                        {% endfor %}
                     </div>
-                    <div class="mt-1 flex items-center">
-                        <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-gray-200">
-                            {{ tasks_count|intcomma }}
-                        </h3>
-                    </div>
+                    <!-- End Timeline -->
                 </div>
             </div>
-            <!-- End Card -->
-            <!-- Card -->
-            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800 my-1">
-                <div class="p-4 md:p-5">
-                    <div class="flex items-center gap-x-2">
-                        <p class="text-xs uppercase tracking-wide text-gray-500">{% translate "Notes" %}</p>
-                        <div class="hs-tooltip">
-                            <div class="hs-tooltip-toggle">
-                                <svg class="w-3.5 h-3.5 text-gray-500"
-                                     xmlns="http://www.w3.org/2000/svg"
-                                     width="16"
-                                     height="16"
-                                     fill="currentColor"
-                                     viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                    <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
-                                </svg>
-                                <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
-                                      role="tooltip">{% translate "The number of total notes" %}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1 flex items-center">
-                        <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-gray-200">
-                            {{ notes_count|intcomma }}
-                        </h3>
-                    </div>
-                </div>
-            </div>
-            <!-- End Card -->
-            <!-- Card -->
-            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
-                <div class="p-4 md:p-5">
-                    <div class="flex items-center gap-x-2">
-                        <p class="text-xs uppercase tracking-wide text-gray-500">{% translate "Documents" %}</p>
-                        <div class="hs-tooltip">
-                            <div class="hs-tooltip-toggle">
-                                <svg class="w-3.5 h-3.5 text-gray-500"
-                                     xmlns="http://www.w3.org/2000/svg"
-                                     width="16"
-                                     height="16"
-                                     fill="currentColor"
-                                     viewBox="0 0 16 16">
-                                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
-                                    <path d="M5.255 5.786a.237.237 0 0 0 .241.247h.825c.138 0 .248-.113.266-.25.09-.656.54-1.134 1.342-1.134.686 0 1.314.343 1.314 1.168 0 .635-.374.927-.965 1.371-.673.489-1.206 1.06-1.168 1.987l.003.217a.25.25 0 0 0 .25.246h.811a.25.25 0 0 0 .25-.25v-.105c0-.718.273-.927 1.01-1.486.609-.463 1.244-.977 1.244-2.056 0-1.511-1.276-2.241-2.673-2.241-1.267 0-2.655.59-2.75 2.286zm1.557 5.763c0 .533.425.927 1.01.927.609 0 1.028-.394 1.028-.927 0-.552-.42-.94-1.029-.94-.584 0-1.009.388-1.009.94z" />
-                                </svg>
-                                <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
-                                      role="tooltip">{% translate "The number of total documents" %}</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mt-1 flex items-center">
-                        <h3 class="text-xl sm:text-2xl font-medium text-gray-800 dark:text-gray-200">
-                            {{ documents_count|intcomma }}
-                        </h3>
-                    </div>
-                </div>
-            </div>
-            <!-- End Card -->
         </div>
     </div>
     <!-- End Lists Cards -->
-    <!-- Start Special Assignments Table -->
-    <!-- Table Section -->
-    <div class="max-w-[100rem] py-10 lg:py-14 mx-auto">
-        {% if special_assignments %}
-
-            {% include "bw_components/special_assignment/mini_table_list.html" with is_checkbox_enabled=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Special assignments" header_subtitle="Special assignments custom specific assignments to clients" app_label="special_assignment" pagination_list_url_name="dashboard:special_assignment:list" is_actions_menu_enabled=True actions_items="show,update,delete" actions_app_name="special_assignment" actions_base_url="dashboard:special_assignment" base_url_name="dashboard:special_assignment" filter_cancel_url="dashboard:special_assignment:list" page_obj=special_assignments %}
-
-        {% else %}
-
-            {% include "bw_ui_components/global/empty_card.html" with label="special assignments" %}
-
-        {% endif %}
-    </div>
-    <!-- End Table Section -->
-    <!-- End Special Assignments Table -->
 {% endblock dashboard_content_block %}

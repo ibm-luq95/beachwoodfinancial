@@ -109,7 +109,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
                     table_options=table_options,
                     return_table=True,
                 )
-                dprint.panel(text_content=table, title="Created users")
+                BWDebuggingPrint.print(table)
                 self.stdout_output("success", _(f"Users created successfully!"))
 
         except Exception as ex:

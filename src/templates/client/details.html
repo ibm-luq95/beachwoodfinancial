@@ -238,7 +238,9 @@
                         <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-800">
                             <div class="flex justify-between p-4 md:p-5 gap-x-3">
                                 <div>
-                                    <p class="text-xs tracking-wide text-gray-500 uppercase">{% translate "Total Assignments" %}</p>
+                                    <p class="text-xs tracking-wide text-gray-500 uppercase">
+                                        {% translate "Total Assignments" %}
+                                    </p>
                                     <div class="flex items-center mt-1 gap-x-1">
                                         <h3 class="text-xl font-medium text-gray-800 sm:text-2xl dark:text-gray-200">
                                             {{ object.special_assignments.count }}
@@ -305,10 +307,21 @@
                                         <ul class="max-w-xs flex flex-col divide-y divide-gray-200 dark:divide-gray-700 mt-2">
                                             {% for bookkeeper in object.bookkeepers.all %}
                                                 <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-gray-800 dark:text-white">
-                                                    <a href="">{{ bookkeeper.user.fullname }}</a>
+                                                    <a href="{% url 'dashboard:staff:member-details' bookkeeper.user.pk %}">{{ bookkeeper.user.fullname }}</a>
+                                                    <a class="{{ BW_PRELINE_PRIMARY_ANCHOR_TAG_DEFAULT_COLOR }}"
+                                                       href="{% url 'dashboard:staff:member-details' bookkeeper.user.pk %}"
+                                                       target="_blank">
+                                                        <i class="fa-solid fa-arrow-up-right-from-square text-[12px]"></i>
+                                                    </a>
                                                 </li>
                                             {% endfor %}
                                         </ul>
+                                        <button type="button"
+                                                id="addBookkeeperBtn"
+                                                data-hs-overlay="#addBookkeeperModal"
+                                                class="{{ BW_FULL_INPUT_CSS_CLASSES }} py-2 px-4 w-full inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                            {% translate "Add bookkeeper" %}
+                                        </button>
                                     </div>
                                 </div>
                             </div>
@@ -699,5 +712,8 @@
     {# Start create client account modal #}
     {% bw_js_modal modal_css_id="createClientAccountModal" modal_size="md" modal_title="Create new account" is_submit_btn_enabled=True is_form_modal=True form_object=client_account_form is_upload_form=False form_id="createClientAccountForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:client_account:api:client-account-api-router-list" %}
     {# End create client account modal #}
+    {# Start Add bookkeeper to client modal #}
+    {% bw_js_modal modal_css_id="addBookkeeperModal" modal_size="md" modal_title="Assign bookkeeper" is_submit_btn_enabled=True is_form_modal=True form_object=client_assign_bookkeeper_form is_upload_form=False form_id="assignBookkeeperClientForm" form_submit_text="Assign" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:client:api:client-api-router-assign-bookkeeper" %}
+    {# End Add bookkeeper to client modal #}
     {# End tabs #}
 {% endblock dashboard_content_block %}

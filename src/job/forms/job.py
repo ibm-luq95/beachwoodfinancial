@@ -22,6 +22,8 @@ class JobForm(BWJSModalFormRendererMixin, BaseModelFormMixin, JoditFormMixin):
     field_order = [
         "title",
         "client",
+        "period_year",
+        "period_month",
         "managed_by",
         "start_date",
         "due_date",

@@ -17,6 +17,7 @@ django-guardian
 django-widget-tweaks
 djangorestframework
 drf-standardized-errors
+django-easy-audit
 gunicorn
 hiredis
 mysql-connector-python

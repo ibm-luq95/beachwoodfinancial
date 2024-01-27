@@ -7,6 +7,8 @@ from django.utils.translation import gettext as _
 
 from beach_wood_user.models import BWUser
 from core.choices import JobTypeEnum
+from core.choices.fiscal_year import FiscalYearEnum
+from core.choices.months import MonthChoices
 from core.constants.file_types_validation import IMAGES_FT
 from core.constants.status_labels import CON_NOT_STARTED
 from core.forms.mixins.base_form_mixin import BWBaseFormMixin
@@ -22,7 +24,9 @@ file_validator = FileValidator(max_size=1024 * 1000, content_types=IMAGES_FT)
 
 
 class JobMiniForm(RemoveFieldsMixin, BWJSModalFormRendererMixin, BWBaseFormMixin):
-    def __init__(self, removed_fields: Optional[list] = None, client=None, *args, **kwargs):
+    def __init__(
+        self, removed_fields: Optional[list] = None, client=None, *args, **kwargs
+    ):
         super(BWBaseFormMixin, self).__init__(*args, **kwargs)
         RemoveFieldsMixin.__init__(self, removed_fields=removed_fields)
         self.initial["start_date"] = timezone.now().date()
@@ -42,6 +46,18 @@ class JobMiniForm(RemoveFieldsMixin, BWJSModalFormRendererMixin, BWBaseFormMixin
         widget=RichHTMLEditorWidget,
         required=True,
         help_text=JOB_HELP_MESSAGES.get("description"),
+    )
+    period_year = forms.ChoiceField(
+        label=_("Period Year"),
+        required=False,
+        choices=FiscalYearEnum.choices,
+        help_text=JOB_HELP_MESSAGES.get("period_year"),
+    )
+    period_month = forms.ChoiceField(
+        label=_("Period Month"),
+        required=False,
+        choices=MonthChoices.choices,
+        help_text=JOB_HELP_MESSAGES.get("period_month"),
     )
     categories = forms.ModelChoiceField(
         label=_("Categories"),
