@@ -352,7 +352,12 @@
                                     <!-- End Icon -->
                                     <!-- Right Content -->
                                     <div class="grow pt-0.5 pb-3">
-                                        <h3 class="flex gap-x-1.5 font-semibold text-sm text-gray-800 dark:text-white">
+                                        <h3 class="flex gap-x-1.5 font-semibold text-sm
+                                                   {% if assignment.status == CON_PAST_DUE %}
+                                                       {{ BW_PRELINE_DANGER_ANCHOR_TAG_DEFAULT_COLOR }}
+                                                   {% else %}
+                                                       text-gray-800 dark:text-white
+                                                   {% endif %}">
                                             <svg class="flex-shrink-0 w-3 h-3 mt-1"
                                                  xmlns="http://www.w3.org/2000/svg"
                                                  width="24"
@@ -372,7 +377,7 @@
                                         </h3>
                                         <a href="#"
                                            class="mt-1 -ms-1 p-1 italic inline-flex items-center gap-x-2 text-xs rounded-lg border border-transparent text-gray-500 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                                            {{ assignment.assigned_by.fullname|safe }}
+                                            {{ assignment.assigned_by.fullname|safe }} - {{ assignment.created_at|naturaltime }}
                                         </a>
                                     </div>
                                     <!-- End Right Content -->
@@ -391,7 +396,7 @@
         </div>
         <div class="grow">
             <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-                <div class="p-4 md:p-4">
+                <div class="px-4 pt-3 pb-3 md:px-5">
                     <h3 class="text-lg font-bold text-gray-800 dark:text-white">
                         {% translate "Last activities" %}
                     </h3>
@@ -443,7 +448,8 @@
                                         {% endif %}
                                         - {{ activity.content_type }}
                                     </p>
-                                    <a href="{% url 'dashboard:staff:member-details' activity.user.pk %}"
+                                    {# <a href="{% url 'dashboard:staff:member-details' activity.user.pk %}" #}
+                                    <a href="#"
                                        target="_blank"
                                        class="mt-1 -ms-1 p-1 underline inline-flex items-center gap-x-2 text-xs rounded-lg border border-transparent text-gray-500 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
                                         <img class="flex-shrink-0 w-4 h-4 rounded-full"
