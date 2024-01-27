@@ -9,7 +9,6 @@ from django.views.generic import (
 
 from core.cache import BWCacheViewMixin
 from core.constants.site_settings import SITE_SETTINGS_DB_SLUG
-from core.utils import debugging_print
 from core.views.mixins import (
     BWLoginRequiredMixin,
 )
@@ -47,5 +46,4 @@ class SiteSettingsFormView(
     def form_valid(self, form):
         """If the form is valid, save the associated model."""
         self.object = form.save()
-        debugging_print(form.cleaned_data)
         return super().form_valid(form)
