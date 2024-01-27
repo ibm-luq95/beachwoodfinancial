@@ -9,7 +9,6 @@ from rich.panel import Panel
 
 from client_category.models import ClientCategory
 from core.init_command_data.client_category import INIT_DATA_CLIENT_CATEGORIES
-from core.init_command_data.job_category import INIT_DATA_JOB_CATEGORIES
 from core.management.mixins import CommandStdOutputMixin
 
 
@@ -26,7 +25,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
                 ClientCategory.objects.bulk_create(inserted_listed)
                 print(
                     Panel(
-                        f"Done, [green]{INIT_DATA_JOB_CATEGORIES}!",
+                        f"Done, [green]{INIT_DATA_CLIENT_CATEGORIES}!",
                         title="Success",
                         subtitle="Thank you",
                     )
