@@ -14,7 +14,7 @@ class FilterCreatedMixin(HelpfulFilterSet):
         field_name="created_at",
         choices=DateFiltersEnum.choices,
         method="filter_created",
-        empty_label=_("Quick filter"),
+        empty_label=_("---"),
     )
     created_between = django_filters.DateFromToRangeFilter(
         field_name="created_at",

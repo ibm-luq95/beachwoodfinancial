@@ -65,16 +65,18 @@
                 </div>
             </th>
         {% endif %}
-        <th scope="col" class="px-6 py-3 text-left">
-            <div class="flex items-center gap-x-2">
-                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                    {% translate "Manager" %}
-                </span>
+        {% if is_hide_manager is False or extra_context.is_hide_manager is False %}
+            <th scope="col" class="px-6 py-3 text-left">
+                <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                        {% translate "Manager" %}
+                    </span>
 
-                {% include "bw_components/global/table_list/sort_icon.html" %}
+                    {% include "bw_components/global/table_list/sort_icon.html" %}
 
-            </div>
-        </th>
+                </div>
+            </th>
+        {% endif %}
         <th scope="col" class="px-6 py-3 text-left">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
@@ -135,7 +137,7 @@
 {# End Table Header Columns #}
 {# Start Table Body #}
 {% block tbody_block %}
-    {% for object in object_list %}
+    {% for object in page_obj %}
         <tr>
             {% if is_checkbox_enabled is True %}
                 <td class="h-px w-px whitespace-nowrap">
@@ -178,20 +180,23 @@
                     </div>
                 </td>
             {% endif %}
-            <td class="h-px w-px whitespace-nowrap">
-                <div class="px-5 py-3">
-                    {% if object.managed_by %}
-                        {% if request.user.user_type == CON_BOOKKEEPER %}
-                            <a href="javascript:;" class="disabledAnchorElement text-sm">{{ object.managed_by }}</a>
+            
+            {% if is_hide_manager is False or extra_context.is_hide_manager is False %}
+                <td class="h-px w-px whitespace-nowrap">
+                    <div class="px-5 py-3">
+                        {% if object.managed_by %}
+                            {% if request.user.user_type == CON_BOOKKEEPER %}
+                                <a href="javascript:;" class="disabledAnchorElement text-sm">{{ object.managed_by }}</a>
+                            {% else %}
+                                <a href="{% url 'dashboard:staff:member-details' object.managed_by.pk %}"
+                                   class="text-sm {{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }}">{{ object.managed_by }}</a>
+                            {% endif %}
                         {% else %}
-                            <a href="{% url 'dashboard:staff:member-details' object.managed_by.pk %}"
-                               class="text-sm {{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }}">{{ object.managed_by }}</a>
+                            <span class="text-sm text-yellow-600 font-semibold italic">{% translate "No manager" %}</span>
                         {% endif %}
-                    {% else %}
-                        <span class="text-sm text-yellow-600 font-semibold italic">{% translate "No manager" %}</span>
-                    {% endif %}
-                </div>
-            </td>
+                    </div>
+                </td>
+            {% endif %}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-5 py-3">
                     {% bw_badge code=object.status text=object.get_status_display is_solid=False size="sm" %}
@@ -228,7 +233,7 @@
 {# End Table Body #}
 {# Start Table Results #}
 {% block results_block %}
-    {{ object_list.count }}/{{ total_records }}
+    {{ page_obj.object_list|length }}/{{ total_records }}
 {% endblock results_block %}
 {# End Table Results #}
 {# Start Table Pagination #}

@@ -5,14 +5,11 @@ import click
 from django.core.paginator import Paginator
 from django.db import transaction
 from django.db.models import Q
-from django.utils.translation import gettext as _
-import random
 
 from client.models.helpers.map_helper import ClientDetailsMap
 from client.models.querysets.types import ClientJobsFilterTypes
 from core.models.querysets import BaseQuerySetMixin
 from core.utils import bw_log
-from core.utils import debugging_print
 from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from reports.models import ClientJobsReportsDBView
 
@@ -36,6 +33,8 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
             job_type = filter_params.get("job_type")
             job_stats = filter_params.get("job_stats")
             jobs_managed_by = filter_params.get("managed_by")
+            period_year = filter_params.get("period_year")
+            period_month = filter_params.get("period_month")
             # debugging_print(filter_params)
             clients_q = Q()
             if client_categories is not None:
@@ -52,6 +51,10 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
                 clients_q &= Q(jobs__status__in=job_status)
             if jobs_managed_by is not None:
                 clients_q &= Q(jobs__managed_by__in=jobs_managed_by)
+            if period_year is not None:
+                clients_q &= Q(jobs__period_year__in=period_year)
+            if period_month is not None:
+                clients_q &= Q(jobs__period_month__in=period_month)
             # debugging_print(created_year.isdigit())
 
             try:
@@ -60,12 +63,18 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
                     .all()
                     .order_by("client_name")
                 )
+                # BWDebuggingPrint.log(reports)
+                # for r in reports:
+                #     BWDebuggingPrint.log(r)
                 for r in reports:
                     years_list.add(r.job_year)
                 details_dict = dict()
                 # bw_log().log(years_list)
                 clients = (
-                    ClientProxy.objects.select_related().filter(clients_q).order_by("name")
+                    ClientProxy.objects.select_related()
+                    .filter(clients_q)
+                    .distinct()
+                    .order_by("name")
                 )
                 # debugging_print(len(clients))
                 # debugging_print(clients.first().jobs.all())

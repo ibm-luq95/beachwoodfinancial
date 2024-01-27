@@ -287,7 +287,7 @@
                                          aria-labelledby="bar-with-underline-item-2">
                                         {% if object.jobs.all %}
 
-                                            {% include "bw_components/job/table_list.html" with is_checkbox_enabled=False is_show_create_btn=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Jobs" header_subtitle="" app_label="job" pagination_list_url_name="dashboard:job:list" is_actions_menu_enabled=False actions_items="show,update,delete" actions_app_name="job" actions_base_url="dashboard:job" base_url_name="dashboard:job" object_list=object.jobs.all is_show_client=False %}
+                                            {% include "bw_components/job/table_list.html" with is_checkbox_enabled=False is_show_create_btn=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Jobs" header_subtitle="" app_label="job" pagination_list_url_name="dashboard:job:list" is_actions_menu_enabled=False actions_items="show,update,delete" actions_app_name="job" actions_base_url="dashboard:job" base_url_name="dashboard:job" object_list=object.jobs.all is_show_client=False is_hide_manager=True %}
 
                                         {% else %}
 
@@ -300,9 +300,11 @@
                                      class="hidden"
                                      role="tabpanel"
                                      aria-labelledby="bar-with-underline-item-3">
-                                    <div class="text-right">
+                                    {% comment  %}
+                                        <div class="text-right">
                                         {% bw_create_btn_js_modal js_create_btn_css_id="createAssignmentBtn" modal_css_id="createAssignmentModal" app_name="special_assignment" %}
                                     </div>
+                                    {% endcomment %}
                                     {% if object.get_staff_member_object.staff_object.special_assignments.all %}
 
                                         {% include "bw_components/special_assignment/mini_table_list.html" with is_checkbox_enabled=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Special assignments" header_subtitle="Special assignments custom specific assignments to clients" app_label="special_assignment" pagination_list_url_name="dashboard:special_assignment:list" is_actions_menu_enabled=True actions_items="show,update,delete" actions_app_name="special_assignment" actions_base_url="dashboard:special_assignment" base_url_name="dashboard:special_assignment" page_obj=object.get_staff_member_object.staff_object.special_assignments.all %}

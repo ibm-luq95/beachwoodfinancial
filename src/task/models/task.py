@@ -8,6 +8,7 @@ from core.models.mixins import BaseModelMixin, StrModelMixin
 from core.models.mixins.access_proxy_models_mixin import AccessProxyModelMixin
 from core.models.mixins.cron_column_mixin import CronColumnMixin
 from job.models.job_proxy import JobProxy
+from task.models.manager.tasks_manager import TaskManager
 
 
 # class Task(BaseModelMixin, StartAndDueDateMixin, StrModelMixin, CreatedByMixin):
@@ -65,6 +66,7 @@ class Task(BaseModelMixin, AccessProxyModelMixin, CronColumnMixin, StrModelMixin
         blank=True,
         help_text=_("Additional note for the task"),
     )
+    objects = TaskManager()
 
     # items = models.ManyToManyField(to=TaskItem, related_name="task", blank=True)
 

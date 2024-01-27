@@ -14,5 +14,7 @@ JOB_HELP_MESSAGES = {
     "due_date": _("Due date for this job"),
     "managed_by": _("Staff member who will handle the job"),
     "state": _("Job state"),
-    "categories": _("Categorize your job")
+    "categories": _("Categorize your job"),
+    "period_year": _("Period year which will be used in reporting"),
+    "period_month": _("Period month which will be used in reporting"),
 }

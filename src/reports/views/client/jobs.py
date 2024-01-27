@@ -12,6 +12,7 @@ from client.models import ClientProxy
 from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.utils import debugging_print, get_months_abbr
+from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from job.models import JobProxy
 from reports.filters.client import ClientJobsFilter
@@ -24,7 +25,7 @@ from django.conf import settings
 #     from silk.profiling.profiler import silk_profile
 
 
-@method_decorator(csrf_exempt, name="dispatch")  # TODO: check if this is needed
+# @method_decorator(csrf_exempt, name="dispatch")  # TODO: check if this is needed
 class JobsReportView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
@@ -75,6 +76,7 @@ class JobsReportView(
         context.setdefault("months_list", months_list)
         form = self.get_form()
         page = int(self.request.GET.get("page", 1))
+        # BWDebuggingPrint.pprint(form.serialize_inputs())
         object_list = ClientProxy.reports_manager.get_all_jobs_as_list(
             form.serialize_inputs(), page
         )

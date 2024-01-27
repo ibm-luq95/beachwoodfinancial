@@ -10,6 +10,8 @@ from rest_framework import serializers
 
 from client.models import ClientProxy
 from core.choices import JobStatusEnum, JobTypeEnum, JobStateEnum
+from core.choices.fiscal_year import FiscalYearEnum
+from core.choices.months import MonthChoices
 from core.models.mixins import BaseModelMixin, StartAndDueDateMixin, StrModelMixin
 from core.models.mixins.access_proxy_models_mixin import AccessProxyModelMixin
 from core.models.mixins.cron_column_mixin import CronColumnMixin
@@ -57,6 +59,22 @@ class Job(
     )
     slug = models.SlugField(
         _("slug"), max_length=250, null=True, blank=True, editable=False
+    )
+    period_year = models.PositiveIntegerField(
+        _("period year"),
+        null=True,
+        blank=True,
+        db_index=True,
+        choices=FiscalYearEnum.choices,
+        help_text=JOB_HELP_MESSAGES.get("period_year"),
+    )
+    period_month = models.PositiveSmallIntegerField(
+        _("period month"),
+        null=True,
+        blank=True,
+        db_index=True,
+        choices=MonthChoices.choices,
+        help_text=JOB_HELP_MESSAGES.get("period_month"),
     )
     # description = models.TextField(
     #     _("description"),

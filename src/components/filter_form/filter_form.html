@@ -93,6 +93,21 @@
                             </div>
                         {% endif %}
                     {% endfor %}
+                    {% if per_page_filter_form %}
+                        <div class="mr-3 mb-1">
+                            <label for="{{ per_page_filter_form.per_page.id_for_label }}"
+                                   class="block text-[13px] font-medium mb-2 dark:text-white">
+                                {{ per_page_filter_form.per_page.label }}
+                            </label>
+                            <div class="relative">
+                                {% render_field per_page_filter_form.per_page class+=BW_PRELINE_FILTER_SELECT_INPUT_DEFAULT disabled="disabled" %}
+                                <p class="text-xs text-gray-500 mt-2"
+                                   id="{{ per_page_filter_form.per_page.id_for_label }}">
+                                    {{ per_page_filter_form.per_page.help_text }}
+                                </p>
+                            </div>
+                        </div>
+                    {% endif %}
                     <!-- End Input -->
                 </div>
             </fieldset>

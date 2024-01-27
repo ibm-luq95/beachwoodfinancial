@@ -3,8 +3,8 @@
   // "less.validate": false,
   // "scss.validate": false,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.fixAll.stylelint": "explicit"
+    // "source.fixAll.eslint": "explicit",
+    // "source.fixAll.stylelint": "explicit"
   },
   // "eslint.validate": ["javascript"],
   "editor.formatOnSave": false,
@@ -86,7 +86,7 @@
   // "isort.check": true,
   "stylelint.stylelintPath": "./src/frontend/node_modules/stylelint/bin/stylelint.js",
   "isort.interpreter": [
-    "${userHome}/miniconda3/envs/beachwoodfinancial_dev_3.12.0_venv/bin/python3"
+    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/isort"
   ],
   "typescript.tsdk": "./src/frontend/node_modules/typescript/lib",
   "stylelint.configFile": "${workspaceFolder}/.stylelintrc.json",
