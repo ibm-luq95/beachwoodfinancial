@@ -113,12 +113,12 @@ class BWDebuggingPrint:
         Print a panel with the given text.
         """
         print(Panel.fit(str(text_content), title=title, subtitle=subtitle))
-    
+
     @classmethod
     def table(
         cls,
         columns_headers: list,
-        rows: List[str],
+        rows: List[str | Any],
         table_options: Optional[DPOTableOptions] = None,
         return_table: Optional[bool] = False,
     ) -> None | Table:
