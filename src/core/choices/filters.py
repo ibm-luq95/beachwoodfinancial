@@ -15,11 +15,11 @@ class DateFiltersEnum(models.TextChoices):
 
 class DateYearsFiltersEnum(models.TextChoices):
     ALL = "all", _("All")
-    Y2020 = 2020, _("2020")
-    Y2021 = 2021, _("2021")
-    Y2022 = 2022, _("2022")
-    Y2023 = 2023, _("2023")
-    Y2024 = 2024, _("2024")
+    Y2020 = "2020", _("2020")
+    Y2021 = "2021", _("2021")
+    Y2022 = "2022", _("2022")
+    Y2023 = "2023", _("2023")
+    Y2024 = "2024", _("2024")
 
 
 MONTHS_CHOICES = list()
