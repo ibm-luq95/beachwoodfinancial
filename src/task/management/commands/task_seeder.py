@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-#
 import random
 import traceback
-
+from django.utils import timezone
 from django.core.management.base import BaseCommand
 from django.db import transaction
 from django.utils.translation import gettext as _
@@ -49,8 +49,11 @@ class Command(BaseCommand, CommandStdOutputMixin):
                         "hints": random.choice([None, faker.sentence(nb_words=5)]),
                         "task_type": random.choice(TaskTypeEnum.choices)[0],
                         "status": random.choice(TaskStatusEnum.choices)[0],
-                        "created_at": faker.date_time_between_dates(
-                            datetime_start="-4y", datetime_end="-1y"
+                        "created_at": timezone.make_aware(
+                            faker.date_time_between_dates(
+                                datetime_start="-4y", datetime_end="-1y"
+                            ),
+                            timezone=timezone.get_current_timezone(),
                         ),
                         # "start_date": faker.date_between(
                         #     # start_date="-1y", end_date="today"

@@ -7,6 +7,7 @@ import numpy as np
 from django.conf import settings
 from django.utils.dateparse import parse_date, parse_datetime
 from django.core.management.base import BaseCommand
+from django.utils import timezone
 from django.db import transaction
 from django.utils.translation import gettext as _
 
@@ -106,10 +107,10 @@ class Command(BaseCommand, CommandStdOutputMixin):
                         self.stdout_output("success", _("All data deleted!"))
                         return
                 migrated_data_dir: PosixPath = (
-                        settings.BASE_DIR
-                        / settings.BASE_DIR.parent
-                        / "docs"
-                        / "Production Exported Data"
+                    settings.BASE_DIR
+                    / settings.BASE_DIR.parent
+                    / "docs"
+                    / "Production Exported Data"
                 )
                 # BWDebuggingPrint.pprint(migrated_data_dir)
                 # BWDebuggingPrint.pprint(migrated_data_dir.exists())
@@ -178,8 +179,9 @@ class Command(BaseCommand, CommandStdOutputMixin):
                             if job_df.loc[i, "created_at"]:
                                 new_job_data.update(
                                     {
-                                        "created_at": parse_datetime(
-                                            job_df.loc[i, "created_at"]
+                                        "created_at": timezone.make_aware(
+                                            parse_datetime(job_df.loc[i, "created_at"]),
+                                            timezone=timezone.get_current_timezone(),
                                         )
                                     }
                                 )
@@ -190,16 +192,18 @@ class Command(BaseCommand, CommandStdOutputMixin):
                             if job_df.loc[i, "deleted_at"]:
                                 new_job_data.update(
                                     {
-                                        "deleted_at": parse_datetime(
-                                            job_df.loc[i, "deleted_at"]
+                                        "deleted_at": timezone.make_aware(
+                                            parse_datetime(job_df.loc[i, "deleted_at"]),
+                                            timezone=timezone.get_current_timezone(),
                                         )
                                     }
                                 )
                             if job_df.loc[i, "updated_at"]:
                                 new_job_data.update(
                                     {
-                                        "updated_at": parse_datetime(
-                                            job_df.loc[i, "updated_at"]
+                                        "updated_at": timezone.make_aware(
+                                            parse_datetime(job_df.loc[i, "updated_at"]),
+                                            timezone=timezone.get_current_timezone(),
                                         )
                                     }
                                 )
@@ -272,24 +276,27 @@ class Command(BaseCommand, CommandStdOutputMixin):
                             if task_df.loc[i, "created_at"]:
                                 task_data_dict.update(
                                     {
-                                        "created_at": parse_datetime(
-                                            task_df.loc[i, "created_at"]
+                                        "created_at": timezone.make_aware(
+                                            parse_datetime(task_df.loc[i, "created_at"]),
+                                            timezone=timezone.get_current_timezone(),
                                         )
                                     }
                                 )
                             if task_df.loc[i, "deleted_at"]:
                                 task_data_dict.update(
                                     {
-                                        "deleted_at": parse_datetime(
-                                            task_df.loc[i, "deleted_at"]
+                                        "deleted_at": timezone.make_aware(
+                                            parse_datetime(task_df.loc[i, "deleted_at"]),
+                                            timezone=timezone.get_current_timezone(),
                                         )
                                     }
                                 )
                             if task_df.loc[i, "updated_at"]:
                                 task_data_dict.update(
                                     {
-                                        "updated_at": parse_datetime(
-                                            task_df.loc[i, "updated_at"]
+                                        "updated_at": timezone.make_aware(
+                                            parse_datetime(task_df.loc[i, "updated_at"]),
+                                            timezone=timezone.get_current_timezone(),
                                         )
                                     }
                                 )
@@ -312,7 +319,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
                     if "assignment" in apps:
                         new_assignment_list = []
                         assignment_file_path = (
-                                migrated_data_dir / "SpecialAssignment-2023-09-05.csv"
+                            migrated_data_dir / "SpecialAssignment-2023-09-05.csv"
                         )
                         assignment_df = pd.read_csv(assignment_file_path)
                         assignment_df = assignment_df.replace(np.nan, None)
@@ -351,8 +358,11 @@ class Command(BaseCommand, CommandStdOutputMixin):
                             if assignment_df.loc[i, "created_at"]:
                                 new_assignment_data.update(
                                     {
-                                        "created_at": parse_datetime(
-                                            assignment_df.loc[i, "created_at"]
+                                        "created_at": timezone.make_aware(
+                                            parse_datetime(
+                                                assignment_df.loc[i, "created_at"]
+                                            ),
+                                            timezone=timezone.get_current_timezone(),
                                         )
                                     }
                                 )
@@ -367,16 +377,22 @@ class Command(BaseCommand, CommandStdOutputMixin):
                             if assignment_df.loc[i, "deleted_at"]:
                                 new_assignment_data.update(
                                     {
-                                        "deleted_at": parse_datetime(
-                                            assignment_df.loc[i, "deleted_at"]
+                                        "deleted_at": timezone.make_aware(
+                                            parse_datetime(
+                                                assignment_df.loc[i, "deleted_at"]
+                                            ),
+                                            timezone=timezone.get_current_timezone(),
                                         )
                                     }
                                 )
                             if assignment_df.loc[i, "updated_at"]:
                                 new_assignment_data.update(
                                     {
-                                        "updated_at": parse_datetime(
-                                            assignment_df.loc[i, "updated_at"]
+                                        "updated_at": timezone.make_aware(
+                                            parse_datetime(
+                                                assignment_df.loc[i, "updated_at"]
+                                            ),
+                                            timezone=timezone.get_current_timezone(),
                                         )
                                     }
                                 )
@@ -415,7 +431,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
                         p_table_client_accounts = list()
                         new_client_accounts_list = []
                         client_account_file_path = (
-                                migrated_data_dir / "ClientAccount-2024-01-11.csv"
+                            migrated_data_dir / "ClientAccount-2024-01-11.csv"
                         )
                         client_account_df = pd.read_csv(client_account_file_path)
                         client_account_df = client_account_df.replace(np.nan, None)
@@ -450,24 +466,33 @@ class Command(BaseCommand, CommandStdOutputMixin):
                             if client_account_df.loc[i, "created_at"]:
                                 new_client_account_data.update(
                                     {
-                                        "created_at": parse_datetime(
-                                            client_account_df.loc[i, "created_at"]
+                                        "created_at": timezone.make_aware(
+                                            parse_datetime(
+                                                client_account_df.loc[i, "created_at"]
+                                            ),
+                                            timezone=timezone.get_current_timezone(),
                                         )
                                     }
                                 )
                             if client_account_df.loc[i, "deleted_at"]:
                                 new_client_account_data.update(
                                     {
-                                        "deleted_at": parse_datetime(
-                                            client_account_df.loc[i, "deleted_at"]
+                                        "deleted_at": timezone.make_aware(
+                                            parse_datetime(
+                                                client_account_df.loc[i, "deleted_at"]
+                                            ),
+                                            timezone=timezone.get_current_timezone(),
                                         )
                                     }
                                 )
                             if client_account_df.loc[i, "updated_at"]:
                                 new_client_account_data.update(
                                     {
-                                        "updated_at": parse_datetime(
-                                            client_account_df.loc[i, "updated_at"]
+                                        "updated_at": timezone.make_aware(
+                                            parse_datetime(
+                                                client_account_df.loc[i, "updated_at"]
+                                            ),
+                                            timezone=timezone.get_current_timezone(),
                                         )
                                     }
                                 )
