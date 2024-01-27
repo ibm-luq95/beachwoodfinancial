@@ -12,6 +12,8 @@ from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.status_labels import CON_DRAFT, CON_COMPLETED, CON_ARCHIVED
 from core.constants.users import CON_BOOKKEEPER
+from core.forms.per_page_form import PerPageForm
+from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from core.views.mixins.update_previous_mixin import UpdateReturnPreviousMixin
 from discussion.forms import DiscussionMiniForm
@@ -41,17 +43,22 @@ class JobListView(
     paginate_by = LIST_VIEW_PAGINATE_BY
     list_type = "list"
 
-    def paginate_queryset(self, queryset, page_size):
-        queryset = JobProxy.objects.filter(
-            ~Q(status__in=[CON_ARCHIVED, CON_COMPLETED, CON_DRAFT])
-        ).order_by("title")
-        return super().paginate_queryset(queryset, page_size)
+    # def paginate_queryset(self, queryset, page_size):
+    #     queryset = JobProxy.objects.filter(
+    #         ~Q(status__in=[CON_ARCHIVED, CON_COMPLETED, CON_DRAFT])
+    #     ).order_by("title")
+    #     return super().paginate_queryset(queryset, page_size)
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
+
         context["title"] = _("Jobs")
+        # BWDebuggingPrint.pprint(dir(self.paginator_class))
+        # BWDebuggingPrint.pprint(dir(self.paginator_class.count))
+        # BWDebuggingPrint.log(self.paginator_class.page())
         context.setdefault("filter_form", self.filterset.form)
+
         context.setdefault("list_type", self.list_type)
         context.setdefault("component_path", "bw_components/job/table_list.html")
         context.setdefault("page_header", _("jobs".title()))
@@ -70,7 +77,9 @@ class JobListView(
         context.setdefault("actions_items", "details,update,delete")
         context.setdefault("base_url_name", "dashboard:job")
         context.setdefault("empty_label", _("client"))
-        context.setdefault("extra_context", {"is_show_client": True})
+        context.setdefault(
+            "extra_context", {"is_show_client": True, "is_hide_manager": False}
+        )
         context.setdefault("show_info_icon", True)
         context.setdefault(
             "info_details",
@@ -88,6 +97,7 @@ class JobListView(
         if self.request.user.user_type == CON_BOOKKEEPER:
             queryset = self.request.user.bookkeeper.get_proxy_model().get_user_jobs()
         self.filterset = JobFilter(self.request.GET, queryset=queryset)
+
         return self.filterset.qs
 
 
