@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-#
 from typing import Optional
 
+from django.core.paginator import Page
 from django.db.models import Q
 
+from client.models.helpers.map_helper import ClientDetailsMap
 from client.models.querysets.reports_qs import ClientReportsQuerySet
 from client.models.querysets.types import ClientJobsFilterTypes
 from core.models.managers import SoftDeleteManager
@@ -23,7 +25,8 @@ class ClientReportsManager(SoftDeleteManager):
         self,
         filter_params: Optional[ClientJobsFilterTypes] = None,
         page: Optional[int] = None,
-    ) -> dict:
+        per_page: Optional[int] = 15,
+    ) -> dict[int, Page, list[ClientDetailsMap]]:
         qs = self.get_queryset()
 
-        return qs.get_all_jobs_as_list(filter_params, page)
+        return qs.get_all_jobs_as_list(filter_params, page, per_page)

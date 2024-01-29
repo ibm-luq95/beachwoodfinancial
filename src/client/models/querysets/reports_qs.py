@@ -2,7 +2,7 @@
 from typing import Optional
 
 import click
-from django.core.paginator import Paginator
+from django.core.paginator import Paginator, Page
 from django.db import transaction
 from django.db.models import Q
 
@@ -19,7 +19,9 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
         self,
         filter_params: Optional[ClientJobsFilterTypes] = None,
         page: Optional[int] = None,
-    ) -> dict:
+        per_page: Optional[int] = 15,
+    ) -> dict[int, Page, list[ClientDetailsMap]]:
+        # BWDebuggingPrint.pprint(locals())
         from client.models.client_proxy import ClientProxy
 
         with transaction.atomic():
@@ -79,7 +81,7 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
                 # debugging_print(len(clients))
                 # debugging_print(clients.first().jobs.all())
                 details_dict.setdefault("total_rows_count", len(clients))
-                page_object = Paginator(clients, 10)
+                page_object = Paginator(clients, per_page)
                 details_dict.setdefault("page_obj", page_object.get_page(page))
                 # debugging_print(clients.page(1).object_list)
                 for client in page_object.page(page).object_list:
