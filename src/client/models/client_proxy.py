@@ -14,6 +14,7 @@ from core.constants.status_labels import (
     CON_DRAFT,
 )
 from core.models.querysets import BaseQuerySetMixin
+from core.utils.developments.debugging_print_object import BWDebuggingPrint
 
 
 class ClientProxy(Client):
@@ -22,13 +23,12 @@ class ClientProxy(Client):
     class Meta(Client.Meta):
         proxy = True
 
-    def active_jobs(self) -> BaseQuerySetMixin | None:
+    def active_jobs(self) -> BaseQuerySetMixin | int:
         if hasattr(self, "jobs"):
-            return self.jobs.filter(
-                ~Q(status__in=[CON_ARCHIVED, CON_COMPLETED, CON_DRAFT])
-            ).order_by("created_at")
+            qs = self.jobs.all()
+            return qs
         else:
-            return None
+            return 0
 
     def get_managed_bookkeepers(self) -> set | None:
         all_bookkeepers = []

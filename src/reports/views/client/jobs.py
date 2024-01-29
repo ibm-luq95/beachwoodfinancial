@@ -11,6 +11,7 @@ from django.utils import timezone
 from client.models import ClientProxy
 from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
+from core.forms.per_page_form import PerPageForm
 from core.utils import debugging_print, get_months_abbr
 from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
@@ -69,16 +70,20 @@ class JobsReportView(
         # object_list = Paginator(object_list=object_list, per_page=10)
         # context.setdefault("page_obj", object_list)
         # debugging_print(form.serialize_inputs())
+        page = int(self.request.GET.get("page", 1))
+        per_page = int(self.request.GET.get("per_page", 15))
+        per_page_form = PerPageForm(initial={"per_page": per_page})
+        context.setdefault("per_page_filter_form", per_page_form)
         context.setdefault("page_header", _("Reports".title()))
 
         months_list = get_months_abbr(return_months_idxs=True)
         # months_list = [str(m) for m in months_list]
         context.setdefault("months_list", months_list)
         form = self.get_form()
-        page = int(self.request.GET.get("page", 1))
+
         # BWDebuggingPrint.pprint(form.serialize_inputs())
         object_list = ClientProxy.reports_manager.get_all_jobs_as_list(
-            form.serialize_inputs(), page
+            form.serialize_inputs(), page, per_page_form.fields.get("per_page").initial
         )
         context.setdefault("object_list", object_list)
         # form["created_year"].initial = timezone.now().year

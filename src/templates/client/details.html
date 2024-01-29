@@ -124,6 +124,7 @@
                     <i class="fa-solid fa-suitcase hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 w-3.5 h-3.5 text-gray-400 dark:text-gray-600"></i>
                     {% translate "Jobs" %}
                     <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">
+                        {{ object.jobs.count }}
                         {% if object.active_jobs %}
                             {{ object.active_jobs.count }}
                         {% else %}
@@ -374,7 +375,7 @@
                 </div>
                 {% if object.active_jobs %}
 
-                    {% include "bw_components/job/table_list.html" with is_checkbox_enabled=False is_show_create_btn=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Jobs" header_subtitle="" app_label="job" pagination_list_url_name="dashboard:job:list" is_actions_menu_enabled=True actions_items="update,delete" actions_app_name="job" actions_base_url="dashboard:job" base_url_name="dashboard:job" object_list=object.active_jobs is_show_client=False %}
+                    {% include "bw_components/job/table_list.html" with is_checkbox_enabled=False is_show_create_btn=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Jobs" header_subtitle="" app_label="job" pagination_list_url_name="dashboard:job:list" is_actions_menu_enabled=True actions_items="update,delete" actions_app_name="job" actions_base_url="dashboard:job" base_url_name="dashboard:job" page_obj=object.active_jobs is_show_client=False %}
 
                 {% else %}
 
