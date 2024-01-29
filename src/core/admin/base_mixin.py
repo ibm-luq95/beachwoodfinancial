@@ -12,3 +12,9 @@ class BWBaseAdminModelMixin(ImportExportModelAdmin, admin.ModelAdmin):
         ("updated_at", DateRangeFilterBuilder(title=_("Updated at"))),
     ]
     exclude = ("metadata", "is_deleted", "deleted_at")
+
+    def get_queryset(self, request):
+        # queryset = super().get_queryset(request)
+        # queryset = queryset.prefetch_related('car').all()
+        qs = self.model.original_objects.get_queryset()
+        return qs
