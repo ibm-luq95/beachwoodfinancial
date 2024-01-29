@@ -85,10 +85,6 @@
 {# Start Table Body #}
 {% block tbody_block %}
     {% for object in object_list.object_list %}
-        {% comment  %}
-        {% print created_year %}
-    {% print object.organize_jobs_years_months %}
-        {% endcomment %}
         <tr>
             {% if is_checkbox_enabled is True %}
                 <td class="h-px w-px whitespace-nowrap">
@@ -201,7 +197,14 @@
 {# End Table Body #}
 {# Start Table Results #}
 {% block results_block %}
-    {{ object_list.total_rows_count }}
+    {% comment  %}
+        {% with total_pages=object_list.page_obj.paginator.per_page %}
+            {% with new_count=total_pages|add:object_list.page_obj.paginator.per_page %}
+                The new count is: {{ new_count }}
+            {% endwith %}
+        {% endwith %}
+    {% endcomment %}
+    {{ object_list.page_obj.paginator.per_page }} {% translate "of" %} {{ object_list.total_rows_count }}
 {% endblock results_block %}
 {# End Table Results #}
 {# Start Table Pagination #}
