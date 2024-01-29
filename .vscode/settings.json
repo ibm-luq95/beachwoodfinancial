@@ -126,5 +126,8 @@
     // "reportImplicitStringConcatenation": "warning"
     "reportOptionalMemberAccess": "warning"
   },
-  "python.analysis.autoImportCompletions": true
+  "python.analysis.autoImportCompletions": true,
+  "[html]": {
+    "editor.defaultFormatter": "monosans.djlint"
+  }
 }
