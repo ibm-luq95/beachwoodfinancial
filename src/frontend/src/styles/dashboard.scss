@@ -1,115 +1,115 @@
 .chart-dashboard-wrapper {
-    max-width: 800px;
-    margin: 0 auto;
-    max-height: 250px;
+  max-width: 800px;
+  margin: 0 auto;
+  max-height: 250px;
 }
 
 .ck-editor__editable_inline {
-    min-height: 500px;
+  min-height: 500px;
 }
 
 div.scrollable-wrapper {
-    height: 50px;
-    overflow: auto;
+  height: 50px;
+  overflow: auto;
 }
 
 .linkedin-social-icon-link {
-    &:hover {
-        color: #0072b1;
-    }
+  &:hover {
+    color: #0072b1;
+  }
 }
 
 .github-social-icon-link {
-    &:hover {
-        color: #333;
-    }
+  &:hover {
+    color: #333;
+  }
 }
 
 .instagram-social-icon-link {
-    &:hover {
-        // color: #833ab4;
-        color: #c13584;
-    }
+  &:hover {
+    // color: #833ab4;
+    color: #c13584;
+  }
 }
 
 .facebook-social-icon-link {
-    &:hover {
-        color: #4267b2;
-    }
+  &:hover {
+    color: #4267b2;
+  }
 }
 
 .twitter-social-icon-link {
-    &:hover {
-        color: #1da1f2;
-    }
+  &:hover {
+    color: #1da1f2;
+  }
 }
 
 .discussion-wrapper {
-    margin-bottom: 15px;
-    border-bottom: 1px solid #dad9d9;
-    padding-bottom: 5px;
+  margin-bottom: 15px;
+  border-bottom: 1px solid #dad9d9;
+  padding-bottom: 5px;
 }
 
 .bw-js-modal {
-    background-color: rgba(0 0 0 / 50%);
+  background-color: rgba(0 0 0 / 50%);
 }
 
 #toasts-wrapper {
-    z-index: 100 !important;
+  z-index: 100 !important;
 }
 
 .bw-js-modal-lg {
-    max-width: 100rem !important;
+  max-width: 100rem !important;
 }
 
 .bw-js-modal-md {
-    max-width: 50rem !important;
+  max-width: 50rem !important;
 }
 
 .bw-js-modal-sm {
-    max-width: 40rem !important;
+  max-width: 40rem !important;
 }
 
 .multi-selectbox {
-    position: relative;
-    overflow: hidden;
-    margin: 15px auto;
-    height: 100px;
-    width: 100%;
-    max-width: 300px;
-    background: #ddd;
-    border: 1px solid #ddd;
+  position: relative;
+  overflow: hidden;
+  margin: 15px auto;
+  height: 100px;
+  width: 100%;
+  max-width: 300px;
+  background: #ddd;
+  border: 1px solid #ddd;
 }
 
 .selectbox-scrollable {
-    overflow: scroll;
-    position: absolute;
-    padding: 0 7px 0 0;
-    width: calc(100% + 17px);
-    height: 100%;
-    border: 0;
+  overflow: scroll;
+  position: absolute;
+  padding: 0 7px 0 0;
+  width: calc(100% + 17px);
+  height: 100%;
+  border: 0;
 }
 
 .selectbox-scrollbar-rail {
-    position: absolute;
-    overflow: auto;
-    top: 0;
-    right: 0;
-    bottom: 0;
-    z-index: 2;
-    background: #ddd;
-    width: 5px;
-    border-radius: 0;
+  position: absolute;
+  overflow: auto;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 2;
+  background: #ddd;
+  width: 5px;
+  border-radius: 0;
 }
 
 .selectbox-scrollbar {
-    cursor: n-resize;
-    position: absolute;
-    overflow: auto;
-    top: 0;
-    right: 0;
-    z-index: 3;
-    background: #444;
-    width: 5px;
-    border-radius: px;
+  cursor: n-resize;
+  position: absolute;
+  overflow: auto;
+  top: 0;
+  right: 0;
+  z-index: 3;
+  background: #444;
+  width: 5px;
+  border-radius: px;
 }
