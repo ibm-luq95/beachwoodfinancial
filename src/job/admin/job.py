@@ -10,6 +10,7 @@ from core.admin import BWBaseAdminModelMixin
 
 @admin.register(JobProxy)
 class JobAdmin(BWBaseAdminModelMixin):
+
     actions = ["make_draft", "make_completed", "make_archived"]
     search_fields = ("title", "client", "status", "managed_by", "state", "job_type")
     list_filter = (

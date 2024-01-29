@@ -2,6 +2,7 @@
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models import Manager
 from django.utils import timezone
 from django.utils.dateparse import parse_date
 from django.utils.text import slugify
@@ -129,6 +130,7 @@ class Job(
     is_created_from_template = models.BooleanField(
         _("is_created_from_template"), default=False, editable=False
     )
+    # objects = Manager()
 
     # not_filtered_objects = JobManager()
     # objects = JobManager()
