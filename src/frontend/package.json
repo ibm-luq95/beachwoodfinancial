@@ -95,7 +95,7 @@
     "dotenv": "^16.4.1",
     "glightbox": "^3.2.0",
     "highlight.js": "^11.9.0",
-    "i18next": "^23.7.20",
+    "i18next": "^23.8.1",
     "pinia": "^2.1.7",
     "preline": "^2.0.3",
     "simplelightbox": "^2.14.2",
