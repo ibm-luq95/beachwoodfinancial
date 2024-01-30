@@ -13,6 +13,8 @@ import "animate.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import hljs from "highlight.js";
+import NiceSelect from "nice-select2/dist/js/nice-select2.js";
+import "nice-select2/dist/css/nice-select2.css";
 
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // import "css.gg/icons/all.css";
@@ -20,7 +22,6 @@ import hljs from "highlight.js";
 import tableSort from "table-sort-js/table-sort.js";
 // eslint-disable-next-line no-unused-vars
 import Chart from "chart.js/auto";
-
 
 import "./dashboard/dashboard.js";
 import "./job/details.js";
@@ -39,6 +40,12 @@ import "./beach_wood_user/details.js";
 import { setFormInputsReadOnly } from "../utils/form_helpers";
 
 window.document.addEventListener("DOMContentLoaded", function () {
+  const niceSelectElements = document.querySelectorAll("select.nice-select");
+  if (niceSelectElements.length > 0) {
+    niceSelectElements.forEach((element) => {
+      new NiceSelect(element, { searchable: true });
+    });
+  }
   hljs.highlightAll();
   let gallery = new SimpleLightbox(".gallery a", {
     overlayOpacity: 0.9,
