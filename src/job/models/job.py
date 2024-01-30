@@ -61,16 +61,18 @@ class Job(
     slug = models.SlugField(
         _("slug"), max_length=250, null=True, blank=True, editable=False
     )
-    period_year = models.PositiveIntegerField(
+    period_year = models.CharField(
         _("period year"),
+        max_length=4,
         null=True,
         blank=True,
         db_index=True,
         choices=FiscalYearEnum.choices,
         help_text=JOB_HELP_MESSAGES.get("period_year"),
     )
-    period_month = models.PositiveSmallIntegerField(
+    period_month = models.CharField(
         _("period month"),
+        max_length=2,
         null=True,
         blank=True,
         db_index=True,
