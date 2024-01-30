@@ -41,7 +41,7 @@ class JobFilter(HelpfulFilterSet):
             "period_year": ["exact"],
             "period_month": ["exact"],
             # "bookkeeper": ["icontains"],
-            "client__name": ["icontains"],
+            "client": ["exact"],
             # "job_type": ["exact"],
             "status": ["exact"],
             "state": ["exact"],
