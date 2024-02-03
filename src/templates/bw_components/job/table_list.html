@@ -100,6 +100,16 @@
         <th scope="col" class="px-6 py-3 text-left">
             <div class="flex items-center gap-x-2">
                 <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                    {% translate "Period Year" %}
+                </span>
+
+                {% include "bw_components/global/table_list/sort_icon.html" %}
+
+            </div>
+        </th>
+        <th scope="col" class="px-6 py-3 text-left">
+            <div class="flex items-center gap-x-2">
+                <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                     {% translate "Start Date" %}
                 </span>
 
@@ -180,7 +190,6 @@
                     </div>
                 </td>
             {% endif %}
-            
             {% if is_hide_manager is False or extra_context.is_hide_manager is False %}
                 <td class="h-px w-px whitespace-nowrap">
                     <div class="px-5 py-3">
@@ -205,6 +214,11 @@
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-5 py-3">
                     {% bw_badge code=object.state text=object.get_state_display is_solid=False size="sm" %}
+                </div>
+            </td>
+            <td class="h-px w-px whitespace-nowrap">
+                <div class="px-5 py-3">
+                    <p class="text-sm text-gray-600 dark:text-gray-400">{{ object.period_year }}</p>
                 </div>
             </td>
             <td class="h-px w-px whitespace-nowrap">
