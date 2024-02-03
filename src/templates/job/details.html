@@ -87,12 +87,12 @@
             <div class="my-9">
                 <!-- <label for="hs-trailing-button" class="sr-only">Label</label> -->
                 <div class="flex rounded-md shadow-sm">
-                    <span class="px-4 inline-flex items-center min-w-fit rounded-md border border-r-0 border-gray-200 bg-gray-50 text-sm dark:bg-gray-700 dark:border-gray-700">
+                    <span class="px-4 inline-flex items-center min-w-fit rounded-md border border-gray-200 bg-gray-50 text-sm dark:bg-gray-700 dark:border-gray-700">
                         <span class="text-sm text-gray-500 dark:text-gray-400">{% translate "Notes:" %}</span>
                     </span>
-                    <p class="mx-2 italic">
-                        <small>{{ object.note|safe }}</small>
-                    </p>
+                    <div class="flex ml-1 flex-col w-full bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                        <small class="italic text-nowrap">{{ object.note|safe }}</small>
+                    </div>
                 </div>
             </div>
             {# Start Tabs Block #}
@@ -342,7 +342,7 @@
                                        placeholder="{{ object.client.name|safe }}"
                                        readonly
                                        disabled />
-                                <a href="{% url 'dashboard:client:details' object.client.pk %}"
+                                <a href="{% if object.client %} {% url 'dashboard:client:details' object.client.pk %} {% else %} # {% endif %}"
                                    target="_blank"
                                    class="w-[2.875rem] h-[2.875rem] flex-shrink-0 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-e-md border border-transparent bg-blue-100 text-blue-500 hover:text-white hover:bg-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
                                     <i class="fa-solid fa-arrow-up-right-from-square"></i>
@@ -350,6 +350,18 @@
                             </div>
                         </div>
                     </div>
+                </div>
+                <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
+                    <dl class="grid sm:grid-cols-3 gap-1 sm:gap-3">
+                        <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Period Year" %}</dt>
+                        <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                            <h6 class="text-base dark:text-white">{{ object.period_year }}</h6>
+                        </dd>
+                        <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Period Month" %}</dt>
+                        <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                            <h6 class="text-base dark:text-white">{{ object.get_period_month_display }}</h6>
+                        </dd>
+                    </dl>
                 </div>
                 <div class="-mt-2">
                     {% if object.discussions.all %}
