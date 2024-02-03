@@ -3,7 +3,7 @@ from django.utils.translation import gettext as _
 
 
 class MonthChoices(models.TextChoices):
-    # __empty__ = "---"
+    __empty__ = "---"
     JANUARY = "1", _("January")
     FEBRUARY = "2", _("February")
     MARCH = "3", _("March")
