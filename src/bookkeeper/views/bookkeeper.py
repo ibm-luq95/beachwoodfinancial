@@ -4,7 +4,7 @@ from django.contrib.messages.views import SuccessMessageMixin
 from django.db import transaction
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
-from django.views.generic import DeleteView, DetailView, ListView, FormView
+from django.views.generic import DeleteView, ListView, FormView
 from django.views.generic.detail import SingleObjectMixin
 
 from beach_wood_user.models import BWUser
@@ -19,218 +19,238 @@ from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 
 
 class BookkeeperListView(
-    PermissionRequiredMixin,
-    BWLoginRequiredMixin,
-    BWCacheViewMixin,
-    BWBaseListViewMixin,
-    ListView,
+	PermissionRequiredMixin,
+	BWLoginRequiredMixin,
+	BWCacheViewMixin,
+	BWBaseListViewMixin,
+	ListView,
 ):
-    permission_required = "bookkeeper.can_view_list"
-    template_name = "core/crudl/list.html"
-    model = BookkeeperProxy
-    paginate_by = LIST_VIEW_PAGINATE_BY
-    list_type = "list"
-    # queryset = BookkeeperProxy.objects.get_queryset().order_by("-user__created_at")
+	permission_required = "bookkeeper.can_view_list"
+	template_name = "core/crudl/list.html"
+	model = BookkeeperProxy
+	paginate_by = LIST_VIEW_PAGINATE_BY
+	list_type = "list"
 
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
-        context["title"] = _("Bookkeepers")
-        context.setdefault("filter_form", self.filterset.form)
-        context.setdefault("list_type", self.list_type)
-        context.setdefault("page_header", _("bookkeepers".capitalize()))
-        context.setdefault("component_path", "bw_components/bookkeeper/table_list.html")
-        context.setdefault("subtitle", _("bookkeepers staff".title()))
-        context.setdefault("actions_base_url", "dashboard:management_bookkeeper")
-        context.setdefault("filter_cancel_url", "dashboard:management_bookkeeper:list")
-        context.setdefault("table_header_title", _("C"))
-        context.setdefault("table_header_subtitle", _("management_bookkeeper subtitle"))
-        context.setdefault("is_show_create_btn", True)
-        context.setdefault(
-            "pagination_list_url_name", "dashboard:management_bookkeeper:list"
-        )
-        context.setdefault("is_filters_enabled", True)
-        context.setdefault("is_actions_menu_enabled", True)
-        context.setdefault("is_header_enabled", True)
-        context.setdefault("is_footer_enabled", True)
-        context.setdefault("actions_items", "update,delete")
-        context.setdefault("base_url_name", "dashboard:management_bookkeeper")
-        context.setdefault("empty_label", _("bookkeepers"))
-        context.setdefault("extra_context", {})
-        context.setdefault("show_info_icon", True)
-        context.setdefault(
-            "info_details",
-            {
-                "tooltip_txt": BW_INFO_MODAL_CSS_CLASSES.get("bookkeeper").get(
-                    "tooltip_txt"
-                ),
-                "modal_css_id": BW_INFO_MODAL_CSS_CLASSES.get("bookkeeper").get(
-                    "cssID"
-                ),
-            },
-        )
+	# queryset = BookkeeperProxy.objects.get_queryset().order_by("-user__created_at")
 
-        # debugging_print(self.filterset.form["name"])
-        return context
+	def get_context_data(self, **kwargs):
+		# Call the base implementation first to get a context
+		context = super().get_context_data(**kwargs)
+		context["title"] = _("Bookkeepers")
+		context.setdefault("filter_form", self.filterset.form)
+		context.setdefault("list_type", self.list_type)
+		context.setdefault("page_header", _("bookkeepers".capitalize()))
+		context.setdefault("component_path", "bw_components/bookkeeper/table_list.html")
+		context.setdefault("subtitle", _("bookkeepers staff".title()))
+		context.setdefault("actions_base_url", "dashboard:management_bookkeeper")
+		context.setdefault("filter_cancel_url", "dashboard:management_bookkeeper:list")
+		context.setdefault("table_header_title", _("C"))
+		context.setdefault("table_header_subtitle", _("management_bookkeeper subtitle"))
+		context.setdefault("is_show_create_btn", True)
+		context.setdefault(
+			"pagination_list_url_name", "dashboard:management_bookkeeper:list"
+		)
+		context.setdefault("is_filters_enabled", True)
+		context.setdefault("is_actions_menu_enabled", True)
+		context.setdefault("is_header_enabled", True)
+		context.setdefault("is_footer_enabled", True)
+		context.setdefault("actions_items", "update,delete")
+		context.setdefault("base_url_name", "dashboard:management_bookkeeper")
+		context.setdefault("empty_label", _("bookkeepers"))
+		context.setdefault("extra_context", {})
+		context.setdefault("show_info_icon", True)
+		context.setdefault(
+			"info_details",
+			{
+				"tooltip_txt": BW_INFO_MODAL_CSS_CLASSES.get("bookkeeper").get(
+					"tooltip_txt"
+				),
+				"modal_css_id": BW_INFO_MODAL_CSS_CLASSES.get("bookkeeper").get("cssID"),
+			},
+		)
 
-    def get_queryset(self):
-        queryset = super().get_queryset()
-        self.filterset = BookkeeperFilter(self.request.GET, queryset=queryset)
-        return self.filterset.qs
+		# debugging_print(self.filterset.form["name"])
+		return context
+
+	def get_queryset(self):
+		queryset = super().get_queryset()
+		self.filterset = BookkeeperFilter(self.request.GET, queryset=queryset)
+		return self.filterset.qs
 
 
 class BookkeeperCreateView(
-    PermissionRequiredMixin,
-    SuccessMessageMixin,
-    BWLoginRequiredMixin,
-    BWCacheViewMixin,
-    FormView,
+	PermissionRequiredMixin,
+	SuccessMessageMixin,
+	BWLoginRequiredMixin,
+	BWCacheViewMixin,
+	FormView,
 ):
-    # permission_required = ["bookkeeper.add_bookkeeper", "bookkeeper.add_bookkeeperproxy"]
-    permission_required = "bookkeeper.add_bookkeeperproxy"
-    permission_denied_message = _("You do not have permission to access this page.")
-    template_name = "bookkeeper/create.html"
-    form_class = BookkeeperForm
-    success_message = _("Bookkeeper created successfully")
-    success_url = reverse_lazy("dashboard:management_bookkeeper:list")
+	# permission_required = ["bookkeeper.add_bookkeeper", "bookkeeper.add_bookkeeperproxy"]
+	permission_required = "bookkeeper.add_bookkeeperproxy"
+	permission_denied_message = _("You do not have permission to access this page.")
+	template_name = "bookkeeper/create.html"
+	form_class = BookkeeperForm
+	success_message = _("Bookkeeper created successfully")
+	success_url = reverse_lazy("dashboard:management_bookkeeper:list")
 
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
-        context.setdefault("title", _("Create a new bookkeeper"))
-        return context
+	def get_context_data(self, **kwargs):
+		# Call the base implementation first to get a context
+		context = super().get_context_data(**kwargs)
+		context.setdefault("title", _("Create a new bookkeeper"))
+		return context
 
-    def form_valid(self, form: BookkeeperForm):
-        """If the form is valid, save the associated model."""
-        with transaction.atomic():
-            user_details = {
-                "first_name": form.cleaned_data.get("first_name"),
-                "last_name": form.cleaned_data.get("last_name"),
-                "email": form.cleaned_data.get("email"),
-                "user_type": form.STAFF_MEMBER_TYPE,
-            }
-            new_user = BWUser.objects.create(**user_details)
-            debugging_print(form.cleaned_data.get("password"))
-            new_user.set_password(form.cleaned_data.get("password"))
-            new_user.save()
-            new_user.bookkeeper.profile_picture = form.cleaned_data.get("profile_picture")
-            new_user.bookkeeper.bio = form.cleaned_data.get("bio")
-            new_user.bookkeeper.save()
-        return super().form_valid(form)
+	def form_valid(self, form: BookkeeperForm):
+		"""If the form is valid, save the associated model."""
+		with transaction.atomic():
+			user_details = {
+				"first_name": form.cleaned_data.get("first_name"),
+				"last_name": form.cleaned_data.get("last_name"),
+				"email": form.cleaned_data.get("email"),
+				"user_type": form.STAFF_MEMBER_TYPE,
+			}
+			new_user = BWUser.objects.create(**user_details)
+			debugging_print(form.cleaned_data.get("password"))
+			new_user.set_password(form.cleaned_data.get("password"))
+			new_user.save()
+			new_user.bookkeeper.profile_picture = form.cleaned_data.get("profile_picture")
+			new_user.bookkeeper.bio = form.cleaned_data.get("bio")
+			new_user.bookkeeper.save()
+		return super().form_valid(form)
 
-    # def get_initial(self) -> dict[str, Any]:
-    #     return {"user_type": CON_BOOKKEEPER}
+
+# def get_initial(self) -> dict[str, Any]:
+#     return {"user_type": CON_BOOKKEEPER}
 
 
 class BookkeeperUpdateView(
-    PermissionRequiredMixin,
-    BWLoginRequiredMixin,
-    SuccessMessageMixin,
-    BWCacheViewMixin,
-    SingleObjectMixin,
-    FormView,
+	PermissionRequiredMixin,
+	BWLoginRequiredMixin,
+	SuccessMessageMixin,
+	BWCacheViewMixin,
+	SingleObjectMixin,
+	FormView,
 ):
-    # permission_required = [
-    #     "bookkeeper.change_bookkeeper",
-    #     "bookkeeper.change_bookkeeperproxy",
-    # ]
-    permission_required = "bookkeeper.change_bookkeeperproxy"
-    permission_denied_message = _("You do not have permission to access this page.")
-    template_name = "bookkeeper/update.html"
-    form_class = BookkeeperForm
-    # success_message = _("Bookkeeper updated successfully")
-    # success_url = reverse_lazy("dashboard:management_bookkeeper:list")
-    model = BookkeeperProxy
+	# permission_required = [
+	#     "bookkeeper.change_bookkeeper",
+	#     "bookkeeper.change_bookkeeperproxy",
+	# ]
+	permission_required = "bookkeeper.change_bookkeeperproxy"
+	permission_denied_message = _("You do not have permission to access this page.")
+	template_name = "bookkeeper/update.html"
+	form_class = BookkeeperForm
+	# success_message = _("Bookkeeper updated successfully")
+	# success_url = reverse_lazy("dashboard:management_bookkeeper:list")
+	model = BookkeeperProxy
 
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        self.object = self.get_object()  # this must be before super()
-        context = super().get_context_data(**kwargs)
-        context.setdefault("title", _("Update bookkeeper"))
-        return context
+	def get_context_data(self, **kwargs):
+		# Call the base implementation first to get a context
+		self.object = self.get_object()  # this must be before super()
+		context = super().get_context_data(**kwargs)
+		context.setdefault("title", _(f"Update - {self.object.user.fullname}"))
+		return context
 
-    def get_success_message(self, cleaned_data: dict[str, str]) -> str:
-        return _(f"Bookkeeper {self.object.user.fullname} updated successfully!")
+	def get_success_message(self, cleaned_data: dict[str, str]) -> str:
+		return _(f"Bookkeeper {self.object.user.fullname} updated successfully!")
 
-    def get_object(self, queryset=None):
-        """
-        Retrieve the object that this view is displaying.
-        """
-        if queryset is None:
-            queryset = self.get_queryset()
-        # Retrieve the object
+	def get_object(self, queryset=None):
+		"""
+		Retrieve the object that this view is displaying.
+		"""
+		if queryset is None:
+			queryset = self.get_queryset()
+		# Retrieve the object
 
-        return queryset.get(pk=self.kwargs["pk"])
+		return queryset.get(pk=self.kwargs["pk"])
 
-    def get_success_url(self):
-        """Return the URL to redirect to after processing a valid form."""
-        success_url = reverse_lazy(
-            "dashboard:management_bookkeeper:update", kwargs={"pk": self.object.pk}
-        )
-        return str(success_url)  # success_url may be lazy
+	def get_success_url(self):
+		"""Return the URL to redirect to after processing a valid form."""
+		success_url = reverse_lazy(
+			"dashboard:management_bookkeeper:update", kwargs={"pk": self.object.pk}
+		)
+		return str(success_url)  # success_url may be lazy
 
-    def get_initial(self) -> dict:
-        initial = super().get_initial()
-        initial["email"] = self.object.user.email
-        initial["first_name"] = self.object.user.first_name
-        initial["last_name"] = self.object.user.last_name
-        initial["bio"] = self.object.profile.bio
-        initial["profile_picture"] = self.object.profile.profile_picture
-        return initial
+	def get_initial(self) -> dict:
+		initial = super().get_initial()
+		initial["email"] = self.object.user.email
+		initial["first_name"] = self.object.user.first_name
+		initial["last_name"] = self.object.user.last_name
+		initial["bio"] = self.object.profile.bio
+		initial["address"] = self.object.profile.address
+		initial["phone_number"] = self.object.profile.phone_number
+		initial["facebook"] = self.object.profile.facebook
+		initial["twitter"] = self.object.profile.twitter
+		initial["linkedin"] = self.object.profile.linkedin
+		initial["github"] = self.object.profile.github
+		initial["instagram"] = self.object.profile.instagram
+		initial["profile_picture"] = self.object.profile.profile_picture
+		return initial
 
-    def post(self, request, *args, **kwargs):
-        """
-        Handle POST requests: instantiate a form instance with the passed
-        POST variables and then check if it's valid.
-        """
-        self.object = self.get_object()
-        form = self.get_form()
-        if form.is_valid():
-            # form.split_user_profiles_inputs(excluded_fields=["password", "confirm_password"])
-            return self.form_valid(form)
-        else:
-            return self.form_invalid(form)
+	def post(self, request, *args, **kwargs):
+		"""
+		Handle POST requests: instantiate a form instance with the passed
+		POST variables and then check if it's valid.
+		"""
+		self.object = self.get_object()
+		form = self.get_form()
+		if form.is_valid():
+			# form.split_user_profiles_inputs(excluded_fields=["password", "confirm_password"])
+			return self.form_valid(form)
+		else:
+			return self.form_invalid(form)
 
-    def form_valid(self, form: BookkeeperForm):
-        """If the form is valid, save the associated model."""
-        debugging_print("Form valid")
-        with transaction.atomic():
-            bookkeeper = self.object
-            user_details = {
-                "first_name": form.cleaned_data.get("first_name"),
-                "last_name": form.cleaned_data.get("last_name"),
-                "email": form.cleaned_data.get("email"),
-                "user_type": form.STAFF_MEMBER_TYPE,
-            }
-            for key, value in user_details.items():
-                setattr(bookkeeper.user, key, value)
-            bookkeeper.user.save()
-            bookkeeper.profile_picture = form.cleaned_data.get("profile_picture")
-            bookkeeper.bio = form.cleaned_data.get("bio")
-            bookkeeper.save()
-        return super().form_valid(form)
+	def form_valid(self, form: BookkeeperForm):
+		"""If the form is valid, save the associated model."""
+		# debugging_print("Form valid")
+		with transaction.atomic():
+			bookkeeper = self.object
+
+			user_details = {
+				"first_name": form.cleaned_data.get("first_name"),
+				"last_name": form.cleaned_data.get("last_name"),
+				"email": form.cleaned_data.get("email"),
+				"user_type": form.STAFF_MEMBER_TYPE,
+			}
+			for key, value in user_details.items():
+				setattr(bookkeeper.user, key, value)
+			password = form.cleaned_data.get("password")
+			if password:
+				bookkeeper.user.set_password(password)
+			bookkeeper.user.save()
+			bookkeeper.profile.profile_picture = form.cleaned_data.get("profile_picture")
+			bookkeeper.profile.bio = form.cleaned_data.get("bio")
+			bookkeeper.profile.address = form.cleaned_data.get("address")
+			bookkeeper.profile.phone_number = form.cleaned_data.get("phone_number")
+			bookkeeper.profile.facebook = form.cleaned_data.get("facebook")
+			bookkeeper.profile.twitter = form.cleaned_data.get("twitter")
+			bookkeeper.profile.linkedin = form.cleaned_data.get("linkedin")
+			bookkeeper.profile.github = form.cleaned_data.get("github")
+			bookkeeper.profile.instagram = form.cleaned_data.get("instagram")
+
+			bookkeeper.profile.save()
+			bookkeeper.save()
+		return super().form_valid(form)
 
 
 class BookkeeperDeleteView(
-    PermissionRequiredMixin,
-    BWLoginRequiredMixin,
-    BWCacheViewMixin,
-    SuccessMessageMixin,
-    DeleteView,
+	PermissionRequiredMixin,
+	BWLoginRequiredMixin,
+	BWCacheViewMixin,
+	SuccessMessageMixin,
+	DeleteView,
 ):
-    template_name = "bookkeeper/delete.html"
-    model = BookkeeperProxy
-    success_message = _("Bookkeeper deleted successfully")
-    success_url = reverse_lazy("dashboard:management_bookkeeper:list")
-    permission_denied_message = _("You do not have permission to access this page.")
-    # permission_required = [
-    #     "bookkeeper.delete_bookkeeper",
-    #     "bookkeeper.delete_bookkeeperproxy",
-    # ]
-    permission_required = "bookkeeper.delete_bookkeeperproxy"
+	template_name = "bookkeeper/delete.html"
+	model = BookkeeperProxy
+	success_message = _("Bookkeeper deleted successfully")
+	success_url = reverse_lazy("dashboard:management_bookkeeper:list")
+	permission_denied_message = _("You do not have permission to access this page.")
+	# permission_required = [
+	#     "bookkeeper.delete_bookkeeper",
+	#     "bookkeeper.delete_bookkeeperproxy",
+	# ]
+	permission_required = "bookkeeper.delete_bookkeeperproxy"
 
-    def get_context_data(self, **kwargs):
-        # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
-        context.setdefault("title", _("Delete bookkeeper"))
-        return context
+	def get_context_data(self, **kwargs):
+		# Call the base implementation first to get a context
+		context = super().get_context_data(**kwargs)
+		context.setdefault("title", _("Delete bookkeeper"))
+		return context

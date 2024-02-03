@@ -86,7 +86,7 @@
   // "isort.check": true,
   "stylelint.stylelintPath": "./src/frontend/node_modules/stylelint/bin/stylelint.js",
   "isort.interpreter": [
-    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/isort"
+    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/python3"
   ],
   "typescript.tsdk": "./src/frontend/node_modules/typescript/lib",
   "stylelint.configFile": "${workspaceFolder}/.stylelintrc.json",

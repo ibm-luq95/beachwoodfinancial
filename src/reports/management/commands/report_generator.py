@@ -1,12 +1,22 @@
 # -*- coding: utf-8 -*-#
+import traceback
 from collections import defaultdict
 from typing import Optional
+import timeit
 
+from django.core.management.base import BaseCommand
+from django.db import transaction
+from django.db.models import Q
+from django.utils.translation import gettext as _
+
+from client.models import ClientProxy
+from core.management.mixins import CommandStdOutputMixin
 from core.utils import get_months_abbr
+from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from reports.models import ClientJobsReportsDBView
 
 
-class ClientDetailsMap:
+class TMPMAP:
 	JOBS_FIELD_NAMES = [
 		"job_completed_count",
 		"job_not_completed_count",
@@ -100,7 +110,7 @@ class ClientDetailsMap:
 			"organize_by_year": self.organize_by_year(),
 			"organize_by_month": self.organize_by_month(),
 			"all_reports": self.all_reports(),
-			"has_reports": self.has_reports(),
+			"has_reports": self.has_reports()
 		}
 
 	def has_reports(self) -> bool:
@@ -258,3 +268,60 @@ class ClientDetailsMap:
 			f"Client: PK: {self.pk}, Name: {self.client.name}, Years: {self.years}, Total QS Count: "
 			f"{self.reports_qs_count}"
 		)
+
+
+class Command(BaseCommand, CommandStdOutputMixin):
+	help = _("Generate and initialize reports for client")
+
+	def add_arguments(self, parser):
+		parser.add_argument(
+			"--client", "-c", type=str, help=_("Client PK (OPTIONAL)"), required=False
+		)
+
+	def handle(self, *args, **options):
+		try:
+			client_pk = options.get("client")
+			filters = {
+				"clients": None,
+				"categories": [
+					"d6e6a42e-6e54-41f7-b19d-03cba9be73e0",
+					"005eb29b-788e-4a1c-afe2-e446b60cc82c",
+				],
+				"period_year": None,
+				"job_categories": None,
+				"job_status": ["in_progress"],
+				"job_type": None,
+				"job_stats": None,
+				"managed_by": None,
+			}
+			clients_q = Q()
+			if filters.get("categories") is not None:
+				clients_q &= Q(categories__in=filters.get("categories"))
+			if filters.get("job_status") is not None:
+				clients_q &= Q(jobs__status__in=filters.get("job_status"))
+			with transaction.atomic():
+				if client_pk:
+					client_obj = ClientProxy.objects.filter(pk=client_pk).first()
+					if not client_obj:
+						raise Exception(_("Client not found."))
+
+				# for client in ClientProxy.objects.all():
+				#     BWDebuggingPrint.pprint(client.pk)
+				#     BWDebuggingPrint.pprint(client.name)
+				start_time = timeit.default_timer()
+				tt = TMPMAP(client_obj)
+				BWDebuggingPrint.pprint(tt.serializer())
+				# tt.all_reports()
+				# ac = ClientProxy.objects.filter(clients_q)
+				# BWDebuggingPrint.pprint(ac.count())
+				# for c in ac:
+				# 	tt = TMPMAP(c)
+				# 	BWDebuggingPrint.pprint(tt.serializer())
+				BWDebuggingPrint.pprint(
+					f"The time difference is : {timeit.default_timer() - start_time}"
+				)
+				# BWDebuggingPrint.pprint(tt.organize_by_year())
+				return
+
+		except Exception:
+			self.stdout_output("error", traceback.format_exc())

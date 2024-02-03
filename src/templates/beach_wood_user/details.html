@@ -39,8 +39,8 @@
                                         </h3>
                                         <div class="mt-5">
                                             <div class="flex flex-col">
-                                                <div class="-m-1.5 overflow-x-auto">
-                                                    <div class="p-1.5 min-w-full inline-block align-middle">
+                                                <div class="-m-1.5 overflow-y-visible overflow-x-auto">
+                                                    <div class="p-1.5 min-w-full h-80 inline-block align-middle">
                                                         {% if object.bookkeeper.get_proxy_model.get_past_due_jobs %}
                                                             <div class="border rounded-lg shadow overflow-hidden dark:border-gray-700 dark:shadow-gray-900">
                                                                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -113,8 +113,8 @@
                                         </h3>
                                         <div class="mt-5">
                                             <div class="flex flex-col">
-                                                <div class="-m-1.5 overflow-x-auto">
-                                                    <div class="p-1.5 min-w-full inline-block align-middle">
+                                                <div class="-m-1.5 overflow-y-visible overflow-x-auto">
+                                                    <div class="p-1.5 min-w-full h-80 inline-block align-middle">
                                                         {% if object.bookkeeper.get_proxy_model.get_stats_jobs %}
                                                             <div class="border rounded-lg shadow overflow-hidden dark:border-gray-700 dark:shadow-gray-900">
                                                                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -287,7 +287,7 @@
                                          aria-labelledby="bar-with-underline-item-2">
                                         {% if object.jobs.all %}
 
-                                            {% include "bw_components/job/table_list.html" with is_checkbox_enabled=False is_show_create_btn=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Jobs" header_subtitle="" app_label="job" pagination_list_url_name="dashboard:job:list" is_actions_menu_enabled=False actions_items="show,update,delete" actions_app_name="job" actions_base_url="dashboard:job" base_url_name="dashboard:job" object_list=object.jobs.all is_show_client=False is_hide_manager=True %}
+                                            {% include "bw_components/job/table_list.html" with is_checkbox_enabled=False is_show_create_btn=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Jobs" header_subtitle="" app_label="job" pagination_list_url_name="dashboard:job:list" is_actions_menu_enabled=False actions_items="show,update,delete" actions_app_name="job" actions_base_url="dashboard:job" base_url_name="dashboard:job" page_obj=object.jobs.all is_show_client=False is_hide_manager=True %}
 
                                         {% else %}
 

@@ -48,7 +48,8 @@ class BWDebuggingPrint:
     def get_console_obj(cls) -> Console:
         return cls.console
 
-    def print_json(self, obj: Any) -> None:
+    @classmethod
+    def print_json(cls, obj: Any, cast: bool = True) -> None:
         """
         Print the given object as JSON.
 
@@ -57,11 +58,24 @@ class BWDebuggingPrint:
 
         Returns:
             None
+
+        Parameters
+        ----------
+        cast
         """
-        self.console.print_json(obj)
+        if cast is True:
+            cls.console.print_json(str(obj))
+        else:
+            cls.console.print_json(obj)
 
     @classmethod
-    def log(cls, obj: Any) -> None:
+    def log(
+        cls,
+        *args,
+        justify: Literal["center", "full", "right", "left"] = "full",
+        highlight: bool = True,
+        emoji: bool = True,
+    ) -> None:
         """
         The log() method offers the same capabilities as print, but adds some features useful for debugging a running
         application. Logging writes the current time in a column to the left, and the file and line where the method
@@ -72,8 +86,14 @@ class BWDebuggingPrint:
 
         Returns:
             None
+
+        Parameters
+        ----------
+        highlight
+        emoji
+        justify
         """
-        cls.console.log(obj)
+        cls.console.log(args, justify=justify, highlight=highlight, emoji=emoji)
 
     @classmethod
     def print_exception(cls, is_show_locales: bool = False) -> None:
@@ -82,8 +102,14 @@ class BWDebuggingPrint:
         """
         cls.console.print_exception(show_locals=is_show_locales)
 
+    @staticmethod
+    def print(*args, sep=" ", end="\n", file=None, flush=False):
+        print(args, sep=sep, end=end, file=file, flush=flush)
+
     @classmethod
-    def print(cls, obj: Any, justify: Literal["left", "center", "right"] = "left") -> None:
+    def cprint(
+        cls, obj: Any, justify: Literal["left", "center", "right"] = "left"
+    ) -> None:
         """
         Print the given object.
         """
@@ -100,7 +126,7 @@ class BWDebuggingPrint:
         """
         Pretty print the given object.
         """
-        pprint(obj)
+        pprint(obj, expand_all=True)
 
     @classmethod
     def panel(
