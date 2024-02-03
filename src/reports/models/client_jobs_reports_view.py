@@ -1,15 +1,15 @@
 # -*- coding: utf-8 -*-#
-from django.apps import apps
-
 from django.db import models
+from django.forms import model_to_dict
 from django.utils.translation import gettext as _
 
 from core.constants.db import CONST_CLIENT_JOBS_REPORTS_VIEW
-from core.models.mixins.get_model_instance_as_dict import GetModelInstanceAsDictMixin
+from core.utils import sort_dict
 
 
-class ClientJobsReportsDBView(GetModelInstanceAsDictMixin, models.Model):
-    """Client jobs reports db view, this model like readonly model."""
+class ClientJobsReportsDBView(models.Model):
+    """A class representing a read-only view of client job reports in the database."""
+
     ID_FIELD = "client_id"
 
     client_id = models.UUIDField(primary_key=True, editable=False)
@@ -21,8 +21,10 @@ class ClientJobsReportsDBView(GetModelInstanceAsDictMixin, models.Model):
     job_archived_count = models.IntegerField(null=True, blank=True)
     job_not_started_count = models.IntegerField(null=True, blank=True)
     job_draft_count = models.IntegerField(null=True, blank=True)
-    job_year = models.IntegerField(null=True, blank=True)
-    job_month = models.IntegerField(null=True, blank=True)
+    # job_year = models.IntegerField(null=True, blank=True)
+    # job_month = models.IntegerField(null=True, blank=True)
+    job_period_month = models.CharField(null=True, blank=True, max_length=2)
+    job_period_year = models.CharField(null=True, blank=True, max_length=4)
 
     objects = models.Manager()
 
@@ -34,8 +36,31 @@ class ClientJobsReportsDBView(GetModelInstanceAsDictMixin, models.Model):
         verbose_name_plural = _("Client jobs reports db view")
         ordering = ["client_name"]
 
+    # def job_month(self):
+    #     if self.job_month is not None or self.job_month != "":
+    #         return int(self.job_month)
+    #     return self.job_month
+
+    @property
+    def get_instance_as_dict(self) -> dict:
+        data = {
+            "client_id": self.client_id,
+            "client_name": self.client_name,
+            "job_completed_count": int(self.job_completed_count),
+            "job_not_completed_count": int(self.job_not_completed_count),
+            "job_past_due_count": int(self.job_past_due_count),
+            "job_in_progress_count": int(self.job_in_progress_count),
+            "job_archived_count": int(self.job_archived_count),
+            "job_not_started_count": int(self.job_not_started_count),
+            "job_draft_count": int(self.job_draft_count),
+            "job_period_month": int(self.job_period_month),
+            "job_period_year": int(self.job_period_year),
+        }
+
+        return sort_dict(data)
+
     def __str__(self) -> str:
-        return self.client_name
+        return f"{self.client_name} - {self.job_period_year} of {self.job_period_month}"
 
     def save(self, *args, **kwargs):
         raise Exception(_("Client jobs reports db view cannot be saved."))
