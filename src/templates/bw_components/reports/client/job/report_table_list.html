@@ -58,9 +58,9 @@
         </th>
         {% for month in months_list %}
             <th scope="col" class="px-6 py-3 text-center disable-sort" width="15%">
-                <div class="flex items-center gap-x-2">
+                <div class="flex items-center gap-x-2 text-center">
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
-                        {{ month|get_month_abbrev }} - {{ created_year }}
+                        {{ month|get_month_abbrev }} - {{ form.period_year.value|default:"All" }}
                     </span>
                     {# {% include "bw_components/global/table_list/sort_icon.html" %} #}
                 </div>
@@ -84,6 +84,11 @@
 {# End Table Header Columns #}
 {# Start Table Body #}
 {% block tbody_block %}
+    {% comment  %}
+        {% for oo in object_list.object_list %}
+        {{ oo }}<br />
+    {% endfor %}
+    {% endcomment %}
     {% for object in object_list.object_list %}
         <tr>
             {% if is_checkbox_enabled is True %}
@@ -101,12 +106,12 @@
             {% endif %}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
-                    <a href="{% url 'dashboard:client:details' object.client.pk %}">
-                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.client.name|bw_truncate_titles }}</span>
+                    <a href="{% url 'dashboard:client:details' object.client_obj.pk %}">
+                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.client_obj.name|bw_truncate_titles }}</span>
                     </a>
-                    {% if object.client.categories.all %}
+                    {% if object.client_obj.categories.all %}
                         <div class="my-1 text-left">
-                            {% for category in object.client.categories.all %}
+                            {% for category in object.client_obj.categories.all %}
                                 <div class="hs-tooltip inline-block mr-0.5">
                                     <a href="#" class="hs-tooltip-toggle">
                                         <span class="inline-flex items-center gap-1 py-0.5 px-2 rounded-full text-[10px] font-medium bg-blue-100 text-blue-800">{{ category.name }}</span>
@@ -121,64 +126,79 @@
             </td>
             {% for month in months_list %}
                 <td class="h-px w-px whitespace-nowrap">
-                    {% extract_jobs_by_years object created_year as extracted_jobs %}
-                    {# {% print extracted_jobs %} #}
-                    {% extract_months_from_jobs extracted_jobs created_year as extracted_months %}
-                    {# {% print extracted_months %} #}
-                    {# {% print extracted_jobs %} #}
-                    {% if month in extracted_months %}
-                        {% extract_job_from_month extracted_jobs month created_year as job_dict %}
-                        {# {% print job_dict %} #}
-                        <div class="px-6 py-3">
-                            {# Start Not Started #}
-                            <div class="hs-tooltip inline-block justify-center items-center mr-1">
-                                <span class="hs-tooltip-toggle inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-full text-xs font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">
-                                    {{ job_dict.job_not_started_count }}
-                                    <span class="{{ BW_PRELINE_SPAN_TOOLTIP_CSS_CLASSES }}" role="tooltip">
-                                        {% translate "Not started" %}
-                                    </span>
+                    {# {% if form.period_year.value is None %} #}
+                    {# Start All years #}
+                    {% if object.serialized_obj.has_reports is True %}
+                        {% if form.period_year.value is not None %}
+                            {% define object.serialized_obj.organize_by_month.0 as report_obj %}
+                        {% else %}
+                            {% define object.serialized_obj.all_reports as report_obj %}
+                        {% endif %}
+                        {% extract_job_month_idx month report_obj.data as extracted_jobs %}
+                        {% if extracted_jobs is not None %}
+                            {% if extracted_jobs.job_period_month|cast_to_str == month|cast_to_str %}
+                                <div class="px-6 py-3">
+                                    {# Start Not Started #}
+                                    <div class="hs-tooltip inline-block justify-center items-center mr-1">
+                                        <span class="hs-tooltip-toggle inline-flex items-center gap-x-1.5 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-white/10 dark:text-white shadow-sm">
+                                            {{ extracted_jobs.job_not_started_count }}
+                                            <span class="{{ BW_PRELINE_SPAN_TOOLTIP_CSS_CLASSES }}" role="tooltip">
+                                                {% translate "Not started" %}
+                                            </span>
+                                        </span>
+                                    </div>
+                                    {# End Not Started #}
+                                    {# Start Completed #}
+                                    <div class="hs-tooltip inline-block justify-center items-center">
+                                        <span class="hs-tooltip-toggle inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium bg-green-800 text-white">
+                                            {{ extracted_jobs.job_completed_count }}
+                                            <span class="{{ BW_PRELINE_SPAN_TOOLTIP_CSS_CLASSES }}" role="tooltip">
+                                                {% translate "Completed" %}
+                                            </span>
+                                        </span>
+                                    </div>
+                                    {# End Completed #}
+                                    {# Start In progress #}
+                                    <div class="hs-tooltip inline-block justify-center items-center">
+                                        <span class="hs-tooltip-toggle inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium bg-yellow-800 text-white mx-1">
+                                            {{ extracted_jobs.job_in_progress_count }}
+                                            <span class="{{ BW_PRELINE_SPAN_TOOLTIP_CSS_CLASSES }}" role="tooltip">
+                                                {% translate "In progress" %}
+                                            </span>
+                                        </span>
+                                    </div>
+                                    {# End In progress #}
+                                    {# Start Past due #}
+                                    <div class="hs-tooltip inline-block justify-center items-center">
+                                        <span class="hs-tooltip-toggle inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium bg-red-800 text-white">
+                                            {{ extracted_jobs.job_past_due_count }}
+                                            <span class="{{ BW_PRELINE_SPAN_TOOLTIP_CSS_CLASSES }}" role="tooltip">
+                                                {% translate "Past due" %}
+                                            </span>
+                                        </span>
+                                    </div>
+                                    {# End Past due #}
+                                </div>
+                            {% endif %}
+                        {% else %}
+                            {# Start No jobs at all #}
+                            <div class="hs-tooltip inline-block flex flex-auto flex-col justify-center items-center">
+                                <span class="hs-tooltip-toggle inline-flex items-center gap-x-1.5 py-1 px-2 rounded-full text-xs font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">
+                                    <i class="fa-solid fa-minus flex-shrink-0 w-3 h-3"></i>
+                                    <span class="{{ BW_PRELINE_SPAN_TOOLTIP_CSS_CLASSES }}" role="tooltip">{% translate "No jobs in " %} {{ month|get_month_abbrev }}, {{ form.period_year.value|default:"All" }}</span>
                                 </span>
                             </div>
-                            {# End Not Started #}
-                            {# Start Completed #}
-                            <div class="hs-tooltip inline-block justify-center items-center">
-                                <span class="hs-tooltip-toggle inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium bg-green-800 text-white">
-                                    {{ job_dict.job_completed_count }}
-                                    <span class="{{ BW_PRELINE_SPAN_TOOLTIP_CSS_CLASSES }}" role="tooltip">
-                                        {% translate "Completed" %}
-                                    </span>
-                                </span>
-                            </div>
-                            {# End Completed #}
-                            {# Start In progress #}
-                            <div class="hs-tooltip inline-block justify-center items-center">
-                                <span class="hs-tooltip-toggle inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium bg-yellow-800 text-white mx-1">
-                                    {{ job_dict.job_in_progress_count }}
-                                    <span class="{{ BW_PRELINE_SPAN_TOOLTIP_CSS_CLASSES }}" role="tooltip">
-                                        {% translate "In progress" %}
-                                    </span>
-                                </span>
-                            </div>
-                            {# End In progress #}
-                            {# Start Past due #}
-                            <div class="hs-tooltip inline-block justify-center items-center">
-                                <span class="hs-tooltip-toggle inline-flex items-center py-0.5 px-1.5 rounded-full text-xs font-medium bg-red-800 text-white">
-                                    {{ job_dict.job_past_due_count }}
-                                    <span class="{{ BW_PRELINE_SPAN_TOOLTIP_CSS_CLASSES }}" role="tooltip">
-                                        {% translate "Past due" %}
-                                    </span>
-                                </span>
-                            </div>
-                            {# End Past due #}
-                        </div>
+                            {# End  No jobs at all #}
+                        {% endif %}
                     {% else %}
                         <div class="hs-tooltip inline-block flex flex-auto flex-col justify-center items-center">
                             <span class="hs-tooltip-toggle inline-flex items-center gap-x-1.5 py-1 px-2 rounded-full text-xs font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">
-                                <i class="fa-solid fa-minus flex-shrink-0 w-4 h-4"></i>
-                                <span class="{{ BW_PRELINE_SPAN_TOOLTIP_CSS_CLASSES }}" role="tooltip">{% translate "No jobs in " %} {{ month|get_month_abbrev }}, {{ created_year }}</span>
+                                <i class="fa-solid fa-ban flex-shrink-0 w-3 h-3"></i>
+                                <span class="{{ BW_PRELINE_SPAN_TOOLTIP_CSS_CLASSES }}" role="tooltip">{% translate "No jobs at all for client: " %} {{ object.client_obj.name }}</span>
                             </span>
                         </div>
                     {% endif %}
+                    {# End All years #}
                 </td>
             {% endfor %}
             {% if is_show_created_at is True %}
@@ -204,7 +224,7 @@
             {% endwith %}
         {% endwith %}
     {% endcomment %}
-    {{ object_list.page_obj.paginator.per_page }} {% translate "of" %} {{ object_list.total_rows_count }}
+    {{ object_list.current_object_list_count }} {% translate "of" %} {{ object_list.total_rows_count }}
 {% endblock results_block %}
 {# End Table Results #}
 {# Start Table Pagination #}
