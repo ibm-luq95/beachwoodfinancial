@@ -87,25 +87,33 @@ class JobsReportView(
         )
         context.setdefault("object_list", object_list)
         # form["created_year"].initial = timezone.now().year
-        created_year = form.serialize_inputs().get("created_year")
-
-        # if form.serialize_inputs().get("created_year") is not None:
+        # created_year = form.serialize_inputs().get("period_year")
+        # created_year = timezone.now().year
+        # BWDebuggingPrint.pprint(form.serialize_inputs())
+        # if form.serialize_inputs().get("period_year") is not None:
         #     created_year = None
-        #     year = form.serialize_inputs().get("created_year")
-        #
+        #     year = form.serialize_inputs().get("period_year")
+        # 
         #     if year != _("all"):
         #         created_year = int(year)
-        #
+        # 
         # else:
         #     # created_year = _("All")
         #     created_year = timezone.now().year
-        context.setdefault("created_year", created_year)
+        # context.setdefault("created_year", created_year)
 
-        # debugging_print(self.filterset.form["name"])
         return context
+
+    def get_initial(self):
+        initial = super().get_initial()
+        # initial_dict = dict(self.request.GET)
+        # initial["period_year"] = timezone.now().year
+        # initial.update(initial_dict)
+        # BWDebuggingPrint.pprint(initial)
+        return initial
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
-        kwargs.update({"initial": dict(self.request.GET)})
+        # kwargs.update({"initial": dict(self.request.GET)})
         kwargs.update({"request": self.request})
         return kwargs
