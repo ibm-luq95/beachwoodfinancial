@@ -246,17 +246,14 @@
                                         <h3 class="text-xl font-medium text-gray-800 sm:text-2xl dark:text-gray-200">
                                             {{ object.special_assignments.count }}
                                         </h3>
-                                        <span class="flex items-center text-red-600">
-                                            <svg class="self-center inline-block w-7 h-7"
-                                                 xmlns="http://www.w3.org/2000/svg"
-                                                 width="16"
-                                                 height="16"
-                                                 fill="currentColor"
-                                                 viewBox="0 0 16 16">
+                                        {% comment  %}
+                                            <span class="flex items-center text-red-600">
+                                            <svg class="self-center inline-block w-7 h-7" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
                                                 <path fill-rule="evenodd" d="M8 4a.5.5 0 0 1 .5.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5A.5.5 0 0 1 8 4z" />
                                             </svg>
                                             <span class="inline-block text-lg">1.7%</span>
                                         </span>
+                                        {% endcomment %}
                                     </div>
                                 </div>
                                 <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px] bg-blue-600 text-white rounded-full dark:bg-blue-900 dark:text-blue-200">
