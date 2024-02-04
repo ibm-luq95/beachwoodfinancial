@@ -141,7 +141,7 @@ class ClientAccountDeleteView(
     SuccessMessageMixin,
     DeleteView,
 ):
-    template_name = "client_account/delete.html"
+    template_name = "core/crudl/delete.html"
     # form_class = ClientCategoryForm
     model = ClientAccount
     success_message = _("Contact deleted successfully")
@@ -153,4 +153,8 @@ class ClientAccountDeleteView(
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context.setdefault("title", get_trans_txt("Delete account"))
+        context.setdefault("cancel_url", "dashboard:client_account:list")
+        context.setdefault("object", self.get_object())
+        context.setdefault("object_name", "client account")
+        context.setdefault("form_css_id", "clientAccountDeleteForm")
         return context
