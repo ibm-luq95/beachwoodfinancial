@@ -59,7 +59,7 @@
                             <div class="relative">
                                 <!-- Boolean Field -->
                                 {% if field|field_type == 'booleanfield' %}
-                                    {% bw_switch bound_field=field %}
+                                    {% bw_switch bound_field=field css_classes=BW_FULL_INPUT_CSS_CLASSES %}
                                 {% elif field|field_type == 'datefield' or field|field_type == 'emailfield' or field|field_type == "passwordfield" or field|field_type == "charfield" or field|field_type == 'datetimefield' or field|field_type == 'urlfield' or field|field_type == "decimalfield" or field|field_type == "integerfield" or field|field_type == "slugfield" or field|field_type == "uuidfield" or field|field_type == "urlfield" %}
                                     {% render_field field class+=BW_PRELINE_TEXT_INPUT_CSS_CLASSES placeholder=widget_attrs.placeholder %}
                                 {% elif field|field_type == "modelmultiplechoicefield" or field|field_type == "multiplechoicefield" or field|field_type == "modelchoicefield" %}
@@ -70,7 +70,7 @@
                                             {% endwith %}
                                         {% elif field.field.widget|bw_get_form_field_type == "CheckboxSelectMultiple" or field.field|bw_get_form_field_type == "MultipleChoiceField" %}
                                             {% for checkbox_field in field %}
-                                                {% bw_checkbox field=checkbox_field %}
+                                                {% bw_checkbox field=checkbox_field css_classes=BW_PRELINE_CHECKBOX_CSS_CLASSES %}
                                             {% endfor %}
                                         {% endif %}
                                     {% else %}
@@ -121,9 +121,9 @@
                 <div class="hs-tooltip inline-block">
                     {% if hide_back_btn is False %}
                         <a href="{{ request.META.HTTP_REFERER }}"
-                                disabled
-                                id="formBackBtn"
-                                class="hs-tooltip-toggle {{ BW_FULL_INPUT_CSS_CLASSES }} py-3 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                           disabled
+                           id="formBackBtn"
+                           class="hs-tooltip-toggle {{ BW_FULL_INPUT_CSS_CLASSES }} py-3 px-3 inline-flex justify-center items-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
                             <i class="fa-solid fa-arrow-left w-3.5 h-3.5"></i>
                             <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
                                   role="tooltip">{% translate "Back" %}</span>

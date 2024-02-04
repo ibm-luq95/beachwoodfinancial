@@ -195,7 +195,7 @@
                     <div class="px-5 py-3">
                         {% if object.managed_by %}
                             {% if request.user.user_type == CON_BOOKKEEPER %}
-                                <a href="javascript:;" class="disabledAnchorElement text-sm">{{ object.managed_by }}</a>
+                                <p class="text-sm text-gray-600 italic dark:text-gray-400">{{ object.managed_by }}</p>
                             {% else %}
                                 <a href="{% url 'dashboard:staff:member-details' object.managed_by.pk %}"
                                    class="text-sm {{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }}">{{ object.managed_by }}</a>

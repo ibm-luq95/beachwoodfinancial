@@ -69,13 +69,13 @@ def assign_groups(sender, instance: BWUser, created: bool, **kwargs):
                 readonly_group = Group.objects.filter(
                     name=READONLY_NEW_STAFF_MEMBER_GROUP_NAME
                 )
-                if readonly_group:
-                    readonly_group = readonly_group.first()
-                if (
-                    created_user.user_type == "bookkeeper"
-                    or created_user.user_type == "assistant"
-                ):
-                    created_user.groups.add(readonly_group)
+                # if readonly_group:
+                #     readonly_group = readonly_group.first()
+                # if (
+                #     created_user.user_type == "bookkeeper"
+                #     or created_user.user_type == "assistant"
+                # ):
+                #     created_user.groups.add(readonly_group)
                 if created_user.user_type == "bookkeeper":
                     group_obj = Group.objects.get(name=BOOKKEEPER_GROUP_NAME)
                     created_user.groups.add(group_obj)

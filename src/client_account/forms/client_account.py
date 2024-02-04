@@ -13,6 +13,7 @@ from core.utils import PasswordHasher
 
 class ClientAccountForm(BaseModelFormMixin, SetFieldsInputsHiddenMixin):
     field_order = [
+        "client",
         "service_name",
         "account_name",
         "account_url",

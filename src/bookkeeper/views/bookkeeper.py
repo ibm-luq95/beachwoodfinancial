@@ -238,7 +238,7 @@ class BookkeeperDeleteView(
 	SuccessMessageMixin,
 	DeleteView,
 ):
-	template_name = "bookkeeper/delete.html"
+	template_name = "core/crudl/delete.html"
 	model = BookkeeperProxy
 	success_message = _("Bookkeeper deleted successfully")
 	success_url = reverse_lazy("dashboard:management_bookkeeper:list")
@@ -253,4 +253,8 @@ class BookkeeperDeleteView(
 		# Call the base implementation first to get a context
 		context = super().get_context_data(**kwargs)
 		context.setdefault("title", _("Delete bookkeeper"))
+		context.setdefault("cancel_url", "dashboard:management_bookkeeper:list")
+		context.setdefault("object", self.get_object())
+		context.setdefault("object_name", "bookkeeper")
+		context.setdefault("form_css_id", "bookkeeperDeleteForm")
 		return context

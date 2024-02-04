@@ -735,6 +735,8 @@
                                 {% translate "Requested assignments" %}
                             </a>
                         </li>
+                        
+                        {% if request.user.user_type == CON_MANAGER %}
                         <li>
                             <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
                                href="{% url 'dashboard:discussion:list' %}">
@@ -742,6 +744,8 @@
                                 {% translate "Discussions" %}
                             </a>
                         </li>
+                        {% endif %}
+                            
                     </ul>
                 </div>
             </li>
@@ -873,6 +877,8 @@
                 </div>
             </li>
             {% endcomment %}
+            
+            {% if request.user.user_type == CON_MANAGER or request.user.user_type == CON_ASSISTANT %}
             <li class="hs-accordion" id="archive-accordion">
                 <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
                    href="javascript:;">
@@ -1000,6 +1006,9 @@
                     </ul>
                 </div>
             </li>
+                
+            {% endif %}
+                
             {% if perms.assistant.assistant_has_full_manager_permissions or request.user.is_superuser is True %}
                 <li class="hs-accordion" id="site-settings-accordion">
                     <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
@@ -1035,13 +1044,22 @@
                                     {% translate "Web App Settings" %}
                                 </a>
                             </li>
-                            <li>
-                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="{% url 'dashboard:site_settings:app_configs_settings' %}">
-                                    <i class="fa-solid fa-gears"></i>
-                                    {% translate "Configurations" %}
-                                </a>
-                            </li>
+                            {% if debug %}
+                                <li>
+                                    <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
+                                       href="{% url 'dashboard:site_settings:app_configs_settings' %}">
+                                        <i class="fa-solid fa-gears"></i>
+                                        {% translate "Configurations" %}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
+                                       href="javascript:;">
+                                        <i class="fa-solid fa-database"></i>
+                                        {% translate "DB Backup" %}
+                                    </a>
+                                </li>
+                            {% endif %}
                             {% if request.user.is_superuser is True and request.user.user_genre == CON_DEVELOPER %}
                                 <li>
                                     <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
@@ -1051,13 +1069,6 @@
                                     </a>
                                 </li>
                             {% endif %}
-                            <li>
-                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="javascript:;">
-                                    <i class="fa-solid fa-database"></i>
-                                    {% translate "DB Backup" %}
-                                </a>
-                            </li>
                         </ul>
                     </div>
                 </li>
