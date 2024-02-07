@@ -35,7 +35,13 @@
                             {% if extra_hidden_inputs_markup_list %}
                                 {% for hidden_input in extra_hidden_inputs_markup_list %}{{ hidden_input|safe }}{% endfor %}
                             {% endif %}
-                            {{ form_object }}
+                            {% if is_only_checkbox_form is True %}
+
+                                {% include "bw_ui_components/elements/forms/checkbox_only_form.html" with form=form_object %}
+
+                            {% else %}
+                                {{ form_object }}
+                            {% endif %}
                         </fieldset>
                     </form>
                 {% endif %}
