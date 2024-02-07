@@ -1,0 +1,31 @@
+{% for field in form %}
+    <div class="flex justify-between items-center">
+        <label for="with-corner-hint"
+               class="block text-sm font-medium mb-2 dark:text-white">
+            {{ field.label|safe }}
+        </label>
+        <!-- <span class="block text-sm text-gray-500 mb-2">Optional</span> -->
+    </div>
+    {% if field.field.widget|bw_get_form_field_type == "CheckboxSelectMultiple" %}
+        <div class="grid sm:grid-cols-3 gap-2">
+            {% for choice in field %}
+                <label for="{{ choice.data.attrs.id }}"
+                       class="flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                    <input type="checkbox"
+                           {% if choice.data.selected is True %}checked{% endif %}
+                           value="{{ choice.data.value }}"
+                           name="{{ field.name }}"
+                           class="shrink-0 mt-0.5 border-gray-200 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
+                           id="{{ choice.data.attrs.id }}" />
+                    <span class="text-sm text-gray-500 ms-3 dark:text-gray-400">{{ choice.choice_label|safe }}</span>
+                </label>
+            {% endfor %}
+        </div>
+        {% if field.help_text %}
+            <p class="text-xs text-gray-500 mt-2"
+               id="hs-input-helper-text-{{ field.id_for_label }}">
+                {{ field.help_text|safe }}
+            </p>
+        {% endif %}
+    {% endif %}
+{% endfor %}
