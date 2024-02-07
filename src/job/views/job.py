@@ -71,7 +71,7 @@ class JobListView(
 		context.setdefault("is_footer_enabled", True)
 		context.setdefault("actions_items", "details,update,delete")
 		context.setdefault("base_url_name", "dashboard:job")
-		context.setdefault("empty_label", _("client"))
+		context.setdefault("empty_label", _("jobs"))
 		context.setdefault(
 			"extra_context", {"is_show_client": True, "is_hide_manager": False}
 		)
