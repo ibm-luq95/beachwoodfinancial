@@ -243,8 +243,64 @@
                                 <div id="user-details-tab"
                                      role="tabpanel"
                                      aria-labelledby="user-details-tab-underline">
-                                    <section id="formWrapper">
-                                        {% component "bw_form" form=staff_form perms=perms form_id="staffUpdateMiniForm" submit_btn_text="Update" form_title="Update staff - "|add:object.fullname form_subtitle="Update staff details" is_upload_form=True hide_back_btn=True hide_submit_btn=True %}
+                                    <section id="staff-details" class="p-5">
+                                        <dl class="grid sm:grid-cols-3 gap-1 sm:gap-3">
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Full Name" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                {{ object.fullname|safe }}
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Email Address" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                <a class="text-blue-600 italic" href="mailto:{{ object.email|safe }}">{{ object.email|safe }}</a>
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Address" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                <p>{{ object.get_staff_member_object.staff_object.profile.address|safe }}</p>
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold truncate dark:text-white">
+                                                {% translate "Phone Number" %}
+                                            </dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                <p>{{ object.get_staff_member_object.staff_object.profile.phone_number|safe }}</p>
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold truncate dark:text-white">{% translate "BIO" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                <p>{{ object.get_staff_member_object.staff_object.profile.bio|safe }}</p>
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Facebook" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                <a class="text-blue-600 italic"
+                                                   href="mailto:{{ object.get_staff_member_object.staff_object.profile.facebook|safe }}">{{ object.get_staff_member_object.staff_object.profile.facebook|safe }}</a>
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Twitter" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                <a class="text-blue-600 italic"
+                                                   href="mailto:{{ object.get_staff_member_object.staff_object.profile.twitter|safe }}">{{ object.get_staff_member_object.staff_object.profile.twitter|safe }}</a>
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Instagram" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                <a class="text-blue-600 italic"
+                                                   href="mailto:{{ object.get_staff_member_object.staff_object.profile.instagram|safe }}">{{ object.get_staff_member_object.staff_object.profile.instagram|safe }}</a>
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Linkedin" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                <a class="text-blue-600 italic"
+                                                   href="mailto:{{ object.get_staff_member_object.staff_object.profile.linkedin|safe }}">{{ object.get_staff_member_object.staff_object.profile.linkedin|safe }}</a>
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Github" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                <a class="text-blue-600 italic"
+                                                   href="mailto:{{ object.get_staff_member_object.staff_object.profile.github|safe }}">{{ object.get_staff_member_object.staff_object.profile.github|safe }}</a>
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Created" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                <p>{{ object.created_at }}</p>
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Last Login" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                <p>{{ object.last_login }}</p>
+                                            </dd>
+                                        </dl>
                                     </section>
                                 </div>
                                 {# End Details Tab #}
