@@ -10,4 +10,5 @@ class ManagerFilter(FilterCreatedMixin):
             "user__status": ["exact"],
             "user__email": ["exact"],
             "user__is_superuser": ["exact"],
+            "user__is_active": ["exact"],
         }
