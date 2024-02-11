@@ -50,6 +50,7 @@
     "filterset",
     "fullname",
     "Hiredis",
+    "icontact",
     "levelname",
     "localstorage",
     "msgpack",
