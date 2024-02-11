@@ -36,7 +36,8 @@ class FilterCreatedMixin(HelpfulFilterSet):
             now = timezone.now()
             start = now - timedelta(days=now.weekday())
             end = start + timedelta(days=6)
-            # debugging_print(queryset.filter(created_at__date__range=(start.date(), end.date())))
+            # debugging_print(queryset.filter(created_at__date__range=(start.date(), 
+            # end.date())))
             return queryset.filter(created_at__date__range=(start.date(), end.date()))
         elif value == "this_month":
             now = timezone.now()
