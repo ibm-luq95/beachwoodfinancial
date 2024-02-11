@@ -10,5 +10,6 @@ class ImportantContactFilter(FilterCreatedMixin):
             "contact_first_name": ["icontains"],
             "contact_last_name": ["icontains"],
             "contact_label": ["exact"],
+            "client": ["exact"],
             "company_name": ["icontains"],
         }
