@@ -10,7 +10,6 @@ import { getIconForToasts } from "./icons";
  */
 const showToastNotification = (msg, notificationType = "success") => {
   const toastsWrapperElement = document.querySelector("div#toasts-wrapper");
-  console.log(toastsWrapperElement);
   const iconWrapper = toastsWrapperElement.querySelector("div#iconWrapper");
   const msgElement = toastsWrapperElement.querySelector("p#msg");
   msgElement.textContent = msg;

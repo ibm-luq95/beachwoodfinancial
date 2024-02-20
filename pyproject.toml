@@ -47,43 +47,51 @@ ignore = "H006"
 
 [tool.ruff]
 line-length = 91
+# Skip unused variable rules (`F841`).
+#ignore = ["F841", "F401", "E402", "E501", "E741", "W503"]
+ignore = ["F841", "F401", "E402", "E501", "E741"]
 show-fixes = true
+ignore-init-module-imports = true
 target-version = "py312"
 indent-width = 4
 # Exclude a variety of commonly ignored directories.
 exclude = [
-  ".bzr",
-  ".direnv",
-  ".eggs",
-  ".git",
-  ".git-rewrite",
-  ".hg",
-  ".mypy_cache",
-  ".nox",
-  ".pants.d",
-  ".pytype",
-  ".ruff_cache",
-  ".svn",
-  ".tox",
-  ".venv",
-  "__pypackages__",
-  "_build",
-  "buck-out",
-  "build",
-  "dist",
-  "node_modules",
-  "venv",
-
+    ".bzr",
+    ".direnv",
+    ".eggs",
+    ".git",
+    ".git-rewrite",
+    ".hg",
+    ".mypy_cache",
+    ".nox",
+    ".pants.d",
+    ".pytype",
+    ".ruff_cache",
+    ".svn",
+    ".tox",
+    ".venv",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "node_modules",
+    "venv",
 ]
 
 [tool.ruff.lint.isort]
 #case-sensitive = true
+detect-same-package = false
+combine-as-imports = true
 
 [tool.ruff.format]
 quote-style = "double"
 indent-style = "tab"
 # Like Black, automatically detect the appropriate line ending.
 line-ending = "auto"
+docstring-code-format = true
+# Enable preview style formatting.
+preview = true
 
 
 # 4. Ignore `E402` (import violations) in all `__init__.py` files, and in select subdirectories.
@@ -97,8 +105,6 @@ line-ending = "auto"
 # McCabe complexity (`C901`) by default.
 select = ["E4", "E7", "E9", "F"]
 ignore = []
-
-
 # Allow fix for all enabled rules (when `--fix`) is provided.
 fixable = ["ALL"]
 unfixable = []

@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-#
 from django.contrib import messages
+from django.contrib.admin.models import LogEntry
 from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 
 from core.cache import BWCacheViewMixin
+from core.models import CRUDEventProxy
 from core.utils import get_formatted_logger
+from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from core.views.mixins import BWLoginRequiredMixin, BWManagerAccessMixin
 from client.models import ClientProxy
 from special_assignment.models import SpecialAssignmentProxy
@@ -26,15 +29,18 @@ class DashboardViewBW(
         context = super().get_context_data(**kwargs)
         context.setdefault("title", _("Manager dashboard"))
         messages.set_level(self.request, messages.DEBUG)
-        clients = ClientProxy.objects.all()[:5]
+        clients = ClientProxy.objects.all().order_by("-created_at")[:5]
         documents_count = Document.objects.count()
         notes_count = Note.objects.count()
         tasks_count = TaskProxy.objects.count()
-        special_assignments = SpecialAssignmentProxy.objects.all()[:5]
+
+        last_activities = CRUDEventProxy.objects.all().order_by("-datetime")[:4]
+        special_assignments = SpecialAssignmentProxy.objects.all().order_by("-created_at")[:4]
         context.setdefault("clients", clients)
         context.setdefault("documents_count", documents_count)
         context.setdefault("notes_count", notes_count)
         context.setdefault("tasks_count", tasks_count)
         context.setdefault("special_assignments", special_assignments)
+        context.setdefault("last_activities", last_activities)
 
         return context

@@ -2,6 +2,8 @@
 
 {% load i18n %}
 
+{% load core_tags %}
+
 {# Start Table Header #}
 {% block header_title %}
     {% translate header_title %}
@@ -114,7 +116,7 @@
                 </span>
             </div>
         </th>
-        {% if is_show_created_at is True %}
+        {% if is_show_created_at is True or extra_context.is_show_created_at is True %}
             <th scope="col" class="px-6 py-3 text-left">
                 <div class="flex items-center gap-x-2">
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
@@ -151,22 +153,24 @@
             {% endif %}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
-                    <a href="{% url base_url_name|add:':details' object.pk %}">
-                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.name }}</span>
-                    </a>
-                    {% if object.categories.all %}
-                        <div class="my-1 text-left">
-                            {% for category in object.categories.all %}
-                                <div class="hs-tooltip inline-block mr-0.5">
-                                    <a href="#" class="hs-tooltip-toggle">
-                                        <span class="inline-flex items-center gap-1 py-0.5 px-2 rounded-full text-[10px] font-medium bg-blue-100 text-blue-800">{{ category.name }}</span>
-                                        <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
-                                              role="tooltip">{% translate "Category" %}</span>
-                                    </a>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    {% endif %}
+                    <div class="scrollable-wrapper h-12 {{ BW_PRELINE_ROUNDED_SCROLLBAR_CSS_CLASSES }}">
+                        <a href="{% url base_url_name|add:':details' object.pk %}">
+                            <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.name|safe }}</span>
+                        </a>
+                        {% if object.categories.all %}
+                            <div class="my-1 text-left">
+                                {% for category in object.categories.all %}
+                                    <div class="hs-tooltip inline-block mr-0.5">
+                                        <a href="#" class="hs-tooltip-toggle">
+                                            <span class="inline-flex items-center gap-1 py-0.5 px-2 rounded-full text-[10px] font-medium bg-blue-100 text-blue-800">{{ category.name|safe }}</span>
+                                            <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                                  role="tooltip">{% translate "Category" %}</span>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
                 </div>
             </td>
             {% if extra_context.is_show_status is True %}
@@ -179,7 +183,7 @@
             {% if extra_context.is_show_bookkeeper is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     <div class="px-6 py-3">
-                        <div class="scrollable-wrapper">
+                        <div class="scrollable-wrapper max-h-[80px] {{ BW_PRELINE_ROUNDED_SCROLLBAR_CSS_CLASSES }}">
                             {% for bookkeeper in object.bookkeepers.all %}
                                 {% if request.user.user_type == CON_BOOKKEEPER %}
                                     <a href="javascript:;" class="disabledAnchorElement text-sm">{{ bookkeeper }}</a>
@@ -204,18 +208,28 @@
             {% endif %}
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
-                    <span class="text-sm text-gray-600 dark:text-gray-400 italic hover:not-italic">{{ object.industry|truncatechars:DEFAULT_TEMPLATE_TABLE_LIST_TRUNCATED_STRING }}</span>
-                </div>
-            </td>
-            <td class="h-px w-px whitespace-nowrap">
-                <div class="px-6 py-3">
-                    <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.get_jobs_count }}</span>
+                    <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.industry|truncatechars:DEFAULT_TEMPLATE_TABLE_LIST_TRUNCATED_STRING }}</span>
                 </div>
             </td>
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
                     <span class="text-sm text-gray-600 dark:text-gray-400">
-                        {{ object.get_total_tasks_for_all_jobs }}
+                        {% if object.get_proxy_model %}
+                            {{ object.get_proxy_model.get_jobs_count }}
+                        {% else %}
+                            {{ object.get_jobs_count }}
+                        {% endif %}
+                    </span>
+                </div>
+            </td>
+            <td class="h-px w-px whitespace-nowrap">
+                <div class="px-6 py-3">
+                    <span class="text-sm text-gray-600 dark:text-gray-400">
+                        {% if object.get_proxy_model %}
+                            {{ object.get_proxy_model.get_total_tasks_for_all_jobs }}
+                        {% else %}
+                            {{ object.get_total_tasks_for_all_jobs }}
+                        {% endif %}
                     </span>
                 </div>
             </td>
@@ -224,7 +238,7 @@
                     <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.special_assignments.count }}</span>
                 </div>
             </td>
-            {% if is_show_created_at is True %}
+            {% if is_show_created_at is True or extra_context.is_show_created_at is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     {% bw_date date_txt=object.created_at is_in_table_list=True %}
                 </td>

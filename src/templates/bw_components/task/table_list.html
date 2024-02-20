@@ -2,6 +2,8 @@
 
 {% load i18n %}
 
+{% load core_tags %}
+
 {# Start Table Header #}
 {% block header_title %}
     {% translate header_title %}
@@ -104,7 +106,7 @@
                 </div>
             </th>
         {% endif %}
-        {% if is_show_created_at is True %}
+        {% if is_show_created_at is True or extra_context.is_show_created_at is True %}
             <th scope="col" class="px-6 py-3 text-left">
                 <div class="flex items-center gap-x-2">
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
@@ -142,7 +144,7 @@
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
                     <a href="{% url base_url_name|add:':update' object.pk %}">
-                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.title }}</span>
+                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.title|safe }}</span>
                     </a>
                 </div>
             </td>
@@ -181,7 +183,11 @@
             {% if extra_context.is_show_type_column is True or is_show_type_column is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     <div class="px-6 py-3">
-                        <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">{{ object.get_task_type_display }}</span>
+                        {% if object.task_type %}
+                            <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">{{ object.get_task_type_display }}</span>
+                        {% else %}
+                            <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 dark:bg-yellow-800/30 dark:text-yellow-500">{% translate "No type" %}</span>
+                        {% endif %}
                     </div>
                 </td>
             {% endif %}
@@ -192,7 +198,7 @@
                     </div>
                 </td>
             {% endif %}
-            {% if is_show_created_at is True %}
+            {% if is_show_created_at is True or extra_context.is_show_created_at is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     {% bw_date date_txt=object.created_at is_in_table_list=True %}
                 </td>

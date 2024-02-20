@@ -12,4 +12,5 @@ class AssistantFilter(FilterCreatedMixin):
             "assistant_type": ["exact"],
             "user__status": ["exact"],
             "user__email": ["exact"],
+            "user__is_active": ["exact"],
         }

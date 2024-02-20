@@ -1,7 +1,5 @@
 "use strict";
 
-"use strict";
-
 import { sendRequest } from "../../utils/apis/apis";
 import { bwCleanApiError } from "../../utils/apis/clean_errors";
 import { UploadFileRequest } from "../../utils/apis/upload_file";

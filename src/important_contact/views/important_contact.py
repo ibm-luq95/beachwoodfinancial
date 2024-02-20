@@ -4,12 +4,19 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
-from django.views.generic import CreateView, UpdateView, ListView, DeleteView
+from django.views.generic import CreateView
+from django.views.generic import DeleteView
+from django.views.generic import ListView
+from django.views.generic import UpdateView
 
 from core.cache import BWCacheViewMixin
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
+from core.constants.users import CON_ASSISTANT
+from core.constants.users import CON_BOOKKEEPER
+from core.constants.users import CON_MANAGER
 from core.utils import get_trans_txt
-from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
+from core.views.mixins import BWBaseListViewMixin
+from core.views.mixins import BWLoginRequiredMixin
 from core.views.mixins.update_previous_mixin import UpdateReturnPreviousMixin
 from important_contact.filters import ImportantContactFilter
 from important_contact.forms import ImportantContactForm
@@ -51,7 +58,7 @@ class ImportantContactListViewBW(
         context.setdefault("actions_items", "update,delete")
         context.setdefault("base_url_name", "dashboard:important_contact")
         context.setdefault("empty_label", _("contacts"))
-        context.setdefault("extra_context", {})
+        context.setdefault("extra_context", {"is_client_enabled": True})
         context.setdefault("show_info_icon", True)
         context.setdefault(
             "info_details",
@@ -67,8 +74,22 @@ class ImportantContactListViewBW(
         return context
 
     def get_queryset(self):
-        queryset = super().get_queryset()
+
+        current_user = self.request.user
+        if (
+            current_user.user_type == CON_MANAGER
+            or current_user.user_type == CON_ASSISTANT
+        ):
+            queryset = super().get_queryset()
+        elif current_user.user_type == CON_BOOKKEEPER:
+            bookkeeper_clients = current_user.bookkeeper.get_proxy_model().clients.all()
+            if bookkeeper_clients:
+                queryset = ImportantContact.objects.filter(client__in=bookkeeper_clients)
+            else:
+                queryset = ImportantContact.objects.none()
+
         self.filterset = ImportantContactFilter(self.request.GET, queryset=queryset)
+
         return self.filterset.qs
 
 
@@ -127,7 +148,7 @@ class ImportantContactDeleteView(
     SuccessMessageMixin,
     DeleteView,
 ):
-    template_name = "important_contact/delete.html"
+    template_name = "core/crudl/delete.html"
     permission_required = "important_contact.delete_importantcontact"
     permission_denied_message = _("You do not have permission to access this page.")
     model = ImportantContact
@@ -138,4 +159,8 @@ class ImportantContactDeleteView(
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context.setdefault("title", get_trans_txt("Delete contact"))
+        context.setdefault("cancel_url", "dashboard:important_contact:list")
+        context.setdefault("object", self.get_object())
+        context.setdefault("object_name", "client contact")
+        context.setdefault("form_css_id", "importantContactDeleteForm")
         return context

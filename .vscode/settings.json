@@ -3,8 +3,8 @@
   // "less.validate": false,
   // "scss.validate": false,
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "explicit",
-    "source.fixAll.stylelint": "explicit"
+    // "source.fixAll.eslint": "explicit",
+    // "source.fixAll.stylelint": "explicit"
   },
   // "eslint.validate": ["javascript"],
   "editor.formatOnSave": false,
@@ -44,11 +44,13 @@
   "cSpell.words": [
     "Beachwood",
     "blockquote",
+    "cnfm",
     "CSRFINPUTNAME",
     "externalcss",
     "filterset",
     "fullname",
     "Hiredis",
+    "icontact",
     "levelname",
     "localstorage",
     "msgpack",
@@ -86,7 +88,7 @@
   // "isort.check": true,
   "stylelint.stylelintPath": "./src/frontend/node_modules/stylelint/bin/stylelint.js",
   "isort.interpreter": [
-    "${userHome}/miniconda3/envs/beachwoodfinancial_dev_3.12.0_venv/bin/python3"
+    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/python3"
   ],
   "typescript.tsdk": "./src/frontend/node_modules/typescript/lib",
   "stylelint.configFile": "${workspaceFolder}/.stylelintrc.json",
@@ -94,36 +96,30 @@
   "tailwind-fold.autoFold": false,
   "flake8.importStrategy": "fromEnvironment",
   "flake8.interpreter": [
-    "${userHome}/miniconda3/envs/beachwoodfinancial_dev_3.12.0_venv/bin/python3"
+    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/python3"
   ],
-  "flake8.path": [
-    "${userHome}/miniconda3/envs/beachwoodfinancial_dev_3.12.0_venv/bin/flake8"
-  ],
+  "flake8.path": ["${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/flake8"],
   "black-formatter.path": [
-    "/home/ibrahim-pc/miniconda3/envs/beachwoodfinancial_dev_3.12.0_venv/bin/black"
+    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/black"
   ],
   "black-formatter.interpreter": [
-    "/home/ibrahim-pc/miniconda3/envs/beachwoodfinancial_dev_3.12.0_venv/bin/python3"
+    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/python3"
   ],
   "isort.check": true,
   "ruff.lint.run": "onSave",
   "ruff.trace.server": "messages",
   "ruff.showNotifications": "onError",
-  "isort.path": [
-    "${userHome}/miniconda3/envs/beachwoodfinancial_dev_3.12.0_venv/bin/isort"
-  ],
+  "isort.path": ["${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/isort"],
   "pylint.importStrategy": "fromEnvironment",
-  "pylint.path": [
-    "${userHome}/miniconda3/envs/beachwoodfinancial_dev_3.12.0_venv/bin/pylint"
-  ],
+  "pylint.path": ["${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/pylint"],
   "bandit.importStrategy": "fromEnvironment",
   "html-css-class-completion.enableEmmetSupport": true,
   "mypy-type-checker.importStrategy": "fromEnvironment",
   "mypy-type-checker.interpreter": [
-    "/home/ibrahim-pc/miniconda3/envs/beachwoodfinancial_dev_3.12.1_venv/bin/mypy"
+    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/mypy"
   ],
   "mypy-type-checker.path": [
-    "/home/ibrahim-pc/miniconda3/envs/beachwoodfinancial_dev_3.12.1_venv/bin/python3"
+    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/python3"
   ],
   "editor.defaultFormatter": null,
   "mypy-type-checker.args": ["--config-file", "${workspaceFolder}/pyproject.toml"],
@@ -132,5 +128,8 @@
     // "reportImplicitStringConcatenation": "warning"
     "reportOptionalMemberAccess": "warning"
   },
-  "python.analysis.autoImportCompletions": true
+  "python.analysis.autoImportCompletions": true,
+  "[html]": {
+    "editor.defaultFormatter": "monosans.djlint"
+  }
 }

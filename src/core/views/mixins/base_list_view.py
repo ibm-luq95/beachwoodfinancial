@@ -5,6 +5,7 @@ from django.forms import model_to_dict
 
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.general import IS_SHOW_CREATED_AT, IS_SHOW_LABELS_IN_FILTER_FORM
+from core.forms.per_page_form import PerPageForm
 from core.utils import debugging_print
 from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from site_settings.models import SectionDescription
@@ -38,7 +39,12 @@ class BWBaseListViewMixin:
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context.setdefault("is_show_created_at", IS_SHOW_CREATED_AT)
+        per_page_number = self.request.GET.get("per_page", LIST_VIEW_PAGINATE_BY)
+        per_page_form = PerPageForm(initial={"per_page": per_page_number})
+        context.setdefault("per_page_filter_form", per_page_form)
         if hasattr(self, "object_list") is True:
+            # for o in self.object_list:
+            #     BWDebuggingPrint.pprint(o.status)
             context.setdefault("total_records", len(self.object_list))
         if hasattr(self, "modal"):
             if hasattr(self.model, "_meta"):
@@ -63,3 +69,11 @@ class BWBaseListViewMixin:
 
                 context.setdefault("fields", new_list)
         return context
+
+    def get_paginate_by(self, queryset):
+        """
+        Paginate by specified value in querystring, or use default class property value.
+        """
+        # return self.request.GET.get('paginate_by', self.paginate_by)
+        per_page_num = self.request.GET.get("per_page", LIST_VIEW_PAGINATE_BY)
+        return per_page_num

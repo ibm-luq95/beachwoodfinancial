@@ -72,4 +72,39 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
       });
     }
   }
+
+  const initJobPeriodInputs = () => {
+    const periodYearInput = document.querySelector("select#id_period_year");
+    const periodMonthInput = document.querySelector("select#id_period_month");
+
+    if (startDateInput.value) {
+      const currentStartDate = startDateInput.value;
+      const parsedDate = Date.parse(currentStartDate);
+      const dateObj = new Date(parsedDate);
+      const month = `${dateObj.getMonth() + 1}`;
+      const year = dateObj.getFullYear().toString();
+      for (let index = 0; index < periodYearInput.options.length; index++) {
+        const element = periodYearInput.options[index];
+        if (element.value === year) {
+          periodYearInput.selectedIndex = index;
+          break;
+        }
+      }
+      for (let index = 0; index < periodMonthInput.options.length; index++) {
+        const element = periodMonthInput.options[index];
+        if (element.value === month) {
+          periodMonthInput.selectedIndex = index;
+          break;
+        }
+      }
+    }
+  };
+
+  const startDateInput = document.querySelector("input#id_start_date");
+  if (startDateInput) {
+    initJobPeriodInputs();
+    startDateInput.addEventListener("change", (event) => {
+      initJobPeriodInputs();
+    });
+  }
 });

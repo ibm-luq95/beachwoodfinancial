@@ -9,6 +9,8 @@ from beach_wood_user.models import BWUser
 from client.models import ClientProxy
 from client_category.models import ClientCategory
 from core.choices import JobStatusEnum, JobTypeEnum, JobStateEnum
+from core.choices.fiscal_year import FiscalYearEnum
+from core.choices.months import MonthChoices
 from core.forms.mixins.base_form_mixin import BWBaseFormMixin
 from core.models.querysets import BaseQuerySetMixin
 from job_category.models import JobCategory
@@ -37,6 +39,7 @@ class ClientJobsFilter(
         self.fields["created_year"].help_text = _("Job created year")
         self.fields.pop("quick_created_at")
         self.fields.pop("created_at")
+        self.fields.pop("created_year")
 
     clients = forms.ModelMultipleChoiceField(
         label=_("Client"),
@@ -52,6 +55,18 @@ class ClientJobsFilter(
         required=False,
         help_text=_("Client categories to filter"),
     )
+    period_year = forms.ChoiceField(
+        label=_("Period year"),
+        required=False,
+        choices=FiscalYearEnum.choices,
+        help_text=_("Period Year"),
+    )
+    # period_month = forms.ChoiceField(
+    #     label=_("Period month"),
+    #     required=False,
+    #     choices=MonthChoices.choices,
+    #     help_text=_("Period Month"),
+    # )
 
     job_categories = forms.ModelMultipleChoiceField(
         label=_("Job category"),
@@ -59,24 +74,24 @@ class ClientJobsFilter(
         required=False,
         help_text=_("Filter by job category"),
     )
-    job_status = forms.MultipleChoiceField(
-        label=_("Job status"),
-        required=False,
-        choices=JobStatusEnum.choices,
-        help_text=_("Filter by job status"),
-    )
-    job_type = forms.MultipleChoiceField(
-        label=_("Job type"),
-        required=False,
-        choices=JobTypeEnum.choices,
-        help_text=_("Filter by job type"),
-    )
-    job_stats = forms.MultipleChoiceField(
-        choices=JobStateEnum.choices,
-        label=_("Job state"),
-        required=False,
-        help_text=_("Filter by job stats"),
-    )
+    # job_status = forms.MultipleChoiceField(
+    #     label=_("Job status"),
+    #     required=False,
+    #     choices=JobStatusEnum.choices,
+    #     help_text=_("Filter by job status"),
+    # )
+    # job_type = forms.MultipleChoiceField(
+    #     label=_("Job type"),
+    #     required=False,
+    #     choices=JobTypeEnum.choices,
+    #     help_text=_("Filter by job type"),
+    # )
+    # job_stats = forms.MultipleChoiceField(
+    #     choices=JobStateEnum.choices,
+    #     label=_("Job state"),
+    #     required=False,
+    #     help_text=_("Filter by job stats"),
+    # )
     managed_by = forms.ModelMultipleChoiceField(
         queryset=BWUser.objects.all(),
         label=_("Managed by"),

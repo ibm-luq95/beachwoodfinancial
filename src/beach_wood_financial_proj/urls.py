@@ -7,21 +7,22 @@ from django.utils.translation import gettext as _
 from django.views.generic import RedirectView
 from django.views.i18n import JavaScriptCatalog
 
+
 static_and_media_path_urls = static(
-	settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
+    settings.MEDIA_URL, document_root=settings.MEDIA_ROOT
 ) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 urlpatterns = [
-	path("admin/", admin.site.urls),
-	# path("admin/defender/", include("defender.urls")),  # defender admin
-	path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
-	# path("", include("home.urls"), name="home-urls"),
-	path("logs/", include("log_viewer.urls")),
-	path("", RedirectView.as_view(url=reverse_lazy("auth:login")), name="home-url"),
-	path("js-settings/", js_settings, name="js_settings"),
-	path("core/", include("core.urls"), name="core-urls"),
-	path("auth/", include("beach_wood_user.urls.auth"), name="auth-urls"),
-	path("dashboard/", include("dashboard.urls"), name="dashboard-urls"),
+    # path("admin/", admin.site.urls),
+    # path("admin/defender/", include("defender.urls")),  # defender admin
+    path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
+    # path("", include("home.urls"), name="home-urls"),
+    path("logs/", include("log_viewer.urls")),
+    path("", RedirectView.as_view(url=reverse_lazy("auth:login")), name="home-url"),
+    path("js-settings/", js_settings, name="js_settings"),
+    path("core/", include("core.urls"), name="core-urls"),
+    path("auth/", include("beach_wood_user.urls.auth"), name="auth-urls"),
+    path("dashboard/", include("dashboard.urls"), name="dashboard-urls"),
 ]
 
 admin.site.index_title = _("Beachwood Financial Administrator")
@@ -29,14 +30,19 @@ admin.site.site_header = _("Beachwood Financial Solutions")
 admin.site.site_title = _("Beachwood Financial Administrator")
 
 if settings.DEBUG:
-	urlpatterns += static_and_media_path_urls
-	urlpatterns.append(path("__debug__/", include("debug_toolbar.urls")))
-	urlpatterns.append(
-		path("request-logs/", include("request_viewer.urls")),
-	)
-	# urlpatterns.append(path("admin/", admin.site.urls))
-	urlpatterns.append(path("admin/doc/", include("django.contrib.admindocs.urls")))
-	# urlpatterns.append(path("silk/", include("silk.urls", namespace="silk")))
-	# urlpatterns.append(path("admin/", admin.site.urls))
+    urlpatterns += static_and_media_path_urls
+    urlpatterns.append(path("__debug__/", include("debug_toolbar.urls")))
+    urlpatterns.append(
+        path("request-logs/", include("request_viewer.urls")),
+    )
+    urlpatterns.append(path("admin/", admin.site.urls))
+    urlpatterns.append(path("admin/doc/", include("django.contrib.admindocs.urls")))
+    # urlpatterns.append(path("silk/", include("silk.urls", namespace="silk")))
+    # urlpatterns.append(path("admin/", admin.site.urls))
 else:
-	urlpatterns.append(path("secret/", admin.site.urls))
+    urlpatterns.append(path("secret/", admin.site.urls))
+
+# Custom 404 error view
+handler404 = "core.views.error_404"
+# Custom 500 error view
+# handler500 = 'my_app.views.error_500'

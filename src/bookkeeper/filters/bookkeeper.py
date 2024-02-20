@@ -14,4 +14,5 @@ class BookkeeperFilter(FilterCreatedMixin):
             # "job": ["exact"],
             # "task": ["exact"],
             # "document_section": ["exact"],
+            "user__is_active": ["exact"],
         }

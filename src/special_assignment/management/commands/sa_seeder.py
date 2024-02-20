@@ -5,6 +5,7 @@ import traceback
 from django.core.management.base import BaseCommand
 from django.db import transaction
 from django.db.models import Q
+from django.utils import timezone
 from django.utils.translation import gettext as _
 from faker import Faker
 
@@ -70,8 +71,11 @@ class Command(BaseCommand, CommandStdOutputMixin):
                         "body": faker.paragraph(nb_sentences=30),
                         "notes": faker.sentence(nb_words=15),
                         "status": random.choice(SpecialAssignmentStatusEnum.choices)[0],
-                        "created_at": faker.date_time_between_dates(
-                            datetime_start="-1y", datetime_end="now"
+                        "created_at": timezone.make_aware(
+                            faker.date_time_between_dates(
+                                datetime_start="-1y", datetime_end="now"
+                            ),
+                            timezone=timezone.get_current_timezone(),
                         ),
                         "start_date": faker.date_between(
                             # start_date="-1y", end_date="today"

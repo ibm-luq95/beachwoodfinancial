@@ -2,22 +2,24 @@
 
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.urls import reverse_lazy
 from django.utils import timezone
-from django.utils.dateparse import parse_date
 from django.utils.text import slugify
 from django.utils.translation import gettext as _
-from rest_framework import serializers
 
 from client.models import ClientProxy
-from core.choices import JobStatusEnum, JobTypeEnum, JobStateEnum
-from core.models.mixins import BaseModelMixin, StartAndDueDateMixin, StrModelMixin
+from core.choices import JobStateEnum
+from core.choices import JobStatusEnum
+from core.choices import JobTypeEnum
+from core.choices.fiscal_year import FiscalYearEnum
+from core.choices.months import MonthChoices
+from core.models.mixins import BaseModelMixin
+from core.models.mixins import StartAndDueDateMixin
+from core.models.mixins import StrModelMixin
 from core.models.mixins.access_proxy_models_mixin import AccessProxyModelMixin
 from core.models.mixins.cron_column_mixin import CronColumnMixin
-from django.core.exceptions import ValidationError
-
 from core.models.mixins.validate_due_date import ValidateDueDateMixin
 from job_category.models import JobCategory
-
 # from task.models import Task
 from .help_messages import JOB_HELP_MESSAGES
 
@@ -57,6 +59,24 @@ class Job(
     )
     slug = models.SlugField(
         _("slug"), max_length=250, null=True, blank=True, editable=False
+    )
+    period_year = models.CharField(
+        _("period year"),
+        max_length=4,
+        null=True,
+        blank=True,
+        db_index=True,
+        choices=FiscalYearEnum.choices,
+        help_text=JOB_HELP_MESSAGES.get("period_year"),
+    )
+    period_month = models.CharField(
+        _("period month"),
+        max_length=2,
+        null=True,
+        blank=True,
+        db_index=True,
+        choices=MonthChoices.choices,
+        help_text=JOB_HELP_MESSAGES.get("period_month"),
     )
     # description = models.TextField(
     #     _("description"),
@@ -112,6 +132,8 @@ class Job(
         _("is_created_from_template"), default=False, editable=False
     )
 
+    # objects = Manager()
+
     # not_filtered_objects = JobManager()
     # objects = JobManager()
 
@@ -138,6 +160,9 @@ class Job(
             return True
         else:
             return False
+
+    def get_absolute_url(self):
+        reverse_lazy("dashboard:job:details", kwargs={"pk": self.pk})
 
     # def get_all_assigned_users(self) -> list:
     #     all_users = []

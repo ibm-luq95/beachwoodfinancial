@@ -7,10 +7,10 @@ from core.forms import AbstractStaffMemberForm
 
 
 class BookkeeperForm(AbstractStaffMemberForm):
-    STAFF_MEMBER_TYPE = CON_BOOKKEEPER
+	STAFF_MEMBER_TYPE = CON_BOOKKEEPER
 
-    def __init__(
-        self, user_type: Optional[str] = None, pk: Optional[UUID] = None, *args, **kwargs
-    ):
-        # super(BookkeeperForm, self).__init__(*args, **kwargs)
-        super().__init__(user_type=self.STAFF_MEMBER_TYPE, *args, **kwargs)
+	def __init__(
+		self, user_type: Optional[str] = None, pk: Optional[UUID] = None, *args, **kwargs
+	):
+		# super(BookkeeperForm, self).__init__(*args, **kwargs)
+		super().__init__(user_type=self.STAFF_MEMBER_TYPE, *args, **kwargs)

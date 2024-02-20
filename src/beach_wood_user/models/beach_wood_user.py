@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-#
+from django.urls import reverse_lazy
+
 from core.choices import (
     BeachWoodUserStatusEnum,
     BeachWoodUserTypeEnum,
@@ -140,3 +142,6 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin, GuardianUserMix
         if self.user_type == "manager":
             user_dict.update({"is_superuser": self.is_superuser})
         return user_dict
+
+    def get_absolute_url(self):
+        return reverse_lazy("dashboard:staff:member-details", kwargs={"pk": self.pk})

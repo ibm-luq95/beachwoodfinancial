@@ -2,6 +2,7 @@
 from PIL import Image
 from django.core import validators
 from django.db import models
+from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 
 from core.choices import ClientStatusEnum
@@ -82,3 +83,6 @@ class Client(BaseModelMixin, AccessProxyModelMixin):
                     image.save(self.company_logo.path)
         except FileNotFoundError:
             pass
+
+    def get_absolute_url(self):
+        reverse_lazy("dashboard:client:details", kwargs={"pk": self.pk})

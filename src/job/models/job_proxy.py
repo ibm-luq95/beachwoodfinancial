@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-#
 from django.db import transaction
-from django.db.models import Q
+from django.db.models import Q, Manager
 
 from bookkeeper.models import BookkeeperProxy
 from core.constants.status_labels import (
@@ -14,6 +14,8 @@ from job.models import Job
 
 
 class JobProxy(Job):
+    # objects = Manager()  # This only enable when import using django-import-export package
+
     class Meta(Job.Meta):
         proxy = True
 

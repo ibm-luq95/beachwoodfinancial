@@ -18,7 +18,7 @@ class ClientFilter(FilterCreatedMixin):
         label=_("Contact label"),
         widget=forms.Select,
         choices=ImportantContactLabelsEnum.choices,
-        empty_label=_("Contact label"),
+        empty_label=_("---"),
     )
     contact_name = django_filters.CharFilter(
         field_name="important_contacts__company_name", label=_("Contact name")
@@ -29,14 +29,14 @@ class ClientFilter(FilterCreatedMixin):
         # widget=forms.Select(attrs={"placeholder": "dsfj"}, emp),
         lookup_expr="exact",
         label=_("Managed by"),
-        empty_label=_("Managed by"),
+        empty_label=_("---"),
     )
     categories = django_filters.ModelChoiceFilter(
         field_name="categories",
         queryset=ClientCategory.objects.all(),
         # widget=forms.CheckboxSelectMultiple,
         lookup_expr="exact",
-        empty_label=_("Categories"),
+        empty_label=_("---"),
     )
 
     class Meta:

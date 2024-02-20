@@ -277,7 +277,7 @@ class ManagerDeleteView(
     #     "manager.manager_user",
     # ]
     permission_required = "manager.delete_managerproxy"
-    template_name = "manager/delete.html"
+    template_name = "core/crudl/delete.html"
     model = ManagerProxy
     success_message = _("Manager deleted successfully")
     success_url = reverse_lazy("dashboard:manager:list")
@@ -286,4 +286,8 @@ class ManagerDeleteView(
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context.setdefault("title", _("Delete manager"))
+        context.setdefault("cancel_url", "dashboard:manager:list")
+        context.setdefault("object", self.get_object())
+        context.setdefault("object_name", "manager")
+        context.setdefault("form_css_id", "managerDeleteForm")
         return context

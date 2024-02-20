@@ -97,3 +97,14 @@ def get_months_abbr(
         return tuple(data)
     else:
         return tuple(range(1, 13))
+
+
+def get_months_dict() -> dict[str, list]:
+    """
+    Return a dictionary mapping month numbers to empty lists.
+    """
+    months_data = get_months_abbr(return_months_idxs=True)
+    months_dict = dict()
+    for i, month in enumerate(months_data):
+        months_dict[str(i + 1)] = []
+    return months_dict
