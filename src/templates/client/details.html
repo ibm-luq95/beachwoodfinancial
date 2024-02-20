@@ -609,7 +609,9 @@
                                 {% if object.important_contacts.all %}
                                     <div>
                                         {% for icontact in object.important_contacts.all %}
-                                            <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white mx-1">{{ icontact.get_contact_label_display }} - {{ icontact.full_name }}</span>
+                                            <a href="{% url 'dashboard:important_contact:update' icontact.pk %}">
+                                                <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white mx-1">{{ icontact.get_contact_label_display }} - {{ icontact.full_name|safe }}</span>
+                                            </a>
                                         {% endfor %}
                                     </div>
                                 {% else %}

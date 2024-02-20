@@ -72,7 +72,7 @@
                 </span>
             </div>
         </th>
-        {% if is_show_created_at is True %}
+        {% if is_show_created_at is True or extra_context.is_show_created_at is True %}
             <th scope="col" class="px-6 py-3 text-left">
                 <div class="flex items-center gap-x-2">
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
@@ -141,7 +141,7 @@
                     </a>
                 </div>
             </td>
-            {% if is_show_created_at is True %}
+            {% if is_show_created_at is True or extra_context.is_show_created_at is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     {% bw_date date_txt=object.created_at is_in_table_list=True %}
                 </td>

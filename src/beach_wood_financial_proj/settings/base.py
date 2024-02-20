@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+
 from pathlib import Path
 from decouple import Config, RepositoryEnv, Csv
 from django.contrib.messages import constants as messages
@@ -87,7 +88,8 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
-    # "django.middleware.cache.UpdateCacheMiddleware",  # new for the cache, not working with django-redis package
+    # "django.middleware.cache.UpdateCacheMiddleware",  # new for the cache, not working
+    # with django-redis package
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -103,7 +105,8 @@ MIDDLEWARE = [
     "core.middleware.MultiHostMiddleware",
     "maintenance_mode.middleware.MaintenanceModeMiddleware",
     "easyaudit.middleware.easyaudit.EasyAuditMiddleware",
-    # "django.middleware.cache.FetchFromCacheMiddleware",  # new for the cache, not working with django-redis package
+    # "django.middleware.cache.FetchFromCacheMiddleware",  # new for the cache,
+    # not working with django-redis package
 ]
 
 ROOT_URLCONF = "beach_wood_financial_proj.urls"
@@ -131,6 +134,7 @@ UI_COMPONENTS_TEMPLATETAGS = [
     "bw_ui_components.templatetags.table_list.filters",
     "bw_ui_components.templatetags.forms.delete_form",
     "bw_ui_components.templatetags.components.core.badge",
+    "bw_ui_components.templatetags.global.check_var_none",
 ]
 
 TEMPLATES = [
@@ -146,8 +150,10 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.request",
                 # "django.template.context_processors.i18n",
-                "site_settings.context_processors.site_settings.return_site_settings_context",
-                "site_settings.context_processors.section_descriptions.return_section_description_context",
+                "site_settings.context_processors.site_settings"
+                ".return_site_settings_context",
+                "site_settings.context_processors.section_descriptions"
+                ".return_section_description_context",
                 "core.context_processors.access_constants",
                 "core.context_processors.access_css_classes_constants",
                 "core.context_processors.access_constants_as_group",
@@ -436,9 +442,11 @@ LOGGING = {
         "require_debug_false": {"()": "django.utils.log.RequireDebugFalse"},
         "require_debug_true": {"()": "django.utils.log.RequireDebugTrue"},
     },
-    # django uses some of its own loggers for internal operations. In case you want to disable them just replace the
+    # django uses some of its own loggers for internal operations. In case you want to
+    # disable them just replace the
     # False above with true.
-    # A handler for WARNING. It is basically writing the WARNING messages into a file called WARNING.log
+    # A handler for WARNING. It is basically writing the WARNING messages into a file
+    # called WARNING.log
     "handlers": {
         "warning_file": {
             "level": "INFO",
@@ -471,13 +479,16 @@ LOGGING = {
         #     "formatter": "large",
         # },
     },
-    # A logger for WARNING which has a handler called 'file'. A logger can have multiple handler
+    # A logger for WARNING which has a handler called 'file'. A logger can have multiple
+    # handler
     "loggers": {
-        # notice the blank '', Usually you would put built in loggers like django or root here based on your needs
+        # notice the blank '', Usually you would put built in loggers like django or
+        # root here based on your needs
         # "django": {
         #     "handlers": [
         #         "console",
-        #     ],  # notice how file variable is called in handler which has been defined above
+        #     ],  # notice how file variable is called in handler which has been defined
+        #     above
         #     "level": "DEBUG",
         # },
         "bw_logger": {

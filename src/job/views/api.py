@@ -22,7 +22,7 @@ class JobViewSet(ModelViewSet):
     serializer_class = JobSerializer
     permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
     perm_slug = "job.job"
-    queryset = JobProxy.objects.all()
+    queryset = JobProxy.original_objects.all()
 
 
 class UpdateJobApiView(APIView):
@@ -32,7 +32,7 @@ class UpdateJobApiView(APIView):
     def put(self, request: Request, *args, **kwargs):
         try:
             data = request.data
-            job_object = JobProxy.objects.get(pk=data.get("jobId"))
+            job_object = JobProxy.original_objects.get(pk=data.get("jobId"))
             del data["jobId"]
             # debugging_print(data)
 

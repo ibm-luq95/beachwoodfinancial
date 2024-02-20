@@ -39,8 +39,8 @@
                                         </h3>
                                         <div class="mt-5">
                                             <div class="flex flex-col">
-                                                <div class="-m-1.5 overflow-y-visible overflow-x-auto">
-                                                    <div class="p-1.5 min-w-full h-80 inline-block align-middle">
+                                                <div class="-m-1.5 h-80 {{ BW_PRELINE_ROUNDED_SCROLLBAR_CSS_CLASSES }}">
+                                                    <div class="p-1.5 min-w-full inline-block align-middle">
                                                         {% if object.bookkeeper.get_proxy_model.get_past_due_jobs %}
                                                             <div class="border rounded-lg shadow overflow-hidden dark:border-gray-700 dark:shadow-gray-900">
                                                                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -113,8 +113,8 @@
                                         </h3>
                                         <div class="mt-5">
                                             <div class="flex flex-col">
-                                                <div class="-m-1.5 overflow-y-visible overflow-x-auto">
-                                                    <div class="p-1.5 min-w-full h-80 inline-block align-middle">
+                                                <div class="-m-1.5 h-80 {{ BW_PRELINE_ROUNDED_SCROLLBAR_CSS_CLASSES }}">
+                                                    <div class="p-1.5 min-w-full inline-block align-middle">
                                                         {% if object.bookkeeper.get_proxy_model.get_stats_jobs %}
                                                             <div class="border rounded-lg shadow overflow-hidden dark:border-gray-700 dark:shadow-gray-900">
                                                                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
@@ -243,8 +243,138 @@
                                 <div id="user-details-tab"
                                      role="tabpanel"
                                      aria-labelledby="user-details-tab-underline">
-                                    <section id="formWrapper">
-                                        {% component "bw_form" form=staff_form perms=perms form_id="staffUpdateMiniForm" submit_btn_text="Update" form_title="Update staff - "|add:object.fullname form_subtitle="Update staff details" is_upload_form=True hide_back_btn=True hide_submit_btn=True %}
+                                    <section id="staff-details" class="p-5">
+                                        <dl class="grid sm:grid-cols-3 gap-1 sm:gap-3">
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Full Name" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                {{ object.fullname|safe }}
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Email Address" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                {% if object.email|check_var_none is True %}
+                                                    <address>
+                                                        <a class="text-blue-600 italic hober:itealic"
+                                                           href="mailto:{{ object.email|safe }}">{{ object.email|safe }}</a>
+                                                    </address>
+                                                {% else %}
+                                                    ---
+                                                {% endif %}
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "User Type" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">
+                                                    {{ object.get_user_type_display }}
+                                                </span>
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "User Genre" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">
+                                                    {{ object.get_user_genre_display }}
+                                                </span>
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Status" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                {% if object.status == CON_PENDING %}
+                                                    <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-yellow-200 shadow-sm  bg-yellow-100 text-yellow-800 dark:bg-yellow-800/30 dark:text-yellow-500">{{ object.get_status_display }}</span>
+                                                {% elif object.status == CON_ENABLED %}
+                                                    <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-green-200 shadow-sm  bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-500">{{ object.get_status_display }}</span>
+                                                {% elif object.status == CON_CANCELED %}
+                                                    <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-red-200 shadow-sm  bg-red-100 text-red-800 dark:bg-red-800/30 dark:text-red-500">{{ object.get_status_display }}</span>
+                                                {% elif object.status == CON_DISABLED %}
+                                                    <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-gray-500 text-white">{{ object.get_status_display }}</span>
+                                                {% elif object.status == CON_ARCHIVED %}
+                                                    <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">{{ object.get_status_display }}</span>
+                                                {% endif %}
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Address" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                {% if object.get_staff_member_object.staff_object.profile.address|check_var_none is True %}
+                                                    <address>
+                                                        {{ object.get_staff_member_object.staff_object.profile.address|safe }}
+                                                    </address>
+                                                {% else %}
+                                                    ---
+                                                {% endif %}
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold truncate dark:text-white">
+                                                {% translate "Phone Number" %}
+                                            </dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                {% if object.get_staff_member_object.staff_object.profile.phone_number|check_var_none is True %}
+                                                    <address>
+                                                        <a class="text-blue-600 italic"
+                                                           href="tel:{{ object.get_staff_member_object.staff_object.profile.phone_number|safe }}">{{ object.get_staff_member_object.staff_object.profile.phone_number|safe }}</a>
+                                                    </address>
+                                                {% else %}
+                                                    ---
+                                                {% endif %}
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold truncate dark:text-white">{% translate "BIO" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                {% if object.get_staff_member_object.staff_object.profile.bio|check_var_none is True %}
+                                                    <p>{{ object.get_staff_member_object.staff_object.profile.bio|safe }}</p>
+                                                {% else %}
+                                                    ---
+                                                {% endif %}
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Facebook" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                {% if object.get_staff_member_object.staff_object.profile.facebook|check_var_none is True %}
+                                                    <a class="text-blue-600 italic"
+                                                       href="mailto:{{ object.get_staff_member_object.staff_object.profile.facebook|safe }}">{{ object.get_staff_member_object.staff_object.profile.facebook|safe }}</a>
+                                                {% else %}
+                                                    ---
+                                                {% endif %}
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Twitter" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                {% if object.get_staff_member_object.staff_object.profile.twitter|check_var_none is True %}
+                                                    <a class="text-blue-600 italic"
+                                                       href="mailto:{{ object.get_staff_member_object.staff_object.profile.twitter|safe }}">{{ object.get_staff_member_object.staff_object.profile.twitter|safe }}</a>
+                                                {% else %}
+                                                    ---
+                                                {% endif %}
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Instagram" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                {% if object.get_staff_member_object.staff_object.profile.instagram|check_var_none is True %}
+                                                    <a class="text-blue-600 italic"
+                                                       href="mailto:{{ object.get_staff_member_object.staff_object.profile.instagram|safe }}">{{ object.get_staff_member_object.staff_object.profile.instagram|safe }}</a>
+                                                {% else %}
+                                                    ---
+                                                {% endif %}
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Linkedin" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                {% if object.get_staff_member_object.staff_object.profile.linkedin|check_var_none is True %}
+                                                    <a class="text-blue-600 italic"
+                                                       href="mailto:{{ object.get_staff_member_object.staff_object.profile.linkedin|safe }}">{{ object.get_staff_member_object.staff_object.profile.linkedin|safe }}</a>
+                                                {% else %}
+                                                    ---
+                                                {% endif %}
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Github" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                {% if object.get_staff_member_object.staff_object.profile.github|check_var_none is True %}
+                                                    <a class="text-blue-600 italic"
+                                                       href="mailto:{{ object.get_staff_member_object.staff_object.profile.github|safe }}">{{ object.get_staff_member_object.staff_object.profile.github|safe }}</a>
+                                                {% else %}
+                                                    ---
+                                                {% endif %}
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Created" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                <p>{{ object.created_at }}</p>
+                                            </dd>
+                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Last Login" %}</dt>
+                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                                {% if object.last_login|check_var_none is True %}
+                                                    <p>{{ object.last_login }}</p>
+                                                {% else %}
+                                                    ---
+                                                {% endif %}
+                                            </dd>
+                                        </dl>
                                     </section>
                                 </div>
                                 {# End Details Tab #}

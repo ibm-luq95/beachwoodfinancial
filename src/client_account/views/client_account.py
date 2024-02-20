@@ -2,10 +2,12 @@
 from django.contrib import messages
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.db.models import QuerySet
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
-from django.views.generic import CreateView, UpdateView, ListView, DeleteView
+from django.views.generic import CreateView
+from django.views.generic import DeleteView
+from django.views.generic import ListView
+from django.views.generic import UpdateView
 
 from client_account.filters import ClientAccountFilter
 from client_account.forms import ClientAccountForm
@@ -14,7 +16,8 @@ from core.cache import BWCacheViewMixin
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.users import CON_BOOKKEEPER
 from core.utils import get_trans_txt
-from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
+from core.views.mixins import BWBaseListViewMixin
+from core.views.mixins import BWLoginRequiredMixin
 from core.views.mixins.update_previous_mixin import UpdateReturnPreviousMixin
 
 
