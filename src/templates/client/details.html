@@ -170,7 +170,7 @@
                         role="tab">
                     <i class="fa-solid fa-note-sticky hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 w-3.5 h-3.5 text-gray-400 dark:text-gray-600"></i>
                     {% translate "Notes" %}
-                    <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">{{ object.notes.count }}</span>
+                    <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">{{ object.get_all_related_notes_and_documents.notes.count }}</span>
                 </button>
                 <button type="button"
                         class="hs-tab-active:font-semibold hs-tab-active:border-blue-600 hs-tab-active:text-blue-600 py-4 px-1 inline-flex items-center gap-2 border-b-[3px] border-transparent text-sm whitespace-nowrap text-gray-500 hover:text-blue-600 flex-auto justify-center text-center font-medium dark:hover:text-gray-400"
@@ -180,7 +180,7 @@
                         role="tab">
                     <i class="fa-solid fa-file hs-tab-active:text-blue-600 dark:hs-tab-active:text-blue-600 w-3.5 h-3.5 text-gray-400 dark:text-gray-600"></i>
                     {% translate "Documents" %}
-                    <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">{{ object.documents.count }}</span>
+                    <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">{{ object.get_all_related_notes_and_documents.documents.count }}</span>
                 </button>
             </nav>
         </div>
@@ -421,7 +421,7 @@
                  aria-labelledby="tabs-with-icons-item-3">
                 {% comment  %}
                     <section id="formWrapper">
-                    {% component "bw_form" form=client_form perms=perms form_id="clientDetailsMiniForm" submit_btn_text="Update" form_title="Update client - "|add:object.name form_subtitle="Update client details" is_upload_form=True hide_submit_btn=True hide_back_btn=True %}
+                    {% component "bw_form" form=client_form perms=perms form_id="clientDetailsMiniForm" submit_btn_text="Update" form_title="Update client - "|add:object.name form_subtitle="Update client details" is_upload_form=True hide_submit_btn=True hide_back_btn=True %}{% endcomponent %}
                 </section>
                 {% endcomment %}
                 <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-slate-900 dark:border-gray-700 dark:shadow-slate-700/[.7]">
@@ -677,9 +677,8 @@
                     {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt="What notes in beachwoodfinancial" modal_css_id="infoNoteModal" %}
 
                 </div>
-                {% if object.notes.all %}
-
-                    {% include "bw_components/note/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Notes" is_show_create_btn=False app_label="note" pagination_list_url_name="dashboard:note:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete" actions_app_name="note" actions_base_url="dashboard:note" base_url_name="dashboard:note" filter_form=filter_form filter_cancel_url="dashboard:note:list" object_list=object.notes.all is_show_section=False %}
+                {% if object.get_all_related_notes_and_documents.notes %}
+                    {% include "bw_components/note/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Notes" is_show_create_btn=False app_label="note" pagination_list_url_name="dashboard:note:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete" actions_app_name="note" actions_base_url="dashboard:note" base_url_name="dashboard:note" filter_form=filter_form filter_cancel_url="dashboard:note:list" object_list=object.get_all_related_notes_and_documents.notes is_show_section=True is_show_job_link=True is_show_task_link=True %}
 
                 {% else %}
 
@@ -699,7 +698,7 @@
                 </div>
                 {% if object.documents.all %}
 
-                    {% include "bw_components/document/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at is_show_create_btn=False app_label="document" pagination_list_url_name="dashboard:document:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete" actions_app_name="document" actions_base_url="dashboard:document" base_url_name="dashboard:document" filter_form=filter_form filter_cancel_url="dashboard:document:list" object_list=object.documents.all is_show_section=False %}
+                    {% include "bw_components/document/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at is_show_create_btn=False app_label="document" pagination_list_url_name="dashboard:document:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete" actions_app_name="document" actions_base_url="dashboard:document" base_url_name="dashboard:document" filter_form=filter_form filter_cancel_url="dashboard:document:list" object_list=object.get_all_related_notes_and_documents.documents is_show_section=True is_show_job_link=True is_show_task_link=True is_show_client_link=True %}
 
                 {% else %}
 

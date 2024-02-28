@@ -91,6 +91,7 @@ def show_toolbar(request):
 DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": show_toolbar}
 
 GRAPH_MODELS = {"all_applications": True, "group_models": True}
+# GRAPH_MODELS = {'app_labels': ["client"]}
 
 # django-request-viewer configs
 REQUEST_VIEWER = {"LIVE_MONITORING": False, "WHITELISTED_PATH": []}

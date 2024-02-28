@@ -9,7 +9,7 @@
 
     {# End Page Heading #}
     {# Start Filter Form #}
-    {% component "bw_filter_form" filter_form_id="clientJobsReportFilterForm" filter_form=form filter_cancel_url="dashboard:reports:clients_reports:job_reports_list" filter_form_action="dashboard:reports:clients_reports:job_reports_list" %}
+    {% component "bw_filter_form" filter_form_id="clientJobsReportFilterForm" filter_form=form filter_cancel_url="dashboard:reports:clients_reports:job_reports_list" filter_form_action="dashboard:reports:clients_reports:job_reports_list" %}{% endcomponent %}
     {# End Filter Form #}
     {% if object_list %}
         <!-- Table Section -->

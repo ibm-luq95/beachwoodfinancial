@@ -6,7 +6,8 @@ from django.utils.translation import gettext as _
 
 from client.models import ClientProxy
 from core.choices import DocumentSectionEnum
-from core.models.mixins import BaseModelMixin, GeneralStatusFieldMixin, StrModelMixin
+from core.models.mixins import BaseModelMixin, GeneralStatusFieldMixin, StrModelMixin, \
+    GetObjectSectionMixin
 from job.models import JobProxy
 from task.models import TaskProxy
 
@@ -16,7 +17,7 @@ def saved_document_file_path(instance, filename):
     return f"documents/{file_suffix}_{filename}"
 
 
-class Document(BaseModelMixin, GeneralStatusFieldMixin, StrModelMixin):
+class Document(BaseModelMixin, GetObjectSectionMixin, GeneralStatusFieldMixin, StrModelMixin):
     title = models.CharField(
         _("title"), max_length=70, null=False, blank=False, db_index=True
     )

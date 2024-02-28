@@ -3,6 +3,7 @@ from django.utils.translation import gettext as _
 
 from client.models import ClientProxy
 from core.choices import NoteSectionEnum
+from core.constants.general import CON_JOB
 from core.models.mixins import (
     BaseModelMixin,
     GetObjectSectionMixin,

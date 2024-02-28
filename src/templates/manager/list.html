@@ -10,7 +10,7 @@
     {# End Page Heading #}
     {# Start Filter Form #}
     {% if filter_form %}
-        {% component "bw_filter_form" filter_form=filter_form filter_cancel_url="dashboard:managers:list" %}
+        {% component "bw_filter_form" filter_form=filter_form filter_cancel_url="dashboard:managers:list" %}{% endcomponent %}
     {% endif %}
     {# End Filter Form #}
     {% if object_list %}

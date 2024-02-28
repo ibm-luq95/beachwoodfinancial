@@ -23,70 +23,69 @@ file_validator = FileValidator(max_size=1024 * 1000, content_types=IMAGES_FT)
 
 
 class JobMiniForm(RemoveFieldsMixin, BWJSModalFormRendererMixin, BWBaseFormMixin):
-	def __init__(
-		self, removed_fields: Optional[list] = None, client=None, *args, **kwargs
-	):
-		super(BWBaseFormMixin, self).__init__(*args, **kwargs)
-		RemoveFieldsMixin.__init__(self, removed_fields=removed_fields)
-		self.initial["start_date"] = timezone.now().date()
-		self.initial["due_date"] = timezone.now().date()
-		self.initial["status"] = CON_NOT_STARTED
-		if client is not None:
-			clients_bookkeeper = client.bookkeepers.all()
-			if clients_bookkeeper:
-				users_pk = [bookkeeper.user.pk for bookkeeper in clients_bookkeeper]
-				if users_pk:
-					print("There bookkeeper")
-					self.fields["managed_by"].queryset = BWUser.objects.filter(
-						pk__in=users_pk
-					)
-			else:
-				print("No bookkeeper")
-				self.fields["managed_by"].queryset = BWUser.objects.none()
+    def __init__(
+        self, removed_fields: Optional[list] = None, client=None, *args, **kwargs
+    ):
+        super(BWBaseFormMixin, self).__init__(*args, **kwargs)
+        RemoveFieldsMixin.__init__(self, removed_fields=removed_fields)
+        self.initial["start_date"] = timezone.now().date()
+        self.initial["due_date"] = timezone.now().date()
+        self.initial["status"] = CON_NOT_STARTED
+        if client is not None:
+            clients_bookkeeper = client.bookkeepers.all()
+            if clients_bookkeeper:
+                users_pk = [bookkeeper.user.pk for bookkeeper in clients_bookkeeper]
+                if users_pk:
+                    self.fields["managed_by"].queryset = BWUser.objects.filter(
+                        pk__in=users_pk
+                    )
+            else:
+                print("No bookkeeper")
+                self.fields["managed_by"].queryset = BWUser.objects.none()
 
-	title = forms.CharField(label=_("Title"), required=True)
-	start_date = forms.DateField(label=_("Start Date"), required=True)
-	due_date = forms.DateField(label=_("Due Date"), required=True)
-	description = forms.CharField(
-		label=_("Description"),
-		widget=RichHTMLEditorWidget,
-		required=True,
-		help_text=JOB_HELP_MESSAGES.get("description"),
-	)
-	period_year = forms.ChoiceField(
-		label=_("Period Year"),
-		required=False,
-		choices=FiscalYearEnum.choices,
-		help_text=JOB_HELP_MESSAGES.get("period_year"),
-	)
-	period_month = forms.ChoiceField(
-		label=_("Period Month"),
-		required=False,
-		choices=MonthChoices.choices,
-		help_text=JOB_HELP_MESSAGES.get("period_month"),
-	)
-	categories = forms.ModelChoiceField(
-		label=_("Categories"),
-		widget=forms.CheckboxSelectMultiple,
-		queryset=JobCategory.objects.all(),
-		# help_text=JOB_HELP_MESSAGES.get("categories"),
-	)
-	job_type = forms.ChoiceField(
-		label=_("Type"),
-		choices=JobTypeEnum.choices,
-		help_text=JOB_HELP_MESSAGES.get("job_type"),
-	)
-	managed_by = forms.ModelChoiceField(
-		label=_("Manager"),
-		required=True,
-		queryset=BWUser.objects.all(),
-		help_text=JOB_HELP_MESSAGES.get("managed_by"),
-	)
-	note = forms.CharField(
-		label=_("Note"),
-		required=False,
-		help_text=JOB_HELP_MESSAGES.get("note"),
-		widget=forms.TextInput(attrs={"placeholder": _("Optional notes about the job")}),
-	)
-	client = forms.UUIDField(widget=forms.HiddenInput)
-	status = forms.CharField(widget=forms.HiddenInput)
+    title = forms.CharField(label=_("Title"), required=True)
+    start_date = forms.DateField(label=_("Start Date"), required=True)
+    due_date = forms.DateField(label=_("Due Date"), required=True)
+    description = forms.CharField(
+        label=_("Description"),
+        widget=RichHTMLEditorWidget,
+        required=True,
+        help_text=JOB_HELP_MESSAGES.get("description"),
+    )
+    period_year = forms.ChoiceField(
+        label=_("Period Year"),
+        required=False,
+        choices=FiscalYearEnum.choices,
+        help_text=JOB_HELP_MESSAGES.get("period_year"),
+    )
+    period_month = forms.ChoiceField(
+        label=_("Period Month"),
+        required=False,
+        choices=MonthChoices.choices,
+        help_text=JOB_HELP_MESSAGES.get("period_month"),
+    )
+    categories = forms.ModelChoiceField(
+        label=_("Categories"),
+        widget=forms.CheckboxSelectMultiple,
+        queryset=JobCategory.objects.all(),
+        # help_text=JOB_HELP_MESSAGES.get("categories"),
+    )
+    job_type = forms.ChoiceField(
+        label=_("Type"),
+        choices=JobTypeEnum.choices,
+        help_text=JOB_HELP_MESSAGES.get("job_type"),
+    )
+    managed_by = forms.ModelChoiceField(
+        label=_("Manager"),
+        required=True,
+        queryset=BWUser.objects.all(),
+        help_text=JOB_HELP_MESSAGES.get("managed_by"),
+    )
+    note = forms.CharField(
+        label=_("Note"),
+        required=False,
+        help_text=JOB_HELP_MESSAGES.get("note"),
+        widget=forms.TextInput(attrs={"placeholder": _("Optional notes about the job")}),
+    )
+    client = forms.UUIDField(widget=forms.HiddenInput)
+    status = forms.CharField(widget=forms.HiddenInput)

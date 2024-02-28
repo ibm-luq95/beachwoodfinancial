@@ -19,7 +19,7 @@
         <div>
             <div class="relative top-2">
                 {% if is_show_create_btn is True %}
-                    {% component "tl_create_btn" app_name=app_label actions_base_url=actions_base_url %}
+                    {% component "tl_create_btn" app_name=app_label actions_base_url=actions_base_url %}{% endcomponent %}
                 {% endif %}
             </div>
         </div>

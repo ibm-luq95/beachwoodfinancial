@@ -27,7 +27,7 @@
 {% if is_show_create_btn is True %}
     {# Start Create Button Block #}
     {% block create_btn_block %}
-        {% component "tl_create_btn" app_name=app_label actions_base_url=actions_base_url %}
+        {% component "tl_create_btn" app_name=app_label actions_base_url=actions_base_url %}{% endcomponent %}
         {% comment %}
 {% bw_button btn_text="Click" btn_variant="success" btn_size="small" data_pk="eee" data_title="ddlel" is_disabled=True btn_type="button" %}
         {% endcomment %}
