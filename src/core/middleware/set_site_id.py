@@ -23,8 +23,9 @@ class MultiHostMiddleware:
         self, request: HttpRequest, view_func, view_args: list, view_kwargs: dict
     ):
         try:
-            s = Site.objects.get(domain=request.get_host())
+            s = Site.objects.filter(domain=request.get_host())
             if s:
+                s = s.first()
                 settings.SITE_ID = s.id
         except KeyError:
             pass  # use default urlconf (settings.ROOT_URLCONF)
