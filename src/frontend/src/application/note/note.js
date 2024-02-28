@@ -34,6 +34,8 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
           url: currentTarget.action,
           token: currentTarget[CSRFINPUTNAME].value,
         };
+        // console.warn(requestOptions);
+        // throw new Error("Wait");
         const request = sendRequest(requestOptions);
         request
           .then((data) => {
@@ -50,11 +52,11 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
               er.forEach((erElement) => {
                 showToastNotification(
                   `Error: ${erElement["detail"]} - ${erElement["attr"]}`,
-                  "danger",
+                  "error",
                 );
               });
             } else {
-              showToastNotification(`Error adding note!`, "danger");
+              showToastNotification(`Error adding note!`, "error");
             }
             console.error(error);
           })
@@ -66,7 +68,7 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
           });
       } catch (error) {
         console.error(error);
-        showToastNotification("Error while add new note!");
+        showToastNotification("Error while add new note!", "error");
       } finally {
         disableAndEnableFieldsetItems({
           formElement: createNoteForm,
