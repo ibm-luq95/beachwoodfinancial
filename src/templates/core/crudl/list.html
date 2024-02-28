@@ -10,7 +10,7 @@
     {# End Page Heading #}
     {# Start Filter Form #}
     {% if is_filters_enabled is True %}
-        {% component "bw_filter_form" filter_form=filter_form filter_cancel_url=filter_cancel_url %}
+        {% component "bw_filter_form" filter_form=filter_form filter_cancel_url=filter_cancel_url %}{% endcomponent %}
     {% endif %}
     {# End Filter Form #}
     {% if object_list or page_obj %}
