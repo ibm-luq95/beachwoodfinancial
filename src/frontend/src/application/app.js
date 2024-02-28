@@ -13,6 +13,7 @@ import "animate.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import hljs from "highlight.js";
+import 'highlight.js/styles/default.css';
 import NiceSelect from "nice-select2/dist/js/nice-select2.js";
 import "nice-select2/dist/css/nice-select2.css";
 
