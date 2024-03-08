@@ -56,9 +56,9 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
             if jobs_managed_by is not None:
                 clients_q &= Q(jobs__managed_by__in=jobs_managed_by)
             if period_year is not None:
-                clients_q &= Q(jobs__period_year=str(period_year))
-            if period_month is not None:
-                clients_q &= Q(jobs__period_month=str(period_month))
+                clients_q &= Q(jobs__period_year__in=[int(period_year)])
+            # if period_month is not None:
+            #     clients_q &= Q(jobs__period_month=str(period_month))
             # debugging_print(created_year.isdigit())
             # BWDebuggingPrint.pprint(clients_q)
             try:
@@ -68,7 +68,7 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
                     .order_by("client_name")
                 )
                 # BWDebuggingPrint.pprint(reports.first().job_period_year)
-                # BWDebuggingPrint.log(reports)
+                # BWDebuggingPrint.pprint(str(reports.filter(pk="2dad20b9-a900-4e6a-b6f1-1e8c458631a0").query))
                 # for r in reports:
                 #     BWDebuggingPrint.log(r)
                 for r in reports:
