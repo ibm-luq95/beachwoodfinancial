@@ -32,4 +32,5 @@ urlpatterns = [
     path("reports/", include("reports.urls"), name="reports"),
     path("staff/", include("beach_wood_user.urls.staff"), name="staff"),
     path("archive/", include("archive.urls"), name="archive"),
+    path("briefcase/", include("staff_briefcase.urls.staff_briefcase"), name="briefcase"),
 ]
