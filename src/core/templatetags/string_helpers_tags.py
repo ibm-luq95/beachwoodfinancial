@@ -27,3 +27,12 @@ def bw_truncate_titles(text: str) -> str:
     return textwrap.shorten(
         text, width=DEFAULT_TEMPLATE_TABLE_LIST_TRUNCATED_STRING, placeholder="..."
     )
+
+
+@register.filter(name="grab_last_permission_label")
+def grab_last_permission_label(permission_full_name: str) -> str | None:
+    if permission_full_name is not None:
+        # return " - ".join(permission_full_name.split(" | ")[0:-1])
+        return f'{permission_full_name.split(" | ")[0]} - {permission_full_name.split(" | ")[-1]}'
+    else:
+        return None
