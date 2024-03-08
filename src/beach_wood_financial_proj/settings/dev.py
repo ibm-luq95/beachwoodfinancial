@@ -9,6 +9,7 @@ DEBUG = config("DEBUG", cast=bool)
 INSTALLED_APPS = INSTALLED_APPS + [
 	"django.contrib.admindocs",
 	"debug_toolbar",
+	"template_profiler_panel",
 	"debugtools",
 	"debug_permissions",
 	"django_model_info.apps.DjangoModelInfoConfig",
@@ -16,7 +17,6 @@ INSTALLED_APPS = INSTALLED_APPS + [
 	# "django_pdb",
 	"request_viewer",
 ]
-
 # INSTALLED_APPS.insert(0, "django_pdb")
 
 MIDDLEWARE = MIDDLEWARE + [
@@ -79,6 +79,7 @@ DEBUG_TOOLBAR_PANELS = [
 	"debug_toolbar.panels.logging.LoggingPanel",
 	"debug_toolbar.panels.redirects.RedirectsPanel",
 	"debug_toolbar.panels.profiling.ProfilingPanel",
+	"template_profiler_panel.panels.template.TemplateProfilerPanel"
 ]
 
 SHOW_COLLAPSED = True
