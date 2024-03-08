@@ -85,6 +85,7 @@ INSTALLED_APPS = [
     "reports.apps.ReportsConfig",
     "archive.apps.ArchiveConfig",
     "fiscal_year.apps.FiscalYearConfig",
+    "staff_briefcase.apps.StaffBriefcaseConfig",
 ]
 
 MIDDLEWARE = [
