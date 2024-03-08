@@ -81,7 +81,7 @@ class JobsReportView(
         context.setdefault("months_list", months_list)
         form = self.get_form()
 
-        # BWDebuggingPrint.pprint(form.serialize_inputs())
+        BWDebuggingPrint.pprint(form.serialize_inputs())
         object_list = ClientProxy.reports_manager.get_all_jobs_as_list(
             form.serialize_inputs(), page, per_page_form.fields.get("per_page").initial
         )
@@ -104,13 +104,14 @@ class JobsReportView(
 
         return context
 
-    def get_initial(self):
-        initial = super().get_initial()
+    # def get_initial(self):
+    #     initial = super().get_initial()
         # initial_dict = dict(self.request.GET)
-        # initial["period_year"] = timezone.now().year
+        # BWDebuggingPrint.pprint(self.get_form().serialize_inputs())
+        # initial["period_year"] = str(timezone.now().year)
         # initial.update(initial_dict)
         # BWDebuggingPrint.pprint(initial)
-        return initial
+        # return initial
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
