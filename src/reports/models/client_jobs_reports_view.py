@@ -53,8 +53,8 @@ class ClientJobsReportsDBView(models.Model):
             "job_archived_count": int(self.job_archived_count),
             "job_not_started_count": int(self.job_not_started_count),
             "job_draft_count": int(self.job_draft_count),
-            "job_period_month": int(self.job_period_month),
-            "job_period_year": int(self.job_period_year),
+            "job_period_month": str(self.job_period_month),
+            "job_period_year": str(self.job_period_year),
         }
 
         return sort_dict(data)
