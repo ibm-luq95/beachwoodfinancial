@@ -23,10 +23,7 @@ class BWGetRelatedNotesAndDocuments:
             from task.models import TaskProxy
             from note.models import Note
 
-            data = {
-                "notes": Note.objects.none(),
-                "documents": Document.objects.none()
-            }
+            data = {"notes": Note.objects.none(), "documents": Document.objects.none()}
             if hasattr(self, "notes"):
                 data.update({"notes": self.notes.prefetch_related()})
             if hasattr(self, "documents"):
@@ -47,7 +44,7 @@ class BWGetRelatedNotesAndDocuments:
                                 if hasattr(task, "documents"):
                                     data["documents"] |= task.documents.prefetch_related()
 
-            BWDebuggingPrint.pprint(data)
+            # BWDebuggingPrint.pprint(data)
             return data
         except Exception as ex:
             BWDebuggingPrint.print_exception()

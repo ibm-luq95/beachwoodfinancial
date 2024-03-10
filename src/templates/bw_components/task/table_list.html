@@ -58,6 +58,18 @@
 
             </div>
         </th>
+        {% if extra_context.is_show_client_column is True or is_show_client_column is True %}
+            <th scope="col" class="px-6 py-3 text-left">
+                <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                        {% translate "Client" %}
+                    </span>
+
+                    {% include "bw_components/global/table_list/sort_icon.html" %}
+
+                </div>
+            </th>
+        {% endif %}
         {% if extra_context.is_show_job_column is True or is_show_job_column is True %}
             <th scope="col" class="px-6 py-3 text-left">
                 <div class="flex items-center gap-x-2">
@@ -148,6 +160,20 @@
                     </a>
                 </div>
             </td>
+            {% if extra_context.is_show_client_column is True or is_show_client_column is True %}
+                <td class="h-px w-px whitespace-nowrap">
+                    <div class="px-6 py-3">
+                        {% if object.get_client %}
+                            <a class="text-sm italic {{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }} dark:text-gray-400"
+                               href="{% url 'dashboard:client:details' object.get_client.pk %}">
+                                {{ object.get_client|safe }}
+                            </a>
+                        {% else %}
+                            <span class="text-sm text-yellow-600 font-semibold italic dark:text-gray-400">{% translate "No client" %}</span>
+                        {% endif %}
+                    </div>
+                </td>
+            {% endif %}
             {% if extra_context.is_show_job_column is True or is_show_job_column is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     <div class="px-6 py-3">

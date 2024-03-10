@@ -22,6 +22,14 @@ class TaskProxy(Task):
             self.is_completed = False
         super().save(*args, **kwargs)
 
+    def get_client(self):
+        if hasattr(self, "job"):
+            if hasattr(self.job, "client"):
+                return self.job.client
+            else:
+                return None
+        return None
+
     # def log_task_to_history(self) -> None:
     #     with transaction.atomic():
     #         from . import TaskHistory

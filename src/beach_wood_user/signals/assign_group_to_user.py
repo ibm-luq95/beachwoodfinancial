@@ -21,6 +21,7 @@ from core.constants.users import (
 )
 from core.utils import get_formatted_logger, debugging_print, colored_output_with_logging
 from manager.models import ManagerProxy
+from staff_briefcase.models import StaffBriefcase
 
 # TODO: remove the custom logger before push (only for development)
 # ###### [Custom Logger] #########
@@ -93,6 +94,7 @@ def assign_groups(sender, instance: BWUser, created: bool, **kwargs):
                     created_user.is_active = True
                 else:
                     created_user.is_active = False
+                briefcase = StaffBriefcase.objects.create(user=created_user)
                 created_user.save()
 
     except Exception as ex:

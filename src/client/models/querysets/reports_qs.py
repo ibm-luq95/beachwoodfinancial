@@ -25,6 +25,7 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
     ) -> dict[int, Page, list[ClientDetailsMap]]:
         # BWDebuggingPrint.pprint(locals())
         from client.models.client_proxy import ClientProxy
+
         # BWDebuggingPrint.pprint(filter_params)
         with transaction.atomic():
             data_list: list[dict] = list()
@@ -56,25 +57,9 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
             if jobs_managed_by is not None:
                 clients_q &= Q(jobs__managed_by__in=jobs_managed_by)
             if period_year is not None:
-                clients_q &= Q(jobs__period_year=str(period_year))
-            if period_month is not None:
-                clients_q &= Q(jobs__period_month=str(period_month))
-            # debugging_print(created_year.isdigit())
-            # BWDebuggingPrint.pprint(clients_q)
+                clients_q &= Q(jobs__period_year__in=[int(period_year)])
             try:
-                reports = (
-                    ClientJobsReportsDBView.objects.select_related()
-                    .all()
-                    .order_by("client_name")
-                )
-                # BWDebuggingPrint.pprint(reports.first().job_period_year)
-                # BWDebuggingPrint.log(reports)
-                # for r in reports:
-                #     BWDebuggingPrint.log(r)
-                for r in reports:
-                    years_list.add(r.job_period_year)
                 details_dict = dict()
-                # bw_log().log(years_list)
                 clients = (
                     ClientProxy.objects.select_related()
                     # .annotate(period_year=Cast("jobs__period_year", CharField()))
@@ -82,14 +67,9 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
                     .distinct()
                     .order_by("name")
                 )
-                # BWDebuggingPrint.pprint(str(clients.query))
-                # BWDebuggingPrint.pprint(clients)
-                # debugging_print(len(clients))
-                # debugging_print(clients.first().jobs.all())
                 details_dict.setdefault("total_rows_count", len(clients))
                 page_object = Paginator(clients, per_page)
                 details_dict.setdefault("page_obj", page_object.get_page(page))
-                # debugging_print(clients.page(1).object_list)
                 for client in page_object.page(page).object_list:
                     q_objects = Q(client_id=client.pk)
                     if (
@@ -100,29 +80,15 @@ class ClientReportsQuerySet(BaseQuerySetMixin):
                         period_month is not None and period_month.isdigit() is True
                     ):  # it should be letter case
                         q_objects &= Q(job_period_month=str(period_month))
-                    # client_view_results = (
-                    #     ClientJobsReportsDBView.objects.select_related()
-                    #     .annotate(period_year=Cast("job_period_year", CharField()))
-                    #     .annotate(period_month=Cast("job_period_month", CharField()))
-                    #     .filter(q_objects)
-                    #     .order_by("client_name")
-                    # )
-                    # debugging_print(str(client_view_results.count()))
-                    client_details_map = ClientDetailsMap(client)
+                    client_details_map = ClientDetailsMap(
+                        client=client, filtered_by_year=period_year
+                    )
                     tmp_data = {
                         "map_obj": client_details_map,
                         "client_obj": client,
                         "serialized_obj": client_details_map.serializer(),
                     }
-                    # client_details_map.ALL_VIEWS_QS = client_view_results
-                    # years_set = set()
-                    # for y in client_view_results.values_list("job_period_year", flat=True):
-                    #     years_set.add(int(y))
-                    # client_details_map.ALL_YEARS = years_set
-                    # debugging_print(client.job_year)
                     data_list.append(tmp_data)
-                    client_details_map = None
-                    tmp_data = None
                 # BWDebuggingPrint.pprint(data_list)
                 details_dict.setdefault("object_list", data_list)
                 details_dict.setdefault("current_object_list_count", len(data_list))

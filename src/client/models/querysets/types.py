@@ -19,8 +19,8 @@ class ClientJobsFilterTypes(TypedDict):
     job_status: NotRequired[list]
     job_type: NotRequired[list]
     quick_created_at: NotRequired[str]
-    period_month: NotRequired[list[str | int]]
-    period_year: NotRequired[list[str | int]]
+    period_month: NotRequired[str]
+    period_year: NotRequired[str]
 
 
 # @dataclass(order=True, init=False)

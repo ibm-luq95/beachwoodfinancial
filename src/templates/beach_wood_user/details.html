@@ -15,11 +15,6 @@
                 {% include "beach_wood_user/ui_widgets/user_card.html" with object=object %}
 
                 {# End User Card #}
-                {# Start Bio Card #}
-
-                {% include "beach_wood_user/ui_widgets/biography_card.html" with object=object %}
-
-                {# End Bio Card #}
                 {# Start Total Items Card #}
 
                 {% include "beach_wood_user/ui_widgets/total_items_card.html" with object=object %}
@@ -197,16 +192,10 @@
                                  role="tablist">
                                 <button type="button"
                                         class="active hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400"
-                                        id="user-details-tab-underline"
-                                        data-hs-tab="#user-details-tab"
-                                        aria-controls="user-details-tab"
-                                        role="tab">{% translate "Details" %}</button>
-                                <button type="button"
-                                        class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400"
-                                        id="user-permissions-tab-underline"
-                                        data-hs-tab="#user-permissions-tab"
-                                        aria-controls="user-permissions-tab"
-                                        role="tab">{% translate "Permissions" %}</button>
+                                        id="user-briefcase-tab-underline"
+                                        data-hs-tab="#user-briefcase-tab"
+                                        aria-controls="user-briefcase-tab"
+                                        role="tab">{% translate "Briefcase" %}</button>
                                 {% if object.user_type == CON_BOOKKEEPER %}
                                     <button type="button"
                                             class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400"
@@ -239,152 +228,12 @@
                                 {% endif %}
                             </nav>
                             <div class="mt-3">
-                                {# Start Details Tab #}
-                                <div id="user-details-tab"
-                                     role="tabpanel"
-                                     aria-labelledby="user-details-tab-underline">
-                                    <section id="staff-details" class="p-5">
-                                        <dl class="grid sm:grid-cols-3 gap-1 sm:gap-3">
-                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Full Name" %}</dt>
-                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
-                                                {{ object.fullname|safe }}
-                                            </dd>
-                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Email Address" %}</dt>
-                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
-                                                {% if object.email|check_var_none is True %}
-                                                    <address>
-                                                        <a class="text-blue-600 italic hober:itealic"
-                                                           href="mailto:{{ object.email|safe }}">{{ object.email|safe }}</a>
-                                                    </address>
-                                                {% else %}
-                                                    ---
-                                                {% endif %}
-                                            </dd>
-                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "User Type" %}</dt>
-                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
-                                                <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">
-                                                    {{ object.get_user_type_display }}
-                                                </span>
-                                            </dd>
-                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "User Genre" %}</dt>
-                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
-                                                <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">
-                                                    {{ object.get_user_genre_display }}
-                                                </span>
-                                            </dd>
-                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Status" %}</dt>
-                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
-                                                {% if object.status == CON_PENDING %}
-                                                    <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-yellow-200 shadow-sm  bg-yellow-100 text-yellow-800 dark:bg-yellow-800/30 dark:text-yellow-500">{{ object.get_status_display }}</span>
-                                                {% elif object.status == CON_ENABLED %}
-                                                    <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-green-200 shadow-sm  bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-500">{{ object.get_status_display }}</span>
-                                                {% elif object.status == CON_CANCELED %}
-                                                    <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-red-200 shadow-sm  bg-red-100 text-red-800 dark:bg-red-800/30 dark:text-red-500">{{ object.get_status_display }}</span>
-                                                {% elif object.status == CON_DISABLED %}
-                                                    <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-gray-500 text-white">{{ object.get_status_display }}</span>
-                                                {% elif object.status == CON_ARCHIVED %}
-                                                    <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">{{ object.get_status_display }}</span>
-                                                {% endif %}
-                                            </dd>
-                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Address" %}</dt>
-                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
-                                                {% if object.get_staff_member_object.staff_object.profile.address|check_var_none is True %}
-                                                    <address>
-                                                        {{ object.get_staff_member_object.staff_object.profile.address|safe }}
-                                                    </address>
-                                                {% else %}
-                                                    ---
-                                                {% endif %}
-                                            </dd>
-                                            <dt class="sm:col-span-1 font-semibold truncate dark:text-white">
-                                                {% translate "Phone Number" %}
-                                            </dt>
-                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
-                                                {% if object.get_staff_member_object.staff_object.profile.phone_number|check_var_none is True %}
-                                                    <address>
-                                                        <a class="text-blue-600 italic"
-                                                           href="tel:{{ object.get_staff_member_object.staff_object.profile.phone_number|safe }}">{{ object.get_staff_member_object.staff_object.profile.phone_number|safe }}</a>
-                                                    </address>
-                                                {% else %}
-                                                    ---
-                                                {% endif %}
-                                            </dd>
-                                            <dt class="sm:col-span-1 font-semibold truncate dark:text-white">{% translate "BIO" %}</dt>
-                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
-                                                {% if object.get_staff_member_object.staff_object.profile.bio|check_var_none is True %}
-                                                    <p>{{ object.get_staff_member_object.staff_object.profile.bio|safe }}</p>
-                                                {% else %}
-                                                    ---
-                                                {% endif %}
-                                            </dd>
-                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Facebook" %}</dt>
-                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
-                                                {% if object.get_staff_member_object.staff_object.profile.facebook|check_var_none is True %}
-                                                    <a class="text-blue-600 italic"
-                                                       href="mailto:{{ object.get_staff_member_object.staff_object.profile.facebook|safe }}">{{ object.get_staff_member_object.staff_object.profile.facebook|safe }}</a>
-                                                {% else %}
-                                                    ---
-                                                {% endif %}
-                                            </dd>
-                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Twitter" %}</dt>
-                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
-                                                {% if object.get_staff_member_object.staff_object.profile.twitter|check_var_none is True %}
-                                                    <a class="text-blue-600 italic"
-                                                       href="mailto:{{ object.get_staff_member_object.staff_object.profile.twitter|safe }}">{{ object.get_staff_member_object.staff_object.profile.twitter|safe }}</a>
-                                                {% else %}
-                                                    ---
-                                                {% endif %}
-                                            </dd>
-                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Instagram" %}</dt>
-                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
-                                                {% if object.get_staff_member_object.staff_object.profile.instagram|check_var_none is True %}
-                                                    <a class="text-blue-600 italic"
-                                                       href="mailto:{{ object.get_staff_member_object.staff_object.profile.instagram|safe }}">{{ object.get_staff_member_object.staff_object.profile.instagram|safe }}</a>
-                                                {% else %}
-                                                    ---
-                                                {% endif %}
-                                            </dd>
-                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Linkedin" %}</dt>
-                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
-                                                {% if object.get_staff_member_object.staff_object.profile.linkedin|check_var_none is True %}
-                                                    <a class="text-blue-600 italic"
-                                                       href="mailto:{{ object.get_staff_member_object.staff_object.profile.linkedin|safe }}">{{ object.get_staff_member_object.staff_object.profile.linkedin|safe }}</a>
-                                                {% else %}
-                                                    ---
-                                                {% endif %}
-                                            </dd>
-                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Github" %}</dt>
-                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
-                                                {% if object.get_staff_member_object.staff_object.profile.github|check_var_none is True %}
-                                                    <a class="text-blue-600 italic"
-                                                       href="mailto:{{ object.get_staff_member_object.staff_object.profile.github|safe }}">{{ object.get_staff_member_object.staff_object.profile.github|safe }}</a>
-                                                {% else %}
-                                                    ---
-                                                {% endif %}
-                                            </dd>
-                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Created" %}</dt>
-                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
-                                                <p>{{ object.created_at }}</p>
-                                            </dd>
-                                            <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Last Login" %}</dt>
-                                            <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
-                                                {% if object.last_login|check_var_none is True %}
-                                                    <p>{{ object.last_login }}</p>
-                                                {% else %}
-                                                    ---
-                                                {% endif %}
-                                            </dd>
-                                        </dl>
-                                    </section>
-                                </div>
-                                {# End Details Tab #}
                                 {# Start Permissions Tab #}
-                                <div id="user-permissions-tab"
+                                <div id="user-briefcase-tab"
                                      role="tabpanel"
-                                     class="hidden"
-                                     aria-labelledby="user-permissions-tab-underline">
-                                    <section id="permissionsFormWrapper">
-                                        {% component "bw_form" form=permissions_form perms=perms form_id="permissionsUpdateMiniForm" submit_btn_text="Update" form_title="Update permissions - "|add:object.fullname form_subtitle="Update permissions" is_upload_form=False hide_back_btn=True hide_submit_btn=False %}{% endcomponent %}
+                                     aria-labelledby="user-briefcase-tab-underline">
+                                    <section id="briefcaseWrapper">
+                                        Briefcase
                                     </section>
                                 </div>
                                 {# End Permissions Tab #}
@@ -538,5 +387,244 @@
     {# Start create assignment modal #}
     {% bw_js_modal modal_css_id="createAssignmentModal" modal_size="sm" modal_title="Create new assignment" is_submit_btn_enabled=True is_form_modal=True form_object=special_assignment_form is_upload_form=True form_id="createAssignmentForm" form_submit_text="Create" action_url="dashboard:special_assignment:api:special-assignment-api-router-list" %}
     {# End create assignment modal #}
+    {# Start Permissions and Details Modal #}
+    <div id="permissions-details-modal"
+         class="bw-js-modal hs-overlay hidden size-full fixed top-0 start-0 z-[80] overflow-x-hidden overflow-y-auto pointer-events-none">
+        <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all lg:max-w-6xl lg:w-full m-3 lg:mx-auto h-[calc(100%-3.5rem)]">
+            <div class="max-h-full overflow-hidden flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+                <div class="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700">
+                    <h3 class="font-bold text-gray-800 dark:text-white">
+                        {% translate "Details & Permissions" %}
+                    </h3>
+                    <button type="button"
+                            class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                            data-hs-overlay="#permissions-details-modal">
+                        <span class="sr-only">{% translate "Close" %}</span>
+                        <svg class="flex-shrink-0 size-4"
+                             xmlns="http://www.w3.org/2000/svg"
+                             width="24"
+                             height="24"
+                             viewBox="0 0 24 24"
+                             fill="none"
+                             stroke="currentColor"
+                             stroke-width="2"
+                             stroke-linecap="round"
+                             stroke-linejoin="round">
+                            <path d="M18 6 6 18" />
+                            <path d="m6 6 12 12" />
+                        </svg>
+                    </button>
+                </div>
+                <div class="p-4 overflow-y-auto" id="staffDetailsPermissionsTabs">
+                    <nav class="relative z-0 flex border rounded-xl overflow-hidden dark:border-gray-700"
+                         aria-label="Tabs"
+                         role="tablist">
+                        <button type="button"
+                                class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-s-0 border-s border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-400 active"
+                                id="details-tab-item"
+                                data-hs-tab="#details-tab"
+                                aria-controls="details-tab"
+                                role="tab">{% translate "Details" %}</button>
+                        <button type="button"
+                                class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-s-0 border-s border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-400"
+                                id="permissions-tab-item"
+                                data-hs-tab="#permissions-tab"
+                                aria-controls="permissions-tab"
+                                role="tab">{% translate "Permissions" %}</button>
+                    </nav>
+                    <div class="mt-3">
+                        <div id="details-tab" role="tabpanel" aria-labelledby="details-tab-item">
+                            <section id="staff-details" class="p-5">
+                                <dl class="grid sm:grid-cols-3 gap-1 sm:gap-3">
+                                    <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Full Name" %}</dt>
+                                    <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                        {{ object.fullname|safe }}
+                                    </dd>
+                                    <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Email Address" %}</dt>
+                                    <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                        {% if object.email|check_var_none is True %}
+                                            <address>
+                                                <a class="text-blue-600 italic hober:itealic"
+                                                   href="mailto:{{ object.email|safe }}">{{ object.email|safe }}</a>
+                                            </address>
+                                        {% else %}
+                                            ---
+                                        {% endif %}
+                                    </dd>
+                                    <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "User Type" %}</dt>
+                                    <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                        <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">
+                                            {{ object.get_user_type_display }}
+                                        </span>
+                                    </dd>
+                                    <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "User Genre" %}</dt>
+                                    <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                        <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-sm font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">
+                                            {{ object.get_user_genre_display }}
+                                        </span>
+                                    </dd>
+                                    <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Status" %}</dt>
+                                    <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                        {% if object.status == CON_PENDING %}
+                                            <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-yellow-200 shadow-sm  bg-yellow-100 text-yellow-800 dark:bg-yellow-800/30 dark:text-yellow-500">{{ object.get_status_display }}</span>
+                                        {% elif object.status == CON_ENABLED %}
+                                            <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-green-200 shadow-sm  bg-green-100 text-green-800 dark:bg-green-800/30 dark:text-green-500">{{ object.get_status_display }}</span>
+                                        {% elif object.status == CON_CANCELED %}
+                                            <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-red-200 shadow-sm  bg-red-100 text-red-800 dark:bg-red-800/30 dark:text-red-500">{{ object.get_status_display }}</span>
+                                        {% elif object.status == CON_DISABLED %}
+                                            <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-gray-500 text-white">{{ object.get_status_display }}</span>
+                                        {% elif object.status == CON_ARCHIVED %}
+                                            <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium border border-gray-200 bg-white text-gray-800 shadow-sm dark:bg-slate-900 dark:border-gray-700 dark:text-white">{{ object.get_status_display }}</span>
+                                        {% endif %}
+                                    </dd>
+                                    <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Address" %}</dt>
+                                    <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                        {% if object.get_staff_member_object.staff_object.profile.address|check_var_none is True %}
+                                            <address>
+                                                {{ object.get_staff_member_object.staff_object.profile.address|safe }}
+                                            </address>
+                                        {% else %}
+                                            ---
+                                        {% endif %}
+                                    </dd>
+                                    <dt class="sm:col-span-1 font-semibold truncate dark:text-white">
+                                        {% translate "Phone Number" %}
+                                    </dt>
+                                    <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                        {% if object.get_staff_member_object.staff_object.profile.phone_number|check_var_none is True %}
+                                            <address>
+                                                <a class="text-blue-600 italic"
+                                                   href="tel:{{ object.get_staff_member_object.staff_object.profile.phone_number|safe }}">{{ object.get_staff_member_object.staff_object.profile.phone_number|safe }}</a>
+                                            </address>
+                                        {% else %}
+                                            ---
+                                        {% endif %}
+                                    </dd>
+                                    <dt class="sm:col-span-1 font-semibold truncate dark:text-white">{% translate "BIO" %}</dt>
+                                    <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                        {% if object.get_staff_member_object.staff_object.profile.bio|check_var_none is True %}
+                                            <p>{{ object.get_staff_member_object.staff_object.profile.bio|safe }}</p>
+                                        {% else %}
+                                            ---
+                                        {% endif %}
+                                    </dd>
+                                    <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Facebook" %}</dt>
+                                    <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                        {% if object.get_staff_member_object.staff_object.profile.facebook|check_var_none is True %}
+                                            <a class="text-blue-600 italic"
+                                               href="mailto:{{ object.get_staff_member_object.staff_object.profile.facebook|safe }}">{{ object.get_staff_member_object.staff_object.profile.facebook|safe }}</a>
+                                        {% else %}
+                                            ---
+                                        {% endif %}
+                                    </dd>
+                                    <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Twitter" %}</dt>
+                                    <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                        {% if object.get_staff_member_object.staff_object.profile.twitter|check_var_none is True %}
+                                            <a class="text-blue-600 italic"
+                                               href="mailto:{{ object.get_staff_member_object.staff_object.profile.twitter|safe }}">{{ object.get_staff_member_object.staff_object.profile.twitter|safe }}</a>
+                                        {% else %}
+                                            ---
+                                        {% endif %}
+                                    </dd>
+                                    <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Instagram" %}</dt>
+                                    <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                        {% if object.get_staff_member_object.staff_object.profile.instagram|check_var_none is True %}
+                                            <a class="text-blue-600 italic"
+                                               href="mailto:{{ object.get_staff_member_object.staff_object.profile.instagram|safe }}">{{ object.get_staff_member_object.staff_object.profile.instagram|safe }}</a>
+                                        {% else %}
+                                            ---
+                                        {% endif %}
+                                    </dd>
+                                    <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Linkedin" %}</dt>
+                                    <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                        {% if object.get_staff_member_object.staff_object.profile.linkedin|check_var_none is True %}
+                                            <a class="text-blue-600 italic"
+                                               href="mailto:{{ object.get_staff_member_object.staff_object.profile.linkedin|safe }}">{{ object.get_staff_member_object.staff_object.profile.linkedin|safe }}</a>
+                                        {% else %}
+                                            ---
+                                        {% endif %}
+                                    </dd>
+                                    <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Github" %}</dt>
+                                    <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                        {% if object.get_staff_member_object.staff_object.profile.github|check_var_none is True %}
+                                            <a class="text-blue-600 italic"
+                                               href="mailto:{{ object.get_staff_member_object.staff_object.profile.github|safe }}">{{ object.get_staff_member_object.staff_object.profile.github|safe }}</a>
+                                        {% else %}
+                                            ---
+                                        {% endif %}
+                                    </dd>
+                                    <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Created" %}</dt>
+                                    <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                        <p>{{ object.created_at }}</p>
+                                    </dd>
+                                    <dt class="sm:col-span-1 font-semibold dark:text-white">{% translate "Last Login" %}</dt>
+                                    <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
+                                        {% if object.last_login|check_var_none is True %}
+                                            <p>{{ object.last_login }}</p>
+                                        {% else %}
+                                            ---
+                                        {% endif %}
+                                    </dd>
+                                </dl>
+                            </section>
+                        </div>
+                        <div id="permissions-tab"
+                             class="hidden"
+                             role="tabpanel"
+                             aria-labelledby="permissions-tab-item">
+                            <form method="post" id="permissionsUpdateMiniForm">
+                                <fieldset>
+                                    {% csrf_token %}
+                                    <input type="hidden" name="_method" value="post" />
+                                    <input type="hidden" name="user" value="{{ object.pk }}" />
+                                    <legend class="mb-2">
+                                        <h4 class="text-xl dark:text-white">{% translate "Permissions" %}</h4>
+                                    </legend>
+                                    <div class="grid sm:grid-cols-4 gap-2">
+                                        {% for permission_field in permissions_form %}
+                                            {% if permission_field.field.widget|bw_get_form_field_type == "CheckboxSelectMultiple" %}
+                                                {% for choice in permission_field %}
+                                                    <label for="{{ choice.data.attrs.id }}"
+                                                           class="flex p-3 block w-full bg-white border border-gray-200 rounded-md text-xs focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                                                        <div>
+                                                            <span class="block text-sm font-semibold text-gray-800 dark:text-gray-300">{{ choice.choice_label|safe|grab_last_permission_label }}</span>
+                                                            <span id="{{ choice.data.attrs.id }}-description"
+                                                                  class="block text-sm text-gray-600 dark:text-gray-500">
+                                                                <p class="text-xs italic my-1">{{ choice.choice_label|safe }}</p>
+                                                            </span>
+                                                        </div>
+                                                        <input type="checkbox"
+                                                               {% if choice.data.selected is True %}checked{% endif %}
+                                                               value="{{ choice.data.value }}"
+                                                               name="{{ permission_field.name }}"
+                                                               id="{{ choice.data.attrs.id }}"
+                                                               class="{{ BW_FULL_INPUT_CSS_CLASSES }} shrink-0 ml-auto mt-0.5 border-gray-200 rounded text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800" />
+                                                    </label>
+                                                {% endfor %}
+                                            {% endif %}
+                                        {% endfor %}
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-gray-700">
+                    <button type="button"
+                            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                            data-hs-overlay="#permissions-details-modal">
+                        {% translate "Close" %}
+                    </button>
+                    <button type="submit"
+                            form="permissionsUpdateMiniForm"
+                            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                            id="updatePermissionsStaffDetailsBtn">
+                        {% translate "Update" %}
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {# End Permissions and Details Modal #}
     {# End Models #}
 {% endblock dashboard_content_block %}

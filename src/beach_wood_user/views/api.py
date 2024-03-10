@@ -13,7 +13,8 @@ from beach_wood_user.models import BWUser
 from bookkeeper.models import BookkeeperProxy
 from client.models import ClientProxy
 from core.api.permissions import ManagerApiPermission
-from core.utils import get_formatted_logger, debugging_print
+from core.utils import get_formatted_logger
+from core.utils.developments.debugging_print_object import BWDebuggingPrint
 
 logger = get_formatted_logger()
 
@@ -40,6 +41,7 @@ class UpdateStaffPermissionsApiView(APIView):
                 return Response(status=status.HTTP_200_OK, data=data)
         except Exception as e:
             logger.error(traceback.format_exc())
+            BWDebuggingPrint.print_exception()
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data=str(e))
 
 
@@ -62,4 +64,5 @@ class AssignClientToBookkeeperApiView(APIView):
                 return Response(status=status.HTTP_200_OK, data=data)
         except Exception as e:
             logger.error(traceback.format_exc())
+            BWDebuggingPrint.print_exception()
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data=str(e))
