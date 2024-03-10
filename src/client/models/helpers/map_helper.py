@@ -2,6 +2,8 @@
 from collections import defaultdict
 from typing import Optional
 
+from django.db.models import Q
+
 from core.utils import get_months_abbr
 from reports.models import ClientJobsReportsDBView
 
@@ -17,12 +19,17 @@ class ClientDetailsMap:
         "job_draft_count",
     ]
 
-    def __init__(self, client):
+    def __init__(self, client, filtered_by_year: Optional[str | int] = None):
         """
         Initialize the instance with the given client.
         """
         self.client = client
-        self.reports_qs = ClientJobsReportsDBView.objects.filter(client_id=self.client.pk)
+        report_qs_q_obj = Q()
+        report_qs_q_obj &= Q(client_id=self.client.pk)
+        if filtered_by_year is not None:
+            self.filtered_by_year = str(filtered_by_year)
+            report_qs_q_obj &= Q(job_period_year=self.filtered_by_year)
+        self.reports_qs = ClientJobsReportsDBView.objects.filter(report_qs_q_obj)
         self.reports_qs_count = self.reports_qs.count()
         self.pk = self.client.pk
         self.__years = set()
