@@ -61,3 +61,4 @@ class ClientAccountForm(BaseModelFormMixin, SetFieldsInputsHiddenMixin):
     class Meta(BaseModelFormMixin.Meta):
         model = ClientAccount
         exclude = EXCLUDED_FIELDS
+        widgets = {"account_url": forms.URLInput()}
