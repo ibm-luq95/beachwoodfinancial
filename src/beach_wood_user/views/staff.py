@@ -19,6 +19,11 @@ from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from core.views.mixins import BWLoginRequiredMixin
 from manager.forms import ManagerForm
 from special_assignment.forms import MiniSpecialAssignmentForm
+from staff_briefcase.forms import (
+    BriefcaseNoteMiniForm,
+    BriefcaseDocumentMiniForm,
+    BriefcaseAccountMiniForm,
+)
 
 
 class StaffMemberDetailsView(
@@ -66,10 +71,17 @@ class StaffMemberDetailsView(
             staff_form = ManagerForm(
                 initial=staff_form_initial, removed_fields=removed_fields
             )
+        briefcase_note_form = BriefcaseNoteMiniForm()
+        briefcase_document_form = BriefcaseDocumentMiniForm()
+        briefcase_account_form = BriefcaseAccountMiniForm()
+
         context.setdefault("clients", clients)
         context.setdefault("special_assignment_form", special_assignment_form)
         context.setdefault("staff_form", staff_form)
         context.setdefault("permissions_form", permissions_form)
+        context.setdefault("briefcase_note_form", briefcase_note_form)
+        context.setdefault("briefcase_document_form", briefcase_document_form)
+        context.setdefault("briefcase_account_form", briefcase_account_form)
         return context
 
 
