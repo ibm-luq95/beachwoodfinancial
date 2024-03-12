@@ -10,7 +10,7 @@ from core.utils import PasswordHasher
 
 class StaffAccounts(BaseModelMixin, StrModelMixin):
     title = models.CharField(_("title"), max_length=25)
-    url = models.URLField(_("url"), null=True, blank=True)
+    url = models.TextField(_("url"), null=True, blank=True)
     username_email = models.CharField(_("Username / Email"), max_length=100)
     password = models.CharField(_("Password"), max_length=250)
     name = models.CharField(
