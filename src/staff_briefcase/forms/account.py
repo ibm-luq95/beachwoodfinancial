@@ -23,6 +23,6 @@ class BriefcaseAccountMiniForm(
     title = forms.CharField(label=_("Title"))
     url = forms.CharField(label=_("URL"), widget=forms.URLInput, required=False)
     username_email = forms.CharField(label=_("Username / Email"), required=False)
-    account_password = forms.CharField(widget=BWPasswordInputWidget, required=False)
+    password = forms.CharField(widget=BWPasswordInputWidget, required=False)
     name = forms.ChoiceField(label=_("Name"), choices=ServiceNameEnum.choices)
     briefcase = forms.UUIDField(widget=forms.HiddenInput)

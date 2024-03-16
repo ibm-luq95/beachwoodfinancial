@@ -40,7 +40,7 @@ class StaffAccounts(BaseModelMixin, StrModelMixin):
 
     def save(self, *args, **kwargs):
         if self.decrypted_password:
-            self.account_password = PasswordHasher.encrypt(self.password)
+            self.password = PasswordHasher.encrypt(self.password)
         else:
-            self.account_password = PasswordHasher.encrypt(self.account_password)
+            self.password = PasswordHasher.encrypt(self.password)
         super(StaffAccounts, self).save(*args, **kwargs)
