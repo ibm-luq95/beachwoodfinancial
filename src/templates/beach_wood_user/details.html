@@ -286,59 +286,45 @@
                                                                 </div>
                                                                 <hr class="mb-3 mt-1 dark:border-white" />
                                                                 <div class="flex flex-col">
-                                                                    <div class="-m-1.5 overflow-x-auto">
-                                                                        <div class="p-1.5 min-w-full inline-block align-middle">
-                                                                            <div class="border rounded-lg shadow overflow-hidden dark:border-gray-700 dark:shadow-gray-900">
-                                                                                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                                                                    {# <caption class="py-2 text-start text-sm text-gray-600 dark:text-gray-500">{% translate "List of notes" %}</caption> #}
-                                                                                    <thead class="bg-gray-50 dark:bg-gray-700">
-                                                                                        <tr>
-                                                                                            <th scope="col"
-                                                                                                class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
-                                                                                                {% translate "Title" %}
-                                                                                            </th>
-                                                                                            <th scope="col"
-                                                                                                class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
-                                                                                                {% translate "Body" %}
-                                                                                            </th>
-                                                                                            <th scope="col"
-                                                                                                class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
-                                                                                                #
-                                                                                            </th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                                                                                        <tr>
-                                                                                            <td class="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">
-                                                                                                <p class="text-balance">
-                                                                                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae, ratione!
-                                                                                                </p>
-                                                                                            </td>
-                                                                                            <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">
-                                                                                                <p class="text-balance">
-                                                                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Eaque dolores, pariatur illum, adipisci inventore ipsa atque esse ea explicabo velit, eveniet delectus nam placeat voluptates consequuntur aliquid quis alias quam.
-                                                                                                </p>
-                                                                                            </td>
-                                                                                            <td class="px-6 py-4 text-end text-sm font-medium">
-                                                                                                <button type="button"
-                                                                                                        class="py-3 pr-4 pl-1.5 inline-flex items-center gap-x-2 text-sm font-semibold text-center rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 size-[30px]">
-                                                                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                                         width="16"
-                                                                                                         height="16"
-                                                                                                         fill="currentColor"
-                                                                                                         class="flex-shrink-0 size-4"
-                                                                                                         viewBox="0 0 16 16">
-                                                                                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
-                                                                                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
-                                                                                                    </svg>
-                                                                                                </button>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
+                                                                    {% if object.briefcase.notes.all %}
+                                                                        <div class="-m-1.5 overflow-x-auto">
+                                                                            <div class="p-1.5 min-w-full inline-block align-middle">
+                                                                                <div class="border rounded-lg shadow overflow-hidden dark:border-gray-700 dark:shadow-gray-900">
+                                                                                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                                                                        {# <caption class="py-2 text-start text-sm text-gray-600 dark:text-gray-500">{% translate "List of notes" %}</caption> #}
+                                                                                        <thead class="bg-gray-50 dark:bg-gray-700">
+                                                                                            <tr>
+                                                                                                <th scope="col"
+                                                                                                    class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
+                                                                                                    {% translate "Title" %}
+                                                                                                </th>
+                                                                                                <th scope="col"
+                                                                                                    class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
+                                                                                                    {% translate "Body" %}
+                                                                                                </th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                                                                            {% for s_note in object.briefcase.notes.all %}
+                                                                                                <tr>
+                                                                                                    <td class="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">
+                                                                                                        <p class="text-balance text-sm italic">{{ s_note.title|safe }}</p>
+                                                                                                    </td>
+                                                                                                    <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">
+                                                                                                        <p class="text-balance">{{ s_note.note|safe }}</p>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            {% endfor %}
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
-                                                                    </div>
+                                                                    {% else %}
+
+                                                                        {% include "bw_ui_components/global/empty_card.html" with label="staff notes" %}
+
+                                                                    {% endif %}
                                                                 </div>
                                                             </div>
                                                             <div id="documents-tab"
@@ -360,70 +346,59 @@
                                                                     </div>
                                                                 </div>
                                                                 <hr class="mb-3 mt-1 dark:border-white" />
-                                                                <div class="flex flex-col">
-                                                                    <div class="-m-1.5 overflow-x-auto">
-                                                                        <div class="p-1.5 min-w-full inline-block align-middle">
-                                                                            <div class="border rounded-lg shadow overflow-hidden dark:border-gray-700 dark:shadow-gray-900">
-                                                                                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                                                                    {# <caption class="py-2 text-start text-sm text-gray-600 dark:text-gray-500">{% translate "List of notes" %}</caption> #}
-                                                                                    <thead class="bg-gray-50 dark:bg-gray-700">
-                                                                                        <tr>
-                                                                                            <th scope="col"
-                                                                                                class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
-                                                                                                {% translate "Title" %}
-                                                                                            </th>
-                                                                                            <th scope="col"
-                                                                                                class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
-                                                                                                {% translate "File" %}
-                                                                                            </th>
-                                                                                            <th scope="col"
-                                                                                                class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
-                                                                                                #
-                                                                                            </th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                                                                                        <tr>
-                                                                                            <td class="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">
-                                                                                                <p class="text-balance">
-                                                                                                    Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repudiandae, ratione!
-                                                                                                </p>
-                                                                                            </td>
-                                                                                            <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">
-                                                                                                <button type="button"
-                                                                                                        class="py-3 pr-4 pl-1.5 inline-flex items-center gap-x-2 text-sm font-semibold text-center rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 size-[30px]">
-                                                                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                                         width="24"
-                                                                                                         height="24"
-                                                                                                         fill="currentColor"
-                                                                                                         class="flex-shrink-0 size-4"
-                                                                                                         viewBox="0 0 16 16">
-                                                                                                        <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
-                                                                                                        <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
-                                                                                                    </svg>
-                                                                                                </button>
-                                                                                            </td>
-                                                                                            <td class="px-6 py-4 text-end text-sm font-medium">
-                                                                                                <button type="button"
-                                                                                                        class="py-3 pr-4 pl-1.5 inline-flex items-center gap-x-2 text-sm font-semibold text-center rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 size-[30px]">
-                                                                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                                         width="16"
-                                                                                                         height="16"
-                                                                                                         fill="currentColor"
-                                                                                                         class="flex-shrink-0 size-4"
-                                                                                                         viewBox="0 0 16 16">
-                                                                                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
-                                                                                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
-                                                                                                    </svg>
-                                                                                                </button>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
+                                                                {% if object.briefcase.documents.all %}
+                                                                    <div class="flex flex-col">
+                                                                        <div class="-m-1.5 overflow-x-auto">
+                                                                            <div class="p-1.5 min-w-full inline-block align-middle">
+                                                                                <div class="border rounded-lg shadow overflow-hidden dark:border-gray-700 dark:shadow-gray-900">
+                                                                                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                                                                        {# <caption class="py-2 text-start text-sm text-gray-600 dark:text-gray-500">{% translate "List of notes" %}</caption> #}
+                                                                                        <thead class="bg-gray-50 dark:bg-gray-700">
+                                                                                            <tr>
+                                                                                                <th scope="col"
+                                                                                                    class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
+                                                                                                    {% translate "Title" %}
+                                                                                                </th>
+                                                                                                <th scope="col"
+                                                                                                    class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
+                                                                                                    {% translate "File" %}
+                                                                                                </th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                                                                            {% for s_document in object.briefcase.documents.all %}
+                                                                                                <tr>
+                                                                                                    <td class="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">
+                                                                                                        <p class="text-balance italic">{{ s_document.title|safe }}</p>
+                                                                                                    </td>
+                                                                                                    <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">
+                                                                                                        <a href="{{ s_document.document_file.url|safe }}"
+                                                                                                           download="{{ s_document.document_file.url|safe }}"
+                                                                                                           class="py-3 pr-4 pl-1.5 inline-flex items-center gap-x-2 text-sm font-semibold text-center rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 size-[30px]">
+                                                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                                 width="24"
+                                                                                                                 height="24"
+                                                                                                                 fill="currentColor"
+                                                                                                                 class="flex-shrink-0 size-4"
+                                                                                                                 viewBox="0 0 16 16">
+                                                                                                                <path d="M.5 9.9a.5.5 0 0 1 .5.5v2.5a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1v-2.5a.5.5 0 0 1 1 0v2.5a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2v-2.5a.5.5 0 0 1 .5-.5" />
+                                                                                                                <path d="M7.646 11.854a.5.5 0 0 0 .708 0l3-3a.5.5 0 0 0-.708-.708L8.5 10.293V1.5a.5.5 0 0 0-1 0v8.793L5.354 8.146a.5.5 0 1 0-.708.708z" />
+                                                                                                            </svg>
+                                                                                                        </a>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            {% endfor %}
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                {% else %}
+
+                                                                    {% include "bw_ui_components/global/empty_card.html" with label="staff documents" %}
+
+                                                                {% endif %}
                                                             </div>
                                                             <div id="vertical-tab-with-border-3"
                                                                  class="hidden"
@@ -444,148 +419,158 @@
                                                                     </div>
                                                                 </div>
                                                                 <hr class="mb-3 mt-1 dark:border-white" />
-                                                                <div class="flex flex-col">
-                                                                    <div class="-m-1.5 overflow-x-auto">
-                                                                        <div class="p-1.5 min-w-full inline-block align-middle">
-                                                                            <div class="border rounded-lg shadow overflow-hidden dark:border-gray-700 dark:shadow-gray-900">
-                                                                                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                                                                                    {# <caption class="py-2 text-start text-sm text-gray-600 dark:text-gray-500">{% translate "List of notes" %}</caption> #}
-                                                                                    <thead class="bg-gray-50 dark:bg-gray-700">
-                                                                                        <tr>
-                                                                                            <th scope="col"
-                                                                                                class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
-                                                                                                {% translate "Title" %}
-                                                                                            </th>
-                                                                                            <th scope="col"
-                                                                                                class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
-                                                                                                {% translate "Name" %}
-                                                                                            </th>
-                                                                                            <th scope="col"
-                                                                                                class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
-                                                                                                {% translate "URL" %}
-                                                                                            </th>
-                                                                                            <th scope="col"
-                                                                                                class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
-                                                                                                {% translate "Username" %}
-                                                                                            </th>
-                                                                                            <th scope="col"
-                                                                                                class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
-                                                                                                {% translate "Password" %}
-                                                                                            </th>
-                                                                                            <th scope="col"
-                                                                                                class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
-                                                                                                #
-                                                                                            </th>
-                                                                                        </tr>
-                                                                                    </thead>
-                                                                                    <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                                                                                        <tr>
-                                                                                            <td class="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">
-                                                                                                <p class="text-balance">Lorem ipsum, dolor sit amet conse</p>
-                                                                                            </td>
-                                                                                            <td class="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">Name</td>
-                                                                                            <td class="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">
-                                                                                                <div>
-                                                                                                    <div class="flex rounded-md shadow-sm">
-                                                                                                        <input type="url"
-                                                                                                               id="url-input-{{ object.pk }}"
-                                                                                                               disabled
-                                                                                                               data-label="Account URL"
-                                                                                                               readonly
-                                                                                                               value="{{ object.account_url }}"
-                                                                                                               name="url-input-{{ object.pk }}"
-                                                                                                               class="{{ BW_FULL_INPUT_CSS_CLASSES }} ca-credentials-input py-1 px-2 block w-full border-gray-200 shadow-sm rounded-l-md text-xs focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400" />
-                                                                                                        <button type="button"
-                                                                                                                disabled
-                                                                                                                data-credentials-id="url-input-{{ object.pk }}"
-                                                                                                                class="{{ BW_FULL_INPUT_CSS_CLASSES }} ca-credentials-btn inline-flex flex-shrink-0 justify-center items-center w-[2rem] hover:text-white rounded-r-md border border-transparent font-semibold bg-blue-100 text-blue-500 hover:bg-blue-500 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all text-sm dark:focus:ring-offset-gray-800">
-                                                                                                            <i class="fa-solid fa-clipboard w-4 h-4"></i>
-                                                                                                        </button>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </td>
-                                                                                            <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">
-                                                                                                <div>
-                                                                                                    <div class="flex rounded-md shadow-sm">
-                                                                                                        <input type="text"
-                                                                                                               id="username-input-{{ object.pk }}"
-                                                                                                               disabled
-                                                                                                               data-label="Username"
-                                                                                                               value="{{ object.account_username }}"
-                                                                                                               readonly
-                                                                                                               name="username-input-{{ object.pk }}"
-                                                                                                               class="{{ BW_FULL_INPUT_CSS_CLASSES }} ca-credentials-input py-1 px-2 block w-full border-gray-200 shadow-sm rounded-l-md text-xs focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400" />
-                                                                                                        <button type="button"
-                                                                                                                disabled
-                                                                                                                data-credentials-id="username-input-{{ object.pk }}"
-                                                                                                                class="{{ BW_FULL_INPUT_CSS_CLASSES }} ca-credentials-btn inline-flex flex-shrink-0 justify-center items-center w-[2rem] hover:text-white rounded-r-md border border-transparent font-semibold bg-blue-100 text-blue-500 hover:bg-blue-500 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all text-sm dark:focus:ring-offset-gray-800">
-                                                                                                            <i class="fa-solid fa-clipboard w-4 h-4"></i>
-                                                                                                        </button>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </td>
-                                                                                            <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">
-                                                                                                <div>
-                                                                                                    <div class="grid grid-cols-3 gap-1">
-                                                                                                        <div class="col-span-2">
-                                                                                                            <input type="password"
-                                                                                                                   readonly
-                                                                                                                   id="password-input-{{ object.pk }}"
-                                                                                                                   name="password-input-{{ object.pk }}"
-                                                                                                                   disabled
-                                                                                                                   value="{{ object.decrypted_account_password }}"
-                                                                                                                   data-label="Password"
-                                                                                                                   class="{{ BW_FULL_INPUT_CSS_CLASSES }} ca-credentials-input py-1 px-2 block w-full border-gray-200 rounded-md text-xs focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400" />
-                                                                                                        </div>
+                                                                {% if object.briefcase.accounts.all %}
+                                                                    <div class="flex flex-col">
+                                                                        <div class="-m-1.5 overflow-x-auto">
+                                                                            <div class="p-1.5 min-w-full inline-block align-middle">
+                                                                                <div class="border rounded-lg shadow overflow-hidden dark:border-gray-700 dark:shadow-gray-900">
+                                                                                    <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                                                                        {# <caption class="py-2 text-start text-sm text-gray-600 dark:text-gray-500">{% translate "List of notes" %}</caption> #}
+                                                                                        <thead class="bg-gray-50 dark:bg-gray-700">
+                                                                                            <tr>
+                                                                                                <th scope="col"
+                                                                                                    class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
+                                                                                                    {% translate "Title" %}
+                                                                                                </th>
+                                                                                                <th scope="col"
+                                                                                                    class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
+                                                                                                    {% translate "Name" %}
+                                                                                                </th>
+                                                                                                <th scope="col"
+                                                                                                    class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
+                                                                                                    {% translate "URL" %}
+                                                                                                </th>
+                                                                                                <th scope="col"
+                                                                                                    class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
+                                                                                                    {% translate "Username" %}
+                                                                                                </th>
+                                                                                                <th scope="col"
+                                                                                                    class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
+                                                                                                    {% translate "Password" %}
+                                                                                                </th>
+                                                                                                <th scope="col"
+                                                                                                    class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase dark:text-gray-400">
+                                                                                                    #
+                                                                                                </th>
+                                                                                            </tr>
+                                                                                        </thead>
+                                                                                        <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                                                                            {% for s_account in object.briefcase.accounts.all %}
+                                                                                                <tr>
+                                                                                                    <td class="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">
+                                                                                                        <p class="text-balance italic">{{ s_account.title|safe }}</p>
+                                                                                                    </td>
+                                                                                                    <td class="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">
+                                                                                                        {{ s_account.get_name_display|safe }}
+                                                                                                    </td>
+                                                                                                    <td class="px-6 py-4 text-sm font-medium text-gray-800 dark:text-gray-200">
                                                                                                         <div>
-                                                                                                            <div class="hs-tooltip inline-block">
+                                                                                                            <div class="flex rounded-md shadow-sm">
+                                                                                                                <input type="url"
+                                                                                                                       id="url-input-{{ s_account.pk }}"
+                                                                                                                       disabled
+                                                                                                                       data-label="Account URL"
+                                                                                                                       readonly
+                                                                                                                       value="{{ s_account.url }}"
+                                                                                                                       name="url-input-{{ s_account.pk }}"
+                                                                                                                       class="{{ BW_FULL_INPUT_CSS_CLASSES }} ca-credentials-input py-1 px-2 block w-full border-gray-200 shadow-sm rounded-l-md text-xs focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400" />
                                                                                                                 <button type="button"
                                                                                                                         disabled
-                                                                                                                        data-credentials-id="password-input-{{ object.pk }}"
-                                                                                                                        class="{{ BW_FULL_INPUT_CSS_CLASSES }} ca-credentials-btn hs-tooltip-toggle mr-1 inline-flex flex-shrink-0 justify-center items-center gap-2 h-[1.7rem] w-[1.7rem] rounded-full border border-transparent hover:text-white font-semibold bg-blue-100 text-blue-500 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm  dark:focus:ring-offset-gray-800">
-                                                                                                                    <i class="fa-solid fa-clipboard w-3 h-3"></i>
-                                                                                                                    <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity hover:text-white inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
-                                                                                                                          role="tooltip">{% translate "Copy" %}</span>
-                                                                                                                </button>
-                                                                                                            </div>
-                                                                                                            <div class="hs-tooltip inline-block">
-                                                                                                                <button type="button"
-                                                                                                                        disabled
-                                                                                                                        data-credentials-id="password-input-{{ object.pk }}"
-                                                                                                                        data-is-visible="false"
-                                                                                                                        class="{{ BW_FULL_INPUT_CSS_CLASSES }} ca-show-password-btn hs-tooltip-toggle mr-1 inline-flex flex-shrink-0 justify-center items-center gap-2 h-[1.7rem] w-[1.7rem] rounded-full border border-transparent font-semibold bg-blue-100 text-blue-500 hover:bg-blue-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm  dark:focus:ring-offset-gray-800">
-                                                                                                                    <span class="ca-icon">
-                                                                                                                        <i class="fa-solid fa-eye w-3 h-3"></i>
-                                                                                                                    </span>
-                                                                                                                    <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
-                                                                                                                          role="tooltip">{% translate "Show" %}</span>
+                                                                                                                        data-credentials-id="url-input-{{ s_account.pk }}"
+                                                                                                                        class="{{ BW_FULL_INPUT_CSS_CLASSES }} ca-credentials-btn inline-flex flex-shrink-0 justify-center items-center w-[2rem] hover:text-white rounded-r-md border border-transparent font-semibold bg-blue-100 text-blue-500 hover:bg-blue-500 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                                                                                                    <i class="fa-solid fa-clipboard w-4 h-4"></i>
                                                                                                                 </button>
                                                                                                             </div>
                                                                                                         </div>
-                                                                                                    </div>
-                                                                                                </div>
-                                                                                            </td>
-                                                                                            <td class="px-6 py-4 text-end text-sm font-medium">
-                                                                                                <button type="button"
-                                                                                                        class="py-3 pr-4 pl-1.5 inline-flex items-center gap-x-2 text-sm font-semibold text-center rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 size-[30px]">
-                                                                                                    <svg xmlns="http://www.w3.org/2000/svg"
-                                                                                                         width="16"
-                                                                                                         height="16"
-                                                                                                         fill="currentColor"
-                                                                                                         class="flex-shrink-0 size-4"
-                                                                                                         viewBox="0 0 16 16">
-                                                                                                        <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
-                                                                                                        <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
-                                                                                                    </svg>
-                                                                                                </button>
-                                                                                            </td>
-                                                                                        </tr>
-                                                                                    </tbody>
-                                                                                </table>
+                                                                                                    </td>
+                                                                                                    <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">
+                                                                                                        <div>
+                                                                                                            <div class="flex rounded-md shadow-sm">
+                                                                                                                <input type="text"
+                                                                                                                       id="username-input-{{ s_account.pk }}"
+                                                                                                                       disabled
+                                                                                                                       data-label="Username"
+                                                                                                                       value="{{ s_account.username_email }}"
+                                                                                                                       readonly
+                                                                                                                       name="username-input-{{ s_account.pk }}"
+                                                                                                                       class="{{ BW_FULL_INPUT_CSS_CLASSES }} ca-credentials-input py-1 px-2 block w-full border-gray-200 shadow-sm rounded-l-md text-xs focus:z-10 focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400" />
+                                                                                                                <button type="button"
+                                                                                                                        disabled
+                                                                                                                        data-credentials-id="username-input-{{ s_account.pk }}"
+                                                                                                                        class="{{ BW_FULL_INPUT_CSS_CLASSES }} ca-credentials-btn inline-flex flex-shrink-0 justify-center items-center w-[2rem] hover:text-white rounded-r-md border border-transparent font-semibold bg-blue-100 text-blue-500 hover:bg-blue-500 focus:z-10 focus:outline-none focus:ring-2 focus:ring-blue-100 transition-all text-sm dark:focus:ring-offset-gray-800">
+                                                                                                                    <i class="fa-solid fa-clipboard w-4 h-4"></i>
+                                                                                                                </button>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </td>
+                                                                                                    <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200">
+                                                                                                        <div>
+                                                                                                            <div class="grid grid-cols-3 gap-1">
+                                                                                                                <div class="col-span-2">
+                                                                                                                    <input type="password"
+                                                                                                                           readonly
+                                                                                                                           id="password-input-{{ s_account.pk }}"
+                                                                                                                           name="password-input-{{ s_account.pk }}"
+                                                                                                                           disabled
+                                                                                                                           value="{{ s_account.decrypted_password }}"
+                                                                                                                           data-label="Password"
+                                                                                                                           class="{{ BW_FULL_INPUT_CSS_CLASSES }} ca-credentials-input py-1 px-2 block w-full border-gray-200 rounded-md text-xs focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400" />
+                                                                                                                </div>
+                                                                                                                <div>
+                                                                                                                    <div class="hs-tooltip inline-block">
+                                                                                                                        <button type="button"
+                                                                                                                                disabled
+                                                                                                                                data-credentials-id="password-input-{{ s_account.pk }}"
+                                                                                                                                class="{{ BW_FULL_INPUT_CSS_CLASSES }} ca-credentials-btn hs-tooltip-toggle mr-1 inline-flex flex-shrink-0 justify-center items-center gap-2 h-[1.7rem] w-[1.7rem] rounded-full border border-transparent hover:text-white font-semibold bg-blue-100 text-blue-500 hover:bg-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm  dark:focus:ring-offset-gray-800">
+                                                                                                                            <i class="fa-solid fa-clipboard w-3 h-3"></i>
+                                                                                                                            <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity hover:text-white inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                                                                                                                  role="tooltip">{% translate "Copy" %}</span>
+                                                                                                                        </button>
+                                                                                                                    </div>
+                                                                                                                    <div class="hs-tooltip inline-block">
+                                                                                                                        <button type="button"
+                                                                                                                                disabled
+                                                                                                                                data-credentials-id="password-input-{{ s_account.pk }}"
+                                                                                                                                data-is-visible="false"
+                                                                                                                                class="{{ BW_FULL_INPUT_CSS_CLASSES }} ca-show-password-btn hs-tooltip-toggle mr-1 inline-flex flex-shrink-0 justify-center items-center gap-2 h-[1.7rem] w-[1.7rem] rounded-full border border-transparent font-semibold bg-blue-100 text-blue-500 hover:bg-blue-500 hover:text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm  dark:focus:ring-offset-gray-800">
+                                                                                                                            <span class="ca-icon">
+                                                                                                                                <i class="fa-solid fa-eye w-3 h-3"></i>
+                                                                                                                            </span>
+                                                                                                                            <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                                                                                                                  role="tooltip">{% translate "Show" %}</span>
+                                                                                                                        </button>
+                                                                                                                    </div>
+                                                                                                                </div>
+                                                                                                            </div>
+                                                                                                        </div>
+                                                                                                    </td>
+                                                                                                    <td class="px-6 py-4 text-end text-sm font-medium">
+                                                                                                        <button type="button"
+                                                                                                                class="py-3 pr-4 pl-1.5 inline-flex items-center gap-x-2 text-sm font-semibold text-center rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 size-[30px]">
+                                                                                                            <svg xmlns="http://www.w3.org/2000/svg"
+                                                                                                                 width="16"
+                                                                                                                 height="16"
+                                                                                                                 fill="currentColor"
+                                                                                                                 class="flex-shrink-0 size-4"
+                                                                                                                 viewBox="0 0 16 16">
+                                                                                                                <path d="M16 8s-3-5.5-8-5.5S0 8 0 8s3 5.5 8 5.5S16 8 16 8M1.173 8a13 13 0 0 1 1.66-2.043C4.12 4.668 5.88 3.5 8 3.5s3.879 1.168 5.168 2.457A13 13 0 0 1 14.828 8q-.086.13-.195.288c-.335.48-.83 1.12-1.465 1.755C11.879 11.332 10.119 12.5 8 12.5s-3.879-1.168-5.168-2.457A13 13 0 0 1 1.172 8z" />
+                                                                                                                <path d="M8 5.5a2.5 2.5 0 1 0 0 5 2.5 2.5 0 0 0 0-5M4.5 8a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0" />
+                                                                                                            </svg>
+                                                                                                        </button>
+                                                                                                    </td>
+                                                                                                </tr>
+                                                                                            {% endfor %}
+                                                                                        </tbody>
+                                                                                    </table>
+                                                                                </div>
                                                                             </div>
                                                                         </div>
                                                                     </div>
-                                                                </div>
+                                                                {% else %}
+
+                                                                    {% include "bw_ui_components/global/empty_card.html" with label="staff account" %}
+
+                                                                {% endif %}
                                                             </div>
                                                         </div>
                                                     </div>
@@ -985,13 +970,13 @@
     </div>
     {# End Permissions and Details Modal #}
     {# Start create briefcase note modal #}
-    {% bw_js_modal modal_css_id="createBriefcaseNoteModal" modal_size="md" modal_title="Create new briefcase note" is_submit_btn_enabled=True is_form_modal=True form_object=briefcase_note_form is_upload_form=False form_id="createBriefcaseNoteForm" form_submit_text="Create" action_url="dashboard:client_account:api:client-account-api-router-list" %}
+    {% bw_js_modal modal_css_id="createBriefcaseNoteModal" modal_size="md" modal_title="Create new briefcase note" is_submit_btn_enabled=True is_form_modal=True form_object=briefcase_note_form is_upload_form=False form_id="createBriefcaseNoteForm" form_submit_text="Create" action_url="dashboard:briefcase:briefcase_staff_notes:api:staff-note-api-router-list" %}
     {# End create briefcase note modal #}
     {# Start create briefcase document modal #}
-    {% bw_js_modal modal_css_id="createBriefcaseDocumentModal" modal_size="md" modal_title="Create new briefcase document" is_submit_btn_enabled=True is_form_modal=True form_object=briefcase_document_form is_upload_form=True form_id="createBriefcaseDocumentForm" form_submit_text="Create" action_url="dashboard:client_account:api:client-account-api-router-list" %}
+    {% bw_js_modal modal_css_id="createBriefcaseDocumentModal" modal_size="md" modal_title="Create new briefcase document" is_submit_btn_enabled=True is_form_modal=True form_object=briefcase_document_form is_upload_form=True form_id="createBriefcaseDocumentForm" form_submit_text="Create" action_url="dashboard:briefcase:briefcase_staff_documents:api:staff-documents-api-router-list" %}
     {# End create briefcase document modal #}
     {# Start create briefcase account modal #}
-    {% bw_js_modal modal_css_id="createBriefcaseAccountModal" modal_size="md" modal_title="Create new briefcase account" is_submit_btn_enabled=True is_form_modal=True form_object=briefcase_account_form is_upload_form=True form_id="createBriefcaseAccountForm" form_submit_text="Create" action_url="dashboard:client_account:api:client-account-api-router-list" %}
+    {% bw_js_modal modal_css_id="createBriefcaseAccountModal" modal_size="md" modal_title="Create new briefcase account" is_submit_btn_enabled=True is_form_modal=True form_object=briefcase_account_form is_upload_form=True form_id="createBriefcaseAccountForm" form_submit_text="Create" action_url="dashboard:briefcase:briefcase_staff_accounts:api:staff-accounts-api-router-list" %}
     {# End create briefcase account modal #}
     {# End Models #}
 {% endblock dashboard_content_block %}
