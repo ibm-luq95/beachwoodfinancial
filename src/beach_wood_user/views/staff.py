@@ -71,9 +71,15 @@ class StaffMemberDetailsView(
             staff_form = ManagerForm(
                 initial=staff_form_initial, removed_fields=removed_fields
             )
-        briefcase_note_form = BriefcaseNoteMiniForm()
-        briefcase_document_form = BriefcaseDocumentMiniForm()
-        briefcase_account_form = BriefcaseAccountMiniForm()
+        briefcase_note_form = BriefcaseNoteMiniForm(
+            initial={"briefcase": self.get_object().briefcase.pk}
+        )
+        briefcase_document_form = BriefcaseDocumentMiniForm(
+            initial={"briefcase": self.get_object().briefcase.pk}
+        )
+        briefcase_account_form = BriefcaseAccountMiniForm(
+            initial={"briefcase": self.get_object().briefcase.pk}
+        )
 
         context.setdefault("clients", clients)
         context.setdefault("special_assignment_form", special_assignment_form)
