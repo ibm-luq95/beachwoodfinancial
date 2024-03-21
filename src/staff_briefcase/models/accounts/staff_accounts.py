@@ -22,6 +22,7 @@ class StaffAccounts(BaseModelMixin, StrModelMixin):
     )
 
     class Meta(BaseModelMixin.Meta):
+        ordering = ["title"]
         indexes = [
             models.Index(name="staff_account_name_idx", fields=["name"]),
             models.Index(name="staff_account_title_idx", fields=["title"]),

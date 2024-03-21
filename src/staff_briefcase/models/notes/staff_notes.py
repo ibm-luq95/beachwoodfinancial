@@ -25,3 +25,4 @@ class StaffNotes(BaseModelMixin, StrModelMixin):
     class Meta:
         verbose_name = _("Staff Note")
         verbose_name_plural = _("Staff Notes")
+        ordering = ["title"]
