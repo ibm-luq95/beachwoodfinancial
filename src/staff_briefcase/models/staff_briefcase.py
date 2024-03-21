@@ -29,4 +29,4 @@ class StaffBriefcase(BaseModelMixin):
         ]
 
     def __str__(self):
-        return f"Briefcase for - {self.user}"
+        return _(f"Briefcase for - {self.user}")
