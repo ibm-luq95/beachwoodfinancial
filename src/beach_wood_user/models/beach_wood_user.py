@@ -101,34 +101,21 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin, GuardianUserMix
 
     def get_staff_details(self) -> dict:
         user_dict = dict()
+        staff_object = self.get_staff_member_object.get("staff_object")
         user_dict.update(
             {
-                "linkedin": self.get_staff_member_object.get(
-                    "staff_object"
-                ).profile.linkedin,
-                "instagram": self.get_staff_member_object.get(
-                    "staff_object"
-                ).profile.instagram,
-                "github": self.get_staff_member_object.get("staff_object").profile.github,
-                "profile_picture": self.get_staff_member_object.get(
-                    "staff_object"
-                ).profile.profile_picture,
-                "facebook": self.get_staff_member_object.get(
-                    "staff_object"
-                ).profile.facebook,
-                "twitter": self.get_staff_member_object.get(
-                    "staff_object"
-                ).profile.twitter,
-                "bio": self.get_staff_member_object.get("staff_object").profile.bio,
+                "linkedin": getattr(staff_object.profile, "linkedin", None),
+                "instagram": getattr(staff_object.profile, "instagram", None),
+                "github": getattr(staff_object.profile, "github", None),
+                "profile_picture": getattr(staff_object.profile, "profile_picture", None),
+                "facebook": getattr(staff_object.profile, "facebook", None),
+                "twitter": getattr(staff_object.profile, "twitter", None),
+                "bio": getattr(staff_object.profile, "bio", None),
                 "first_name": self.first_name,
                 "last_name": self.last_name,
                 "email": self.email,
-                "phone_number": self.get_staff_member_object.get(
-                    "staff_object"
-                ).profile.phone_number,
-                "address": self.get_staff_member_object.get(
-                    "staff_object"
-                ).profile.address,
+                "phone_number": getattr(staff_object.profile, "phone_number", None),
+                "address": getattr(staff_object.profile, "address", None),
             }
         )
         if self.user_type == "assistant":
