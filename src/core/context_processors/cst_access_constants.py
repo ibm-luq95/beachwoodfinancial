@@ -8,6 +8,7 @@ from core.constants.general import (
     IS_SHOW_CREATED_AT,
     DEFAULT_MEDIUM_TRUNCATED_STRING,
     DEFAULT_LONG_TRUNCATED_STRING,
+    DEFAULT_SHORT_TRUNCATED_STRING,
 )
 from core.constants.status_labels import (
     CON_ENABLED,
@@ -26,7 +27,13 @@ from core.constants.status_labels import (
     CON_STALLED,
     CON_ONGOING,
 )
-from core.constants.users import CON_BOOKKEEPER, CON_ASSISTANT, CON_MANAGER, CON_DEVELOPER, CON_USER
+from core.constants.users import (
+    CON_BOOKKEEPER,
+    CON_ASSISTANT,
+    CON_MANAGER,
+    CON_DEVELOPER,
+    CON_USER,
+)
 
 
 def access_constants(request) -> dict:
@@ -63,6 +70,7 @@ def access_constants(request) -> dict:
         "DEFAULT_TEMPLATE_TABLE_LIST_TRUNCATED_STRING_WIDGETS": (
             DEFAULT_TEMPLATE_TABLE_LIST_TRUNCATED_STRING_WIDGETS
         ),
+        "DEFAULT_SHORT_TRUNCATED_STRING": DEFAULT_SHORT_TRUNCATED_STRING,
     }
 
 
