@@ -4,8 +4,6 @@ import traceback
 from django.db import transaction
 from rest_framework import serializers
 
-from core.constants import EXCLUDED_FIELDS
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from staff_briefcase.models import StaffAccounts, StaffBriefcase
 
 
@@ -19,7 +17,6 @@ class StaffAccountsSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         try:
-            BWDebuggingPrint.pprint(validated_data)
             with transaction.atomic():
                 briefcase_pk = validated_data.pop("briefcase")
                 briefcase_obj = StaffBriefcase.objects.get(pk=briefcase_pk)
