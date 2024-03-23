@@ -1,0 +1,139 @@
+{% load i18n %}
+
+<div id="job-categories-modal"
+     class="bw-js-modal hs-overlay hidden w-full h-full fixed top-0 left-0 z-[60] overflow-x-hidden overflow-y-auto [--overlay-backdrop:static]">
+    <div class="hs-overlay-open:mt-7 hs-overlay-open:opacity-100 hs-overlay-open:duration-500 mt-0 opacity-0 ease-out transition-all lg:max-w-4xl lg:w-full m-3 lg:mx-auto">
+        <div class="flex flex-col bg-white border shadow-sm rounded-xl pointer-events-auto dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+            <div class="flex justify-between items-center py-3 px-4 border-b dark:border-gray-700">
+                <h3 class="font-bold text-gray-800 dark:text-white">
+                    {{ filter_categories_dict.categories_modal_title }}
+                </h3>
+                <button type="button"
+                        class="flex justify-center items-center size-7 text-sm font-semibold rounded-full border border-transparent text-gray-800 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-white dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                        data-hs-overlay="#job-categories-modal">
+                    <span class="sr-only">{% translate "Close" %}</span>
+                    <svg class="flex-shrink-0 size-4"
+                         xmlns="http://www.w3.org/2000/svg"
+                         width="24"
+                         height="24"
+                         viewBox="0 0 24 24"
+                         fill="none"
+                         stroke="currentColor"
+                         stroke-width="2"
+                         stroke-linecap="round"
+                         stroke-linejoin="round">
+                        <path d="M18 6 6 18" />
+                        <path d="m6 6 12 12" />
+                    </svg>
+                </button>
+            </div>
+            <div class="p-4 overflow-y-auto">
+                <nav class="relative z-0 flex border rounded-xl overflow-hidden dark:border-gray-700"
+                     aria-label="Tabs"
+                     role="tablist">
+                    <button type="button"
+                            class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-s-0 border-s border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-400 active"
+                            id="bar-with-underline-item-1"
+                            data-hs-tab="#bar-with-underline-1"
+                            aria-controls="bar-with-underline-1"
+                            role="tab">
+                        <i class="fa-solid fa-table-list inline-block mr-2"></i>
+                        {% translate "List" %}
+                    </button>
+                    <button type="button"
+                            class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-s-0 border-s border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-400"
+                            id="bar-with-underline-item-2"
+                            data-hs-tab="#bar-with-underline-2"
+                            aria-controls="bar-with-underline-2"
+                            role="tab">
+                        <i class="fa-solid fa-plus inline-block mr-2"></i>
+                        {% translate "Add" %}
+                    </button>
+                </nav>
+                <div class="mt-3">
+                    <div id="bar-with-underline-1"
+                         role="tabpanel"
+                         aria-labelledby="bar-with-underline-item-1">
+                        <div class="flex flex-col">
+                            <div class="-m-1.5 h-80 {{ BW_PRELINE_ROUNDED_SCROLLBAR_CSS_CLASSES }}">
+                                <div class="p-1.5 min-w-full inline-block align-middle">
+                                    <div class="overflow-hidden">
+                                        {% if filter_categories.categories_object_list %}
+                                            <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col"
+                                                            class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">
+                                                            {% translate "Name" %}
+                                                        </th>
+                                                        <th scope="col"
+                                                            class="px-6 py-3 text-start text-xs font-medium text-gray-500 uppercase">
+                                                            {% translate "Clients" %}
+                                                        </th>
+                                                        <th scope="col"
+                                                            class="px-6 py-3 text-end text-xs font-medium text-gray-500 uppercase">
+                                                            Action
+                                                        </th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    {% for cat_object in filter_categories.categories_object_list %}
+                                                        <tr class="odd:bg-white even:bg-gray-100 dark:odd:bg-slate-900 dark:even:bg-slate-800">
+                                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-800 dark:text-gray-200">
+                                                                {{ cat_object.name|safe }}
+                                                            </td>
+                                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-800 dark:text-gray-200">
+                                                                {{ cat_object.jobs.count }}
+                                                            </td>
+                                                            <td class="px-6 py-4 whitespace-nowrap text-end text-sm font-medium">
+                                                                <button type="button"
+                                                                        class="inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent text-blue-600 hover:text-blue-800 disabled:opacity-50 disabled:pointer-events-none dark:text-blue-500 dark:hover:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                                                                    Delete
+                                                                </button>
+                                                            </td>
+                                                        </tr>
+                                                    {% endfor %}
+                                                </tbody>
+                                            </table>
+                                        {% else %}
+
+                                            {% include "bw_ui_components/global/empty_card.html" with label="job categories" %}
+
+                                        {% endif %}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="bar-with-underline-2"
+                         class="hidden"
+                         role="tabpanel"
+                         aria-labelledby="bar-with-underline-item-2">
+                        <section>
+                            <article class="my-3 text-sm leading-6 text-slate-600 dark:text-slate-400">
+                                <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
+                                    <p>
+                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Et, reprehenderit natus omnis perferendis facere corporis minima. Quis aperiam praesentium dignissimos, delectus libero dicta nemo illo quam, sunt natus adipisci culpa.
+                                    </p>
+                                  </div>
+                            </article>
+                            <form action="" method="post">
+                                {% csrf_token %}
+                                {% component "bw_form" form=filter_categories_dict.categories_add_form perms=perms form_id=filter_categories.categories_add_form_css_id is_btns_enabled=False form_title="Add new category" %}{% endcomponent %}
+                            </form>
+                        </section>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end items-center gap-x-2 py-3 px-4 border-t dark:border-gray-700">
+                <button type="button"
+                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                        data-hs-overlay="#job-categories-modal">{% translate "Close" %}</button>
+                <button type="button"
+                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
+                    {% translate "Create" %}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
