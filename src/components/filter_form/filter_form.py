@@ -30,6 +30,7 @@ class BWFilterForm(component.Component):
         is_disabled: bool = False,
         filter_form_method: str = "GET",
         filter_form_title: str = _("Filters"),
+        filter_categories_is_enabled: bool = False,
     ) -> dict:
         try:
             filter_cancel_url = reverse_lazy(filter_cancel_url)
@@ -47,6 +48,7 @@ class BWFilterForm(component.Component):
             "filter_form_method": filter_form_method,
             "filter_form_title": filter_form_title,
             "filter_form_action": filter_form_action,
+            "filter_categories_is_enabled": filter_categories_is_enabled,
         }
 
     class Media:
