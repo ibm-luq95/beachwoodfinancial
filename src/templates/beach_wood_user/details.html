@@ -190,15 +190,9 @@
                             <nav class="relative z-0 flex border rounded-xl overflow-hidden dark:border-gray-700"
                                  aria-label="Tabs"
                                  role="tablist">
-                                <button type="button"
-                                        class="active hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400"
-                                        id="user-briefcase-tab-underline"
-                                        data-hs-tab="#user-briefcase-tab"
-                                        aria-controls="user-briefcase-tab"
-                                        role="tab">{% translate "Briefcase" %}</button>
                                 {% if object.user_type == CON_BOOKKEEPER %}
                                     <button type="button"
-                                            class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400"
+                                            class="active hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400"
                                             id="bar-with-underline-item-1"
                                             data-hs-tab="#clients-tab"
                                             aria-controls="clients-tab"
@@ -226,11 +220,18 @@
                                             aria-controls="add-clients-tab"
                                             role="tab">{% translate "Add clients" %}</button>
                                 {% endif %}
+                                <button type="button"
+                                        class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400"
+                                        id="user-briefcase-tab-underline"
+                                        data-hs-tab="#user-briefcase-tab"
+                                        aria-controls="user-briefcase-tab"
+                                        role="tab">{% translate "Briefcase" %}</button>
                             </nav>
                             <div class="mt-3">
                                 {# Start Permissions Tab #}
                                 <div id="user-briefcase-tab"
                                      role="tabpanel"
+                                     class="hidden"
                                      aria-labelledby="user-briefcase-tab-underline">
                                     <section id="briefcaseWrapper">
                                         <section id="briefcase-wrapper" class="w-full">
@@ -583,7 +584,6 @@
                                 {% if object.user_type == CON_BOOKKEEPER %}
                                     <div id="clients-tab"
                                          role="tabpanel"
-                                         class="hidden"
                                          aria-labelledby="bar-with-underline-item-1">
                                         {% if object.get_staff_member_object.staff_object.get_proxy_model.clients.all %}
                                             <!-- Table Section -->
