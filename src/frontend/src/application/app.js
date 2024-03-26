@@ -41,6 +41,7 @@ import "./beach_wood_user/details.js";
 import "./staff_briefcase/staff_notes.js";
 import "./staff_briefcase/staff_documents.js";
 import "./staff_briefcase/staff_accounts.js";
+import "./filter_category_forms/filter_category_forms.js";
 import { setFormInputsReadOnly } from "../utils/form_helpers";
 
 window.document.addEventListener("DOMContentLoaded", function () {
