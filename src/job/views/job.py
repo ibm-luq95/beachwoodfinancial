@@ -92,8 +92,14 @@ class JobListView(
             {
                 "categories_add_form": JobCategoryForm,
                 "categories_add_form_css_id": "jobCategoriesCreateForm",
+                "categories_add_form_css_class": "filterCategoryForms",
                 "categories_object_list": JobCategory.objects.all(),
                 "categories_modal_title": _("Job categories"),
+                "category_app_label": "job_category",
+                "is_actions_menu_enabled": False,
+                "category_filter_form_action_url": reverse_lazy(
+                    "dashboard:job_category:api:job-category-api-router-list"
+                ),
             },
         )
 
