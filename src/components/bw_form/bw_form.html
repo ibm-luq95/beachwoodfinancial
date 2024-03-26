@@ -41,6 +41,7 @@
         {% endif %}
         {# Start Form #}
         <form id="{{ form_id }}"
+              {% if extra_form_css_classes %}class="{{ extra_form_css_classes }}"{% endif %}
               method="{{ form_method }}"
               action="{{ form_action_url }}"
               {% if is_upload_form == True %}enctype="multipart/form-data"{% endif %}>
