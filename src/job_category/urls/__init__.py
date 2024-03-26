@@ -1,4 +1,4 @@
-from django.urls import path
+from django.urls import path, include
 
 from job_category.views import (
     JobCategoryCreateView,
@@ -14,4 +14,5 @@ urlpatterns = [
     path("create", JobCategoryCreateView.as_view(), name="create"),
     path("update/<uuid:pk>", JobCategoryUpdateView.as_view(), name="update"),
     path("delete/<uuid:pk>", JobCategoryDeleteView.as_view(), name="delete"),
+    path("api/", include("job_category.urls.api"), name="api"),
 ]
