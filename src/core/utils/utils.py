@@ -7,6 +7,12 @@ from django.utils.translation import gettext as _
 
 
 def sort_dict(dict_object: dict) -> dict:
+    """
+    Sorts a dictionary object recursively based on keys and returns the sorted dictionary.
+
+    :param dict_object: a dictionary to be sorted
+    :return: a sorted dictionary
+    """
     res = dict()
     for k, v in sorted(dict_object.items()):
         if isinstance(v, dict):

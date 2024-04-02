@@ -10,8 +10,8 @@ from core.utils import PasswordHasher
 
 class StaffAccounts(BaseModelMixin, StrModelMixin):
     title = models.CharField(_("title"), max_length=25)
-    url = models.URLField(_("url"), null=True, blank=True)
-    username_email = models.CharField(_("Username / Email"), max_length=100)
+    url = models.TextField(_("url"), null=True, blank=True)
+    username_email = models.CharField(_("Username / Email"), max_length=150)
     password = models.CharField(_("Password"), max_length=250)
     name = models.CharField(
         _("name"),
@@ -22,6 +22,7 @@ class StaffAccounts(BaseModelMixin, StrModelMixin):
     )
 
     class Meta(BaseModelMixin.Meta):
+        ordering = ["title"]
         indexes = [
             models.Index(name="staff_account_name_idx", fields=["name"]),
             models.Index(name="staff_account_title_idx", fields=["title"]),
@@ -40,7 +41,7 @@ class StaffAccounts(BaseModelMixin, StrModelMixin):
 
     def save(self, *args, **kwargs):
         if self.decrypted_password:
-            self.account_password = PasswordHasher.encrypt(self.password)
+            self.password = PasswordHasher.encrypt(self.password)
         else:
-            self.account_password = PasswordHasher.encrypt(self.account_password)
+            self.password = PasswordHasher.encrypt(self.password)
         super(StaffAccounts, self).save(*args, **kwargs)

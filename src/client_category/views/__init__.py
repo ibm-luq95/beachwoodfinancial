@@ -5,3 +5,4 @@ from .category import (
     ClientCategoryUpdateView,
     ClientCategoryDeleteView,
 )
+from .api import ClientCategoryViewSet

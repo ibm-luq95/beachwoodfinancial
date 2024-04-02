@@ -13,7 +13,7 @@ import "animate.css";
 import "@fortawesome/fontawesome-free/js/all.js";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import hljs from "highlight.js";
-import 'highlight.js/styles/default.css';
+import "highlight.js/styles/default.css";
 import NiceSelect from "nice-select2/dist/js/nice-select2.js";
 import "nice-select2/dist/css/nice-select2.css";
 
@@ -38,6 +38,10 @@ import "./client/client.js";
 import "./client_account/client_account.js";
 import "./client_account/credentials_inputs.js";
 import "./beach_wood_user/details.js";
+import "./staff_briefcase/staff_notes.js";
+import "./staff_briefcase/staff_documents.js";
+import "./staff_briefcase/staff_accounts.js";
+import "./filter_category_forms/filter_category_forms.js";
 import { setFormInputsReadOnly } from "../utils/form_helpers";
 
 window.document.addEventListener("DOMContentLoaded", function () {

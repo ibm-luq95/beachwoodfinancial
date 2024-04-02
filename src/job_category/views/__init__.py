@@ -4,3 +4,4 @@ from .job_category import (
     JobCategoryDeleteView,
     JobCategoryUpdateView,
 )
+from .api import JobCategoryViewSet

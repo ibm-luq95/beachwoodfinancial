@@ -18,6 +18,8 @@ from document.forms import DocumentForm
 from job.filters import JobFilter
 from job.forms import JobForm
 from job.models import JobProxy
+from job_category.forms import JobCategoryForm
+from job_category.models import JobCategory
 from note.forms import NoteForm
 from special_assignment.forms import MiniSpecialAssignmentForm
 from task.forms import TaskForm
@@ -82,6 +84,22 @@ class JobListView(
             {
                 "tooltip_txt": BW_INFO_MODAL_CSS_CLASSES.get("job").get("tooltip_txt"),
                 "modal_css_id": BW_INFO_MODAL_CSS_CLASSES.get("job").get("cssID"),
+            },
+        )
+        context.setdefault("filter_categories_is_enabled", True)
+        context.setdefault(
+            "filter_categories",
+            {
+                "categories_add_form": JobCategoryForm,
+                "categories_add_form_css_id": "jobCategoriesCreateForm",
+                "categories_add_form_css_class": "filterCategoryForms",
+                "categories_object_list": JobCategory.objects.all(),
+                "categories_modal_title": _("Job categories"),
+                "category_app_label": "job_category",
+                "is_actions_menu_enabled": False,
+                "category_filter_form_action_url": reverse_lazy(
+                    "dashboard:job_category:api:job-category-api-router-list"
+                ),
             },
         )
 

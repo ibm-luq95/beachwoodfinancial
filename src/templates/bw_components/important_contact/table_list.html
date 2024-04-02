@@ -205,7 +205,7 @@
             {% if is_client_enabled is True or extra_context.is_client_enabled is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     <div class="px-6 py-3">
-                        {% if object.client %}
+                        {% if object.client.exists is True %}
                             <a href="{% url 'dashboard:client:details' object.client.get.pk %}">
                                 <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.client.get.name|safe }}</span>
                             </a>

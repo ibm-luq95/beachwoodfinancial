@@ -34,6 +34,7 @@ class ClientFilter(FilterCreatedMixin):
     categories = django_filters.ModelChoiceFilter(
         field_name="categories",
         queryset=ClientCategory.objects.all(),
+        widget=forms.SelectMultiple(attrs={"data_name": "client-categories"}),
         # widget=forms.CheckboxSelectMultiple,
         lookup_expr="exact",
         empty_label=_("---"),

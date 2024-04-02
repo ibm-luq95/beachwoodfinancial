@@ -25,5 +25,6 @@ class StaffDocuments(BaseModelMixin):
         return None
 
     class Meta:
+        ordering = ["title"]
         verbose_name = _("Staff Document")
         verbose_name_plural = _("Staff Documents")
