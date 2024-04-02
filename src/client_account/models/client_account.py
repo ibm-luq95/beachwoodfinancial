@@ -27,7 +27,7 @@ class ClientAccount(BaseModelMixin):
     account_name = models.CharField(_("account name"), max_length=50, null=True)
     # account_email = models.EmailField(_("account email"), max_length=50, null=True)
     account_url = models.TextField(_("account url"), null=True)
-    account_username = models.CharField(_("account username"), max_length=30, null=True)
+    account_username = models.CharField(_("account username"), max_length=150, null=True)
     account_password = models.CharField(_("account password"), max_length=250, null=True)
     status = models.CharField(
         _("status"),
