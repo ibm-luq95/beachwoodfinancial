@@ -101,7 +101,6 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
           const request = sendRequest(requestOptions);
           request
             .then((data) => {
-              console.log(data);
               showToastNotification("Permissions update successfully", "success");
               setTimeout(() => {
                 window.location.reload();
@@ -124,4 +123,10 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
         });
     });
   }
+
+  // const el = window.HSTabs.getInstance("#details-tab");
+
+  // el.on("change", ({ el, prev, current }) => {
+  //   console.log(el);
+  // });
 });

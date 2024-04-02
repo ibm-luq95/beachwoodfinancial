@@ -6,5 +6,7 @@ class JobConfig(AppConfig):
     name = "job"
 
     def ready(self):
+        import job.signals.archive_items
         from . import cron
+
         cron.check_past_due_jobs()

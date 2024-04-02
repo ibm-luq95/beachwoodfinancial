@@ -10,6 +10,7 @@ djangorestframework-stubs
 djangorestframework-stubs[compatible-mypy]
 django-debug-permissions
 django-request-viewer
+django-debug-toolbar-template-profiler
 django-silk
 djipsum
 gprof2dot

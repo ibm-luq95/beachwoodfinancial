@@ -26,3 +26,4 @@ class ClientCategoryForm(BaseModelFormMixin):
 
     class Meta(BaseModelFormMixin.Meta):
         model = ClientCategory
+        fields = ["name"]

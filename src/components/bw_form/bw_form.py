@@ -30,6 +30,7 @@ class BWForm(component.Component):
         hide_back_btn=False,
         hide_submit_btn=False,
         is_btns_enabled=True,
+        extra_form_css_classes: str | None = None,
     ):
         # form_action_url syntax: app_name:endpoint: client:details
         # if form_action_url is not None:
@@ -54,6 +55,7 @@ class BWForm(component.Component):
             "hide_back_btn": hide_back_btn,
             "hide_submit_btn": hide_submit_btn,
             "is_btns_enabled": is_btns_enabled,
+            "extra_form_css_classes": extra_form_css_classes,
         }
 
     class Media:

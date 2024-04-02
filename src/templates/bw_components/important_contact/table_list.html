@@ -25,7 +25,7 @@
 {% if is_show_create_btn is True %}
     {# Start Create Button Block #}
     {% block create_btn_block %}
-        {% component "tl_create_btn" app_name=app_label actions_base_url=actions_base_url %}
+        {% component "tl_create_btn" app_name=app_label actions_base_url=actions_base_url %}{% endcomponent %}
     {% endblock create_btn_block %}
     {# End Create Button Block #}
 {% endif %}
@@ -205,9 +205,13 @@
             {% if is_client_enabled is True or extra_context.is_client_enabled is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     <div class="px-6 py-3">
-                        <a href="{% url 'dashboard:client:details' object.client.get.pk %}">
-                            <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.client.get.name|safe }}</span>
-                        </a>
+                        {% if object.client.exists is True %}
+                            <a href="{% url 'dashboard:client:details' object.client.get.pk %}">
+                                <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.client.get.name|safe }}</span>
+                            </a>
+                        {% else %}
+                            ---
+                        {% endif %}
                     </div>
                 </td>
             {% endif %}

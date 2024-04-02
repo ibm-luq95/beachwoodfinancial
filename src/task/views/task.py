@@ -57,6 +57,7 @@ class TaskListView(
 				"is_show_status_column": True,
 				"is_show_type_column": True,
 				"is_show_manager_column": True,
+				"is_show_client_column": True,
 				"is_show_job_column": True,
 			},
 		)

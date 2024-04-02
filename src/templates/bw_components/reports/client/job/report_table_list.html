@@ -28,7 +28,7 @@
 {% if is_show_create_btn is True %}
     {# Start Create Button Block #}
     {% block create_btn_block %}
-        {% component "tl_create_btn" app_name=app_label actions_base_url=actions_base_url %}
+        {% component "tl_create_btn" app_name=app_label actions_base_url=actions_base_url %}{% endcomponent %}
     {% endblock create_btn_block %}
     {# End Create Button Block #}
 {% endif %}
@@ -109,32 +109,35 @@
                     <a href="{% url 'dashboard:client:details' object.client_obj.pk %}">
                         <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.client_obj.name|bw_truncate_titles }}</span>
                     </a>
-                    {% if object.client_obj.categories.all %}
-                        <div class="my-1 text-left">
-                            {% for category in object.client_obj.categories.all %}
-                                <div class="hs-tooltip inline-block mr-0.5">
-                                    <a href="#" class="hs-tooltip-toggle">
-                                        <span class="inline-flex items-center gap-1 py-0.5 px-2 rounded-full text-[10px] font-medium bg-blue-100 text-blue-800">{{ category.name }}</span>
-                                        <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
-                                              role="tooltip">{% translate "Category" %}</span>
-                                    </a>
-                                </div>
-                            {% endfor %}
-                        </div>
+                    {% if is_client_category_enabled is True %}
+                        {% if object.client_obj.categories.all %}
+                            <div class="my-1 text-left">
+                                {% for category in object.client_obj.categories.all %}
+                                    <div class="hs-tooltip inline-block mr-0.5">
+                                        <a href="#" class="hs-tooltip-toggle">
+                                            <span class="inline-flex items-center gap-1 py-0.5 px-2 rounded-full text-[10px] font-medium bg-blue-100 text-blue-800">{{ category.name }}</span>
+                                            <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                                  role="tooltip">{% translate "Category" %}</span>
+                                        </a>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
                     {% endif %}
                 </div>
             </td>
             {% for month in months_list %}
                 <td class="h-px w-px whitespace-nowrap">
                     {# {% if form.period_year.value is None %} #}
-                    {# Start All years #}
+                    {# {% print object.serialized_obj.organize_by_month.0 %} #}
                     {% if object.serialized_obj.has_reports is True %}
                         {% if form.period_year.value is not None %}
                             {% define object.serialized_obj.organize_by_month.0 as report_obj %}
                         {% else %}
                             {% define object.serialized_obj.all_reports as report_obj %}
                         {% endif %}
-                        {% extract_job_month_idx month report_obj.data as extracted_jobs %}
+                        {# {% print report_obj %} #}
+                        {% extract_job_month_idx month report_obj.data form.period_year.value as extracted_jobs %}
                         {% if extracted_jobs is not None %}
                             {% if extracted_jobs.job_period_month|cast_to_str == month|cast_to_str %}
                                 <div class="px-6 py-3">
@@ -198,7 +201,6 @@
                             </span>
                         </div>
                     {% endif %}
-                    {# End All years #}
                 </td>
             {% endfor %}
             {% if is_show_created_at is True or extra_context.is_show_created_at is True %}

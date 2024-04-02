@@ -25,7 +25,7 @@
 {% if is_show_create_btn is True %}
     {# Start Create Button Block #}
     {% block create_btn_block %}
-        {% component "tl_create_btn" app_name=app_label actions_base_url=actions_base_url %}
+        {% component "tl_create_btn" app_name=app_label actions_base_url=actions_base_url %}{% endcomponent %}
     {% endblock create_btn_block %}
     {# End Create Button Block #}
 {% endif %}
@@ -53,11 +53,47 @@
 
             </div>
         </th>
-        {% if is_show_section is True %}
+        {% if is_show_section is True or extra_context.is_show_section is True %}
             <th scope="col" class="px-6 py-3 text-left">
                 <div class="flex items-center gap-x-2">
                     <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
                         {% translate "Section" %}
+                    </span>
+
+                    {% include "bw_components/global/table_list/sort_icon.html" %}
+
+                </div>
+            </th>
+        {% endif %}
+        {% if extra_context.is_show_job_link is True or is_show_job_link is True %}
+            <th scope="col" class="px-6 py-3 text-left">
+                <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                        {% translate "Job" %}
+                    </span>
+
+                    {% include "bw_components/global/table_list/sort_icon.html" %}
+
+                </div>
+            </th>
+        {% endif %}
+        {% if extra_context.is_show_client_link is True or is_show_client_link is True %}
+            <th scope="col" class="px-6 py-3 text-left">
+                <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                        {% translate "Client" %}
+                    </span>
+
+                    {% include "bw_components/global/table_list/sort_icon.html" %}
+
+                </div>
+            </th>
+        {% endif %}
+        {% if extra_context.is_show_task_link is True or is_show_task_link is True %}
+            <th scope="col" class="px-6 py-3 text-left">
+                <div class="flex items-center gap-x-2">
+                    <span class="text-xs font-semibold uppercase tracking-wide text-gray-800 dark:text-gray-200">
+                        {% translate "Task" %}
                     </span>
 
                     {% include "bw_components/global/table_list/sort_icon.html" %}
@@ -110,14 +146,53 @@
             <td class="h-px w-px whitespace-nowrap">
                 <div class="px-6 py-3">
                     <a href="{% url base_url_name|add:':update' object.pk %}">
-                        <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.title|bw_truncate_titles }}</span>
+                        <span class="text-sm italic text-gray-600 dark:text-gray-400">{{ object.title|bw_truncate_titles }}</span>
                     </a>
                 </div>
             </td>
-            {% if is_show_section is True %}
+            {% if is_show_section is True or extra_context.is_show_section is True %}
                 <td class="h-px w-px whitespace-nowrap">
                     <div class="px-10 py-3">
                         <span class="text-sm text-gray-600 dark:text-gray-400">{{ object.get_document_section_display }}</span>
+                    </div>
+                </td>
+            {% endif %}
+            {% if extra_context.is_show_job_link is True or is_show_job_link is True %}
+                <td class="h-px w-px whitespace-nowrap">
+                    <div class="px-10 py-3">
+                        {% if object.get_related_objects_as_dict.job is not None %}
+                            <a href="{% url 'dashboard:job:details' object.get_related_objects_as_dict.job.pk %}">
+                                <span class="text-sm {{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }} italic dark:text-gray-400">{{ object.get_related_objects_as_dict.job }}</span>
+                            </a>
+                        {% else %}
+                            ---
+                        {% endif %}
+                    </div>
+                </td>
+            {% endif %}
+            {% if extra_context.is_show_client_link is True or is_show_client_link is True %}
+                <td class="h-px w-px whitespace-nowrap">
+                    <div class="px-10 py-3">
+                        {% if object.get_related_objects_as_dict.client is not None %}
+                            <a href="{% url 'dashboard:client:details' object.get_related_objects_as_dict.client.pk %}">
+                                <span class="text-sm {{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }} italic dark:text-gray-400">{{ object.get_related_objects_as_dict.client }}</span>
+                            </a>
+                        {% else %}
+                            ---
+                        {% endif %}
+                    </div>
+                </td>
+            {% endif %}
+            {% if extra_context.is_show_task_link is True or is_show_task_link is True %}
+                <td class="h-px w-px whitespace-nowrap">
+                    <div class="px-10 py-3">
+                        {% if object.get_related_objects_as_dict.task is not None %}
+                            <a href="{% url 'dashboard:task:update' object.get_related_objects_as_dict.task.pk %}">
+                                <span class="text-sm {{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }} italic dark:text-gray-400">{{ object.get_related_objects_as_dict.task }}</span>
+                            </a>
+                        {% else %}
+                            ---
+                        {% endif %}
                     </div>
                 </td>
             {% endif %}

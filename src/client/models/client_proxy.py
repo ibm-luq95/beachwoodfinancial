@@ -13,12 +13,14 @@ from core.constants.status_labels import (
     CON_PAST_DUE,
     CON_DRAFT,
 )
+from core.models.mixins.get_related_notes_documents import BWGetRelatedNotesAndDocuments
 from core.models.querysets import BaseQuerySetMixin
 from core.utils.developments.debugging_print_object import BWDebuggingPrint
 
 
-class ClientProxy(Client):
+class ClientProxy(Client, BWGetRelatedNotesAndDocuments):
     reports_manager = ClientReportsManager()
+    RELATED_ITEM_ID = "client"
 
     class Meta(Client.Meta):
         proxy = True
@@ -129,3 +131,5 @@ class ClientProxy(Client):
     def get_all_past_due_jobs(self) -> BaseQuerySetMixin:
         jobs = self.jobs.filter(status=CON_PAST_DUE)
         return jobs
+
+    

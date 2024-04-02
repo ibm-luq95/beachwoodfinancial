@@ -99,7 +99,7 @@
                         <ul class="pt-2 pl-3 hs-accordion-group" data-hs-accordion-always-open>
                             <li class="hs-accordion" id="users-assistant-accordion-sub-2">
                                 <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="javascript:;">
+                                   href="{% url 'dashboard:management_assistant:list' %}">
                                     {% translate "Assistants" %}
                                     <svg class="hidden w-3 h-3 ml-auto text-gray-600 hs-accordion-active:block group-hover:text-gray-500"
                                          width="16"
@@ -110,39 +110,11 @@
                                         <path d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round">
                                         </path>
                                     </svg>
-                                    <svg class="block w-3 h-3 ml-auto text-gray-600 hs-accordion-active:hidden group-hover:text-gray-500"
-                                         width="16"
-                                         height="16"
-                                         viewBox="0 0 16 16"
-                                         fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                                        </path>
-                                    </svg>
                                 </a>
-                                <div id="users-assistant-accordion-sub-2-child"
-                                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden pl-2">
-                                    <ul class="pt-2 pl-2">
-                                        <li>
-                                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                               href="{% url 'dashboard:management_assistant:list' %}">
-                                                <i class="fa-solid fa-list"></i>
-                                                {% translate "List" %}
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                               href="{% url 'dashboard:management_assistant:create' %}">
-                                                <i class="fa-solid fa-plus"></i>
-                                                {% translate "Add new" %}
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
                             </li>
                             <li class="hs-accordion" id="users-bookkeepers-accordion-sub-2">
                                 <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="javascript:;">
+                                   href="{% url 'dashboard:management_bookkeeper:list' %}">
                                     {% translate "Bookkeepers" %}
                                     <svg class="hidden w-3 h-3 ml-auto text-gray-600 hs-accordion-active:block group-hover:text-gray-500"
                                          width="16"
@@ -153,39 +125,11 @@
                                         <path d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round">
                                         </path>
                                     </svg>
-                                    <svg class="block w-3 h-3 ml-auto text-gray-600 hs-accordion-active:hidden group-hover:text-gray-500"
-                                         width="16"
-                                         height="16"
-                                         viewBox="0 0 16 16"
-                                         fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                                        </path>
-                                    </svg>
                                 </a>
-                                <div id="users-bookkeepers-accordion-sub-2-child"
-                                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden pl-2">
-                                    <ul class="pt-2 pl-2">
-                                        <li>
-                                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                               href="{% url 'dashboard:management_bookkeeper:list' %}">
-                                                <i class="fa-solid fa-list"></i>
-                                                {% translate "List" %}
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                                href="{% url 'dashboard:management_bookkeeper:create' %}"">
-                                                <i class="fa-solid fa-plus"></i>
-                                                {% translate "Add new" %}
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
                             </li>
                             <li class="hs-accordion" id="users-accordion-sub-1">
                                 <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="javascript:;">
+                                   href="{% url 'dashboard:managers:list' %}">
                                     {% translate "Managers" %}
                                     <svg class="hidden w-3 h-3 ml-auto text-gray-600 hs-accordion-active:block group-hover:text-gray-500"
                                          width="16"
@@ -196,40 +140,72 @@
                                         <path d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round">
                                         </path>
                                     </svg>
-                                    <svg class="block w-3 h-3 ml-auto text-gray-600 hs-accordion-active:hidden group-hover:text-gray-500"
-                                         width="16"
-                                         height="16"
-                                         viewBox="0 0 16 16"
-                                         fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                                        </path>
-                                    </svg>
                                 </a>
-                                <div id="users-manager-accordion-sub-1-child"
-                                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
-                                    <ul class="pt-2 pl-2">
-                                        <li>
-                                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                               href="{% url 'dashboard:managers:list' %}">
-                                                <i class="fa-solid fa-list"></i>
-                                                {% translate "List" %}
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                               href="{% url 'dashboard:managers:create' %}">
-                                                <i class="fa-solid fa-plus"></i>
-                                                {% translate "Add new" %}
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
                             </li>
                         </ul>
                     </div>
                 </li>
             {% endif %}
+            <li class="hs-accordion" id="clients-accordion">
+                <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
+                   href="{% url 'dashboard:client:list' %}">
+                    <i class="fa-solid fa-building-user w-3.5 h-3.5"></i>
+                    {% translate "Clients" %}
+                    <svg class="hidden w-3 h-3 ml-auto text-gray-600 hs-accordion-active:block group-hover:text-gray-500"
+                         width="16"
+                         height="16"
+                         viewBox="0 0 16 16"
+                         fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        </path>
+                    </svg>
+                </a>
+            </li>
+            <li class="hs-accordion" id="jobs-accordion">
+                <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
+                   href="{% url 'dashboard:job:list' %}">
+                    <i class="fa-solid fa-briefcase w-3.5 h-3.5"></i>
+                    {% translate "Jobs" %}
+                </a>
+            </li>
+            <li class="hs-accordion" id="tasks-accordion">
+                <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
+                   href="{% url 'dashboard:task:list' %}">
+                    <i class="fa-solid fa-list-check w-3.5 h-3.5"></i>
+                    {% translate "Tasks" %}
+                    <svg class="hs-accordion-active:block ml-auto hidden w-3 h-3 text-gray-600 group-hover:text-gray-500"
+                         width="16"
+                         height="16"
+                         viewBox="0 0 16 16"
+                         fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                        </path>
+                    </svg>
+                </a>
+            </li>
+            <li class="hs-accordion" id="special-assignment-accordion">
+                <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
+                   href="{% url 'dashboard:special_assignment:list' %}">
+                    <i class="fa-solid fa-list-ol w-3.5 h-3.5"></i>
+                    {% translate "Assignments" %}
+                </a>
+            </li>
+            <li class="hs-accordion" id="notes-accordion">
+                <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
+                   href="{% url 'dashboard:note:list' %}">
+                    <i class="fa-solid fa-note-sticky w-3.5 h-3.5"></i>
+                    {% translate "Notes" %}
+                </a>
+            </li>
+            <li class="hs-accordion" id="contacts-accordion">
+                <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
+                   href="{% url 'dashboard:important_contact:list' %}">
+                    <i class="fa-solid fa-address-book w-3.5 h-3.5"></i>
+                    {% translate "Contacts" %}
+                </a>
+            </li>
             {# {% if request.user.is_superuser is True and request.user.user_genre == CON_DEVELOPER %} #}
             {% if request.user.user_type == CON_MANAGER %}
                 <li class="hs-accordion" id="reports-accordion">
@@ -237,7 +213,6 @@
                        href="javascript:;">
                         <i class="fa-solid fa-filter w-3.5 h-3.5"></i>
                         {% translate "Reports" %}
-                        <span class="ml-0.5 inline-flex items-center px-2 rounded-full text-[10px] font-medium bg-blue-500 text-white">{% translate "NEW" %}</span>
                         <svg class="hidden w-3 h-3 ml-auto text-gray-600 hs-accordion-active:block group-hover:text-gray-500"
                              width="16"
                              height="16"
@@ -260,589 +235,24 @@
                     <div id="report-clients-accordion-child"
                          class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
                         <ul class="pt-2 pl-3 hs-accordion-group" data-hs-accordion-always-open>
-                            <li class="hs-accordion" id="reports-accordion-sub-1">
-                                <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="javascript:;">
-                                    <i class="fa-solid fa-building-user w-3.5 h-3.5 -mr-1"></i>
-                                    {% translate "Clients" %}
-                                    <svg class="hidden w-3 h-3 ml-auto text-gray-600 hs-accordion-active:block group-hover:text-gray-500"
+                            <li>
+                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
+                                   href="{% url 'dashboard:reports:clients_reports:job_reports_list' %}">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
                                          width="16"
                                          height="16"
-                                         viewBox="0 0 16 16"
-                                         fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                                        </path>
+                                         fill="currentColor"
+                                         class="bi bi-filter"
+                                         viewBox="0 0 16 16">
+                                        <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
                                     </svg>
-                                    <svg class="block w-3 h-3 ml-auto text-gray-600 hs-accordion-active:hidden group-hover:text-gray-500"
-                                         width="16"
-                                         height="16"
-                                         viewBox="0 0 16 16"
-                                         fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                                        </path>
-                                    </svg>
+                                    {% translate "Jobs" %}
                                 </a>
-                                <div id="report-clients-accordion-sub-1-child"
-                                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
-                                    <ul class="pt-2 pl-2">
-                                        <li>
-                                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                               href="{% url 'dashboard:reports:clients_reports:job_reports_list' %}">
-                                                <svg xmlns="http://www.w3.org/2000/svg"
-                                                     width="16"
-                                                     height="16"
-                                                     fill="currentColor"
-                                                     class="bi bi-filter"
-                                                     viewBox="0 0 16 16">
-                                                    <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
-                                                </svg>
-                                                {% translate "Jobs" %}
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
                             </li>
                         </ul>
                     </div>
                 </li>
             {% endif %}
-            <li class="hs-accordion" id="clients-accordion">
-                <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                   href="javascript:;">
-                    <i class="fa-solid fa-building-user w-3.5 h-3.5"></i>
-                    {% translate "Clients" %}
-                    <svg class="hidden w-3 h-3 ml-auto text-gray-600 hs-accordion-active:block group-hover:text-gray-500"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        </path>
-                    </svg>
-                    <svg class="block w-3 h-3 ml-auto text-gray-600 hs-accordion-active:hidden group-hover:text-gray-500"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        </path>
-                    </svg>
-                </a>
-                <div id="clients-categories-accordion-child"
-                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
-                    <ul class="pt-2 pl-3 hs-accordion-group" data-hs-accordion-always-open>
-                        {% if perms.client.can_view_list %}
-                            <li>
-                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="{% url 'dashboard:client:list' %}">
-                                    <i class="fa-solid fa-list"></i>
-                                    {% translate "List" %}
-                                </a>
-                            </li>
-                        {% endif %}
-                        {% if perms.client.add_clientproxy or perms.client.add_client %}
-                            <li>
-                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="{% url 'dashboard:client:create' %}">
-                                    <i class="fa-solid fa-plus"></i>
-                                    {% translate "Add new" %}
-                                </a>
-                            </li>
-                        {% endif %}
-                        {% if perms.assistant.assistant_has_full_manager_permissions or request.user.is_superuser is True %}
-                            <li class="hs-accordion" id="clients-categories-accordion">
-                                <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="javascript:;">
-                                    {% translate "Categories" %}
-                                    <svg class="hidden w-3 h-3 ml-auto text-gray-600 hs-accordion-active:block group-hover:text-gray-500"
-                                         width="16"
-                                         height="16"
-                                         viewBox="0 0 16 16"
-                                         fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                                        </path>
-                                    </svg>
-                                    <svg class="block w-3 h-3 ml-auto text-gray-600 hs-accordion-active:hidden group-hover:text-gray-500"
-                                         width="16"
-                                         height="16"
-                                         viewBox="0 0 16 16"
-                                         fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                                        </path>
-                                    </svg>
-                                </a>
-                                <div id="clients-accordion-sub-1-child"
-                                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
-                                    <ul class="pt-2 pl-2">
-                                        {% if perms.client_category.can_view_list %}
-                                            <li>
-                                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                                   href="{% url 'dashboard:client_category:list' %}">
-                                                    <i class="fa-solid fa-list"></i>
-                                                    {% translate "List" %}
-                                                </a>
-                                            </li>
-                                        {% endif %}
-                                        {% if perms.client_category.add_clientcategory %}
-                                            <li>
-                                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                                   href="{% url 'dashboard:client_category:create' %}">
-                                                    <i class="fa-solid fa-plus"></i>
-                                                    {% translate "Add new" %}
-                                                </a>
-                                            </li>
-                                        {% endif %}
-                                    </ul>
-                                </div>
-                            </li>
-                        {% endif %}
-                        <li class="hs-accordion" id="clients-contacts-accordion">
-                            <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                               href="javascript:;">
-                                {% translate "Contacts" %}
-                                <svg class="hidden w-3 h-3 ml-auto text-gray-600 hs-accordion-active:block group-hover:text-gray-500"
-                                     width="16"
-                                     height="16"
-                                     viewBox="0 0 16 16"
-                                     fill="none"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                                    </path>
-                                </svg>
-                                <svg class="block w-3 h-3 ml-auto text-gray-600 hs-accordion-active:hidden group-hover:text-gray-500"
-                                     width="16"
-                                     height="16"
-                                     viewBox="0 0 16 16"
-                                     fill="none"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                                    </path>
-                                </svg>
-                            </a>
-                            <div id="clients-contacts-child"
-                                 class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden pl-2">
-                                <ul class="pt-2 pl-2">
-                                    {% if perms.important_contact.can_view_list %}
-                                        <li>
-                                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                               href="{% url 'dashboard:important_contact:list' %}">
-                                                <i class="fa-solid fa-list"></i>
-                                                {% translate "List" %}
-                                            </a>
-                                        </li>
-                                    {% endif %}
-                                    {% if perms.important_contact.add_importantcontact %}
-                                        <li>
-                                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                               href="{% url 'dashboard:important_contact:create' %}">
-                                                <i class="fa-solid fa-plus"></i>
-                                                {% translate "Add new" %}
-                                            </a>
-                                        </li>
-                                    {% endif %}
-                                </ul>
-                            </div>
-                        </li>
-                        <li class="hs-accordion" id="clients-accounts-accordion">
-                            <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                               href="javascript:;">
-                                {% translate "Accounts" %}
-                                <svg class="hidden w-3 h-3 ml-auto text-gray-600 hs-accordion-active:block group-hover:text-gray-500"
-                                     width="16"
-                                     height="16"
-                                     viewBox="0 0 16 16"
-                                     fill="none"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                                    </path>
-                                </svg>
-                                <svg class="block w-3 h-3 ml-auto text-gray-600 hs-accordion-active:hidden group-hover:text-gray-500"
-                                     width="16"
-                                     height="16"
-                                     viewBox="0 0 16 16"
-                                     fill="none"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                                    </path>
-                                </svg>
-                            </a>
-                            <div id="clients-accounts-child"
-                                 class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden pl-2">
-                                <ul class="pt-2 pl-2">
-                                    {% if perms.client_account.can_view_list %}
-                                        <li>
-                                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                               href="{% url 'dashboard:client_account:list' %}">
-                                                <i class="fa-solid fa-list"></i>
-                                                {% translate "List" %}
-                                            </a>
-                                        </li>
-                                    {% endif %}
-                                    {% if perms.client_account.add_clientaccount %}
-                                        <li>
-                                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                               href="{% url 'dashboard:client_account:create' %}">
-                                                <i class="fa-solid fa-plus"></i>
-                                                {% translate "Add new" %}
-                                            </a>
-                                        </li>
-                                    {% endif %}
-                                </ul>
-                            </div>
-                        </li>
-                    </ul>
-                </div>
-            </li>
-            <li class="hs-accordion" id="jobs-accordion">
-                <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                   href="javascript:;">
-                    <i class="fa-solid fa-briefcase w-3.5 h-3.5"></i>
-                    {% translate "Jobs" %}
-                    <svg class="hidden w-3 h-3 ml-auto text-gray-600 hs-accordion-active:block group-hover:text-gray-500"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        </path>
-                    </svg>
-                    <svg class="block w-3 h-3 ml-auto text-gray-600 hs-accordion-active:hidden group-hover:text-gray-500"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        </path>
-                    </svg>
-                </a>
-                <div id="jobs-categories-accordion-child"
-                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
-                    <ul class="pt-2 pl-3 hs-accordion-group" data-hs-accordion-always-open>
-                        {% if perms.job.can_view_list %}
-                            <li>
-                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="{% url 'dashboard:job:list' %}">
-                                    <i class="fa-solid fa-list"></i>
-                                    {% translate "List" %}
-                                </a>
-                            </li>
-                        {% endif %}
-                        {% if perms.job.add_jobproxy or job.add_job %}
-                            <li>
-                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="{% url 'dashboard:job:create' %}">
-                                    <i class="fa-solid fa-plus"></i>
-                                    {% translate "Add new" %}
-                                </a>
-                            </li>
-                        {% endif %}
-                        {% if perms.assistant.assistant_has_full_manager_permissions or request.user.is_superuser is True %}
-                            <li class="hs-accordion" id="jobs-categories-accordion">
-                                <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="javascript:;">
-                                    {% translate "Categories" %}
-                                    <svg class="hidden w-3 h-3 ml-auto text-gray-600 hs-accordion-active:block group-hover:text-gray-500"
-                                         width="16"
-                                         height="16"
-                                         viewBox="0 0 16 16"
-                                         fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                                        </path>
-                                    </svg>
-                                    <svg class="block w-3 h-3 ml-auto text-gray-600 hs-accordion-active:hidden group-hover:text-gray-500"
-                                         width="16"
-                                         height="16"
-                                         viewBox="0 0 16 16"
-                                         fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                                        </path>
-                                    </svg>
-                                </a>
-                                <div id="jobs-accordion-sub-1-child"
-                                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
-                                    <ul class="pt-2 pl-2">
-                                        <li>
-                                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                               href="{% url 'dashboard:job_category:list' %}">
-                                                <i class="fa-solid fa-list"></i>
-                                                {% translate "List" %}
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                               href="{% url 'dashboard:job_category:create' %}">
-                                                <i class="fa-solid fa-plus"></i>
-                                                {% translate "Add new" %}
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                            <li class="hs-accordion" id="jobs-templates-accordion">
-                                <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="javascript:;">
-                                    {% translate "Templates" %} <span class="inline-flex items-center gap-1 py-0.5 px-2 rounded-full text-[10px] font-medium bg-blue-500 text-white">{% translate "BETA" %}</span>
-                                    <svg class="hidden w-3 h-3 ml-auto text-gray-600 hs-accordion-active:block group-hover:text-gray-500"
-                                         width="16"
-                                         height="16"
-                                         viewBox="0 0 16 16"
-                                         fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                                        </path>
-                                    </svg>
-                                    <svg class="block w-3 h-3 ml-auto text-gray-600 hs-accordion-active:hidden group-hover:text-gray-500"
-                                         width="16"
-                                         height="16"
-                                         viewBox="0 0 16 16"
-                                         fill="none"
-                                         xmlns="http://www.w3.org/2000/svg">
-                                        <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                                        </path>
-                                    </svg>
-                                </a>
-                                <div id="jobs-templates-child"
-                                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden pl-2">
-                                    <ul class="pt-2 pl-2">
-                                        <li>
-                                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                               href="javascript:;">
-                                                <i class="fa-solid fa-list"></i>
-                                                {% translate "List" %}
-                                            </a>
-                                        </li>
-                                        <li>
-                                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                               href="javascript:;">
-                                                <i class="fa-solid fa-plus"></i>
-                                                {% translate "Add new" %}
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </li>
-            <li class="hs-accordion" id="tasks-accordion">
-                <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                   href="javascript:;">
-                    <i class="fa-solid fa-list-check w-3.5 h-3.5"></i>
-                    {% translate "Tasks" %}
-                    <svg class="hs-accordion-active:block ml-auto hidden w-3 h-3 text-gray-600 group-hover:text-gray-500"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        </path>
-                    </svg>
-                    <svg class="hs-accordion-active:hidden ml-auto block w-3 h-3 text-gray-600 group-hover:text-gray-500"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        </path>
-                    </svg>
-                </a>
-                <div id="tasks-accordion-child"
-                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
-                    <ul class="pt-2 pl-2">
-                        {% if perms.task.can_view_list %}
-                            <li>
-                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="{% url 'dashboard:task:list' %}">
-                                    <i class="fa-solid fa-list"></i>
-                                    {% translate "List" %}
-                                </a>
-                            </li>
-                        {% endif %}
-                        {% if perms.task.can_create or perms.task.add_taskproxy %}
-                            <li>
-                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="{% url 'dashboard:task:create' %}">
-                                    <i class="fa-solid fa-plus"></i>
-                                    {% translate "Add new" %}
-                                </a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </li>
-            <li class="hs-accordion" id="special-assignment-accordion">
-                <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                   href="javascript:;">
-                    <i class="fa-solid fa-list-ol w-3.5 h-3.5"></i>
-                    {% translate "Assignments" %}
-                    <svg class="hs-accordion-active:block ml-auto hidden w-3 h-3 text-gray-600 group-hover:text-gray-500"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        </path>
-                    </svg>
-                    <svg class="hs-accordion-active:hidden ml-auto block w-3 h-3 text-gray-600 group-hover:text-gray-500"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        </path>
-                    </svg>
-                </a>
-                <div id="special-assignment-accordion-child"
-                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
-                    <ul class="pt-2 pl-2">
-                        {% if perms.special_assignment.can_view_list %}
-                            <li>
-                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="{% url 'dashboard:special_assignment:list' %}">
-                                    <i class="fa-solid fa-list"></i>
-                                    {% translate "List" %}
-                                </a>
-                            </li>
-                        {% endif %}
-                        {% if perms.special_assignment.add_specialassignment or perms.special_assignment.add_specialassignmentproxy %}
-                            <li>
-                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="{% url 'dashboard:special_assignment:create' %}">
-                                    <i class="fa-solid fa-plus"></i>
-                                    {% translate "Add new" %}
-                                </a>
-                            </li>
-                        {% endif %}
-                        <li>
-                            <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                               href="{% url 'dashboard:special_assignment:requested' %}">
-                                <i class="fa-solid fa-person-circle-question"></i>
-                                {% translate "Requested assignments" %}
-                            </a>
-                        </li>
-                        {% if request.user.user_type == CON_MANAGER %}
-                            <li>
-                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="{% url 'dashboard:discussion:list' %}">
-                                    <i class="fa-solid fa-comments"></i>
-                                    {% translate "Discussions" %}
-                                </a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </li>
-            <li class="hs-accordion" id="notes-accordion">
-                <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                   href="javascript:;">
-                    <i class="fa-solid fa-note-sticky w-3.5 h-3.5"></i>
-                    {% translate "Notes" %}
-                    <svg class="hs-accordion-active:block ml-auto hidden w-3 h-3 text-gray-600 group-hover:text-gray-500"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        </path>
-                    </svg>
-                    <svg class="hs-accordion-active:hidden ml-auto block w-3 h-3 text-gray-600 group-hover:text-gray-500"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        </path>
-                    </svg>
-                </a>
-                <div id="notes-accordion-child"
-                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
-                    <ul class="pt-2 pl-2">
-                        {% if perms.note.can_view_list %}
-                            <li>
-                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="{% url 'dashboard:note:list' %}">
-                                    <i class="fa-solid fa-list"></i>
-                                    {% translate "List" %}
-                                </a>
-                            </li>
-                        {% endif %}
-                        {% if perms.note.add_note %}
-                            <li>
-                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="{% url 'dashboard:note:create' %}">
-                                    <i class="fa-solid fa-plus"></i>
-                                    {% translate "Add new" %}
-                                </a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </li>
-            <li class="hs-accordion" id="documents-accordion">
-                <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                   href="javascript:;">
-                    <i class="fa-solid fa-file w-3.5 h-3.5"></i>
-                    {% translate "Documents" %}
-                    <svg class="hs-accordion-active:block ml-auto hidden w-3 h-3 text-gray-600 group-hover:text-gray-500"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 11L8.16086 5.31305C8.35239 5.13625 8.64761 5.13625 8.83914 5.31305L15 11" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        </path>
-                    </svg>
-                    <svg class="hs-accordion-active:hidden ml-auto block w-3 h-3 text-gray-600 group-hover:text-gray-500"
-                         width="16"
-                         height="16"
-                         viewBox="0 0 16 16"
-                         fill="none"
-                         xmlns="http://www.w3.org/2000/svg">
-                        <path d="M2 5L8.16086 10.6869C8.35239 10.8637 8.64761 10.8637 8.83914 10.6869L15 5" stroke="currentColor" stroke-width="2" stroke-linecap="round">
-                        </path>
-                    </svg>
-                </a>
-                <div id="documents-accordion-child"
-                     class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 hidden">
-                    <ul class="pt-2 pl-2">
-                        {% if perms.document.can_view_list %}
-                            <li>
-                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="{% url 'dashboard:document:list' %}">
-                                    <i class="fa-solid fa-list"></i>
-                                    {% translate "List" %}
-                                </a>
-                            </li>
-                        {% endif %}
-                        {% if perms.document.add_document %}
-                            <li>
-                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                   href="{% url 'dashboard:document:create' %}">
-                                    <i class="fa-solid fa-plus"></i>
-                                    {% translate "Add new" %}
-                                </a>
-                            </li>
-                        {% endif %}
-                    </ul>
-                </div>
-            </li>
             {% comment  %}
             <li class="hs-accordion" id="company-services-accordion">
                 <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white" href="javascript:;">

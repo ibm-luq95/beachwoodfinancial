@@ -25,6 +25,7 @@ class JobFilter(HelpfulFilterSet):
         field_name="categories",
         queryset=JobCategory.objects.all(),
         # widget=forms.CheckboxSelectMultiple,
+        widget=forms.SelectMultiple(attrs={"data_name": "job-categories"}),
         lookup_expr="exact",
     )
 
