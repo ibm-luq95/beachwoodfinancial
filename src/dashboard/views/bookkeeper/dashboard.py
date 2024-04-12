@@ -3,8 +3,10 @@ from django.contrib import messages
 from django.views.generic import TemplateView
 from django.utils.translation import gettext as _
 
+from core.views.mixins import BWLoginRequiredMixin
 
-class DashboardView(TemplateView):
+
+class DashboardView(BWLoginRequiredMixin, TemplateView):
     template_name = "dashboard/bookkeeper/dashboard.html"
 
     def get_context_data(self, **kwargs):
