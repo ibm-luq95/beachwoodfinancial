@@ -70,7 +70,7 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin, GuardianUserMix
         ordering = ["-created_at", "-updated_at"]
         permissions = [("developer_user", "Developer User")]
 
-    def __str__(self):
+    def __str__(self) -> str:
         full_info = self.fullname
         if full_info != "":
             return f"User - {full_info}"
@@ -78,10 +78,10 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin, GuardianUserMix
             return f"User - {self.email}"
 
     @property
-    def fullname(self):
+    def fullname(self) -> str:
         return f"{self.first_name} {self.last_name}"
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
         self.email = self.email.lower()
         super(BWUser, self).save(*args, **kwargs)
 
