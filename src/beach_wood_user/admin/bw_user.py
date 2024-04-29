@@ -108,7 +108,6 @@ class BWUserAdmin(ImportExportModelAdmin, UserAdmin):
     @admin.action(description=_("Add staff briefcase permissions for selected users"))
     def add_view_staffbriefcase_permission(self, request, queryset):
         try:
-            BWDebuggingPrint.pprint(queryset)
 
             if queryset:
                 cnt = ContentType.objects.filter(
