@@ -2,12 +2,8 @@ bpython
 django-debug-toolbar
 django-debugtools
 django-model-info
-django-stubs
 django-pdb
 django-anonymous
-django-stubs-ext
-djangorestframework-stubs
-djangorestframework-stubs[compatible-mypy]
 django-debug-permissions
 django-request-viewer
 django-debug-toolbar-template-profiler

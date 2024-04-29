@@ -2,7 +2,6 @@ autopep8
 bandit
 black
 djlint
-django-filter-stubs
 curlylint
 docformatter
 flake8
@@ -10,8 +9,6 @@ isort
 mypy
 mypy-extensions
 pep8
-python-decouple-typed
-drf-typed
 pycodestyle
 pydocstyle
 pylama
