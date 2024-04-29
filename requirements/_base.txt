@@ -25,7 +25,7 @@ mysqlclient
 Pillow
 prettytable
 psycopg[binary]
-pyminizip
+#pyminizip
 python-decouple
 python-magic
 python-webpack-boilerplate
