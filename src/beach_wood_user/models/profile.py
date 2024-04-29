@@ -39,7 +39,7 @@ class Profile(BaseModelMixin, StaffMemberSocialMediaMixin, models.Model):
 	)
 	bio = models.TextField(_("bio"), null=True, blank=True)
 
-	def save(self, *args, **kwargs):
+	def save(self, *args, **kwargs) -> None:
 		super(Profile, self).save(*args, **kwargs)
 		if self.profile_picture:
 			image = Image.open(self.profile_picture.path)
@@ -48,7 +48,7 @@ class Profile(BaseModelMixin, StaffMemberSocialMediaMixin, models.Model):
 				image.thumbnail(output_size)
 				image.save(self.profile_picture.path)
 
-	def __str__(self):
+	def __str__(self) -> str:
 		if hasattr(self, "bookkeeper"):
 			return _(
 				f"Profile for: {self.bookkeeper.user.fullname} - {self.bookkeeper.user.user_type}"
