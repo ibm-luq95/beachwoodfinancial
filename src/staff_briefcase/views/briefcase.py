@@ -10,6 +10,11 @@ from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
+from staff_briefcase.forms import (
+    BriefcaseNoteMiniForm,
+    BriefcaseDocumentMiniForm,
+    BriefcaseAccountMiniForm,
+)
 from staff_briefcase.models import StaffBriefcase
 
 
@@ -89,7 +94,7 @@ class StaffBriefcaseDetailView(
     BWCacheViewMixin,
     DetailView,
 ):
-    permission_required = "staff_briefcase.view_briefcase"
+    permission_required = "staff_briefcase.view_staffbriefcase"
     template_name = "staff_briefcase/details.html"
     model = StaffBriefcase
     # context_object_name = "briefcase"
@@ -98,6 +103,18 @@ class StaffBriefcaseDetailView(
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context["title"] = _(f"Briefcase - {self.get_object().user.fullname}")
+        briefcase_note_form = BriefcaseNoteMiniForm(
+            initial={"briefcase": self.get_object().pk}
+        )
+        briefcase_document_form = BriefcaseDocumentMiniForm(
+            initial={"briefcase": self.get_object().pk}
+        )
+        briefcase_account_form = BriefcaseAccountMiniForm(
+            initial={"briefcase": self.get_object().pk}
+        )
+        context.setdefault("briefcase_note_form", briefcase_note_form)
+        context.setdefault("briefcase_document_form", briefcase_document_form)
+        context.setdefault("briefcase_account_form", briefcase_account_form)
 
         return context
 
