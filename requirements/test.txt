@@ -1,6 +1,6 @@
-model-bakery
 Coverage
 django_coverage_plugin
+model-bakery
 pytest
-Selenium
 pytest-django
+Selenium
