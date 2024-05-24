@@ -1,5 +1,11 @@
 # -*- coding: utf-8 -*-#
-# import colorama
+"""
+File: set_site.py
+Author: Ibrahim Luqman
+Date: 5/13/24
+
+Description: Initiate django site, django site framework for this project
+"""
 from colorama import Fore
 from decouple import Config, RepositoryEnv
 from django.conf import settings

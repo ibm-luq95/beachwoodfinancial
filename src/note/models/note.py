@@ -15,6 +15,22 @@ from task.models import TaskProxy
 
 
 class Note(BaseModelMixin, GetObjectSectionMixin, GeneralStatusFieldMixin, StrModelMixin):
+    """Notes model for bookkeeper, assistant, and manager.
+
+    This class represents a Note in the system with attributes such as title, body, client, job, task, and note_section.
+
+    Attributes:
+        title (CharField): The title of the note.
+        body (TextField): The main body content of the note.
+        client (ForeignKey): A foreign key to the ClientProxy model representing the client associated with the note.
+        job (ForeignKey): A foreign key to the JobProxy model representing the job associated with the note.
+        task (ForeignKey): A foreign key to the TaskProxy model representing the task associated with the note.
+        note_section (CharField): Indicates the section of the note (choices: JOB, TASK, CLIENT).
+
+    Methods:
+        save(self, *args, **kwargs): Overrides the save method to set the note_section based on related objects.
+    """
+
     """Notes model for bookkeeper, assistant, and manager
 
     Args:

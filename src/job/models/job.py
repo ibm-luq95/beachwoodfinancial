@@ -20,6 +20,7 @@ from core.models.mixins.access_proxy_models_mixin import AccessProxyModelMixin
 from core.models.mixins.cron_column_mixin import CronColumnMixin
 from core.models.mixins.validate_due_date import ValidateDueDateMixin
 from job_category.models import JobCategory
+
 # from task.models import Task
 from .help_messages import JOB_HELP_MESSAGES
 
@@ -32,6 +33,29 @@ class Job(
     CronColumnMixin,
     StrModelMixin,
 ):
+    """This is the job for every bookkeeper and assistant.
+
+    Attributes:
+        client: The client associated with the job.
+        managed_by: The user who manages the job.
+        title: The title of the job.
+        slug: The slug of the job.
+        period_year: The fiscal year of the job.
+        period_month: The fiscal month of the job.
+        description: The description of the job.
+        job_type: The type of the job.
+        status: The status of the job.
+        state: The state of the job.
+        categories: The categories associated with the job.
+        note: The note for the job.
+        is_created_from_template: Indicates if the job is created from a template.
+
+    Methods:
+        get_all_not_completed_tasks(): Returns all the tasks that are not completed.
+        is_job_pass_due(): Checks if the job has passed its due date.
+        get_absolute_url(): Returns the absolute URL of the job.
+    """
+
     """This is the job for every bookkeeper and assistant
 
     Args:

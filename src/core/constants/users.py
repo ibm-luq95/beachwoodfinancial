@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-#
+"""
+File: users.py
+Author: Ibrahim Luqman
+Date: 5/10/24
+
+Description: Includes constants for users and permissions 
+"""
 
 # Bookkeeper user group name
 BOOKKEEPER_GROUP_NAME = "Bookkeeper Group"

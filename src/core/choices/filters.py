@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-#
+"""
+File: filters.py
+Author: Ibrahim Luqman
+Date: 5/10/24
+
+Description: Filter choices and enums, it uses in the filter views
+"""
 import calendar
 
 from django.utils.translation import gettext as _

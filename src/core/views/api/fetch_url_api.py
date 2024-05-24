@@ -15,9 +15,35 @@ logger = get_formatted_logger()
 
 
 class FetchUrlApiView(APIView):
+    """
+    API view for fetching URL paths based on input data.
+
+    Permissions:
+        - IsAuthenticated: Users must be authenticated to access this view.
+
+    Methods:
+        post(request: Request, *args, **kwargs) -> Response: Processes a POST request to fetch URL paths.
+
+    Returns:
+        Response: JSON response containing the fetched URL path and status code.
+
+    """
+
     permission_classes = (permissions.IsAuthenticated,)
 
     def post(self, request: Request, *args, **kwargs):
+        """
+        Processes a POST request to fetch URL paths based on input data.
+
+        Args:
+            request (Request): The HTTP request object.
+            *args: Additional positional arguments.
+            **kwargs: Additional keyword arguments.
+
+        Returns:
+            Response: JSON response containing the fetched URL path and status code.
+
+        """
         serializer = ""
         try:
             data = request.data
@@ -32,20 +58,17 @@ class FetchUrlApiView(APIView):
                 status=status.HTTP_200_OK,
             )
         except APIException as ex:
-            # logger.error("API Exception")
             logger.error(ex)
             response_data = {
                 "status": status.HTTP_400_BAD_REQUEST,
-                # "user_error_msg": ex.detail,
                 "user_error_msg": ex.default_detail,
             }
             return Response(response_data, status=status.HTTP_400_BAD_REQUEST)
         except Exception as ex:
-            # debugging_print(ex)
             logger.error(traceback.format_exc())
             response_data = {
                 "status": status.HTTP_400_BAD_REQUEST,
                 "error": str(ex),
-                "user_error_msg": "Error while fetch url name!",
+                "user_error_msg": "Error while fetching URL path!",
             }
             return Response(response_data, status=status.HTTP_400_BAD_REQUEST)

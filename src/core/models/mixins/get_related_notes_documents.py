@@ -4,8 +4,20 @@ from core.utils.developments.debugging_print_object import BWDebuggingPrint
 
 
 class BWGetRelatedNotesAndDocuments:
+    """
+    A mixin class for retrieving related notes and documents.
+
+    Methods:
+        related_for_job(self) -> dict: Returns an empty dictionary.
+        related_for_clients(self) -> dict: Retrieves related notes and documents for clients.
+        get_all_related_notes_and_documents(self) -> dict: Retrieves related notes and documents based on the value of `RELATED_ITEM_ID`.
+
+    """
 
     def related_for_job(self) -> dict:
+        """
+        Returns an empty dictionary.
+        """
         try:
             from document.models import Document
             from task.models import TaskProxy
@@ -18,6 +30,9 @@ class BWGetRelatedNotesAndDocuments:
             BWDebuggingPrint.print_exception()
 
     def related_for_clients(self) -> dict:
+        """
+        Retrieves related notes and documents for clients.
+        """
         try:
             from document.models import Document
             from task.models import TaskProxy
@@ -50,7 +65,9 @@ class BWGetRelatedNotesAndDocuments:
             BWDebuggingPrint.print_exception()
 
     def get_all_related_notes_and_documents(self) -> dict:
-
+        """
+        Retrieves related notes and documents based on the value of `RELATED_ITEM_ID`.
+        """
         try:
             if self.RELATED_ITEM_ID == "client":
                 return self.related_for_clients()

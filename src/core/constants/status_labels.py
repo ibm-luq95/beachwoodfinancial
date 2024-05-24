@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-#
+"""
+File: status_labels.py
+Author: Ibrahim Luqman
+Date: 5/10/24
+
+Description: Includes status labels for the project
+"""
 CON_NOT_STARTED = "not_started"
 CON_IN_PROGRESS = "in_progress"
 CON_PAST_DUE = "past_due"

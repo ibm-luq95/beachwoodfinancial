@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-#
+"""
+File: init_cache_data.py
+Author: Ibrahim Luqman
+Date: 5/13/24
+
+Description: Initiate necessary data into cache, web app settings, application configurations, site
+"""
 import stringcase
 from decouple import Config, RepositoryEnv
 from django.conf import settings
@@ -117,7 +124,9 @@ class Command(BaseCommand, CommandStdOutputMixin):
 
                     try:
                         site_settings = SiteSettings.objects.get(site=site_object)
-                        site_settings_serializer = SiteSettingsSerializer(instance=site_settings)
+                        site_settings_serializer = SiteSettingsSerializer(
+                            instance=site_settings
+                        )
                         # debugging_print(site_settings_serializer.data)
                         BWCacheHandler.set_item(
                             site_object.domain,

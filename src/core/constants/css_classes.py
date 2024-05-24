@@ -1,4 +1,12 @@
 # -*- coding: utf-8 -*-#
+"""
+File: css_classes.py
+Author: Ibrahim Luqman
+Date: 5/10/24
+
+Description: This file contains CSS classes for all CSS classes in the current project,
+it uses the preline CSS framework
+"""
 from django.utils.translation import gettext as _
 
 from core.constants.identity import BWIdentity

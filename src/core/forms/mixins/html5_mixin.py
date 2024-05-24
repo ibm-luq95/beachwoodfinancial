@@ -4,12 +4,25 @@ from django import forms
 
 class Html5Mixin:
     """
-    Mixin for form classes. Adds HTML5 features to forms for client
-    side validation by the browser, like a "required" attribute and
-    "email" and "url" input types.
+    Mixin for form classes.
+
+    Adds HTML5 features to forms for client side validation by the browser, like a
+    "required" attribute and "email" and "url" input types.
+
     """
 
     def __init__(self, *args, **kwargs):
+        """
+        Initializes the Html5Mixin.
+
+        Args:
+            *args: Positional arguments passed to the parent class.
+            **kwargs: Keyword arguments passed to the parent class.
+
+        Returns:
+            None
+
+        """
         super().__init__(*args, **kwargs)
         if hasattr(self, "fields"):
             first_field = None

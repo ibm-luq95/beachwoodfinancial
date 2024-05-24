@@ -9,6 +9,19 @@ from core.models.mixins import BaseModelMixin, StrModelMixin
 
 
 class StaffNotes(BaseModelMixin, StrModelMixin):
+    """Represents a staff note.
+
+    This class defines a staff note with attributes such as title and note content.
+
+    Attributes:
+        title (CharField): The title of the note.
+        note (TextField): The main content of the note.
+
+    Methods:
+        note_body(self): Displays a shortened version of the note content.
+        get_briefcase(self): Retrieves the associated briefcase for the staff note.
+    """
+
     title = models.CharField(_("title"), max_length=250, null=True, blank=True)
     note = models.TextField(_("Note"))
 

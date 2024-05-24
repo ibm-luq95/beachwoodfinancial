@@ -25,11 +25,12 @@ logger = get_formatted_logger()
 
 
 class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin, GuardianUserMixin):
-    """BWUser, it used instead of default django user model
-
+    """BWUser, Main user customized model
+    
+        it used instead of default django user model
     Args:
-        BaseModelMixin (_type_): _description_
-        AbstractBaseUser (_type_): _description_
+        BaseModelMixin (BaseModelMixin): Base abstract model contains common fields
+        AbstractBaseUser (AbstractBaseUser): _description_
         PermissionsMixin (_type_): _description_
 
     Returns:

@@ -1,4 +1,12 @@
 # -*- coding: utf-8 -*-#
+"""
+File: migrate_old_data.py
+Author: Ibrahim Luqman
+Date: 5/13/24
+
+Description: Migrate old data from old version, this command not used alot, it will be
+deprecated in the future, using django_import_export package
+"""
 import traceback
 from pathlib import Path, PosixPath
 import pandas as pd
