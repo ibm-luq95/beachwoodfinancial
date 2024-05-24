@@ -514,6 +514,9 @@ LOGGING = {
 SESSION_TIMEOUT_REDIRECT = "/auth/login"
 ANONYMOUS_USER_NAME = None
 
+# Django-import-export config
+# IMPORT_EXPORT_SKIP_ADMIN_LOG = True
+
 # SENTRY configs
 if config("SENTRY_IS_ENABLED", cast=bool) is True:
     sentry_sdk.init(
