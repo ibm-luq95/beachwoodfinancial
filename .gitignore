@@ -573,3 +573,4 @@ _base_app_packages
 src/cert.pem
 src/key.pem
 /.env_dotenv
+/commands/development_only/
