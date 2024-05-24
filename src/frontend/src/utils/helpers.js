@@ -1,8 +1,9 @@
 "use strict";
 /**
- * Capitalized the first letter of string
- * @param {string} text String will capitalized
- * @returns string
+ * Capitalizes the first letter of a given string.
+ *
+ * @param {string} text - The input string to capitalize the first letter of.
+ * @returns {string} The input string with the first letter capitalized.
  */
 const capitalizedFirstLetter = (text) => {
   const capitalized = text.charAt(0).toUpperCase() + text.slice(1);
@@ -10,9 +11,10 @@ const capitalizedFirstLetter = (text) => {
 };
 
 /**
- * Order or sort json object items
- * @param {Object} unorderedObject Un ordered object
- * @returns Object
+ * Orders the items of an object alphabetically by their keys.
+ *
+ * @param {Object} unorderedObject - The object whose items need to be ordered.
+ * @returns {Object} The ordered object with its items sorted alphabetically by keys.
  */
 const orderObjectItems = (unorderedObject) => {
   const orderedObject = Object.keys(unorderedObject)
@@ -25,9 +27,10 @@ const orderObjectItems = (unorderedObject) => {
 };
 
 /**
- * Check if the checkbox single or multiple elements
- * @param {HTMLInputElement|RadioNodeList} htmlElement Element to check
- * @returns string
+ * Check if the input is a single HTML element or a RadioNodeList.
+ *
+ * @param {HTMLElement|RadioNodeList} htmlElement - The input element to check.
+ * @returns {string} Returns "single" if the input is a single HTML element, or "multiple" if it is a RadioNodeList.
  */
 const checkIfInputSingleOrList = (htmlElement) => {
   // RadioNodeList, HTMLInputElement
@@ -41,9 +44,10 @@ const checkIfInputSingleOrList = (htmlElement) => {
 };
 
 /**
- * Check if the text is true or false
- * @param {string} text Text to check true | false
- * @returns bool
+ * Converts a string to a boolean value.
+ *
+ * @param {string} text - The input string to convert.
+ * @returns {boolean} The boolean value converted from the input string.
  */
 const convertStrToBool = (text) => {
   const boolValue = /true/i.test(text);

@@ -1,9 +1,10 @@
 "use strict";
 
 /**
- *  Filter and return cleaned errors form api errors
- * @param {Error} error the error to filter
- * @returns Array
+ * Cleans the API error object and returns an array of error details.
+ *
+ * @param {Object} error - The API error object.
+ * @returns {Array|null} - An array of error details or null if it's not an API error.
  */
 const bwCleanApiError = (error) => {
   console.log(error);
@@ -17,16 +18,7 @@ const bwCleanApiError = (error) => {
         detail: element["detail"],
         attr: element["attr"],
       });
-      // eslint-disable-next-line no-useless-escape
-      //   const replace = element["detail"].replace(/[\[\]]/g, "");
-      //   console.warn(replace);
-      //   const array = replace.split(",");
-      //   console.warn(array);
-      //   const errorDetail = JSON.parse(JSON.stringify(element["detail"]));
-      //   console.warn(typeof errorDetail);
-      //   console.warn(errorDetail);
     });
-    // console.log(allErrorsArray);
     return allErrorsArray;
   } else {
     console.warn("Not api error");

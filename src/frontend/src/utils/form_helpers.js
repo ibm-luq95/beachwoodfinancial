@@ -37,15 +37,15 @@ const castBooleanCheckboxElement = (input) => {
 };
 
 /**
- * This will serialize form inputs
- * @typedef param
- * @param {Object} param - this is object param
- * @param {HTMLFormElement} param.formElement The form element
- * @param {Array} param.excludedFields Array of excluded fields
- * @param {boolean} param.isOrdered Order the returned object
- * @param {boolean} param.returnAsFormData Return inputs as FormData object
- * @param {Array} param.filesArray File(s) inputs names
- * @returns {Object|FormData} json object of all inputs
+ * Serializes form input elements into an object or FormData.
+ *
+ * @param {Object} options - The options for serialization.
+ * @param {HTMLFormElement} options.formElement - The form element to serialize.
+ * @param {Array} [options.excludedFields=[]] - The fields to exclude from serialization.
+ * @param {boolean} [options.isOrdered=false] - Whether to order the serialized object alphabetically by keys.
+ * @param {boolean} [options.returnAsFormData=false] - Whether to return the serialized data as a FormData object.
+ * @param {Array} [options.filesArray=[]] - The names of file input fields to include in the FormData.
+ * @returns {Object|FormData} - The serialized form data.
  */
 const formInputSerializer = ({
   formElement,
@@ -124,9 +124,12 @@ const formInputSerializer = ({
 };
 
 /**
- * This function will set html form elements with values
- * @param {HTMLFormElement} formElement Form element which will set the values
- * @param {Object} objectOfValues Object of values to set
+ * Sets the values of form inputs based on an object of values.
+ *
+ * @param {HTMLFormElement} formElement - The form element to set values on.
+ * @param {Object} objectOfValues - An object containing the values to set on the form inputs.
+ * @throws {Error} If the formElement is not an instance of HTMLFormElement.
+ * @returns {void}
  */
 const setFormInputValues = (formElement, objectOfValues) => {
   const wyswygCssClass = "wyswyg-textarea";
@@ -155,11 +158,11 @@ const setFormInputValues = (formElement, objectOfValues) => {
 };
 
 /**
- * Enable or disable form fieldset items with form's submit button
- * @typedef param
- * @param {Object} param - this is object param
- * @param {HTMLFormElement} param.formElement HTML form element
- * @param {string} param.state this will enable or disable
+ * Disables or enables the items within a fieldset based on the provided state.
+ *
+ * @param {Object} options - The options object.
+ * @param {HTMLElement} options.formElement - The form element containing the fieldset.
+ * @param {string} options.state - The state to set for the fieldset items. Can be "enable" or "disable".
  */
 const disableAndEnableFieldsetItems = ({ formElement, state }) => {
   SessionStorageManagement.clear();
@@ -175,9 +178,7 @@ const disableAndEnableFieldsetItems = ({ formElement, state }) => {
   ];
   // const allFormInputs = document.querySelectorAll(`[data-form-id=${formElement.id}]`);
   // const allFormInputs = Array.from(formElement.elements);
-  const allFormInputs = formElement.querySelectorAll(
-    "input, select, textarea, button",
-  );
+  const allFormInputs = formElement.querySelectorAll("input, select, textarea, button");
   // console.log(allFormInputs);
   const submitBtn = document.querySelector(`button[form=${formElement.id}]`);
   switch (stateLower) {
@@ -228,8 +229,10 @@ const disableAndEnableFieldsetItems = ({ formElement, state }) => {
 };
 
 /**
- * Set all form elements to read only
- * @param {string} formID HTML form id
+ * Sets the form inputs to read-only mode.
+ *
+ * @param {string} formID - The ID of the form element.
+ * @returns {void}
  */
 const setFormInputsReadOnly = (formID) => {
   const readOnlyFormElement = document.querySelector(`form#${formID}`);

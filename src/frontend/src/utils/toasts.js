@@ -4,9 +4,12 @@ import { TOASTSTIMEOUTSECS } from "./constants";
 import { getIconForToasts } from "./icons";
 
 /**
- * This will display notification message
- * @param {string} msg the message in the notification
- * @param {string} notificationType notification message type
+ * Displays a toast notification with the given message and notification type.
+ *
+ * @param {string} msg - The message to be displayed in the toast notification.
+ * @param {string} [notificationType="success"] - The type of the toast notification. Possible values are "success", "error", "danger", "info", and "warning".
+ * @throws {Error} If the specified notification type does not exist.
+ * @returns {void}
  */
 const showToastNotification = (msg, notificationType = "success") => {
   const toastsWrapperElement = document.querySelector("div#toasts-wrapper");
@@ -25,12 +28,6 @@ const showToastNotification = (msg, notificationType = "success") => {
     toastsWrapperElement.classList.add(...["animate__animated", "animate__fadeOutRight"]);
   }, TOASTSTIMEOUTSECS);
   toastsWrapperElement.classList.remove(...["animate__fadeOutRight"]);
-  // setTimeout(() => {
-  //   toastsWrapperElement.classList.remove(
-  //     ...["animate__animated", "animate__fadeInRight", "animate__faster"],
-  //   );
-  //   toastsWrapperElement.classList.add("hidden");
-  // }, TOASTSTIMEOUTSECS + 500);
 };
 
 export { showToastNotification };

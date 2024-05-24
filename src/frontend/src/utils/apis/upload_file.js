@@ -3,17 +3,19 @@
 import { showToastNotification } from "../toasts";
 
 /**
- * This object will send request api with uploaded file using XMLHTTPRequest
+ * Represents a request for uploading files.
+ * This class handles the creation and management of an AJAX request for file uploads.
+ * It includes setting headers, handling various events like progress, error, and abort,
+ * and managing the response.
+ *
+ * @class
+ * @param {string} url - The URL endpoint to which the file will be uploaded.
+ * @param {FormData} formDataObject - The FormData object containing the file and other data to be uploaded.
+ * @param {string} csrfToken - A CSRF token required for validating the request on the server side.
+ * @param {string} [requestMethod="POST"] - The HTTP method to be used for the request. Defaults to "POST".
+ * @param {boolean} [isDebugging=false] - Flag to enable logging of debugging information.
  */
 class UploadFileRequest {
-  /**
-   * Constructor which will init url and form data to the object
-   * @param {string} url the url endpoint
-   * @param {FormData} formDataObject FormData object which contains all data to upload
-   * @param {string} csrfToken django csrf token
-   * @param {string} requestMethod request type, default POST
-   * @param {boolean} isDebugging logging output
-   */
   constructor(url, formDataObject, csrfToken, requestMethod, isDebugging = false) {
     this.url = url;
     this.formData = formDataObject;
@@ -24,7 +26,9 @@ class UploadFileRequest {
   }
 
   /**
-   * This method will set the header for the request
+   * Sets the necessary HTTP headers for the AJAX request.
+   * This includes the CSRF token and headers for AJAX, caching, and expected response type.
+   * Throws an error if the CSRF token is not provided.
    */
   setHeaders() {
     try {
@@ -48,8 +52,11 @@ class UploadFileRequest {
     }
   }
   /**
-   * This method will send the request
-   * @returns Promise
+   * Sends the AJAX request to upload the file.
+   * This method sets up event listeners for progress, error, abort, and load events,
+   * and sends the FormData object through the AJAX request.
+   * @returns {Promise} A promise that resolves with the server's response message if the upload is successful,
+   * or rejects with an error if the request fails.
    */
   sendRequest() {
     return new Promise((resolve, reject) => {
@@ -108,8 +115,8 @@ class UploadFileRequest {
     });
   }
   /**
-   * This check if the response is ok
-   * @returns bool
+   * Checks if the HTTP response status is within the successful range (200-399).
+   * @returns {boolean} True if the status is within the successful range, false otherwise.
    */
   ok() {
     // console.log(this.ajaxObject.status);
@@ -119,16 +126,31 @@ class UploadFileRequest {
       return false;
     }
   }
+  /**
+   * Handles the progress event of the upload.
+   * Logs the percentage of the upload completed.
+   * @param {ProgressEvent} event - The progress event object.
+   */
   uploadProgressHandler(event) {
     const percent = (event.loaded / event.total) * 100;
     console.log(Math.round(percent) + "%");
   }
 
+  /**
+   * Handles errors during the upload process.
+   * Logs the error and shows a toast notification.
+   * @param {Event} event - The error event object.
+   */
   errorHandler(event) {
     showToastNotification("Error while uploading!", "danger");
     console.error(event);
   }
   // eslint-disable-next-line no-unused-vars
+  /**
+   * Handles the abort event when the upload is manually aborted.
+   * Aborts the AJAX request and shows a toast notification.
+   * @param {Event} event - The abort event object.
+   */
   abortHandler(event) {
     this.ajaxObject.abort();
     showToastNotification("Abort uploading!", "danger");
