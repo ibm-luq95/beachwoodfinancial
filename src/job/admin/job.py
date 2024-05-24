@@ -20,7 +20,7 @@ class JobAdmin(BWBaseAdminModelMixin):
         "period_year",
         "period_month",
         "managed_by",
-        "client",
+        # "client",
     )
     list_per_page = 20
     list_display = (
