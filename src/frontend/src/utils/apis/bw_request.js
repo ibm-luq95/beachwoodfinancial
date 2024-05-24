@@ -42,8 +42,10 @@ class BWRequestApi {
     this.initFormMethod();
     this.initFormInputs();
     this.initRequestOptions();
-    console.log(this.formInputs);
-    console.log(this.#requestOptions);
+  }
+
+  get getRequestOptions() {
+    return this.#requestOptions;
   }
 
   initFormInputs() {
@@ -51,6 +53,7 @@ class BWRequestApi {
       formElement: this.formElementObject,
       excludedFields: ["_method"],
     });
+    console.log(`initFormInputs-> ${this.formInputs}`);
   }
 
   initFormUrl() {
@@ -67,6 +70,7 @@ class BWRequestApi {
         throw new Error("No form passed!");
       }
     }
+    console.warn(`initFormUrl-> ${this.url}`);
   }
   initFormToken() {
     if (this.token) {
@@ -82,6 +86,7 @@ class BWRequestApi {
         throw new Error("No form passed!");
       }
     }
+    console.warn(`initFormToken-> ${this.token}`);
   }
   initFormMethod() {
     if (this.method) {
@@ -97,12 +102,14 @@ class BWRequestApi {
         throw new Error("No form passed!");
       }
     }
+    console.warn(`initFormMethod-> ${this.method}`);
   }
   initRequestOptions() {
     this.#requestOptions["method"] = this.method;
     this.#requestOptions["token"] = this.token;
     this.#requestOptions["url"] = this.url;
     this.#requestOptions["dataToSend"] = this.formInputs;
+    console.log(`initRequestOptions-> ${this.getRequestOptions}`);
   }
 
   #sendRequest() {
@@ -162,19 +169,6 @@ class BWRequestApi {
 
   #beforeSend() {}
   #afterSend() {}
-  /* sendRequest() {
-    return new Promise((resolve, reject) => {
-      const requestOptions = this.#requestOptions;
-      const request = sendRequest(requestOptions);
-      request
-        .then((data) => {
-          resolve(data);
-        })
-        .catch((error) => {
-          reject(error);
-        });
-    });
-  } */
 }
 
 export { BWRequestApi };
