@@ -12,8 +12,8 @@ from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from core.views.mixins.bookkeeper_pass_related_mixin import BookkeeperPassRelatedMixin
 from core.views.mixins.update_previous_mixin import UpdateReturnPreviousMixin
 from staff_briefcase.filters import StaffNotesFilter
+from staff_briefcase.forms.notes import StaffNotesForm
 from staff_briefcase.models import StaffNotes
-from staff_briefcase.models.notes.model_form import StaffNotesForm
 
 
 class StaffNotesListView(
