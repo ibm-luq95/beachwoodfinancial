@@ -131,5 +131,3 @@ class ClientProxy(Client, BWGetRelatedNotesAndDocuments):
     def get_all_past_due_jobs(self) -> BaseQuerySetMixin:
         jobs = self.jobs.filter(status=CON_PAST_DUE)
         return jobs
-
-    

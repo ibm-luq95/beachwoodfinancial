@@ -12,6 +12,7 @@ def sort_dict(dict_object: dict) -> dict:
 
     :param dict_object: a dictionary to be sorted
     :return: a sorted dictionary
+
     """
     res = dict()
     for k, v in sorted(dict_object.items()):
@@ -24,7 +25,7 @@ def sort_dict(dict_object: dict) -> dict:
 
 def get_trans_txt(txt) -> str:
     """
-    Get text as django translated text
+    Get text as django translated text.
 
     Parameters
     ----------
@@ -35,13 +36,14 @@ def get_trans_txt(txt) -> str:
     -------
     str
         translated string
+
     """
     return _(txt)
 
 
 def foreign_key_snake_case_plural(s: str) -> str:
     """
-    Generate foreign key with (s) plural name
+    Generate foreign key with (s) plural name.
 
     Parameters
     ----------
@@ -52,6 +54,7 @@ def foreign_key_snake_case_plural(s: str) -> str:
     -------
     str
         return the plural name
+
     """
     # print(s)
     snake_name = "_".join(
@@ -63,6 +66,17 @@ def foreign_key_snake_case_plural(s: str) -> str:
 
 
 def get_request_context(context, kwargs_element) -> dict:
+    """
+    Generate the request context by merging the provided context and kwargs_element.
+
+    Parameters:
+        context (list): A list of dictionaries representing the context.
+        kwargs_element (dict): A dictionary containing key-value pairs.
+
+    Returns:
+        dict: A dictionary representing the merged context with additional data_aria_attributes.
+
+    """
     full_dict = dict()
     data_aria_attributes = ""
     for con in context:
@@ -81,7 +95,8 @@ def get_months_abbr(
     year: Optional[int | str] = None, return_months_idxs: bool = False
 ) -> tuple:
     """
-    Get months abbreviations as tuple of months abbreviations or indexes
+    Get months abbreviations as tuple of months abbreviations or indexes.
+
     Parameters
     ----------
     year: int | str = Year passed
@@ -90,6 +105,7 @@ def get_months_abbr(
     Returns
     -------
     tuple
+
     """
     data = []
     base_months = tuple(calendar.month_abbr)

@@ -27,6 +27,10 @@ class JobsInline(ReadOnlyInlineMixin):
 @admin.register(ClientProxy)
 class ClientAdmin(BWBaseAdminModelMixin):
     list_display = ("name", "email", "industry", "status", "created_at")
-    list_filter = ["status", "industry"] + BWBaseAdminModelMixin.list_filter
-    search_fields = ("email",)
+    list_filter = ["status", "bookkeepers"] + BWBaseAdminModelMixin.list_filter
+    search_fields = (
+        "email",
+        "industry",
+    )
     inlines = [JobsInline]
+    readonly_fields = ["id"]
