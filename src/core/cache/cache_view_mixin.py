@@ -3,9 +3,12 @@ from typing import Any, Union, Optional
 
 from django.core.cache import cache
 
+# TODO: Review any changes here
+
 
 class BWCacheViewMixin:
     """This is cache mixin, which will use with any cbv"""
+
     pass
 
     # def cmx_check(self, key: str) -> bool:
