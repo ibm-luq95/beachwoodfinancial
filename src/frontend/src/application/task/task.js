@@ -1,4 +1,7 @@
 "use strict";
+/* 
+This file will handle all tasks related api requests
+*/
 import { sendRequest } from "../../utils/apis/apis";
 import { bwCleanApiError } from "../../utils/apis/clean_errors";
 import { CSRFINPUTNAME } from "../../utils/constants";
@@ -9,7 +12,8 @@ import {
 import { showToastNotification } from "../../utils/toasts";
 
 document.addEventListener("DOMContentLoaded", (readyEvent) => {
-  const createTaskModalForm = document.querySelector("form#createTaskForm");
+  const createTaskModalForm = document.querySelector("form#createTaskForm"); // Grab the task form element
+  // Check if the form element exists in the page
   if (createTaskModalForm) {
     const fieldset = createTaskModalForm.querySelector("fieldset");
     createTaskModalForm.addEventListener("submit", (event) => {
