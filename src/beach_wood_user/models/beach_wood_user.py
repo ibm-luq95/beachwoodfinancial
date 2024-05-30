@@ -26,7 +26,7 @@ logger = get_formatted_logger()
 
 class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin, GuardianUserMixin):
     """BWUser, Main user customized model
-    
+
         it used instead of default django user model
     Args:
         BaseModelMixin (BaseModelMixin): Base abstract model contains common fields
@@ -58,6 +58,9 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin, GuardianUserMix
         choices=BeachWoodUserTypesEnum.choices,
         default=BeachWoodUserTypesEnum.USER,
         db_index=True,
+    )
+    last_login = models.DateTimeField(
+        _("last login"), blank=True, null=True, editable=False
     )
 
     USERNAME_FIELD = "email"
