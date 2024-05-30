@@ -36,7 +36,7 @@ class BWUserAdmin(ImportExportModelAdmin, UserAdmin):
         "last_login",
         "created_at",
     )
-    readonly_fields = ("date_joined", "last_login")
+    readonly_fields = ("date_joined", "last_login", "updated_at")
     fieldsets = (
         (None, {"fields": ("email", "password")}),
         (
@@ -60,6 +60,7 @@ class BWUserAdmin(ImportExportModelAdmin, UserAdmin):
             {
                 "fields": (
                     "date_joined",
+                    "updated_at",
                     "last_login",
                 )
             },
