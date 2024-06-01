@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-#
+from django.contrib.auth import get_user_model
 from django.contrib.auth.signals import user_logged_in
 from django.dispatch import receiver
 from django.utils import timezone
@@ -17,4 +18,6 @@ def log_user_login(sender, request, user, **kwargs):
 
 
 # user_logged_in.disconnect(update_last_login)
-user_logged_in.disconnect(update_last_login, dispatch_uid="update_last_login")
+user_logged_in.disconnect(
+    update_last_login, sender=get_user_model(), dispatch_uid="update_last_login"
+)
