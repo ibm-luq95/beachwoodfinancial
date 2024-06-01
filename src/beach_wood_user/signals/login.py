@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-#
+from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.contrib.auth.signals import user_logged_in
 from django.dispatch import receiver
@@ -19,5 +20,5 @@ def log_user_login(sender, request, user, **kwargs):
 
 # user_logged_in.disconnect(update_last_login)
 user_logged_in.disconnect(
-    update_last_login, sender=get_user_model(), dispatch_uid="update_last_login"
+    update_last_login, sender=settings.AUTH_USER_MODEL, dispatch_uid="update_last_login"
 )
