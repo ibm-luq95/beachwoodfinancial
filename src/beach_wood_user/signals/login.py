@@ -18,7 +18,7 @@ def log_user_login(sender, request, user, **kwargs):
     BWDebuggingPrint.pprint("Update last login done")
 
 
-user_logged_in.disconnect(update_last_login, sender=settings.AUTH_USER_MODEL)
+user_logged_in.disconnect(update_last_login)
 # user_logged_in.disconnect(
 #     update_last_login, sender=settings.AUTH_USER_MODEL, dispatch_uid="update_last_login"
 # )
