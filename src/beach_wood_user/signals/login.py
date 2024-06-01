@@ -13,8 +13,8 @@ from core.utils.developments.debugging_print_object import BWDebuggingPrint
 def log_user_login(sender, request, user, **kwargs):
     # if user.user_type == "manager":
     user.last_login = timezone.now()
-    # user.save(update_fields=["last_login"])
-    user.save()
+    user.save(update_fields=["last_login"])
+    # user.save()
     BWDebuggingPrint.pprint("Update last login done")
 
 
