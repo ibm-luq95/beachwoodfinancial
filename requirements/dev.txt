@@ -6,6 +6,7 @@ django-pdb
 django-anonymous
 django-debug-permissions
 django-request-viewer
+django-admin-cli
 django-debug-toolbar-template-profiler
 django-silk
 djipsum
