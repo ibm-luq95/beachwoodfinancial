@@ -73,6 +73,8 @@ const sendRequest = (options) => {
         // "Content-Type": "application/x-www-form-urlencoded",
         Accept: "application/json",
         "X-Requested-With": "XMLHttpRequest",
+        // "X-Content-Type-Options": "nosniff",  // TODO: Enable in production and test it
+        // "X-XSS-Protection": "1; mode=block",  // TODO: Enable in production and test it
         "X-CSRFToken": options["token"] ? options["token"] : getCookie("csrftoken"),
         // "Content-Disposition": "attachment; filename=upload.jpg",
       });
