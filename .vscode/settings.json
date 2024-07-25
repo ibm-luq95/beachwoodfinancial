@@ -139,6 +139,9 @@
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 4000,
   "codium.codeCompletion.enable": true,
+  "[nginx]": {
+    "editor.defaultFormatter": "ahmadalli.vscode-nginx-conf"
+  },
   // config for extention: junstyle.vscode-django-support
   // "files.associations": {
   //   "**/templates/**/*.html": "django-html",
