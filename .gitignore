@@ -575,3 +575,5 @@ src/key.pem
 /.env_dotenv
 /commands/development_only/
 .pnpm-store
+
+src/tmplogs
