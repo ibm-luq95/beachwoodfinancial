@@ -20,8 +20,8 @@ drf-standardized-errors
 django-easy-audit
 gunicorn
 hiredis
-mysql-connector-python
-mysqlclient
+#mysql-connector-python
+#mysqlclient
 Pillow
 prettytable
 psycopg[binary]
