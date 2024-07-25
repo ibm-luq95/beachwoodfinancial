@@ -267,10 +267,10 @@ MAINTENANCE_MODE_IGNORE_SUPERUSER = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-
+DJANGO_CSRF_TRUSTED_ORIGINS = ["http://localhost:8000"]
 STATIC_URL = "static/"
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    BASE_DIR / "static/",
     BASE_DIR / "frontend" / "build",
     BASE_DIR / "components",
 ]
@@ -370,7 +370,7 @@ if config("IS_CACHE_ENABLED", cast=bool) is True:
             "BACKEND": config("CACHE_BACKEND_ENGINE", cast=str),
             "LOCATION": f"redis://{config('REDIS_HOST')}/1",
             "OPTIONS": {
-                "PASSWORD": config("REDIS_PASSWORD"),
+                # "PASSWORD": config("REDIS_PASSWORD"),
                 # "PARSER_CLASS": "redis.connection.HiredisParser",
                 "CLIENT_CLASS": "django_redis.client.DefaultClient",
                 "PICKLE_VERSION": -1,

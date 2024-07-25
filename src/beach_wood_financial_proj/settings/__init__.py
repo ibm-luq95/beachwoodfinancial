@@ -3,7 +3,8 @@ from pathlib import Path
 from decouple import Config, RepositoryEnv
 
 cwd = Path.cwd()
-env_path = cwd / ".env" / ".env"
+# env_path = cwd / ".env" / ".env"
+env_path = cwd / ".env" / ".env_docker"  # For docker
 
 # check if .env file not exists
 if env_path.exists() is False:
