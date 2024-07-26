@@ -1,5 +1,6 @@
 djangorestframework-stubs
 djangorestframework-types
+typed-argument-parser
 django-filter-stubs
 python-decouple-typed
 django-stubs
