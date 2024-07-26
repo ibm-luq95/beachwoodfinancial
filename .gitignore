@@ -577,3 +577,4 @@ src/key.pem
 .pnpm-store
 
 src/tmplogs!/.unotes/
+src/tmplogs/*
