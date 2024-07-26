@@ -1,9 +1,7 @@
 # -*- coding: utf-8 -*-#
 import os
 
-from django.core.management import call_command
 from django.contrib.auth.management.commands import createsuperuser
-from django.core.management.base import BaseCommand
 from django.db import transaction
 from django.utils.translation import gettext as _
 
