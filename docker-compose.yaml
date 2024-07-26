@@ -1,6 +1,5 @@
 #version: "3"
 services:
-  
   backend:
     restart: no
     container_name: beachwoodfinancial_development_webapp
@@ -23,16 +22,15 @@ services:
       args:
         BUILD_ENV: development
         progress: plain
-    working_dir: /beachwoodfinancial_development/src
+    working_dir:
+      /beachwoodfinancial_development/src
       #    ports:
-      #      - "8000:8000"
-      #    network_mode: bridge
+    #      - "8000:8000"
     expose:
       - 8000
     volumes:
-      #      - .:/beachwoodfinancial_development:z
+#      - .:/beachwoodfinancial_development:z
       - staticfiles:/beachwoodfinancial_development/src/staticfiles
-#      - media-data:/media
       - type: bind
         source: .
         target: /beachwoodfinancial_development:z
@@ -42,7 +40,7 @@ services:
     depends_on:
       - db
       - cache
-  
+
   db:
     image: postgres:alpine
     tty: true
@@ -87,12 +85,12 @@ services:
     build:
       context: .
       dockerfile: ./docker/nginx/Dockerfile
-    #    restart: unless-stopped
     ports:
       - "80:80"
-    #      - "443:443"
+    #      - "443:443"  # This is for SSL 
     volumes:
       - staticfiles:/home/static/staticfiles
+      - mediafiles:/home/media/media
     depends_on:
       - backend
     environment:
@@ -112,3 +110,4 @@ volumes:
   pgdata:
   #  static-data:
   staticfiles:
+  mediafiles:
