@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 from decouple import Config, RepositoryEnv, Csv
+import configparser
 from django.contrib.messages import constants as messages
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -20,6 +21,11 @@ from sentry_sdk.integrations.django import DjangoIntegration
 # BASE_DIR = Path(__file__).resolve().parent.parent  # Default BASE_DIR
 BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
 env_file_path: Path = BASE_DIR / ".env" / ".env"
+
+config = configparser.RawConfigParser()
+stage_env_file = BASE_DIR / ".env" / "current_stage.ini"
+config.read(stage_env_file)
+stage = config.get("environment", "STAGE_ENVIRONMENT")
 
 config: Config = Config(RepositoryEnv(env_file_path))
 
@@ -365,7 +371,7 @@ FILTERS_EMPTY_CHOICE_LABEL = ""
 
 # check if cache enabled
 if config("IS_CACHE_ENABLED", cast=bool) is True:
-    CACHES = {
+    cache_dict = {
         "default": {
             "BACKEND": config("CACHE_BACKEND_ENGINE", cast=str),
             "LOCATION": f"redis://{config('REDIS_HOST')}/1",
@@ -380,6 +386,9 @@ if config("IS_CACHE_ENABLED", cast=bool) is True:
             },
         }
     }
+    if stage == "LOCAL_DEV":
+        cache_dict["default"]["OPTIONS"]["PASSWORD"] = config("REDIS_PASSWORD")
+    CACHES = cache_dict
     # SESSION_ENGINE = "django.contrib.sessions.backends.cache"
     # SESSION_CACHE_ALIAS = "default"
     DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
