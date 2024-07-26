@@ -23,9 +23,9 @@ BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
 env_file_path: Path = BASE_DIR / ".env" / ".env"
 
 config = configparser.RawConfigParser()
-stage_env_file = BASE_DIR / ".env" / "current_stage.ini"
+stage_env_file = BASE_DIR / ".env" / ".current_stage"
 config.read(stage_env_file)
-stage = config.get("environment", "STAGE_ENVIRONMENT")
+stage = config.get("environment", "STAGE_ENVIRONMENT".lower())
 
 config: Config = Config(RepositoryEnv(env_file_path))
 
