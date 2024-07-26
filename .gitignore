@@ -576,4 +576,4 @@ src/key.pem
 /commands/development_only/
 .pnpm-store
 
-src/tmplogs
+src/tmplogs!/.unotes/
