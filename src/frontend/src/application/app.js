@@ -1,5 +1,9 @@
 // This is the scss entry file
-
+import $ from "jquery";
+window.jQuery = $;
+window.$ = $;
+import _ from "lodash";
+import Dropzone from "dropzone";
 import "../styles/index.scss";
 import "../styles/dashboard.scss";
 import "simplelightbox/dist/simple-lightbox.css";
