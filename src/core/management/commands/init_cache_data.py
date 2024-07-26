@@ -6,10 +6,6 @@ Date: 5/13/24
 
 Description: Initiate necessary data into cache, web app settings, application configurations, site
 """
-import stringcase
-from decouple import Config, RepositoryEnv
-from django.conf import settings
-from django.core import serializers
 from django.contrib.sites.models import Site
 from django.core.management import CommandError
 from django.core.management.base import BaseCommand
@@ -20,9 +16,8 @@ from django.utils.translation import gettext as _
 from core.cache import BWCacheHandler
 from core.constants.site_settings import SITE_SETTINGS_DB_SLUG, WEB_APP_SITE_SETTINGS_KEY
 from core.management.mixins import CommandStdOutputMixin
-from core.utils import debugging_print
 from core.utils.grab_env_file import grab_env_file
-from site_settings.models import SiteSettings, ApplicationConfigurations
+from site_settings.models import SiteSettings
 from site_settings.serializers import SiteSettingsSerializer
 
 
