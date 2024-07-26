@@ -20,6 +20,12 @@ import hljs from "highlight.js";
 import "highlight.js/styles/default.css";
 import NiceSelect from "nice-select2/dist/js/nice-select2.js";
 import "nice-select2/dist/css/nice-select2.css";
+import pdfMake from "pdfmake/build/pdfmake";
+import pdfFonts from "pdfmake/build/vfs_fonts";
+pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import 'pdfmake/build/vfs_fonts';
+
+import "jszip";
 
 // import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 // import "css.gg/icons/all.css";
@@ -27,7 +33,9 @@ import "nice-select2/dist/css/nice-select2.css";
 import tableSort from "table-sort-js/table-sort.js";
 // eslint-disable-next-line no-unused-vars
 import Chart from "chart.js/auto";
-
+import "datatables.net-fixedheader";
+import "datatables.net-buttons";
+import "datatables.net-buttons/js/buttons.html5.js";
 import "./dashboard/dashboard.js";
 import "./job/details.js";
 import "./special_assignment/details.js";
@@ -49,6 +57,14 @@ import "./filter_category_forms/filter_category_forms.js";
 import { setFormInputsReadOnly } from "../utils/form_helpers";
 
 window.document.addEventListener("DOMContentLoaded", function () {
+  // Datatables config
+  const dataTablesInputs = document.querySelectorAll(".dt-container thead input");
+
+  dataTablesInputs.forEach((input) => {
+    input.addEventListener("keydown", function (evt) {
+      if ((evt.metaKey || evt.ctrlKey) && evt.key === "a") this.select();
+    });
+  });
   const niceSelectElements = document.querySelectorAll("select.nice-select");
   if (niceSelectElements.length > 0) {
     niceSelectElements.forEach((element) => {
