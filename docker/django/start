@@ -3,24 +3,29 @@
 set -o errexit
 set -o pipefail
 set -o nounset
+MAIN_DIR_PROJECT_DIR="/beachwoodfinancial_development"
+CUSTOM_SCRIPTS_DIR="$MAIN_DIR_PROJECT_DIR/scripts"
+SRC_DIR="$MAIN_DIR_PROJECT_DIR/src"
+FRONTEND_DIR="$SRC_DIR/frontend"
 
-
-#python3 manage.py makemigrations
-#python3 manage.py migrate
-##exec python3 manage.py runserver 0.0.0.0:8000
-#python3 manage.py runserver 0.0.0.0:8000
 # setup frontend
 echo "###############################################################"
 echo "Waiting for frontend to setup..."
-cd frontend
+cd $FRONTEND_DIR
 npm set progress true
 pnpm install
 pnpm run build
 echo "###############################################################"
 
 echo "###############################################################"
+cd $CUSTOM_SCRIPTS_DIR
+python3 create_stage.py -f -n docker_dev -d
+python3 create_stage.py -f -n docker_dev
+echo "###############################################################"
+
+echo "###############################################################"
 echo "Waiting for enter src folder ..."
-cd ..
+cd $SRC_DIR
 echo "###############################################################"
 
 echo "###############################################################"
