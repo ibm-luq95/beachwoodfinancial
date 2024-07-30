@@ -126,6 +126,7 @@ class ClientProxy(Client, BWGetRelatedNotesAndDocuments):
             return 0
 
     def get_jobs_count(self) -> int | None:
+        # print(self.jobs.archive_objects.all())
         return self.jobs.count()
 
     def get_all_past_due_jobs(self) -> BaseQuerySetMixin:
