@@ -578,3 +578,5 @@ src/key.pem
 
 src/tmplogs!/.unotes/
 src/tmplogs/*
+
+.idea
