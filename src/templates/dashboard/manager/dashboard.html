@@ -480,10 +480,16 @@
                                     <a href="#"
                                        target="_blank"
                                        class="mt-1 -ms-1 p-1 underline inline-flex items-center gap-x-2 text-xs rounded-lg border border-transparent text-gray-500 hover:bg-gray-100 disabled:opacity-50 disabled:pointer-events-none dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600">
-                                        <img class="flex-shrink-0 w-4 h-4 rounded-full"
-                                             src="https://images.unsplash.com/photo-1659482633369-9fe69af50bfb?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8auto=format&fit=facearea&facepad=3&w=320&h=320&q=80"
-                                             alt="Image Description" />
-                                        {{ activity.user }}
+                                        {% if activity.user.get_staff_member_object.staff_object.profile.profile_picture %}
+                                            <img class="flex-shrink-0 w-4 h-4 rounded-full"
+                                                 src="{{ activity.user.get_staff_member_object.staff_object.profile.profile_picture.url }}"
+                                                 alt="{{ activity.user.fullname }}" />
+                                        {% else %}
+                                            <img class="flex-shrink-0 w-4 h-4 rounded-full"
+                                                 src="{% static 'img/default_staff.png' %}"
+                                                 alt="{{ activity.user.fullname }}" />
+                                        {% endif %}
+                                        {{ activity.user.fullname }}
                                         <i class="fa-solid fa-arrow-up-right-from-square text-[9px]"></i>
                                     </a>
                                 </div>
