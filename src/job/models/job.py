@@ -23,6 +23,7 @@ from job_category.models import JobCategory
 
 # from task.models import Task
 from .help_messages import JOB_HELP_MESSAGES
+from .manager.job_manager import JobManager
 
 
 class Job(
@@ -155,6 +156,7 @@ class Job(
     is_created_from_template = models.BooleanField(
         _("is_created_from_template"), default=False, editable=False
     )
+    objects = JobManager()
 
     # objects = Manager()
 
@@ -163,6 +165,7 @@ class Job(
 
     class Meta(BaseModelMixin.Meta):
         ordering = ["title"]
+
         permissions = BaseModelMixin.Meta.permissions + [
             ("list_abstract_job_template", "List abstract job template")
         ]
