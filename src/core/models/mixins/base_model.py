@@ -67,6 +67,7 @@ class BaseModelMixin(DiffingMixin, GetModelInstanceAsDictMixin, models.Model):
 
     class Meta:
         abstract = True
+        # base_manager_name = "objects"
         # ordering = ["-created_at", "-updated_at"]
         # ordering = ["-created_at"]
         permissions = [
