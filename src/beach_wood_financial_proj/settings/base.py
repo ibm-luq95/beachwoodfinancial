@@ -40,6 +40,13 @@ DEBUG = config("DEBUG", cast=bool)
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
 
+CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", cast=Csv())
+
+PROD_HOST_NAME = config("PROD_HOST_NAME", str)
+if PROD_HOST_NAME:
+    ALLOWED_HOSTS.append(PROD_HOST_NAME)
+    CSRF_TRUSTED_ORIGINS.append(f"https://{PROD_HOST_NAME}")
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -66,7 +73,7 @@ INSTALLED_APPS = [
     "drf_standardized_errors",
     "widget_tweaks",
     "rangefilter",
-    "easyaudit",
+    # "easyaudit",
     # "defender",
     "core.apps.CoreConfig",
     "beach_wood_user.apps.BeachWoodUserConfig",
