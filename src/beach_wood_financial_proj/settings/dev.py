@@ -25,7 +25,7 @@ MIDDLEWARE = MIDDLEWARE + [
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "debugtools.middleware.XViewMiddleware",
     "django.contrib.admindocs.middleware.XViewMiddleware",
-    "django_pdb.middleware.PdbMiddleware",
+    # "django_pdb.middleware.PdbMiddleware",
     # "silk.middleware.SilkyMiddleware",
 ]
 
