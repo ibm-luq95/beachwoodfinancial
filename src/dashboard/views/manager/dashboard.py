@@ -7,7 +7,7 @@ from django.views.generic import TemplateView
 
 from core.cache import BWCacheViewMixin
 from core.constants.status_labels import CON_ARCHIVED, CON_COMPLETED
-from core.models import CRUDEventProxy
+# from core.models import CRUDEventProxy
 from core.utils import get_formatted_logger
 from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from core.views.mixins import BWLoginRequiredMixin, BWManagerAccessMixin
@@ -36,7 +36,7 @@ class DashboardViewBW(
         notes_count = Note.objects.count()
         tasks_count = TaskProxy.objects.count()
 
-        last_activities = CRUDEventProxy.objects.all().order_by("-datetime")[:4]
+        # last_activities = CRUDEventProxy.objects.all().order_by("-datetime")[:4]
         special_assignments = SpecialAssignmentProxy.objects.all().order_by("-created_at")[
             :4
         ]
@@ -60,6 +60,6 @@ class DashboardViewBW(
             "requested_special_assignments_count", requested_special_assignments_count
         )
         context.setdefault("special_assignments", special_assignments)
-        context.setdefault("last_activities", last_activities)
+        # context.setdefault("last_activities", last_activities)
 
         return context
