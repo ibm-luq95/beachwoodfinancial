@@ -24,12 +24,12 @@ services:
         progress: plain
     working_dir:
       /beachwoodfinancial_development/src
-      #    ports:
+    #    ports:
     #      - "8000:8000"
     expose:
       - 8000
     volumes:
-#      - .:/beachwoodfinancial_development:z
+      #      - .:/beachwoodfinancial_development:z
       - staticfiles:/beachwoodfinancial_development/src/staticfiles
       - type: bind
         source: .
@@ -97,6 +97,15 @@ services:
       - TERM=xterm-256color
       - COLOR_PROMPT=yes
       - LANG=C.UTF-8
+  cloudflaretunnel:
+    image: cloudflare/cloudflared:latest
+    entrypoint: [ "cloudflared", "tunnel", "--no-autoupdate", "run", "--token", "$CLOUDFLARE_TUNNEL_TOKEN" ]
+    env_file:
+      - ./src/.env/.env_cloudflare
+    networks:
+      - hosting_network
+networks:
+  hosting_network:
 
 volumes:
   #  code_volume:
