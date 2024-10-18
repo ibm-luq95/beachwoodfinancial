@@ -14,6 +14,7 @@ echo "Waiting for frontend to setup..."
 cd $FRONTEND_DIR
 npm set progress true
 pnpm install
+# --loglevel info
 pnpm run build
 echo "###############################################################"
 
@@ -62,8 +63,6 @@ python3 manage.py init_site_settings -i -v 2 -e
 
 echo "Waiting for init beachwood cache data..."
 python3 manage.py init_cache_data -i -e
-
-
 
 echo "###############################################################"
 
