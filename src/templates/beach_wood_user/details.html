@@ -233,7 +233,9 @@
                                      role="tabpanel"
                                      class="hidden"
                                      aria-labelledby="user-briefcase-tab-underline">
+
                                     {% include "staff_briefcase/details_component.html" with object=object briefcase_document_form=briefcase_document_form briefcase_note_form=briefcase_note_form briefcase_account_form=briefcase_account_form %}
+
                                 </div>
                                 {# End Permissions Tab #}
                                 {% if object.user_type == CON_BOOKKEEPER %}
@@ -413,10 +415,10 @@
                         </svg>
                     </button>
                 </div>
-                <div class="p-4 overflow-y-auto" id="staffDetailsPermissionsTabs">
+                <div class="p-4 overflow-y-auto">
                     <nav class="relative z-0 flex border rounded-xl overflow-hidden dark:border-gray-700"
                          aria-label="Tabs"
-                         role="tablist">
+                         role="tablist" id="staffDetailsPermissionsTabs">
                         <button type="button"
                                 class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-s-0 border-s border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 focus:outline-none focus:text-blue-600 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-400 active"
                                 id="details-tab-item"
@@ -489,10 +491,14 @@
                                         {% translate "Phone Number" %}
                                     </dt>
                                     <dd class="sm:col-span-2 mb-3 sm:mb-0 dark:text-white">
-                                        {% if object.get_staff_member_object.staff_object.profile.phone_number|check_var_none is True %}
+                                        {% if object.get_staff_member_object.staff_object.profile.phone_number %}
                                             <address>
-                                                <a class="text-blue-600 italic"
-                                                   href="tel:{{ object.get_staff_member_object.staff_object.profile.phone_number|safe }}">{{ object.get_staff_member_object.staff_object.profile.phone_number|safe }}</a>
+                                                {% if object.get_staff_member_object.staff_object.profile.phone_number %}
+                                                    <a class="text-blue-600 italic"
+                                                       href="tel:{{ object.get_staff_member_object.staff_object.profile.phone_number|safe }}">{{ object.get_staff_member_object.staff_object.profile.phone_number|safe }}</a>
+                                                {% else %}
+                                                    <a class="text-blue-600 italic" href="javascript:;">---</a>
+                                                {% endif %}
                                             </address>
                                         {% else %}
                                             ---
@@ -615,7 +621,7 @@
                     </button>
                     <button type="submit"
                             form="permissionsUpdateMiniForm"
-                            class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+                            class="hidden py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
                             id="updatePermissionsStaffDetailsBtn">
                         {% translate "Update" %}
                     </button>
@@ -624,6 +630,5 @@
         </div>
     </div>
     {# End Permissions and Details Modal #}
-
     {# End Models #}
 {% endblock dashboard_content_block %}
