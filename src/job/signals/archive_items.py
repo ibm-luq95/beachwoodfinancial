@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-#
 from django.db.models.base import ModelBase
-from django.dispatch import receiver
-from django.db.models.signals import post_save, post_delete
+from django.db.models.signals import post_save
 
 from core.constants.status_labels import CON_ARCHIVED, CON_COMPLETED
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from job.helpers import JobArchiveRelatedItemsHelper
 from job.models import JobProxy, Job
 
