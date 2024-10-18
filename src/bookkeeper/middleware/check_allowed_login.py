@@ -39,13 +39,18 @@ class CheckAllowedLoginMiddleware:
                 site_settings = BWCacheHandler.get_item(
                     request.get_host(), WEB_APP_SITE_SETTINGS_KEY
                 )
-                if (
-                    site_settings.get("can_bookkeepers_login") is False
-                    or site_settings.get("can_assistants_login") is False
-                ):
-                    messages.error(
-                        request,
-                        _("You not allowed to login, please contact the administrator"),
-                    )
-                    logout(request)
-                    return redirect(reverse_lazy("auth:login"))
+                # TODO: check if site_settings is None, for test cases
+                # print(request.get_host())
+                # print("###################")
+                # print(site_settings)
+                if site_settings is not None:
+                    if (
+                        site_settings.get("can_bookkeepers_login") is False
+                        or site_settings.get("can_assistants_login") is False
+                    ):
+                        messages.error(
+                            request,
+                            _("You not allowed to login, please contact the administrator"),
+                        )
+                        logout(request)
+                        return redirect(reverse_lazy("auth:login"))
