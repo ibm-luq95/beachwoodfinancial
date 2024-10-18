@@ -7,7 +7,8 @@ import mimetypes
 
 DEBUG = config("DEBUG", cast=bool)
 
-INSTALLED_APPS = INSTALLED_APPS + ["debug_toolbar", "request_viewer"]
+# INSTALLED_APPS = INSTALLED_APPS + ["debug_toolbar", "request_viewer"]
+INSTALLED_APPS = INSTALLED_APPS + ["debug_toolbar"]
 
 MIDDLEWARE = MIDDLEWARE + ["debug_toolbar.middleware.DebugToolbarMiddleware"]
 
@@ -28,6 +29,7 @@ DATABASES = {
 }
 
 # Djagno Debug Toolbar
+# DEBUG_TOOLBAR_CONFIG['IS_RUNNING_TESTS'] = False # This for test only
 INTERNAL_IPS = config("INTERNAL_IPS", cast=str).split(", ")
 DISABLE_PANELS = {}
 
@@ -55,7 +57,11 @@ def show_toolbar(request):
     return True
 
 
-DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": show_toolbar}
+DEBUG_TOOLBAR_CONFIG = {
+    "SHOW_TOOLBAR_CALLBACK": show_toolbar,
+    "IS_RUNNING_TESTS": False,
+    "RENDER_PANELS": None,
+}
 
 mimetypes.add_type("application/javascript", ".js", True)
 
