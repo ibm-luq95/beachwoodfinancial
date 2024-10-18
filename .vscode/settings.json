@@ -84,42 +84,22 @@
   },
   "isort.importStrategy": "fromEnvironment",
   "isort.logLevel": "warn",
-  // "isort.check": true,
   "stylelint.stylelintPath": "./src/frontend/node_modules/stylelint/bin/stylelint.js",
-  "isort.interpreter": [
-    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12/bin/python3"
-  ],
   "typescript.tsdk": "./src/frontend/node_modules/typescript/lib",
   "stylelint.configFile": "${workspaceFolder}/.stylelintrc.json",
   "stylelint.configBasedir": "./src/frontend/node_modules",
   "tailwind-fold.autoFold": false,
   "flake8.importStrategy": "fromEnvironment",
-  "flake8.interpreter": [
-    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12/bin/python3"
-  ],
-  "flake8.path": ["${userHome}/.virtualenvs/beachwood_financial_venv_3.12/bin/flake8"],
-  "black-formatter.path": [
-    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12/bin/black"
-  ],
-  "black-formatter.interpreter": [
-    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12/bin/python3"
-  ],
+  "flake8.path": ["${interpreter}", "-m", "flake8"],
+  "black-formatter.path": ["${interpreter}", "-m", "black"],
   "isort.check": true,
   "ruff.lint.run": "onSave",
   "ruff.trace.server": "messages",
   "ruff.showNotifications": "onError",
-  "isort.path": ["${userHome}/.virtualenvs/beachwood_financial_venv_3.12/bin/isort"],
   "pylint.importStrategy": "fromEnvironment",
-  "pylint.path": ["${userHome}/.virtualenvs/beachwood_financial_venv_3.12/bin/pylint"],
   "bandit.importStrategy": "fromEnvironment",
   "html-css-class-completion.enableEmmetSupport": true,
   "mypy-type-checker.importStrategy": "fromEnvironment",
-  "mypy-type-checker.interpreter": [
-    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12/bin/python3"
-  ],
-  "mypy-type-checker.path": [
-    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12/bin/mypy"
-  ],
   "editor.defaultFormatter": null,
   "mypy-type-checker.args": ["--config-file", "${workspaceFolder}/pyproject.toml"],
   "python.analysis.diagnosticSeverityOverrides": {
@@ -141,7 +121,7 @@
   "codium.codeCompletion.enable": true,
   "[nginx]": {
     "editor.defaultFormatter": "ahmadalli.vscode-nginx-conf"
-  },
+  }
   // config for extention: junstyle.vscode-django-support
   // "files.associations": {
   //   "**/templates/**/*.html": "django-html",
