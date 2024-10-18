@@ -23,7 +23,7 @@ import "nice-select2/dist/css/nice-select2.css";
 import pdfMake from "pdfmake/build/pdfmake";
 import pdfFonts from "pdfmake/build/vfs_fonts";
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
-import 'pdfmake/build/vfs_fonts';
+import "pdfmake/build/vfs_fonts";
 
 import "jszip";
 
@@ -55,8 +55,11 @@ import "./staff_briefcase/staff_documents.js";
 import "./staff_briefcase/staff_accounts.js";
 import "./filter_category_forms/filter_category_forms.js";
 import { setFormInputsReadOnly } from "../utils/form_helpers";
+import { HSTabs } from "../../node_modules/preline/dist/preline.js";
+// import { HSTabs } from "../../node_modules/preline/dist/preline.js";
 
 window.document.addEventListener("DOMContentLoaded", function () {
+  window.HSStaticMethods.autoInit();
   // Datatables config
   const dataTablesInputs = document.querySelectorAll(".dt-container thead input");
 
@@ -129,4 +132,16 @@ window.document.addEventListener("DOMContentLoaded", function () {
     // console.log(evt);
     console.log("Close");
   }); */
+  const staffDetailsPermissionsTabs = HSTabs.getInstance("#staffDetailsPermissionsTabs");
+  staffDetailsPermissionsTabs.on(
+    "change",
+    ({ staffDetailsPermissionsTabs, prev, current }) => {
+      const btn = document.querySelector("button#updatePermissionsStaffDetailsBtn");
+      if (current === "#permissions-tab") {
+        btn.classList.remove("hidden");
+      } else {
+        btn.classList.add("hidden");
+      }
+    },
+  );
 });
