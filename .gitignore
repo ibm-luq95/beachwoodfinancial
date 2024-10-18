@@ -584,3 +584,4 @@ src/tmplogs/*
 .unotes
 /src/ignoretest.py
 /scripts/docker_puller.py
+/staticfiles/**
