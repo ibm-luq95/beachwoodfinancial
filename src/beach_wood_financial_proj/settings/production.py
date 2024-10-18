@@ -2,6 +2,10 @@ from .base import *
 
 DEBUG = config("DEBUG", cast=bool)
 
+ADMINS = [("Ibrahim Luqman", "ibm_luq995@outlook.com")]
+MANAGERS = [("Ibrahim Luqman", "ibm_luq995@outlook.com")]
+
+
 AUTH_PASSWORD_VALIDATORS = [
     {
         # Checks the similarity between the password and a set of attributes of the user.
