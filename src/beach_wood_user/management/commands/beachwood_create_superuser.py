@@ -7,7 +7,7 @@ from django.utils.translation import gettext as _
 
 from beach_wood_user.models import BWUser
 from core.management.mixins import CommandStdOutputMixin
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
+from core.utils.developments.debugging_print_object import DebuggingPrint
 
 
 class Command(createsuperuser.Command, CommandStdOutputMixin):
@@ -16,11 +16,11 @@ class Command(createsuperuser.Command, CommandStdOutputMixin):
     def handle(self, *args, **options):
         try:
             with transaction.atomic():
-                BWDebuggingPrint.pprint("Creating superuser")
+                DebuggingPrint.pprint("Creating superuser")
                 check = BWUser.objects.filter(email=os.getenv("DJANGO_SUPERUSER_EMAIL"))
-                BWDebuggingPrint.print(os.getenv("DJANGO_SUPERUSER_EMAIL"))
+                DebuggingPrint.print(os.getenv("DJANGO_SUPERUSER_EMAIL"))
                 if check:
-                    BWDebuggingPrint.panel(
+                    DebuggingPrint.panel(
                         f"Superuser exists {os.getenv('DJANGO_SUPERUSER_EMAIL')}"
                     )
                     self.stdout_output("warn", _(f"Superuser exists"))
@@ -38,5 +38,5 @@ class Command(createsuperuser.Command, CommandStdOutputMixin):
                 if options.get("verbosity", 0) >= 1:
                     self.stdout.write("Superuser created successfully.")
         except Exception as ex:
-            BWDebuggingPrint.print_exception()
+            DebuggingPrint.print_exception()
             self.stdout_output("error", str(ex))
