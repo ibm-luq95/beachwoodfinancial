@@ -57,40 +57,22 @@ RUN apt install -y gettext
 RUN echo "##################################################################"
 # Install build and developments packages
 # cleaning up unused files
-#RUN apt purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false && rm -rf /var/lib/apt/lists/*
+RUN apt purge -y --auto-remove -o APT::AutoRemove::RecommendsImportant=false && rm -rf /var/lib/apt/lists/*
 
 RUN echo "Check python version with pip"
 RUN #pip3 install -U setuptools pip wheel
 RUN which python3
 RUN python3 --version && pip3 -V
 RUN echo "##################################################################"
-# Install Python and PIP
 
-
-# Making source and static directory
-#RUN mkdir /beachwoodfinancial_development
 WORKDIR /beachwoodfinancial_development
-#ENV VIRTUAL_ENV=/beachwoodfinancial_development/venv
-#RUN python3 -m venv $VIRTUAL_ENV
-#ENV PATH="$VIRTUAL_ENV/bin:$PATH"
-# Create a virtual environment and install dependencies
 
-#RUN pip3 install --upgrade pip setuptools wheel
-#COPY --from=project ./src ./src
-#COPY ./src ./src
-#COPY --from=project ./requirements ./requirements
-#COPY ./requirements ./requirements
-#RUN ls -laR
+
 COPY . .
 RUN pwd
-#RUN /usr/src/app/venv/bin/pip3 install --upgrade pip 
-RUN --mount=type=cache,target=/root/.cache pip3 install -r requirements/_base.txt
-RUN --mount=type=cache,target=/root/.cache pip3 install -r requirements/dev.txt
-RUN --mount=type=cache,target=/root/.cache pip3 install -r requirements/_dev_ids.txt
-RUN --mount=type=cache,target=/root/.cache pip3 install -r requirements/production.txt
-RUN --mount=type=cache,target=/root/.cache pip3 install -r requirements/security.txt
-RUN --mount=type=cache,target=/root/.cache pip3 install -r requirements/test.txt
-RUN --mount=type=cache,target=/root/.cache pip3 install -r requirements/stage.txt
+
+RUN --mount=type=cache,target=/root/.cache pip3 install -U --progress-bar=on setuptools wheel pip
+RUN --mount=type=cache,target=/root/.cache pip3 install --progress-bar=on -r requirements/_all.txt
 
 # Setup NodeJs
 #WORKDIR ~
@@ -104,6 +86,8 @@ RUN bash src/node_installer nodejs
 RUN node -v
 RUN npm set progress true
 RUN npm --version
+#RUN npm install -g pnpm
+RUN npm update -g npm
 RUN npm install -g pnpm
 
 # Minimizing Layers for Efficiency
@@ -114,9 +98,6 @@ RUN npm install -g pnpm
 
 WORKDIR /beachwoodfinancial_development/src
 
-RUN chmod 755 /beachwoodfinancial_development/src/server-entrypoint.sh
-RUN chmod 755 /beachwoodfinancial_development/src/init.sh
-
 COPY ./docker/django/start /start
 RUN sed -i 's/\r$//g' /start
 RUN chmod +x /start
@@ -126,13 +107,3 @@ RUN ls -la
 RUN mkdir -p /beachwoodfinancial_development/logs
 RUN touch /beachwoodfinancial_development/logs/gunicorn_access.log
 RUN touch /beachwoodfinancial_development/logs/gunicorn_error.log
-#ENTRYPOINT ["bash", "-c", "/beachwoodfinancial_development/src/server-entrypoint.sh"]
-# Start the Django app with Gunicorn 
-#CMD gunicorn beach_wood_financial_proj.wsgi:application --bind 0.0.0.0:8000
-#CMD ["gunicorn", "beach_wood_financial_proj.wsgi:application", "--config", "gunicorn.py"]
-
-
-#ENTRYPOINT ["bash", "-c", "/usr/src/app/src/server-entrypoint.sh"]
-#EXPOSE 8000
-#CMD ["bash", "-c", "ls -la"]
-#CMD ["gunicorn", "--config", "gunicorn.conf.py"]
