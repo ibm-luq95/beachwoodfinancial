@@ -1,21 +1,12 @@
 # -*- coding: utf-8 -*-#
-from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.contrib.messages.views import SuccessMessageMixin
-from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import (
-    CreateView,
-    DeleteView,
-    DetailView,
     ListView,
-    UpdateView,
-    TemplateView,
 )
 
 from core.cache import BWCacheViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.users import CON_BOOKKEEPER
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from job.filters import JobFilter
 from job.models import JobProxy
