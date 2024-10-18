@@ -1,4 +1,4 @@
-#version: "3"
+version: "3"
 services:
   backend:
     restart: no
@@ -10,7 +10,6 @@ services:
       - PYTHONUNBUFFERED=1
       - PYTHONDONTWRITEBYTECODE=1
       - PIP_DISABLE_PIP_VERSION_CHECK=1
-      #      - PIP_NO_CACHE_DIR=off
       - NODE_ENV=development
       - PIP_PROGRESS_BAR=on
     tty: true
@@ -18,19 +17,15 @@ services:
     build:
       context: ./
       dockerfile: ./docker/django/Dockerfile
-      #      target: development
       args:
         BUILD_ENV: development
         progress: plain
-    working_dir:
-      /beachwoodfinancial_development/src
-    #    ports:
-    #      - "8000:8000"
-    expose:
-      - 8000
+    working_dir: /beachwoodfinancial_development/src
+    ports:
+      - "8000:8000"  # Expose port 8000 for Nginx to forward traffic
     volumes:
-      #      - .:/beachwoodfinancial_development:z
-      - staticfiles:/beachwoodfinancial_development/src/staticfiles
+      - ./staticfiles:/beachwoodfinancial_development/src/staticfiles  # Bind static folder
+      - ./media:/beachwoodfinancial_development/src/media              # Bind media folder
       - type: bind
         source: .
         target: /beachwoodfinancial_development:z
@@ -46,7 +41,6 @@ services:
     tty: true
     stdin_open: true
     container_name: beachwoodfinancial_development_db
-    #    network_mode: host
     ports:
       - "5433:5432"
     expose:
@@ -66,16 +60,11 @@ services:
   cache:
     restart: always
     container_name: beachwoodfinancial_development_cache
-    tty: true
-    stdin_open: true
-    #    command: /bin/sh -c "redis-server --requirepass $$REDIS_HOST_PASSWORD"
     ports:
       - "6379:6379"
-    image: valkey/valkey
+    image: valkey/valkey  # Keeping your custom Redis image
     expose:
       - 6379
-    #    env_file:
-    #      - ./src/.env/.redis.env
     environment:
       - TERM=xterm-256color
       - COLOR_PROMPT=yes
@@ -88,16 +77,18 @@ services:
       dockerfile: ./docker/nginx/Dockerfile
     ports:
       - "80:80"
-    #      - "443:443"  # This is for SSL 
     volumes:
-      - staticfiles:/home/static/staticfiles
-      - mediafiles:/home/media/media
+      - ./staticfiles:/home/static/staticfiles  # Bind static files
+      - ./media:/home/media/media               # Bind media files
     depends_on:
       - backend
+      - db
+      - cache  # Added db and cache dependencies
     environment:
       - TERM=xterm-256color
       - COLOR_PROMPT=yes
       - LANG=C.UTF-8
+
   cloudflaretunnel:
     image: cloudflare/cloudflared:latest
     entrypoint: [ "cloudflared", "tunnel", "--no-autoupdate", "run", "--token", "$CLOUDFLARE_TUNNEL_TOKEN" ]
@@ -105,19 +96,11 @@ services:
       - ./src/.env/.env_cloudflare
     networks:
       - hosting_network
+
 networks:
   hosting_network:
 
 volumes:
-  #  code_volume:
-  #    driver: local
-  #    driver_opts:
-  #      type: none
-  #      device: .
-  #      o: bind,rw,z
-  #    labels:
-  #      selinux.label: system_u:object_r:docker_var_lib_t:s0
   pgdata:
-  #  static-data:
   staticfiles:
   mediafiles:
