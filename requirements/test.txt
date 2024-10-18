@@ -1,6 +1,12 @@
 Coverage
+coverage-rich
 django_coverage_plugin
 model-bakery
 pytest
 pytest-django
 Selenium
+webdriver-manager
+pytest-factoryboy
+factory_boy
+mysqlclient
+mysql-connector-python
