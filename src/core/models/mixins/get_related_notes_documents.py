@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-#
 
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
+from core.utils.developments.debugging_print_object import DebuggingPrint
 
 
 class BWGetRelatedNotesAndDocuments:
@@ -27,7 +27,7 @@ class BWGetRelatedNotesAndDocuments:
 
             return data
         except Exception as ex:
-            BWDebuggingPrint.print_exception()
+            DebuggingPrint.print_exception()
 
     def related_for_clients(self) -> dict:
         """
@@ -59,10 +59,10 @@ class BWGetRelatedNotesAndDocuments:
                                 if hasattr(task, "documents"):
                                     data["documents"] |= task.documents.prefetch_related()
 
-            # BWDebuggingPrint.pprint(data)
+            # DebuggingPrint.pprint(data)
             return data
         except Exception as ex:
-            BWDebuggingPrint.print_exception()
+            DebuggingPrint.print_exception()
 
     def get_all_related_notes_and_documents(self) -> dict:
         """
@@ -72,4 +72,4 @@ class BWGetRelatedNotesAndDocuments:
             if self.RELATED_ITEM_ID == "client":
                 return self.related_for_clients()
         except Exception as ex:
-            BWDebuggingPrint.print_exception()
+            DebuggingPrint.print_exception()
