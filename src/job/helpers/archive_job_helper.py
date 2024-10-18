@@ -7,7 +7,7 @@ from core.constants.status_labels import CON_COMPLETED
 from core.constants.status_labels import CON_ENABLED
 from core.models.querysets import BaseQuerySetMixin
 from core.utils import get_formatted_logger
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
+from core.utils.developments.debugging_print_object import DebuggingPrint
 from job.models import Job
 from job.models import JobProxy
 
@@ -47,4 +47,4 @@ class JobArchiveRelatedItemsHelper:
                         documents.filter(Q(status=CON_ARCHIVED)).update(status=CON_ENABLED)
         except Exception as ex:
             logger.error(ex)
-            BWDebuggingPrint.print_exception()
+            DebuggingPrint.print_exception()
