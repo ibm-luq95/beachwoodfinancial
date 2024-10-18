@@ -9,7 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-
+import pprint
 from pathlib import Path
 from decouple import Config, RepositoryEnv, Csv
 import configparser
@@ -39,6 +39,12 @@ SECRET_KEY = config("SECRET_KEY", cast=str)
 DEBUG = config("DEBUG", cast=bool)
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
+
+X_FRAME_OPTIONS = "SAMEORIGIN"
+
+DEFAULT_FROM_EMAIL = (
+    "",
+)  # Default email address for automated correspondence from the site manager(s). This address is used in the From: header of outgoing emails and can take any format valid in the chosen email sending protocol.
 
 CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", cast=Csv())
 
@@ -73,7 +79,7 @@ INSTALLED_APPS = [
     "drf_standardized_errors",
     "widget_tweaks",
     "rangefilter",
-    # "easyaudit",
+    "easyaudit",
     # "defender",
     "core.apps.CoreConfig",
     "beach_wood_user.apps.BeachWoodUserConfig",
@@ -103,7 +109,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     # "django.middleware.cache.UpdateCacheMiddleware",  # new for the cache, not working
-    # with django-redis package
+    # with django-valkey package
+    "django.middleware.common.BrokenLinkEmailsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -120,7 +127,7 @@ MIDDLEWARE = [
     "maintenance_mode.middleware.MaintenanceModeMiddleware",
     "easyaudit.middleware.easyaudit.EasyAuditMiddleware",
     # "django.middleware.cache.FetchFromCacheMiddleware",  # new for the cache,
-    # not working with django-redis package
+    # not working with django-valkey package
 ]
 
 ROOT_URLCONF = "beach_wood_financial_proj.urls"
@@ -367,8 +374,8 @@ MESSAGE_TAGS = {
 
 # django-defender configs
 # DEFENDER_USERNAME_FORM_FIELD = "email"
-# DEFENDER_REDIS_URL = (
-#     f"redis://:{config('REDIS_PASSWORD', cast=str)}@{config('REDIS_HOST', cast=str)}/0"
+# DEFENDER_VALKEY_URL = (
+#     f"valkey://:{config('VALKEY_PASSWORD', cast=str)}@{config('REDIS_HOST', cast=str)}/0"
 # )
 
 # Django-filter configs
@@ -381,24 +388,25 @@ if config("IS_CACHE_ENABLED", cast=bool) is True:
     cache_dict = {
         "default": {
             "BACKEND": config("CACHE_BACKEND_ENGINE", cast=str),
-            "LOCATION": f"redis://{config('REDIS_HOST')}/1",
-            "OPTIONS": {
-                # "PASSWORD": config("REDIS_PASSWORD"),
-                # "PARSER_CLASS": "redis.connection.HiredisParser",
-                "CLIENT_CLASS": "django_redis.client.DefaultClient",
-                "PICKLE_VERSION": -1,
-                "SERIALIZER": "django_redis.serializers.json.JSONSerializer",
-                # "SERIALIZER": "django_redis.serializers.msgpack.MSGPackSerializer",
-                # "COMPRESSOR": "django_redis.compressors.lzma.LzmaCompressor",
-            },
+            "LOCATION": f"valkey://{config('VALKEY_HOST')}/1",
+            # "OPTIONS": {
+            #     # "PASSWORD": config("VALKEY_PASSWORD"),
+            #     # "PARSER_CLASS": "valkey.connection.HiredisParser",
+            #     "CLIENT_CLASS": "django_valkey.client.DefaultClient",
+            #     "PICKLE_VERSION": -1,
+            #     "SERIALIZER": "django_valkey.serializers.json.JSONSerializer",
+            #     # "SERIALIZER": "django_valkey.serializers.msgpack.MSGPackSerializer",
+            #     # "COMPRESSOR": "django_valkey.compressors.lzma.LzmaCompressor",
+            # },
         }
     }
-    if stage == "LOCAL_DEV":
-        cache_dict["default"]["OPTIONS"]["PASSWORD"] = config("REDIS_PASSWORD")
+    # if stage == "LOCAL_DEV":
+    #     cache_dict["default"]["OPTIONS"]["PASSWORD"] = config("VALKEY_PASSWORD")
+    # pprint.pprint(cache_dict)
     CACHES = cache_dict
     # SESSION_ENGINE = "django.contrib.sessions.backends.cache"
     # SESSION_CACHE_ALIAS = "default"
-    DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
+    DJANGO_VALKEY_LOG_IGNORED_EXCEPTIONS = True
     CACHE_MIDDLEWARE_ALIAS = config(
         "CACHE_MIDDLEWARE_ALIAS", cast=str
     )  # which cache alias to use
