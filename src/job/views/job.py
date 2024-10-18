@@ -52,9 +52,9 @@ class JobListView(
         context = super().get_context_data(**kwargs)
 
         context["title"] = _("Jobs")
-        # BWDebuggingPrint.pprint(dir(self.paginator_class))
-        # BWDebuggingPrint.pprint(dir(self.paginator_class.count))
-        # BWDebuggingPrint.log(self.paginator_class.page())
+        # DebuggingPrint.pprint(dir(self.paginator_class))
+        # DebuggingPrint.pprint(dir(self.paginator_class.count))
+        # DebuggingPrint.log(self.paginator_class.page())
         context.setdefault("filter_form", self.filterset.form)
 
         context.setdefault("list_type", self.list_type)

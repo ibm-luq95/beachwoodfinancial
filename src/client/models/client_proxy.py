@@ -11,11 +11,9 @@ from core.constants.status_labels import (
     CON_ENABLED,
     CON_NOT_STARTED,
     CON_PAST_DUE,
-    CON_DRAFT,
 )
 from core.models.mixins.get_related_notes_documents import BWGetRelatedNotesAndDocuments
 from core.models.querysets import BaseQuerySetMixin
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
 
 
 class ClientProxy(Client, BWGetRelatedNotesAndDocuments):

@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-#
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.contrib.messages.views import SuccessMessageMixin
-from django.http import Http404
-from django.contrib.auth import update_session_auth_hash
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import DetailView
@@ -15,7 +14,6 @@ from beach_wood_user.models import BWUser
 from bookkeeper.forms import BookkeeperForm
 from client.models import ClientProxy
 from core.config.forms import BWFormRenderer
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from core.views.mixins import BWLoginRequiredMixin
 from manager.forms import ManagerForm
 from special_assignment.forms import MiniSpecialAssignmentForm

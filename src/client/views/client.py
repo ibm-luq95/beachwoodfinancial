@@ -23,7 +23,6 @@ from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.status_labels import CON_ENABLED
 from core.constants.users import CON_BOOKKEEPER, CON_MANAGER, CON_ASSISTANT
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 from core.views.mixins.base_list_view import BWSectionDescriptionHelperMixin
 from document.forms import DocumentForm
@@ -46,6 +45,7 @@ class ClientListView(
     permission_required = "client.can_view_list"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "core/crudl/list.html"
+    # template_name = "client/list.html"
     model = ClientProxy
     # queryset = Client.objects.filter(~Q(status="archive")).prefetch_related("jobs")
     # queryset = Client.objects.prefetch_related(

@@ -1,18 +1,17 @@
 # -*- coding: utf-8 -*-#
+import random
 import traceback
 
 from django.core.management.base import BaseCommand
 from django.db import transaction
 from django.utils.translation import gettext as _
 from faker import Faker
-import random
 
 from beach_wood_user.models import BWUser
 from core.choices import BeachWoodUserStatusEnum
 from core.management.mixins import CommandStdOutputMixin
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
+from core.utils.developments.debugging_print_object import DebuggingPrint
 from core.utils.developments.debugging_print_types import DPOTableOptions
-from core.utils.developments.debugging_prompt import DebuggingPrompt
 
 
 class Command(BaseCommand, CommandStdOutputMixin):
@@ -38,7 +37,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
 
     def handle(self, *args, **options):
         try:
-            dprint = BWDebuggingPrint()
+            dprint = DebuggingPrint()
             with transaction.atomic():
                 number = options.get("number")
                 user_type = options.get("user_type")
@@ -109,7 +108,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
                     table_options=table_options,
                     return_table=True,
                 )
-                BWDebuggingPrint.print(table)
+                DebuggingPrint.print(table)
                 self.stdout_output("success", _(f"Users created successfully!"))
 
         except Exception as ex:
