@@ -93,3 +93,4 @@ key.pem
 .Python
 .pnpm-store
 
+.run
