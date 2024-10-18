@@ -62,6 +62,7 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_PORT=5432
       - POSTGRES_HOST_AUTH_METHOD=trust
+
   cache:
     restart: always
     container_name: beachwoodfinancial_development_cache
@@ -70,7 +71,7 @@ services:
     #    command: /bin/sh -c "redis-server --requirepass $$REDIS_HOST_PASSWORD"
     ports:
       - "6379:6379"
-    image: redis:alpine
+    image: valkey/valkey
     expose:
       - 6379
     #    env_file:
