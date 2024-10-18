@@ -583,3 +583,4 @@ src/tmplogs/*
 .run
 .unotes
 /src/ignoretest.py
+/scripts/docker_puller.py
