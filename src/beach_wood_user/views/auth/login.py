@@ -11,7 +11,7 @@ from django.views.generic.edit import FormView
 from beach_wood_user.forms import BWLoginForm
 from beach_wood_user.models import BWUser
 from core.cache import BWCacheViewMixin
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
+from core.utils.developments.debugging_print_object import DebuggingPrint
 from core.utils.grab_env_file import grab_env_file
 
 
@@ -106,6 +106,6 @@ class BWLoginViewBW(SuccessMessageMixin, BWCacheViewMixin, FormView):
 
             return super().form_valid(form)
         except Exception:
-            BWDebuggingPrint.get_console_obj().print_exception(show_locals=False)
+            DebuggingPrint.get_console_obj().print_exception(show_locals=False)
             messages.error(self.request, _("Error while login"))
             return super().form_invalid(form)
