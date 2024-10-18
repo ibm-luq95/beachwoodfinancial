@@ -8,7 +8,7 @@ from django.db import transaction
 from client.models import ClientProxy
 from core.choices import NoteSectionEnum
 from core.management.mixins.base_seeder_command import BaseSeederCommandMixin
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
+from core.utils.developments.debugging_print_object import DebuggingPrint
 from core.utils.developments.debugging_print_types import DPOTableOptions
 from job.models import JobProxy
 from note.models import Note
@@ -50,7 +50,7 @@ class Command(BaseSeederCommandMixin):
                                 "task": random_task,
                             }
                         )
-                    # BWDebuggingPrint.pprint(note_data)
+                    # DebuggingPrint.pprint(note_data)
                     note_obj = Note.objects.create(**note_data)
                     p_table_jobs_rows.append(
                         [
@@ -69,12 +69,12 @@ class Command(BaseSeederCommandMixin):
                     "show_lines": True,
                     "title": "Notes",
                 }
-                table_obj = BWDebuggingPrint.table(
+                table_obj = DebuggingPrint.table(
                     columns_headers=table_header_cols,
                     rows=p_table_jobs_rows,
                     table_options=table_options,
                 )
-                # BWDebuggingPrint.pprint(table_obj)
+                # DebuggingPrint.pprint(table_obj)
 
         except Exception as ex:
             self.stdout_output("error", traceback.format_exc())
