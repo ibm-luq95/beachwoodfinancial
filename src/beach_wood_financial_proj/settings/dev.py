@@ -6,6 +6,7 @@ mimetypes.add_type("application/javascript", ".js", True)
 
 DEBUG = config("DEBUG", cast=bool)
 
+
 INSTALLED_APPS = INSTALLED_APPS + [
     "django.contrib.admindocs",
     "debug_toolbar",
@@ -15,13 +16,13 @@ INSTALLED_APPS = INSTALLED_APPS + [
     "django_model_info.apps.DjangoModelInfoConfig",
     # "silk",
     # "django_pdb",
-    "request_viewer",
+    # "request_viewer",
 ]
 # INSTALLED_APPS.insert(0, "django_pdb")
 
 MIDDLEWARE = MIDDLEWARE + [
-    "request_viewer.middleware.RequestViewerMiddleware",
-    "request_viewer.middleware.ExceptionMiddleware",
+    # "request_viewer.middleware.RequestViewerMiddleware",
+    # "request_viewer.middleware.ExceptionMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
     "debugtools.middleware.XViewMiddleware",
     "django.contrib.admindocs.middleware.XViewMiddleware",
@@ -42,6 +43,10 @@ DATABASES = {
         "OPTIONS": {
             "client_encoding": config("DB_CLIENT_ENCODING", cast=str),
             "server_side_binding": True,
+        },
+        "TEST": {
+            "NAME": "testing_beachwoodfinancial_development_db",
+            "MIGRATE": False,
         },
     }
 }
@@ -95,7 +100,7 @@ def show_toolbar(request):
     return True
 
 
-DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": show_toolbar}
+DEBUG_TOOLBAR_CONFIG = {"SHOW_TOOLBAR_CALLBACK": show_toolbar, "IS_RUNNING_TESTS": False}
 
 GRAPH_MODELS = {"all_applications": True, "group_models": True}
 # GRAPH_MODELS = {'app_labels': ["client"]}
@@ -103,7 +108,6 @@ GRAPH_MODELS = {"all_applications": True, "group_models": True}
 # django-request-viewer configs
 REQUEST_VIEWER = {"LIVE_MONITORING": False, "WHITELISTED_PATH": []}
 
-X_FRAME_OPTIONS = "SAMEORIGIN"
 
 # django-silk settings
 # SILKY_PYTHON_PROFILER = True
