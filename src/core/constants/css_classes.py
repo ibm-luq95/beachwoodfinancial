@@ -109,8 +109,8 @@ BW_PRELINE_CORE_BG_COLORS = {
     },
     "blue": {"soft": " bg-blue-100 text-blue-800 ", "solid": " bg-blue-500 text-white "},
     "purple": {
-        "soft": " bg-purple-100 text-purple-800 ",
-        "solid": " bg-purple-500 text-white ",
+        "soft": " bg-blue-100 text-blue-800 dark:bg-blue-800/30 dark:text-blue-500 ",
+        "solid": " bg-blue-600 text-white dark:bg-blue-500 ",
     },
     "white": {"soft": "bg-white/[.1] text-gray-600", "solid": "bg-white text-gray-600"},
     "indigo": {
