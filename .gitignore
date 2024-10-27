@@ -585,3 +585,5 @@ src/tmplogs/*
 /src/ignoretest.py
 /scripts/docker_puller.py
 /staticfiles/**
+
+src/frontend/bun.lockb
