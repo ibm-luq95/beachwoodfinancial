@@ -1,8 +1,8 @@
-version: "3"
 services:
   backend:
     restart: no
-    container_name: beachwoodfinancial_development_webapp
+    container_name: beachwoodfinancial_development_backend
+    #    image: beachwoodfinancial_development_webapp_image
     environment:
       - TERM=xterm-256color
       - COLOR_PROMPT=yes
@@ -10,8 +10,8 @@ services:
       - PYTHONUNBUFFERED=1
       - PYTHONDONTWRITEBYTECODE=1
       - PIP_DISABLE_PIP_VERSION_CHECK=1
-      - NODE_ENV=development
       - PIP_PROGRESS_BAR=on
+      - ENV_VAR=development
     tty: true
     stdin_open: true
     build:
@@ -35,7 +35,28 @@ services:
     depends_on:
       - db
       - cache
-
+#      - frontend
+#  frontend:
+#    build:
+#      context: ./  # Create a Node.js Dockerfile in this directory
+#      dockerfile: ./docker/nodejs/Dockerfile
+#    container_name: beachwoodfinancial_development_frontend
+#    environment:
+#      - NODE_ENV=development
+#      - TERM=xterm-256color
+#      - COLOR_PROMPT=yes
+#    working_dir: /app
+#    volumes:
+#      - ./src/frontend:/app:z  # Bind the Node.js app folder
+#      - ./staticfiles:/app/staticfiles:z  # Shared volume for static files
+#      - ./media:/app/media  # Shared volume for media files
+#    ports:
+#      - "9091:9091"  # Expose port 9091 for the Node.js app
+#    depends_on:
+#      - backend  # Ensuring the backend is ready before Node.js starts
+#    command: npm run build  # Replace this with the actual start command for your Node.js app
+#    networks:
+#      - hosting_network
   db:
     image: postgres:alpine
     tty: true
@@ -56,6 +77,7 @@ services:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_PORT=5432
       - POSTGRES_HOST_AUTH_METHOD=trust
+      - ENV_VAR=development
 
   cache:
     restart: always
@@ -69,6 +91,7 @@ services:
       - TERM=xterm-256color
       - COLOR_PROMPT=yes
       - LANG=C.UTF-8
+      - ENV_VAR=development
 
   nginx:
     image: nginx:latest
@@ -91,6 +114,7 @@ services:
 
   cloudflaretunnel:
     image: cloudflare/cloudflared:latest
+    container_name: beachwoodfinancial_development_cloudflaretunnel
     entrypoint: [ "cloudflared", "tunnel", "--no-autoupdate", "run", "--token", "$CLOUDFLARE_TUNNEL_TOKEN" ]
     env_file:
       - ./src/.env/.env_cloudflare
