@@ -1,71 +1,47 @@
 # -*- coding: utf-8 -*-#
 from typing import Any, Union, Optional
 
+from django.contrib.sites.models import Site
 from django.core.cache import cache
 
-# TODO: Review any changes here
+from core.constants.site_settings import SITE_SETTINGS_DB_SLUG
+from core.utils.developments.debugging_print_object import DebuggingPrint
+from site_settings.models import SiteSettings
 
 
 class BWCacheViewMixin:
     """This is cache mixin, which will use with any cbv"""
 
-    pass
+    def get_context_data(self, **kwargs):
+        """
+        Retrieves the context data for the view.
 
-    # def cmx_check(self, key: str) -> bool:
-    #     """
-    #     This method will check if specific cache key exists in cache
-    #     Args:
-    #         key: str = key name
-    #
-    #     Returns:
-    #         bool: True value exists, False otherwise
-    #     """
-    #     checked = cache.get(key)
-    #     if checked is not None:
-    #         return True
-    #     else:
-    #         return False
-    #
-    # def cmx_get_item(self, key: str) -> Union[None, Any]:
-    #     """
-    #     Get cache item value based on key
-    #     Args:
-    #         key: str: Cache key name
-    #
-    #     Returns:
-    #         None: If key not exists
-    #         Any: Any object store in the cache
-    #     """
-    #     # print(f"############ {self.cmx_check(key)} ############")
-    #     if self.cmx_check(key):
-    #         return cache.get(key)
-    #     else:
-    #         return None
-    #
-    # def cmx_clear(self) -> None:
-    #     """
-    #     Clear all cache data
-    #     """
-    #     cache.clear()
-    #
-    # def cmx_set_item(self, key: str, value: Any, timeout: Optional[int] = None) -> None:
-    #     """
-    #     Set cache item value based on key
-    #     Args:
-    #         key: str: Cache key name
-    #         value: Any: The value will store
-    #         timeout: int: timeout expire
-    #     Returns:
-    #         None: If key not exists
-    #     """
-    #     cache.set(key, value, timeout)
-    #
-    # def cmx_delete_item(self, key: str) -> None:
-    #     """
-    #     Delete cache item
-    #     Args:
-    #         key: str: Cache key name
-    #     Returns:
-    #         None: If key not exists
-    #     """
-    #     cache.delete(key)
+        This method adds additional data to the context, such as the value of `is_show_created_at`,
+        the `per_page_filter_form`, and the `total_records` if applicable.
+
+        Args:
+            **kwargs: Additional keyword arguments.
+
+        Returns:
+            dict: The context data for the view.
+
+        """
+        # Call the base implementation first to get a context
+        context = super().get_context_data(**kwargs)
+        context.setdefault("get_web_app_settings", self.get_sitesettings_cache())
+        return context
+
+    def get_sitesettings_cache(self) -> dict | None:
+        # Get the cache key from the request
+        site_obj = Site.objects.filter(domain=self.request.get_host()).first()
+        if site_obj is not None:
+            site_settings = SiteSettings.objects.select_related().filter(
+                site=site_obj, slug=SITE_SETTINGS_DB_SLUG
+            )
+            if site_settings:
+                site_settings = site_settings.first()
+                return site_settings.get_instance_as_dict
+            else:
+                return None
+        else:
+            return None
