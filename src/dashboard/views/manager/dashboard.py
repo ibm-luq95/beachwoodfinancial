@@ -58,6 +58,6 @@ class DashboardViewBW(
             "requested_special_assignments_count", requested_special_assignments_count
         )
         context.setdefault("special_assignments", special_assignments)
-        # context.setdefault("last_activities", last_activities)
+        context.setdefault("last_activities", last_activities)
 
         return context
