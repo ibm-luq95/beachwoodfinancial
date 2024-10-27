@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
+
 import pprint
 from pathlib import Path
 from decouple import Config, RepositoryEnv, Csv
@@ -171,8 +172,8 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.request",
                 # "django.template.context_processors.i18n",
-                "site_settings.context_processors.site_settings"
-                ".return_site_settings_context",
+                # "site_settings.context_processors.site_settings"
+                # ".return_site_settings_context",
                 "site_settings.context_processors.section_descriptions"
                 ".return_section_description_context",
                 "core.context_processors.access_constants",
@@ -388,8 +389,8 @@ if config("IS_CACHE_ENABLED", cast=bool) is True:
     cache_dict = {
         "default": {
             "BACKEND": config("CACHE_BACKEND_ENGINE", cast=str),
-            "LOCATION": f"valkey://{config('VALKEY_HOST')}/1",
-            # "OPTIONS": {
+            "LOCATION": f"valkey://{config('VALKEY_HOST')}",
+            "OPTIONS": {},
             #     # "PASSWORD": config("VALKEY_PASSWORD"),
             #     # "PARSER_CLASS": "valkey.connection.HiredisParser",
             #     "CLIENT_CLASS": "django_valkey.client.DefaultClient",
@@ -400,8 +401,8 @@ if config("IS_CACHE_ENABLED", cast=bool) is True:
             # },
         }
     }
-    # if stage == "LOCAL_DEV":
-    #     cache_dict["default"]["OPTIONS"]["PASSWORD"] = config("VALKEY_PASSWORD")
+    if stage == "LOCAL_DEV":
+        cache_dict["default"]["OPTIONS"]["PASSWORD"] = config("VALKEY_PASSWORD", cast=str)
     # pprint.pprint(cache_dict)
     CACHES = cache_dict
     # SESSION_ENGINE = "django.contrib.sessions.backends.cache"
