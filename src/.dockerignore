@@ -13,3 +13,4 @@ latest.dump
 node_modules
 public/static/dist
 .pnpm-store
+/frontend/pnpm-lock.yaml
