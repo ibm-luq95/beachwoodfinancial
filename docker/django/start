@@ -12,8 +12,8 @@ FRONTEND_DIR="$SRC_DIR/frontend"
 echo "###############################################################"
 echo "Waiting for frontend to setup..."
 cd $FRONTEND_DIR
-npm set progress true
-pnpm install
+#npm set progress true
+#pnpm install
 # --loglevel info
 pnpm run build
 echo "###############################################################"
