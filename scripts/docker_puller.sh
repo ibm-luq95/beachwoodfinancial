@@ -4,14 +4,14 @@ set -o pipefail
 set -o nounset
 
 echo "Pulling latest docker images for beachwood..."
-echo "Pulling Python:3.12-bookworm..."
-docker pull python:3.12-bookworm
+echo "Pulling Python:3.13-bookworm..."
+docker pull python:3.13-bookworm
 echo "**********************************************************"
 echo "Pulling Postgres alpine..."
 docker pull postgres:alpine
 echo "**********************************************************"
-echo "Pulling Valkey (Redis alternative)..."
-docker pull valkey/valkey
+#echo "Pulling Valkey (Redis alternative)..."
+#docker pull valkey/valkey
 echo "**********************************************************"
 echo "Pulling Nginx..."
 docker pull nginx:latest
