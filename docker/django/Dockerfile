@@ -1,4 +1,4 @@
-FROM python:3.12-bookworm
+FROM python:3.13-bookworm
 LABEL MAINTAINER="Ibrahim Luqman"
 LABEL version="1.0"
 LABEL description="Development image of beachwood"
@@ -40,7 +40,7 @@ RUN --mount=type=cache,target=/root/.cache pip3 install -r requirements/_all.txt
 # Remove Node.js and pnpm setup (handled in the Node.js service now)
 # Setup NodeJs
 #WORKDIR ~
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x -o nodesource_setup.sh
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x -o nodesource_setup.sh
 RUN bash -x nodesource_setup.sh
 RUN apt update
 #RUN apt install -y nodejs
@@ -53,6 +53,7 @@ RUN npm --version
 #RUN npm install -g pnpm
 RUN npm update -g npm
 RUN npm install -g pnpm
+RUN npm install -g yarn
 
 # Copy and set up the start script
 COPY ./docker/django/start /start

@@ -53,16 +53,10 @@ echo "###############################################################"
 
 echo "###############################################################"
 echo "Executing custom commands ..."
-echo "Waiting for init and setup django site..."
-python3 manage.py set_site -i
 
 
 echo "Waiting for init beachwood site settings..."
-python3 manage.py init_site_settings -i -v 2 -e
-
-
-echo "Waiting for init beachwood cache data..."
-python3 manage.py init_cache_data -i -e
+python3 manage.py init_site_settings -i
 
 echo "###############################################################"
 
@@ -78,6 +72,6 @@ echo "###############################################################"
 # for debug
 echo "###############################################################"
 echo "Waiting for runserver..."
-#python3 manage.py runserver 0.0.0.0:8000
-gunicorn --config gunicorn.conf.py
+python3 manage.py runserver 0.0.0.0:8000
+#gunicorn --config gunicorn.conf.py
 echo "###############################################################"
