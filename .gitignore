@@ -586,4 +586,5 @@ src/tmplogs/*
 /scripts/docker_puller.py
 /staticfiles/**
 
-src/frontend/bun.lockb
+src/frontend/bun.lockb!/.env_dotenv
+.env_dotenv
