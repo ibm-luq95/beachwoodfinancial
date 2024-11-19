@@ -5,7 +5,7 @@ from django.utils.translation import gettext as _
 from django.views.generic import FormView
 
 from client.models import ClientProxy
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.forms.per_page_form import PerPageForm
 from core.utils import get_months_abbr
 from core.views.mixins import BWLoginRequiredMixin
@@ -20,7 +20,7 @@ from reports.filters.client import ClientJobsFilter
 class JobsReportView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     # BWBaseListViewMixin,
     FormView,
     # ListView,

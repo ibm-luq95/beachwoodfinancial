@@ -6,7 +6,7 @@ from django.views.generic import ListView
 
 from client.filters import ClientFilter
 from client.models import ClientProxy
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.status_labels import CON_COMPLETED, CON_ARCHIVED
@@ -17,7 +17,7 @@ from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 class ClientArchiveListView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):

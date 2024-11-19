@@ -9,7 +9,7 @@ from django.views.generic import DeleteView
 from django.views.generic import ListView
 from django.views.generic import UpdateView
 
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.users import CON_ASSISTANT
 from core.constants.users import CON_BOOKKEEPER
@@ -26,7 +26,7 @@ from important_contact.models import ImportantContact
 class ImportantContactListViewBW(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
@@ -96,7 +96,7 @@ class ImportantContactListViewBW(
 class ImportantContactCreateView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     BWBaseListViewMixin,
     SuccessMessageMixin,
     CreateView,
@@ -120,7 +120,7 @@ class ImportantContactCreateView(
 class ImportantContactUpdateView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     UpdateReturnPreviousMixin,
     UpdateView,
@@ -144,7 +144,7 @@ class ImportantContactUpdateView(
 class ImportantContactDeleteView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):

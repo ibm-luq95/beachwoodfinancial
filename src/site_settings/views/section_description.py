@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import UpdateView, CreateView, ListView
 
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from site_settings.forms import SectionDescriptionForm
 from site_settings.models import SectionDescription
@@ -14,7 +14,7 @@ from site_settings.models import SectionDescription
 class SectionDescriptionCreateView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     CreateView,
 ):
@@ -36,7 +36,7 @@ class SectionDescriptionCreateView(
 class SectionDescriptionUpdateView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     UpdateView,
 ):
@@ -59,7 +59,7 @@ class SectionDescriptionUpdateView(
 class SectionDescriptionListView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):

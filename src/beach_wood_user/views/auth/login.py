@@ -10,12 +10,12 @@ from django.views.generic.edit import FormView
 
 from beach_wood_user.forms import BWLoginForm
 from beach_wood_user.models import BWUser
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.utils.developments.debugging_print_object import DebuggingPrint
 from core.utils.grab_env_file import grab_env_file
 
 
-class BWLoginViewBW(SuccessMessageMixin, BWCacheViewMixin, FormView):
+class BWLoginViewBW(SuccessMessageMixin, BWSiteSettingsViewMixin, FormView):
     """
     BWLoginViewBW Default login form view
 
@@ -23,7 +23,7 @@ class BWLoginViewBW(SuccessMessageMixin, BWCacheViewMixin, FormView):
 
     Args:
         SuccessMessageMixin (_type_): Django success message mixin
-        BWCacheViewMixin (_type_): Backend cache mixin
+        BWSiteSettingsViewMixin (_type_): Backend cache mixin
         FormView (_type_): Django form view renderer
 
     """

@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import UpdateView
 
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.constants.site_settings import APP_CONFIGS_DB_SLUG
 from core.views.mixins import BWLoginRequiredMixin
 from site_settings.forms import ApplicationConfigurationsForm
@@ -15,7 +15,7 @@ from site_settings.models import ApplicationConfigurations
 class ApplicationConfigurationsFormView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     UpdateView,
 ):

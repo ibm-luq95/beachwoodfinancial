@@ -18,7 +18,7 @@ from django.utils.translation import gettext as _
 from django.views.generic.detail import SingleObjectMixin
 
 from beach_wood_user.models import BWUser
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.choices import JobStateEnum, JobStatusEnum
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
@@ -36,7 +36,7 @@ from manager.models import ManagerProxy
 class ManagerListView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
@@ -92,7 +92,7 @@ class ManagerListView(
 class ManagerCreateView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     FormView,
 ):
@@ -154,7 +154,7 @@ class ManagerUpdateView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
     SuccessMessageMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SingleObjectMixin,
     FormView,
 ):
@@ -267,7 +267,7 @@ class ManagerUpdateView(
 class ManagerDeleteView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):

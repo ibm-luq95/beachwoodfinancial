@@ -17,7 +17,7 @@ from client.models import ClientProxy
 from client_account.forms import ClientAccountForm
 from client_category.forms import ClientCategoryForm
 from client_category.models import ClientCategory
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.config.forms import BWFormRenderer
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
@@ -38,7 +38,7 @@ from task.forms import TaskForm
 class ClientListView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
@@ -116,7 +116,7 @@ class ClientListView(
 class ClientCreateView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     CreateView,
 ):
@@ -145,7 +145,7 @@ class ClientCreateView(
 class ClientUpdateView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     UpdateView,
 ):
@@ -175,7 +175,7 @@ class ClientUpdateView(
 class ClientDeleteView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):
@@ -202,7 +202,7 @@ class ClientDetailsView(
     PermissionRequiredMixin,
     UserPassesTestMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     BWSectionDescriptionHelperMixin,
     DetailView,
 ):

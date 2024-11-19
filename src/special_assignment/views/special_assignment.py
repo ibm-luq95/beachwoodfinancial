@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.status_labels import CON_ARCHIVED, CON_COMPLETED
@@ -21,7 +21,7 @@ from special_assignment.models import SpecialAssignmentProxy
 class SpecialAssignmentListView(
 	PermissionRequiredMixin,
 	BWLoginRequiredMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	BWBaseListViewMixin,
 	ListView,
 ):
@@ -88,7 +88,7 @@ class SpecialAssignmentListView(
 class SpecialAssignmentCreateView(
 	PermissionRequiredMixin,
 	BWLoginRequiredMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	SuccessMessageMixin,
 	CreateView,
 ):
@@ -120,7 +120,7 @@ class SpecialAssignmentCreateView(
 class SpecialAssignmentUpdateView(
 	PermissionRequiredMixin,
 	BWLoginRequiredMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	SuccessMessageMixin,
 	UpdateReturnPreviousMixin,
 	UpdateView,
@@ -150,7 +150,7 @@ class SpecialAssignmentUpdateView(
 class SpecialAssignmentDeleteView(
 	PermissionRequiredMixin,
 	BWLoginRequiredMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	SuccessMessageMixin,
 	DeleteView,
 ):
@@ -176,7 +176,7 @@ class SpecialAssignmentDeleteView(
 
 
 class SpecialAssignmentDetailsView(
-	PermissionRequiredMixin, BWLoginRequiredMixin, BWCacheViewMixin, DetailView
+	PermissionRequiredMixin, BWLoginRequiredMixin, BWSiteSettingsViewMixin, DetailView
 ):
 	model = SpecialAssignmentProxy
 	template_name = "special_assignment/details.html"
@@ -196,7 +196,7 @@ class SpecialAssignmentDetailsView(
 class RequestedSpecialAssignmentsListView(
 	PermissionRequiredMixin,
 	BWLoginRequiredMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	BWBaseListViewMixin,
 	ListView,
 ):

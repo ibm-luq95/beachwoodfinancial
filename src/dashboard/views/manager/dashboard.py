@@ -5,10 +5,11 @@ from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 
 from client.models import ClientProxy
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.constants.status_labels import CON_ARCHIVED, CON_COMPLETED
 from core.models import CRUDEventProxy
 from core.utils import get_formatted_logger
+from core.utils.developments.debugging_print_object import DebuggingPrint
 from core.views.mixins import BWLoginRequiredMixin, BWManagerAccessMixin
 from document.models import Document
 from note.models import Note
@@ -19,7 +20,7 @@ logger = get_formatted_logger("bw_error_logger")
 
 
 class DashboardViewBW(
-    BWLoginRequiredMixin, BWManagerAccessMixin, BWCacheViewMixin, TemplateView
+    BWLoginRequiredMixin, BWManagerAccessMixin, BWSiteSettingsViewMixin, TemplateView
 ):
     template_name = "dashboard/manager/dashboard.html"
     http_method_names = ["get"]
@@ -28,6 +29,7 @@ class DashboardViewBW(
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context.setdefault("title", _("Manager dashboard"))
+        # DebuggingPrint.print(context)
         messages.set_level(self.request, messages.DEBUG)
         clients = ClientProxy.objects.all().order_by("-created_at")[:5]
         documents_count = Document.objects.count()

@@ -4,7 +4,7 @@ from django.views.generic import (
     ListView,
 )
 
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.users import CON_BOOKKEEPER
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
@@ -13,7 +13,7 @@ from job.models import JobProxy
 
 
 class JobArchiveListView(
-    BWLoginRequiredMixin, BWCacheViewMixin, BWBaseListViewMixin, ListView
+    BWLoginRequiredMixin, BWSiteSettingsViewMixin, BWBaseListViewMixin, ListView
 ):
     template_name = "core/crudl/list.html"
     model = JobProxy
