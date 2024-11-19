@@ -28,13 +28,13 @@ services:
       - ./media:/beachwoodfinancial_development/src/media              # Bind media folder
       - type: bind
         source: .
-        target: /beachwoodfinancial_development:z
+        target: /beachwoodfinancial_development
     env_file:
       - ./src/.env/.env_docker
     command: /start
     depends_on:
       - db
-      - cache
+#      - cache
 #      - frontend
 #  frontend:
 #    build:
@@ -79,19 +79,19 @@ services:
       - POSTGRES_HOST_AUTH_METHOD=trust
       - ENV_VAR=development
 
-  cache:
-    restart: always
-    container_name: beachwoodfinancial_development_cache
-    ports:
-      - "6379:6379"
-    image: valkey/valkey  # Keeping your custom Redis image
-    expose:
-      - 6379
-    environment:
-      - TERM=xterm-256color
-      - COLOR_PROMPT=yes
-      - LANG=C.UTF-8
-      - ENV_VAR=development
+#  cache:
+#    restart: always
+#    container_name: beachwoodfinancial_development_cache
+#    ports:
+#      - "6379:6379"
+#    image: valkey/valkey  # Keeping your custom Redis image
+#    expose:
+#      - 6379
+#    environment:
+#      - TERM=xterm-256color
+#      - COLOR_PROMPT=yes
+#      - LANG=C.UTF-8
+#      - ENV_VAR=development
 
   nginx:
     image: nginx:latest
@@ -106,7 +106,7 @@ services:
     depends_on:
       - backend
       - db
-      - cache  # Added db and cache dependencies
+#      - cache  # Added db and cache dependencies
     environment:
       - TERM=xterm-256color
       - COLOR_PROMPT=yes
