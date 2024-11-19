@@ -6,9 +6,12 @@ HELP_MESSAGES = {
         "Site settings code name which indicate the settings section (it must be unique)"
     ),
     "name": _("Web application name"),
-    "title": _("Web application title, (it used in SEO)"),
+    "title": _("Web application title"),
+    "og_title": _("Web application title, (it used in SEO)"),
     "email": _("Web application contact email address"),
     "url": _("Web application URL"),
+    "og_url": _("Web application URL"),
+    "canonical": _("Web application URL"),
     "description": _("Description for the website. (it used in SEO)"),
     "keywords": _("Keywords indicate for the website, separated by (,). (it used in SEO)"),
     "logo": _("Web application logo image"),
@@ -25,6 +28,7 @@ HELP_MESSAGES = {
     "site": _("The site this settings related to."),
     "classification": _("Classification for this web app"),
     "subject": _("Website subject"),
+    "og_description": _("OG Description"),
 }
 
 APPLICATION_CONFIGURATIONS_HELP_MESSAGES = {
