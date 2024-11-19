@@ -9,7 +9,7 @@ it uses the preline CSS framework
 """
 from django.utils.translation import gettext as _
 
-from core.constants.identity import BWIdentity
+from core.constants.identity import LedgerFlareIdentity
 
 BW_BASE_INPUT_CSS_CLASSES = "bw-input"
 BW_DISABLED_ANCHOR_CSS_CLASSES = "bw-disabled-anchor"
@@ -143,74 +143,74 @@ BW_PRELINE_ROUNDED_SCROLLBAR_CSS_CLASSES = (
 BW_INFO_MODAL_CSS_CLASSES = {
     "client": {
         "cssID": "infoClientModal",
-        "tooltip_txt": _(f"What clients are in {BWIdentity.name}"),
+        "tooltip_txt": _(f"What clients are in {LedgerFlareIdentity.name}"),
     },
     "staff_briefcase": {
         "cssID": "infoStaffBriefcaseModal",
-        "tooltip_txt": _(f"What staff briefcases are in {BWIdentity.name}"),
+        "tooltip_txt": _(f"What staff briefcases are in {LedgerFlareIdentity.name}"),
     },
     "note": {
         "cssID": "infoNoteModal",
-        "tooltip_txt": _(f"What notes are in {BWIdentity.name}"),
+        "tooltip_txt": _(f"What notes are in {LedgerFlareIdentity.name}"),
     },
     "document": {
         "cssID": "infoDocumentModal",
-        "tooltip_txt": _(f"What documents are in {BWIdentity.name}"),
+        "tooltip_txt": _(f"What documents are in {LedgerFlareIdentity.name}"),
     },
     "job": {
         "cssID": "infoJobModal",
-        "tooltip_txt": _(f"What jobs are in {BWIdentity.name}"),
+        "tooltip_txt": _(f"What jobs are in {LedgerFlareIdentity.name}"),
     },
     "task": {
         "cssID": "infoTaskModal",
-        "tooltip_txt": _(f"What tasks are in {BWIdentity.name}"),
+        "tooltip_txt": _(f"What tasks are in {LedgerFlareIdentity.name}"),
     },
     "special_assignment": {
         "cssID": "infoSpecialAssignmentModal",
-        "tooltip_txt": _(f"What special assignments are in {BWIdentity.name}"),
+        "tooltip_txt": _(f"What special assignments are in {LedgerFlareIdentity.name}"),
     },
     "requested_assignment": {
         "cssID": "infoRequestedAssignmentModal",
-        "tooltip_txt": _(f"What requested assignments are in {BWIdentity.name}"),
+        "tooltip_txt": _(f"What requested assignments are in {LedgerFlareIdentity.name}"),
     },
     "client_category": {
         "cssID": "infoClientCategoryModal",
-        "tooltip_txt": _(f"What client categories are in {BWIdentity.name}"),
+        "tooltip_txt": _(f"What client categories are in {LedgerFlareIdentity.name}"),
     },
     "job_category": {
         "cssID": "infoJobCategoryModal",
-        "tooltip_txt": _(f"What job categories are in {BWIdentity.name}"),
+        "tooltip_txt": _(f"What job categories are in {LedgerFlareIdentity.name}"),
     },
     "bookkeeper": {
         "cssID": "infoBookkeeperModal",
-        "tooltip_txt": _(f"What bookkeepers are in {BWIdentity.name}"),
+        "tooltip_txt": _(f"What bookkeepers are in {LedgerFlareIdentity.name}"),
     },
     "assistant": {
         "cssID": "infoAssistantModal",
-        "tooltip_txt": _(f"What assistants are in {BWIdentity.name}"),
+        "tooltip_txt": _(f"What assistants are in {LedgerFlareIdentity.name}"),
     },
     "manager": {
         "cssID": "infoManagerModal",
-        "tooltip_txt": _(f"What managers are in {BWIdentity.name}"),
+        "tooltip_txt": _(f"What managers are in {LedgerFlareIdentity.name}"),
     },
     "client_account": {
         "cssID": "infoClientAccountModal",
-        "tooltip_txt": _(f"What client accounts are in {BWIdentity.name}"),
+        "tooltip_txt": _(f"What client accounts are in {LedgerFlareIdentity.name}"),
     },
     "important_contact": {
         "cssID": "infoImportantContactModal",
-        "tooltip_txt": _(f"What important contacts are in {BWIdentity.name}"),
+        "tooltip_txt": _(f"What important contacts are in {LedgerFlareIdentity.name}"),
     },
     "discussion": {
         "cssID": "infoDiscussionModal",
-        "tooltip_txt": _(f"What discussions are in {BWIdentity.name}"),
+        "tooltip_txt": _(f"What discussions are in {LedgerFlareIdentity.name}"),
     },
     "reports": {
         "cssID": "infoReportsModal",
-        "tooltip_txt": _(f"What reports are in {BWIdentity.name}"),
+        "tooltip_txt": _(f"What reports are in {LedgerFlareIdentity.name}"),
     },
     "site_settings": {
         "cssID": "infoSiteSettingsModal",
-        "tooltip_txt": _(f"What site settings are in {BWIdentity.name}"),
+        "tooltip_txt": _(f"What site settings are in {LedgerFlareIdentity.name}"),
     },
 }
