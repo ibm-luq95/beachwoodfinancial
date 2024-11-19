@@ -1,6 +1,7 @@
 "use strict";
 
 import { sendRequest } from "../../utils/apis/apis";
+import { BWRequestApi } from "../../utils/apis/bw_request";
 import { bwCleanApiError } from "../../utils/apis/clean_errors";
 import { UploadFileRequest } from "../../utils/apis/upload_file";
 import { CSRFINPUTNAME, SUCCESSTIMEOUTSECS } from "../../utils/constants";
@@ -22,6 +23,7 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
           formElement: currentTarget,
           excludedFields: ["_method"],
         });
+        // const req = new BWRequestApi({ formHTMLElement: currentTarget });
         disableAndEnableFieldsetItems({
           formElement: createNoteForm,
           state: "disable",
@@ -34,6 +36,8 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
           url: currentTarget.action,
           token: currentTarget[CSRFINPUTNAME].value,
         };
+        // alert("EEEe");
+        // throw new Error("PAUSE");
         // console.warn(requestOptions);
         // throw new Error("Wait");
         const request = sendRequest(requestOptions);

@@ -1,5 +1,6 @@
 /* eslint-disable no-undef */
 "use strict";
+// TODO: Check the docstring
 
 document.addEventListener("DOMContentLoaded", (readyEvent) => {
   const allRichEditors = document.querySelectorAll("textarea.rich-editor");

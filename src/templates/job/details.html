@@ -29,61 +29,63 @@
                 {% endif %}
                 {# End categories badges #}
             </div>
-            <form class="form pt-4 flex items-center justify-between gap-2 rounded">
-                <div>
-                    <!-- <label for="hs" class="sr-only">Label</label> -->
-                    <div class="flex rounded-md shadow-sm">
-                        <span class="px-4 inline-flex items-center p-3 min-w-fit rounded-md border border-gray-200 bg-gray-50 text-sm dark:bg-gray-700 dark:border-gray-700">
-                            <span class="text-sm text-gray-900 flex items-center gap-3 dark:text-gray-400">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     fill="none"
-                                     viewBox="0 0 24 24"
-                                     stroke-width="1.5"
-                                     stroke="currentColor"
-                                     class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
-                                </svg>
-                            {% translate "Due Date:" %} {% bw_date date_txt=object.due_date is_in_table_list=False %}</span>
-                        </span>
+            <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                <form class="form pt-4 flex items-center justify-between gap-2 rounded">
+                    <div>
+                        <!-- <label for="hs" class="sr-only">Label</label> -->
+                        <div class="flex rounded-md shadow-sm">
+                            <span class="px-4 inline-flex items-center p-3 min-w-fit rounded-md border border-gray-200 bg-gray-50 text-sm dark:bg-gray-700 dark:border-gray-700">
+                                <span class="text-sm text-gray-900 flex items-center gap-3 dark:text-gray-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         fill="none"
+                                         viewBox="0 0 24 24"
+                                         stroke-width="1.5"
+                                         stroke="currentColor"
+                                         class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+                                    </svg>
+                                {% translate "Due Date:" %} {% bw_date date_txt=object.due_date is_in_table_list=False %}</span>
+                            </span>
+                        </div>
                     </div>
-                </div>
-                {# Start Job Status #}
-                <div class="hs-tooltip inline-block">
-                    <p class="hs-tooltip-toggle">
-                        {% bw_badge code=object.status text=object.get_status_display is_solid=False size="md" %}
-                        <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
-                              role="tooltip">{% translate "Status" %}</span>
-                    </p>
-                </div>
-                {# End Job Status #}
-                {# Start Job State #}
-                <div class="hs-tooltip inline-block">
-                    <p class="hs-tooltip-toggle">
-                        <!-- <span class="m-0.5 inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-indigo-500 text-white">Badge</span> -->
-                        {% bw_badge code=object.state text=object.get_state_display is_solid=False size="md" %}
-                        <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
-                              role="tooltip">{% translate "State" %}</span>
-                    </p>
-                </div>
-                {# End Job State #}
-                <div>
-                    <!-- <label for="hs-trailing" class="sr-only">Label</label> -->
-                    <div class="flex rounded-md shadow-sm">
-                        <span class="px-4 inline-flex items-center p-3 min-w-fit rounded-md border border-gray-200 bg-gray-50 text-sm dark:bg-gray-700 dark:border-gray-700">
-                            <span class="text-sm text-gray-900 flex items-center gap-3 dark:text-gray-400">
-                                <svg xmlns="http://www.w3.org/2000/svg"
-                                     fill="none"
-                                     viewBox="0 0 24 24"
-                                     stroke-width="1.5"
-                                     stroke="currentColor"
-                                     class="w-6 h-6">
-                                    <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
-                                </svg>
-                            {% translate "Created at Date" %}: {% bw_date date_txt=object.created_at is_in_table_list=False %}</span>
-                        </span>
+                    {# Start Job Status #}
+                    <div class="hs-tooltip inline-block">
+                        <p class="hs-tooltip-toggle">
+                            {% bw_badge code=object.status text=object.get_status_display is_solid=False size="md" %}
+                            <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                  role="tooltip">{% translate "Status" %}</span>
+                        </p>
                     </div>
-                </div>
-            </form>
+                    {# End Job Status #}
+                    {# Start Job State #}
+                    <div class="hs-tooltip inline-block">
+                        <p class="hs-tooltip-toggle">
+                            <!-- <span class="m-0.5 inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-indigo-500 text-white">Badge</span> -->
+                            {% bw_badge code=object.state text=object.get_state_display is_solid=False size="md" %}
+                            <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                                  role="tooltip">{% translate "State" %}</span>
+                        </p>
+                    </div>
+                    {# End Job State #}
+                    <div>
+                        <!-- <label for="hs-trailing" class="sr-only">Label</label> -->
+                        <div class="flex rounded-md shadow-sm">
+                            <span class="px-4 inline-flex items-center p-3 min-w-fit rounded-md border border-gray-200 bg-gray-50 text-sm dark:bg-gray-700 dark:border-gray-700">
+                                <span class="text-sm text-gray-900 flex items-center gap-3 dark:text-gray-400">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         fill="none"
+                                         viewBox="0 0 24 24"
+                                         stroke-width="1.5"
+                                         stroke="currentColor"
+                                         class="w-6 h-6">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 012.25-2.25h13.5A2.25 2.25 0 0121 7.5v11.25m-18 0A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75m-18 0v-7.5A2.25 2.25 0 015.25 9h13.5A2.25 2.25 0 0121 11.25v7.5m-9-6h.008v.008H12v-.008zM12 15h.008v.008H12V15zm0 2.25h.008v.008H12v-.008zM9.75 15h.008v.008H9.75V15zm0 2.25h.008v.008H9.75v-.008zM7.5 15h.008v.008H7.5V15zm0 2.25h.008v.008H7.5v-.008zm6.75-4.5h.008v.008h-.008v-.008zm0 2.25h.008v.008h-.008V15zm0 2.25h.008v.008h-.008v-.008zm2.25-4.5h.008v.008H16.5v-.008zm0 2.25h.008v.008H16.5V15z" />
+                                    </svg>
+                                {% translate "Created at Date" %}: {% bw_date date_txt=object.created_at is_in_table_list=False %}</span>
+                            </span>
+                        </div>
+                    </div>
+                </form>
+            </div>
             <div class="my-9">
                 <!-- <label for="hs-trailing-button" class="sr-only">Label</label> -->
                 <div class="flex rounded-md shadow-sm">
@@ -91,7 +93,7 @@
                         <span class="text-sm text-gray-500 dark:text-gray-400">{% translate "Notes:" %}</span>
                     </span>
                     <div class="flex ml-1 flex-col w-full bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
-                        <small class="italic text-nowrap">{{ object.note|safe }}</small>
+                        <small class="italic">{{ object.note|safe }}</small>
                     </div>
                 </div>
             </div>

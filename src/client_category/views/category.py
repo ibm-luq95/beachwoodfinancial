@@ -9,7 +9,7 @@ from django.views.generic import CreateView, UpdateView, ListView, DeleteView
 from client_category.filters import ClientCategoryFilter
 from client_category.forms import ClientCategoryForm
 from client_category.models import ClientCategory
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.utils import get_trans_txt
 from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
@@ -18,7 +18,7 @@ from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 class ClientCategoryListViewBW(
 	PermissionRequiredMixin,
 	BWLoginRequiredMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	BWBaseListViewMixin,
 	ListView,
 ):
@@ -74,7 +74,7 @@ class ClientCategoryListViewBW(
 class ClientCategoryCreateView(
 	PermissionRequiredMixin,
 	BWLoginRequiredMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	SuccessMessageMixin,
 	CreateView,
 ):
@@ -97,7 +97,7 @@ class ClientCategoryCreateView(
 class ClientCategoryUpdateView(
 	PermissionRequiredMixin,
 	BWLoginRequiredMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	SuccessMessageMixin,
 	UpdateView,
 ):
@@ -120,7 +120,7 @@ class ClientCategoryUpdateView(
 class ClientCategoryDeleteView(
 	PermissionRequiredMixin,
 	BWLoginRequiredMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	SuccessMessageMixin,
 	DeleteView,
 ):

@@ -1,9 +1,20 @@
+import configparser
 from pathlib import Path
 
 from decouple import Config, RepositoryEnv
 
 cwd = Path.cwd()
-env_path = cwd / ".env" / ".env"
+config = configparser.RawConfigParser()
+stage_env_file = cwd / ".env" / ".current_stage"
+if stage_env_file.exists() is False:
+    raise Exception("stage file not exists!!!".upper())
+config.read(stage_env_file)
+stage = config.get("environment", "STAGE_ENVIRONMENT".lower())
+if stage == "DOCKER_DEV":
+    env_path = cwd / ".env" / ".env_docker"  # For docker
+else:
+    env_path = cwd / ".env" / ".env"  # For local
+
 
 # check if .env file not exists
 if env_path.exists() is False:

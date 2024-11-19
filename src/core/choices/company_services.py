@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-#
+"""
+File: company_services.py
+Author: Ibrahim Luqman
+Date: 5/10/24
+
+Description: Service name choices for company services 
+"""
 from django.db import models
 from django.utils.translation import gettext as _
 

@@ -13,6 +13,18 @@ def saved_document_file_path(instance, filename):
 
 
 class StaffDocuments(BaseModelMixin):
+    """Represents a staff document.
+
+    This class defines a staff document with attributes such as title and document file.
+
+    Attributes:
+        title (CharField): The title of the document.
+        document_file (FileField): The file associated with the document.
+
+    Methods:
+        get_briefcase(self): Retrieves the associated briefcase for the staff document.
+    """
+
     title = models.CharField(_("title"), max_length=250, null=True, blank=True)
     document_file = models.FileField(
         _("document file"), upload_to=saved_document_file_path

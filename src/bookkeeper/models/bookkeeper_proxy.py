@@ -18,6 +18,12 @@ logger = get_formatted_logger()
 
 
 class BookkeeperProxy(Bookkeeper):
+    """BookkeeperProxy model
+
+    Represents a proxy model for the Bookkeeper model.
+    Inherits from the Bookkeeper model and serves as a proxy for accessing and extending its functionality.
+    """
+
     class Meta(Bookkeeper.Meta):
         proxy = True
 

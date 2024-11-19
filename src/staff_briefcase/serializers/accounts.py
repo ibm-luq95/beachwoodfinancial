@@ -21,7 +21,6 @@ class StaffAccountsSerializer(serializers.ModelSerializer):
                 briefcase_pk = validated_data.pop("briefcase")
                 briefcase_obj = StaffBriefcase.objects.get(pk=briefcase_pk)
                 obj = StaffAccounts.objects.create(**validated_data)
-                # BWDebuggingPrint.pprint(obj.password)
                 briefcase_obj.accounts.add(obj)
                 briefcase_obj.save()
                 # obj.save(foo=validated_data["foo"])

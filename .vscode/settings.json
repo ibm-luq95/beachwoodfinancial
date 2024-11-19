@@ -23,9 +23,9 @@
   "isort.args": ["--settings-path", "${workspaceFolder}/pyproject.toml", "--color"],
   "python.formatting.provider": "none",
   "[python]": {
-    "editor.defaultFormatter": "charliermarsh.ruff"
+    "editor.defaultFormatter": "ms-python.black-formatter"
   },
-  "python.analysis.typeCheckingMode": "basic",
+  "python.analysis.typeCheckingMode": "standard",
   "python.analysis.autoImportUserSymbols": true,
   "python.analysis.completeFunctionParens": true,
   "python.analysis.extraPaths": ["src/"],
@@ -39,7 +39,6 @@
   "djlint.formatJs": true,
   "python.linting.banditEnabled": false,
   "python.linting.pycodestyleEnabled": false,
-  "autoDocstring.docstringFormat": "numpy",
   "autoDocstring.includeName": true,
   "cSpell.words": [
     "Beachwood",
@@ -85,42 +84,22 @@
   },
   "isort.importStrategy": "fromEnvironment",
   "isort.logLevel": "warn",
-  // "isort.check": true,
   "stylelint.stylelintPath": "./src/frontend/node_modules/stylelint/bin/stylelint.js",
-  "isort.interpreter": [
-    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/python3"
-  ],
   "typescript.tsdk": "./src/frontend/node_modules/typescript/lib",
   "stylelint.configFile": "${workspaceFolder}/.stylelintrc.json",
   "stylelint.configBasedir": "./src/frontend/node_modules",
   "tailwind-fold.autoFold": false,
   "flake8.importStrategy": "fromEnvironment",
-  "flake8.interpreter": [
-    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/python3"
-  ],
-  "flake8.path": ["${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/flake8"],
-  "black-formatter.path": [
-    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/black"
-  ],
-  "black-formatter.interpreter": [
-    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/python3"
-  ],
+  "flake8.path": ["${interpreter}", "-m", "flake8"],
+  "black-formatter.path": ["${interpreter}", "-m", "black"],
   "isort.check": true,
   "ruff.lint.run": "onSave",
   "ruff.trace.server": "messages",
   "ruff.showNotifications": "onError",
-  "isort.path": ["${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/isort"],
   "pylint.importStrategy": "fromEnvironment",
-  "pylint.path": ["${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/pylint"],
   "bandit.importStrategy": "fromEnvironment",
   "html-css-class-completion.enableEmmetSupport": true,
   "mypy-type-checker.importStrategy": "fromEnvironment",
-  "mypy-type-checker.interpreter": [
-    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/mypy"
-  ],
-  "mypy-type-checker.path": [
-    "${userHome}/.virtualenvs/beachwood_financial_venv_3.12.1/bin/python3"
-  ],
   "editor.defaultFormatter": null,
   "mypy-type-checker.args": ["--config-file", "${workspaceFolder}/pyproject.toml"],
   "python.analysis.diagnosticSeverityOverrides": {
@@ -132,6 +111,17 @@
   "[html]": {
     "editor.defaultFormatter": "monosans.djlint"
   },
+  "autoDocstring.docstringFormat": "google",
+  "python.analysis.inlayHints.variableTypes": true,
+  "python.analysis.autoFormatStrings": true,
+  "files.autoSaveWhenNoErrors": true,
+  "files.autoSaveWorkspaceFilesOnly": true,
+  "files.autoSave": "afterDelay",
+  "files.autoSaveDelay": 4000,
+  "codium.codeCompletion.enable": true,
+  "[nginx]": {
+    "editor.defaultFormatter": "ahmadalli.vscode-nginx-conf"
+  }
   // config for extention: junstyle.vscode-django-support
   // "files.associations": {
   //   "**/templates/**/*.html": "django-html",

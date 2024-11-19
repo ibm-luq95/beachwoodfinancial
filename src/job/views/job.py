@@ -5,7 +5,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.choices import JobStatusEnum, JobStateEnum
 from core.config.forms import BWFormRenderer
 from core.constants import LIST_VIEW_PAGINATE_BY
@@ -28,7 +28,7 @@ from task.forms import TaskForm
 class JobListView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
@@ -52,9 +52,9 @@ class JobListView(
         context = super().get_context_data(**kwargs)
 
         context["title"] = _("Jobs")
-        # BWDebuggingPrint.pprint(dir(self.paginator_class))
-        # BWDebuggingPrint.pprint(dir(self.paginator_class.count))
-        # BWDebuggingPrint.log(self.paginator_class.page())
+        # DebuggingPrint.pprint(dir(self.paginator_class))
+        # DebuggingPrint.pprint(dir(self.paginator_class.count))
+        # DebuggingPrint.log(self.paginator_class.page())
         context.setdefault("filter_form", self.filterset.form)
 
         context.setdefault("list_type", self.list_type)
@@ -118,7 +118,7 @@ class JobListView(
 class JobCreateView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     CreateView,
 ):
@@ -149,7 +149,7 @@ class JobDetailsView(
     PermissionRequiredMixin,
     UserPassesTestMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     DetailView,
 ):
@@ -265,7 +265,7 @@ class JobDetailsView(
 class JobUpdateView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     UpdateReturnPreviousMixin,
     UpdateView,
@@ -292,7 +292,7 @@ class JobUpdateView(
 class JobDeleteView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     BWBaseListViewMixin,
     SuccessMessageMixin,
     DeleteView,

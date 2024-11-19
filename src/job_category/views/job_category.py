@@ -4,7 +4,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
@@ -15,7 +15,7 @@ from job_category.models import JobCategory
 class JobCategoryListView(
 	PermissionRequiredMixin,
 	BWLoginRequiredMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	BWBaseListViewMixin,
 	ListView,
 ):
@@ -65,7 +65,7 @@ class JobCategoryListView(
 class JobCategoryCreateView(
 	PermissionRequiredMixin,
 	BWLoginRequiredMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	SuccessMessageMixin,
 	CreateView,
 ):
@@ -88,7 +88,7 @@ class JobCategoryCreateView(
 class JobCategoryUpdateView(
 	PermissionRequiredMixin,
 	BWLoginRequiredMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	SuccessMessageMixin,
 	UpdateView,
 ):
@@ -112,7 +112,7 @@ class JobCategoryUpdateView(
 class JobCategoryDeleteView(
 	PermissionRequiredMixin,
 	BWLoginRequiredMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	SuccessMessageMixin,
 	DeleteView,
 ):

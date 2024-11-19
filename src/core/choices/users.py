@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-#
+"""
+File: users.py
+Author: Ibrahim Luqman
+Date: 5/10/24
+
+Description: beach_wood_user's choices
+"""
 import stringcase
 from django.db import models
 from django.utils.translation import gettext as _

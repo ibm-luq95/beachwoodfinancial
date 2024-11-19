@@ -9,7 +9,9 @@
         <div class="bg-white border border-gray-200 shadow-sm mt-7 rounded-xl dark:bg-gray-800 dark:border-gray-700">
             <div class="p-4 sm:p-7">
                 <div class="text-center">
-                    <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">{% translate "Sign in" %}</h1>
+                    <h1 class="block text-2xl font-bold text-gray-800 dark:text-white">
+                        {% translate "Sign in" %}
+                    </h1>
                 </div>
                 <div class="mt-5">
                     <!-- Form -->
@@ -21,6 +23,7 @@
                         <div class="grid gap-y-4">
                             {{ form }}
                             <button type="submit"
+                                    id="submit"
                                     class="inline-flex items-center justify-center gap-2 px-4 py-3 text-sm font-semibold text-white transition-all bg-blue-500 border border-transparent rounded-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
                                 {% translate "Sign in" %}
                             </button>

@@ -19,6 +19,23 @@ ASSISTANT_TYPE_TEXT = (
 
 
 class AssistantForm(AbstractStaffMemberForm):
+    """A form for creating or updating an Assistant.
+
+    This form extends the `AbstractStaffMemberForm` and adds additional fields specific to an Assistant.
+
+    Attributes:
+        STAFF_MEMBER_TYPE (str): The type of staff member. It is set to `CON_ASSISTANT`.
+        field_order (list): The order of fields in the form. It includes the fields from `AbstractStaffMemberForm`
+            and appends "assistant_type".
+        assistant_type (forms.ChoiceField): A choice field for selecting the assistant type.
+            It has choices defined in the `AssistantTypeEnum` enum.
+
+    Methods:
+        __init__(self, user_type: Optional[str] = None, pk: Optional[UUID] = None, *args, **kwargs):
+            Initializes the form with the given parameters. It calls the parent's `__init__` method
+            with the `user_type` set to `STAFF_MEMBER_TYPE` and the other parameters.
+    """
+
     STAFF_MEMBER_TYPE = CON_ASSISTANT
     field_order = AbstractStaffMemberForm.field_order + ["assistant_type"]
 
@@ -29,5 +46,13 @@ class AssistantForm(AbstractStaffMemberForm):
     def __init__(
         self, user_type: Optional[str] = None, pk: Optional[UUID] = None, *args, **kwargs
     ):
+        """Initializes the AssistantForm.
+
+        Args:
+            user_type (str, optional): The type of user. Defaults to None.
+            pk (UUID, optional): The primary key of the Assistant. Defaults to None.
+            *args: Variable length argument list.
+            **kwargs: Arbitrary keyword arguments.
+        """
         # super(BookkeeperForm, self).__init__(*args, **kwargs)
         super().__init__(user_type=self.STAFF_MEMBER_TYPE, *args, **kwargs)

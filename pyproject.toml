@@ -133,3 +133,14 @@ dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
 [tool.mypy]
 warn_return_any = true
 warn_unused_configs = true
+
+[tool.docformatter]
+#recursive = true
+wrap-summaries = 91
+black = true
+blank = true
+pre-summary-newline = true
+pre-summary-space = true
+make-summary-multi-line = true
+wrap-descriptions = 91
+#force-wrap = true

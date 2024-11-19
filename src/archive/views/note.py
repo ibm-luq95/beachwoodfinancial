@@ -2,7 +2,7 @@
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.views.generic import ListView
 
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.users import CON_BOOKKEEPER
@@ -16,7 +16,7 @@ from note.models import Note
 class NoteArchiveListView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):

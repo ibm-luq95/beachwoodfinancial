@@ -541,7 +541,7 @@ src/frontend/!.yarn/patches
 src/frontend/!.yarn/plugins
 src/frontend/!.yarn/sdks
 src/frontend/!.yarn/versions
-#.unotes
+
 
 # if you are NOT using Zero-installs, then:
 # comment the following lines
@@ -573,3 +573,18 @@ _base_app_packages
 src/cert.pem
 src/key.pem
 /.env_dotenv
+/commands/development_only/
+.pnpm-store
+
+src/tmplogs!/.unotes/
+src/tmplogs/*
+
+.idea!/.run/
+.run
+.unotes
+/src/ignoretest.py
+/scripts/docker_puller.py
+/staticfiles/**
+
+src/frontend/bun.lockb!/.env_dotenv
+.env_dotenv

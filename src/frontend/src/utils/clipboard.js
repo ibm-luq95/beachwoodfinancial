@@ -4,14 +4,15 @@ import { capitalizedFirstLetter } from "./helpers";
 import { showToastNotification } from "./toasts";
 
 /**
- * Copy text to clipboard using native javascript api with toast notifications
- * @typedef param
- * @param {Object} param - this is object param
- * @param {string} param.textWillCopy Text will copy to clipboard
- * @param {string} param.label Label which will appear in notification
- * @param {boolean} param.isNotify If true will display notification message after copy
- * @param {string} param.notificationMsg Custom notification message not the default
- * @param {string} param.notificationType Notification type
+ * Copies the given text to the clipboard and displays a notification.
+ *
+ * @param {Object} options - The options for copying text and displaying the notification.
+ * @param {string} options.textWillCopy - The text to be copied to the clipboard.
+ * @param {string} options.label - The label for the copied text.
+ * @param {boolean} [options.isNotify=true] - Whether to display a notification or not.
+ * @param {string} [options.notificationMsg=null] - The custom notification message.
+ * @param {string} [options.notificationType="success"] - The type of notification.
+ * @returns {void}
  */
 const addTxtToClipboardWithNotification = ({
   textWillCopy,

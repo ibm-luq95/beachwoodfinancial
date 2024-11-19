@@ -5,21 +5,21 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import ListView, UpdateView, CreateView, DeleteView
 
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from core.views.mixins.bookkeeper_pass_related_mixin import BookkeeperPassRelatedMixin
 from core.views.mixins.update_previous_mixin import UpdateReturnPreviousMixin
 from staff_briefcase.filters import StaffNotesFilter
+from staff_briefcase.forms.notes import StaffNotesForm
 from staff_briefcase.models import StaffNotes
-from staff_briefcase.models.notes.model_form import StaffNotesForm
 
 
 class StaffNotesListView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
@@ -85,7 +85,7 @@ class StaffNotesListView(
 class StaffNotesUpdateView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     BookkeeperPassRelatedMixin,
     UpdateReturnPreviousMixin,
@@ -118,7 +118,7 @@ class StaffNotesUpdateView(
 class StaffNotesCreateView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     CreateView,
 ):
@@ -148,7 +148,7 @@ class StaffNotesCreateView(
 class StaffNotesDeleteView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     BWBaseListViewMixin,
     SuccessMessageMixin,
     DeleteView,

@@ -32,9 +32,9 @@ admin.site.site_title = _("Beachwood Financial Administrator")
 if settings.DEBUG:
     urlpatterns += static_and_media_path_urls
     urlpatterns.append(path("__debug__/", include("debug_toolbar.urls")))
-    urlpatterns.append(
-        path("request-logs/", include("request_viewer.urls")),
-    )
+    # urlpatterns.append(
+    #     path("request-logs/", include("request_viewer.urls")),
+    # )
     urlpatterns.append(path("admin/", admin.site.urls))
     urlpatterns.append(path("admin/doc/", include("django.contrib.admindocs.urls")))
     # urlpatterns.append(path("silk/", include("silk.urls", namespace="silk")))

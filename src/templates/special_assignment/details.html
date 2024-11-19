@@ -117,9 +117,13 @@
                     <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
                         <div class="flex-shrink-0 group block">
                             <div class="flex items-center">
-                                <img class="inline-block flex-shrink-0 w-[46px] h-[46px] rounded-full"
-                                     src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
-                                     alt="Image Description" />
+                                {% if object.client.company_logo %}
+                                    <img class="inline-block flex-shrink-0 w-[46px] h-[46px] rounded-full"
+                                         src="{{ object.client.company_logo.url }}"
+                                         alt="{{ object.client.name }}" />
+                                {% else %}
+                                    <i class="fa-solid fa-building inline-block flex-shrink-0 fa-2x rounded-full"></i>
+                                {% endif %}
                                 <div class="ml-3">
                                     <h3 class="font-semibold text-gray-800 dark:text-white">{{ object.client.name }}</h3>
                                     <p class="text-sm font-medium text-gray-400">{% translate "Client name" %}</p>
@@ -153,9 +157,15 @@
                 <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
                     <div class="flex-shrink-0 group block">
                         <div class="flex items-center">
-                            <img class="inline-block flex-shrink-0 w-[46px] h-[46px] rounded-full"
-                                 src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
-                                 alt="Image Description" />
+                            {% if object.get_managed_user.profile.profile_picture %}
+                                <img class="inline-block flex-shrink-0 w-[46px] h-[46px] rounded-full"
+                                     src="{{ object.get_managed_user.profile.profile_picture.url }}"
+                                     alt="{{ object.get_managed_user.fullname }}" />
+                            {% else %}
+                                <img class="inline-block flex-shrink-0 w-[46px] h-[46px] rounded-full"
+                                     src="{% static 'img/default_staff.png' %}"
+                                     alt="{{ object.get_managed_user.fullname }}" />
+                            {% endif %}
                             <div class="ml-3">
                                 <h3 class="font-semibold text-gray-800 dark:text-white">{{ object.get_managed_user }}</h3>
                                 <p class="text-sm font-medium text-gray-400">{% translate "Assigned to" %}</p>
@@ -170,9 +180,15 @@
                 <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
                     <div class="flex-shrink-0 group block">
                         <div class="flex items-center">
-                            <img class="inline-block flex-shrink-0 w-[46px] h-[46px] rounded-full"
-                                 src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
-                                 alt="Image Description" />
+                            {% if object.assigned_by.get_staff_member_object.staff_object.profile.profile_picture %}
+                                <img class="inline-block flex-shrink-0 w-[46px] h-[46px] rounded-full"
+                                     src="{{ object.assigned_by.get_staff_member_object.staff_object.profile.profile_picture.url }}"
+                                     alt="{{ object.assigned_by.fullname }}" />
+                            {% else %}
+                                <img class="inline-block flex-shrink-0 w-[46px] h-[46px] rounded-full"
+                                     src="{% static 'img/default_staff.png' %}"
+                                     alt="{{ object.assigned_by.fullname }}" />
+                            {% endif %}
                             <div class="ml-3">
                                 <h3 class="font-semibold text-gray-800 dark:text-white">{{ object.assigned_by.fullname }}</h3>
                                 <p class="text-sm font-medium text-gray-400">{% translate "Assigned By" %}</p>

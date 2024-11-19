@@ -1,12 +1,9 @@
-from django.utils import timezone
-from django.utils.translation import gettext as _
 from rest_framework import serializers
 
 from beach_wood_user.models import BWUser
 from client.models import ClientProxy
 from core.constants import EXCLUDED_FIELDS
 from core.serializers.validate_due_date import ValidateDueDateSerializerMixin
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from job.models import JobProxy
 from job_category.models import JobCategory
 from task.serializers import TaskSerializer

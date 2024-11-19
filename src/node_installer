@@ -1,0 +1,8 @@
+#!/bin/bash
+pattern=$!
+if apt list --installed | grep -q "^$pattern/"; then
+    echo "Package exits!"
+else
+    echo "Package is not installed."
+    apt install -y nodejs
+fi

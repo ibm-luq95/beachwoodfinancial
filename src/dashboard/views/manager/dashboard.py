@@ -1,27 +1,26 @@
 # -*- coding: utf-8 -*-#
 from django.contrib import messages
-from django.contrib.admin.models import LogEntry
 from django.db.models import Q
 from django.utils.translation import gettext as _
 from django.views.generic import TemplateView
 
-from core.cache import BWCacheViewMixin
+from client.models import ClientProxy
+from core.cache import BWSiteSettingsViewMixin
 from core.constants.status_labels import CON_ARCHIVED, CON_COMPLETED
 from core.models import CRUDEventProxy
 from core.utils import get_formatted_logger
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
+from core.utils.developments.debugging_print_object import DebuggingPrint
 from core.views.mixins import BWLoginRequiredMixin, BWManagerAccessMixin
-from client.models import ClientProxy
+from document.models import Document
+from note.models import Note
 from special_assignment.models import SpecialAssignmentProxy
 from task.models import TaskProxy
-from note.models import Note
-from document.models import Document
 
 logger = get_formatted_logger("bw_error_logger")
 
 
 class DashboardViewBW(
-    BWLoginRequiredMixin, BWManagerAccessMixin, BWCacheViewMixin, TemplateView
+    BWLoginRequiredMixin, BWManagerAccessMixin, BWSiteSettingsViewMixin, TemplateView
 ):
     template_name = "dashboard/manager/dashboard.html"
     http_method_names = ["get"]
@@ -30,6 +29,7 @@ class DashboardViewBW(
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context.setdefault("title", _("Manager dashboard"))
+        # DebuggingPrint.print(context)
         messages.set_level(self.request, messages.DEBUG)
         clients = ClientProxy.objects.all().order_by("-created_at")[:5]
         documents_count = Document.objects.count()

@@ -10,8 +10,10 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
 
+import pprint
 from pathlib import Path
 from decouple import Config, RepositoryEnv, Csv
+import configparser
 from django.contrib.messages import constants as messages
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
@@ -20,6 +22,11 @@ from sentry_sdk.integrations.django import DjangoIntegration
 # BASE_DIR = Path(__file__).resolve().parent.parent  # Default BASE_DIR
 BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
 env_file_path: Path = BASE_DIR / ".env" / ".env"
+
+config = configparser.RawConfigParser()
+stage_env_file = BASE_DIR / ".env" / ".current_stage"
+config.read(stage_env_file)
+stage = config.get("environment", "STAGE_ENVIRONMENT".lower())
 
 config: Config = Config(RepositoryEnv(env_file_path))
 
@@ -33,6 +40,19 @@ SECRET_KEY = config("SECRET_KEY", cast=str)
 DEBUG = config("DEBUG", cast=bool)
 
 ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
+
+X_FRAME_OPTIONS = "SAMEORIGIN"
+
+DEFAULT_FROM_EMAIL = (
+    "",
+)  # Default email address for automated correspondence from the site manager(s). This address is used in the From: header of outgoing emails and can take any format valid in the chosen email sending protocol.
+
+CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", cast=Csv())
+
+PROD_HOST_NAME = config("PROD_HOST_NAME", str)
+if PROD_HOST_NAME:
+    ALLOWED_HOSTS.append(PROD_HOST_NAME)
+    CSRF_TRUSTED_ORIGINS.append(f"https://{PROD_HOST_NAME}")
 
 # Application definition
 
@@ -90,7 +110,8 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     # "django.middleware.cache.UpdateCacheMiddleware",  # new for the cache, not working
-    # with django-redis package
+    # with django-valkey package
+    "django.middleware.common.BrokenLinkEmailsMiddleware",
     "django.middleware.security.SecurityMiddleware",
     "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
@@ -107,7 +128,7 @@ MIDDLEWARE = [
     "maintenance_mode.middleware.MaintenanceModeMiddleware",
     "easyaudit.middleware.easyaudit.EasyAuditMiddleware",
     # "django.middleware.cache.FetchFromCacheMiddleware",  # new for the cache,
-    # not working with django-redis package
+    # not working with django-valkey package
 ]
 
 ROOT_URLCONF = "beach_wood_financial_proj.urls"
@@ -151,8 +172,8 @@ TEMPLATES = [
                 "django.contrib.messages.context_processors.messages",
                 "django.template.context_processors.request",
                 # "django.template.context_processors.i18n",
-                "site_settings.context_processors.site_settings"
-                ".return_site_settings_context",
+                # "site_settings.context_processors.site_settings"
+                # ".return_site_settings_context",
                 "site_settings.context_processors.section_descriptions"
                 ".return_section_description_context",
                 "core.context_processors.access_constants",
@@ -267,10 +288,10 @@ MAINTENANCE_MODE_IGNORE_SUPERUSER = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
-
+DJANGO_CSRF_TRUSTED_ORIGINS = ["http://localhost:8000"]
 STATIC_URL = "static/"
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    BASE_DIR / "static/",
     BASE_DIR / "frontend" / "build",
     BASE_DIR / "components",
 ]
@@ -354,8 +375,8 @@ MESSAGE_TAGS = {
 
 # django-defender configs
 # DEFENDER_USERNAME_FORM_FIELD = "email"
-# DEFENDER_REDIS_URL = (
-#     f"redis://:{config('REDIS_PASSWORD', cast=str)}@{config('REDIS_HOST', cast=str)}/0"
+# DEFENDER_VALKEY_URL = (
+#     f"valkey://:{config('VALKEY_PASSWORD', cast=str)}@{config('REDIS_HOST', cast=str)}/0"
 # )
 
 # Django-filter configs
@@ -365,24 +386,28 @@ FILTERS_EMPTY_CHOICE_LABEL = ""
 
 # check if cache enabled
 if config("IS_CACHE_ENABLED", cast=bool) is True:
-    CACHES = {
+    cache_dict = {
         "default": {
             "BACKEND": config("CACHE_BACKEND_ENGINE", cast=str),
-            "LOCATION": f"redis://{config('REDIS_HOST')}/1",
-            "OPTIONS": {
-                "PASSWORD": config("REDIS_PASSWORD"),
-                # "PARSER_CLASS": "redis.connection.HiredisParser",
-                "CLIENT_CLASS": "django_redis.client.DefaultClient",
-                "PICKLE_VERSION": -1,
-                "SERIALIZER": "django_redis.serializers.json.JSONSerializer",
-                # "SERIALIZER": "django_redis.serializers.msgpack.MSGPackSerializer",
-                # "COMPRESSOR": "django_redis.compressors.lzma.LzmaCompressor",
-            },
+            "LOCATION": f"valkey://{config('VALKEY_HOST')}",
+            "OPTIONS": {},
+            #     # "PASSWORD": config("VALKEY_PASSWORD"),
+            #     # "PARSER_CLASS": "valkey.connection.HiredisParser",
+            #     "CLIENT_CLASS": "django_valkey.client.DefaultClient",
+            #     "PICKLE_VERSION": -1,
+            #     "SERIALIZER": "django_valkey.serializers.json.JSONSerializer",
+            #     # "SERIALIZER": "django_valkey.serializers.msgpack.MSGPackSerializer",
+            #     # "COMPRESSOR": "django_valkey.compressors.lzma.LzmaCompressor",
+            # },
         }
     }
+    if stage == "LOCAL_DEV":
+        cache_dict["default"]["OPTIONS"]["PASSWORD"] = config("VALKEY_PASSWORD", cast=str)
+    # pprint.pprint(cache_dict)
+    CACHES = cache_dict
     # SESSION_ENGINE = "django.contrib.sessions.backends.cache"
     # SESSION_CACHE_ALIAS = "default"
-    DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
+    DJANGO_VALKEY_LOG_IGNORED_EXCEPTIONS = True
     CACHE_MIDDLEWARE_ALIAS = config(
         "CACHE_MIDDLEWARE_ALIAS", cast=str
     )  # which cache alias to use
@@ -513,6 +538,9 @@ LOGGING = {
 
 SESSION_TIMEOUT_REDIRECT = "/auth/login"
 ANONYMOUS_USER_NAME = None
+
+# Django-import-export config
+# IMPORT_EXPORT_SKIP_ADMIN_LOG = True
 
 # SENTRY configs
 if config("SENTRY_IS_ENABLED", cast=bool) is True:

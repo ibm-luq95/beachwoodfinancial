@@ -5,8 +5,12 @@ from django.utils import timezone
 
 class BaseQuerySetMixin(models.QuerySet):
     """
-    Prevents objects from being hard-deleted. Instead, sets the
-    ``date_deleted``, effectively soft-deleting the object.
+    BaseQuerySetMixin class extends the Django models.QuerySet class.
+
+    Methods:
+        - delete(self): Sets the `deleted_at` attribute of each object in the queryset to the current time and sets the `is_deleted` attribute to True.
+        - restore(self): Sets the `deleted_at` attribute of each object in the queryset to None and sets the `is_deleted` attribute to False.
+
     """
 
     def delete(self):

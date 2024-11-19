@@ -40,7 +40,6 @@ class JobMiniForm(RemoveFieldsMixin, BWJSModalFormRendererMixin, BWBaseFormMixin
                         pk__in=users_pk
                     )
             else:
-                print("No bookkeeper")
                 self.fields["managed_by"].queryset = BWUser.objects.none()
 
     title = forms.CharField(label=_("Title"), required=True)
