@@ -9,7 +9,7 @@ from core.utils.developments.debugging_print_object import DebuggingPrint
 from site_settings.models import SiteSettings
 
 
-class BWCacheViewMixin:
+class BWSiteSettingsViewMixin:
     """This is cache mixin, which will use with any cbv"""
 
     def get_context_data(self, **kwargs):
@@ -28,20 +28,14 @@ class BWCacheViewMixin:
         """
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context.setdefault("get_web_app_settings", self.get_sitesettings_cache())
+        context.update({"get_web_app_settings": self.get_sitesettings_cache()})
         return context
 
     def get_sitesettings_cache(self) -> dict | None:
         # Get the cache key from the request
-        site_obj = Site.objects.filter(domain=self.request.get_host()).first()
-        if site_obj is not None:
-            site_settings = SiteSettings.objects.select_related().filter(
-                site=site_obj, slug=SITE_SETTINGS_DB_SLUG
-            )
-            if site_settings:
-                site_settings = site_settings.first()
-                return site_settings.get_instance_as_dict
-            else:
-                return None
-        else:
-            return None
+        site_settings = SiteSettings.objects.select_related().filter(
+            slug=SITE_SETTINGS_DB_SLUG
+        )
+        if site_settings:
+            site_settings = site_settings.first()
+            return site_settings.get_instance_as_dict

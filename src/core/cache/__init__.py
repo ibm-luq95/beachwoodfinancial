@@ -14,5 +14,5 @@ __maintainer__ = "developer"
 __status__ = "Production"
 __version__ = "2.0"
 
-from .cache_view_mixin import BWCacheViewMixin
+from .sitesettings_view_mixin import BWSiteSettingsViewMixin
 from .cache_handler import BWCacheHandler
