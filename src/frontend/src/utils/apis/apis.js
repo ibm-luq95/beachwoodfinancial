@@ -4,9 +4,12 @@ import { FETCHURLNAMEURL } from "../constants";
 import { getCookie } from "../cookie";
 
 /**
- * Fetch the url path by url name
- * @param {string} urlName URL name to fetch url
- * @param {string} pk PK value
+ * Fetches the URL path by name from backend.
+ *
+ * @param {string} urlName - The name of the URL.
+ * @param {string|null} pk - The primary key (optional).
+ * @returns {Promise} - A promise that resolves to the fetched data.
+ * @throws {Error} - If there is an HTTP error.
  */
 const fetchUrlPathByName = async (urlName, pk = null) => {
   try {
@@ -46,9 +49,17 @@ const fetchUrlPathByName = async (urlName, pk = null) => {
 };
 
 /**
- * This function will send a request to backend server
- * @param {Object} options json object of all options of the request
- * @returns Promise
+ * Sends a request to the specified URL with the given options.
+ *
+ * @param {Object} options - The options for the request.
+ * @param {string} options.url - The URL to send the request to.
+ * @param {string} [options.contentType="application/json;charset=utf-8"] - The content type of the request.
+ * @param {string} [options.token] - The CSRF token for the request.
+ * @param {string} [options.method="GET"] - The HTTP method for the request.
+ * @param {Object} [options.dataToSend] - The data to send with the request.
+ * @returns {Promise} A promise that resolves with the response data or rejects with an error.
+ *
+ * @throws {Error} If an error occurs while sending the request.
  */
 const sendRequest = (options) => {
   return new Promise((resolve, reject) => {
@@ -62,6 +73,8 @@ const sendRequest = (options) => {
         // "Content-Type": "application/x-www-form-urlencoded",
         Accept: "application/json",
         "X-Requested-With": "XMLHttpRequest",
+        // "X-Content-Type-Options": "nosniff",  // TODO: Enable in production and test it
+        // "X-XSS-Protection": "1; mode=block",  // TODO: Enable in production and test it
         "X-CSRFToken": options["token"] ? options["token"] : getCookie("csrftoken"),
         // "Content-Disposition": "attachment; filename=upload.jpg",
       });

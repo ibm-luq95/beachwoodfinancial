@@ -11,7 +11,7 @@ from beach_wood_user.models import BWUser
 from bookkeeper.filters import BookkeeperFilter
 from bookkeeper.forms import BookkeeperForm
 from bookkeeper.models import BookkeeperProxy
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.utils import debugging_print
@@ -21,7 +21,7 @@ from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 class BookkeeperListView(
 	PermissionRequiredMixin,
 	BWLoginRequiredMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	BWBaseListViewMixin,
 	ListView,
 ):
@@ -82,7 +82,7 @@ class BookkeeperCreateView(
 	PermissionRequiredMixin,
 	SuccessMessageMixin,
 	BWLoginRequiredMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	FormView,
 ):
 	# permission_required = ["bookkeeper.add_bookkeeper", "bookkeeper.add_bookkeeperproxy"]
@@ -126,7 +126,7 @@ class BookkeeperUpdateView(
 	PermissionRequiredMixin,
 	BWLoginRequiredMixin,
 	SuccessMessageMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	SingleObjectMixin,
 	FormView,
 ):
@@ -234,7 +234,7 @@ class BookkeeperUpdateView(
 class BookkeeperDeleteView(
 	PermissionRequiredMixin,
 	BWLoginRequiredMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	SuccessMessageMixin,
 	DeleteView,
 ):

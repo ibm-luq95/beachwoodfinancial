@@ -1,4 +1,12 @@
 # -*- coding: utf-8 -*-#
+"""
+File: migrate_old_data.py
+Author: Ibrahim Luqman
+Date: 5/13/24
+
+Description: Migrate old data from old version, this command not used alot, it will be
+deprecated in the future, using django_import_export package
+"""
 import traceback
 from pathlib import Path, PosixPath
 import pandas as pd
@@ -15,7 +23,7 @@ from client.models import ClientProxy
 from client_account.models import ClientAccount
 from core.management.mixins import CommandStdOutputMixin
 from core.utils import debugging_print, PasswordHasher
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
+from core.utils.developments.debugging_print_object import DebuggingPrint
 from core.utils.developments.debugging_print_types import DPOTableOptions
 from core.utils.grab_env_file import grab_env_file
 from job.models import JobProxy
@@ -112,8 +120,8 @@ class Command(BaseCommand, CommandStdOutputMixin):
                     / "docs"
                     / "Production Exported Data"
                 )
-                # BWDebuggingPrint.pprint(migrated_data_dir)
-                # BWDebuggingPrint.pprint(migrated_data_dir.exists())
+                # DebuggingPrint.pprint(migrated_data_dir)
+                # DebuggingPrint.pprint(migrated_data_dir.exists())
                 # return
                 # debugging_print(migrated_data_dir)
                 if migrated_data_dir.exists() is False:
@@ -497,7 +505,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
                                     }
                                 )
                             new_client_accounts_list.append(new_client_account_data)
-                        # BWDebuggingPrint.pprint(new_client_accounts_list)
+                        # DebuggingPrint.pprint(new_client_accounts_list)
                         # return
 
                         for ca in new_client_accounts_list:
@@ -532,7 +540,7 @@ class Command(BaseCommand, CommandStdOutputMixin):
                             "show_lines": True,
                             "title": "Client Accounts",
                         }
-                        table_obj = BWDebuggingPrint.table(
+                        table_obj = DebuggingPrint.table(
                             columns_headers=table_header_cols,
                             rows=p_table_client_accounts,
                             table_options=table_options,
@@ -542,4 +550,4 @@ class Command(BaseCommand, CommandStdOutputMixin):
             self.stdout_output("info", _("Canceled by user."))
         except Exception as ex:
             # self.stdout_output("error", traceback.format_exc())
-            BWDebuggingPrint.print_exception(is_show_locales=True)
+            DebuggingPrint.print_exception(is_show_locales=True)

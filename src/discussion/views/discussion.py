@@ -3,7 +3,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.utils.translation import gettext as _
 from django.views.generic import ListView
 
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
@@ -13,7 +13,7 @@ from discussion.models import DiscussionProxy
 class DiscussionListView(
 	PermissionRequiredMixin,
 	BWLoginRequiredMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	BWBaseListViewMixin,
 	ListView,
 ):

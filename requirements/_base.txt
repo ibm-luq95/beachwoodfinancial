@@ -20,12 +20,10 @@ drf-standardized-errors
 django-easy-audit
 gunicorn
 hiredis
-mysql-connector-python
-mysqlclient
+django-valkey
 Pillow
 prettytable
 psycopg[binary]
-pyminizip
 python-decouple
 python-magic
 python-webpack-boilerplate

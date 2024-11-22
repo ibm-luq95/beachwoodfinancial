@@ -1,25 +1,15 @@
 # -*- coding: utf-8 -*-#
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.core.paginator import Paginator
-from django.http import HttpResponseRedirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, FormView
 from django.utils.translation import gettext as _
-from calendar import month_name
-from django.utils import timezone
+from django.views.generic import FormView
 
 from client.models import ClientProxy
-from core.cache import BWCacheViewMixin
-from core.constants import LIST_VIEW_PAGINATE_BY
+from core.cache import BWSiteSettingsViewMixin
 from core.forms.per_page_form import PerPageForm
-from core.utils import debugging_print, get_months_abbr
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
-from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
-from job.models import JobProxy
+from core.utils import get_months_abbr
+from core.views.mixins import BWLoginRequiredMixin
 from reports.filters.client import ClientJobsFilter
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
-from django.conf import settings
 
 
 # if settings.DEBUG is True:
@@ -30,7 +20,7 @@ from django.conf import settings
 class JobsReportView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     # BWBaseListViewMixin,
     FormView,
     # ListView,
@@ -88,7 +78,7 @@ class JobsReportView(
         # form["created_year"].initial = timezone.now().year
         # created_year = form.serialize_inputs().get("period_year")
         # created_year = timezone.now().year
-        # BWDebuggingPrint.pprint(form.serialize_inputs())
+        # DebuggingPrint.pprint(form.serialize_inputs())
         # if form.serialize_inputs().get("period_year") is not None:
         #     created_year = None
         #     year = form.serialize_inputs().get("period_year")
@@ -106,10 +96,10 @@ class JobsReportView(
     # def get_initial(self):
     #     initial = super().get_initial()
     # initial_dict = dict(self.request.GET)
-    # BWDebuggingPrint.pprint(self.get_form().serialize_inputs())
+    # DebuggingPrint.pprint(self.get_form().serialize_inputs())
     # initial["period_year"] = str(timezone.now().year)
     # initial.update(initial_dict)
-    # BWDebuggingPrint.pprint(initial)
+    # DebuggingPrint.pprint(initial)
     # return initial
 
     def get_form_kwargs(self):

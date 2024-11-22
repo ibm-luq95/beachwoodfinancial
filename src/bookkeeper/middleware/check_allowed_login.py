@@ -7,8 +7,10 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 
 from core.cache import BWCacheHandler
-from core.constants.site_settings import WEB_APP_SITE_SETTINGS_KEY
+from core.constants.site_settings import WEB_APP_SITE_SETTINGS_KEY, SITE_SETTINGS_DB_SLUG
 from core.utils import debugging_print
+from core.utils.developments.debugging_print_object import DebuggingPrint
+from site_settings.models import SiteSettings
 
 
 class CheckAllowedLoginMiddleware:
@@ -36,16 +38,23 @@ class CheckAllowedLoginMiddleware:
                 request.user.user_type == "bookkeeper"
                 or request.user.user_type == "assistants"
             ):
-                site_settings = BWCacheHandler.get_item(
-                    request.get_host(), WEB_APP_SITE_SETTINGS_KEY
-                )
-                if (
-                    site_settings.get("can_bookkeepers_login") is False
-                    or site_settings.get("can_assistants_login") is False
-                ):
-                    messages.error(
-                        request,
-                        _("You not allowed to login, please contact the administrator"),
-                    )
-                    logout(request)
-                    return redirect(reverse_lazy("auth:login"))
+                site_settings = SiteSettings.objects.get(slug=SITE_SETTINGS_DB_SLUG)
+
+                # DebugPrettyPrinter.pprint(site_settings)
+                # TODO: check if site_settings is None, for test cases
+                # print(request.get_host())
+                # print("###################")
+                # print(site_settings)
+                if site_settings is not None:
+                    if (
+                        site_settings.can_bookkeepers_login is False
+                        or site_settings.can_assistants_login is False
+                    ):
+                        messages.error(
+                            request,
+                            _(
+                                "You not allowed to login, please contact the administrator"
+                            ),
+                        )
+                        logout(request)
+                        return redirect(reverse_lazy("auth:login"))

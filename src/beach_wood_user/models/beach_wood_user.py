@@ -25,11 +25,12 @@ logger = get_formatted_logger()
 
 
 class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin, GuardianUserMixin):
-    """BWUser, it used instead of default django user model
+    """BWUser, Main user customized model
 
+        it used instead of default django user model
     Args:
-        BaseModelMixin (_type_): _description_
-        AbstractBaseUser (_type_): _description_
+        BaseModelMixin (BaseModelMixin): Base abstract model contains common fields
+        AbstractBaseUser (AbstractBaseUser): _description_
         PermissionsMixin (_type_): _description_
 
     Returns:
@@ -58,6 +59,9 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin, GuardianUserMix
         default=BeachWoodUserTypesEnum.USER,
         db_index=True,
     )
+    last_login = models.DateTimeField(
+        _("last login"), blank=True, null=True, editable=False
+    )
 
     USERNAME_FIELD = "email"
     REQUIRED_FIELDS = ["user_type", "user_genre"]
@@ -70,7 +74,7 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin, GuardianUserMix
         ordering = ["-created_at", "-updated_at"]
         permissions = [("developer_user", "Developer User")]
 
-    def __str__(self):
+    def __str__(self) -> str:
         full_info = self.fullname
         if full_info != "":
             return f"User - {full_info}"
@@ -78,10 +82,10 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin, GuardianUserMix
             return f"User - {self.email}"
 
     @property
-    def fullname(self):
+    def fullname(self) -> str:
         return f"{self.first_name} {self.last_name}"
 
-    def save(self, *args, **kwargs):
+    def save(self, *args, **kwargs) -> None:
         self.email = self.email.lower()
         super(BWUser, self).save(*args, **kwargs)
 

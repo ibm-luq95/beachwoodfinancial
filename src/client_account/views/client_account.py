@@ -12,7 +12,7 @@ from django.views.generic import UpdateView
 from client_account.filters import ClientAccountFilter
 from client_account.forms import ClientAccountForm
 from client_account.models import ClientAccount
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.users import CON_BOOKKEEPER
 from core.utils import get_trans_txt
@@ -24,7 +24,7 @@ from core.views.mixins.update_previous_mixin import UpdateReturnPreviousMixin
 class ClientAccountListViewBW(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
@@ -88,7 +88,7 @@ class ClientAccountListViewBW(
 class ClientAccountCreateView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     CreateView,
 ):
@@ -111,7 +111,7 @@ class ClientAccountCreateView(
 class ClientAccountUpdateView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     UpdateReturnPreviousMixin,
     UpdateView,
@@ -140,7 +140,7 @@ class ClientAccountUpdateView(
 class ClientAccountDeleteView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):

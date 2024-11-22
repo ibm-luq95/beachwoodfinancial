@@ -44,6 +44,7 @@ class BWPasswordInput(forms.PasswordInput):
 
 
 class BWLoginForm(forms.Form):
+
 	default_renderer = FormRenderer()
 	# field_order = ["user_type", "username", "password"]
 	# username_field = "email"

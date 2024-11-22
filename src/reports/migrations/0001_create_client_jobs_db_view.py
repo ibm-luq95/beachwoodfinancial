@@ -14,7 +14,7 @@ sql_file.close()
 
 
 class Migration(migrations.Migration):
-    dependencies = [("client", "0001_initial"), ("job", "0001_initial")]
+    # dependencies = [("client", "0001_initial"), ("job", "0001_initial")]
 
     operations = [
         migrations.RunSQL(sql_code, f"DROP view {CONST_CLIENT_JOBS_REPORTS_VIEW}")

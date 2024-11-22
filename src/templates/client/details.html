@@ -678,6 +678,7 @@
 
                 </div>
                 {% if object.get_all_related_notes_and_documents.notes %}
+
                     {% include "bw_components/note/table_list.html" with is_checkbox_enabled=False is_show_created_at=is_show_created_at header_title="Notes" is_show_create_btn=False app_label="note" pagination_list_url_name="dashboard:note:list" is_filters_enabled=False is_actions_menu_enabled=True actions_items="update,delete" actions_app_name="note" actions_base_url="dashboard:note" base_url_name="dashboard:note" filter_form=filter_form filter_cancel_url="dashboard:note:list" object_list=object.get_all_related_notes_and_documents.notes is_show_section=True is_show_job_link=True is_show_task_link=True %}
 
                 {% else %}

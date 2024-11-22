@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-#
+"""
+File: general.py
+Author: Ibrahim Luqman
+Date: 5/10/24
+
+Description: General constants and configurations for the general usage
+"""
 LIST_VIEW_PAGINATE_BY = 50
 IS_SHOW_LABELS_IN_FILTER_FORM = False
 DEFAULT_FULL_DATE_TIME_FORMAT = "jS F Y H:i A"

@@ -9,9 +9,38 @@ from core.models.querysets import BaseQuerySetMixin
 
 
 class ArchiveManager(models.Manager):
+    """
+    A custom manager for querying instances of the model with a soft delete feature.
+
+    This manager provides methods for querying instances that are not marked as deleted.
+    It also includes additional methods for random selection and filtering by status.
+
+    Attributes:
+        ALLOWED_STATUS (list): A list of status values that are considered allowed and not marked as deleted.
+
+    Methods:
+        get_queryset(self) -> BaseQuerySetMixin: Returns a `BaseQuerySetMixin` object representing all instances of the model
+            that are not marked as deleted, with a status of either `CON_ARCHIVED` or `CON_COMPLETED`, ordered by `created_at` in descending order.
+
+        all(self) -> BaseQuerySetMixin: Returns a `BaseQuerySetMixin` object representing all instances of the model with a
+            status of either `CON_ARCHIVED` or `CON_COMPLETED`, ordered by `created_at` in descending order.
+
+        random(self) -> Model: Returns a random instance of the model that is not marked as deleted.
+
+    """
+
     ALLOWED_STATUS = [CON_ARCHIVED, CON_COMPLETED]
 
     def get_queryset(self) -> BaseQuerySetMixin:
+        """
+        Returns a `BaseQuerySetMixin` object representing all instances of the model that
+        are not marked as deleted, with a status of either `CON_ARCHIVED` or
+        `CON_COMPLETED`, ordered by `created_at` in descending order.
+
+        Returns:
+            BaseQuerySetMixin: A `BaseQuerySetMixin` object representing all instances of the model with the specified statuses.
+
+        """
         queryset = (
             BaseQuerySetMixin(self.model, using=self._db)
             .filter(Q(is_deleted=False) & Q(status__in=self.ALLOWED_STATUS))
@@ -22,11 +51,13 @@ class ArchiveManager(models.Manager):
 
     def all(self) -> BaseQuerySetMixin:
         """
-        Returns a `BaseQuerySetMixin` object representing all instances of the model
-        with a status of either `CON_ARCHIVED` or `CON_COMPLETED`, ordered by `created_at` in descending order.
+        Returns a `BaseQuerySetMixin` object representing all instances of the model with a
+        status of either `CON_ARCHIVED` or `CON_COMPLETED`, ordered by `created_at` in
+        descending order.
 
-        :return: A `BaseQuerySetMixin` object representing all instances of the model with the specified statuses.
-        :rtype: BaseQuerySetMixin
+        Returns:
+            BaseQuerySetMixin: A `BaseQuerySetMixin` object representing all instances of the model with the specified statuses.
+
         """
         qs = self.get_queryset()
 

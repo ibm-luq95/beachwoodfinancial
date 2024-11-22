@@ -12,7 +12,7 @@ from django.utils.translation import gettext as _
 from client.models import ClientProxy
 from core.management.mixins import CommandStdOutputMixin
 from core.utils import get_months_abbr
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
+from core.utils.developments.debugging_print_object import DebuggingPrint
 from reports.models import ClientJobsReportsDBView
 
 
@@ -165,9 +165,9 @@ class TMPMAP:
 		This function retrieves all reports and organizes them by month, updating the months_data dictionary with the
 		relevant counts. It returns the updated months_data dictionary if successful, or None if orgs_months is None.
 		"""
-		# BWDebuggingPrint.pprint(self.reports_qs_count)
+		# DebuggingPrint.pprint(self.reports_qs_count)
 		orgs_months = self.organize_by_month()
-		# BWDebuggingPrint.pprint(orgs_months)
+		# DebuggingPrint.pprint(orgs_months)
 		if orgs_months is None:
 			return None
 		all_data = self.create_all_months_template(is_with_year=False)
@@ -180,11 +180,11 @@ class TMPMAP:
 						ff = self.merge_data_for_all_report(
 							all_data["data"][m_idx], m_data
 						)
-						# BWDebuggingPrint.pprint(ff)
+						# DebuggingPrint.pprint(ff)
 						all_data["data"][m_idx] = ff
 					else:
 						all_data["data"][m_idx] = m_data
-		# BWDebuggingPrint.pprint(all_data)
+		# DebuggingPrint.pprint(all_data)
 		return all_data
 
 	def create_all_months_template(
@@ -227,7 +227,7 @@ class TMPMAP:
 			return None
 		# Create a dictionary where the keys are years and the values are the filtered reports for each year
 		data = {year: self.reports_qs.filter(job_period_year=year) for year in self.years}
-		# BWDebuggingPrint.pprint(data)
+		# DebuggingPrint.pprint(data)
 		return data
 
 	def organize_by_month(self) -> list[dict] | None:
@@ -236,14 +236,14 @@ class TMPMAP:
 		Returns a dictionary with years as keys and a list of instances as values.
 		"""
 		years_orgs = self.organize_by_year()
-		# BWDebuggingPrint.pprint(years_orgs)
+		# DebuggingPrint.pprint(years_orgs)
 		if years_orgs is None:
 			return None
 		years_dict = defaultdict(list)
 		full_months_data: list[dict] = []
 		for year, jobs_qs in years_orgs.items():
 			months_years_dict = self.create_all_months_template(year)
-			# BWDebuggingPrint.pprint(months_years_dict["data"])
+			# DebuggingPrint.pprint(months_years_dict["data"])
 			if jobs_qs:
 				for qs in jobs_qs:
 					years_dict[year].append(qs.get_instance_as_dict)
@@ -259,8 +259,8 @@ class TMPMAP:
 			# 	] = []
 
 			full_months_data.append(months_years_dict)
-		# BWDebuggingPrint.pprint(years_dict)
-		# BWDebuggingPrint.pprint(full_months_data)
+		# DebuggingPrint.pprint(years_dict)
+		# DebuggingPrint.pprint(full_months_data)
 		return full_months_data
 
 	def __repr__(self):
@@ -306,21 +306,21 @@ class Command(BaseCommand, CommandStdOutputMixin):
 						raise Exception(_("Client not found."))
 
 				# for client in ClientProxy.objects.all():
-				#     BWDebuggingPrint.pprint(client.pk)
-				#     BWDebuggingPrint.pprint(client.name)
+				#     DebuggingPrint.pprint(client.pk)
+				#     DebuggingPrint.pprint(client.name)
 				start_time = timeit.default_timer()
 				tt = TMPMAP(client_obj)
-				BWDebuggingPrint.pprint(tt.serializer())
+				DebuggingPrint.pprint(tt.serializer())
 				# tt.all_reports()
 				# ac = ClientProxy.objects.filter(clients_q)
-				# BWDebuggingPrint.pprint(ac.count())
+				# DebuggingPrint.pprint(ac.count())
 				# for c in ac:
 				# 	tt = TMPMAP(c)
-				# 	BWDebuggingPrint.pprint(tt.serializer())
-				BWDebuggingPrint.pprint(
+				# 	DebuggingPrint.pprint(tt.serializer())
+				DebuggingPrint.pprint(
 					f"The time difference is : {timeit.default_timer() - start_time}"
 				)
-				# BWDebuggingPrint.pprint(tt.organize_by_year())
+				# DebuggingPrint.pprint(tt.organize_by_year())
 				return
 
 		except Exception:

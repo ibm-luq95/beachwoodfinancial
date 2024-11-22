@@ -7,7 +7,7 @@ from django.views.generic import (
     UpdateView,
 )
 
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.constants.site_settings import SITE_SETTINGS_DB_SLUG
 from core.views.mixins import (
     BWLoginRequiredMixin,
@@ -19,7 +19,7 @@ from site_settings.models import SiteSettings
 class SiteSettingsFormView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     UpdateView,
 ):

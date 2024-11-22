@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-#
+"""
+File: types_labels.py
+Author: Ibrahim Luqman
+Date: 5/10/24
+
+Description: This include types labels
+"""
 CON_NO_TYPE = "no_type"
 CON_RECURRING = "recurring"
 CON_WEEKLY = "weekly"

@@ -6,8 +6,8 @@
         <div class="flex items-center justify-between">
             <a class="flex-none text-white text-xl font-semibold dark:text-white"
                href="#"
-               aria-label="Beach Wood Financial">
-                <img src="{% if get_web_app_settings.logo %} {{ get_web_app_settings.logo }} {% endif %}"
+               aria-label="{{ get_web_app_settings.name }}">
+                <img src="{% if get_web_app_settings.logo %} {{ get_web_app_settings.logo.url }} {% endif %}"
                      alt="{{ get_web_app_settings.name }}"
                      class="w-auto h-16" />
             </a>

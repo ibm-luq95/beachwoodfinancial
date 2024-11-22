@@ -12,7 +12,7 @@ from assistant.filters import AssistantFilter
 from assistant.forms import AssistantForm
 from assistant.models import AssistantProxy
 from beach_wood_user.models import BWUser
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
@@ -21,7 +21,7 @@ from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 class AssistantListView(
 	PermissionRequiredMixin,
 	BWLoginRequiredMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	BWBaseListViewMixin,
 	ListView,
 ):
@@ -83,7 +83,7 @@ class AssistantCreateView(
 	PermissionRequiredMixin,
 	SuccessMessageMixin,
 	BWLoginRequiredMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	FormView,
 ):
 	# permission_required = ["assistant.add_assistant", "assistant.add_assistantproxy"]
@@ -137,7 +137,7 @@ class AssistantUpdateView(
 	PermissionRequiredMixin,
 	BWLoginRequiredMixin,
 	SuccessMessageMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	SingleObjectMixin,
 	FormView,
 ):
@@ -245,7 +245,7 @@ class AssistantUpdateView(
 class AssistantDeleteView(
 	PermissionRequiredMixin,
 	BWLoginRequiredMixin,
-	BWCacheViewMixin,
+	BWSiteSettingsViewMixin,
 	SuccessMessageMixin,
 	DeleteView,
 ):

@@ -15,6 +15,21 @@ from task.models.manager.tasks_manager import TaskManager
 
 # class Task(BaseModelMixin, StartAndDueDateMixin, StrModelMixin, CreatedByMixin):
 class Task(BaseModelMixin, AccessProxyModelMixin, CronColumnMixin, StrModelMixin):
+    """Tasks for every job.
+
+    This class represents a task in the system. It extends the `BaseModelMixin`, `AccessProxyModelMixin`, `CronColumnMixin`, and `StrModelMixin` classes.
+
+    Attributes:
+        job (ForeignKey): A foreign key to the `JobProxy` model representing the job associated with the task.
+        title (CharField): ACharField representing the title of the task.
+        task_type (CharField): ACharField representing the type of the task.
+        status (CharField): ACharField representing the status of the task.
+        is_completed (BooleanField): ABooleanField indicating whether the task is completed or not.
+        hints (CharField): ACharField representing hints for the task.
+        additional_notes (TextField): ATextField representing additional notes for the task.
+        objects (TaskManager): The manager for the `Task` model.
+    """
+
     """Tasks for every job
 
     Args:

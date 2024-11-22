@@ -1,4 +1,12 @@
 "use strict";
+
+/**
+ * Retrieves the value of a cookie by its name. this from the official Django documentation
+ * This method only used in API requests
+ *
+ * @param {string} name - The name of the cookie.
+ * @returns {string|null} - The value of the cookie, or null if the cookie does not exist.
+ */
 const getCookie = (name) => {
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {

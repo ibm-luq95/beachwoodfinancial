@@ -1,9 +1,11 @@
 "use strict";
 
 /**
- * Get the correct icon based on type and color
- * @param {string} iconType Icon type success, info, error, warning
- * @returns Object
+ * Retrieves the icon details for the specified toast icon type.
+ *
+ * @param {string} iconType - The type of toast icon.
+ * @returns {object} - The icon details object containing the icon SVG, CSS color classes, and font color.
+ * @throws {Error} - If the specified icon type does not exist.
  */
 const getIconForToasts = (iconType) => {
   const iconsDetails = {

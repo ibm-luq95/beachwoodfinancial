@@ -5,9 +5,39 @@ from rest_framework import serializers
 
 
 class ValidateDueDateSerializerMixin:
+    """
+    Mixin class that validates the due date and start date of a serializer.
+
+    This mixin class adds a validation method to a serializer that checks if the due date is in the past and if the start date is after the due date. It raises a `ValidationError` if either condition is not met.
+
+    Args:
+        self: The object instance.
+        data (dict): The data to be validated.
+
+    Returns:
+        dict: The validated data.
+
+    Raises:
+        serializers.ValidationError: If the due date is in the past or if the start date is after the due date.
+
+    """
+
     def validate(self, data):
         """
-        Check that start is before finish.
+        Validates the due date and start date of the serializer.
+
+        This method checks if the due date is in the past and if the start date is after the due date.
+        It raises a `ValidationError` if either condition is not met.
+
+        Args:
+            self: The object instance.
+            data (dict): The data to be validated.
+
+        Returns:
+            dict: The validated data.
+
+        Raises:
+            serializers.ValidationError: If the due date is in the past or if the start date is after the due date.
         """
         now = timezone.now().date()
         due_date = data.get("due_date")

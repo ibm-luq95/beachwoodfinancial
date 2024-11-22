@@ -9,6 +9,27 @@ from core.models.mixins.access_proxy_models_mixin import AccessProxyModelMixin
 
 
 class Assistant(BaseModelMixin, StaffMemberMixin, AccessProxyModelMixin):
+    """Represents an Assistant in the system.
+
+    This class defines the model for an Assistant, including their attributes and
+    permissions.
+
+    Args:
+        BaseModelMixin (models.Model): A Django base model mixin providing common
+            fields and methods.
+        StaffMemberMixin: A mixin for staff members providing additional functionality.
+        AccessProxyModelMixin: A mixin for handling access proxy models.
+
+    Attributes:
+        assistant_type (models.CharField): The type of the assistant.
+            Choices are defined in AssistantTypeEnum with a default of AssistantTypeEnum.ALL.
+
+    Meta:
+        Contains permissions associated with the Assistant.
+            Permissions include access to bookkeeper and client account details,
+            user editing, and full manager permissions.
+    """
+
     """Assistant models
 
     Args:

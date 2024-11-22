@@ -8,8 +8,9 @@ from core.models.mixins.access_proxy_models_mixin import AccessProxyModelMixin
 class Bookkeeper(BaseModelMixin, StaffMemberMixin, AccessProxyModelMixin):
     """Bookkeeper model
 
-    Args:
-        BaseModelMixin (models.Model): Django base model mixin
+    Represents a bookkeeper in the application.
+    Inherits from BaseModelMixin, StaffMemberMixin, and AccessProxyModelMixin.
+    Meta class defines permissions for the bookkeeper user.
     """
 
     class Meta(BaseModelMixin.Meta, StaffMemberMixin.Meta):

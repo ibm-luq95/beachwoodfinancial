@@ -24,6 +24,25 @@ file_validator = FileValidator(max_size=1024 * 1000, content_types=IMAGES_AND_DO
 class SpecialAssignment(
     BaseModelMixin, StartAndDueDateMixin, TeamMembersMixin, CronColumnMixin, StrModelMixin
 ):
+    """Represents a special assignment.
+
+    This class defines a special assignment with attributes such as client, job, title, body, status, attachment, notes, is_seen, and assigned_by.
+
+    Attributes:
+        client (ForeignKey to ClientProxy): The client associated with the assignment.
+        job (ForeignKey to JobProxy): The job associated with the assignment.
+        title (CharField): The title of the assignment.
+        body (TextField): The main content of the assignment.
+        status (CharField): The status of the assignment.
+        attachment (FileField): File attachment for the assignment.
+        notes (TextField): Additional notes for the assignment.
+        is_seen (BooleanField): Indicates if the assignment has been seen.
+        assigned_by (ForeignKey to User): User who assigned the special assignment.
+
+    Methods:
+        get_absolute_url(self): Returns the absolute URL for the special assignment.
+    """
+
     client = models.ForeignKey(
         to=ClientProxy,
         on_delete=models.PROTECT,

@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-#
+"""
+File: site_settings.py
+Author: Ibrahim Luqman
+Date: 5/10/24
+
+Description: Site settings module constants and slugs
+"""
 from django.utils.text import slugify
 
 WEB_APP_SITE_SETTINGS_KEY = "web_app_site_settings"  # this for cache
@@ -24,4 +31,3 @@ SEC_DESC_REPORT = "report"
 SEC_DESC_SITE_SETTINGS = "site_settings"
 SEC_DESC_APPLICATION_CONFIGURATIONS = "application_configurations"
 SEC_DESC_IMPORTANT_CONTACT = "important_contact"
-

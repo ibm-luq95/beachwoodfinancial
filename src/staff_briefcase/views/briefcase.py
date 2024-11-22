@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
 from django.views.generic import CreateView, DeleteView, DetailView, ListView, UpdateView
 
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
@@ -21,7 +21,7 @@ from staff_briefcase.models import StaffBriefcase
 class StaffBriefcaseListView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
@@ -91,7 +91,7 @@ class StaffBriefcaseListView(
 class StaffBriefcaseDetailView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     DetailView,
 ):
     permission_required = "staff_briefcase.view_staffbriefcase"
@@ -122,7 +122,7 @@ class StaffBriefcaseDetailView(
 class StaffBriefcaseCreateView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     CreateView,
 ):

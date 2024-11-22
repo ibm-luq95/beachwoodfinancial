@@ -11,11 +11,9 @@ from core.constants.status_labels import (
     CON_ENABLED,
     CON_NOT_STARTED,
     CON_PAST_DUE,
-    CON_DRAFT,
 )
 from core.models.mixins.get_related_notes_documents import BWGetRelatedNotesAndDocuments
 from core.models.querysets import BaseQuerySetMixin
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
 
 
 class ClientProxy(Client, BWGetRelatedNotesAndDocuments):
@@ -126,10 +124,9 @@ class ClientProxy(Client, BWGetRelatedNotesAndDocuments):
             return 0
 
     def get_jobs_count(self) -> int | None:
+        # print(self.jobs.archive_objects.all())
         return self.jobs.count()
 
     def get_all_past_due_jobs(self) -> BaseQuerySetMixin:
         jobs = self.jobs.filter(status=CON_PAST_DUE)
         return jobs
-
-    

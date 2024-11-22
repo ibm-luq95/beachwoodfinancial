@@ -7,5 +7,6 @@ class BeachWoodUserConfig(AppConfig):
     verbose_name = "Beach Wood Users"
 
     def ready(self) -> None:
-        # import beach_wood_user.signals.login
+        # Signal.disconnect(update_last_login, sender=get_user_model())
+        import beach_wood_user.signals.login
         import beach_wood_user.signals.assign_group_to_user

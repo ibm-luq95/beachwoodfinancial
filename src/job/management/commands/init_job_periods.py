@@ -1,13 +1,12 @@
 # -*- coding: utf-8 -*-#
 import traceback
-from django.core.management.base import BaseCommand
 from datetime import datetime, date
+
+from django.core.management.base import BaseCommand
 from django.db import transaction
 from django.utils.translation import gettext as _
 
-from core.choices.months import MonthChoices
 from core.management.mixins import CommandStdOutputMixin
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from core.utils.developments.debugging_prompt import DebuggingPrompt
 from job.models import JobProxy
 
@@ -41,8 +40,8 @@ class Command(BaseCommand, CommandStdOutputMixin):
                     for job in all_jobs:
                         job_date_field: datetime | date = getattr(job, date_field_label)
                         if job_date_field:
-                            # BWDebuggingPrint.print(str(job_date_field.year))
-                            # BWDebuggingPrint.print(str(job_date_field.month))
+                            # DebuggingPrint.print(str(job_date_field.year))
+                            # DebuggingPrint.print(str(job_date_field.month))
                             job.period_year = str(job_date_field.year)
                             # job.period_year = None
                             job.period_month = str(job_date_field.month)

@@ -11,7 +11,6 @@ from beach_wood_user.forms import BWUserCreationForm, BWUserChangeForm
 from beach_wood_user.models import BWUser
 from core.admin import BWBaseAdminModelMixin
 from core.constants.users import READONLY_NEW_STAFF_MEMBER_GROUP_NAME
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
 
 
 @admin.register(BWUser)
@@ -36,7 +35,7 @@ class BWUserAdmin(ImportExportModelAdmin, UserAdmin):
         "last_login",
         "created_at",
     )
-    readonly_fields = ("date_joined", "last_login")
+    readonly_fields = ("date_joined", "last_login", "updated_at")
     fieldsets = (
         (None, {"fields": ("email", "password")}),
         (
@@ -60,6 +59,7 @@ class BWUserAdmin(ImportExportModelAdmin, UserAdmin):
             {
                 "fields": (
                     "date_joined",
+                    "updated_at",
                     "last_login",
                 )
             },
@@ -108,7 +108,6 @@ class BWUserAdmin(ImportExportModelAdmin, UserAdmin):
     @admin.action(description=_("Add staff briefcase permissions for selected users"))
     def add_view_staffbriefcase_permission(self, request, queryset):
         try:
-            BWDebuggingPrint.pprint(queryset)
 
             if queryset:
                 cnt = ContentType.objects.filter(

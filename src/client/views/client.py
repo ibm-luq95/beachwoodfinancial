@@ -17,13 +17,12 @@ from client.models import ClientProxy
 from client_account.forms import ClientAccountForm
 from client_category.forms import ClientCategoryForm
 from client_category.models import ClientCategory
-from core.cache import BWCacheViewMixin
+from core.cache import BWSiteSettingsViewMixin
 from core.config.forms import BWFormRenderer
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.status_labels import CON_ENABLED
 from core.constants.users import CON_BOOKKEEPER, CON_MANAGER, CON_ASSISTANT
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
 from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
 from core.views.mixins.base_list_view import BWSectionDescriptionHelperMixin
 from document.forms import DocumentForm
@@ -39,13 +38,14 @@ from task.forms import TaskForm
 class ClientListView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
     permission_required = "client.can_view_list"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "core/crudl/list.html"
+    # template_name = "client/list.html"
     model = ClientProxy
     # queryset = Client.objects.filter(~Q(status="archive")).prefetch_related("jobs")
     # queryset = Client.objects.prefetch_related(
@@ -116,7 +116,7 @@ class ClientListView(
 class ClientCreateView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     CreateView,
 ):
@@ -145,7 +145,7 @@ class ClientCreateView(
 class ClientUpdateView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     UpdateView,
 ):
@@ -175,7 +175,7 @@ class ClientUpdateView(
 class ClientDeleteView(
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):
@@ -202,7 +202,7 @@ class ClientDetailsView(
     PermissionRequiredMixin,
     UserPassesTestMixin,
     BWLoginRequiredMixin,
-    BWCacheViewMixin,
+    BWSiteSettingsViewMixin,
     BWSectionDescriptionHelperMixin,
     DetailView,
 ):

@@ -21,7 +21,7 @@ from django.db.models import Count, Sum
 from faker import Faker
 from client.models import ClientProxy
 from core.utils import debugging_print, get_months_abbr
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
+from core.utils.developments.debugging_print_object import DebuggingPrint
 from job.models import JobProxy
 from job_category.models import JobCategory
 
@@ -35,13 +35,13 @@ class Command(BaseCommand, CommandStdOutputMixin):
                 all_clients = ClientProxy.objects.all()
                 all_bookkeepers = BookkeeperProxy.objects.all()
                 for client in all_clients:
-                    BWDebuggingPrint.panel(f"Client: {client.name} - {client.pk}")
+                    DebuggingPrint.panel(f"Client: {client.name} - {client.pk}")
                     # random_bookkeepers = random.choices(all_bookkeepers, k=2)
                     random_bookkeepers = random.choices(all_bookkeepers, k=random.randint(1, 10))
-                    # BWDebuggingPrint.log(f"Random bookkeepers: {random_bookkeepers}")
+                    # DebuggingPrint.log(f"Random bookkeepers: {random_bookkeepers}")
                     client.bookkeepers.add(*random_bookkeepers)
                     client.save()
-                    BWDebuggingPrint.log(
+                    DebuggingPrint.log(
                         "########################################################"
                     )
 

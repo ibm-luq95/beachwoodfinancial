@@ -103,6 +103,16 @@ def dd(request, data=""):
 
 
 def get_list_from_text_choices(txt_choices: TextChoices) -> list:
+    """
+    Returns a list of values from a TextChoices object.
+
+    Parameters:
+        txt_choices (TextChoices): The TextChoices object from which to retrieve values.
+
+    Returns:
+        list: A list of values from the TextChoices object.
+
+    """
     # debugging_print(dir(txt_choices))
 
     return txt_choices.values

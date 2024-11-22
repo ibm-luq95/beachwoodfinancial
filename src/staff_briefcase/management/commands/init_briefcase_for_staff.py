@@ -7,7 +7,7 @@ from django.db import transaction
 
 from beach_wood_user.models import BWUser
 from core.management.mixins import CommandStdOutputMixin
-from core.utils.developments.debugging_print_object import BWDebuggingPrint
+from core.utils.developments.debugging_print_object import DebuggingPrint
 from core.utils.developments.debugging_prompt import DebuggingPrompt
 from staff_briefcase.models import StaffBriefcase
 
@@ -24,11 +24,11 @@ class Command(BaseCommand, CommandStdOutputMixin):
                     for user in users:
 
                         if StaffBriefcase.objects.filter(user=user).exists():
-                            BWDebuggingPrint.pprint(
+                            DebuggingPrint.pprint(
                                 _(f"Staff briefcase already exists for user {user}.")
                             )
                         else:
-                            BWDebuggingPrint.pprint(
+                            DebuggingPrint.pprint(
                                 _("Creating staff briefcase for: %s") % user
                             )
                             StaffBriefcase.objects.get_or_create(user=user)

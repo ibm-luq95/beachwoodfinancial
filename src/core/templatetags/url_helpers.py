@@ -1,5 +1,13 @@
 # -*- coding: utf-8 -*-#
-from typing import Optional
+"""
+File: url_helpers.py
+Author: Ibrahim Luqman
+Date: 5/13/24
+
+Description: URL helpers to handle urls processes.
+"""
+from typing import Optional, List, Union, Dict
+from django.urls.resolvers import URLPattern, URLResolver
 from uuid import UUID
 
 from django import template
@@ -13,6 +21,16 @@ register = template.Library()
 
 @register.filter(name="get_last_url_part")
 def get_last_url_part(full_url: str) -> str:
+    """
+    This function takes a full URL as a string and returns the last part of the URL.
+
+    Args:
+        full_url (str): The full URL string from which the last part needs to be extracted.
+
+    Returns:
+        str: The last part of the URL.
+
+    """
     last_part = full_url.rsplit("/")[-1]
     return last_part
 
@@ -20,7 +38,23 @@ def get_last_url_part(full_url: str) -> str:
 # @register.filter(name="get_url_path_by_name")
 
 
-def collect_urls(urls=None, namespace=None, prefix=None) -> list | None:
+def collect_urls(
+    urls: Union[URLResolver, URLPattern, None] = None,
+    namespace: Optional[str] = None,
+    prefix: Optional[List[str]] = None,
+) -> List[dict]:
+    """
+    This function collects URLs based on the input URL resolver or URL pattern.
+
+    Args:
+        urls (Union[URLResolver, URLPattern, None]): The URL resolver or pattern to collect URLs from.
+        namespace (Optional[str]): The namespace for the URLs.
+        prefix (Optional[List[str]]): The prefix to be added to the URLs.
+
+    Returns:
+        List[dict]: A list of dictionaries containing URL information.
+
+    """
     if urls is None:
         urls = resolvers.get_resolver()
     prefix = prefix or []
@@ -54,8 +88,22 @@ def fetch_url_by_name_pk(
     action_urls_pattern: Optional[str] = None,
     url_name: Optional[str] = None,
     object_pk: Optional[UUID] = None,
-) -> str | None:
-    url_path = ""
+) -> Union[str, None]:
+    """
+    Fetches the URL based on the provided parameters.
+
+    Args:
+        context (RequestContext): The request context.
+        details_url (Optional[str]): The details URL pattern.
+        action_urls_pattern (Optional[str]): The action URL pattern.
+        url_name (Optional[str]): The URL name.
+        object_pk (Optional[UUID]): The primary key of the object.
+
+    Returns:
+        Union[str, None]: The URL path or None if no URL is found.
+
+    """
+    url_path: Union[str, None] = None
 
     if details_url is not None:
         url_path = reverse_lazy(details_url, kwargs={"pk": object_pk})
@@ -66,7 +114,7 @@ def fetch_url_by_name_pk(
             url_path = reverse_lazy(url_name, kwargs={"pk": object_pk})
         else:
             url_path = reverse_lazy(url_name)
-    # debugging_print(locals())
+
     return url_path
 
 
@@ -78,14 +126,28 @@ def fetch_app_url_for_user(
     user_type: Optional[str] = None,
     object_pk: Optional[UUID] = None,
 ) -> str:
-    url_path = ""
+    """
+    Fetches the URL for a user based on the app name, path name, user type, and object
+    primary key.
+
+    Args:
+        context (RequestContext): The request context.
+        app_name (str): The name of the app.
+        path_name (str): The name of the path.
+        user_type (Optional[str], optional): The type of user. Defaults to None.
+        object_pk (Optional[UUID], optional): The primary key of the object. Defaults to None.
+
+    Returns:
+        str: The URL path.
+
+    """
+    url_path: str = ""
     if user_type is not None:
-        url_pattern = f"{app_name}:{user_type}:{path_name}"
+        url_pattern: str = f"{app_name}:{user_type}:{path_name}"
     else:
-        url_pattern = f"{app_name}:{path_name}"
-    # debugging_print(locals())
+        url_pattern: str = f"{app_name}:{path_name}"
     if object_pk is not None:
-        url_path = reverse_lazy(url_pattern, kwargs={"pk": object_pk})
+        url_path = reverse_lazy(url_pattern, kwargs={"pk": str(object_pk)})
     else:
         url_path = reverse_lazy(url_pattern)
     return url_path
@@ -95,27 +157,52 @@ def fetch_app_url_for_user(
 def fetch_user_details_url(
     base_user: str, user_object: BWUser, details_name: Optional[str] = "details"
 ) -> str:
-    url_path = ""
-    user_type = user_object.user_type
+    """
+    Fetches the URL for user details.
+
+    Args:
+        base_user (str): The base user.
+        user_object (BWUser): The user object.
+        details_name (Optional[str], optional): The details name. Defaults to "details".
+
+    Returns:
+        str: The URL path.
+
+    """
+    url_path: str = ""
+    user_type: str = user_object.user_type
     get_user_object = getattr(user_object, user_type, None)
     if get_user_object is not None:
-        url_pattern = f"{base_user}:{user_type}:{details_name}"
+        url_pattern: str = f"{base_user}:{user_type}:{details_name}"
         url_path = reverse_lazy(url_pattern, kwargs={"pk": get_user_object.pk})
-    # debugging_print(locals())
     return url_path
 
 
 @register.simple_tag
-def fetch_drf_route_api_by_name(app_name: str, url_kwargs: dict) -> str:
-    if not url_kwargs:
-        url = reverse_lazy(app_name, kwargs={"pk": url_kwargs.get("pk")})
-    else:
+def fetch_drf_route_api_by_name(
+    app_name: str, url_kwargs: Optional[Dict[str, str]]
+) -> str:
+    """
+    Fetches the DRF route URL by name.
+
+    Args:
+        app_name (str): The name of the app.
+        url_kwargs (Optional[Dict[str, str]]): The URL kwargs.
+
+    Returns:
+        str: The URL path.
+
+    """
+    if url_kwargs is None:
         url = reverse_lazy(app_name)
+    else:
+        url = reverse_lazy(app_name, kwargs={"pk": url_kwargs.get("pk")})
     return url
 
 
 @register.simple_tag
 def get_staff_member_update_url(user: BWUser) -> str:
+    # TODO: document here
     url_path = ""
     management_section = ""
     pk = ""

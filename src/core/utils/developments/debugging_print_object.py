@@ -2,6 +2,7 @@ from typing import Any, Literal, Optional, List
 
 from django.conf import settings
 from rich import print
+from rich import inspect
 from rich.console import Console
 from rich.panel import Panel
 from rich.table import Table
@@ -11,7 +12,7 @@ from rich.tree import Tree
 from core.utils.developments.debugging_print_types import DPOTableOptions
 
 
-class BWDebuggingPrint:
+class DebuggingPrint:
     """
     A class representing an employee.
 
@@ -95,7 +96,7 @@ class BWDebuggingPrint:
         justify
         """
         cls.console.log(
-            args,
+            *args,
             justify=justify,
             highlight=highlight,
             emoji=emoji,
@@ -110,7 +111,11 @@ class BWDebuggingPrint:
 
     @staticmethod
     def print(*args, sep=" ", end="\n", file=None, flush=False):
-        print(args, sep=sep, end=end, file=file, flush=flush)
+        print(*args, sep=sep, end=end, file=file, flush=flush)
+    
+    @staticmethod
+    def dir(obj: Any):
+        print(dir(obj))
 
     @classmethod
     def cprint(
@@ -179,3 +184,29 @@ class BWDebuggingPrint:
         for item in items:
             tree.add(item, highlight=True)
         print(tree)
+
+    @staticmethod
+    def inspect(
+        obj: Any,
+        title: str | None = None,
+        is_all: bool = False,
+        help: bool = False,
+        methods: bool = False,
+        docs: bool = True,
+        private: bool = False,
+        dunder: bool = False,
+        sort: bool = True,
+        value: bool = True,
+    ) -> None:
+        inspect(
+            obj,
+            title=title,
+            all=is_all,
+            value=value,
+            help=help,
+            methods=methods,
+            docs=docs,
+            private=private,
+            dunder=dunder,
+            sort=sort,
+        )

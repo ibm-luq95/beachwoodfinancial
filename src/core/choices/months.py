@@ -1,3 +1,10 @@
+"""
+File: months.py
+Author: Ibrahim Luqman
+Date: 5/10/24
+
+Description: Months choices enum
+"""
 from django.db import models
 from django.utils.translation import gettext as _
 

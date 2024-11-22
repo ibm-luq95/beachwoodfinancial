@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-#
+"""
+File: documents.py
+Author: Ibrahim Luqman
+Date: 5/10/24
+
+Description: Choices for the document app
+"""
 from django.db import models
 from django.utils.translation import gettext as _
 import stringcase

@@ -1,4 +1,11 @@
 # -*- coding: utf-8 -*-#
+"""
+File: cache_reset.py
+Author: Ibrahim Luqman
+Date: 5/13/24
+
+Description: This command will reset the data which saved in the backend cache memory
+"""
 from django.conf import settings
 from django.contrib.sites.models import Site
 from django.core.cache import cache

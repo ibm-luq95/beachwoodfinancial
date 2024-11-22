@@ -4,6 +4,7 @@ from django.core.signals import request_started
 
 from core.cache import BWCacheHandler
 from core.utils import debugging_print, get_formatted_logger
+from core.utils.developments.debugging_print_object import DebuggingPrint
 from site_settings.models import SiteSettings
 from core.constants.site_settings import WEB_APP_SITE_SETTINGS_KEY, SITE_SETTINGS_DB_SLUG
 from site_settings.serializers import SiteSettingsSerializer
@@ -15,6 +16,7 @@ def update_site_settings_cache(sender, instance, created, **kwargs):
     site_settings_object = instance
     # debugging_print(locals())
     site_settings_serializer = SiteSettingsSerializer(instance=site_settings_object)
+    # DebuggingPrint(site_settings_serializer)
     # debugging_print(BWCacheHandler.get_site_dict(site_settings_object.site.domain))
     BWCacheHandler.update_item(
         site_settings_object.site.domain,

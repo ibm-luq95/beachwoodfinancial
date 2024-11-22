@@ -91,7 +91,11 @@
         <div>
             <p>
                 <address class="text-gray-600 text-[14px] italic">
-                    {{ object.get_staff_member_object.staff_object.profile.address|safe }}
+                    {% if object.get_staff_member_object.staff_object.profile.address %}
+                        {{ object.get_staff_member_object.staff_object.profile.address|safe }}
+                    {% else %}
+                        ---
+                    {% endif %}
                 </address>
             </p>
         </div>
@@ -119,8 +123,12 @@
             <!-- End Icon -->
         </div>
         <div>
-            <p class="text-blue-600 text-[14px] italic">
-                <a href="">{{ object.get_staff_member_object.staff_object.profile.phone_number }}</a>
+            <p>
+                {% if object.get_staff_member_object.staff_object.profile.phone_number %}
+                    <a class="text-blue-600 text-[14px] italic" href="">{{ object.get_staff_member_object.staff_object.profile.phone_number }}</a>
+                {% else %}
+                    ---
+                {% endif %}
             </p>
         </div>
     </div>
@@ -173,11 +181,12 @@
                 {% translate "Edit " %} {{ object.user_type }}
                 <i class="fa-solid fa-pencil w-3.5 h-3.5"></i>
             </a>
-            <a href="#"
-               class="m-1 ml-0 py-3 px-4 inline-flex justify-center items-center gap-2 rounded-full w-full bg-yellow-100 border border-transparent font-semibold text-yellow-500 hover:text-white hover:bg-yellow-500 focus:outline-none focus:ring-2 ring-offset-white focus:ring-yellow-100 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
+            {% comment  %}
+                <a href="#" class="m-1 ml-0 py-3 px-4 inline-flex justify-center items-center gap-2 rounded-full w-full bg-yellow-100 border border-transparent font-semibold text-yellow-500 hover:text-white hover:bg-yellow-500 focus:outline-none focus:ring-2 ring-offset-white focus:ring-yellow-100 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
                 {% translate "Edit user" %}
                 <i class="fa-solid fa-user-pen w-3.5 h-3.5"></i>
             </a>
+            {% endcomment %}
         </div>
     {% endif %}
 </div>

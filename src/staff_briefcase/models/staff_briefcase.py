@@ -10,6 +10,17 @@ from staff_briefcase.models.notes import StaffNotes
 
 
 class StaffBriefcase(BaseModelMixin):
+    """Represents a briefcase for staff members.
+
+    This class defines a briefcase for staff members to store notes, documents, and accounts.
+
+    Attributes:
+        user (OneToOneField): A one-to-one relationship to the `BWUser` model representing the user associated with the briefcase.
+        notes (ManyToManyField): A many-to-many relationship to the `StaffNotes` model for storing notes in the briefcase.
+        documents (ManyToManyField): A many-to-many relationship to the `StaffDocuments` model for storing documents in the briefcase.
+        accounts (ManyToManyField): A many-to-many relationship to the `StaffAccounts` model for storing accounts in the briefcase.
+    """
+
     user = models.OneToOneField(
         to=BWUser, related_name="briefcase", on_delete=models.CASCADE
     )
