@@ -35,7 +35,7 @@
     "@tailwindcss/forms": "^0.5.9",
     "@tailwindcss/typography": "^0.5.15",
     "@types/node-fetch": "^2.6.12",
-    "@vue/compiler-sfc": "^3.5.12",
+    "@vue/compiler-sfc": "^3.5.13",
     "ajv": "^8.17.1",
     "autoprefixer": "^10.4.20",
     "babel-loader": "^9.2.1",
@@ -44,7 +44,7 @@
     "copy-webpack-plugin": "^12.0.2",
     "css-loader": "^7.1.2",
     "esbuild-loader": "^4.2.2",
-    "eslint": "^9.14.0",
+    "eslint": "^9.15.0",
     "eslint-webpack-plugin": "^4.2.0",
     "exports-loader": "^5.0.0",
     "html-webpack-plugin": "^5.6.3",
@@ -55,10 +55,10 @@
     "postcss-import": "^16.1.0",
     "postcss-loader": "^8.1.1",
     "postcss-nesting": "^13.0.1",
-    "postcss-preset-env": "^10.1.0",
+    "postcss-preset-env": "^10.1.1",
     "prettier": "^3.3.3",
-    "prettier-plugin-tailwindcss": "^0.6.8",
-    "sass": "~1.80.7",
+    "prettier-plugin-tailwindcss": "^0.6.9",
+    "sass": "~1.81.0",
     "sass-loader": "^16.0.3",
     "standard": "^17.1.2",
     "style-loader": "^4.0.0",
@@ -67,8 +67,8 @@
     "stylelint-config-standard-scss": "^13.1.0",
     "stylelint-webpack-plugin": "^5.0.1",
     "tailwind-config-viewer": "^2.0.4",
-    "tailwindcss": "^3.4.14",
-    "typescript": "^5.6.3",
+    "tailwindcss": "^3.4.15",
+    "typescript": "^5.7.2",
     "vue-loader": "^17.4.2",
     "webpack": "^5.96.1",
     "webpack-assets-manifest": "^5.2.1",
@@ -78,7 +78,7 @@
     "webpack-notifier": "^1.15.0"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.6.0",
+    "@fortawesome/fontawesome-free": "^6.7.1",
     "@preline/accordion": "^2.5.0",
     "@preline/collapse": "^2.5.0",
     "@preline/datatable": "^2.5.0",
@@ -108,7 +108,7 @@
     "glightbox": "^3.3.0",
     "glob": "^11.0.0",
     "highlight.js": "^11.10.0",
-    "i18next": "^23.16.5",
+    "i18next": "^24.0.0",
     "jquery": "^3.7.1",
     "jszip": "^3.10.1",
     "lodash": "^4.17.21",
@@ -122,7 +122,7 @@
     "table-sort-js": "^1.22.1",
     "uuid": "^11.0.3",
     "validator": "^13.12.0",
-    "vue": "^3.5.12"
+    "vue": "^3.5.13"
   },
-  "packageManager": "pnpm@9.13.0"
+  "packageManager": "pnpm@9.14.2"
 }
