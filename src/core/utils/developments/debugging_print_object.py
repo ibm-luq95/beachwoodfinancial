@@ -112,7 +112,7 @@ class DebuggingPrint:
     @staticmethod
     def print(*args, sep=" ", end="\n", file=None, flush=False):
         print(*args, sep=sep, end=end, file=file, flush=flush)
-    
+
     @staticmethod
     def dir(obj: Any):
         print(dir(obj))
@@ -126,11 +126,12 @@ class DebuggingPrint:
         """
         cls.console.print(obj, justify=justify)
 
-    def rule(self, text: str) -> None:
+    @classmethod
+    def rule(cls, text: str) -> None:
         """
         Print a rule with the given text.
         """
-        self.console.rule(text)
+        cls.console.rule(text)
 
     @classmethod
     def pprint(cls, obj: Any) -> None:
@@ -149,7 +150,7 @@ class DebuggingPrint:
         """
         Print a panel with the given text.
         """
-        print(Panel.fit(str(text_content), title=title, subtitle=subtitle))
+        print(Panel(text_content, title=title, subtitle=subtitle))
 
     @classmethod
     def table(
