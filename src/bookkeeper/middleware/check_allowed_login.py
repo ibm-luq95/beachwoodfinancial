@@ -8,7 +8,7 @@ from django.utils.translation import gettext as _
 
 from core.cache import BWCacheHandler
 from core.constants.site_settings import WEB_APP_SITE_SETTINGS_KEY, SITE_SETTINGS_DB_SLUG
-from core.utils import debugging_print
+
 from core.utils.developments.debugging_print_object import DebuggingPrint
 from site_settings.models import SiteSettings
 
