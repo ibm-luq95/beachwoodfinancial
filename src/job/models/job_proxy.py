@@ -9,7 +9,6 @@ from core.constants.status_labels import (
     CON_ENABLED,
     CON_NOT_STARTED,
 )
-from core.utils import debugging_print
 from job.models import Job
 
 
@@ -44,9 +43,7 @@ class JobProxy(Job):
                     client = self.client
                     if hasattr(managed_by, "bookkeeper"):
                         bookkeeper_obj = managed_by.bookkeeper
-                        # debugging_print(bookkeeper_obj)
                         bookkeeper_obj = BookkeeperProxy.objects.get(pk=bookkeeper_obj.pk)
                         client.bookkeepers.remove(bookkeeper_obj)
                         client.save()
-                        # debugging_print(self.model_class())
                         JobProxy.objects.filter(pk=self.pk).update(managed_by=None)
