@@ -12,6 +12,7 @@ from beach_wood_user.helpers.permission_helper import PermissionHelper
 from beach_wood_user.models import Profile
 from beach_wood_user.models.beach_wood_user import BWUser
 from bookkeeper.models import BookkeeperProxy
+from cfo.models import CFOProxy
 from core.constants.status_labels import CON_ENABLED
 from core.constants.users import (
     BOOKKEEPER_GROUP_NAME,
@@ -64,9 +65,10 @@ def assign_groups(sender, instance: BWUser, created: bool, **kwargs):
                         manager = ManagerProxy.objects.create(
                             user=created_user, profile=Profile.objects.create()
                         )
-                        # # Create profile for new user
-                        # manager.profile = Profile()
-                        # manager.save()
+                    case "cfo":
+                        cfo = CFOProxy.objects.create(
+                            user=created_user, profile=Profile.objects.create()
+                        )
                 readonly_group = Group.objects.filter(
                     name=READONLY_NEW_STAFF_MEMBER_GROUP_NAME
                 )
