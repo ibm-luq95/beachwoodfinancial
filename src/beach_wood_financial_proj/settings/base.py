@@ -86,6 +86,7 @@ INSTALLED_APPS = [
     "beach_wood_user.apps.BeachWoodUserConfig",
     # "home.apps.HomeConfig",
     "bookkeeper.apps.BookkeeperConfig",
+    "cfo.apps.CfoConfig",
     "assistant.apps.AssistantConfig",
     "manager.apps.ManagerConfig",
     "dashboard.apps.DashboardConfig",

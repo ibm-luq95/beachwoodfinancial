@@ -23,6 +23,7 @@ from core.constants.users import (
     CON_ASSISTANT,
     CON_USER,
     CON_DEVELOPER,
+    CON_CFO,
 )
 
 
@@ -30,6 +31,7 @@ class BeachWoodUserTypeEnum(models.TextChoices):
     MANAGER = CON_MANAGER, _(stringcase.sentencecase(CON_MANAGER))
     ASSISTANT = CON_ASSISTANT, _(stringcase.sentencecase(CON_ASSISTANT))
     BOOKKEEPER = CON_BOOKKEEPER, _(stringcase.sentencecase(CON_BOOKKEEPER))
+    CFO = CON_CFO, _(stringcase.sentencecase(CON_CFO))
 
 
 class BeachWoodUserStatusEnum(models.TextChoices):

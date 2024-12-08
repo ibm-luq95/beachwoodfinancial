@@ -16,7 +16,6 @@ from django.utils.translation import gettext as _
 
 from core.cache import BWCacheHandler
 from core.management.mixins import CommandStdOutputMixin
-from core.utils import debugging_print
 from core.utils.grab_env_file import grab_env_file
 
 
