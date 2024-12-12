@@ -73,7 +73,7 @@
     "webpack": "^5.97.1",
     "webpack-assets-manifest": "^5.2.1",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.1.0",
+    "webpack-dev-server": "^5.2.0",
     "webpack-merge": "^6.0.1",
     "webpack-notifier": "^1.15.0"
   },
@@ -108,7 +108,7 @@
     "glightbox": "^3.3.0",
     "glob": "^11.0.0",
     "highlight.js": "^11.10.0",
-    "i18next": "^24.0.5",
+    "i18next": "^24.1.0",
     "jquery": "^3.7.1",
     "jszip": "^3.10.1",
     "lodash": "^4.17.21",
@@ -124,5 +124,5 @@
     "validator": "^13.12.0",
     "vue": "^3.5.13"
   },
-  "packageManager": "pnpm@9.14.4"
+  "packageManager": "pnpm@9.15.0"
 }
