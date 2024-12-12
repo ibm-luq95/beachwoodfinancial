@@ -185,6 +185,10 @@ BW_INFO_MODAL_CSS_CLASSES = {
         "cssID": "infoBookkeeperModal",
         "tooltip_txt": _(f"What bookkeepers are in {LedgerFlareIdentity.name}"),
     },
+    "cfo": {
+        "cssID": "infoCfoModal",
+        "tooltip_txt": _(f"What CFOs are in {LedgerFlareIdentity.name}"),
+    },
     "assistant": {
         "cssID": "infoAssistantModal",
         "tooltip_txt": _(f"What assistants are in {LedgerFlareIdentity.name}"),

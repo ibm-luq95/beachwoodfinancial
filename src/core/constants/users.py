@@ -17,6 +17,7 @@ READONLY_NEW_STAFF_MEMBER_GROUP_NAME = "New Staff Readonly Group"
 CON_BOOKKEEPER = "bookkeeper"
 CON_ASSISTANT = "assistant"
 CON_MANAGER = "manager"
+CON_CFO = "cfo"
 CON_DEVELOPER = "developer"
 CON_USER = "user"
 
