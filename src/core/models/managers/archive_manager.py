@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-#
-from random import randint
 
 from django.db import models
 from django.db.models import Q
@@ -10,23 +9,16 @@ from core.models.querysets import BaseQuerySetMixin
 
 class ArchiveManager(models.Manager):
     """
-    A custom manager for querying instances of the model with a soft delete feature.
+    A manager for handling archived instances of a model.
 
-    This manager provides methods for querying instances that are not marked as deleted.
-    It also includes additional methods for random selection and filtering by status.
-
-    Attributes:
-        ALLOWED_STATUS (list): A list of status values that are considered allowed and not marked as deleted.
+    This manager provides methods for querying and managing instances of a model
+    that are archived or completed. It extends the base Django `Manager` class
+    to include additional functionality specific to archived data.
 
     Methods:
-        get_queryset(self) -> BaseQuerySetMixin: Returns a `BaseQuerySetMixin` object representing all instances of the model
-            that are not marked as deleted, with a status of either `CON_ARCHIVED` or `CON_COMPLETED`, ordered by `created_at` in descending order.
-
-        all(self) -> BaseQuerySetMixin: Returns a `BaseQuerySetMixin` object representing all instances of the model with a
-            status of either `CON_ARCHIVED` or `CON_COMPLETED`, ordered by `created_at` in descending order.
-
-        random(self) -> Model: Returns a random instance of the model that is not marked as deleted.
-
+        get_queryset(self) -> BaseQuerySetMixin:
+            Returns a queryset of all instances of the model that are archived
+            or completed, ordered by `created_at` in descending order.
     """
 
     ALLOWED_STATUS = [CON_ARCHIVED, CON_COMPLETED]
