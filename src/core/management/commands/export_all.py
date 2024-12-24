@@ -35,6 +35,7 @@ from task.management.commands import export_tasks
 from beach_wood_user.management.commands import export_users
 from client.management.commands import export_clients
 from client_category.management.commands import export_client_category
+from client_account.management.commands import export_client_account
 from job.management.commands import export_jobs
 from job_category.management.commands import export_job_category
 from document.management.commands import export_document
@@ -90,6 +91,11 @@ class Command(BaseCommand, CommandStdOutputMixin):
                         "app": "client_category",
                         "command": export_client_category.Command(),
                         "progress_msg": _("Exporting client categories"),
+                    },
+                    {
+                        "app": "client_account",
+                        "command": export_client_account.Command(),
+                        "progress_msg": _("Exporting client accounts"),
                     },
                     {
                         "app": "job",
