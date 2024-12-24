@@ -32,6 +32,7 @@ from core.utils.developments.debugging_print_object import DebuggingPrint
 from core.utils.grab_env_file import grab_env_file
 from note.management.commands import export_note
 from task.management.commands import export_tasks
+from beach_wood_user.management.commands import export_users
 from client.management.commands import export_clients
 from client_category.management.commands import export_client_category
 from job.management.commands import export_jobs
@@ -65,6 +66,11 @@ class Command(BaseCommand, CommandStdOutputMixin):
         try:
             with transaction.atomic():
                 commands_list: list[dict] = [
+                    {
+                        "app": "beach_wood_user",
+                        "command": export_users.Command(),
+                        "progress_msg": _("Exporting users"),
+                    },
                     {
                         "app": "note",
                         "command": export_note.Command(),
