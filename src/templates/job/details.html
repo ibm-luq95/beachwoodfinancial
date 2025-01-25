@@ -10,32 +10,35 @@
     <div class="grid grid-cols-3 gap-4">
         <div class="col-span-2 bg-slate-50 p-5 shadow-md rounded">
             {# Start Job Title #}
-            <h2 class="text-lg font-bold tracking-wider border-b border-slate-950 pb-2">
-                {{ object.title|capfirst }}
-            </h2>
+            <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                <h2 class="text-lg font-bold tracking-wider">{{ object.title|capfirst }}</h2>
+            </div>
             {# End Job Title #}
-            <div class="flex flex-col rounded-md p-3">
+            <div class="mt-2 flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:shadow-neutral-700/70">
+                <h3 class="text-lg font-bold pb-3 text-gray-800 dark:text-white">{% translate "Description" %}</h3>
+                <!-- <p class="mt-1 text-xs font-medium uppercase text-gray-500 dark:text-neutral-500">
+                  Card subtitle
+                </p> -->
                 <!-- <span class="text-sm text-gray-500 dark:text-gray-400">Desciption :</span> -->
-                <article class="text-sm md:text-base lg:text-lg">
+                <article class="text-sm md:text-base lg:text-lg overflow-y-auto max-h-96">
                     <p>{{ object.description|safe }}</p>
-                </article>
-                {# Start categories badges #}
-                {% if object.categories.all %}
-                    <article class="my-3">
+                    <br />
+                    {% if object.categories.all %}
                         {% for category in object.categories.all %}
                             <span class="inline-flex items-center gap-1 py-1 px-3 mr-1 rounded-full text-[10px] font-medium bg-blue-100 text-blue-800">{{ category.name|capfirst }}</span>
                         {% endfor %}
-                    </article>
-                {% endif %}
-                {# End categories badges #}
+                    {% endif %}
+                    {# End categories badges #}
+                </article>
             </div>
-            <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+            {# Start categories badges #}
+            <div class="flex flex-col mt-2 bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
                 <form class="form pt-4 flex items-center justify-between gap-2 rounded">
                     <div>
                         <!-- <label for="hs" class="sr-only">Label</label> -->
                         <div class="flex rounded-md shadow-sm">
                             <span class="px-4 inline-flex items-center p-3 min-w-fit rounded-md border border-gray-200 bg-gray-50 text-sm dark:bg-gray-700 dark:border-gray-700">
-                                <span class="text-sm text-gray-900 flex items-center gap-3 dark:text-gray-400">
+                                <span class="text-sm text-gray-900 font-semibold flex items-center gap-3 dark:text-gray-400">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                          fill="none"
                                          viewBox="0 0 24 24"
@@ -51,7 +54,7 @@
                     {# Start Job Status #}
                     <div class="hs-tooltip inline-block">
                         <p class="hs-tooltip-toggle">
-                            {% bw_badge code=object.status text=object.get_status_display is_solid=False size="md" %}
+                            {% bw_badge code=object.status text=object.get_status_display is_solid=False size="md" extra_css_classes="font-semibold" %}
                             <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
                                   role="tooltip">{% translate "Status" %}</span>
                         </p>
@@ -61,7 +64,7 @@
                     <div class="hs-tooltip inline-block">
                         <p class="hs-tooltip-toggle">
                             <!-- <span class="m-0.5 inline-flex items-center gap-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-indigo-500 text-white">Badge</span> -->
-                            {% bw_badge code=object.state text=object.get_state_display is_solid=False size="md" %}
+                            {% bw_badge code=object.state text=object.get_state_display is_solid=False size="md" extra_css_classes="font-semibold" %}
                             <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
                                   role="tooltip">{% translate "State" %}</span>
                         </p>
@@ -71,7 +74,7 @@
                         <!-- <label for="hs-trailing" class="sr-only">Label</label> -->
                         <div class="flex rounded-md shadow-sm">
                             <span class="px-4 inline-flex items-center p-3 min-w-fit rounded-md border border-gray-200 bg-gray-50 text-sm dark:bg-gray-700 dark:border-gray-700">
-                                <span class="text-sm text-gray-900 flex items-center gap-3 dark:text-gray-400">
+                                <span class="text-sm text-gray-900 font-semibold flex items-center gap-3 dark:text-gray-400">
                                     <svg xmlns="http://www.w3.org/2000/svg"
                                          fill="none"
                                          viewBox="0 0 24 24"
@@ -86,14 +89,14 @@
                     </div>
                 </form>
             </div>
-            <div class="my-9">
+            <div class="my-3">
                 <!-- <label for="hs-trailing-button" class="sr-only">Label</label> -->
                 <div class="flex rounded-md shadow-sm">
                     <span class="px-4 inline-flex items-center min-w-fit rounded-md border border-gray-200 bg-gray-50 text-sm dark:bg-gray-700 dark:border-gray-700">
-                        <span class="text-sm text-gray-500 dark:text-gray-400">{% translate "Notes:" %}</span>
+                        <span class="text-sm text-gray-700 font-bold dark:text-gray-400">{% translate "Notes:" %}</span>
                     </span>
                     <div class="flex ml-1 flex-col w-full bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400">
-                        <small class="italic">{{ object.note|safe }}</small>
+                        <p class="italic">{{ object.note|safe }}</p>
                     </div>
                 </div>
             </div>
@@ -113,7 +116,7 @@
                         <!-- <span class="hs-tab-active:bg-blue-100 hs-tab-active:text-blue-600 dark:hs-tab-active:bg-blue-800 dark:hs-tab-active:text-white ml-1 py-0.5 px-1.5 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">99+</span> -->
                     </button>
                     <button type="button"
-                            class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400 dark:hover:text-gray-300"
+                            class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400"
                             id="documents-btn"
                             data-hs-tab="#documents-tab"
                             aria-controls="documents-tab"
@@ -122,7 +125,7 @@
                         {% translate "Documents" %} ({{ object.documents.count }})
                     </button>
                     <button type="button"
-                            class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400 dark:hover:text-gray-300"
+                            class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400"
                             id="notes-btn"
                             data-hs-tab="#notes-tab"
                             aria-controls="notes-tab"
@@ -131,7 +134,7 @@
                         {% translate "Notes" %} ({{ object.notes.count }})
                     </button>
                     <button type="button"
-                            class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400 dark:hover:text-gray-300"
+                            class="hs-tab-active:border-b-blue-600 hs-tab-active:text-gray-900 dark:hs-tab-active:text-white dark:hs-tab-active:border-b-blue-600 relative min-w-0 flex-1 bg-white first:border-l-0 border-l border-b-2 py-4 px-4 text-gray-500 hover:text-gray-700 text-sm font-medium text-center overflow-hidden hover:bg-gray-50 focus:z-10 dark:bg-gray-800 dark:border-l-gray-700 dark:border-b-gray-700 dark:hover:bg-gray-700 dark:hover:text-gray-400"
                             id="notes-btn"
                             data-hs-tab="#assignments-tab"
                             aria-controls="assignments-tab"
@@ -150,7 +153,13 @@
 </p> -->
                         {% bw_js_modal modal_css_id="createTaskModal" modal_size="sm" modal_title="Create new task" is_submit_btn_enabled=True is_form_modal=True form_object=task_form is_upload_form=True form_id="createTaskForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:task:api:task-api-router-list" %}
                         <div class="text-right">
-                            {% bw_create_btn_js_modal js_create_btn_css_id="createTaskBtn" modal_css_id="createTaskModal" app_name="task" %}
+                            <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-2 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                                <div class="flex justify-end">
+                                    <div>
+                                        {% bw_create_btn_js_modal js_create_btn_css_id="createTaskBtn" modal_css_id="createTaskModal" app_name="task" %}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         {% if object.tasks.all %}
 
@@ -171,7 +180,13 @@
 </p> -->
                         {% bw_js_modal modal_css_id="createDocumentModal" modal_size="sm" modal_title="Create new document" is_submit_btn_enabled=True is_form_modal=True form_object=document_form is_upload_form=True form_id="createDocumentForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:document:api:document-api-router-list" %}
                         <div class="text-right">
-                            {% bw_create_btn_js_modal js_create_btn_css_id="createDocumentBtn" modal_css_id="createDocumentModal" app_name="document" %}
+                            <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-2 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                                <div class="flex justify-end">
+                                    <div>
+                                        {% bw_create_btn_js_modal js_create_btn_css_id="createDocumentBtn" modal_css_id="createDocumentModal" app_name="document" %}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         {% if object.documents.all %}
 
@@ -193,7 +208,13 @@
                         {% convert_dict_to_str job=object.pk as extra_hidden_inputs %}
                         {% bw_js_modal modal_css_id="createNoteModal" modal_size="sm" modal_title="Create new note" is_submit_btn_enabled=True is_form_modal=True form_object=note_form is_upload_form=False form_id="createNoteForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:note:api:note-api-router-list" %}
                         <div class="text-right">
-                            {% bw_create_btn_js_modal js_create_btn_css_id="createNoteBtn" modal_css_id="createNoteModal" app_name="note" %}
+                            <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-2 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                                <div class="flex justify-end">
+                                    <div>
+                                        {% bw_create_btn_js_modal js_create_btn_css_id="createNoteBtn" modal_css_id="createNoteModal" app_name="note" %}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         {% if object.notes.all %}
 
@@ -213,7 +234,13 @@
                             This is the <em class="font-semibold text-gray-800 dark:text-gray-200">first</em> item's tab body.
 </p> -->
                         <div class="text-right">
-                            {% bw_create_btn_js_modal js_create_btn_css_id="createAssignmentBtn" modal_css_id="createAssignmentModal" app_name="special_assignment" %}
+                            <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-2 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                                <div class="flex justify-end">
+                                    <div>
+                                        {% bw_create_btn_js_modal js_create_btn_css_id="createAssignmentBtn" modal_css_id="createAssignmentModal" app_name="special_assignment" %}
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         {% bw_js_modal modal_css_id="createAssignmentModal" modal_size="sm" modal_title="Create new assignment" is_submit_btn_enabled=True is_form_modal=True form_object=special_assignment_form is_upload_form=True form_id="createAssignmentForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:special_assignment:api:special-assignment-api-router-list" %}
                         {% if object.special_assignments.all %}
@@ -232,6 +259,11 @@
         </div>
         <div class="p-5 flex flex-col gap-4 rounded">
             <div class="main flex flex-col gap-4">
+                {% if object.status == CON_ARCHIVED or object.status == CON_COMPLETED %}
+                    <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 text-center">
+                        <span class="gap-x-1.5 py-1.5 px-3 rounded-full text-md font-bold bg-yellow-100 text-yellow-800 dark:bg-yellow-800/30 dark:text-yellow-500">{% translate "Archived" %}</span>
+                    </div>
+                {% endif %}
                 <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
                     <label for="job-status-input" class="sr-only">{% translate "Status" %}</label>
                     <form action="{% url 'dashboard:job:api:job-api-router-detail' object.pk %}"
@@ -262,7 +294,7 @@
                                 </select>
                                 <button type="submit"
                                         form="updateJobStatusStateForm"
-                                        class="{{ BW_FULL_INPUT_CSS_CLASSES }} hs-tooltip -ml-px py-3 px-4 inline-flex justify-center items-center gap-2 border font-medium bg-blue-100 border-transparent text-blue-500 hover:text-white hover:bg-blue-100 focus:outline-none focus:ring-2 ring-offset-white focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                                        class="{{ BW_FULL_INPUT_CSS_CLASSES }} hs-tooltip -ml-px py-3 px-4 inline-flex justify-center items-center gap-2 border font-medium bg-blue-100 border-transparent text-blue-500 hover:text-white hover:bg-blue-400 focus:outline-none focus:ring-2 ring-offset-white focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                                         disabled
                                         id="updateJobStatusBtn">
                                     <i class="fa-solid fa-save"></i>
@@ -271,7 +303,7 @@
                                 </button>
                                 <button type="button"
                                         id="updateJobModalBtn"
-                                        class="{{ BW_FULL_INPUT_CSS_CLASSES }} hs-tooltip hs-tooltip-toggle py-3 px-4 inline-flex flex-shrink-0 justify-center items-center gap-2 rounded-r-md border border-transparent font-semibold bg-yellow-100 text-yellow-500 hover:text-white hover:bg-yellow-100 focus:outline-none focus:ring-2 ring-offset-white focus:ring-yellow-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
+                                        class="{{ BW_FULL_INPUT_CSS_CLASSES }} hs-tooltip hs-tooltip-toggle py-3 px-4 inline-flex flex-shrink-0 justify-center items-center gap-2 rounded-r-md border border-transparent font-semibold bg-yellow-100 text-yellow-500 hover:text-white hover:bg-yellow-400 focus:outline-none focus:ring-2 ring-offset-white focus:ring-yellow-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
                                         data-hs-overlay="#update-job-details-modal"
                                         disabled>
                                     <i class="fa-solid fa-pencil"></i>
@@ -367,93 +399,14 @@
                 </div>
                 <div class="-mt-2">
                     {% if object.discussions.all %}
-                        <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-                            <div class="h-80 overflow-y-auto p-4 md:p-5">
-                                <h3 class="text-lg font-bold text-gray-800 dark:text-white border-b-gray-400">
-                                    {% translate "Discussions" %} ({{ object.discussions.count }})
-                                </h3>
-                                {# Start Content #}
-                                <section class="discussions-wrapper mt-3">
-                                    {% for discussion in object.discussions.get_only_discussions_without_replies.all %}
-                                        <div class="grid grid-cols-12 gap-2 mb-3">
-                                            <div class="col-span-1 text-center">
-                                                <img class="inline-block h-[2rem] w-[2rem] rounded-full"
-                                                     src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
-                                                     alt="Image Description" />
-                                            </div>
-                                            <div class="col-span-10">
-                                                <section class="main-discussion-wrapper">
-                                                    <p>
-                                                        <h3 class="font-semibold text-gray-800 dark:text-white text-sm inline-block">
-                                                            {{ discussion.get_managed_user }}
-                                                        </h3>
-                                                        <span class="font-semibold text-gray-400 dark:text-white text-xs italic inline-block ml-2">{{ discussion.created_at|naturaltime }}</span>
-                                                    </p>
-                                                    <details class="text-sm font-medium text-gray-700 relative">
-                                                        <summary>
-                                                            <input type="radio"
-                                                                   name="discussionID"
-                                                                   disabled
-                                                                   class="{{ BW_FULL_INPUT_CSS_CLASSES }} mr-3 shrink-0 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                                                   id="discussionID-{{ discussion.pk }}"
-                                                                   value="{{ discussion.pk }}" />
-                                                            <span class="inline-block relative top-0.5">{{ discussion.body|safe|truncatechars:30 }} ({{ discussion.discussion_replies.count }})</span>
-                                                            {% if discussion.attachment %}
-                                                                <a href="{{ discussion.attachment.url }}"
-                                                                   download="{{ discussion.attachment.url }}"
-                                                                   class="relative inline-block top-0.5">
-                                                                    <i class="fa-solid fa-paperclip inline-block ml-2 h-3 w-3"></i>
-                                                                </a>
-                                                            {% endif %}
-                                                        </summary>
-                                                        <p class="mt-2">{{ discussion.body|safe }}</p>
-                                                        {% if discussion.discussion_replies.all %}
-                                                            {% for reply in discussion.discussion_replies.all %}
-                                                                <section class="replies-wrapper mt-2 ml-5">
-                                                                    <p>
-                                                                        <h3 class="font-semibold text-gray-800 dark:text-white text-sm inline-block">
-                                                                            {{ reply.get_managed_user }}
-                                                                        </h3>
-                                                                        <span class="font-semibold text-gray-400 dark:text-white text-xs italic inline-block ml-2">{{ reply.created_at|naturaltime }}</span>
-                                                                    </p>
-                                                                    <details class="text-sm font-medium text-gray-700 relative">
-                                                                        <summary>
-                                                                            <input type="radio"
-                                                                                   name="discussionID"
-                                                                                   disabled
-                                                                                   class="{{ BW_FULL_INPUT_CSS_CLASSES }} mr-3 shrink-0 border-gray-200 rounded-full text-blue-600 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                                                                   id="discussionID-{{ reply.pk }}"
-                                                                                   value="{{ reply.pk }}" />
-                                                                            <span class="inline-block relative top-0.5">{{ reply.body|safe|truncatechars:30 }}</span>
-                                                                            {% if reply.attachment %}
-                                                                                <a download="{{ reply.attachment.url }}"
-                                                                                   href="{{ reply.attachment.url }}"
-                                                                                   class="relative inline-block top-0.5">
-                                                                                    <i class="fa-solid fa-paperclip inline-block ml-2 h-3 w-3"></i>
-                                                                                </a>
-                                                                            {% endif %}
-                                                                        </summary>
-                                                                        {{ reply.body|safe }}
-                                                                    </details>
-                                                                </section>
-                                                            {% endfor %}
-                                                        {% endif %}
-                                                    </details>
-                                                </section>
-                                            </div>
-                                        </div>
-                                    {% endfor %}
-                                </section>
-                                {# End Content #}
-                            </div>
-                        </div>
+                        {% bw_discussion_chatbox object=object user=request.user display_form=False %}
                     {% else %}
 
                         {% include "bw_ui_components/global/empty_card.html" with label="discussions or replies" %}
 
                     {% endif %}
                 </div>
-                <div class="-mt-3">
+                <div class="-mt-4">
                     <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
                         {% bw_js_modal modal_css_id="add-discussion-model-form" modal_size="sm" modal_title="Post discussion or reply" is_submit_btn_enabled=True is_form_modal=True form_object=discussion_form is_upload_form=True form_id="createDiscussionForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:discussion:api:discussion-api-router-list" %}
                         <button type="button"
@@ -461,12 +414,6 @@
                                 disabled
                                 class="{{ BW_FULL_INPUT_CSS_CLASSES }} w-full m-1 ml-0 py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md bg-blue-100 border border-transparent font-semibold text-blue-500 hover:text-white hover:bg-blue-500 focus:outline-none focus:ring-2 ring-offset-white focus:ring-blue-100 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
                             {% translate "Submit reply" %}
-                        </button>
-                        <button type="button"
-                                id="discussionsResetBtn"
-                                disabled
-                                class="{{ BW_FULL_INPUT_CSS_CLASSES }} w-full m-1 ml-0 py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md bg-gray-100 border border-transparent font-semibold text-gray-500 hover:text-white hover:bg-gray-500 focus:outline-none focus:ring-2 ring-offset-white focus:ring-gray-100 focus:ring-offset-2 transition-all text-sm dark:bg-gray-700 dark:hover:bg-gray-600 dark:focus:ring-gray-600 dark:text-white dark:focus:ring-offset-gray-800">
-                            {% translate "Reset" %}
                         </button>
                     </div>
                 </div>
