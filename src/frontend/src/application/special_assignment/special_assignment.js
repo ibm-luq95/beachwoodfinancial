@@ -14,16 +14,13 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
       createAssignmentForm.addEventListener("submit", (event) => {
         event.preventDefault();
         const currentTarget = event.currentTarget;
-
         const formInputs = formInputSerializer({
           formElement: currentTarget,
           excludedFields: ["_method", "attachment"],
           returnAsFormData: true,
           filesArray: ["attachment"],
         });
-        // console.log(formInputs);
         fieldset.disabled = true;
-        // console.log(getCookie("csrftoken"));
         const uploadRequest = new UploadFileRequest(
           currentTarget.action,
           formInputs,
