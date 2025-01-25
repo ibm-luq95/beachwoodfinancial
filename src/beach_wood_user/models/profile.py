@@ -48,16 +48,16 @@ class Profile(BaseModelMixin, StaffMemberSocialMediaMixin, models.Model):
 				image.thumbnail(output_size)
 				image.save(self.profile_picture.path)
 
-	def __str__(self) -> str:
-		if hasattr(self, "bookkeeper"):
-			return _(
-				f"Profile for: {self.bookkeeper.user.fullname} - {self.bookkeeper.user.user_type}"
-			)
-		elif hasattr(self, "assistant"):
-			return _(
-				f"Profile for: {self.assistant.user.fullname} - {self.assistant.user.user_type}"
-			)
-		elif hasattr(self, "manager"):
-			return _(
-				f"Profile for: {self.manager.user.fullname} - {self.manager.user.user_type}"
-			)
+	# def __str__(self) -> str:
+	# 	if hasattr(self, "bookkeeper"):
+	# 		return _(
+	# 			f"Profile for: {self.bookkeeper.user.fullname} - {self.bookkeeper.user.user_type}"
+	# 		)
+	# 	elif hasattr(self, "assistant"):
+	# 		return _(
+	# 			f"Profile for: {self.assistant.user.fullname} - {self.assistant.user.user_type}"
+	# 		)
+	# 	elif hasattr(self, "manager"):
+	# 		return _(
+	# 			f"Profile for: {self.manager.user.fullname} - {self.manager.user.user_type}"
+	# 		)
