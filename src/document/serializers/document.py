@@ -1,15 +1,27 @@
 # -*- coding: utf-8 -*-#
 from rest_framework import serializers
 
+from client.models import ClientProxy
 from core.constants import EXCLUDED_FIELDS
 from document.models import Document
+from job.models import JobProxy
 
 
 class DocumentSerializer(serializers.ModelSerializer):
-    # document_file = serializers.FileField(use_url=True, allow_empty_file=False)
-    # job = serializers.PrimaryKeyRelatedField(
-    #     queryset=Job.objects.all(), many=False, required=False
-    # )
+
+    job = serializers.PrimaryKeyRelatedField(
+        queryset=JobProxy.original_objects.all(),
+        many=False,
+        # read_only=True,
+        # allow_null=True,
+        # allow_empty=True,
+        required=False
+    )
+    client = serializers.PrimaryKeyRelatedField(
+        queryset=ClientProxy.original_objects.all(),
+        many=False,
+        required=False
+    )
 
     class Meta:
         model = Document
