@@ -22,7 +22,7 @@ from sentry_sdk.integrations.django import DjangoIntegration
 # BASE_DIR = Path(__file__).resolve().parent.parent  # Default BASE_DIR
 BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
 env_file_path: Path = BASE_DIR / ".env" / ".env"
-
+# SITE_ID = 1
 config = configparser.RawConfigParser()
 stage_env_file = BASE_DIR / ".env" / ".current_stage"
 config.read(stage_env_file)
@@ -156,6 +156,7 @@ UI_COMPONENTS_TEMPLATETAGS = [
     "bw_ui_components.templatetags.table_list.actions_dropdown",
     "bw_ui_components.templatetags.table_list.filters",
     "bw_ui_components.templatetags.forms.delete_form",
+    "bw_ui_components.templatetags.discussion.chatbox",
     "bw_ui_components.templatetags.components.core.badge",
     "bw_ui_components.templatetags.global.check_var_none",
 ]
