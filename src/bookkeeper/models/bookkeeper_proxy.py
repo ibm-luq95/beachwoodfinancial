@@ -24,6 +24,9 @@ class BookkeeperProxy(Bookkeeper):
     Inherits from the Bookkeeper model and serves as a proxy for accessing and extending its functionality.
     """
 
+    def __str__(self):
+        return f"{self.user.first_name} {self.user.last_name}"
+
     class Meta(Bookkeeper.Meta):
         proxy = True
 
