@@ -7,4 +7,5 @@ from core.admin import BWBaseAdminModelMixin
 
 @admin.register(BookkeeperProxy)
 class BookkeeperAdmin(BWBaseAdminModelMixin):
-    list_filter = [] + BWBaseAdminModelMixin.list_filter
+    # list_filter = [] + BWBaseAdminModelMixin.list_filter
+    pass

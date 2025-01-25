@@ -2,6 +2,7 @@
 from django.contrib import admin
 
 from client.models import ClientProxy
+from client.resources.client import ClientResource
 from core.admin import BWBaseAdminModelMixin
 from core.admin.tabularinline_readonly_mixin import ReadOnlyInlineMixin
 from job.models import JobProxy
@@ -34,3 +35,4 @@ class ClientAdmin(BWBaseAdminModelMixin):
     )
     inlines = [JobsInline]
     readonly_fields = ["id"]
+    resource_classes = [ClientResource]

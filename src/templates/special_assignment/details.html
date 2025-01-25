@@ -8,380 +8,206 @@
 {% load static %}
 
 {% block dashboard_content_block %}
-    <div class="grid grid-cols-12 gap-4">
-        {# Start Left Aside #}
-        <div class="col-span-9">
+  <div class="grid grid-cols-12 gap-4 w-full max-w-12xl">
+    {# Start Left Aside #}
+    <div class="col-span-12 md:col-span-7 p-4 rounded-lg shadow">
+      <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
+        {# Start Header #}
+        <section id="header-title-wrapper" class="mb-3">
+          <div class="flex justify-between">
+            <div>
+              <h1 class="text-2xl font-bold text-gray-800 dark:text-white inline-block">
+                {{ object.title|capfirst|truncatechars:50 }}
+              </h1>
+              <span class="inline-block mx-2 text-sm">
+                <a href="#">@{{ object.get_managed_user }}</a>
+              </span>
+              <div class="hs-tooltip inline-block">
+                <button type="button" class="hs-tooltip-toggle">
+                  <span class="inline-block text-sm text-gray-500">{{ object.created_at|naturaltime }}</span>
+                  <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                        role="tooltip">{% translate "Created at" %}</span>
+                </button>
+              </div>
+            </div>
+            <div>
+              <div class="hs-tooltip inline-block">
+                <div class="hs-tooltip inline-block">
+                  <button type="button" class="hs-tooltip-toggle">
+                    <span class="m-1 inline-flex justify-center items-center w-[33px] h-[33px] rounded-full
+                                 {% if object.is_seen is False %}
+                                   bg-yellow-100 text-yellow-500
+                                 {% else %}
+                                   bg-blue-100 text-blue-500
+                                 {% endif %}">
+                      <i class="fa-solid fa-eye-slash w-4 h-4"></i>
+                    </span>
+                    <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                          role="tooltip">{% translate "Not seen or opened by manager" %}</span>
+                  </button>
+                </div>
+              </div>
+              {% bw_badge code=object.status text=object.get_status_display is_solid=False size="sm" extra_css_classes="bottom-1 relative" %}
+              <div class="hs-tooltip inline-block">
+                <a href="{% url 'dashboard:special_assignment:update' object.pk %}"
+                   class="hs-tooltip-toggle">
+                  <span class="m-1 inline-flex justify-center items-center w-[33px] h-[33px] rounded-full bg-green-100 text-green-500">
+                    <i class="fa-solid fa-pencil w-4 h-4"></i>
+                  </span>
+                  <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
+                        role="tooltip">{% translate "Update" %}</span>
+                </a>
+              </div>
+            </div>
+          </div>
+          <hr class="my-2" />
+        </section>
+        {# End Header #}
+        {# Start Title #}
+        <article id="full-title-wrapper">
+          <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-3">
+            {{ object.title|capfirst }}
+          </h3>
+        </article>
+        {# End Title #}
+        {# Start Start Description or Body #}
+        <article id="body-wrapper">
+          <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-3">
+            {% translate "Description" %}
+          </h3>
+          <p>{{ object.body|safe }}</p>
+          <hr class="my-3" />
+        </article>
+        {# End Start Description or Body #}
+        {# Start Note #}
+        {% if object.notes %}
+          <article id="note-wrapper">
+            <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-3">{% translate "Notes" %}</h3>
+            <p>{{ object.notes|safe }}</p>
+            <hr class="my-3" />
+          </article>
+        {% endif %}
+        {# End Note #}
+        {# Start Attachments #}
+        {% if object.attachment %}
+          <article id="attachments-wrapper">
+            <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-3">
+              {% translate "Attachments" %}
+            </h3>
+            <p>
+              <a href="{{ object.attachment.url }}"
+                 download="{{ object.attachment.url }}"
+                 class="{{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }}">
+                <i class="fa-solid fa-paperclip"></i>
+                <span class="inline-block mx-3">{{ object.attachment.name }}</span>
+              </a>
+            </p>
+          </article>
+        {% endif %}
+        {# End Attachments #}
+      </div>
+    </div>
+    {# End Left Aside #}
+    <!-- ... -->
+    {# Start Right Aside #}
+    <div class="col-span-12 md:col-span-5 p-4 rounded-lg shadow">
+      <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+        {# Start Client #}
+        <section class="mb-3">
+          {% if object.client %}
             <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
-                {# Start Header #}
-                <section id="header-title-wrapper" class="mb-3">
-                    <div class="flex justify-between">
-                        <div>
-                            <h1 class="text-2xl font-bold text-gray-800 dark:text-white inline-block">
-                                {{ object.title|capfirst|truncatechars:20 }}
-                            </h1>
-                            <span class="inline-block mx-2 text-sm">
-                                <a href="#">@{{ object.get_managed_user }}</a>
-                            </span>
-                            <div class="hs-tooltip inline-block">
-                                <button type="button" class="hs-tooltip-toggle">
-                                    <span class="inline-block text-sm text-gray-500">{{ object.created_at|naturaltime }}</span>
-                                    <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
-                                          role="tooltip">{% translate "Created at" %}</span>
-                                </button>
-                            </div>
-                        </div>
-                        <div>
-                            <div class="hs-tooltip inline-block">
-                                <div class="hs-tooltip inline-block">
-                                    <button type="button" class="hs-tooltip-toggle">
-                                        <span class="m-1 inline-flex justify-center items-center w-[33px] h-[33px] rounded-full
-                                                     {% if object.is_seen is False %}
-                                                         bg-yellow-100 text-yellow-500
-                                                     {% else %}
-                                                         bg-blue-100 text-blue-500
-                                                     {% endif %}">
-                                            <i class="fa-solid fa-eye-slash w-4 h-4"></i>
-                                        </span>
-                                        <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
-                                              role="tooltip">{% translate "Not seen or opened by manager" %}</span>
-                                    </button>
-                                </div>
-                            </div>
-                            {% bw_badge code=object.status text=object.get_status_display is_solid=False size="sm" extra_css_classes="bottom-1 relative" %}
-                            <div class="hs-tooltip inline-block">
-                                <a href="{% url 'dashboard:special_assignment:update' object.pk %}"
-                                   class="hs-tooltip-toggle">
-                                    <span class="m-1 inline-flex justify-center items-center w-[33px] h-[33px] rounded-full bg-green-100 text-green-500">
-                                        <i class="fa-solid fa-pencil w-4 h-4"></i>
-                                    </span>
-                                    <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
-                                          role="tooltip">{% translate "Update" %}</span>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="my-2" />
-                </section>
-                {# End Header #}
-                {# Start Title #}
-                <article id="full-title-wrapper">
-                    <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-3">
-                        {{ object.title|capfirst }}
-                    </h3>
-                </article>
-                {# End Title #}
-                {# Start Start Description or Body #}
-                <article id="body-wrapper">
-                    <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-3">
-                        {% translate "Description" %}
-                    </h3>
-                    <p>{{ object.body|safe }}</p>
-                    <hr class="my-3" />
-                </article>
-                {# End Start Description or Body #}
-                {# Start Note #}
-                {% if object.notes %}
-                    <article id="note-wrapper">
-                        <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-3">{% translate "Notes" %}</h3>
-                        <p>{{ object.notes|safe }}</p>
-                        <hr class="my-3" />
-                    </article>
-                {% endif %}
-                {# End Note #}
-                {# Start Attachments #}
-                {% if object.attachment %}
-                    <article id="attachments-wrapper">
-                        <h3 class="text-lg font-bold text-gray-800 dark:text-white mb-3">
-                            {% translate "Attachments" %}
-                        </h3>
-                        <p>
-                            <a href="{{ object.attachment.url }}"
-                               download="{{ object.attachment.url }}"
-                               class="{{ BW_PRELINE_ANCHOR_TAG_DEFAULT_COLOR }}">
-                                <i class="fa-solid fa-paperclip"></i>
-                                <span class="inline-block mx-3">{{ object.attachment.name }}</span>
-                            </a>
-                        </p>
-                    </article>
-                {% endif %}
-                {# End Attachments #}
+              <div class="flex-shrink-0 group block">
+                <div class="flex items-center">
+                  {% if object.client.company_logo %}
+                    <img class="inline-block flex-shrink-0 w-[30px] h-[30px] rounded-full"
+                         src="{{ object.client.company_logo.url }}"
+                         alt="{{ object.client.name }}" />
+                  {% else %}
+                    <i class="fa-solid fa-building inline-block flex-shrink-0 rounded-full"></i>
+                  {% endif %}
+                  <div class="ml-3">
+                    <h3 class="font-semibold text-sm text-gray-800 dark:text-white">{{ object.client.name }}</h3>
+                    <p class="text-sm font-medium text-gray-400">{% translate "Client name" %}</p>
+                  </div>
+                </div>
+              </div>
             </div>
-        </div>
-        {# End Left Aside #}
-        <!-- ... -->
-        {# Start Right Aside #}
-        <div class="col-span-3">
-            {# Start Client #}
-            <section class="mb-3">
-                {% if object.client %}
-                    <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
-                        <div class="flex-shrink-0 group block">
-                            <div class="flex items-center">
-                                {% if object.client.company_logo %}
-                                    <img class="inline-block flex-shrink-0 w-[46px] h-[46px] rounded-full"
-                                         src="{{ object.client.company_logo.url }}"
-                                         alt="{{ object.client.name }}" />
-                                {% else %}
-                                    <i class="fa-solid fa-building inline-block flex-shrink-0 fa-2x rounded-full"></i>
-                                {% endif %}
-                                <div class="ml-3">
-                                    <h3 class="font-semibold text-gray-800 dark:text-white">{{ object.client.name }}</h3>
-                                    <p class="text-sm font-medium text-gray-400">{% translate "Client name" %}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% elif object.job %}
-                    <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
-                        <div class="flex-shrink-0 group block">
-                            <div class="flex items-center">
-                                <span class="m-1 inline-flex justify-center items-center w-[50px] h-[50px] rounded-full bg-blue-100 text-blue-600">
-                                    <i class="fa-solid fa-briefcase w-6 h-6"></i>
-                                </span>
-                                <div class="ml-3">
-                                    <h6 class="font-semibold text-sm text-gray-800 dark:text-white">
-                                        <a href="{% url 'dashboard:job:details' object.job.pk %}">
-                                            {{ object.job.title|safe|truncatechars:40 }}
-                                        </a>
-                                    </h6>
-                                    <p class="text-sm font-medium text-gray-400">{% translate "Job title" %}</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                {% endif %}
-            </section>
-            {# End Client #}
-            {# Start Start Client Job #}
-            <section>
-                <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-                    <div class="flex-shrink-0 group block">
-                        <div class="flex items-center">
-                            {% if object.get_managed_user.profile.profile_picture %}
-                                <img class="inline-block flex-shrink-0 w-[46px] h-[46px] rounded-full"
-                                     src="{{ object.get_managed_user.profile.profile_picture.url }}"
-                                     alt="{{ object.get_managed_user.fullname }}" />
-                            {% else %}
-                                <img class="inline-block flex-shrink-0 w-[46px] h-[46px] rounded-full"
-                                     src="{% static 'img/default_staff.png' %}"
-                                     alt="{{ object.get_managed_user.fullname }}" />
-                            {% endif %}
-                            <div class="ml-3">
-                                <h3 class="font-semibold text-gray-800 dark:text-white">{{ object.get_managed_user }}</h3>
-                                <p class="text-sm font-medium text-gray-400">{% translate "Assigned to" %}</p>
-                            </div>
-                        </div>
-                    </div>
+          {% elif object.job %}
+            <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7] dark:text-gray-400">
+              <div class="flex-shrink-0 group block">
+                <div class="flex items-center">
+                  <span class="m-1 inline-flex justify-center items-center w-[20px] h-[20px] rounded-full bg-blue-100 text-blue-600">
+                    <i class="fa-solid fa-briefcase w-5 h-5"></i>
+                  </span>
+                  <div class="ml-3">
+                    <h6 class="font-semibold text-sm text-gray-800 dark:text-white">
+                      <a href="{% url 'dashboard:job:details' object.job.pk %}">
+                        {{ object.job.title|safe|truncatechars:40 }}
+                      </a>
+                    </h6>
+                    <p class="text-sm font-medium text-gray-400">{% translate "Job title" %}</p>
+                  </div>
                 </div>
-            </section>
-            {# End Start Client Job #}
-            {# Start Start Assigned By #}
-            <section class="my-3">
-                <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-                    <div class="flex-shrink-0 group block">
-                        <div class="flex items-center">
-                            {% if object.assigned_by.get_staff_member_object.staff_object.profile.profile_picture %}
-                                <img class="inline-block flex-shrink-0 w-[46px] h-[46px] rounded-full"
-                                     src="{{ object.assigned_by.get_staff_member_object.staff_object.profile.profile_picture.url }}"
-                                     alt="{{ object.assigned_by.fullname }}" />
-                            {% else %}
-                                <img class="inline-block flex-shrink-0 w-[46px] h-[46px] rounded-full"
-                                     src="{% static 'img/default_staff.png' %}"
-                                     alt="{{ object.assigned_by.fullname }}" />
-                            {% endif %}
-                            <div class="ml-3">
-                                <h3 class="font-semibold text-gray-800 dark:text-white">{{ object.assigned_by.fullname }}</h3>
-                                <p class="text-sm font-medium text-gray-400">{% translate "Assigned By" %}</p>
-                            </div>
-                        </div>
-                    </div>
+              </div>
+            </div>
+          {% endif %}
+          {# Start Start Client Job #}
+          <section class="my-2">
+            <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+              <div class="flex-shrink-0 group block">
+                <div class="flex items-center">
+                  {% if object.get_managed_user.profile.profile_picture %}
+                    <img class="inline-block flex-shrink-0 w-[20px] h-[20px] rounded-full"
+                         src="{{ object.get_managed_user.profile.profile_picture.url }}"
+                         alt="{{ object.get_managed_user.fullname }}" />
+                  {% else %}
+                    <img class="inline-block flex-shrink-0 w-[20px] h-[20px] rounded-full"
+                         src="{% static 'img/default_staff.png' %}"
+                         alt="{{ object.get_managed_user.fullname }}" />
+                  {% endif %}
+                  <div class="ml-3">
+                    <h3 class="font-semibold text-sm text-gray-800 dark:text-white">
+                      {{ object.get_managed_user }}
+                    </h3>
+                    <p class="text-sm font-medium text-gray-400">{% translate "Assigned to" %}</p>
+                  </div>
                 </div>
-            </section>
-            {# End Start Assigned By #}
-        </div>
-        {# End Right Aside #}
+              </div>
+            </div>
+          </section>
+          {# End Start Client Job #}
+          {# Start Start Assigned By #}
+          <section>
+            <div class="flex flex-col bg-white border shadow-sm rounded-xl p-4 md:p-5 dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
+              <div class="flex-shrink-0 group block">
+                <div class="flex items-center">
+                  {% if object.assigned_by.get_staff_member_object.staff_object.profile.profile_picture %}
+                    <img class="inline-block flex-shrink-0 w-[20px] h-[20px] rounded-full"
+                         src="{{ object.assigned_by.get_staff_member_object.staff_object.profile.profile_picture.url }}"
+                         alt="{{ object.assigned_by.fullname }}" />
+                  {% else %}
+                    <img class="inline-block flex-shrink-0 w-[20px] h-[20px] rounded-full"
+                         src="{% static 'img/default_staff.png' %}"
+                         alt="{{ object.assigned_by.fullname }}" />
+                  {% endif %}
+                  <div class="ml-3">
+                    <h3 class="font-semibold text-sm text-gray-800 dark:text-white">
+                      {{ object.assigned_by.fullname }}
+                    </h3>
+                    <p class="text-sm font-medium text-gray-400">{% translate "Assigned By" %}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          {# End Start Assigned By #}
+        </section>
+        {# End Client #}
+      </div>
+      {# Start Discussion box #}
+      {% bw_discussion_chatbox object=object user=request.user display_form=True %}
+      {# End Discussion box #}
     </div>
-    <div class="grid grid-cols-12 gap-3">
-        {# Start Replies #}
-        <div class="col-span-4">
-            <div class="my-3 flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-                <div class="p-4 md:p-5">
-                    <h3 class="text-lg font-bold text-gray-800 dark:text-white">
-                        {% translate "Post new reply" %}
-                    </h3>
-                    <section id="reply-form-wrapper">
-                        <form action="{% url 'dashboard:discussion:api:discussion-api-router-list' %}"
-                              enctype="multipart/form-data"
-                              id="replyForm"
-                              method="post">
-                            <fieldset form="replyForm">
-                                {% csrf_token %}
-                                <input type="hidden"
-                                       disabled
-                                       name="special_assignment"
-                                       class="{{ BW_FULL_INPUT_CSS_CLASSES }}"
-                                       value="{{ object.pk }}" />
-                                <input type="hidden"
-                                       name="{{ request.user.user_type }}"
-                                       class="{{ BW_FULL_INPUT_CSS_CLASSES }}"
-                                       disabled
-                                       value="{% bw_get_staff_member_pk user=request.user %}" />
-                                <div class="my-3">
-                                    <label for="input-label"
-                                           class="block text-sm font-medium mb-2 dark:text-white">
-                                        {% translate "Body *" %}
-                                    </label>
-                                    <textarea class="{{ BW_FULL_INPUT_CSS_CLASSES }} py-3 px-4 block w-full border-gray-200 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500 dark:bg-slate-900 dark:border-gray-700 dark:text-gray-400"
-                                              rows="3"
-                                              placeholder="This is a textarea placeholder"
-                                              name="body"
-                                              id="body"
-                                              disabled
-                                              required></textarea>
-                                </div>
-                                <div class="my-3">
-                                    <label class="block">
-                                        <span class="sr-only">{% translate "Upload attachment" %}</span>
-                                        <input type="file"
-                                               disabled
-                                               class="{{ BW_FULL_INPUT_CSS_CLASSES }} block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-md file:border-0 file:text-sm file:font-semibold file:bg-blue-500 file:text-white hover:file:bg-blue-600"
-                                               name="attachment"
-                                               id="attachment" />
-                                    </label>
-                                </div>
-                                <div class="mt-5">
-                                    <button type="submit"
-                                            disabled
-                                            class="{{ BW_FULL_INPUT_CSS_CLASSES }} w-full py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md border border-transparent font-semibold bg-blue-500 text-white hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
-                                        {% translate "Reply" %}
-                                    </button>
-                                </div>
-                            </fieldset>
-                        </form>
-                    </section>
-                </div>
-            </div>
-        </div>
-        <div class="my-3 col-span-8">
-            <div class="flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-                <div class="bg-gray-100 border-b rounded-t-xl py-3 px-4 md:py-4 md:px-5 dark:bg-gray-800 dark:border-gray-700">
-                    <p class="mt-1 text-sm text-gray-500 dark:text-gray-500">
-                        {% translate "Replies" %}({{ object.discussions.count }})
-                    </p>
-                </div>
-                <div class="p-4 md:p-5">
-                    {% for discussion in object.discussions.get_only_discussions_without_replies.all %}
-                        <div class="discussion-wrapper">
-                            <div class="flex-shrink-0 group block">
-                                <div class="flex items-center">
-                                    <div class="flex mr-2">
-                                        <label class="inline-flex items-center">
-                                            <input type="radio"
-                                                   disabled
-                                                   class="{{ BW_FULL_INPUT_CSS_CLASSES }} form-radio shrink-0 mt-0.5 border-gray-200 rounded-full text-blue-600 pointer-events-none focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                                                   name="replies"
-                                                   value="{{ discussion.pk }}"
-                                                   id="discussion-pk-{{ discussion.pk }}" />
-                                        </label>
-                                    </div>
-                                    <img class="inline-block flex-shrink-0 h-[2.5rem] w-[2.5rem] rounded-full"
-                                         src="{% if discussion.get_managed_user.profile.profile_picture %} {{ discussion.get_managed_user.profile.profile_picture.url }} {% else %} https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80  {% endif %}"
-                                         alt="Image Description" />
-                                    <div class="ml-3">
-                                        <h3 class="font-semibold text-sm text-gray-800 dark:text-white">
-                                            <span>{{ discussion.get_managed_user }}</span>
-                                            <span class="inline-block text-gray-400 text-xs mx-2 italic">{{ discussion.created_at|naturaltime }}</span>
-                                            {% if discussion.attachment %}
-                                                <div class="hs-tooltip inline-block mx-3">
-                                                    <a href="{{ discussion.attachment.url }}"
-                                                       download="{{ discussion.attachment.url }}"
-                                                       class="hs-tooltip-toggle">
-                                                        <i class="fa-solid fa-paperclip"></i>
-                                                        <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-white"
-                                                              role="tooltip">
-                                                            {% translate "Contain an attachment" %}
-                                                        </span>
-                                                    </a>
-                                                </div>
-                                            {% endif %}
-                                        </h3>
-                                        <details>
-                                            <summary class="font-semibold text-sm text-gray-800 dark:text-white">
-                                                {{ discussion.body|safe|truncatechars:50 }}
-                                            </summary>
-                                            <p class="font-medium text-gray-700">{{ discussion.body|safe }}</p>
-                                            {# Start Reply #}
-                                            {% if discussion.discussion_replies.all %}
-                                                <section class="mb-2 mt-5 ml-8">
-                                                    {% for reply in discussion.discussion_replies.all %}
-                                                        <div class="reply-wrapper mb-3">
-                                                            <div class="flex-shrink-0 group block">
-                                                                <div class="flex items-center">
-                                                                    <img class="inline-block flex-shrink-0 h-[2rem] w-[2rem] rounded-full"
-                                                                         src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=facearea&facepad=2&w=300&h=300&q=80"
-                                                                         alt="Image Description" />
-                                                                    <div class="ml-3">
-                                                                        <h3 class="font-semibold text-gray-800 dark:text-white text-sm">
-                                                                            <span>{{ reply.get_managed_user }}</span>
-                                                                            <span class="inline-block text-gray-400 text-xs mx-2 italic">{{ reply.created_at|naturaltime }}</span>
-                                                                            {% if reply.attachment %}
-                                                                                <div class="hs-tooltip inline-block mx-3">
-                                                                                    <a href="{{ reply.attachment.url }}"
-                                                                                       download="{{ reply.attachment.url }}"
-                                                                                       class="hs-tooltip-toggle">
-                                                                                        <i class="fa-solid fa-paperclip"></i>
-                                                                                        <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-white"
-                                                                                              role="tooltip">
-                                                                                            {% translate "Contain an attachment" %}
-                                                                                        </span>
-                                                                                    </a>
-                                                                                </div>
-                                                                            {% endif %}
-                                                                        </h3>
-                                                                        <details>
-                                                                            <summary class="font-semibold text-sm text-gray-800 dark:text-white">
-                                                                                {{ reply.body|safe|truncatechars:50 }}
-                                                                            </summary>
-                                                                            <p class="font-medium text-gray-700">{{ reply.body|safe }}</p>
-                                                                        </details>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    {% endfor %}
-                                                </section>
-                                            {% endif %}
-                                            {# End Reply #}
-                                        </details>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    {% empty %}
-                        <div class="min-h-[15rem] flex flex-col bg-white border shadow-sm rounded-xl dark:bg-gray-800 dark:border-gray-700 dark:shadow-slate-700/[.7]">
-                            <div class="flex flex-auto flex-col justify-center items-center p-4 md:p-5">
-                                <svg class="max-w-[5rem]"
-                                     viewBox="0 0 375 428"
-                                     fill="none"
-                                     xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M254.509 253.872L226.509 226.872" class="stroke-gray-400 dark:stroke-white" stroke="currentColor" stroke-width="7" stroke-linecap="round" />
-                                    <path d="M237.219 54.3721C254.387 76.4666 264.609 104.226 264.609 134.372C264.609 206.445 206.182 264.872 134.109 264.872C62.0355 264.872 3.60864 206.445 3.60864 134.372C3.60864 62.2989 62.0355 3.87207 134.109 3.87207C160.463 3.87207 184.993 11.6844 205.509 25.1196" class="stroke-gray-400 dark:stroke-white" stroke="currentColor" stroke-width="7" stroke-linecap="round" />
-                                    <rect x="270.524" y="221.872" width="137.404" height="73.2425" rx="36.6212" transform="rotate(40.8596 270.524 221.872)" class="fill-gray-400 dark:fill-white" fill="currentColor" />
-                                    <ellipse cx="133.109" cy="404.372" rx="121.5" ry="23.5" class="fill-gray-400 dark:fill-white" fill="currentColor" />
-                                    <path d="M111.608 188.872C120.959 177.043 141.18 171.616 156.608 188.872" class="stroke-gray-400 dark:stroke-white" stroke="currentColor" stroke-width="7" stroke-linecap="round" />
-                                    <ellipse cx="96.6084" cy="116.872" rx="9" ry="12" class="fill-gray-400 dark:fill-white" fill="currentColor" />
-                                    <ellipse cx="172.608" cy="117.872" rx="9" ry="12" class="fill-gray-400 dark:fill-white" fill="currentColor" />
-                                    <path d="M194.339 147.588C189.547 148.866 189.114 142.999 189.728 138.038C189.918 136.501 191.738 135.958 192.749 137.131C196.12 141.047 199.165 146.301 194.339 147.588Z" class="fill-gray-400 dark:fill-white" fill="currentColor" />
-                                </svg>
-                                <p class="mt-5 text-sm text-gray-500 dark:text-gray-500">
-                                    {% translate "No replies to show" %}
-                                </p>
-                            </div>
-                        </div>
-                    {% endfor %}
-                </div>
-            </div>
-        </div>
-        {# End Replies #}
-    </div>
+    {# End Right Aside #}
+  </div>
 {% endblock dashboard_content_block %}

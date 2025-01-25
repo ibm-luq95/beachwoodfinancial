@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-#
-
+from django.db.models import Q
 from django.utils.translation import gettext as _
 
 from core.constants.status_labels import CON_COMPLETED
+from core.utils.developments.debugging_print_object import DebuggingPrint
+
 from special_assignment.models.special_assignment import SpecialAssignment
 
 
@@ -21,6 +23,22 @@ class SpecialAssignmentProxy(SpecialAssignment):
 
     class Meta(SpecialAssignment.Meta):
         proxy = True
+
+    # def get_all_messages(self):
+    #     from discussion.models import DiscussionProxy
+    #
+    #     data = self.discussions.all()
+    #     data_pks = [d.pk for d in data]
+    #     DebuggingPrint.pprint(data)
+    #     DebuggingPrint.rule("-" * 50)
+    #     q = Q(pk__in=data_pks) & Q(special_assignment=self)
+    #     get_replies = DiscussionProxy.objects.filter(q)
+    #     DebuggingPrint.pprint(get_replies)
+    #     DebuggingPrint.rule("-" * 50)
+    #     full_data = list(data) + list(get_replies)
+    #     # DebuggingPrint.pprint(full_data)
+    #     # DebuggingPrint.pprint(set(full_data))
+    #     return data
 
     def get_is_seen_label(self) -> str:
         """Returns the label for the is_seen attribute.

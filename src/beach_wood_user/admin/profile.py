@@ -7,4 +7,5 @@ from core.admin import BWBaseAdminModelMixin
 
 @admin.register(Profile)
 class ProfileAdmin(BWBaseAdminModelMixin):
+    # list_display = ["address"]
     pass

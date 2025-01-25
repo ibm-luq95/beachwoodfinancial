@@ -10,6 +10,11 @@ urlpatterns = [
         include("dashboard.urls.bookkeeper"),
         name="dashboard-bookkeeper-urls",
     ),
+    path(
+        "cfo/",
+        include("dashboard.urls.cfo"),
+        name="dashboard-cfo-urls",
+    ),
     path("client-category/", include("client_category.urls"), name="client-category"),
     path(
         "important-contact/", include("important_contact.urls"), name="important-contact"

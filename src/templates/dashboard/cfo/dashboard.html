@@ -1,0 +1,63 @@
+{% extends "core/layouts/dashboard_content_base.html" %}
+
+{% load i18n %}
+
+{% block dashboard_content_block %}
+    {# Page Heading #}
+
+    {% include "components/inc/dashboard/content_header.html" with title="Hello, "|add:request.user.fullname %}
+
+    {# End Page Heading #}
+    <!-- Start Content -->
+    <!-- Start Stats -->
+    <!-- Card Section -->
+    <div class="max-w-[100rem] py-10 sm:px-6 lg:px-4 lg:py-14 mx-auto">
+        <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+            <!-- Grid -->
+            <div class="grid gap-6 grid-cols-2 sm:gap-12 lg:grid-cols-3 lg:gap-8">
+                <!-- Stats -->
+                <div>
+                    <h4 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-neutral-200">
+                        Accuracy rate
+                    </h4>
+                    <p class="mt-2 sm:mt-3 text-4xl sm:text-6xl font-bold text-blue-600">99.95%</p>
+                    <p class="mt-1 text-gray-500 dark:text-neutral-500">in fulfilling orders</p>
+                </div>
+                <!-- End Stats -->
+                <!-- Stats -->
+                <div>
+                    <h4 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-neutral-200">
+                        Startup businesses
+                    </h4>
+                    <p class="mt-2 sm:mt-3 text-4xl sm:text-6xl font-bold text-blue-600">2,000+</p>
+                    <p class="mt-1 text-gray-500 dark:text-neutral-500">partner with Preline</p>
+                </div>
+                <!-- End Stats -->
+                <!-- Stats -->
+                <div>
+                    <h4 class="text-lg sm:text-xl font-semibold text-gray-800 dark:text-neutral-200">
+                        Happy customer
+                    </h4>
+                    <p class="mt-2 sm:mt-3 text-4xl sm:text-6xl font-bold text-blue-600">85%</p>
+                    <p class="mt-1 text-gray-500 dark:text-neutral-500">this year alone</p>
+                </div>
+                <!-- End Stats -->
+            </div>
+            <!-- End Grid -->
+        </div>
+    </div>
+    <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+        <div class="grid grid-cols-2 gap-4">
+            <div>
+                <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                    <div id="hs-single-area-chart"></div>
+                </div>
+            </div>
+            <div>
+                <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
+                    <div id="hs-single-area-chart2" style="height: 300px; max-width: 500px;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock dashboard_content_block %}

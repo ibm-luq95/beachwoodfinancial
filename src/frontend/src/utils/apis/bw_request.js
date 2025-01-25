@@ -155,6 +155,7 @@ class BWRequestApi {
       } catch (error) {
         reject(error);
       } finally {
+        // here 
       }
     });
     return requestPromise;

@@ -72,22 +72,32 @@ class BWLoginViewBW(SuccessMessageMixin, BWSiteSettingsViewMixin, FormView):
         """
         try:
             # breakpoint()
+            config = grab_env_file()
             user_type = form.cleaned_data.get("user_type")
             email = form.cleaned_data.get("email")
             password = form.cleaned_data.get("password")
-            user_check = BWUser.objects.filter(email=email)  # type: ignore
+            user_check = BWUser.objects.filter(email=email)
+            # DebuggingPrint.pprint(locals())
+            # raise Exception()
             if not user_check:
                 form.add_error("email", _("Email not exists!"))
                 return self.form_invalid(form)
             #     # raise ValidationError(f"Email not exists!", code="invalid")
-            user_check: BWUser | None = user_check.first()  # type: ignore
-            check_user_type = user_check.user_type  # type: ignore
+            user_check: BWUser | None = user_check.first()
+            check_user_type = user_check.user_type
             #
             # check if the user type came from the form equal the user type saved in the db
             if user_type != check_user_type:
-                form.add_error("user_type", _("User credentials not correct!!"))
+                if (
+                    config("STAGE_ENVIRONMENT", cast=str) == "DEV"
+                    or config("STAGE_ENVIRONMENT", cast=str) == "LOCAL_DEV"
+                ):
+                    form.add_error("user_type", _("User type not correct!!"))
+                else:
+                    form.add_error("user_type", _("User credentials not correct!!"))
                 return self.form_invalid(form)
             user = authenticate(self.request, email=email, password=password)
+            # DebuggingPrint.pprint(user)
             if user is not None:
                 login(self.request, user)
             else:
@@ -95,7 +105,7 @@ class BWLoginViewBW(SuccessMessageMixin, BWSiteSettingsViewMixin, FormView):
                 return super().form_invalid(form)
 
             # Check if next url exists
-            next_url = self.request.session.get("next", None)  # TODO: added to the end
+            next_url = self.request.session.get("next", None)
             if next_url:
                 return redirect(next_url)
 
@@ -103,6 +113,8 @@ class BWLoginViewBW(SuccessMessageMixin, BWSiteSettingsViewMixin, FormView):
                 self.success_url = reverse_lazy("dashboard:manager:home")
             elif check_user_type == "bookkeeper":
                 self.success_url = reverse_lazy("dashboard:bookkeeper:home")
+            elif check_user_type == "cfo":
+                self.success_url = reverse_lazy("dashboard:cfo:home")
 
             return super().form_valid(form)
         except Exception:

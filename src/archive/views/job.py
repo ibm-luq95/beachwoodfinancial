@@ -20,41 +20,30 @@ class JobArchiveListView(
     paginate_by = LIST_VIEW_PAGINATE_BY
     list_type = "archive"
     queryset = JobProxy.archive_objects.all()
+    is_show_create_btn = False
+    is_filters_enabled = True
+    is_actions_menu_enabled = True
+    is_header_enabled = True
+    is_footer_enabled = True
+    show_info_icon = False
+    page_title = _("Jobs archive")
+    page_header = _("Jobs archive".title())
+    component_path = "bw_components/archive/job/table_list.html"
+    actions_base_url = "dashboard:jobs"
+    filter_cancel_url = "dashboard:archive:jobs:list"
+    table_header_title = _("C")
+    pagination_list_url_name = "dashboard:archive:jobs:list"
+    base_url_name = "dashboard:job"
+    empty_label = _("job(s)")
+    subtitle = _("Jobs archive".title())
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
 
-        context["title"] = _("Jobs archive")
-        context.setdefault("component_path", "bw_components/archive/job/table_list.html")
-        context.setdefault("filter_form", self.filterset.form)
-        context.setdefault("list_type", self.list_type)
-        context.setdefault("page_header", "jobs archive".title())
-        context.setdefault("subtitle", "Archived jobs".title())
-        context.setdefault("actions_base_url", "dashboard:job")
-        context.setdefault("filter_cancel_url", "dashboard:archive:jobs:list")
-        context.setdefault("table_header_title", _("C"))
-        context.setdefault("table_header_subtitle", _("Jobs archive subtitle"))
-        context.setdefault("is_show_create_btn", False)
-        context.setdefault("pagination_list_url_name", "dashboard:archive:jobs:list")
-        context.setdefault("is_filters_enabled", True)
-        context.setdefault("is_actions_menu_enabled", False)
-        context.setdefault("is_header_enabled", True)
-        context.setdefault("is_footer_enabled", True)
-        # context.setdefault("actions_items", "details,update,delete")
-        context.setdefault("base_url_name", "dashboard:job")
+        # context.setdefault("filter_form", self.filterset.form)
+        # context.setdefault("base_url_name", "dashboard:job")
         context.setdefault("extra_context", {"is_show_client": True})
-        context.setdefault("empty_label", _("job(s)"))
-        context.setdefault("show_info_icon", False)
-        # context.setdefault(
-        #     "info_details",
-        #     {
-        #         "tooltip_txt": BW_INFO_MODAL_CSS_CLASSES.get("client").get("tooltip_txt"),
-        #         "modal_css_id": BW_INFO_MODAL_CSS_CLASSES.get("client").get("cssID"),
-        #     },
-        # )
-
-        # debugging_print(self.filterset.form["name"])
         return context
 
     def get_queryset(self):

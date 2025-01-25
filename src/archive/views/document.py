@@ -30,31 +30,29 @@ class DocumentArchiveListView(
     # ).filter(~Q(status=CON_ARCHIVED))
     paginate_by = LIST_VIEW_PAGINATE_BY
     list_type = "archive"
+    is_show_create_btn = False
+    is_filters_enabled = True
+    is_actions_menu_enabled = True
+    is_header_enabled = True
+    is_footer_enabled = True
+    show_info_icon = False
+    page_title = _("Documents archive")
+    page_header = _("Documents archive".title())
+    component_path = "bw_components/document/table_list.html"
+    actions_base_url = "dashboard:document"
+    filter_cancel_url = "dashboard:archive:documents:list"
+    table_header_title = _("C")
+    pagination_list_url_name = "dashboard:archive:documents:list"
+    base_url_name = "dashboard:document"
+    empty_label = _("document(s)")
+    subtitle = _("Documents archive".title())
+    actions_items = "update,delete"
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context["title"] = _("Documents archive")
-        context.setdefault("filter_form", self.filterset.form)
-        context.setdefault("list_type", self.list_type)
-        context.setdefault("page_header", _("Documents archive".capitalize()))
-        context.setdefault("component_path", "bw_components/document/table_list.html")
-        context.setdefault("subtitle", _("documents".capitalize()))
-        context.setdefault("actions_base_url", "dashboard:document")
-        context.setdefault("filter_cancel_url", "dashboard:archive:tasks:list")
-        context.setdefault("table_header_title", _("C"))
-        context.setdefault("table_header_subtitle", _("documents subtitle"))
-        context.setdefault("is_show_create_btn", True)
-        context.setdefault("pagination_list_url_name", "dashboard:archive:tasks:list")
-        context.setdefault("is_filters_enabled", True)
-        context.setdefault("is_actions_menu_enabled", True)
-        context.setdefault("is_header_enabled", True)
-        context.setdefault("is_footer_enabled", True)
-        context.setdefault("actions_items", "update,delete")
-        context.setdefault("base_url_name", "dashboard:document")
-        context.setdefault("empty_label", _("documents"))
+        # context.setdefault("filter_form", self.filterset.form)
         context.setdefault("extra_context", {})
-        context.setdefault("show_info_icon", True)
         context.setdefault(
             "info_details",
             {

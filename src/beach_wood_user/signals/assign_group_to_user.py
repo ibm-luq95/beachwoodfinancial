@@ -69,6 +69,8 @@ def assign_groups(sender, instance: BWUser, created: bool, **kwargs):
                         cfo = CFOProxy.objects.create(
                             user=created_user, profile=Profile.objects.create()
                         )
+                        #print("DDDDD")
+                        # print(cfo.pro)
                 readonly_group = Group.objects.filter(
                     name=READONLY_NEW_STAFF_MEMBER_GROUP_NAME
                 )

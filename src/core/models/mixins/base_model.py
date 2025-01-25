@@ -61,9 +61,10 @@ class BaseModelMixin(DiffingMixin, GetModelInstanceAsDictMixin, models.Model):
         _("deleted at"), null=True, default=None, blank=True, editable=False
     )
 
-    objects = SoftDeleteManager()
-    original_objects = models.Manager()
-    archive_objects = ArchiveManager()
+    objects: SoftDeleteManager = SoftDeleteManager()
+    # objects = models.Manager()
+    original_objects: models.Manager = models.Manager()
+    archive_objects: ArchiveManager = ArchiveManager()
 
     class Meta:
         abstract = True

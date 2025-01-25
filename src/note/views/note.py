@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-#
-from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin, UserPassesTestMixin
 from django.contrib.messages.views import SuccessMessageMixin
 from django.urls import reverse_lazy
 from django.utils.translation import gettext as _
@@ -8,7 +8,7 @@ from django.views.generic import CreateView, DeleteView, ListView, UpdateView
 from core.cache import BWSiteSettingsViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
-from core.constants.users import CON_BOOKKEEPER
+from core.constants.users import CON_BOOKKEEPER, CON_CFO
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from core.views.mixins.bookkeeper_pass_related_mixin import BookkeeperPassRelatedMixin
 from core.views.mixins.update_previous_mixin import UpdateReturnPreviousMixin
@@ -19,6 +19,7 @@ from note.models import Note
 
 class NoteListView(
     PermissionRequiredMixin,
+    UserPassesTestMixin,
     BWLoginRequiredMixin,
     BWSiteSettingsViewMixin,
     BWBaseListViewMixin,
@@ -30,29 +31,31 @@ class NoteListView(
     model = Note
     paginate_by = LIST_VIEW_PAGINATE_BY
     list_type = "list"
+    page_title = _("Notes")
+    page_header = _("notes".title())
+    component_path = "bw_components/note/table_list.html"
+    actions_base_url = "dashboard:note"
+    filter_cancel_url = "dashboard:note:list"
+    is_show_create_btn = True
+    is_filters_enabled = True
+    is_actions_menu_enabled = True
+    is_header_enabled = True
+    is_footer_enabled = True
+    show_info_icon = True
+    pagination_list_url_name = "dashboard:note:list"
+    base_url_name = "dashboard:note"
+    empty_label = _("notes")
+    actions_items = "update,delete"
+
+    def test_func(self) -> bool:
+        user_type = self.request.user.user_type
+        if user_type != CON_CFO:
+            return True
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context["title"] = _("Notes")
-        context.setdefault("filter_form", self.filterset.form)
-        context.setdefault("list_type", self.list_type)
-        context.setdefault("page_header", _("notes".title()))
-        context.setdefault("component_path", "bw_components/note/table_list.html")
-        context.setdefault("subtitle", _("note".title()))
-        context.setdefault("actions_base_url", "dashboard:note")
-        context.setdefault("filter_cancel_url", "dashboard:note:list")
-        context.setdefault("table_header_title", _("C"))
-        context.setdefault("table_header_subtitle", _("notes subtitle"))
-        context.setdefault("is_show_create_btn", True)
-        context.setdefault("pagination_list_url_name", "dashboard:note:list")
-        context.setdefault("is_filters_enabled", True)
-        context.setdefault("is_actions_menu_enabled", True)
-        context.setdefault("is_header_enabled", True)
-        context.setdefault("is_footer_enabled", True)
-        context.setdefault("actions_items", "update,delete")
-        context.setdefault("base_url_name", "dashboard:note")
-        context.setdefault("empty_label", _("notes"))
+        # context.setdefault("filter_form", self.filterset.form)
         context.setdefault(
             "extra_context",
             {
@@ -62,7 +65,6 @@ class NoteListView(
                 "is_show_task_link": True,
             },
         )
-        context.setdefault("show_info_icon", True)
         context.setdefault(
             "info_details",
             {

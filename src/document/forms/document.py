@@ -7,6 +7,7 @@ from core.forms.mixins.remove_fields_mixin import RemoveFieldsMixin
 from core.forms.mixins.set_bookkeeper_related_mixin import InitBookkeeperRelatedFieldsMixin
 from core.forms.mixins.set_field_to_hidden import SetFieldsInputsHiddenMixin
 from core.utils import debugging_print
+from core.utils.developments.debugging_print_object import DebuggingPrint
 from document.models import Document
 
 
@@ -41,7 +42,8 @@ class DocumentForm(
         #     # self.fields.pop("task")
         #     self.fields.pop("job")
         if self.initial.get("client") is not None:
-            pass
+            # DebuggingPrint.print(self.initial)
+            self.fields["client"].initial = self.initial.get("client")
 
         # if client is not None:
         #     self.fields["client"].initial = client

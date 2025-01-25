@@ -30,6 +30,7 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
           formElement: createDocumentForm,
           state: "disable",
         });
+
         const uploadRequest = new UploadFileRequest(
           currentTarget.action,
           formInputs,

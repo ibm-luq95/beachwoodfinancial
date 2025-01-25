@@ -40,6 +40,22 @@ class JobListView(
 
     paginate_by = LIST_VIEW_PAGINATE_BY
     list_type = "list"
+    is_show_create_btn = True
+    is_filters_enabled = True
+    is_actions_menu_enabled = True
+    is_header_enabled = True
+    is_footer_enabled = True
+    show_info_icon = True
+    page_title = _("Jobs")
+    page_header = _("Jobs".title())
+    component_path = "bw_components/job/table_list.html"
+    actions_base_url = "dashboard:job"
+    filter_cancel_url = "dashboard:job:list"
+    subtitle = _("jobs for all clients".title())
+    pagination_list_url_name = "dashboard:job:list"
+    base_url_name = "dashboard:job"
+    empty_label = _("jobs")
+    actions_items = "details,update,delete"
 
     # def paginate_queryset(self, queryset, page_size):
     #     queryset = JobProxy.objects.filter(
@@ -55,30 +71,13 @@ class JobListView(
         # DebuggingPrint.pprint(dir(self.paginator_class))
         # DebuggingPrint.pprint(dir(self.paginator_class.count))
         # DebuggingPrint.log(self.paginator_class.page())
-        context.setdefault("filter_form", self.filterset.form)
+        # context.setdefault("filter_form", self.filterset.form)
 
-        context.setdefault("list_type", self.list_type)
-        context.setdefault("component_path", "bw_components/job/table_list.html")
-        context.setdefault("page_header", _("jobs".title()))
-        context.setdefault("subtitle", _("Jobs for clients".capitalize()))
-        context.setdefault("actions_base_url", "dashboard:job")
-        context.setdefault("filter_cancel_url", "dashboard:job:list")
-        context.setdefault("table_header_title", _("C"))
         context.setdefault("table_header_subtitle", _("Jobs subtitle"))
-        context.setdefault("is_show_create_btn", True)
-        context.setdefault("pagination_list_url_name", "dashboard:job:list")
-        context.setdefault("is_filters_enabled", True)
-        context.setdefault("is_actions_menu_enabled", True)
         context.setdefault("total_records", JobProxy.objects.count())
-        context.setdefault("is_header_enabled", True)
-        context.setdefault("is_footer_enabled", True)
-        context.setdefault("actions_items", "details,update,delete")
-        context.setdefault("base_url_name", "dashboard:job")
-        context.setdefault("empty_label", _("jobs"))
         context.setdefault(
             "extra_context", {"is_show_client": True, "is_hide_manager": False}
         )
-        context.setdefault("show_info_icon", True)
         context.setdefault(
             "info_details",
             {

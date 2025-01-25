@@ -40,6 +40,7 @@ from job.management.commands import export_jobs
 from job_category.management.commands import export_job_category
 from document.management.commands import export_document
 from special_assignment.management.commands import export_sa
+from important_contact.management.commands import export_important_contact
 from discussion.management.commands import export_discussion
 from staff_briefcase.management.commands import export_briefcase
 from staff_briefcase.management.commands import export_briefcase_accounts
@@ -96,6 +97,11 @@ class Command(BaseCommand, CommandStdOutputMixin):
                         "app": "client_account",
                         "command": export_client_account.Command(),
                         "progress_msg": _("Exporting client accounts"),
+                    },
+                    {
+                        "app": "important_contact",
+                        "command": export_important_contact.Command(),
+                        "progress_msg": _("Exporting important accounts"),
                     },
                     {
                         "app": "job",

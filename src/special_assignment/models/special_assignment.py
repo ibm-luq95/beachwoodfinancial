@@ -88,7 +88,7 @@ class SpecialAssignment(
         db_index=True,
     )
 
-    objects = SpecialAssignmentsManager()
+    # objects = SpecialAssignmentsManager()
 
     class Meta(BaseModelMixin.Meta):
         ordering = ["title"]
