@@ -13,6 +13,8 @@
   },
   "rules": {
     "semi": 2,
-    "no-unused-vars": "off"
+    "no-unused-vars": "off",
+    "no-self-assign": "off",
+    "no-unused-private-class-members": "off"
   }
 }
