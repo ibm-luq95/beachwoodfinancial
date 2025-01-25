@@ -34,32 +34,29 @@ class ImportantContactListViewBW(
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "core/crudl/list.html"
     model = ImportantContact
+    is_show_create_btn = True
+    is_filters_enabled = True
+    is_actions_menu_enabled = True
+    is_header_enabled = True
+    is_footer_enabled = True
+    show_info_icon = True
+    page_title = _("Client Contacts")
+    page_header = _("Client Contacts".title())
+    component_path = "bw_components/important_contact/table_list.html"
+    actions_base_url = "dashboard:important_contact"
+    filter_cancel_url = "dashboard:important_contact:list"
+    table_header_title = _("C")
+    pagination_list_url_name = "dashboard:important_contact:list"
+    base_url_name = "dashboard:important_contact"
+    empty_label = _("contacts")
+    action_items = "update,delete"
+    subtitle = _("Clients contacts".capitalize())
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context.setdefault("title", get_trans_txt("Client Contacts"))
-        context.setdefault("filter_form", self.filterset.form)
-        context.setdefault("page_header", _("contacts".capitalize()))
-        context.setdefault(
-            "component_path", "bw_components/important_contact/table_list.html"
-        )
-        context.setdefault("subtitle", _("Client contacts".title()))
-        context.setdefault("actions_base_url", "dashboard:important_contact")
-        context.setdefault("filter_cancel_url", "dashboard:important_contact:list")
-        context.setdefault("table_header_title", _("C"))
-        context.setdefault("table_header_subtitle", _("important_contact subtitle"))
-        context.setdefault("is_show_create_btn", True)
-        context.setdefault("pagination_list_url_name", "dashboard:important_contact:list")
-        context.setdefault("is_filters_enabled", True)
-        context.setdefault("is_actions_menu_enabled", True)
-        context.setdefault("is_header_enabled", True)
-        context.setdefault("is_footer_enabled", True)
-        context.setdefault("actions_items", "update,delete")
-        context.setdefault("base_url_name", "dashboard:important_contact")
-        context.setdefault("empty_label", _("contacts"))
+        # context.setdefault("filter_form", self.filterset.form)
         context.setdefault("extra_context", {"is_client_enabled": True})
-        context.setdefault("show_info_icon", True)
         context.setdefault(
             "info_details",
             {

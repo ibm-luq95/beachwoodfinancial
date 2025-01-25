@@ -34,29 +34,28 @@ class DocumentListView(
     # ).filter(~Q(status=CON_ARCHIVED))
     paginate_by = LIST_VIEW_PAGINATE_BY
     list_type = "list"
+    is_show_create_btn = True
+    is_filters_enabled = True
+    is_actions_menu_enabled = True
+    is_header_enabled = True
+    is_footer_enabled = True
+    show_info_icon = True
+    page_title = _("Documents")
+    page_header = _("Documents".title())
+    component_path = "bw_components/document/table_list.html"
+    actions_base_url = "dashboard:document"
+    filter_cancel_url = "dashboard:document:list"
+    subtitle = _("documents".title())
+    pagination_list_url_name = "dashboard:document:list"
+    base_url_name = "dashboard:document"
+    empty_label = _("documents")
+    actions_items = "update,delete"
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context["title"] = _("Documents")
-        context.setdefault("filter_form", self.filterset.form)
-        context.setdefault("list_type", self.list_type)
-        context.setdefault("page_header", _("Documents".title()))
-        context.setdefault("component_path", "bw_components/document/table_list.html")
-        context.setdefault("subtitle", _("documents".title()))
-        context.setdefault("actions_base_url", "dashboard:document")
-        context.setdefault("filter_cancel_url", "dashboard:document:list")
-        context.setdefault("table_header_title", _("C"))
+        # context.setdefault("filter_form", self.filterset.form)
         context.setdefault("table_header_subtitle", _("documents subtitle"))
-        context.setdefault("is_show_create_btn", True)
-        context.setdefault("pagination_list_url_name", "dashboard:document:list")
-        context.setdefault("is_filters_enabled", True)
-        context.setdefault("is_actions_menu_enabled", True)
-        context.setdefault("is_header_enabled", True)
-        context.setdefault("is_footer_enabled", True)
-        context.setdefault("actions_items", "update,delete")
-        context.setdefault("base_url_name", "dashboard:document")
-        context.setdefault("empty_label", _("documents"))
         context.setdefault(
             "extra_context",
             {

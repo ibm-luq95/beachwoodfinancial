@@ -32,33 +32,31 @@ class ClientArchiveListView(
     paginate_by = LIST_VIEW_PAGINATE_BY
     queryset = ClientProxy.archive_objects.all()
     list_type = "archive"
+    is_show_create_btn = False
+    is_filters_enabled = True
+    is_actions_menu_enabled = True
+    is_header_enabled = True
+    is_footer_enabled = True
+    show_info_icon = False
+    page_title = _("Clients archive")
+    page_header = _("Clients archive".title())
+    component_path = "bw_components/client/table_list.html"
+    actions_base_url = "dashboard:archive:clients"
+    filter_cancel_url = "dashboard:archive:clients:list"
+    table_header_title = _("C")
+    pagination_list_url_name = "dashboard:archive:clients:list"
+    actions_items = "details,update,delete"
+    base_url_name = "dashboard:archive:clients"
+    empty_label = _("client(s)")
+    subtitle = _("Client archive".title())
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context["title"] = _("Clients archive")
-        context.setdefault("component_path", "bw_components/client/table_list.html")
-        context.setdefault("filter_form", self.filterset.form)
-        context.setdefault("list_type", self.list_type)
-        context.setdefault("page_header", "client".capitalize())
-        context.setdefault("subtitle", "Client archive".capitalize())
-        context.setdefault("actions_base_url", "dashboard:client")
-        context.setdefault("filter_cancel_url", "dashboard:archive:clients:list")
-        context.setdefault("table_header_title", _("C"))
-        context.setdefault("table_header_subtitle", _("Client accounts for all services"))
-        context.setdefault("is_show_create_btn", True)
-        context.setdefault("pagination_list_url_name", "dashboard:archive:clients:list")
-        context.setdefault("is_filters_enabled", True)
-        context.setdefault("is_actions_menu_enabled", True)
-        context.setdefault("is_header_enabled", True)
-        context.setdefault("is_footer_enabled", True)
-        context.setdefault("actions_items", "details,update,delete")
-        context.setdefault("base_url_name", "dashboard:client")
-        context.setdefault("empty_label", _("client(s)"))
+        # context.setdefault("filter_form", self.filterset.form)
         context.setdefault(
             "extra_context", {"is_show_bookkeeper": True, "is_show_status": True}
         )
-        context.setdefault("show_info_icon", True)
         context.setdefault(
             "info_details",
             {
