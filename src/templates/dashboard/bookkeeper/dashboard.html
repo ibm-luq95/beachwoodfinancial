@@ -5,7 +5,7 @@
 {% block dashboard_content_block %}
     {# Page Heading #}
 
-    {% include "components/inc/dashboard/content_header.html" with title="Hello, "|add:request.user.fullname subtitle="Man should fear never beginning to live." %}
+    {% include "components/inc/dashboard/content_header.html" with title="Hello, "|add:request.user.fullname %}
 
     {# End Page Heading #}
     <!-- Start Content -->
@@ -154,7 +154,9 @@
                         <div class="h-80 overflow-y-auto py-4 md:py-5">
                             <!-- Header -->
                             <div class=" border-b border-gray-200 dark:border-gray-700 mb-3 pb-3 px-3">
-                                <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">{% translate "Tasks" %}</h2>
+                                <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">
+                                    {% translate "Tasks" %}
+                                </h2>
                             </div>
                             <!-- End Header -->
                             <!-- Start Table -->
