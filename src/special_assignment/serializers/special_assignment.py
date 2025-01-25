@@ -9,14 +9,17 @@ from special_assignment.models import SpecialAssignmentProxy
 
 class SpecialAssignmentSerializer(serializers.ModelSerializer):
     assigned_by = serializers.PrimaryKeyRelatedField(
-        default="assigned_by", queryset=BWUser.objects.all()
+        default="assigned_by", queryset=BWUser.original_objects.all()
     )
     job = serializers.PrimaryKeyRelatedField(
-        default="job", queryset=JobProxy.objects.all(), required=False, allow_null=True
+        default="job",
+        queryset=JobProxy.original_objects.all(),
+        required=False,
+        allow_null=True,
     )
     client = serializers.PrimaryKeyRelatedField(
         default="client",
-        queryset=ClientProxy.objects.all(),
+        queryset=ClientProxy.original_objects.all(),
         required=False,
         allow_null=True,
     )
