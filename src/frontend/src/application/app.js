@@ -20,6 +20,9 @@ import hljs from "highlight.js";
 import "highlight.js/styles/default.css";
 import NiceSelect from "nice-select2/dist/js/nice-select2.js";
 import "nice-select2/dist/css/nice-select2.css";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
+
 // import pdfMake from "pdfmake/build/pdfmake";
 // import pdfFonts from "pdfmake/build/vfs_fonts";
 // pdfMake.vfs = pdfFonts.pdfMake.vfs;
@@ -43,6 +46,7 @@ import "./special_assignment/special_assignment.js";
 import "./task/task.js";
 import "./document/document.js";
 import "./note/note.js";
+import "./cfo/dashboard.js";
 import "./discussion/discussion.js";
 import "./job/job.js";
 import "./important_contact/important_contact.js";
