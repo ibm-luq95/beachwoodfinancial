@@ -4,21 +4,21 @@ from django.utils.translation import gettext as _
 
 class LedgerFlareIdentity:
     """
-    This class represents the identity of Beach Wood Financial.
+    This class represents the identity of Ledger Flare.
 
     Attributes:
     email_address : str
-        The email address of Beach Wood Financial.
+        The email address of Ledger Flare.
     name : str
-        The name of Beach Wood Financial.
+        The name of Ledger Flare.
     url : str
-        The URL of Beach Wood Financial's website.
+        The URL of Ledger Flare's website.
     title : str
-        The title of Beach Wood Financial's website.
+        The title of Ledger Flare's website.
     manager_name : str
-        The name of the manager of Beach Wood Financial.
+        The name of the manager of Ledger Flare.
     description : str
-        A brief description of Beach Wood Financial.
+        A brief description of Ledger Flare.
 
     """
 

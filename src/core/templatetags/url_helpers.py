@@ -216,5 +216,8 @@ def get_staff_member_update_url(user: BWUser) -> str:
         case "manager":
             management_section = "managers"
             pk = user.manager.pk
+        case "cfo":
+            management_section = "management_cfo"
+            pk = user.cfo.pk
     url_path = reverse_lazy(f"dashboard:{management_section}:update", kwargs={"pk": pk})
     return url_path

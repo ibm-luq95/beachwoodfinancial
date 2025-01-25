@@ -21,6 +21,7 @@ from core.cache import BWSiteSettingsViewMixin
 from core.config.forms import BWFormRenderer
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
+from core.constants.identity import LedgerFlareIdentity
 from core.constants.status_labels import CON_ENABLED
 from core.constants.users import CON_BOOKKEEPER, CON_MANAGER, CON_ASSISTANT
 from core.views.mixins import BWBaseListViewMixin, BWLoginRequiredMixin
@@ -53,31 +54,30 @@ class ClientListView(
     # ).filter(~Q(status=CON_ARCHIVED))
     paginate_by = LIST_VIEW_PAGINATE_BY
     list_type = "list"
+    page_title = _("Clients")
+    page_header = _("client".title())
+    component_path = "bw_components/client/table_list.html"
+    actions_base_url = "dashboard:client"
+    filter_cancel_url = "dashboard:client:list"
+    table_header_subtitle = _("Client accounts for all services")
+    pagination_list_url_name = "dashboard:client:list"
+    actions_items = "details,update,delete"
+    is_show_create_btn = True
+    is_filters_enabled = True
+    is_actions_menu_enabled = True
+    is_header_enabled = True
+    is_footer_enabled = True
+    show_info_icon = True
+    base_url_name = "dashboard:client"
+    empty_label = _("client")
+    subtitle = _(f"Clients for {LedgerFlareIdentity.name}".title())
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context["title"] = _("Clients")
-        context.setdefault("component_path", "bw_components/client/table_list.html")
-        context.setdefault("filter_form", self.filterset.form)
-        context.setdefault("list_type", self.list_type)
-        context.setdefault("page_header", "client".title())
-        context.setdefault("subtitle", "Clients".title())
-        context.setdefault("actions_base_url", "dashboard:client")
-        context.setdefault("filter_cancel_url", "dashboard:client:list")
-        context.setdefault("table_header_title", _("C"))
-        context.setdefault("table_header_subtitle", _("Client accounts for all services"))
-        context.setdefault("is_show_create_btn", True)
-        context.setdefault("pagination_list_url_name", "dashboard:client:list")
-        context.setdefault("is_filters_enabled", True)
-        context.setdefault("is_actions_menu_enabled", True)
-        context.setdefault("is_header_enabled", True)
-        context.setdefault("is_footer_enabled", True)
-        context.setdefault("actions_items", "details,update,delete")
-        context.setdefault("base_url_name", "dashboard:client")
-        context.setdefault("empty_label", _("client"))
+        # context.setdefault("filter_form", self.filterset.form)
         context.setdefault("extra_context", {"is_show_bookkeeper": True})
-        context.setdefault("show_info_icon", True)
+
         context.setdefault(
             "info_details",
             {
@@ -209,7 +209,6 @@ class ClientDetailsView(
     template_name = "client/details.html"
 
     model = ClientProxy
-    # permission_required = ["client.view_client", "client.view_client"]
     permission_required = "client.view_client"
     permission_denied_message = _("You do not have permission to access this page.")
 

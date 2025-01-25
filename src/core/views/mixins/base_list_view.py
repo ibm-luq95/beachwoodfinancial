@@ -64,6 +64,7 @@ class BWBaseListViewMixin:
 
     paginate_by = LIST_VIEW_PAGINATE_BY
     is_show_labels_in_filter_form = IS_SHOW_LABELS_IN_FILTER_FORM
+    page_title: str = ""
 
     def get_context_data(self, **kwargs):
         """
@@ -80,7 +81,7 @@ class BWBaseListViewMixin:
 
         """
         # Call the base implementation first to get a context
-        context = super().get_context_data(**kwargs)
+        context: dict = super().get_context_data(**kwargs)
         context.setdefault("is_show_created_at", IS_SHOW_CREATED_AT)
         per_page_number = self.request.GET.get("per_page", LIST_VIEW_PAGINATE_BY)
         per_page_form = PerPageForm(initial={"per_page": per_page_number})
@@ -105,6 +106,59 @@ class BWBaseListViewMixin:
                     if name not in excluded_fields
                 ]
                 context.setdefault("fields", new_list)
+        context.setdefault("title", self.page_title)
+        if hasattr(self, "list_type"):
+            context.setdefault("list_type", self.list_type)
+        if hasattr(self, "page_header"):
+            context.setdefault("page_header", self.page_header)
+        if hasattr(self, "component_path"):
+            context.setdefault("component_path", self.component_path)
+
+        if hasattr(self, "is_show_create_btn"):
+            context.setdefault("is_show_create_btn", self.is_show_create_btn)
+        if hasattr(self, "actions_base_url"):
+            context.setdefault("actions_base_url", self.actions_base_url)
+        if hasattr(self, "filter_cancel_url"):
+            context.setdefault("filter_cancel_url", self.filter_cancel_url)
+        if hasattr(self, "pagination_list_url_name"):
+            context.setdefault("pagination_list_url_name", self.pagination_list_url_name)
+
+
+        if hasattr(self, "is_header_enabled"):
+            context.setdefault("is_header_enabled", self.is_header_enabled)
+
+        if hasattr(self, "subtitle"):
+            context.setdefault("subtitle", self.subtitle)
+
+        if hasattr(self, "table_header_subtitle"):
+            context.setdefault("table_header_subtitle", self.table_header_subtitle)
+
+        if hasattr(self, "actions_items"):
+            context.setdefault("actions_items", self.actions_items)
+
+        if hasattr(self, "show_info_icon"):
+            context.setdefault("show_info_icon", self.show_info_icon)
+
+        if hasattr(self, "base_url_name"):
+            context.setdefault("base_url_name", self.base_url_name)
+
+        if hasattr(self, "empty_label"):
+            context.setdefault("empty_label", self.empty_label)
+
+        if hasattr(self, "is_filters_enabled"):
+            context.setdefault("is_filters_enabled", self.is_filters_enabled)
+
+        if hasattr(self, "is_footer_enabled"):
+            context.setdefault("is_footer_enabled", self.is_footer_enabled)
+
+        if hasattr(self, "is_actions_menu_enabled"):
+            context.setdefault("is_actions_menu_enabled", self.is_actions_menu_enabled)
+
+        if hasattr(self, "filterset"):
+            if hasattr(self.filterset, "form"):
+                context.setdefault("filter_form", getattr(self.filterset, "form"))
+
+        # context.update()
         return context
 
     def get_paginate_by(self, queryset):

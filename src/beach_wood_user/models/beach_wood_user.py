@@ -100,6 +100,8 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin, GuardianUserMix
             user_dict["staff_object"] = getattr(self, "manager")
         elif hasattr(self, "assistant"):
             user_dict["staff_object"] = getattr(self, "assistant")
+        elif hasattr(self, "cfo"):
+            user_dict["staff_object"] = getattr(self, "cfo")
 
         return user_dict
 

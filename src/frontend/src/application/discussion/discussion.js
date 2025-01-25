@@ -10,6 +10,13 @@ import {
 import { showToastNotification } from "../../utils/toasts";
 
 document.addEventListener("DOMContentLoaded", (readyEvent) => {
+  const chatbox = document.getElementById("chatbox");
+  if (chatbox) {
+    chatbox.scrollTop = chatbox.scrollHeight - chatbox.clientHeight;
+    // chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: "smooth" });
+    // alert("Dd")
+  }
+
   const discussionModalElement = document.querySelector("div#add-discussion-model-form");
   const discussionsResetBtn = document.querySelector("button#discussionsResetBtn");
   if (discussionsResetBtn) {

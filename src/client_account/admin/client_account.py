@@ -2,6 +2,7 @@
 from django.contrib import admin
 
 from client_account.models import ClientAccount
+from client_account.resources.client_account import ClientAccountResource
 from core.admin import BWBaseAdminModelMixin
 
 
@@ -15,3 +16,4 @@ class ClientAccountAdmin(BWBaseAdminModelMixin):
         "account_username",
         "status",
     ]
+    resource_classes = [ClientAccountResource]

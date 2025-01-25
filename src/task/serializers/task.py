@@ -13,7 +13,9 @@ class TaskSerializer(serializers.ModelSerializer):
     # status_display = serializers.CharField(
     #     source="get_status_display", required=False
     # )
-    job = serializers.PrimaryKeyRelatedField(queryset=JobProxy.objects.all(), many=False)
+    job = serializers.PrimaryKeyRelatedField(
+        queryset=JobProxy.original_objects.all(), many=False
+    )
 
     class Meta:
         model = TaskProxy

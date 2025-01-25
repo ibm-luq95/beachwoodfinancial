@@ -9,6 +9,7 @@ from import_export.admin import ImportExportModelAdmin
 
 from beach_wood_user.forms import BWUserCreationForm, BWUserChangeForm
 from beach_wood_user.models import BWUser
+from beach_wood_user.resources.users import UsersResource
 from core.admin import BWBaseAdminModelMixin
 from core.constants.users import READONLY_NEW_STAFF_MEMBER_GROUP_NAME
 
@@ -17,6 +18,7 @@ from core.constants.users import READONLY_NEW_STAFF_MEMBER_GROUP_NAME
 class BWUserAdmin(ImportExportModelAdmin, UserAdmin):
     actions = ["unset_readonly_group", "add_view_staffbriefcase_permission"]
     add_form = BWUserCreationForm
+    resource_classes = [UsersResource]
     form = BWUserChangeForm
     ordering = ("email",)
     model = BWUser
@@ -34,6 +36,7 @@ class BWUserAdmin(ImportExportModelAdmin, UserAdmin):
         "is_active",
         "last_login",
         "created_at",
+        "is_deleted",
     )
     readonly_fields = ("date_joined", "last_login", "updated_at")
     fieldsets = (
@@ -140,6 +143,15 @@ class BWUserAdmin(ImportExportModelAdmin, UserAdmin):
                 )
         except Exception as ex:
             self.message_user(request, str(ex), level=40)
+
+    def get_queryset(self, request):
+        """
+        Returns a QuerySet of all model instances that can be edited by the
+        admin site. This is used by changelist_view.
+        """
+        # qs = self.model._default_manager.get_queryset()
+        qs = self.model.original_objects.get_queryset()
+        return qs
 
     @admin.action(description=_("Unset readonly group for selected users"))
     def unset_readonly_group(self, request, queryset):

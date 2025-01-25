@@ -46,32 +46,32 @@ class ManagerListView(
     model = ManagerProxy
     paginate_by = LIST_VIEW_PAGINATE_BY
     list_type = "list"
-    # queryset = ManagerProxy.objects.get_queryset().order_by("-user__created_at")
+    is_show_create_btn = True
+    is_filters_enabled = True
+    is_actions_menu_enabled = True
+    is_header_enabled = True
+    is_footer_enabled = True
+    show_info_icon = True
+    page_title = _("Managers")
+    page_header = _("Managers".title())
+    component_path = "bw_components/manager/table_list.html"
+    actions_base_url = "dashboard:managers"
+    filter_cancel_url = "dashboard:managers:list"
+    table_header_title = _("C")
+    pagination_list_url_name = "dashboard:managers:list"
+    actions_items = "update,delete"
+    base_url_name = "dashboard:managers"
+    empty_label = _("managers")
+    subtitle = _("managers".title())
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context["title"] = _("Managers")
-        context.setdefault("filter_form", self.filterset.form)
-        context.setdefault("list_type", self.list_type)
-        context.setdefault("page_header", _("managers".capitalize()))
-        context.setdefault("component_path", "bw_components/manager/table_list.html")
-        context.setdefault("subtitle", _("manager staff".title()))
-        context.setdefault("actions_base_url", "dashboard:managers")
-        context.setdefault("filter_cancel_url", "dashboard:managers:list")
-        context.setdefault("table_header_title", _("C"))
+        # context.setdefault("filter_form", self.filterset.form)
+        # context.setdefault("list_type", self.list_type)
         context.setdefault("table_header_subtitle", _("managers subtitle"))
-        context.setdefault("is_show_create_btn", True)
-        context.setdefault("pagination_list_url_name", "dashboard:managers:list")
-        context.setdefault("is_filters_enabled", True)
-        context.setdefault("is_actions_menu_enabled", True)
-        context.setdefault("is_header_enabled", True)
-        context.setdefault("is_footer_enabled", True)
-        context.setdefault("actions_items", "update,delete")
-        context.setdefault("base_url_name", "dashboard:managers")
-        context.setdefault("empty_label", _("managers"))
         context.setdefault("extra_context", {})
-        context.setdefault("show_info_icon", True)
         context.setdefault(
             "info_details",
             {

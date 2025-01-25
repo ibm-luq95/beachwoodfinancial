@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-#
 from django.contrib import admin
 
+from core.utils.developments.debugging_print_object import DebuggingPrint
 from important_contact.models import ImportantContact
 from core.admin import BWBaseAdminModelMixin
 
@@ -13,7 +14,10 @@ class ImportantContactAdmin(BWBaseAdminModelMixin):
         "company_name",
         "contact_first_name",
         "contact_last_name",
+        "created_at"
     ]
 
+    @admin.display(description="Client")
     def get_client(self, obj: ImportantContact):
-        return obj.client.get().name
+        # DebuggingPrint.print(obj.client.all())
+        return obj.client

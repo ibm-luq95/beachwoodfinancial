@@ -32,7 +32,7 @@ from core.constants.users import (
     CON_ASSISTANT,
     CON_MANAGER,
     CON_DEVELOPER,
-    CON_USER,
+    CON_USER, CON_CFO,
 )
 
 
@@ -61,6 +61,7 @@ def access_constants(request) -> dict:
         "CON_BOOKKEEPER": CON_BOOKKEEPER,
         "CON_ASSISTANT": CON_ASSISTANT,
         "CON_MANAGER": CON_MANAGER,
+        "CON_CFO": CON_CFO,
         "CON_DEVELOPER": CON_DEVELOPER,
         "CON_USER": CON_USER,
         "BW_INFO_MODAL_CSS_CLASSES": BW_INFO_MODAL_CSS_CLASSES,

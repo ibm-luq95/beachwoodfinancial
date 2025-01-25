@@ -26,29 +26,29 @@ class TaskArchiveListView(
     paginate_by = LIST_VIEW_PAGINATE_BY
     list_type = "archive"
     queryset = TaskProxy.archive_objects.all()
+    is_show_create_btn = False
+    is_filters_enabled = True
+    is_actions_menu_enabled = True
+    is_header_enabled = True
+    is_footer_enabled = True
+    show_info_icon = False
+    page_title = _("Tasks archive")
+    page_header = _("Tasks archive".title())
+    component_path = "bw_components/task/table_list.html"
+    actions_base_url = "dashboard:task"
+    filter_cancel_url = "dashboard:archive:tasks:list"
+    table_header_title = _("C")
+    pagination_list_url_name = "dashboard:archive:tasks:list"
+    base_url_name = "dashboard:task"
+    empty_label = _("task(s)")
+    subtitle = _("Tasks archive".title())
+    actions_items = "update,delete"
+
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context["title"] = _("Tasks archive")
-        context.setdefault("filter_form", self.filterset.form)
-        context.setdefault("list_type", self.list_type)
-        context.setdefault("page_header", _("Tasks archive".capitalize()))
-        context.setdefault("component_path", "bw_components/task/table_list.html")
-        context.setdefault("subtitle", _("tasks".title()))
-        context.setdefault("actions_base_url", "dashboard:task")
-        context.setdefault("filter_cancel_url", "dashboard:archive:tasks:list")
-        context.setdefault("table_header_title", _("C"))
-        context.setdefault("table_header_subtitle", _("Tasks subtitle"))
-        context.setdefault("is_show_create_btn", True)
-        context.setdefault("pagination_list_url_name", "dashboard:archive:tasks:list")
-        context.setdefault("is_filters_enabled", True)
-        context.setdefault("is_actions_menu_enabled", True)
-        context.setdefault("is_header_enabled", True)
-        context.setdefault("is_footer_enabled", True)
-        context.setdefault("actions_items", "update,delete")
-        context.setdefault("base_url_name", "dashboard:task")
-        context.setdefault("empty_label", _("task"))
+        # context.setdefault("filter_form", self.filterset.form)
         context.setdefault(
             "extra_context",
             {
@@ -58,7 +58,6 @@ class TaskArchiveListView(
                 "is_show_job_column": True,
             },
         )
-        context.setdefault("show_info_icon", True)
         context.setdefault(
             "info_details",
             {

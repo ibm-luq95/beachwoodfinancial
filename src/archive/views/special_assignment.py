@@ -25,36 +25,30 @@ class SpecialAssignmentArchiveListView(
     paginate_by = LIST_VIEW_PAGINATE_BY
     list_type = "archive"
     queryset = SpecialAssignmentProxy.archive_objects.all()
+    is_show_create_btn = False
+    is_filters_enabled = True
+    is_actions_menu_enabled = True
+    is_header_enabled = True
+    is_footer_enabled = True
+    show_info_icon = False
+    page_title = _("Special assignments archive")
+    page_header = _("Special assignments archive".title())
+    component_path = "bw_components/special_assignment/table_list.html"
+    actions_base_url = "dashboard:special_assignment"
+    filter_cancel_url = "dashboard:archive:special_assignment:list"
+    table_header_title = _("C")
+    pagination_list_url_name = "dashboard:archive:special_assignment:list"
+    base_url_name = "dashboard:special_assignment"
+    empty_label = _("assignment(s)")
+    subtitle = _("Special assignments archive".title())
+    actions_items = "details,update,delete"
+
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        context["title"] = _("Special assignments archive")
-        context.setdefault("filter_form", self.filterset.form)
-        context.setdefault("list_type", self.list_type)
-        context.setdefault("page_header", _("Special assignments archived".capitalize()))
-        context.setdefault(
-            "component_path", "bw_components/special_assignment/table_list.html"
-        )
-        context.setdefault(
-            "subtitle",
-            _("Special assignments custom specific assignments to clients".title()),
-        )
-        context.setdefault("actions_base_url", "dashboard:special_assignment")
-        context.setdefault("filter_cancel_url", "dashboard:archive:special_assignment:list")
-        context.setdefault("table_header_title", _("C"))
-        context.setdefault("table_header_subtitle", _("Jobs subtitle"))
-        context.setdefault("is_show_create_btn", True)
-        context.setdefault("pagination_list_url_name", "dashboard:archive:special_assignment:list")
-        context.setdefault("is_filters_enabled", True)
-        context.setdefault("is_actions_menu_enabled", True)
-        context.setdefault("is_header_enabled", True)
-        context.setdefault("is_footer_enabled", True)
-        context.setdefault("actions_items", "details,update,delete")
-        context.setdefault("base_url_name", "dashboard:special_assignment")
-        context.setdefault("empty_label", _("assignment(s)"))
+        # context.setdefault("filter_form", self.filterset.form)
         context.setdefault("extra_context", {})
-        context.setdefault("show_info_icon", True)
         context.setdefault(
             "info_details",
             {

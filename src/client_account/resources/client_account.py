@@ -7,3 +7,4 @@ from client_account.models import ClientAccount
 class ClientAccountResource(resources.ModelResource):
     class Meta:
         model = ClientAccount
+        skip_unchanged = True
