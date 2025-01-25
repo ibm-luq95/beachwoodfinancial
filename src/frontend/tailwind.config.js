@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 const Path = require("path");
 // const fs = require("fs");
-const chalk = require("chalk");
+import chalk from "chalk";
 const pwd = process.env.PWD;
 const pwdParent = Path.dirname(pwd);
 const srcDir = Path.join(pwdParent, "src");
