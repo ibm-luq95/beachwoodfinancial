@@ -77,11 +77,16 @@
                                 {% endif %}
                             </div>
                         </div>
+                    
                     {% endfor %}
                 </div>
                 <!-- Reply with Avatar -->
             {% endif %}
                 {% endcomment %}
+            {% empty %}
+                <p class="italic">
+                    {% translate "No discussions yet." %}
+                </p>
             {% endfor %}
             <!-- Attachment Icon -->
             {% comment %}

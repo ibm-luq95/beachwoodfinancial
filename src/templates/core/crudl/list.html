@@ -10,7 +10,7 @@
     {# End Page Heading #}
     {# Start Filter Form #}
     {% if is_filters_enabled is True %}
-        {% component "bw_filter_form" filter_form=filter_form filter_cancel_url=filter_cancel_url filter_categories_is_enabled=filter_categories_is_enabled filter_categories_dict=filter_categories %}{% endcomponent %}
+        {% component "bw_filter_form" filter_form=filter_form filter_cancel_url=filter_cancel_url filter_categories_is_enabled=filter_categories_is_enabled filter_categories_dict=filter_categories filter_form_id=filter_form_id %}{% endcomponent %}
 
         {% include "bw_ui_components/elements/categories_js_modal.html" with filter_categories_dict=filter_categories %}
 

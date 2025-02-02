@@ -17,6 +17,7 @@ import configparser
 from django.contrib.messages import constants as messages
 import sentry_sdk
 from sentry_sdk.integrations.django import DjangoIntegration
+from django_components import ComponentsSettings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 # BASE_DIR = Path(__file__).resolve().parent.parent  # Default BASE_DIR
@@ -114,7 +115,7 @@ MIDDLEWARE = [
     # with django-valkey package
     "django.middleware.common.BrokenLinkEmailsMiddleware",
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",
+    # "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django_session_timeout.middleware.SessionTimeoutMiddleware",
@@ -128,6 +129,7 @@ MIDDLEWARE = [
     "core.middleware.MultiHostMiddleware",
     "maintenance_mode.middleware.MaintenanceModeMiddleware",
     "easyaudit.middleware.easyaudit.EasyAuditMiddleware",
+    "django_components.middleware.ComponentDependencyMiddleware",
     # "django.middleware.cache.FetchFromCacheMiddleware",  # new for the cache,
     # not working with django-valkey package
 ]
@@ -189,8 +191,29 @@ TEMPLATES = [
                 "core.templatetags.url_helpers",
                 "django_components.templatetags.component_tags",
             ],
+            # "loaders": [
+            #     (
+            #         "django.template.loaders.cached.Loader",
+            #         [
+            #             # Default Django loader
+            #             "django.template.loaders.filesystem.Loader",
+            #             # Inluding this is the same as APP_DIRS=True
+            #             "django.template.loaders.app_directories.Loader",
+            #             # Components loader
+            #             "django_components.template_loader.Loader",
+            #         ],
+            #     )
+            # ],
         },
     }
+]
+
+STATICFILES_FINDERS = [
+    # Default finders
+    "django.contrib.staticfiles.finders.FileSystemFinder",
+    "django.contrib.staticfiles.finders.AppDirectoriesFinder",
+    # Django components
+    "django_components.finders.ComponentsFileSystemFinder",
 ]
 
 # FORM_RENDERER = "django.forms.renderers.TemplatesSetting"
@@ -250,6 +273,9 @@ AUTHENTICATION_BACKENDS = (
 # Django rest framework configs
 REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "drf_standardized_errors.handler.exception_handler",
+    "DEFAULT_RENDERER_CLASSES": (
+        "rest_framework.renderers.JSONRenderer",  # Only JSON responses
+    ),
     "DEFAULT_AUTHENTICATION_CLASSES": [
         "rest_framework.authentication.BasicAuthentication",
         "rest_framework.authentication.SessionAuthentication",
@@ -306,7 +332,11 @@ MEDIA_URL = "media/"
 
 # Whitenoise configs
 STATICFILES_STORAGE = config("STATICFILES_STORAGE", cast=str)
-WHITENOISE_MANIFEST_STRICT = config("WHITENOISE_MANIFEST_STRICT", cast=bool)
+# WHITENOISE_MANIFEST_STRICT = config("WHITENOISE_MANIFEST_STRICT", cast=bool)
+WHITENOISE_MAX_AGE = 0
+WHITENOISE_IMMUTABLE_FILE_TEST = lambda url: False
+WHITENOISE_AUTOREFRESH = True
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -380,46 +410,16 @@ MESSAGE_TAGS = {
 # DEFENDER_VALKEY_URL = (
 #     f"valkey://:{config('VALKEY_PASSWORD', cast=str)}@{config('REDIS_HOST', cast=str)}/0"
 # )
-
+COMPONENTS = ComponentsSettings(
+    autodiscover=True,
+    reload_on_file_change=True,
+    template_cache_size=2,
+)
 # Django-filter configs
 FILTERS_VERBOSE_LOOKUPS = {"exact": "", "iexact": "", "contains": "", "icontains": ""}
 FILTERS_EMPTY_CHOICE_LABEL = ""
 # FILTERS_NULL_CHOICE_LABEL = "---"
 
-# check if cache enabled
-if config("IS_CACHE_ENABLED", cast=bool) is True:
-    cache_dict = {
-        "default": {
-            "BACKEND": config("CACHE_BACKEND_ENGINE", cast=str),
-            "LOCATION": f"valkey://{config('VALKEY_HOST')}",
-            "OPTIONS": {},
-            #     # "PASSWORD": config("VALKEY_PASSWORD"),
-            #     # "PARSER_CLASS": "valkey.connection.HiredisParser",
-            #     "CLIENT_CLASS": "django_valkey.client.DefaultClient",
-            #     "PICKLE_VERSION": -1,
-            #     "SERIALIZER": "django_valkey.serializers.json.JSONSerializer",
-            #     # "SERIALIZER": "django_valkey.serializers.msgpack.MSGPackSerializer",
-            #     # "COMPRESSOR": "django_valkey.compressors.lzma.LzmaCompressor",
-            # },
-        }
-    }
-    if stage == "LOCAL_DEV":
-        cache_dict["default"]["OPTIONS"]["PASSWORD"] = config("VALKEY_PASSWORD", cast=str)
-    # pprint.pprint(cache_dict)
-    CACHES = cache_dict
-    # SESSION_ENGINE = "django.contrib.sessions.backends.cache"
-    # SESSION_CACHE_ALIAS = "default"
-    DJANGO_VALKEY_LOG_IGNORED_EXCEPTIONS = True
-    CACHE_MIDDLEWARE_ALIAS = config(
-        "CACHE_MIDDLEWARE_ALIAS", cast=str
-    )  # which cache alias to use
-    CACHE_MIDDLEWARE_SECONDS = config(
-        "CACHE_MIDDLEWARE_SECONDS", cast=int
-    )  # number of seconds to cache a page for (TTL)
-
-    CACHE_MIDDLEWARE_KEY_PREFIX = config(
-        "CACHE_MIDDLEWARE_KEY_PREFIX", cast=str
-    )  # should be used if the cache is shared across multiple sites that
 # use the
 # same
 # Django instance
@@ -543,6 +543,7 @@ ANONYMOUS_USER_NAME = None
 
 # Django-import-export config
 # IMPORT_EXPORT_SKIP_ADMIN_LOG = True
+
 
 # SENTRY configs
 if config("SENTRY_IS_ENABLED", cast=bool) is True:

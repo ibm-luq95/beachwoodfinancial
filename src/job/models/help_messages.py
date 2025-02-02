@@ -17,4 +17,5 @@ JOB_HELP_MESSAGES = {
     "categories": _("Categorize your job"),
     "period_year": _("Period year which will be used in reporting"),
     "period_month": _("Period month which will be used in reporting"),
+    "is_scheduled": _("Set the start date as scheduled date"),
 }
