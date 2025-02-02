@@ -114,14 +114,46 @@
   "autoDocstring.docstringFormat": "google",
   "python.analysis.inlayHints.variableTypes": true,
   "python.analysis.autoFormatStrings": true,
-  "files.autoSaveWhenNoErrors": true,
-  "files.autoSaveWorkspaceFilesOnly": true,
-  "files.autoSave": "afterDelay",
+  "files.autoSaveWhenNoErrors": false,
+  "files.autoSaveWorkspaceFilesOnly": false,
+  "files.autoSave": "onFocusChange",
   "files.autoSaveDelay": 4000,
   "codium.codeCompletion.enable": true,
   "[nginx]": {
     "editor.defaultFormatter": "ahmadalli.vscode-nginx-conf"
-  }
+  },
+  "djlint.configuration": "./pyproject.toml",
+  "files.associations": {
+    "**/views/**/*.html": "django-html",
+    "*.tpl": "django-html"
+  },
+  "files.refactoring.autoSave": false,
+  "auto-close-tag.SublimeText3Mode": true,
+  "autoimport.showNotifications": true,
+  "autopep8.importStrategy": "fromEnvironment",
+  "git.autorefresh": false,
+  "markdown.extension.preview.autoShowPreviewToSide": true,
+  "path-intellisense.autoSlashAfterDirectory": true,
+  "vue.autoInsert.dotValue": true,
+  "auto-close-tag.fullMode": true,
+  "auto-close-tag.insertSpaceBeforeSelfClosingTag": true,
+  "githubRepositories.autoFetch.interval": 600,
+  "autoDocstring.includeExtendedSummary": true,
+  "gitlens.plusFeatures.enabled": false,
+  "jsdoc-generator.generateDescriptionForReturns": true,
+  "jsdoc-generator.generateDescriptionForParameters": true,
+  "jsdoc-generator.generateDescriptionForTypeParameters": true,
+  "editor.tokenColorCustomizations": {
+  "textMateRules": [
+    {
+      "name": "JSDoc Comment",
+      "scope": "comment.block.documentation.js",
+      "settings": {
+        "foreground": "#6A9955"
+      }
+    }
+  ]
+}
   // config for extention: junstyle.vscode-django-support
   // "files.associations": {
   //   "**/templates/**/*.html": "django-html",
