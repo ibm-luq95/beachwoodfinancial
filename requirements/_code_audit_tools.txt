@@ -1,0 +1,6 @@
+eradicate  # helps cleans up existing junk comments, It does this by detecting block comments that contain valid Python syntax that are likely to be commented out code
+vulture   # Vulture finds unused code in Python programs. This is useful for cleaning up and finding errors in large code bases. If you run Vulture on both your library and test suite you can find untested code.
+#pylama
+bandit
+bandit[toml]
+Prospector  # is a tool to analyse Python code and output information about errors, potential problems, convention violations and complexity.
