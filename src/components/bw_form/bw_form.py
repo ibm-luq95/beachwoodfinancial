@@ -3,8 +3,6 @@
 from django.urls import reverse_lazy
 from django_components import component
 
-from core.utils import debugging_print
-
 
 @component.register("bw_form")
 class BWForm(component.Component):
@@ -12,6 +10,8 @@ class BWForm(component.Component):
     # To customize which template to use based on context
     # you can override def get_template_name() instead of specifying the below variable.
     template_name = "bw_form/bw_form.html"
+    js_file = "bw_form/bw_form.js"
+    css_file = "bw_form/bw_form.css"
 
     # This component takes one parameter, a date string to show in the template
     def get_context_data(
@@ -57,7 +57,3 @@ class BWForm(component.Component):
             "is_btns_enabled": is_btns_enabled,
             "extra_form_css_classes": extra_form_css_classes,
         }
-
-    class Media:
-        css = "bw_form/bw_form.css"
-        js = "bw_form/bw_form.js"

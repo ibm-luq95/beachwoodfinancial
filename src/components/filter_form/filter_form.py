@@ -19,6 +19,9 @@ class BWFilterForm(component.Component):
     # To customize which template to use based on context
     # you can override def get_template_name() instead of specifying the below variable.
     template_name = "filter_form/filter_form.html"
+    js_file = "filter_form/filter_form.js"
+    css_file = "filter_form/filter_form.css"
+
 
     # This component takes one parameter, a date string to show in the template
     def get_context_data(
@@ -52,7 +55,3 @@ class BWFilterForm(component.Component):
             "filter_categories_is_enabled": filter_categories_is_enabled,
             "filter_categories_dict": filter_categories_dict,
         }
-
-    class Media:
-        css = "filter_form/filter_form.css"
-        js = "filter_form/filter_form.js"
