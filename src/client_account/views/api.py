@@ -16,3 +16,4 @@ class ClientAccountViewSet(ModelViewSet):
     # parser_classes = [parsers.FormParser, parsers.MultiPartParser]
     perm_slug = "client_account.clientaccount"
     queryset = ClientAccount.objects.all()
+    http_method_names = ["post"]
