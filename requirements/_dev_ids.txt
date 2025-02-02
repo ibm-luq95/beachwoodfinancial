@@ -2,6 +2,8 @@ autopep8
 bandit
 black
 djlint
+djade
+djhtml
 curlylint
 docformatter
 flake8

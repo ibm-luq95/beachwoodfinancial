@@ -24,6 +24,7 @@ class ClientViewSet(ModelViewSet):
 	parser_classes = [parsers.FormParser, parsers.MultiPartParser]
 	perm_slug = "client.client"
 	queryset = ClientProxy.objects.all()
+	http_method_names = ["post"]
 
 	@action(
 		methods=["POST"],

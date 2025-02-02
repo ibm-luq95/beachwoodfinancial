@@ -58,6 +58,7 @@ import "./staff_briefcase/staff_notes.js";
 import "./staff_briefcase/staff_documents.js";
 import "./staff_briefcase/staff_accounts.js";
 import "./filter_category_forms/filter_category_forms.js";
+import "./reports/new_report.js";
 import { setFormInputsReadOnly } from "../utils/form_helpers";
 import { HSTabs } from "../../node_modules/preline/dist/preline.js";
 // import { HSTabs } from "../../node_modules/preline/dist/preline.js";

@@ -23,6 +23,7 @@ urlpatterns = [
     path("core/", include("core.urls"), name="core-urls"),
     path("auth/", include("beach_wood_user.urls.auth"), name="auth-urls"),
     path("dashboard/", include("dashboard.urls"), name="dashboard-urls"),
+    path("", include("django_components.urls")),
 ]
 
 admin.site.index_title = _("Beachwood Financial Administrator")

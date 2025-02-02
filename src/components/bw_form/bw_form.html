@@ -1,5 +1,4 @@
-{% load widget_tweaks development_tags bw_form_helpers core_tags %}
-{% load i18n %}
+{% load bw_form_helpers core_tags development_tags i18n widget_tweaks %}
 
 {% if form.errors %}
     <div class="bg-red-50 border border-red-200 rounded-md p-4 mb-2"
@@ -39,6 +38,7 @@
         {% if form_subtitle %}
             <p class="mb-4 text-gray-500 dark:text-gray-400">{{ form_subtitle }}</p>
         {% endif %}
+        <hr class="mt-2 mb-5" />
         {# Start Form #}
         <form id="{{ form_id }}"
               {% if extra_form_css_classes %}class="{{ extra_form_css_classes }}"{% endif %}
@@ -58,6 +58,9 @@
                             {% bw_get_form_widget_attrs_as_dict field.field as widget_attrs %}
                             {# {{ input.field|bw_get_form_field_type }} #}
                             <div class="relative">
+                                {% comment %}
+                                {{ field|field_type }}
+                                {% endcomment %}
                                 <!-- Boolean Field -->
                                 {% if field|field_type == 'booleanfield' %}
                                     {% bw_switch bound_field=field css_classes=BW_FULL_INPUT_CSS_CLASSES %}
@@ -82,8 +85,8 @@
                                 {% else %}
                                     {% render_field field class+=BW_PRELINE_TEXT_INPUT_CSS_CLASSES placeholder=widget_attrs.placeholder %}
                                 {% endif %}
-                                {% if field.help_text %}
-                                    <p class="text-sm text-gray-500 mt-2"
+                                {% if field.help_text and field|field_type != 'booleanfield' %}
+                                    <p class="text-sm text-gray-600 mt-2"
                                        id="{{ field.id_for_label|add:'helper' }}">
                                         {{ field.help_text|safe }}
                                     </p>
@@ -114,7 +117,7 @@
                 <!-- End Grid -->
             </fieldset>
         </form>
-        {# End Form  #}
+        {# End Form #}
     </div>
     {% if is_btns_enabled is True %}
         <div class="bg-gray-50 text-right border-t rounded-b-xl py-3 px-4 md:py-3 md:px-5 dark:bg-slate-900 dark:border-gray-700">

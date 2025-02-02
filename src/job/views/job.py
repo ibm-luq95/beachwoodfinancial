@@ -11,6 +11,7 @@ from core.config.forms import BWFormRenderer
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.users import CON_BOOKKEEPER, CON_ASSISTANT, CON_MANAGER
+from core.utils.developments.debugging_print_object import DebuggingPrint
 from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
 from core.views.mixins.update_previous_mixin import UpdateReturnPreviousMixin
 from discussion.forms import DiscussionMiniForm
@@ -67,12 +68,16 @@ class JobListView(
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
 
-        context["title"] = _("Jobs")
+        if self.request.GET:
+            context["title"] = _("Filtered jobs")
+        else:
+            context["title"] = _("Jobs")
+
         # DebuggingPrint.pprint(dir(self.paginator_class))
         # DebuggingPrint.pprint(dir(self.paginator_class.count))
         # DebuggingPrint.log(self.paginator_class.page())
         # context.setdefault("filter_form", self.filterset.form)
-
+        context.setdefault("filter_form_id", "jobFilterForm")
         context.setdefault("table_header_subtitle", _("Jobs subtitle"))
         context.setdefault("total_records", JobProxy.objects.count())
         context.setdefault(

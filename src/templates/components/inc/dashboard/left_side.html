@@ -188,6 +188,15 @@
                     {% translate "Jobs" %}
                 </a>
             </li>
+            {% comment  %}
+                <li class="hs-accordion" id="schedule-jobs-accordion">
+                <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white" href="{% url 'dashboard:managers:schedule_jobs_list' %}">
+                    
+                    <i class="fa-solid fa-business-time w-4.5 h-4.5"></i>
+                    {% translate "Scheduled Jobs" %}
+                </a>
+            </li>
+            {% endcomment %}
             <li class="hs-accordion" id="tasks-accordion">
                 <a class="hs-accordion-toggle flex items-center gap-x-3.5 py-2 px-2.5 hs-accordion-active:text-white hs-accordion-active:hover:bg-transparent text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
                    href="{% url 'dashboard:task:list' %}">
@@ -279,6 +288,20 @@
                                         <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
                                     </svg>
                                     {% translate "Jobs" %}
+                                </a>
+                            </li>
+                            <li>
+                                <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
+                                   href="{% url 'dashboard:reports:new_report' %}">
+                                    <svg xmlns="http://www.w3.org/2000/svg"
+                                         width="16"
+                                         height="16"
+                                         fill="currentColor"
+                                         class="bi bi-filter"
+                                         viewBox="0 0 16 16">
+                                        <path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z" />
+                                    </svg>
+                                    {% translate "New" %}
                                 </a>
                             </li>
                         </ul>
@@ -481,20 +504,20 @@
                                 </a>
                             </li>
                             {% if debug %}
-                                <li>
-                                    <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                       href="{% url 'dashboard:site_settings:app_configs_settings' %}">
+                                {% comment  %}
+                                    <li>
+                                    <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white" href="{% url 'dashboard:site_settings:app_configs_settings' %}">
                                         <i class="fa-solid fa-gears"></i>
                                         {% translate "Configurations" %}
                                     </a>
                                 </li>
                                 <li>
-                                    <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white"
-                                       href="javascript:;">
+                                    <a class="flex items-center gap-x-1.5 py-2 px-2.5 text-sm text-gray-400 rounded-md hover:bg-gray-800 hover:text-white" href="javascript:;">
                                         <i class="fa-solid fa-database"></i>
                                         {% translate "DB Backup" %}
                                     </a>
                                 </li>
+                                {% endcomment %}
                             {% endif %}
                             {% if request.user.is_superuser is True and request.user.user_genre == CON_DEVELOPER %}
                                 <li>
