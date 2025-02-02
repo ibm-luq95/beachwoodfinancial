@@ -34,7 +34,6 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
         url: currentTarget.action,
         token: currentTarget[CSRFINPUTNAME].value,
       };
-      // throw new Error("Wait");
       try {
         const request = sendRequest(requestOptions);
         request
@@ -85,6 +84,14 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
           url: currentTarget.action,
           token: currentTarget[CSRFINPUTNAME].value,
         };
+        if (formInputs["is_scheduled"]) {
+          // console.log("Scheduled");
+          formInputs["is_scheduled"] = true;
+        } else {
+          formInputs["is_scheduled"] = false;
+        }
+        // console.log(formInputs)
+        // throw new Error("Error while updating job!");
         const request = sendRequest(requestOptions);
         request
           .then((data) => {
