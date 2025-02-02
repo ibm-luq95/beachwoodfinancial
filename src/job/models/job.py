@@ -148,6 +148,12 @@ class Job(
         help_text=JOB_HELP_MESSAGES.get("categories"),
         db_index=True,
     )
+    is_scheduled = models.BooleanField(
+        _("scheduled"),
+        null=True,
+        # blank=True,
+        help_text=JOB_HELP_MESSAGES.get("is_scheduled"),
+    )
 
     # tasks = models.ManyToManyField(to=Task, help_text=JOB_HELP_MESSAGES.get("tasks"))
     note = models.TextField(
@@ -168,6 +174,9 @@ class Job(
 
         permissions = BaseModelMixin.Meta.permissions + [
             ("list_abstract_job_template", "List abstract job template")
+        ]
+        indexes = [
+            models.Index(name="jobs_is_scheduled_idx", fields=["is_scheduled"]),
         ]
 
     # def get_absolute_url(self):
