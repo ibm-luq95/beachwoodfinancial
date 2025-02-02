@@ -147,14 +147,16 @@
                 </button>
             </div>
             <div class="hs-tooltip inline-block">
-                <a href="{{ filter_cancel_url }}"
-                   id="resetFilterBtn"
-                   data-form="{{ filter_form_id }}"
-                   class="hs-tooltip-toggle inline-flex flex-shrink-0 h-[2.375rem] w-[2.375rem] justify-center items-center gap-2 rounded-md py-3 px-4inline-flex bg-gray-300 border border-transparent font-semibold text-gray-800 hover:text-white hover:bg-gray-800 focus:outline-none focus:ring-2 ring-offset-white focus:ring-gray-800 focus:ring-offset-2 transition-all text-sm dark:bg-gray-700 dark:hover:bg-gray-900 dark:hover:border-gray-900 dark:text-white dark:focus:ring-gray-900 dark:focus:ring-offset-gray-800">
+                <button type="reset"
+                        data-href="{{ filter_cancel_url }}"
+                        id="resetFilterBtn"
+                        form="{{ filter_form_id }}"
+                        data-form="{{ filter_form_id }}"
+                        class="hs-tooltip-toggle inline-flex flex-shrink-0 h-[2.375rem] w-[2.375rem] justify-center items-center gap-2 rounded-md py-3 px-4inline-flex bg-gray-300 border border-transparent font-semibold text-gray-800 hover:text-white hover:bg-gray-800 focus:outline-none focus:ring-2 ring-offset-white focus:ring-gray-800 focus:ring-offset-2 transition-all text-sm dark:bg-gray-700 dark:hover:bg-gray-900 dark:hover:border-gray-900 dark:text-white dark:focus:ring-gray-900 dark:focus:ring-offset-gray-800">
                     <i class="fa-solid fa-eraser"></i>
                     <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
                           role="tooltip">{% translate "Reset filter" %}</span>
-                </a>
+                </button>
             </div>
         </div>
     </div>
