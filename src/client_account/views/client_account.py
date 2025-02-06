@@ -69,6 +69,7 @@ class ClientAccountListViewBW(
                 ),
             },
         )
+        context.setdefault("filter_form_id", "clientAccountFilterForm")
         return context
 
     def get_queryset(self):

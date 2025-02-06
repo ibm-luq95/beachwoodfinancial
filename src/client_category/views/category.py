@@ -63,6 +63,7 @@ class ClientCategoryListViewBW(
 				),
 			},
 		)
+		context.setdefault("filter_form_id", "clientCategoryFilterForm")
 		return context
 
 	def get_queryset(self):

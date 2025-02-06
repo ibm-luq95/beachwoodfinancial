@@ -75,6 +75,7 @@ class DocumentListView(
                 "modal_css_id": BW_INFO_MODAL_CSS_CLASSES.get("document").get("cssID"),
             },
         )
+        context.setdefault("filter_form_id", "documentFilterForm")
 
         # debugging_print(self.filterset.form["name"])
         return context

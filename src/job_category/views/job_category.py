@@ -58,6 +58,7 @@ class JobCategoryListView(
 				"modal_css_id": BW_INFO_MODAL_CSS_CLASSES.get("job_category").get("cssID"),
 			},
 		)
+		context.setdefault("filter_form_id", "jobCategoryFilterForm")
 
 		return context
 
