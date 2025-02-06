@@ -64,6 +64,7 @@ class CFOListView(
                 "modal_css_id": BW_INFO_MODAL_CSS_CLASSES.get("cfo").get("cssID"),
             },
         )
+        context.setdefault("filter_form_id", "cfosFilterForm")
 
         return context
 

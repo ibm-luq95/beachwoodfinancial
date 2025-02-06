@@ -72,6 +72,7 @@ class NoteListView(
                 "modal_css_id": BW_INFO_MODAL_CSS_CLASSES.get("note").get("cssID"),
             },
         )
+        context.setdefault("filter_form_id", "notesFilterForm")
 
         # debugging_print(self.filterset.form["name"])
         return context

@@ -68,6 +68,7 @@ class ImportantContactListViewBW(
                 ),
             },
         )
+        context.setdefault("filter_form_id", "importantContactFilterForm")
         return context
 
     def get_queryset(self):
