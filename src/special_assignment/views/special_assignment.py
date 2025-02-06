@@ -64,6 +64,7 @@ class SpecialAssignmentListView(
                 ),
             },
         )
+        context.setdefault("filter_form_id", "specialAssignmentFilterForm")
 
         # debugging_print(self.filterset.form["name"])
         return context

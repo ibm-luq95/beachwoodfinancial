@@ -86,6 +86,7 @@ class ClientListView(
             },
         )
         context.setdefault("filter_categories_is_enabled", True)
+        context.setdefault("filter_form_id", "clientFilterForm")
         context.setdefault(
             "filter_categories",
             {

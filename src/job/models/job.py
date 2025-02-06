@@ -37,19 +37,19 @@ class Job(
     """This is the job for every bookkeeper and assistant.
 
     Attributes:
-        client: The client associated with the job.
-        managed_by: The user who manages the job.
-        title: The title of the job.
-        slug: The slug of the job.
-        period_year: The fiscal year of the job.
-        period_month: The fiscal month of the job.
-        description: The description of the job.
-        job_type: The type of the job.
-        status: The status of the job.
-        state: The state of the job.
-        categories: The categories associated with the job.
-        note: The note for the job.
-        is_created_from_template: Indicates if the job is created from a template.
+        client (ClientProxy): The client associated with the job.
+        managed_by (User): The user who manages the job.
+        title (str): The title of the job.
+        slug (str): The slug of the job.
+        period_year (str): The fiscal year of the job.
+        period_month (str): The fiscal month of the job.
+        description (str): The description of the job.
+        job_type (JobTypeEnum): The type of the job.
+        status (JobStatusEnum): The status of the job.
+        state (JobStateEnum): The state of the job.
+        categories (JobCategory): The categories associated with the job.
+        note (str): The note for the job.
+        is_created_from_template (bool): Indicates if the job is created from a template.
 
     Methods:
         get_all_not_completed_tasks(): Returns all the tasks that are not completed.
@@ -103,12 +103,6 @@ class Job(
         choices=MonthChoices.choices,
         help_text=JOB_HELP_MESSAGES.get("period_month"),
     )
-    # description = models.TextField(
-    #     _("description"),
-    #     null=True,
-    #     blank=True,
-    #     help_text=JOB_HELP_MESSAGES.get("description"),
-    # )
     description = models.TextField(
         _("description"),
         null=True,

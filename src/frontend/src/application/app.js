@@ -151,4 +151,21 @@ window.document.addEventListener("DOMContentLoaded", function () {
       },
     );
   }
+  const resetFilterBtn = document.querySelector("button#resetFilterBtn");
+  if(resetFilterBtn){
+    resetFilterBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+      const formId = event.currentTarget.dataset["form"];
+      const url = event.currentTarget.dataset["href"];
+      if (formId !== null || formId !== "None") {
+        const filterForm = document.querySelector(`form#${formId}`);
+        console.log(filterForm);
+        console.log(url);
+        if (filterForm) {
+          filterForm.reset();
+          window.location.href = url;
+        }
+      }
+    });
+  }
 });

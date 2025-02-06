@@ -74,6 +74,7 @@ class StaffBriefcaseListView(
                 ),
             },
         )
+        context.setdefault("filter_form_id", "staffBriefcaseFilterForm")
 
         # debugging_print(self.filterset.form["name"])
         return context
