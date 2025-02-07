@@ -66,6 +66,10 @@ class AssistantListView(
             },
         )
         context.setdefault("filter_form_id", "assistantsFilterForm")
+        if self.request.GET:
+            context["title"] = _("Filtered Assistants")
+        else:
+            context["title"] = _("Assistants")
 
         # debugging_print(self.filterset.form["name"])
         return context

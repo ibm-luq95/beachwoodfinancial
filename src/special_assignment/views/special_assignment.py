@@ -65,6 +65,10 @@ class SpecialAssignmentListView(
             },
         )
         context.setdefault("filter_form_id", "specialAssignmentFilterForm")
+        if self.request.GET:
+            context["title"] = _("Filtered Special assignments")
+        else:
+            context["title"] = _("Special assignments")
 
         # debugging_print(self.filterset.form["name"])
         return context

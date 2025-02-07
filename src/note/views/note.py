@@ -73,6 +73,10 @@ class NoteListView(
             },
         )
         context.setdefault("filter_form_id", "notesFilterForm")
+        if self.request.GET:
+            context["title"] = _("Filtered Notes")
+        else:
+            context["title"] = _("Notes")
 
         # debugging_print(self.filterset.form["name"])
         return context

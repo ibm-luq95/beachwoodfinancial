@@ -59,6 +59,10 @@ import "./staff_briefcase/staff_documents.js";
 import "./staff_briefcase/staff_accounts.js";
 import "./filter_category_forms/filter_category_forms.js";
 import "./reports/new_report.js";
+import "./beach_wood_user/assistant.js";
+import "./beach_wood_user/bookkeeper.js";
+import "./beach_wood_user/manager.js";
+import "./beach_wood_user/cfo.js";
 import { setFormInputsReadOnly } from "../utils/form_helpers";
 import { HSTabs } from "../../node_modules/preline/dist/preline.js";
 // import { HSTabs } from "../../node_modules/preline/dist/preline.js";
@@ -152,15 +156,14 @@ window.document.addEventListener("DOMContentLoaded", function () {
     );
   }
   const resetFilterBtn = document.querySelector("button#resetFilterBtn");
-  if(resetFilterBtn){
+  if (resetFilterBtn) {
     resetFilterBtn.addEventListener("click", (event) => {
       event.preventDefault();
       const formId = event.currentTarget.dataset["form"];
       const url = event.currentTarget.dataset["href"];
       if (formId !== null || formId !== "None") {
         const filterForm = document.querySelector(`form#${formId}`);
-        console.log(filterForm);
-        console.log(url);
+
         if (filterForm) {
           filterForm.reset();
           window.location.href = url;

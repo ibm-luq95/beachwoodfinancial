@@ -7,9 +7,32 @@ import {
   disableAndEnableFieldsetItems,
   formInputSerializer,
 } from "../../utils/form_helpers";
+import FilterPersistence from "../../utils/forms/filterform";
 import { showToastNotification } from "../../utils/toasts";
 
 document.addEventListener("DOMContentLoaded", (readyEvent) => {
+  const filterForm = document.getElementById("importantContactFilterForm");
+  const resetFilterBtn = document.querySelector("button#resetFilterBtn");
+
+  if (filterForm) {
+    const filterPersistence = new FilterPersistence(
+      filterForm,
+      "importantContactsFilter",
+    );
+
+    filterForm.addEventListener("filtersSaved", () => {
+      console.log("Filters saved!");
+    });
+    resetFilterBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+      filterPersistence.safeResetFilters();
+      const href = resetFilterBtn.dataset["href"];
+      window.location.reload();
+    });
+    filterForm.addEventListener("filtersReset", () => {
+      console.log("Filters reset!");
+    });
+  }
   const createImportantContactModalElement = document.querySelector(
     "div#createImportantContactModal",
   );
