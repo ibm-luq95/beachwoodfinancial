@@ -9,9 +9,29 @@ import {
   disableAndEnableFieldsetItems,
   formInputSerializer,
 } from "../../utils/form_helpers";
+import FilterPersistence from "../../utils/forms/filterform";
 import { showToastNotification } from "../../utils/toasts";
 
 document.addEventListener("DOMContentLoaded", (readyEvent) => {
+  const filterForm = document.getElementById("tasksFilterForm");
+  const resetFilterBtn = document.querySelector("button#resetFilterBtn");
+
+  if (filterForm) {
+    const filterPersistence = new FilterPersistence(filterForm, "tasksFilter");
+
+    filterForm.addEventListener("filtersSaved", () => {
+      console.log("Filters saved!");
+    });
+    resetFilterBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+      filterPersistence.safeResetFilters();
+      const href = resetFilterBtn.dataset["href"];
+      window.location.reload();
+    });
+    filterForm.addEventListener("filtersReset", () => {
+      console.log("Filters reset!");
+    });
+  }
   const createTaskModalForm = document.querySelector("form#createTaskForm"); // Grab the task form element
   // Check if the form element exists in the page
   if (createTaskModalForm) {

@@ -4,9 +4,32 @@ import { bwCleanApiError } from "../../utils/apis/clean_errors";
 import { UploadFileRequest } from "../../utils/apis/upload_file";
 import { CSRFINPUTNAME, SUCCESSTIMEOUTSECS } from "../../utils/constants";
 import { formInputSerializer } from "../../utils/form_helpers";
+import FilterPersistence from "../../utils/forms/filterform";
 import { showToastNotification } from "../../utils/toasts";
 
 document.addEventListener("DOMContentLoaded", (readyEvent) => {
+  const filterForm = document.getElementById("specialAssignmentFilterForm");
+  const resetFilterBtn = document.querySelector("button#resetFilterBtn");
+
+  if (filterForm) {
+    const filterPersistence = new FilterPersistence(
+      filterForm,
+      "specialAssignmentFilter",
+    );
+
+    filterForm.addEventListener("filtersSaved", () => {
+      console.log("Filters saved!");
+    });
+    resetFilterBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+      filterPersistence.safeResetFilters();
+      const href = resetFilterBtn.dataset["href"];
+      window.location.reload();
+    });
+    filterForm.addEventListener("filtersReset", () => {
+      console.log("Filters reset!");
+    });
+  }
   const createAssignmentForm = document.querySelector("form#createAssignmentForm");
   if (createAssignmentForm) {
     const fieldset = createAssignmentForm.querySelector("fieldset");

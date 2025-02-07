@@ -7,9 +7,29 @@ import {
   disableAndEnableFieldsetItems,
   formInputSerializer,
 } from "../../utils/form_helpers";
+import FilterPersistence from "../../utils/forms/filterform";
 import { showToastNotification } from "../../utils/toasts";
 
 document.addEventListener("DOMContentLoaded", (readyEvent) => {
+  const filterForm = document.getElementById("clientFilterForm");
+  const resetFilterBtn = document.querySelector("button#resetFilterBtn");
+
+  if (filterForm) {
+    const filterPersistence = new FilterPersistence(filterForm, "clientFilter");
+
+    filterForm.addEventListener("filtersSaved", () => {
+      console.log("Filters saved!");
+    });
+    resetFilterBtn.addEventListener("click", (event) => {
+      event.preventDefault();
+      filterPersistence.safeResetFilters();
+      const href = resetFilterBtn.dataset["href"];
+      window.location.reload();
+    });
+    filterForm.addEventListener("filtersReset", () => {
+      console.log("Filters reset!");
+    });
+  }
   const updateClientForm = document.querySelector("form#updateClientForm");
   if (updateClientForm) {
     updateClientForm.addEventListener("submit", (event) => {
