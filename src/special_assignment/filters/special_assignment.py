@@ -8,7 +8,8 @@ class SpecialAssignmentFilter(FilterCreatedMixin):
         model = SpecialAssignmentProxy
         fields = {
             "title": ["icontains"],
-            "client__name": ["exact"],
+            "client": ["exact"],
+            "job": ["exact"],
             "status": ["exact"],
             "assigned_by": ["exact"],
             "is_seen": ["exact"],
