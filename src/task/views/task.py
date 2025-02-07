@@ -68,6 +68,10 @@ class TaskListView(
             },
         )
         context.setdefault("filter_form_id", "tasksFilterForm")
+        if self.request.GET:
+            context["title"] = _("Filtered Tasks")
+        else:
+            context["title"] = _("Tasks")
 
         # debugging_print(self.filterset.form["name"])
         return context

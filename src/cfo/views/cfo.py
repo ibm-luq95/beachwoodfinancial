@@ -65,6 +65,10 @@ class CFOListView(
             },
         )
         context.setdefault("filter_form_id", "cfosFilterForm")
+        if self.request.GET:
+            context["title"] = _("Filtered CFOs")
+        else:
+            context["title"] = _("CFOs")
 
         return context
 

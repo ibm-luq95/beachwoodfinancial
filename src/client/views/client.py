@@ -87,6 +87,10 @@ class ClientListView(
         )
         context.setdefault("filter_categories_is_enabled", True)
         context.setdefault("filter_form_id", "clientFilterForm")
+        if self.request.GET:
+            context["title"] = _("Filtered Clients")
+        else:
+            context["title"] = _("Clients")
         context.setdefault(
             "filter_categories",
             {

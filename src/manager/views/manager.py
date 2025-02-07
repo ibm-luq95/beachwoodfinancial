@@ -80,6 +80,10 @@ class ManagerListView(
             },
         )
         context.setdefault("filter_form_id", "managerFilterForm")
+        if self.request.GET:
+            context["title"] = _("Filtered Managers")
+        else:
+            context["title"] = _("Managers")
         # debugging_print(self.filterset.form["name"])
         return context
 

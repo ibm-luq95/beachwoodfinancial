@@ -65,6 +65,10 @@ class BookkeeperListView(
             },
         )
         context.setdefault("filter_form_id", "bookkeepersFilterForm")
+        if self.request.GET:
+            context["title"] = _("Filtered Bookkeepers")
+        else:
+            context["title"] = _("Bookkeepers")
 
         # debugging_print(self.filterset.form["name"])
         return context
