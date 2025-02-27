@@ -65,20 +65,20 @@
   //   "titleBar.activeBackground": "#3b83f68c"
   //   // "titleBar.inactiveBackground": "#3F758DCC"
   // },
-  "workbench.colorCustomizations": {
-    "statusBar.background": "#3b83f68c",
-    "statusBar.foreground": "#e7e7e7",
-    "statusBarItem.hoverBackground": "#6ca2f88c",
-    "statusBarItem.remoteBackground": "#3b83f68c",
-    "statusBarItem.remoteForeground": "#e7e7e7",
-    "commandCenter.border": "#e7e7e799",
-    "titleBar.activeBackground": "#3b83f68c",
-    "titleBar.activeForeground": "#e7e7e7",
-    "titleBar.inactiveBackground": "#3b83f699",
-    "titleBar.inactiveForeground": "#e7e7e799",
-    "sash.hoverBorder": "#6ca2f88c"
-  },
-  "peacock.color": "#3b83f68c",
+  // "workbench.colorCustomizations": {
+  //   "statusBar.background": "#3b83f68c",
+  //   "statusBar.foreground": "#e7e7e7",
+  //   "statusBarItem.hoverBackground": "#6ca2f88c",
+  //   "statusBarItem.remoteBackground": "#3b83f68c",
+  //   "statusBarItem.remoteForeground": "#e7e7e7",
+  //   "commandCenter.border": "#e7e7e799",
+  //   "titleBar.activeBackground": "#3b83f68c",
+  //   "titleBar.activeForeground": "#e7e7e7",
+  //   "titleBar.inactiveBackground": "#3b83f699",
+  //   "titleBar.inactiveForeground": "#e7e7e799",
+  //   "sash.hoverBorder": "#6ca2f88c"
+  // },
+  // "peacock.color": "#3b83f68c",
   "files.readonlyInclude": {
     "src/frontend/node_modules/**": true
   },
@@ -153,7 +153,19 @@
       }
     }
   ]
-}
+},
+"djlint.noFunctionFormatting": false,
+"djlint.noSetFormatting": false,
+"djlint.preserveBlankLines": false,
+"djlint.preserveLeadingSpace": false,
+"djlint.useEditorIndentation": true,
+"djlint.enableLinting": true,
+"djlint.profile": "django",
+"djlint.lineBreakAfterMultilineTag": true,
+"djlint.formatAttributeTemplateTags": true,
+"djlint.closeVoidTags": true,
+"djlint.noLineAfterYaml": false,
+"djlint.useGitignore": true
   // config for extention: junstyle.vscode-django-support
   // "files.associations": {
   //   "**/templates/**/*.html": "django-html",
