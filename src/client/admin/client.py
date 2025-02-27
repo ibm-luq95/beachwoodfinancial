@@ -27,7 +27,7 @@ class JobsInline(ReadOnlyInlineMixin):
 
 @admin.register(ClientProxy)
 class ClientAdmin(BWBaseAdminModelMixin):
-    list_display = ("name", "email", "industry", "status", "created_at")
+    list_display = ("pk", "name", "email", "industry", "status", "job_count", "created_at")
     list_filter = ["status", "bookkeepers"] + BWBaseAdminModelMixin.list_filter
     search_fields = (
         "email",
@@ -36,3 +36,8 @@ class ClientAdmin(BWBaseAdminModelMixin):
     inlines = [JobsInline]
     readonly_fields = ["id"]
     resource_classes = [ClientResource]
+
+    def job_count(self, obj):
+        return obj.jobs.count()  # Count related jobs
+
+    job_count.short_description = "Jobs Count"  # Column header in admin
