@@ -12,6 +12,7 @@ env/
 ENV/
 .venv/
 airesults/
+!.analysis/
 
 # Node modules and dependencies
 node_modules/

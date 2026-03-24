@@ -43,6 +43,7 @@ share/python-wheels/
 *.egg
 MANIFEST
 airesults/
+.analysis
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -595,3 +596,4 @@ production_config_files
 uv.lock
 .direnv
 .qaiprompts
+.analysis
