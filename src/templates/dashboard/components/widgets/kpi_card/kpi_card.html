@@ -66,14 +66,13 @@
                 {% endif %}
             </div>
         </div>
-        <div class="flex-shrink-0 flex justify-center items-center w-[46px] h-[46px]
+        <div class="flex-shrink-0 flex justify-center items-center w-11 h-11 rounded-full border-4
                     {% if alert %}
-                        bg-red-600 text-white
+                        border-red-100 bg-red-200 text-red-800 dark:border-red-500/10 dark:bg-red-500/20 dark:text-red-400
                     {% else %}
-                        bg-{{ color }}-600 text-white
-                    {% endif %}
-                    rounded-full dark:bg-{{ color }}-900 dark:text-{{ color }}-200">
-            <i class="fa-solid {{ icon }} w-4 h-4"></i>
+                        border-{{ color }}-100 bg-{{ color }}-200 text-{{ color }}-800 dark:border-{{ color }}-500/10 dark:bg-{{ color }}-500/20 dark:text-{{ color }}-400
+                    {% endif %}">
+            <i class="fa-solid {{ icon }} shrink-0 size-5"></i>
         </div>
     </div>
 </div>
