@@ -46,51 +46,17 @@
                 <span class="sr-only">Navigation Toggle</span>
             </button>
         </div>
-        <!-- Logo / Search combobox -->
+        <!-- Logo / Client Selector -->
         <div class="flex-none mr-3 sm:mr-4 lg:mr-0">
             {% if request.resolver_match.view_name == "dashboard:client:details" or request.resolver_match.view_name == "dashboard:client:transactions" or request.resolver_match.view_name == "dashboard:client:journal_entry" or request.resolver_match.view_name == "dashboard:client:bank_register" or request.resolver_match.view_name == "dashboard:client:chart_of_accounts" or request.resolver_match.view_name == "dashboard:client:expense_create" %}
-                <div class="w-full max-w-[200px] sm:max-w-md">
-                    <!-- Combobox Container -->
-                    <div class="relative" id="combobox-wrapper">
-                        <!-- Search Input -->
-                        <div class="relative">
-                            <input id="search-input"
-                                   class="py-2 sm:py-3 px-3 sm:px-4 pr-10 sm:pr-11 block w-full border-gray-200 rounded-lg text-sm focus:border-blue-500 focus:ring-blue-500 border-2 transition-colors duration-200"
-                                   type="text"
-                                   placeholder="Search..."
-                                   autocomplete="off" />
-                            <!-- Dropdown Toggle Button -->
-                            <div class="absolute inset-y-0 end-0 flex items-center pe-3 sm:pe-4 pointer-events-none">
-                                <svg id="arrow-icon"
-                                     class="w-4 h-4 text-gray-400 transform transition-transform duration-200"
-                                     fill="none"
-                                     stroke="currentColor"
-                                     viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-                                </svg>
-                            </div>
-                        </div>
-                        <!-- Dropdown Menu -->
-                        <div id="dropdown-list"
-                             class="absolute z-50 w-full bg-white border border-gray-200 rounded-lg shadow-lg mt-1 hidden">
-                            <div class="max-h-60 overflow-auto" id="country-list">
-                                <!-- Country options will be inserted here -->
-                            </div>
-                            <!-- No Results Message -->
-                            <div id="no-matches"
-                                 class="py-4 px-3 text-sm text-gray-500 text-center hidden">
-                                <svg class="w-6 h-6 text-gray-400 mx-auto mb-2"
-                                     fill="none"
-                                     stroke="currentColor"
-                                     viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                                </svg>
-                                <p>
-                                    No results found
-                                </p>
-                            </div>
-                        </div>
-                    </div>
+                <!-- Vue Client Selector Mount Point -->
+                <div id="vue-client-selector"
+                     class="w-full max-w-[280px] xs:max-w-[320px] sm:max-w-[350px] lg:max-w-[450px]"
+                     data-api-endpoint="/dashboard/client/api/dropdown/"
+                     data-current-client-id="{{ object.pk|default:'' }}"
+                     data-current-client-name="{{ object.name|default:'' }}"
+                     data-current-client-email="{{ object.email|default:'' }}"
+                     data-current-client-logo="{% if object.company_logo %}{{ object.company_logo.url }}{% endif %}">
                 </div>
             {% else %}
                 <a class="text-lg sm:text-xl font-semibold dark:text-white whitespace-nowrap"
