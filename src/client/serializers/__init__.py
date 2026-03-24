@@ -1,2 +1,2 @@
 # -*- coding: utf-8 -*-#
-from .client import ClientSerializer
+from .client import ClientSerializer, ClientDropdownSerializer
