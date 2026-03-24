@@ -3,7 +3,7 @@ import re
 import logging
 
 from .base import *
-from django_components import ComponentsSettings
+
 
 # Add color formatter
 try:
@@ -186,12 +186,12 @@ REQUEST_VIEWER = {"LIVE_MONITORING": False, "WHITELISTED_PATH": []}
 
 TEMPLATES[0]["OPTIONS"]["debug"] = DEBUG
 
-COMPONENTS = ComponentsSettings(
-    autodiscover=True,
-    reload_on_file_change=True,
-    cache=None,
-    template_cache_size=0,
-)
+# COMPONENTS = ComponentsSettings(
+#     autodiscover=True,
+#     reload_on_file_change=True,
+#     cache=None,
+#     # template_cache_size=0,
+# )
 DJANGO_EASY_AUDIT_PROPAGATE_EXCEPTIONS = DEBUG
 if HAS_COLORLOG:
     LOGGING_BASE["formatters"]["dev_color"] = {
@@ -292,10 +292,7 @@ DJANGO_CSRF_TRUSTED_ORIGINS = ["http://localhost:8000"]
 
 # CORS Settings (Dev)
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",  # Your dev frontend URL
-    "https://dev.int.ledgerflare.com",
-]
+CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", cast=Csv())
 CORS_ALLOW_HEADERS = [
     "accept",
     "accept-encoding",
@@ -327,12 +324,7 @@ CSRF_COOKIE_HTTPONLY = False  # JS needs access
 CSRF_COOKIE_SECURE = False  # Allow HTTP
 CSRF_COOKIE_SAMESITE = "Lax"
 # CSRF_TRUSTED_ORIGINS = []
-CSRF_TRUSTED_ORIGINS = [
-    "https://dev.int.ledgerflare.com",
-    # Add other domains if needed
-    "http://localhost:3000",  # if you're developing locally
-    "http://127.0.0.1:8000",
-]
+CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", cast=Csv())
 CSRF_HEADER_NAME = "HTTP_X_CSRFTOKEN"
 CSRF_COOKIE_NAME = "csrftoken"
 
