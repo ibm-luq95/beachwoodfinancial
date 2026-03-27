@@ -48,23 +48,11 @@
         </div>
         <!-- Logo / Client Selector -->
         <div class="flex-none mr-3 sm:mr-4 lg:mr-0">
-            {% if request.resolver_match.view_name == "dashboard:client:details" or request.resolver_match.view_name == "dashboard:client:transactions" or request.resolver_match.view_name == "dashboard:client:journal_entry" or request.resolver_match.view_name == "dashboard:client:bank_register" or request.resolver_match.view_name == "dashboard:client:chart_of_accounts" or request.resolver_match.view_name == "dashboard:client:expense_create" %}
-                <!-- Vue Client Selector Mount Point -->
-                <div id="vue-client-selector"
-                     class="w-full max-w-[280px] xs:max-w-[320px] sm:max-w-[350px] lg:max-w-[450px]"
-                     data-api-endpoint="/dashboard/client/api/dropdown/"
-                     data-current-client-id="{{ object.pk|default:'' }}"
-                     data-current-client-name="{{ object.name|default:'' }}"
-                     data-current-client-email="{{ object.email|default:'' }}"
-                     data-current-client-logo="{% if object.company_logo %}{{ object.company_logo.url }}{% endif %}">
-                </div>
-            {% else %}
-                <a class="text-lg sm:text-xl font-semibold dark:text-white whitespace-nowrap"
+            <a class="text-lg sm:text-xl font-semibold dark:text-white whitespace-nowrap"
                    href="{% if request.user.user_type == CON_MANAGER or request.user.user_type == CON_ASSISTANT %} {% url 'dashboard:manager:home' %} {% elif request.user.user_type == CON_BOOKKEEPER %} {% url 'dashboard:bookkeeper:home' %} {% endif %}"
                    aria-label="{{ get_web_app_settings.name }}">
                     {{ get_web_app_settings.name }}
                 </a>
-            {% endif %}
         </div>
         <!-- Center-aligned main nav items - hidden on small screens, shown on md+ -->
         <div class="hidden md:flex items-center justify-center flex-1 gap-x-4 lg:gap-x-6">
