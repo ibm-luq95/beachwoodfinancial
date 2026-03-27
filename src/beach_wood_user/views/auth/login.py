@@ -237,7 +237,8 @@ class BWLoginViewBW(SuccessMessageMixin, BWSiteSettingsViewMixin, FormMixin, Vie
 
         except Exception as e:
             logger.exception("Form validation failed: %s", e)
-            messages.error(self.request, _("Error while logging in"))
+            # messages.error(self.request, _("Error while logging in"))
+            messages.error(self.request, str(e))
             return self.form_invalid(form)
 
     def form_invalid(self, form: BWLoginForm) -> HttpResponse:
