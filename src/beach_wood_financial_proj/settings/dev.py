@@ -44,6 +44,7 @@ INSTALLED_APPS = INSTALLED_APPS + [
     "debugtools",
     "debug_permissions",
     "django_model_info.apps.DjangoModelInfoConfig",
+    "client_accounting",
     # "silk",
     # "django_pdb",
     # "request_viewer",
