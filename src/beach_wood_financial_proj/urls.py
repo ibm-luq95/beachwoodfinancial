@@ -31,6 +31,11 @@ urlpatterns = [
     path("jsi18n/", JavaScriptCatalog.as_view(), name="javascript-catalog"),
     # path("", include("home.urls"), name="home-urls"),
     path("logs/", include("log_viewer.urls")),
+    path(
+        "client-accounting/",
+        include("client_accounting.urls"),
+        name="client_accounting",
+    ),
     path("test-logging/", test_logging, name="test_logging"),
     path("test-security-logging/", test_security_logging, name="test_security_logging"),
     path("test-sql-logging/", test_sql_logging, name="test_sql_logging"),
@@ -54,9 +59,11 @@ if settings.DEBUG:
     # )
     urlpatterns.append(path("admin/", admin.site.urls))
     urlpatterns.append(path("admin/doc/", include("django.contrib.admindocs.urls")))
-    urlpatterns.append(path("test-500/", custom_500_view))
-    urlpatterns.append(path("test-404/", custom_404_view))
+
     # urlpatterns.append(path("silk/", include("silk.urls", namespace="silk")))
     # urlpatterns.append(path("admin/", admin.site.urls))
 else:
     urlpatterns.append(path("secret/", admin.site.urls))
+
+urlpatterns.append(path("test-500/", custom_500_view))
+urlpatterns.append(path("test-404/", custom_404_view))
