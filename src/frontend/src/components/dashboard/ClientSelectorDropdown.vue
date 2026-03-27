@@ -312,7 +312,7 @@ if (props.currentClientId && props.currentClientName) {
     name: props.currentClientName,
     email: props.currentClientEmail || "",
     logo_url: logoUrl,
-    dashboard_url: `/dashboard/client/${props.currentClientId}/`,
+    dashboard_url: `/client-accounting/dashboard/${props.currentClientId}`,
   };
 }
 
@@ -411,7 +411,9 @@ const handleLogoError = (event, client = null) => {
 const handleClientClick = (client) => {
   selectedClient.value = client;
   closeDropdown();
-  const eventData = { client, url: client.dashboard_url };
+  // Build dashboard URL matching Django URL pattern: client-accounting:dashboard
+  const dashboardUrl = `/client-accounting/dashboard/${client.id}`;
+  const eventData = { client, url: dashboardUrl };
   emit("client-selected", eventData);
   const customEvent = new CustomEvent("client-selected", {
     detail: eventData,
