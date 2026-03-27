@@ -45,7 +45,7 @@ def log_user_logout(sender, request, user, **kwargs):
         message=f"User {user.email if user else 'anonymous'} logged out",
         extra_data={
             'email': user.email if user else None,
-            'username': user.username if user else None,
+            'username': user.email if user else None,
             'logout_method': 'manual',
         }
     )
@@ -55,7 +55,7 @@ def log_failed_login(sender, credentials, request, **kwargs):
     """Log failed login attempt"""
     ip_address = request.META.get('REMOTE_ADDR', 'unknown')
     user_agent = request.META.get('HTTP_USER_AGENT', 'unknown')
-    username = credentials.get('username', 'unknown')
+    username = credentials.get('email', 'unknown')
     
     log_security_event(
         event_type='LOGIN_FAILED',
@@ -82,7 +82,7 @@ def log_user_changes(sender, instance, created, **kwargs):
             message=f"New user created: {instance.email}",
             extra_data={
                 'user_email': instance.email,  # Use user_email key to avoid conflicts
-                'username': instance.username,
+                # 'username': instance.username,
                 'is_staff': instance.is_staff,
                 'is_superuser': instance.is_superuser,
                 'date_joined': instance.date_joined.isoformat() if instance.date_joined else None,
