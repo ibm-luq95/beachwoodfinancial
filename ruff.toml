@@ -108,6 +108,7 @@ ignore = [
     "F401",
     "D205",
     "PLR6301",
+    "COM812",
 ]
 # Allow fix for all enabled rules (when `--fix`) is provided.
 fixable = ["ALL"]
