@@ -600,3 +600,5 @@ uv.lock
 .analysis
 /opencode.jsonc
 /QWEN.md
+
+.qwen
