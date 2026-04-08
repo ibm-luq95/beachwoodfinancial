@@ -44,6 +44,7 @@ share/python-wheels/
 MANIFEST
 airesults/
 .analysis
+.gemeni_airesults
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -597,3 +598,5 @@ uv.lock
 .direnv
 .qaiprompts
 .analysis
+/opencode.jsonc
+/QWEN.md
