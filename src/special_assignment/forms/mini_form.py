@@ -36,7 +36,7 @@ class MiniSpecialAssignmentForm(BWJSModalFormRendererMixin, BWBaseFormMixin):
         super(BWBaseFormMixin, self).__init__(*args, **kwargs)
         initial_values: dict = kwargs.get("initial")
         if initial_values.get("job"):
-            ENHANCED_DEBUGGING_PRINT_INSTANCE.display(locals())
+            # ENHANCED_DEBUGGING_PRINT_INSTANCE.display(locals())
             self.fields["job"].initial = initial_values.get("job")
         # self.fields["assigned_by"].label = ""
         self.fields.get("attachment").widget.attrs.update(
