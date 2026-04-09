@@ -1,0 +1,52 @@
+{% load i18n %}
+
+<div data-ldgf-checkbox-form-fields
+     {% if custom_styled_checkboxes %}data-ldgf-custom-checkboxes="true"{% endif %}>
+    {% for field in form_object %}
+    {% if field.field.widget|bw_get_form_field_type == "CheckboxSelectMultiple" %}
+    <div class="flex justify-between items-center mb-4">
+        <label for="{{ field.id_for_label }}"
+               class="block text-sm font-medium text-gray-700 dark:text-gray-300">
+            {{ field.label|safe }}
+        </label>
+    </div>
+    <div class="grid sm:grid-cols-3 gap-3 mb-4">
+        {% for choice in field %}
+        <label for="{{ choice.data.attrs.id }}"
+               class="flex p-3 w-full bg-white border border-gray-200 rounded-lg text-sm hover:border-blue-500 hover:bg-blue-50/30 transition-colors cursor-pointer dark:bg-slate-900 dark:border-gray-700 dark:hover:border-blue-500 dark:hover:bg-slate-800">
+            <input type="checkbox"
+                   {% if choice.data.selected %}checked{% endif %}
+                   value="{{ choice.data.value }}"
+                   name="{{ field.name }}"
+                   class="shrink-0 mt-0.5 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 {% if custom_styled_checkboxes %}ldgf-custom-checkbox{% endif %}"
+                   id="{{ choice.data.attrs.id }}">
+            <span class="text-sm text-gray-600 ms-3 dark:text-gray-400">{{ choice.choice_label|safe }}</span>
+        </label>
+        {% endfor %}
+    </div>
+    {% if field.help_text %}
+    <p class="text-xs text-gray-500 mt-2 mb-4 dark:text-gray-400">
+        {{ field.help_text|safe }}
+    </p>
+    {% endif %}
+    {% else %}
+    <div class="mb-4">
+        <input type="checkbox"
+               {% if field.value %}checked{% endif %}
+               value="{{ field.value|default:'on' }}"
+               name="{{ field.name }}"
+               class="shrink-0 border-gray-300 rounded text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-gray-800 dark:border-gray-600 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800 {% if custom_styled_checkboxes %}ldgf-custom-checkbox{% endif %}"
+               id="{{ field.id_for_label }}">
+        <label for="{{ field.id_for_label }}"
+               class="text-sm text-gray-600 ms-2 dark:text-gray-400">
+            {{ field.help_text|safe }}
+        </label>
+    </div>
+    {% endif %}
+    {% if field.errors %}
+    <div class="text-red-500 text-sm mt-1 mb-4">
+        {% for error in field.errors %}{{ error }}{% endfor %}
+    </div>
+    {% endif %}
+    {% endfor %}
+</div>
