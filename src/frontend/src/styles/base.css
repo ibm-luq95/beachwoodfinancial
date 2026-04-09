@@ -25,11 +25,25 @@
 
 @layer components {
   .btn-blue {
-    @apply inline-flex items-center;
-    @apply px-4 py-2;
-    @apply font-semibold rounded-lg shadow-md;
-    @apply text-white bg-blue-500;
-    @apply hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400/50;
+    display: inline-flex;
+    align-items: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+    font-weight: 600;
+    border-radius: 0.5rem;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+    color: #ffffff;
+    background-color: #3b82f6;
+  }
+  .btn-blue:hover {
+    background-color: #2563eb;
+  }
+  .btn-blue:focus {
+    outline: 2px solid transparent;
+    outline-offset: 2px;
+    box-shadow: 0 0 0 3px rgba(96, 165, 250, 0.5);
   }
 }
 
