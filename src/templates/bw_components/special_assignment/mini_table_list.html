@@ -146,7 +146,7 @@
                                         <div class="flex items-center gap-x-2">
                                             <div class="grow">
                                                 {% if object.assigned_by %}
-                                                    <img class="inline-block h-4 w-4 rounded-full"
+                                                    <img class="inline-block h-4 w-4 rounded-full mr-2"
                                                          src="{% if object.assigned_by.profile.profile_picture %} {{ object.assigned_by.profile.profile_picture.url }} {% else %} {% static 'img/default_staff.png' %}  {% endif %}"
                                                          alt="Image Description" />
                                                     <span class="text-xs text-gray-600 dark:text-gray-400">{{ object.assigned_by.fullname }}</span>
