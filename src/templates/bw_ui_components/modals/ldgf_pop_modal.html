@@ -1,0 +1,114 @@
+{% load i18n %}
+
+<div id="{{ modal_css_id }}"
+     class="ldgf-modal fixed inset-0 z-[1050] hidden flex items-center justify-center p-4"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="{{ modal_css_id }}-title"
+     {% if modal_description %}
+         aria-describedby="{{ modal_css_id }}-desc"
+     {% endif %}
+     data-ldgf-modal
+     data-ldgf-backdrop="{{ backdrop|default:'default' }}"
+     {% if enable_dirty_check %}
+         data-ldgf-dirty-check="true"
+     {% endif %}
+     {% if enable_reset_on_close %}
+         data-ldgf-reset-on-close="true"
+     {% endif %}
+     {% if dynamic_src %}
+         data-ldgf-dynamic-src="{{ dynamic_src }}"
+     {% endif %}>
+    <div data-ldgf-modal-backdrop
+         class="absolute inset-0 bg-black/50 opacity-0 pointer-events-none transition-opacity duration-200 ease-out">
+    </div>
+    <div data-ldgf-modal-panel
+         class="{{ modal_size_class }} w-full max-w-[95%] mx-auto bg-white border border-gray-200 shadow-xl rounded-xl dark:bg-gray-800 dark:border-gray-700 opacity-0 -translate-y-4 transition-all duration-200 ease-out">
+        <div class="flex flex-col bg-white border border-gray-200 shadow-xl rounded-xl dark:bg-gray-800 dark:border-gray-700">
+            <div data-ldgf-modal-header
+                 class="flex justify-between items-center py-4 px-5 border-b border-gray-200 dark:border-gray-700 flex-shrink-0">
+                <div class="flex items-center gap-3">
+                    {% if icon_class %}
+                        <i class="{{ icon_type|default:'fa-solid' }} {{ icon_class }} text-xl"></i>
+                    {% endif %}
+                    <div>
+                        <h2 id="{{ modal_css_id }}-title"
+                            class="font-bold text-gray-800 dark:text-white text-lg leading-tight">
+                            {% translate modal_title %}
+                        </h2>
+                        {% if modal_description %}
+                            <p id="{{ modal_css_id }}-desc"
+                               class="text-sm text-gray-500 dark:text-gray-400 mt-1">
+                                {% translate modal_description %}
+                            </p>
+                        {% endif %}
+                    </div>
+                </div>
+                <button type="button"
+                        data-ldgf-modal-close
+                        aria-label="{% translate 'Close modal' %}"
+                        class="inline-flex flex-shrink-0 justify-center items-center h-10 w-10 rounded-lg text-gray-500 hover:text-gray-700 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-400 focus:ring-offset-2 transition-all dark:text-gray-400 dark:hover:text-gray-200 dark:hover:bg-gray-700 dark:focus:ring-gray-600 dark:focus:ring-offset-gray-800">
+                    <span class="sr-only">{% translate "Close" %}</span>
+                    <svg class="w-5 h-5"
+                         width="20"
+                         height="20"
+                         viewBox="0 0 20 20"
+                         fill="none"
+                         xmlns="http://www.w3.org/2000/svg">
+                        <path d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" fill="currentColor" />
+                    </svg>
+                </button>
+            </div>
+            <div data-ldgf-modal-body
+                 class="p-5 overflow-y-auto max-h-[calc(100vh-200px)] flex-shrink-0">
+                {% if is_form_modal %}
+                    <form id="{{ form_id }}"
+                          method="{{ form_method|default:'post' }}"
+                          action="{{ resolved_action_url }}"
+                          {% if is_upload_form %}
+                              enctype="multipart/form-data"
+                          {% endif %}
+                          data-ldgf-ajax-form>
+                        <fieldset form="{{ form_id }}">
+                            {% csrf_token %}
+                            {% if enable_hidden_method %}
+                                <input type="hidden" name="_method" value="{{ form_method|default:'post' }}" />
+                            {% endif %}
+                            {% for hidden_input in extra_hidden_inputs_markup_list %}
+                                {{ hidden_input|safe }}
+                            {% endfor %}
+                            {% if is_only_checkbox_form %}
+
+                                {% include "bw_ui_components/modals/partials/_checkbox_form_fields.html" %}
+
+                            {% else %}
+
+                                {% include "bw_ui_components/modals/partials/_form_fields.html" %}
+
+                            {% endif %}
+                        </fieldset>
+                    </form>
+                {% else %}
+                    {{ caller }}
+                {% endif %}
+            </div>
+            <div data-ldgf-modal-footer
+                 class="flex justify-end items-center gap-3 py-4 px-5 border-t border-gray-200 dark:border-gray-700 flex-shrink-0">
+                <button type="button"
+                        data-ldgf-modal-close
+                        class="py-2.5 px-4 inline-flex justify-center items-center gap-2 rounded-lg border border-gray-300 bg-white text-gray-700 font-medium shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800">
+                    {% translate "Close" %}
+                </button>
+                {% if is_submit_btn_enabled %}
+                    <button type="submit"
+                            form="{{ form_id }}"
+                            data-ldgf-modal-submit
+                            data-ldgf-submit-text="{% translate form_submit_text %}"
+                            class="py-2.5 px-4 inline-flex justify-center items-center gap-2 rounded-lg border border-transparent font-semibold bg-blue-600 text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800 disabled:opacity-50 disabled:cursor-not-allowed">
+                        {% translate form_submit_text %}
+                    </button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
