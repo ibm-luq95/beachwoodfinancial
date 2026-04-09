@@ -4,6 +4,8 @@
 
 {% load humanize %}
 {% load crispy_forms_tags %}
+{% load elements.ldgf_pop_modal %}
+{% load elements.ldgf_pop_modal_btn %}
 
 {% block dashboard_content_block %}
     {# Start client summary #}
@@ -59,35 +61,35 @@
                         <div class="hs-dropdown-menu transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 w-full sm:w-56 hidden z-10 mt-2 min-w-[15rem] bg-white shadow-md rounded-lg p-2 dark:bg-gray-800 dark:border dark:border-gray-700 dark:divide-gray-700"
                              aria-labelledby="hs-dropdown-basic">
                             <a data-modal-name="contact"
-                               data-hs-overlay="#createImportantContactModal"
+                               data-ldgf-modal-target="#createImportantContactModal"
                                class="flex client-details-dropdown-item items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
                                href="javascript:;">{% translate "Contact" %}</a>
-                            <a data-hs-overlay="#createClientAccountModal"
+                            <a data-ldgf-modal-target="#createClientAccountModal"
                                data-modal-name="clientAccount"
                                class="flex client-details-dropdown-item items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
                                href="javascript:;">{% translate "Account" %}</a>
                             <a data-modal-name="job"
-                               data-hs-overlay="#createJobModal"
+                               data-ldgf-modal-target="#createJobModal"
                                class="flex client-details-dropdown-item items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
                                href="javascript:;">{% translate "Job" %}</a>
                             <a data-modal-name="assignment"
-                               data-hs-overlay="#createAssignmentModal"
+                               data-ldgf-modal-target="#createAssignmentModal"
                                class="flex client-details-dropdown-item items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
                                href="javascript:;">{% translate "Assignments" %}</a>
                             <a data-modal-name="note"
-                               data-hs-overlay="#createNoteModal"
+                               data-ldgf-modal-target="#createNoteModal"
                                class="flex client-details-dropdown-item items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
                                href="javascript:;">{% translate "Note" %}</a>
                             <a data-modal-name="document"
-                               data-hs-overlay="#createDocumentModal"
+                               data-ldgf-modal-target="#createDocumentModal"
                                class="flex client-details-dropdown-item items-center gap-x-3.5 py-2 px-3 rounded-md text-sm text-gray-800 hover:bg-gray-100 focus:ring-2 focus:ring-blue-500 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-gray-300"
                                href="javascript:;">{% translate "Document" %}</a>
                         </div>
                     </div>
-                    {% bw_js_modal modal_css_id="update-client-modal" modal_size="sm" modal_title="Update client" is_submit_btn_enabled=True is_form_modal=True form_object=client_form is_upload_form=True form_id="updateClientForm" form_submit_text="Update" action_url="dashboard:client:api:client-api-router-detail" enable_hidden_method=True action_url_pk=object.pk form_method="put" %}
+                    {% ldgf_pop_modal modal_css_id="update-client-modal" modal_size="md" modal_title="Update client" is_submit_btn_enabled=True is_form_modal=True form_object=client_form is_upload_form=True form_id="updateClientForm" form_submit_text="Update" action_url="dashboard:client:api:client-api-router-detail" enable_hidden_method=True action_url_pk=object.pk form_method="put" %}
                     <button class="py-2 px-3 w-full sm:w-auto flex items-center justify-center gap-2 rounded-md border font-medium bg-white text-gray-700 shadow-sm align-middle hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-blue-600 transition-all text-sm dark:bg-slate-900 dark:hover:bg-slate-800 dark:border-gray-700 dark:text-gray-400 dark:hover:text-white dark:focus:ring-offset-gray-800"
                             type="button"
-                            data-hs-overlay="#update-client-modal">
+                            data-ldgf-modal-target="#update-client-modal">
                         {% translate "Edit Client" %}
                     </button>
                     <div class="hs-tooltip [--placement:top] inline-block">
@@ -346,7 +348,7 @@
                                             <div class="hs-tooltip inline-block">
                                                 <button type="button"
                                                         id="addBookkeeperBtn"
-                                                        data-hs-overlay="#addBookkeeperModal"
+                                                        data-ldgf-modal-target="#addBookkeeperModal"
                                                         class="{{ BW_FULL_INPUT_CSS_CLASSES }} hs-tooltip-toggle mx-5 h-[2rem] w-[2rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 flex-shrink-0">
                                                     <i class="fa-solid fa-user-plus"></i>
                                                     <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
@@ -394,7 +396,7 @@
                                             <div class="hs-tooltip inline-block">
                                                 <button type="button"
                                                         id="addCfoBtn"
-                                                        data-hs-overlay="#addCfoModal"
+                                                        data-ldgf-modal-target="#addCfoModal"
                                                         class="{{ BW_FULL_INPUT_CSS_CLASSES }} hs-tooltip-toggle mx-5 h-[2rem] w-[2rem] inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-100 text-blue-800 hover:bg-blue-200 disabled:opacity-50 disabled:pointer-events-none dark:hover:bg-blue-900 dark:text-blue-400 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600 flex-shrink-0">
                                                     <i class="fa-solid fa-user-plus"></i>
                                                     <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
@@ -471,17 +473,11 @@
                  role="tabpanel"
                  aria-labelledby="tabs-with-icons-item-2">
                 <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-2 sm:p-4 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
-                    <div class="flex flex-col sm:flex-row justify-end items-start sm:items-center gap-2">
-                        <div>
-                            {% bw_create_btn_js_modal js_create_btn_css_id="createJobBtn" modal_css_id="createJobModal" app_name="job" %}
-                        </div>
-                        <div>
-                            <div class="relative top-1">
+                    <div class="flex items-center justify-end gap-2 flex-wrap">
+                        {% ldgf_pop_modal_btn js_create_btn_css_id="createJobBtn" modal_css_id="createJobModal" app_name="job" %}
 
-                                {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt="What is jobs" modal_css_id="infoJobModal" %}
+                        {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt="What is jobs" modal_css_id="infoJobModal" %}
 
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="mt-3 overflow-x-auto">
@@ -501,17 +497,11 @@
                  role="tabpanel"
                  aria-labelledby="tabs-with-icons-item-3">
                 <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-2 sm:p-4 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
-                    <div class="flex flex-col sm:flex-row justify-end items-start sm:items-center gap-2">
-                        <div>
-                            {% bw_create_btn_js_modal js_create_btn_css_id="createImportantContactBtn" modal_css_id="createImportantContactModal" app_name="important_contact" %}
-                        </div>
-                        <div>
-                            <div class="relative top-1">
+                    <div class="flex items-center justify-end gap-2 flex-wrap">
+                        {% ldgf_pop_modal_btn js_create_btn_css_id="createImportantContactBtn" modal_css_id="createImportantContactModal" app_name="important_contact" %}
 
-                                {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt="What is client contacts" modal_css_id="infoClientContactModal" %}
+                        {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt="What is client contacts" modal_css_id="infoClientContactModal" %}
 
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="mt-3 overflow-x-auto">
@@ -747,17 +737,11 @@
                  role="tabpanel"
                  aria-labelledby="tabs-with-icons-item-3">
                 <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-2 sm:p-4 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
-                    <div class="flex flex-col sm:flex-row justify-end items-start sm:items-center gap-2">
-                        <div>
-                            {% bw_create_btn_js_modal js_create_btn_css_id="createClientAccountBtn" modal_css_id="createClientAccountModal" app_name="client_account" %}
-                        </div>
-                        <div>
-                            <div class="relative top-1">
+                    <div class="flex items-center justify-end gap-2 flex-wrap">
+                        {% ldgf_pop_modal_btn js_create_btn_css_id="createClientAccountBtn" modal_css_id="createClientAccountModal" app_name="client_account" %}
 
-                                {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt="What is client accounts" modal_css_id="infoClientAccountsModal" %}
+                        {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt="What is client accounts" modal_css_id="infoClientAccountsModal" %}
 
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="mt-3 overflow-x-auto">
@@ -777,17 +761,11 @@
                  role="tabpanel"
                  aria-labelledby="tabs-with-icons-item-3">
                 <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-2 sm:p-4 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
-                    <div class="flex flex-col sm:flex-row justify-end items-start sm:items-center gap-2">
-                        <div>
-                            {% bw_create_btn_js_modal js_create_btn_css_id="createAssignmentBtn" modal_css_id="createAssignmentModal" app_name="special_assignment" %}
-                        </div>
-                        <div>
-                            <div class="relative top-1">
+                    <div class="flex items-center justify-end gap-2 flex-wrap">
+                        {% ldgf_pop_modal_btn js_create_btn_css_id="createAssignmentBtn" modal_css_id="createAssignmentModal" app_name="special_assignment" %}
 
-                                {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt="What special assignment in beachwoodfinancial" modal_css_id="infoSpecialAssignmentModal" %}
+                        {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt="What special assignment in beachwoodfinancial" modal_css_id="infoSpecialAssignmentModal" %}
 
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="mt-3 overflow-x-auto">
@@ -807,17 +785,11 @@
                  role="tabpanel"
                  aria-labelledby="tabs-with-icons-item-3">
                 <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-2 sm:p-4 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
-                    <div class="flex flex-col sm:flex-row justify-end items-start sm:items-center gap-2">
-                        <div>
-                            {% bw_create_btn_js_modal js_create_btn_css_id="createNoteBtn" modal_css_id="createNoteModal" app_name="note" %}
-                        </div>
-                        <div>
-                            <div class="relative top-1">
+                    <div class="flex items-center justify-end gap-2 flex-wrap">
+                        {% ldgf_pop_modal_btn js_create_btn_css_id="createNoteBtn" modal_css_id="createNoteModal" app_name="note" %}
 
-                                {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt="What notes in beachwoodfinancial" modal_css_id="infoNoteModal" %}
+                        {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt="What notes in beachwoodfinancial" modal_css_id="infoNoteModal" %}
 
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="mt-3 overflow-x-auto">
@@ -837,17 +809,11 @@
                  role="tabpanel"
                  aria-labelledby="tabs-with-icons-item-3">
                 <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-2 sm:p-4 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
-                    <div class="flex flex-col sm:flex-row justify-end items-start sm:items-center gap-2">
-                        <div>
-                            {% bw_create_btn_js_modal js_create_btn_css_id="createDocumentBtn" modal_css_id="createDocumentModal" app_name="document" %}
-                        </div>
-                        <div>
-                            <div class="relative top-1">
+                    <div class="flex items-center justify-end gap-2 flex-wrap">
+                        {% ldgf_pop_modal_btn js_create_btn_css_id="createDocumentBtn" modal_css_id="createDocumentModal" app_name="document" %}
 
-                                {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt="What documents in beachwoodfinancial" modal_css_id="infoDocumentModal" %}
+                        {% include "bw_ui_components/public/modal_info_tooltip_btn.html" with tooltip_txt="What documents in beachwoodfinancial" modal_css_id="infoDocumentModal" %}
 
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="mt-3 overflow-x-auto">
@@ -865,28 +831,28 @@
         </div>
     </section>
     {# Start Create job modal #}
-    {% bw_js_modal modal_css_id="createJobModal" modal_size="sm" modal_title="Create new job" is_submit_btn_enabled=True is_form_modal=True form_object=job_form is_upload_form=False form_id="createJobForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:job:api:job-api-router-list" %}
+    {% ldgf_pop_modal modal_css_id="createJobModal" modal_size="md" modal_title="Create new job" is_submit_btn_enabled=True is_form_modal=True form_object=job_form is_upload_form=False form_id="createJobForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:job:api:job-api-router-list" %}
     {# End Create job modal #}
     {# Start create document modal #}
-    {% bw_js_modal modal_css_id="createDocumentModal" modal_size="sm" modal_title="Create new document" is_submit_btn_enabled=True is_form_modal=True form_object=document_form is_upload_form=True form_id="createDocumentForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:document:api:document-api-router-list" %}
+    {% ldgf_pop_modal modal_css_id="createDocumentModal" modal_size="md" modal_title="Create new document" is_submit_btn_enabled=True is_form_modal=True form_object=document_form is_upload_form=True form_id="createDocumentForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:document:api:document-api-router-list" %}
     {# End create document modal #}
     {# Start create note modal #}
-    {% bw_js_modal modal_css_id="createNoteModal" modal_size="sm" modal_title="Create new note" is_submit_btn_enabled=True is_form_modal=True form_object=note_form is_upload_form=False form_id="createNoteForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:note:api:note-api-router-list" %}
+    {% ldgf_pop_modal modal_css_id="createNoteModal" modal_size="md" modal_title="Create new note" is_submit_btn_enabled=True is_form_modal=True form_object=note_form is_upload_form=False form_id="createNoteForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:note:api:note-api-router-list" %}
     {# End create note modal #}
     {# Start create assignment modal #}
-    {% bw_js_modal modal_css_id="createAssignmentModal" modal_size="sm" modal_title="Create new assignment" is_submit_btn_enabled=True is_form_modal=True form_object=special_assignment_form is_upload_form=True form_id="createAssignmentForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:special_assignment:api:special-assignment-api-router-list" %}
+    {% ldgf_pop_modal modal_css_id="createAssignmentModal" modal_size="md" modal_title="Create new assignment" is_submit_btn_enabled=True is_form_modal=True form_object=special_assignment_form is_upload_form=True form_id="createAssignmentForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:special_assignment:api:special-assignment-api-router-list" %}
     {# End create assignment modal #}
     {# Start create important contact modal #}
-    {% bw_js_modal modal_css_id="createImportantContactModal" modal_size="md" modal_title="Create new contact" is_submit_btn_enabled=True is_form_modal=True form_object=important_contact_form is_upload_form=False form_id="createImportantContactForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:important_contact:api:contacts-api-router-list" %}
+    {% ldgf_pop_modal modal_css_id="createImportantContactModal" modal_size="md" modal_title="Create new contact" is_submit_btn_enabled=True is_form_modal=True form_object=important_contact_form is_upload_form=False form_id="createImportantContactForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:important_contact:api:contacts-api-router-list" %}
     {# End create important contact modal #}
     {# Start create client account modal #}
-    {% bw_js_modal modal_css_id="createClientAccountModal" modal_size="md" modal_title="Create new account" is_submit_btn_enabled=True is_form_modal=True form_object=client_account_form is_upload_form=False form_id="createClientAccountForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:client_account:api:client-account-api-router-list" %}
+    {% ldgf_pop_modal modal_css_id="createClientAccountModal" modal_size="md" modal_title="Create new account" is_submit_btn_enabled=True is_form_modal=True form_object=client_account_form is_upload_form=False form_id="createClientAccountForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:client_account:api:client-account-api-router-list" %}
     {# End create client account modal #}
     {# Start Add bookkeeper to client modal #}
-    {% bw_js_modal modal_css_id="addBookkeeperModal" modal_size="md" modal_title="Assign bookkeeper" is_submit_btn_enabled=True is_form_modal=True form_object=client_assign_bookkeeper_form is_upload_form=False form_id="assignBookkeeperClientForm" form_submit_text="Assign" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:client:api:client-api-router-assign-bookkeeper" custom_styled_checkboxes=True is_only_checkbox_form=True %}
+    {% ldgf_pop_modal modal_css_id="addBookkeeperModal" modal_size="md" modal_title="Assign bookkeeper" is_submit_btn_enabled=True is_form_modal=True form_object=client_assign_bookkeeper_form is_upload_form=False form_id="assignBookkeeperClientForm" form_submit_text="Assign" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:client:api:client-api-router-assign-bookkeeper" custom_styled_checkboxes=True is_only_checkbox_form=True %}
     {# End Add bookkeeper to client modal #}
     {# Start Add CFO to client modal #}
-    {% bw_js_modal modal_css_id="addCfoModal" modal_size="md" modal_title="Assign CFOs" is_submit_btn_enabled=True is_form_modal=True form_object=client_assign_cfo_form is_upload_form=False form_id="assignCfoClientForm" form_submit_text="Assign" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:client:api:client-api-router-assign-cfo" custom_styled_checkboxes=True is_only_checkbox_form=True %}
+    {% ldgf_pop_modal modal_css_id="addCfoModal" modal_size="md" modal_title="Assign CFOs" is_submit_btn_enabled=True is_form_modal=True form_object=client_assign_cfo_form is_upload_form=False form_id="assignCfoClientForm" form_submit_text="Assign" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:client:api:client-api-router-assign-cfo" custom_styled_checkboxes=True is_only_checkbox_form=True %}
     {# End Add CFO to client modal #}
     {# End tabs #}
 {% endblock dashboard_content_block %}
