@@ -5,6 +5,8 @@
 {% load static %}
 {% load humanize %}
 {% load bw_form_helpers %}
+{% load elements.ldgf_pop_modal %}
+{% load elements.ldgf_pop_modal_btn %}
 {% load tailwind_filters %}
 
 {% block dashboard_content_block %}
@@ -163,12 +165,12 @@
                     <div id="tasks-tab"
                          role="tabpanel"
                          aria-labelledby="bar-with-underline-item-1">
-                        {% bw_js_modal modal_css_id="createTaskModal" modal_size="sm" modal_title="Create new task" is_submit_btn_enabled=True is_form_modal=True form_object=task_form is_upload_form=True form_id="createTaskForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:task:api:task-api-router-list" %}
+                        {% ldgf_pop_modal modal_css_id="createTaskModal" modal_size="sm" modal_title="Create new task" is_submit_btn_enabled=True is_form_modal=True form_object=task_form is_upload_form=True form_id="createTaskForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:task:api:task-api-router-list" %}
                         <div class="text-right">
                             <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-2 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
                                 <div class="flex justify-end">
                                     <div>
-                                        {% bw_create_btn_js_modal js_create_btn_css_id="createTaskBtn" modal_css_id="createTaskModal" app_name="task" %}
+                                        {% ldgf_pop_modal_btn btn_css_id="createTaskBtn" modal_css_id="createTaskModal" app_name="task" %}
                                     </div>
                                 </div>
                             </div>
@@ -187,12 +189,12 @@
                          class="hidden"
                          role="tabpanel"
                          aria-labelledby="bar-with-underline-item-2">
-                        {% bw_js_modal modal_css_id="createDocumentModal" modal_size="sm" modal_title="Create new document" is_submit_btn_enabled=True is_form_modal=True form_object=document_form is_upload_form=True form_id="createDocumentForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:document:api:document-api-router-list" %}
+                        {% ldgf_pop_modal modal_css_id="createDocumentModal" modal_size="sm" modal_title="Create new document" is_submit_btn_enabled=True is_form_modal=True form_object=document_form is_upload_form=True form_id="createDocumentForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:document:api:document-api-router-list" %}
                         <div class="text-right">
                             <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-2 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
                                 <div class="flex justify-end">
                                     <div>
-                                        {% bw_create_btn_js_modal js_create_btn_css_id="createDocumentBtn" modal_css_id="createDocumentModal" app_name="document" %}
+                                        {% ldgf_pop_modal_btn btn_css_id="createDocumentBtn" modal_css_id="createDocumentModal" app_name="document" %}
                                     </div>
                                 </div>
                             </div>
@@ -212,12 +214,12 @@
                          role="tabpanel"
                          aria-labelledby="bar-with-underline-item-3">
                         {% convert_dict_to_str job=object.pk as extra_hidden_inputs %}
-                        {% bw_js_modal modal_css_id="createNoteModal" modal_size="sm" modal_title="Create new note" is_submit_btn_enabled=True is_form_modal=True form_object=note_form is_upload_form=False form_id="createNoteForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:note:api:note-api-router-list" %}
+                        {% ldgf_pop_modal modal_css_id="createNoteModal" modal_size="sm" modal_title="Create new note" is_submit_btn_enabled=True is_form_modal=True form_object=note_form is_upload_form=False form_id="createNoteForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:note:api:note-api-router-list" %}
                         <div class="text-right">
                             <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-2 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
                                 <div class="flex justify-end">
                                     <div>
-                                        {% bw_create_btn_js_modal js_create_btn_css_id="createNoteBtn" modal_css_id="createNoteModal" app_name="note" %}
+                                        {% ldgf_pop_modal_btn btn_css_id="createNoteBtn" modal_css_id="createNoteModal" app_name="note" %}
                                     </div>
                                 </div>
                             </div>
@@ -240,12 +242,12 @@
                             <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-2 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
                                 <div class="flex justify-end">
                                     <div>
-                                        {% bw_create_btn_js_modal js_create_btn_css_id="createAssignmentBtn" modal_css_id="createAssignmentModal" app_name="special_assignment" %}
+                                        {% ldgf_pop_modal_btn btn_css_id="createAssignmentBtn" modal_css_id="createAssignmentModal" app_name="special_assignment" %}
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        {% bw_js_modal modal_css_id="createAssignmentModal" modal_size="md" modal_title="Create new assignment" is_submit_btn_enabled=True is_form_modal=True form_object=special_assignment_form is_upload_form=True form_id="createAssignmentForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:special_assignment:api:special-assignment-api-router-list" %}
+                        {% ldgf_pop_modal modal_css_id="createAssignmentModal" modal_size="md" modal_title="Create new assignment" is_submit_btn_enabled=True is_form_modal=True form_object=special_assignment_form is_upload_form=True form_id="createAssignmentForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:special_assignment:api:special-assignment-api-router-list" %}
                         {% if object.special_assignments.all %}
 
                             {% include "bw_components/special_assignment/mini_table_list.html" with is_checkbox_enabled=False is_show_created_at=IS_SHOW_CREATED_AT header_title="Special assignments" header_subtitle="Special assignments custom specific assignments to clients" app_label=app_label pagination_list_url_name="dashboard:special_assignment:list" is_actions_menu_enabled=False actions_items="show,update,delete" actions_app_name=app_label actions_base_url="dashboard:special_assignment" base_url_name="dashboard:special_assignment" filter_form=filter_form filter_cancel_url="dashboard:special_assignment:list" page_obj=object.special_assignments.all %}
@@ -317,7 +319,7 @@
                                 <button type="button"
                                         id="updateJobModalBtn"
                                         class="{{ BW_FULL_INPUT_CSS_CLASSES }} hs-tooltip hs-tooltip-toggle py-3 px-4 inline-flex flex-shrink-0 justify-center items-center gap-2 rounded-r-md border border-transparent font-semibold bg-yellow-100 text-yellow-500 hover:text-white hover:bg-yellow-400 focus:outline-none focus:ring-2 ring-offset-white focus:ring-yellow-500 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800"
-                                        data-hs-overlay="#update-job-details-modal"
+                                        data-ldgf-modal-target="#update-job-details-modal"
                                         disabled>
                                     <i class="fa-solid fa-pencil"></i>
                                     <span class="hs-tooltip-content hs-tooltip-shown:opacity-100 hs-tooltip-shown:visible opacity-0 transition-opacity inline-block absolute invisible z-10 py-1 px-2 bg-gray-900 text-xs font-medium text-white rounded-md shadow-sm dark:bg-slate-700"
@@ -431,9 +433,9 @@
                 </div>
                 <div class="-mt-1">
                     <div class="flex flex-col bg-white border border-gray-200 shadow-2xs rounded-xl p-4 md:p-5 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400">
-                        {% bw_js_modal modal_css_id="add-discussion-model-form" modal_size="sm" modal_title="Post discussion or reply" is_submit_btn_enabled=True is_form_modal=True form_object=discussion_form is_upload_form=True form_id="createDiscussionForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:discussion:api:discussion-api-router-list" %}
+                        {% ldgf_pop_modal modal_css_id="add-discussion-model-form" modal_size="sm" modal_title="Post discussion or reply" is_submit_btn_enabled=True is_form_modal=True form_object=discussion_form is_upload_form=True form_id="createDiscussionForm" form_submit_text="Create" extra_hidden_inputs=extra_hidden_inputs action_url="dashboard:discussion:api:discussion-api-router-list" %}
                         <button type="button"
-                                data-hs-overlay="#add-discussion-model-form"
+                                data-ldgf-modal-target="#add-discussion-model-form"
                                 disabled
                                 class="{{ BW_FULL_INPUT_CSS_CLASSES }} w-full m-1 ml-0 py-3 px-4 inline-flex justify-center items-center gap-2 rounded-md bg-blue-100 border border-transparent font-semibold text-blue-500 hover:text-white hover:bg-blue-500 focus:outline-none focus:ring-2 ring-offset-white focus:ring-blue-100 focus:ring-offset-2 transition-all text-sm dark:focus:ring-offset-gray-800">
                             {% translate "Submit reply" %}
@@ -444,6 +446,6 @@
         </div>
     </div>
     {# Start Update Job Modal #}
-    {% bw_js_modal modal_css_id="update-job-details-modal" modal_size="sm" modal_title="Update job" is_submit_btn_enabled=True is_form_modal=True form_object=job_update_form is_upload_form=False form_id="updateJobForm" form_submit_text="Update" action_url="dashboard:job:api:job-api-router-detail" action_url_pk=object.pk form_method="post" enable_hidden_method=True %}
+    {% ldgf_pop_modal modal_css_id="update-job-details-modal" modal_size="sm" modal_title="Update job" is_submit_btn_enabled=True is_form_modal=True form_object=job_update_form is_upload_form=False form_id="updateJobForm" form_submit_text="Update" action_url="dashboard:job:api:job-api-router-detail" action_url_pk=object.pk form_method="post" enable_hidden_method=True %}
     {# End Update Job Modal #}
 {% endblock dashboard_content_block %}
