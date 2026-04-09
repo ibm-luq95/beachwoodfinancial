@@ -69,6 +69,7 @@ import "./beach_wood_user/cfo.js";
 import "./dashboard/notifications.js";
 import "./dashboard/manager_dashboard.js";
 import "./management/delete_staff.js";
+import "./ldgf_pop_modal.js";
 import { initJournalEntryModule } from "./client/journal_entry.js";
 // import "../styles/datatable.css";
 import { setFormInputsReadOnly } from "../utils/form_helpers.js";
