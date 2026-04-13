@@ -181,3 +181,5 @@ docs/_build/
 # Backup files
 *.bak
 *.backup
+
+!GEMINI.md
