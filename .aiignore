@@ -191,10 +191,8 @@ docs/_build/
 /.qwenignore
 /.envrc
 /.base
-/.opencode
-QWEN.md
-AGENTS.md
-opencode.jsonc
+!/.opencode
+!opencode.jsonc
 .my_own_prompts
 !.gemini
 .base
