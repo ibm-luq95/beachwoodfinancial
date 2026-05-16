@@ -604,3 +604,12 @@ uv.lock
 .qwen
 GEMINI.md
 .gemini
+.base
+my_plans
+pgdata
+.mypy_cache
+PROJECT_ANALYSIS.md
+.opencode
+OPENCODE_AGENTS.md
+AGENTS.md
+CONTEXT.md
