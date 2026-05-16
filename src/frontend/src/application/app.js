@@ -74,6 +74,7 @@ import { initJournalEntryModule } from "./client/journal_entry.js";
 import { setFormInputsReadOnly } from "../utils/form_helpers.js";
 import { HSTabs } from "../../node_modules/preline/dist/preline.js";
 // import { HSTabs } from "../../node_modules/preline/dist/preline.js";
+import "../utils/ldgf_pop_modal.js";
 
 window.document.addEventListener("DOMContentLoaded", function () {
   window.HSStaticMethods.autoInit();
