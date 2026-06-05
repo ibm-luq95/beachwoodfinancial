@@ -17,3 +17,9 @@ class DiscussionProxy(Discussion):
             return self.job
         elif self.special_assignment:
             return self.special_assignment
+
+    def get_absolute_url(self) -> str:
+        target = self.for_what()
+        if target:
+            return target.get_absolute_url()
+        return "#"
