@@ -14,9 +14,9 @@ from beach_wood_user.models import BWUser
 from core.api.permissions import BaseApiPermissionMixin
 from core.utils import get_formatted_logger
 from core.utils.developments.debugging_print_object import DebuggingPrint
-from discussion.models import DiscussionProxy, DiscussionNotification
+from discussion.models import DiscussionProxy
 from discussion.serializers import DiscussionSerializer
-from special_assignment.models import SpecialAssignmentNotification
+from lf_notifications.models import NotificationRecipientProxy
 
 logger = get_formatted_logger()
 
@@ -25,36 +25,23 @@ class DiscussionNotificationsApiView(APIView):
     permission_classes = [permissions.IsAuthenticated]
     perm_slug = "discussion.discussionnotifications"
     http_method_names = ["post"]
-    authentication_classes = [TokenAuthentication]
+    # authentication_classes = [TokenAuthentication]
 
     def post(self, request: Request, *args, **kwargs):
         try:
             with atomic():
                 data = dict()
                 post_data = request.data
-                user: BWUser = BWUser.objects.get(pk=post_data.get("user"))
-                notification_object_lbl: Literal[
-                    "SpecialAssignmentNotification", "DiscussionNotification"
-                ] = post_data.get("notificationType")
-                if notification_object_lbl == "DiscussionNotification":
-                    discussion_notifications: DiscussionNotification = (
-                        DiscussionNotification.objects.get(pk=post_data.get("pk"))
-                    )
-                    # validate it the recipient user match the user how clicked on the notifications
-                    # if discussion_notifications.recipient == user:
-                    discussion_notifications.is_read = True
-                    discussion_notifications.save()
-                elif notification_object_lbl == "SpecialAssignmentNotification":
-                    special_assignment_notification: SpecialAssignmentNotification = (
-                        SpecialAssignmentNotification.objects.get(pk=post_data.get("pk"))
-                    )
-                    # validate it the recipient user match the user how clicked on the notifications
-                    # if special_assignment_notification.recipient == user:
-                    special_assignment_notification.is_read = True
-                    special_assignment_notification.save()
-                # DebuggingPrint.pprint(locals())
-                # DebuggingPrint.pprint(discussion_notifications.recipient)
-
+                pk = post_data.get("pk")
+                
+                # Try to find and mark as read in the new system
+                notification_recipient = NotificationRecipientProxy.objects.filter(
+                    pk=pk, recipient=request.user
+                ).first()
+                
+                if notification_recipient:
+                    notification_recipient.mark_as_read()
+                
                 return Response(status=status.HTTP_200_OK, data=data)
         except Exception as e:
             logger.error(traceback.format_exc())
