@@ -98,6 +98,7 @@ INSTALLED_APPS = [
     "special_assignment.apps.SpecialAssignmentConfig",
     "discussion.apps.DiscussionConfig",
     "reports.apps.ReportsConfig",
+    "lf_notifications.apps.LfNotificationsConfig",
     "archive.apps.ArchiveConfig",
     "fiscal_year.apps.FiscalYearConfig",
     "staff_briefcase.apps.StaffBriefcaseConfig",
