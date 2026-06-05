@@ -200,7 +200,7 @@ class Job(
             return False
 
     def get_absolute_url(self):
-        reverse_lazy("dashboard:job:details", kwargs={"pk": self.pk})
+        return reverse_lazy("dashboard:job:details", kwargs={"pk": self.pk})
 
     # def get_all_assigned_users(self) -> list:
     #     all_users = []
