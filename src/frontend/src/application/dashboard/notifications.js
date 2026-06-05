@@ -8,8 +8,27 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
     "button#setAllNotificationsReadBtn",
   );
   if (setAllNotificationsReadBtn) {
-    setAllNotificationsReadBtn.addEventListener("click", (event) => {
-      alert("Soon");
+    setAllNotificationsReadBtn.addEventListener("click", async (event) => {
+      const url = "/notifications/api/notifications/mark_all_read/";
+      const token = getCookie("csrftoken");
+      
+      try {
+        const response = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Accept": "application/json",
+            "X-CSRFToken": token,
+          },
+        });
+        
+        if (response.ok) {
+          window.location.reload();
+        } else {
+          console.error("Failed to mark all notifications as read");
+        }
+      } catch (error) {
+        console.error("Error marking all notifications as read:", error);
+      }
     });
   }
   if (allNotificationItems.length > 0) {
