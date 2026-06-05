@@ -200,7 +200,7 @@ src/bun.lock
 src/node_modules/
 !undefined
 .todos
-OPENCODE_AGENT.md
+!OPENCODE_AGENT.md
 src/public
 docker
 Exported_From_CLI
