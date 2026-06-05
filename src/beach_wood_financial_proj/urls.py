@@ -44,6 +44,7 @@ urlpatterns = [
     path("core/", include("core.urls"), name="core-urls"),
     path("auth/", include("beach_wood_user.urls.auth"), name="auth-urls"),
     path("dashboard/", include("dashboard.urls"), name="dashboard-urls"),
+    path("notifications/", include("lf_notifications.urls"), name="lf_notifications-urls"),
     path("", include("django_components.urls")),
 ]
 
