@@ -28,7 +28,7 @@ prettytable
 psycopg[binary]
 python-decouple
 python-magic
-python-webpack-boilerplate
+django-vite-boilerplate
 PyYAML
 redis
 requests
