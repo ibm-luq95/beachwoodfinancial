@@ -22,7 +22,7 @@
             title="Past Due Jobs"
             value=0
             icon="fa-triangle-exclamation"
-            link_url="/dashboard/jobs/?status=past_due"
+            link_url="/dashboard/job/?status=past_due"
             alert=True
             widget_name="past_due_jobs"
             element_id="lfPastDueJobs"
@@ -33,7 +33,7 @@
             title="Need Info"
             value=0
             icon="fa-circle-question"
-            link_url="/dashboard/jobs/?state=need_info"
+            link_url="/dashboard/job/?state=need_info"
             widget_name="jobs_need_info"
             element_id="lfJobsNeedInfo"
             loading=True
@@ -43,7 +43,7 @@
             title="Tasks This Week"
             value=0
             icon="fa-calendar-check"
-            link_url="/dashboard/tasks/?due=this_week"
+            link_url="/dashboard/task/?due=this_week"
             widget_name="tasks_this_week"
             element_id="lfTasksDueThisWeek"
             loading=False
@@ -235,7 +235,7 @@
                 columns=[]
                 rows=[]
                 empty_message="No past due jobs"
-                link_url="/dashboard/jobs/?status=past_due"
+                link_url="/dashboard/job/?status=past_due"
                 loading=True
                 widget_name="past_due_jobs_table"
                 element_id="lfPastDueJobsTable" / %}
