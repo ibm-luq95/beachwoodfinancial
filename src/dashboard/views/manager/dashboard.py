@@ -56,7 +56,7 @@ class DashboardViewBW(
             notes_count = Note.objects.count()
             tasks_count = TaskProxy.objects.count()
 
-            last_activities = CRUDEventProxy.objects.all().order_by("-datetime")[:7]
+            last_activities = CRUDEventProxy.objects.all().order_by("-timestamp")[:7]
             special_assignments = SpecialAssignmentProxy.objects.all().order_by(
                 "-created_at"
             )[:5]
