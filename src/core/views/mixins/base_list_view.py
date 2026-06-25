@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-#
-import stringcase
+import inflection
 from django.contrib.sites.models import Site
 
 from core.constants import LIST_VIEW_PAGINATE_BY
@@ -101,7 +101,7 @@ class BWBaseListViewMixin:
                 ]
                 names_list = [field.name for field in getattr(self.model, "_meta").fields]
                 new_list = [
-                    stringcase.sentencecase(name.upper())
+                    inflection.humanize(name)
                     for name in names_list
                     if name not in excluded_fields
                 ]
