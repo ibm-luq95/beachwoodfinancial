@@ -8,7 +8,7 @@ MIDDLEWARE = MIDDLEWARE + [
     "core.middleware.security_logging.SecurityLoggingMiddleware",
 ]
 
-DEBUG = config("DEBUG", cast=bool)
+DEBUG = app_settings.DEBUG
 
 ADMINS = [("Ibrahim Luqman", "ibm_luq995@outlook.com")]
 MANAGERS = [("Ibrahim Luqman", "ibm_luq995@outlook.com")]
@@ -43,13 +43,13 @@ AUTH_PASSWORD_VALIDATORS = [
 # Database configurations
 DATABASES = {
     "default": {
-        "ENGINE": config("DB_ENGINE", cast=str),
-        "NAME": config("DB_NAME", cast=str),
-        "USER": config("DB_USER", cast=str),
-        "PASSWORD": config("DB_PASSWORD", cast=str),
-        "HOST": config("DB_HOST", cast=str),
-        "PORT": config("DB_PORT", cast=str),
-        "OPTIONS": {"client_encoding": config("DB_CLIENT_ENCODING", cast=str)},
+        "ENGINE": app_settings.DB_ENGINE,
+        "NAME": app_settings.DB_NAME,
+        "USER": app_settings.DB_USER,
+        "PASSWORD": app_settings.DB_PASSWORD,
+        "HOST": app_settings.DB_HOST,
+        "PORT": app_settings.DB_PORT,
+        "OPTIONS": {"client_encoding": app_settings.DB_CLIENT_ENCODING},
     }
 }
 
@@ -93,9 +93,9 @@ DATABASES = {
 # # SECURE_PROXY_SSL_HEADER = True
 # SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
 
-if config("SENTRY_IS_ENABLED", cast=bool) is True:
+if app_settings.SENTRY_IS_ENABLED is True:
     sentry_sdk.init(
-        dsn=config("SENTRY_SDK_DSN", cast=str),
+        dsn=app_settings.SENTRY_SDK_DSN,
         integrations=[
             DjangoIntegration(
                 transaction_style="url",

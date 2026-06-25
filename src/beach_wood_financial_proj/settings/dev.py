@@ -33,16 +33,16 @@ class PlainFormatter(logging.Formatter):
 
 mimetypes.add_type("application/javascript", ".js", True)
 
-DEBUG = config("DEBUG", cast=bool)
+DEBUG = app_settings.DEBUG
 
 CSRF_USE_SESSIONS = False
 
 INSTALLED_APPS = INSTALLED_APPS + [
     "django.contrib.admindocs",
     "debug_toolbar",
-    "template_profiler_panel",
-    "debugtools",
-    "debug_permissions",
+    # "template_profiler_panel",
+    # "debugtools",
+    # "debug_permissions",
     "django_model_info.apps.DjangoModelInfoConfig",
     "client_accounting",
     # "silk",
@@ -56,7 +56,7 @@ MIDDLEWARE = MIDDLEWARE + [
     # "request_viewer.middleware.RequestViewerMiddleware",
     # "request_viewer.middleware.ExceptionMiddleware",
     "debug_toolbar.middleware.DebugToolbarMiddleware",
-    "debugtools.middleware.XViewMiddleware",
+    # "debugtools.middleware.XViewMiddleware",
     "django.contrib.admindocs.middleware.XViewMiddleware",
     # "django_pdb.middleware.PdbMiddleware",
     # "silk.middleware.SilkyMiddleware",
@@ -66,16 +66,16 @@ MIDDLEWARE = MIDDLEWARE + [
 # Database configurations
 DATABASES = {
     "default": {
-        "ENGINE": config("DB_ENGINE", cast=str),
-        "NAME": config("DB_NAME", cast=str),
-        "USER": config("DB_USER", cast=str),
-        "PASSWORD": config("DB_PASSWORD", cast=str),
-        "HOST": config("DB_HOST", cast=str),
-        "PORT": config("DB_PORT", cast=str),
+        "ENGINE": app_settings.DB_ENGINE,
+        "NAME": app_settings.DB_NAME,
+        "USER": app_settings.DB_USER,
+        "PASSWORD": app_settings.DB_PASSWORD,
+        "HOST": app_settings.DB_HOST,
+        "PORT": app_settings.DB_PORT,
         "CONN_MAX_AGE": None,
         "ATOMIC_REQUESTS": True,
         "OPTIONS": {
-            "client_encoding": config("DB_CLIENT_ENCODING", cast=str),
+            "client_encoding": app_settings.DB_CLIENT_ENCODING,
             "server_side_binding": True,
         },
         "TEST": {
@@ -97,13 +97,13 @@ DATABASES = {
 # DATABASES["default"]["OPTIONS"].update({"read_default_file": "/etc/my.cnf"})
 
 TEMPLATES[0]["OPTIONS"]["builtins"].extend([
-    "debugtools.templatetags.debugtools_tags",
+    # "debugtools.templatetags.debugtools_tags",
     "core.templatetags.development_tags",
 ])
 
 # DJANGO_REDIS_LOG_IGNORED_EXCEPTIONS = True
 # Djagno Debug Toolbar
-INTERNAL_IPS = config("INTERNAL_IPS", cast=Csv())
+INTERNAL_IPS = app_settings.INTERNAL_IPS
 DISABLE_PANELS = {}
 
 DEBUG_TOOLBAR_PANELS = [
@@ -115,14 +115,14 @@ DEBUG_TOOLBAR_PANELS = [
     "debug_toolbar.panels.request.RequestPanel",
     "debug_toolbar.panels.sql.SQLPanel",
     "debug_toolbar.panels.staticfiles.StaticFilesPanel",
-    "debugtools.panels.ViewPanel",
+    # "debugtools.panels.ViewPanel",
     "debug_toolbar.panels.templates.TemplatesPanel",
     # "debug_toolbar.panels.cache.CachePanel",
     "debug_toolbar.panels.signals.SignalsPanel",
     "debug_toolbar.panels.logging.LoggingPanel",
     "debug_toolbar.panels.redirects.RedirectsPanel",
     # "debug_toolbar.panels.profiling.ProfilingPanel",
-    "template_profiler_panel.panels.template.TemplateProfilerPanel",
+    # "template_profiler_panel.panels.template.TemplateProfilerPanel",
 ]
 
 SHOW_COLLAPSED = True
@@ -193,7 +193,7 @@ TEMPLATES[0]["OPTIONS"]["debug"] = DEBUG
 #     cache=None,
 #     # template_cache_size=0,
 # )
-DJANGO_EASY_AUDIT_PROPAGATE_EXCEPTIONS = DEBUG
+# DJANGO_EASY_AUDIT_PROPAGATE_EXCEPTIONS = DEBUG
 if HAS_COLORLOG:
     LOGGING_BASE["formatters"]["dev_color"] = {
         "()": "colorlog.ColoredFormatter",
@@ -293,7 +293,7 @@ DJANGO_CSRF_TRUSTED_ORIGINS = ["http://localhost:8000"]
 
 # CORS Settings (Dev)
 CORS_ALLOW_CREDENTIALS = True
-CORS_ALLOWED_ORIGINS = config("CORS_ALLOWED_ORIGINS", cast=Csv())
+CORS_ALLOWED_ORIGINS = app_settings.CORS_ALLOWED_ORIGINS
 CORS_ALLOW_HEADERS = [
     "accept",
     "accept-encoding",
@@ -325,7 +325,7 @@ CSRF_COOKIE_HTTPONLY = False  # JS needs access
 CSRF_COOKIE_SECURE = False  # Allow HTTP
 CSRF_COOKIE_SAMESITE = "Lax"
 # CSRF_TRUSTED_ORIGINS = []
-CSRF_TRUSTED_ORIGINS = config("CSRF_TRUSTED_ORIGINS", cast=Csv())
+CSRF_TRUSTED_ORIGINS = app_settings.CSRF_TRUSTED_ORIGINS
 CSRF_HEADER_NAME = "HTTP_X_CSRFTOKEN"
 CSRF_COOKIE_NAME = "csrftoken"
 

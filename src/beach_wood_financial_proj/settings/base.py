@@ -1,36 +1,23 @@
-import configparser
 import os
 import pprint
 from pathlib import Path
-
-from decouple import Config
-from decouple import Csv
-from decouple import RepositoryEnv
 from django.contrib.messages import constants as messages
 from django_components import ComponentsSettings
+from .config import app_settings
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-# BASE_DIR = Path(__file__).resolve().parent.parent  # Default BASE_DIR
 BASE_DIR: Path = Path(__file__).resolve().parent.parent.parent
-env_file_path: Path = BASE_DIR / ".env" / ".env"
-# SITE_ID = 1
-config = configparser.RawConfigParser()
-stage_env_file = BASE_DIR / ".env" / ".current_stage"
-config.read(stage_env_file)
-stage = config.get("environment", "STAGE_ENVIRONMENT".lower())
-
-config: Config = Config(RepositoryEnv(env_file_path))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = config("SECRET_KEY", cast=str)
+SECRET_KEY = app_settings.SECRET_KEY
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = config("DEBUG", cast=bool)
+DEBUG = app_settings.DEBUG
 
-ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
+ALLOWED_HOSTS = app_settings.ALLOWED_HOSTS
 
 X_FRAME_OPTIONS = "SAMEORIGIN"
 
@@ -59,7 +46,9 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "guardian",
     "django_extensions",
-    "webpack_boilerplate",
+    # "webpack_boilerplate",
+    "django_vite",
+    "django_vite_boilerplate",
     "django_components",
     # "django_viewcomponent",
     "crispy_forms",
@@ -74,7 +63,7 @@ INSTALLED_APPS = [
     "drf_standardized_errors",
     "widget_tweaks",
     "rangefilter",
-    "easyaudit",
+    "auditlog",
     # "defender",
     "core.apps.CoreConfig",
     "beach_wood_user.apps.BeachWoodUserConfig",
@@ -149,6 +138,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     # 9. Authentication middleware - after sessions and CSRF
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "auditlog.middleware.AuditlogMiddleware",
     # 10. Session timeout - after auth to check authenticated users
     "django_session_timeout.middleware.SessionTimeoutMiddleware",
     # 11. Failed login middleware - after auth
@@ -162,7 +152,6 @@ MIDDLEWARE = [
     # 15. Multi-host middleware - application-specific logic
     "core.middleware.MultiHostMiddleware",
     # 16. Audit middleware - should be late to capture processed requests
-    "easyaudit.middleware.easyaudit.EasyAuditMiddleware",
     # 17. Component dependency middleware - application-specific
     # "django_components.middleware.ComponentDependencyMiddleware",
     # 18. Broken link emails - should be very late
@@ -294,13 +283,13 @@ AUTH_USER_MODEL = "beach_wood_user.BWUser"
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
-LANGUAGE_CODE = config("LANGUAGE_CODE", cast=str)
+LANGUAGE_CODE = app_settings.LANGUAGE_CODE
 
-TIME_ZONE = config("TIME_ZONE", cast=str)
+TIME_ZONE = app_settings.TIME_ZONE
 
-USE_I18N = config("USE_I18N", cast=bool)
+USE_I18N = app_settings.USE_I18N
 
-USE_TZ = config("USE_TZ", cast=bool)
+USE_TZ = app_settings.USE_TZ
 
 LOCALE_PATHS = [BASE_DIR / "locale/"]
 
@@ -361,21 +350,30 @@ MAINTENANCE_MODE_IGNORE_SUPERUSER = False
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = "/static/"
 STATICFILES_DIRS = [
     BASE_DIR / "static/",
-    BASE_DIR / "frontend" / "build",
+    BASE_DIR / "public/static",
+    # BASE_DIR / "frontend" / "build",
     BASE_DIR / "components",
 ]
 STATIC_ROOT = BASE_DIR / "staticfiles"
-# Webpack configs
-WEBPACK_LOADER = {
-    "MANIFEST_FILE": BASE_DIR / "frontend/build/manifest.json",
-    # "MANIFEST_FILE": BASE_DIR
-    # / "frontend"
-    # / "build"
-    # / "manifest.json"
+DJANGO_VITE = {
+    "default": {
+        "dev_mode": DEBUG,
+        "dev_server_port": 3036,
+        # "manifest_path": BASE_DIR / "public/static/.vite/manifest.json",
+        "manifest_path": BASE_DIR / "static" / ".vite" / "manifest.json",
+    },
 }
+# Webpack configs
+# WEBPACK_LOADER = {
+#     "MANIFEST_FILE": BASE_DIR / "frontend/build/manifest.json",
+# "MANIFEST_FILE": BASE_DIR
+# / "frontend"
+# / "build"
+# / "manifest.json"
+# }
 
 # Media URLs
 MEDIA_ROOT = BASE_DIR / "media"
@@ -383,8 +381,8 @@ MEDIA_ROOT = BASE_DIR / "media"
 MEDIA_URL = "media/"
 
 # Whitenoise configs
-STATICFILES_STORAGE = config("STATICFILES_STORAGE", cast=str)
-# WHITENOISE_MANIFEST_STRICT = config("WHITENOISE_MANIFEST_STRICT", cast=bool)
+STATICFILES_STORAGE = app_settings.STATICFILES_STORAGE
+# WHITENOISE_MANIFEST_STRICT = app_settings.WHITENOISE_MANIFEST_STRICT
 WHITENOISE_MAX_AGE = 0
 WHITENOISE_IMMUTABLE_FILE_TEST = lambda url: False
 WHITENOISE_AUTOREFRESH = True
@@ -409,23 +407,19 @@ CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 CRISPY_TEMPLATE_PACK = "tailwind"
 
 # Django session timeout configs
-SESSION_COOKIE_AGE = config("SESSION_COOKIE_AGE", cast=int)
-SESSION_EXPIRE_SECONDS = config("SESSION_EXPIRE_SECONDS", cast=int)  # 1 hour
-SESSION_EXPIRE_AT_BROWSER_CLOSE = config(
-    "SESSION_EXPIRE_AT_BROWSER_CLOSE", cast=bool
-)  # Invalid session
-SESSION_EXPIRE_AFTER_LAST_ACTIVITY = config(
-    "SESSION_EXPIRE_AFTER_LAST_ACTIVITY", cast=bool
-)
+SESSION_COOKIE_AGE = app_settings.SESSION_COOKIE_AGE
+SESSION_EXPIRE_SECONDS = app_settings.SESSION_EXPIRE_SECONDS  # 1 hour
+SESSION_EXPIRE_AT_BROWSER_CLOSE = app_settings.SESSION_EXPIRE_AT_BROWSER_CLOSE  # Invalid session
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = app_settings.SESSION_EXPIRE_AFTER_LAST_ACTIVITY
 
 SESSION_EXPIRE_AFTER_LAST_ACTIVITY_GRACE_PERIOD = 60  # group by minute
 
 # Backup password
-BACKUP_KEY = config("BACKUP_KEY", cast=str)
-COMPRESS_LEVEL = config("COMPRESS_LEVEL", cast=int)
+BACKUP_KEY = app_settings.BACKUP_KEY
+COMPRESS_LEVEL = app_settings.COMPRESS_LEVEL
 
 # ENCRYPT_KEY
-ENCRYPT_KEY = bytes(config("ENCRYPT_KEY", cast=str), "ascii")  # type: ignore
+ENCRYPT_KEY = bytes(app_settings.ENCRYPT_KEY, "ascii")  # type: ignore
 
 
 # Django log viewer package config
@@ -473,12 +467,8 @@ SECURITY_LOG_FILE = BASE_DIR.parent / "logs" / "security.log"
 SECURITY_LOG_RETENTION_YEARS = 7  # Financial industry standard
 
 # Security logging performance optimization
-ENABLE_SELECTIVE_SECURITY_LOGGING = config(
-    "ENABLE_SELECTIVE_SECURITY_LOGGING", cast=bool, default=True
-)
-SECURITY_LOG_SAMPLING_RATE = config(
-    "SECURITY_LOG_SAMPLING_RATE", cast=int, default=10
-)  # Log 1 in N requests
+ENABLE_SELECTIVE_SECURITY_LOGGING = app_settings.ENABLE_SELECTIVE_SECURITY_LOGGING
+SECURITY_LOG_SAMPLING_RATE = app_settings.SECURITY_LOG_SAMPLING_RATE  # Log 1 in N requests
 ALWAYS_LOG_SECURITY_EVENTS = {
     "LOGIN_FAILED",  # Always log authentication failures
     "BRUTE_FORCE_DETECTED",  # Always log brute force attacks
@@ -532,7 +522,7 @@ CACHES = {
 }
 COMPONENTS = ComponentsSettings(
     autodiscover=True,
-    reload_on_file_change=True,
+    # reload_on_file_change=True,
     # cache=None,
     # template_cache_size=0,
 )
@@ -728,7 +718,7 @@ LOGGING_BASE = {
 }
 SESSION_TIMEOUT_REDIRECT = "/auth/login"
 ANONYMOUS_USER_NAME = None
-MANAGER_MAIN_EMAIL = config("MANAGER_MAIN_EMAIL", cast=str)
+MANAGER_MAIN_EMAIL = app_settings.MANAGER_MAIN_EMAIL
 
 
 # Django-import-export config
