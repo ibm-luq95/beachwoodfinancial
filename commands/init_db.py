@@ -28,16 +28,30 @@ def init_db_command():
         output_group = parser.add_mutually_exclusive_group()
         main_group = parser.add_mutually_exclusive_group()
         main_group.add_argument(
-            "-i", "--init-db", help="Initialize the database and user", action="store_true"
+            "-i",
+            "--init-db",
+            help="Initialize the database and user",
+            action="store_true",
         )
         main_group.add_argument(
-            "-d", "--delete-db", help="Delete the database and user", action="store_true"
+            "-d",
+            "--delete-db",
+            help="Delete the database and user",
+            action="store_true",
         )
         output_group.add_argument(
-            "-v", "--verbose", help="Verbose output", action="store_true", required=False
+            "-v",
+            "--verbose",
+            help="Verbose output",
+            action="store_true",
+            required=False,
         )
         output_group.add_argument(
-            "-s", "--silence", help="Silence output", action="store_true", required=False
+            "-s",
+            "--silence",
+            help="Silence output",
+            action="store_true",
+            required=False,
         )
         parser.add_argument(
             "-rw",
@@ -71,7 +85,9 @@ def init_db_command():
                 cursor = conn.cursor()
                 conn.start_transaction()
                 if args.init_db is True:
-                    colored_print(text="Initializing the database and user", color="blue")
+                    colored_print(
+                        text="Initializing the database and user", color="blue"
+                    )
                     sql_statements = {
                         "create_db": (
                             "CREATE DATABASE IF NOT EXISTS"
