@@ -26,7 +26,6 @@ django-valkey
 Pillow
 prettytable
 "psycopg[binary]"
-python-decouple
 python-magic
 django-vite-boilerplate
 PyYAML
