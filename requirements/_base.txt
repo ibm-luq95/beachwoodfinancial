@@ -19,13 +19,13 @@ django-guardian
 django-widget-tweaks
 djangorestframework
 drf-standardized-errors
-django-easy-audit
+django-auditlog
 gunicorn
 hiredis
 django-valkey
 Pillow
 prettytable
-psycopg[binary]
+"psycopg[binary]"
 python-decouple
 python-magic
 django-vite-boilerplate
@@ -34,6 +34,5 @@ redis
 requests
 pandas
 numpy
-stringcase
-sentry-sdk[django]
+"sentry-sdk[django]"
 Whitenoise
