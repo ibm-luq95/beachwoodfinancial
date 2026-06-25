@@ -195,7 +195,7 @@ class ManagerPastDueJobsAPIView(APIView):
                         if hasattr(job, "get_status_display")
                         else job.status
                     ),
-                    "url": f"/dashboard/jobs/{job.id}/",
+                    "url": f"/dashboard/job/{job.id}",
                 })
             # DebuggingPrint.pprint(data)
             return Response(
@@ -253,7 +253,7 @@ class ManagerTasksThisWeekAPIView(APIView):
                         if hasattr(task, "get_status_display")
                         else task.status
                     ),
-                    "url": f"/dashboard/tasks/{task.id}/",
+                    "url": f"/dashboard/task/{task.id}",
                 })
 
             return Response(
