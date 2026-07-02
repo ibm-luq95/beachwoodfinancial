@@ -29,7 +29,9 @@
         <!-- ========== MAIN CONTENT ========== -->
         <!-- Start left side bar -->
         {% if request.user.is_authenticated %}
+
             {% include "client_accounting/core/client_left_sidebar.html" %}
+
         {% endif %}
         <!-- End left side bar -->
         {# Start Toasts #}
@@ -64,6 +66,7 @@
             // Make CSRF token available globally
             window.csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         </script>
+
 
         {% include "core/inc/js.html" %}
 
