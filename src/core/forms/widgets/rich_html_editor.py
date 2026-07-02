@@ -24,5 +24,6 @@ class RichHTMLEditorWidget(forms.widgets.Textarea):
 
         """
         attrs = attrs or {}
-        attrs.update({"class": "rich-editor"})
+        # attrs.update({"class": "rich-editor"})
+        attrs.update({"class": "wyswyg-editor"})
         super(RichHTMLEditorWidget, self).__init__(attrs)
