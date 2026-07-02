@@ -1,4 +1,5 @@
 import { defineConfig } from "vite";
+import { resolve } from "path";
 
 import tailwindcss from "@tailwindcss/vite";
 
@@ -22,6 +23,14 @@ const config = defineConfig({
     tailwindcss(),
     vue(),
   ],
+  build: {
+    rollupOptions: {
+      input: {
+        app: resolve(__dirname, "frontend/application/app.js"),
+        trumbowyg: resolve(__dirname, "frontend/application/trumbowyg.js"),
+      },
+    },
+  },
   server: {
     port: 3036,
     host: "0.0.0.0",
