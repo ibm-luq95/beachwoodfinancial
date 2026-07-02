@@ -11,6 +11,7 @@ import tableSort from "table-sort-js/table-sort.js";
 import "./dashboard/dashboard.js";
 import "./dashboard/manager_dashboard.js";
 import "./job/details.js";
+import "trumbowyg/dist/ui/trumbowyg.css"
 import "./special_assignment/details.js";
 import "./special_assignment/special_assignment.js";
 import "./task/task.js";
@@ -176,17 +177,4 @@ window.document.addEventListener("DOMContentLoaded", function () {
     });
   }
   // Dark theme
-
-  // Setting Quill
-  const quillElements = document.querySelectorAll(".quill-editor");
-  if (quillElements.length > 0) {
-    quillElements.forEach((ele) => {
-      console.warn(ele.id);
-
-      const quill = new Quill(`#${ele.id}`, {
-        theme: "snow",
-      });
-    });
-  }
-  // Setting Quill
 });
