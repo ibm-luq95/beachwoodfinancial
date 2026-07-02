@@ -363,7 +363,8 @@ DJANGO_VITE = {
         "dev_mode": DEBUG,
         "dev_server_port": 3036,
         # "manifest_path": BASE_DIR / "public/static/.vite/manifest.json",
-        "manifest_path": BASE_DIR / "static" / ".vite" / "manifest.json",
+        # "manifest_path": BASE_DIR / "static" / ".vite" / "manifest.json",
+        "manifest_path": BASE_DIR / "public/static/.vite/manifest.json",
     },
 }
 # Webpack configs
