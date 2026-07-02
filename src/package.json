@@ -6,6 +6,7 @@
   },
   "author": "Michael Yin",
   "devDependencies": {
+    "@rollup/plugin-inject": "^5.0.5",
     "@tailwindcss/aspect-ratio": "^0.4.2",
     "@tailwindcss/container-queries": "^0.1.1",
     "@tailwindcss/forms": "^0.5.11",
@@ -59,12 +60,14 @@
     "dropzone": "^6.0.0-beta.2",
     "htmx.org": "^2.0.10",
     "i18next": "^26.3.3",
+    "jquery": "^4.0.0",
     "lodash": "^4.18.1",
     "preline": "^4.2.0",
     "quill": "^2.0.3",
     "sweetalert2": "^11.26.25",
     "table-sort-js": "^1.22.3",
     "toastify-js": "^1.12.0",
+    "trumbowyg": "^2.31.0",
     "vanilla-calendar-pro": "^3.1.0"
   }
 }
