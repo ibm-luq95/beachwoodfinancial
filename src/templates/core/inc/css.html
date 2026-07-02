@@ -2,6 +2,7 @@
 {% load django_vite %}
 {% vite_hmr_client %}
 {% vite_asset "application/app.js" %}
+
 <link type="text/css"
       href="{% vite_asset_url 'application/app.css' %}"
       rel="stylesheet" />
