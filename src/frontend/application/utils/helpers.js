@@ -68,10 +68,27 @@ const capitalizeFirstLetter = (string) => {
   return string.charAt(0).toUpperCase() + string.slice(1);
 };
 
+/**
+ * Escapes special HTML characters to prevent XSS vulnerabilities.
+ *
+ * @param {string} str - The raw string to escape.
+ * @returns {string} The HTML-encoded string.
+ */
+const escapeHTML = (str) => {
+  if (str === null || str === undefined) return "";
+  return String(str)
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;")
+    .replace(/'/g, "&#039;");
+};
+
 export {
   capitalizedFirstLetter,
   orderObjectItems,
   checkIfInputSingleOrList,
   convertStrToBool,
   capitalizeFirstLetter,
+  escapeHTML,
 };
