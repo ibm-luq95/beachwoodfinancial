@@ -2,6 +2,7 @@
 import traceback
 from typing import Literal
 
+from django.db import models
 from django.db.transaction import atomic
 from rest_framework import permissions, parsers, status
 from rest_framework.authentication import TokenAuthentication
@@ -12,6 +13,7 @@ from rest_framework.viewsets import ModelViewSet
 
 from beach_wood_user.models import BWUser
 from core.api.permissions import BaseApiPermissionMixin
+from core.api.mixins import RoleScopedQuerysetMixin
 from core.utils import get_formatted_logger
 from core.utils.developments.debugging_print_object import DebuggingPrint
 from discussion.models import DiscussionProxy
@@ -49,13 +51,30 @@ class DiscussionNotificationsApiView(APIView):
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR, data=str(e))
 
 
-class DiscussionViewSet(ModelViewSet):
+class DiscussionViewSet(RoleScopedQuerysetMixin, ModelViewSet):
     serializer_class = DiscussionSerializer
     permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
     parser_classes = [parsers.FormParser, parsers.MultiPartParser]
     perm_slug = "discussion.discussion"
     queryset = DiscussionProxy.objects.all()
     authentication_classes = [TokenAuthentication]
+
+    def scope_queryset_for_bookkeeper(self, queryset, bookkeeper):
+        return queryset.filter(
+            models.Q(job__managed_by=bookkeeper.user) |
+            models.Q(job__bookkeeper=bookkeeper) |
+            models.Q(job__client__bookkeepers=bookkeeper) |
+            models.Q(special_assignment__assigned_to=bookkeeper.user) |
+            models.Q(special_assignment__assigned_by=bookkeeper.user) |
+            models.Q(special_assignment__bookkeeper=bookkeeper) |
+            models.Q(special_assignment__client__bookkeepers=bookkeeper)
+        )
+
+    def scope_queryset_for_cfo(self, queryset, cfo):
+        return queryset.filter(
+            models.Q(job__client__cfos=cfo) |
+            models.Q(special_assignment__client__cfos=cfo)
+        )
 
 
 # class CreateDiscussionApiView(APIView):
