@@ -2,6 +2,7 @@
 
 import { SecureUrlFetcher } from "../utils/apis/fetch_by_name.js";
 import { RequestHandler } from "../utils/apis/request_handler.js";
+import { escapeHTML } from "../utils/helpers.js";
 import Chart from "chart.js/auto";
 
 /**
@@ -207,6 +208,10 @@ class LFManagerDashboardLoader {
     const rows = data.data
       .map((job, index) => {
         const urgency = getUrgencyLevel(job.days_overdue);
+        const safeTitle = escapeHTML(job.title);
+        const truncatedTitle = safeTitle.length > 25 ? safeTitle.slice(0, 25) + "..." : safeTitle;
+        const safeClientName = escapeHTML(job.client_name);
+        const safeUrl = escapeHTML(job.url);
         return `
         <tr class="group hover:bg-gray-50 dark:hover:bg-neutral-800/50 transition-colors duration-200">
           <td class="px-4 py-3 whitespace-nowrap">
@@ -217,16 +222,16 @@ class LFManagerDashboardLoader {
                 </div>
               </div>
               <div class="flex-1 min-w-0">
-                <a href="${job.url}"
+                <a href="${safeUrl}"
                    class="text-sm font-medium text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 block truncate"
-                   title="View job details: ${job.title}">
-                  ${job.title.length > 25 ? job.title.slice(0, 25) + "..." : job.title}
+                   title="View job details: ${safeTitle}">
+                  ${truncatedTitle}
                 </a>
               </div>
             </div>
           </td>
           <td class="px-4 py-3 whitespace-nowrap">
-            <span class="text-sm text-gray-900 dark:text-gray-100 truncate block" style="max-width: 100px;">${job.client_name}</span>
+            <span class="text-sm text-gray-900 dark:text-gray-100 truncate block" style="max-width: 100px;">${safeClientName}</span>
           </td>
           <td class="px-4 py-3 whitespace-nowrap">
             <div class="flex items-center space-x-2">
@@ -404,6 +409,13 @@ class LFManagerDashboardLoader {
     const rows = data.data
       .map((task, index) => {
         const statusInfo = getStatusInfo(task.status);
+        const safeTitle = escapeHTML(task.title);
+        const truncatedTitle = safeTitle.length > 25 ? safeTitle.slice(0, 25) + "..." : safeTitle;
+        const safeJobTitle = escapeHTML(task.job_title);
+        const truncatedJobTitle = safeJobTitle.length > 20 ? safeJobTitle.slice(0, 20) + "..." : safeJobTitle;
+        const safeClientName = escapeHTML(task.client_name);
+        const safeUrl = escapeHTML(task.url);
+        const safeAssignedTo = task.assigned_to ? escapeHTML(task.assigned_to) : "";
 
         return `
         <tr class="group hover:bg-gray-50 dark:hover:bg-neutral-800/50 transition-colors duration-200">
@@ -415,10 +427,10 @@ class LFManagerDashboardLoader {
                 </div>
               </div>
               <div class="flex-1 min-w-0">
-                <a href="${task.url}" 
+                <a href="${safeUrl}" 
                    class="text-sm font-medium text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 block truncate"
-                   title="View task details: ${task.title}">
-                  ${task.title.slice(0, 25)}...
+                   title="View task details: ${safeTitle}">
+                  ${truncatedTitle}
                 </a>
               </div>
             </div>
@@ -427,14 +439,14 @@ class LFManagerDashboardLoader {
             <div class="flex items-center space-x-2">
               <div class="w-5 h-5 rounded bg-indigo-100 dark:bg-indigo-900/30 flex items-center justify-center flex-shrink-0">
                 <svg class="w-2.5 h-2.5 text-indigo-600 dark:text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 012-2h2a2 2 0 012-2M9 5a2 2 0 012-2h2a2 2 0 012 2"/>
                 </svg>
               </div>
-              <span class="text-sm text-gray-900 dark:text-gray-100 truncate" style="max-width: 120px;">${task.job_title.slice(0, 20)}...</span>
+              <span class="text-sm text-gray-900 dark:text-gray-100 truncate" style="max-width: 120px;">${truncatedJobTitle}</span>
             </div>
           </td>
           <td class="px-4 py-3 whitespace-nowrap">
-            <span class="text-sm text-gray-900 dark:text-gray-100 truncate block" style="max-width: 100px;">${task.client_name}</span>
+            <span class="text-sm text-gray-900 dark:text-gray-100 truncate block" style="max-width: 100px;">${safeClientName}</span>
           </td>
           <td class="px-4 py-3 whitespace-nowrap">
             <div class="flex items-center space-x-2">
@@ -443,10 +455,10 @@ class LFManagerDashboardLoader {
                 ${statusInfo.label}
               </span>
               ${
-                task.assigned_to
+                safeAssignedTo
                   ? `
                 <div class="w-4 h-4 rounded-full bg-blue-500 border border-white dark:border-gray-800 flex items-center justify-center flex-shrink-0">
-                  <span class="text-[10px] text-white font-medium leading-none">${task.assigned_to.charAt(0).toUpperCase()}</span>
+                  <span class="text-[10px] text-white font-medium leading-none">${safeAssignedTo.charAt(0).toUpperCase()}</span>
                 </div>
               `
                   : ""
@@ -901,11 +913,13 @@ class LFManagerDashboardLoader {
     subMessage = null,
     iconClass = "fa-check-circle",
   ) {
+    const safeMessage = escapeHTML(message);
+    const safeSubMessage = subMessage ? escapeHTML(subMessage) : null;
     container.innerHTML = `
       <div class="flex flex-col items-center justify-center py-12 text-center">
         <i class="fa-solid ${iconClass} text-4xl text-green-500 dark:text-green-400 mb-3"></i>
-        <p class="text-gray-600 dark:text-gray-400 font-medium">${message}</p>
-        ${subMessage ? `<p class="text-sm text-gray-500 dark:text-gray-500 mt-1">${subMessage}</p>` : ""}
+        <p class="text-gray-600 dark:text-gray-400 font-medium">${safeMessage}</p>
+        ${safeSubMessage ? `<p class="text-sm text-gray-500 dark:text-gray-500 mt-1">${safeSubMessage}</p>` : ""}
       </div>
     `;
   }
@@ -914,10 +928,11 @@ class LFManagerDashboardLoader {
    * Render Error State
    */
   renderErrorState(container, message) {
+    const safeMessage = escapeHTML(message);
     container.innerHTML = `
       <div class="flex flex-col items-center justify-center py-12 text-center">
         <i class="fa-solid fa-circle-exclamation text-4xl text-red-500 dark:text-red-400 mb-3"></i>
-        <p class="text-gray-600 dark:text-gray-400 font-medium">${message}</p>
+        <p class="text-gray-600 dark:text-gray-400 font-medium">${safeMessage}</p>
         <p class="text-sm text-gray-500 dark:text-gray-500 mt-1">Please refresh the page to try again</p>
       </div>
     `;
