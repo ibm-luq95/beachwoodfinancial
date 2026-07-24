@@ -50,16 +50,14 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
         // Prevent default navigation
         event.preventDefault();
         // alert("Clicke");
-        const workerOptions = {
-          name: "NotificationsWorker", // Name for debugging
-          type: "module", // Enable ES modules (modern browsers)
-          credentials: "same-origin", // For CORS (omit, same-origin, include)
-        };
-        // const notificationsWorker = new Worker(
-        //   require.resolve("./notifications_worker.js"),
-        //   // workerOptions,
-        // );
-        const notificationsWorker = new Worker(workerOptions);
+        const notificationsWorker = new Worker(
+          new URL("./notifications_worker.js", import.meta.url),
+          {
+            name: "NotificationsWorker",
+            type: "module",
+            credentials: "same-origin",
+          },
+        );
         // console.log(dataset);
 
         // const dataset = anchor.dataset;
