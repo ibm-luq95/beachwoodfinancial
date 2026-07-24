@@ -13,11 +13,24 @@ import { getIconForToasts } from "./icons.js";
  */
 const showToastNotification = (msg, notificationType = "success") => {
   const toastsWrapperElement = document.querySelector("div#toasts-wrapper");
+  if (!toastsWrapperElement) {
+    console.warn("[Toast] Container div#toasts-wrapper not found in DOM.");
+    return;
+  }
+
   const iconWrapper = toastsWrapperElement.querySelector("div#iconWrapper");
   const msgElement = toastsWrapperElement.querySelector("p#msg");
-  msgElement.textContent = msg;
-  const color = getIconForToasts(notificationType);
-  iconWrapper.innerHTML = color["icon"];
+
+  if (msgElement) {
+    msgElement.textContent = msg;
+  }
+
+  if (iconWrapper) {
+    const color = getIconForToasts(notificationType);
+    if (color && color["icon"]) {
+      iconWrapper.innerHTML = color["icon"];
+    }
+  }
 
   toastsWrapperElement.classList.remove("hidden");
   toastsWrapperElement.classList.add(
