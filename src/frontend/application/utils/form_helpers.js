@@ -192,63 +192,42 @@ const setFormInputValues = (formElement, objectOfValues) => {
  * @param {string} options.state - The state to set for the fieldset items. Can be "enable" or "disable".
  */
 const disableAndEnableFieldsetItems = ({ formElement, state }) => {
+  if (!formElement || !state) return;
   SessionStorageManagement.clear();
   const stateLower = state.toLowerCase();
   const fieldset = formElement.querySelector("fieldset");
-  // console.log(fieldset);
   const disabledInputCssClasses = [
     "cursor-not-allowed",
     "opacity-70",
-    // "pointer-events-none",
-    // "border-gray-200",
     "bg-gray-100",
   ];
-  // const allFormInputs = document.querySelectorAll(`[data-form-id=${formElement.id}]`);
-  // const allFormInputs = Array.from(formElement.elements);
   const allFormInputs = formElement.querySelectorAll("input, select, textarea, button");
-  // console.log(allFormInputs);
-  const submitBtn = document.querySelector(`button[form=${formElement.id}]`);
+  const submitBtn = formElement.id ? document.querySelector(`button[form="${formElement.id}"]`) : null;
+
   switch (stateLower) {
     case "enable":
     case "e":
     case "en":
-      // console.log("EEENNN");
-      fieldset.disabled = false;
-      submitBtn.disabled = false;
-      // submitBtn.classList.remove(...["bg-blue-400"]);
+      if (fieldset) fieldset.disabled = false;
+      if (submitBtn) submitBtn.disabled = false;
       if (allFormInputs.length > 0) {
         allFormInputs.forEach((element) => {
           element.disabled = false;
           element.classList.remove(...disabledInputCssClasses);
-          // const inputCssClass = SessionStorageManagement.getItem(element.id);
-          // element.className = inputCssClass;
-          // SessionStorageManagement.deleteItem(element.id);
         });
       }
       break;
     case "disable":
     case "dis":
     case "d":
-      fieldset.disabled = true;
-      submitBtn.disabled = true;
-      // submitBtn.classList.add(...["bg-blue-400", "pointer-events-none"]);
+      if (fieldset) fieldset.disabled = true;
+      if (submitBtn) submitBtn.disabled = true;
       if (allFormInputs.length > 0) {
         allFormInputs.forEach((element) => {
-          // SessionStorageManagement.setItem(element.id, element.className);
-          const bgClassesArray = new Array();
-          // element.classList.forEach((cName) => {
-          //   if (cName.startsWith("bg")) {
-          //     bgClassesArray.push(cName);
-          //   }
-          // });
-          // if (bgClassesArray.length > 0) {
-          //   element.classList.remove(...bgClassesArray);
-          // }
           element.disabled = true;
           element.classList.add(...disabledInputCssClasses);
         });
       }
-      break;
     default:
       console.warn(`${stateLower} not defined!`);
       break;
