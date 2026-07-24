@@ -16,5 +16,7 @@ class StaffAccountsViewSet(ModelViewSet):
     serializer_class = StaffAccountsSerializer
     permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
     perm_slug = "staff_briefcase.staffaccounts"
-    queryset = StaffAccounts.objects.all()
     authentication_classes = [TokenAuthentication]
+
+    def get_queryset(self):
+        return StaffAccounts.objects.filter(briefcase__user=self.request.user)
