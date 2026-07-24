@@ -4,7 +4,7 @@ import logging
 
 from .base import *
 
-DJANGO_VITE["default"]["dev_mode"] = False
+DJANGO_VITE["default"]["dev_mode"] = True
 
 
 # Add color formatter
