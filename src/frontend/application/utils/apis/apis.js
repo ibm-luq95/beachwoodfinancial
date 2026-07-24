@@ -3,22 +3,6 @@
 import { FETCHURLNAMEURL } from "../constants.js";
 import { getCookie } from "../cookie.js";
 
-// Debug function to check all CSRF token sources
-function debugCSRFToken() {
-  console.log("CSRF Token Sources:");
-  console.log(
-    "Meta tag:",
-    document.querySelector('meta[name="csrf-token"]')?.getAttribute("content")
-  );
-  console.log("Cookie:", getCookie("csrftoken"));
-  console.log("Form input:", getCSRFTokenFromForm());
-  console.log("Current token being used:", getCSRFToken());
-}
-// Method 3: Get CSRF token from form input (if available)
-function getCSRFTokenFromForm() {
-  const csrfInput = document.querySelector('input[name="csrfmiddlewaretoken"]');
-  return csrfInput ? csrfInput.value : null;
-}
 // Method 2: Get CSRF token from meta tag (recommended for production)
 function getCSRFToken() {
   // First try to get from meta tag
@@ -57,10 +41,6 @@ const fetchUrlPathByName = async (urlName, pk = null) => {
       console.error("CSRF token too short:", csrfToken.length, "characters");
       throw new Error("Invalid CSRF token length");
     }
-
-    // Debug: Log the token (remove in production)
-    console.log("CSRF Token length:", csrfToken.length);
-    console.log("CSRF Token:", csrfToken.substring(0, 8) + "...");
 
     const headers = new Headers({
       "Content-Type": "application/json",
@@ -108,8 +88,6 @@ const fetchUrlPathByName = async (urlName, pk = null) => {
     return data;
   } catch (error) {
     console.error("Fetch error:", error);
-    // Call debug function to help troubleshoot
-    debugCSRFToken();
     throw error;
   }
 };

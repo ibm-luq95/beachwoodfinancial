@@ -107,17 +107,8 @@ class CSRFTokenHandler {
    * Debug function to check all CSRF token sources.
    */
   static debugCSRFToken() {
-    console.log("CSRF Token Sources:");
-    console.log(
-      "Meta tag:",
-      document.querySelector('meta[name="csrf-token"]')?.getAttribute("content")
-    );
-    console.log("Cookie:", this.getCookie("csrftoken"));
-    console.log("Form input:", this.getCSRFTokenFromForm());
-    try {
-      console.log("Current token being used:", this.getCSRFToken());
-    } catch (error) {
-      console.error("Error retrieving CSRF token:", error);
+    if (window.DEBUG === true) {
+      console.debug("CSRF token check:", Boolean(this.getCSRFToken()));
     }
   }
 }
@@ -151,9 +142,6 @@ class SecureUrlFetcher {
       console.error("CSRF token too short:", csrfToken.length, "characters");
       throw new CSRFTokenError("Invalid CSRF token length");
     }
-
-    console.log("CSRF Token length:", csrfToken.length);
-    console.log("CSRF Token:", csrfToken.substring(0, 8) + "...");
 
     const headers = new Headers({
       "Content-Type": "application/json",

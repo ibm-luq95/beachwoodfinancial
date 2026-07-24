@@ -32,24 +32,18 @@ class UploadFileRequest {
    */
   setHeaders() {
     try {
-      if (this.csrfToken == "") {
+      if (!this.csrfToken || String(this.csrfToken).trim() === "") {
         throw new Error("CSRF Token Required!");
       }
-      // this.ajaxObject.setRequestHeader("Content-Type", "multipart/form-data");
-      // this.ajaxObject.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
       this.ajaxObject.setRequestHeader("X-Requested-With", "XMLHttpRequest");
       this.ajaxObject.setRequestHeader("Accept", "application/json");
-      // this.ajaxObject.setRequestHeader("Cache-Control", "no-cache");
       this.ajaxObject.setRequestHeader("Cache-Control", "no-cache");
-      // this.ajaxObject.setRequestHeader("Access-Control-Allow-Origin", "*");
       this.ajaxObject.setRequestHeader("X-CSRFToken", this.csrfToken);
       const authToken = window.AUTH_TOKEN;
       if (authToken) {
         this.ajaxObject.setRequestHeader("Authorization", `Token ${authToken}`);
       }
-      // console.log(this.csrfToken);
       this.ajaxObject.withCredentials = true;
-      // this.ajaxObject.timeout = 60;
       this.ajaxObject.responseType = "json";
     } catch (error) {
       console.error(error);
@@ -105,7 +99,7 @@ class UploadFileRequest {
           if (this.ajaxObject.readyState === 4) {
             const response = this.ajaxObject.response;
             if (this.ok() === true) {
-              resolve(response["msg"]);
+              resolve(response?.msg || response || "File uploaded successfully");
             } else {
               console.error(this.ajaxObject.response);
               reject(response);
