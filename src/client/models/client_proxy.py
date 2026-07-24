@@ -133,4 +133,4 @@ class ClientProxy(Client, BWGetRelatedNotesAndDocuments):
         return jobs
 
     def get_absolute_url(self):
-        reverse_lazy("dashboard:client:details", kwargs={"pk": self.pk})
+        return reverse_lazy("dashboard:client:details", kwargs={"pk": self.pk})
