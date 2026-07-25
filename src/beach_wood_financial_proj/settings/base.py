@@ -515,10 +515,15 @@ FILTERS_EMPTY_CHOICE_LABEL = ""
 #         "LOCATION": "app_cache_table",
 #     }
 # }
+if app_settings.VALKEY_PASSWORD:
+    _valkey_location = f"valkey://:{app_settings.VALKEY_PASSWORD}@{app_settings.VALKEY_HOST}:{app_settings.VALKEY_PORT}/0"
+else:
+    _valkey_location = f"valkey://{app_settings.VALKEY_HOST}:{app_settings.VALKEY_PORT}/0"
+
 CACHES = {
     "default": {
         "BACKEND": "django_valkey.cache.ValkeyCache",
-        "LOCATION": "valkey://127.0.0.1:6379",
+        "LOCATION": _valkey_location,
     }
 }
 COMPONENTS = ComponentsSettings(
