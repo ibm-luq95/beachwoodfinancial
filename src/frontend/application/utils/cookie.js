@@ -8,6 +8,23 @@
  * @returns {string|null} - The value of the cookie, or null if the cookie does not exist.
  */
 const getCookie = (name) => {
+  if (name === "csrftoken") {
+    const metaTag = document.querySelector('meta[name="csrf-token"]');
+    if (metaTag && metaTag.getAttribute("content")) {
+      const metaToken = metaTag.getAttribute("content").trim();
+      if (metaToken.length === 64) {
+        return metaToken;
+      }
+    }
+    const inputTag = document.querySelector('input[name="csrfmiddlewaretoken"]');
+    if (inputTag && inputTag.value) {
+      const inputToken = inputTag.value.trim();
+      if (inputToken.length === 64) {
+        return inputToken;
+      }
+    }
+  }
+
   let cookieValue = null;
   if (document.cookie && document.cookie !== "") {
     const cookies = document.cookie.split(";");
@@ -18,12 +35,6 @@ const getCookie = (name) => {
         cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
         break;
       }
-    }
-  }
-  if (!cookieValue && name === "csrftoken") {
-    const metaTag = document.querySelector('meta[name="csrf-token"]');
-    if (metaTag) {
-      cookieValue = metaTag.getAttribute("content");
     }
   }
   return cookieValue;
