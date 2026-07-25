@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-#
 from django.conf import settings
 from django.db import models
-from django.urls import reverse_lazy
+from django.urls import reverse
 from django.utils.translation import gettext as _
 
 from client.models import ClientProxy
@@ -103,4 +103,4 @@ class SpecialAssignment(
         ordering = ["title"]
 
     def get_absolute_url(self):
-        return reverse_lazy("dashboard:special_assignment:details", kwargs={"pk": self.pk})
+        return reverse("dashboard:special_assignment:details", kwargs={"pk": self.pk})

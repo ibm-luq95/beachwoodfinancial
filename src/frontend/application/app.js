@@ -33,6 +33,7 @@ import "./beach_wood_user/bookkeeper.js";
 import "./beach_wood_user/manager.js";
 import "./beach_wood_user/cfo.js";
 import "./dashboard/notifications.js";
+import "./dashboard/notification_list.js";
 import "./dashboard/manager_dashboard.js";
 import "./management/delete_staff.js";
 import "./utils/rich_editor.js";

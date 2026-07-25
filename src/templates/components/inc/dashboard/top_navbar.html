@@ -172,7 +172,7 @@
                                data-notification-pk="{{ notification_item.pk }}"
                                data-user="{{ request.user.pk }}"
                                data-notification-type="NotificationRecipientProxy"
-                               href="{{ notification_item.notification.content_object.get_absolute_url|default:'#' }}">
+                               href="{{ notification_item.notification.get_absolute_url }}">
                                 
                                 <div class="shrink-0 mt-0.5">
                                     {% with staff_details=notification_item.notification.actor.get_staff_details %}
