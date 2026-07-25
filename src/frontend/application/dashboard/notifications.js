@@ -1,6 +1,6 @@
 "use strict";
 // import Worker from "worker-loader!./notifications_worker.js";
-import Worker from './notifications_worker.js';
+import Worker from "./notifications_worker.js";
 import { getCookie } from "../utils/cookie.js";
 document.addEventListener("DOMContentLoaded", (readyEvent) => {
   const allNotificationItems = document.querySelectorAll("a.notificationsItem");
@@ -11,18 +11,19 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
     setAllNotificationsReadBtn.addEventListener("click", async (event) => {
       const url = "/notifications/api/notifications/mark_all_read/";
       const token =
-        document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") ||
-        getCookie("csrftoken");
-      
+        document
+          .querySelector('meta[name="csrf-token"]')
+          ?.getAttribute("content") || getCookie("csrftoken");
+
       try {
         const response = await fetch(url, {
           method: "POST",
           headers: {
-            "Accept": "application/json",
+            Accept: "application/json",
             "X-CSRFToken": token,
           },
         });
-        
+
         if (response.ok) {
           window.location.reload();
         } else {
@@ -37,7 +38,8 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
     allNotificationItems.forEach((item) => {
       item.addEventListener("click", (event) => {
         // Destructure required event properties
-        const { button, ctrlKey, metaKey, shiftKey, altKey, currentTarget } = event;
+        const { button, ctrlKey, metaKey, shiftKey, altKey, currentTarget } =
+          event;
 
         // Ignore right-clicks or modified clicks
         if (button !== 0 || ctrlKey || metaKey || shiftKey || altKey) return;
@@ -64,8 +66,9 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
 
         // const dataset = anchor.dataset;
         const csrfToken =
-          document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") ||
-          getCookie("csrftoken");
+          document
+            .querySelector('meta[name="csrf-token"]')
+            ?.getAttribute("content") || getCookie("csrftoken");
 
         notificationsWorker.postMessage({
           pk: dataset["notificationPk"],
