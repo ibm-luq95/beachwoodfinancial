@@ -1,5 +1,4 @@
 from pathlib import Path
-import configparser
 from typing import Annotated, Optional
 from pydantic import Field, BeforeValidator
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -8,34 +7,10 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 
-# 1. Parse current environment stage
+# 1. Environment file path configuration
 def get_env_file_path() -> Path:
-    stage_env_file = BASE_DIR / ".env" / ".current_stage"
-    if not stage_env_file.exists():
-        raise FileNotFoundError(f"Stage file not found at: {stage_env_file}")
-
-    config_parser = configparser.RawConfigParser()
-    config_parser.read(stage_env_file)
-    stage = config_parser.get("environment", "stage_environment", fallback="DEV")
-
-    if stage == "DOCKER_DEV":
-        import os
-
-        if os.path.exists("/.dockerenv") or os.environ.get("RUNNING_IN_DOCKER"):
-            return BASE_DIR / ".env" / ".env_docker"
-        return BASE_DIR / ".env" / ".env"
-    elif stage == "DEV":
-        return BASE_DIR / ".env" / ".env_dev"
-    elif stage == "PRODUCTION":
-        return BASE_DIR / ".env" / ".env"
-    elif stage == "STAGE":
-        return BASE_DIR / ".env" / ".env_stage"
-
-    # Default fallback to .env
-    default_env = BASE_DIR / ".env" / ".env"
-    if default_env.exists():
-        return default_env
-    return BASE_DIR / ".env" / ".env_dev"
+    """Always return the single standard .env file path."""
+    return BASE_DIR / ".env" / ".env"
 
 
 # 2. Helper to parse comma-separated strings (like ALLOWED_HOSTS) into lists
