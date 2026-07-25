@@ -186,18 +186,14 @@ class SpecialAssignmentDetailsView(
 ):
     model = SpecialAssignmentProxy
     template_name = "special_assignment/details.html"
-    # permission_required = [
-    #     "special_assignment.view_specialassignment",
-    #     "special_assignment.view_specialassignmentproxy",
-    # ]
-    # permission_required = "special_assignment.view_specialassignment"
+
+    def get_queryset(self):
+        return SpecialAssignmentProxy.original_objects.all()
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context.setdefault("title", _("SA - ") + self.get_object().title)
-        # DebuggingPrint.pprint(dir(self.get_object()._meta))
-        # DebuggingPrint.pprint(self.get_object()._meta.fields)
         return context
 
 
