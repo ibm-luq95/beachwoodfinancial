@@ -700,6 +700,15 @@ wheels = [
 ]
 
 [[package]]
+name = "django-debugtools"
+version = "2.0"
+source = { registry = "https://pypi.org/simple" }
+sdist = { url = "https://files.pythonhosted.org/packages/46/f1/e25cc343eec590a1e0f77619dc004b08641fde29459e64f00d6f01b0f2ac/django-debugtools-2.0.tar.gz", hash = "sha256:085f7bc62a3a5c81c7a0d8643dbc7dfd991cfdffabe7a6d6fbecad0e346608ff", size = 21672, upload-time = "2021-11-16T21:47:51.849Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/83/b5/fc4093f07cd87c5c6efda16b244df79bc91e2d6a201d3e293bf9f369d677/django_debugtools-2.0-py3-none-any.whl", hash = "sha256:e9b3de4ee0aa1b2b9290bf8a09e1cd52baacfc7a8214abe15e8bfb80f2c2f497", size = 21412, upload-time = "2021-11-16T21:47:49.881Z" },
+]
+
+[[package]]
 name = "django-defender"
 version = "0.9.8"
 source = { registry = "https://pypi.org/simple" }
@@ -1394,6 +1403,7 @@ dev = [
     { name = "colorlog" },
     { name = "django-admin-cli" },
     { name = "django-debug-toolbar" },
+    { name = "django-debugtools" },
     { name = "django-model-info" },
     { name = "django-stubs" },
     { name = "djangorestframework-stubs" },
@@ -1487,6 +1497,7 @@ dev = [
     { name = "colorlog" },
     { name = "django-admin-cli" },
     { name = "django-debug-toolbar" },
+    { name = "django-debugtools", specifier = ">=2.0" },
     { name = "django-model-info" },
     { name = "django-stubs" },
     { name = "djangorestframework-stubs" },

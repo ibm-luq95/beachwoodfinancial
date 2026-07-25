@@ -62,11 +62,10 @@ dev = [
   "mypy",
   "django-stubs",
   "djangorestframework-stubs",
-
-
   # Developer Experience
   "ipython",
   "django-debug-toolbar",
+  "django-debugtools>=2.0",
 ]
 
 # Code quality and static analysis
