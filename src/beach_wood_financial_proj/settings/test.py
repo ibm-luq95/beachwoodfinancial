@@ -6,13 +6,10 @@ logging.disable()
 
 ALLOWED_HOSTS = ["127.0.0.1"]
 
-# DEBUG = True
-
-DEBUG_TOOLBAR_CONFIG = {
-    "SHOW_TOOLBAR_CALLBACK": show_toolbar,
-    "IS_RUNNING_TESTS": True,
-    "RENDER_PANELS": None,
-}
+# Remove Debug Toolbar from tests to prevent NoReverseMatch and SystemCheckErrors
+if "debug_toolbar" in INSTALLED_APPS:
+    INSTALLED_APPS.remove("debug_toolbar")
+MIDDLEWARE = [m for m in MIDDLEWARE if "debug_toolbar" not in m]
 
 # DATABASES["TEST"] = {
 #     "ENGINE": "django.db.backends.mysql",

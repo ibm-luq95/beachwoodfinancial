@@ -12,6 +12,8 @@ from django.dispatch import receiver
 from beach_wood_user.models import BWUser
 from core.utils.developments.debugging_print_object import DebuggingPrint
 from special_assignment.models import SpecialAssignmentProxy, SpecialAssignmentNotification
+from lf_notifications.services import NotificationService
+from lf_notifications.models import NotificationVerb
 
 
 @receiver(post_save, sender=SpecialAssignmentProxy)
@@ -78,6 +80,18 @@ def create_notification(
             }
             notification_obj: SpecialAssignmentNotification = (
                 SpecialAssignmentNotification.objects.create(**data)
+            )
+            NotificationService.trigger(
+                notification_type_name="assignment_assigned",
+                actor=special_assignment.assigned_by,
+                recipients=[managed_by],
+                verb=NotificationVerb.ASSIGNED,
+                context={
+                    "actor_name": special_assignment.assigned_by.fullname if special_assignment.assigned_by else _("System"),
+                    "assignment_title": special_assignment.title,
+                    "url": special_assignment.get_absolute_url(),
+                },
+                content_object=instance,
             )
             # DebuggingPrint.pprint(locals())
 

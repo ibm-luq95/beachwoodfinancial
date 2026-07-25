@@ -306,10 +306,14 @@ class ClientDetailsView(
         return context
 
     def test_func(self) -> bool:
+        """Check if current user is authorized to view client details."""
         user_type = self.request.user.user_type
         if user_type in {CON_MANAGER, CON_ASSISTANT}:
             return True
-        else:
+        if user_type == CON_BOOKKEEPER and hasattr(self.request.user, "bookkeeper"):
             bookkeeper = self.request.user.bookkeeper
-            check = self.get_object().bookkeepers.filter(pk=bookkeeper.pk).exists()
-            return check
+            return self.get_object().bookkeepers.filter(pk=bookkeeper.pk).exists()
+        if user_type == CON_CFO and hasattr(self.request.user, "cfo"):
+            cfo = self.request.user.cfo
+            return self.get_object().cfos.filter(pk=cfo.pk).exists()
+        return False

@@ -42,6 +42,9 @@ share/python-wheels/
 .installed.cfg
 *.egg
 MANIFEST
+airesults/
+.analysis
+.gemeni_airesults
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
@@ -594,3 +597,23 @@ production_config_files
 uv.lock
 .direnv
 .qaiprompts
+.analysis
+/opencode.jsonc
+/QWEN.md
+
+.qwen
+GEMINI.md
+.gemini
+.base
+my_plans
+pgdata
+.mypy_cache
+PROJECT_ANALYSIS.md
+.opencode
+OPENCODE_AGENTS.md
+AGENTS.md
+CONTEXT.md
+.antigravitycli
+nginx
+
+src/public

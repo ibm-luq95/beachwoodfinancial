@@ -103,4 +103,4 @@ class SpecialAssignment(
         ordering = ["title"]
 
     def get_absolute_url(self):
-        reverse_lazy("dashboard:special_assignment:details", kwargs={"pk": self.pk})
+        return reverse_lazy("dashboard:special_assignment:details", kwargs={"pk": self.pk})

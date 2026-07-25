@@ -4,11 +4,123 @@ version = "1.0"
 description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.14"
-dependencies = []
+dependencies = [
+  "apscheduler",
+  "colorama",
+  "crispy-tailwind",
+  "cryptography",
+  "pydantic-settings",
+  "Django~=6.0",
+  "django-admin-rangefilter",
+  "django-components",
+  "django-cors-headers",
+  "django-crispy-forms",
+  "django-auditlog",
+  "django-extensions",
+  "django-filter",
+  "django-guardian",
+  "django-import-export",
+  "django-log-viewer",
+  "django-maintenance-mode",
+  "django-session-timeout",
+  "valkey",
+  "django-valkey",
+  "django-vite-boilerplate",
+  "django-widget-tweaks",
+  "djangorestframework",
+  "drf-standardized-errors",
+  "gunicorn",
+  "numpy",
+  "pandas",
+  "Pillow",
+  "prettytable",
+  "psycopg[binary]",
+  "python-json-logger",
+  "python-magic",
+  "PyYAML",
+  "requests",
+  "sentry-sdk[django]",
+  "inflection",
+  "python-json-logger",
+  "django-defender",
+  "whitenoise",
+  "drf-spectacular",
+  "prettyprinter",
+  "termcolor",
+  "nh3>=0.3.6",
+]
+
+[dependency-groups]
+# Core development tools (testing, debugging)
+dev = [
+  "django-model-info",
+  "django-admin-cli",
+  "Werkzeug",
+  "bpython",
+  "colorlog",
+  # Type Checking
+  "mypy",
+  "django-stubs",
+  "djangorestframework-stubs",
+
+
+  # Developer Experience
+  "ipython",
+  "django-debug-toolbar",
+]
+
+# Code quality and static analysis
+lint = [
+  "ruff",
+  "mypy",
+  "django-stubs",
+  "black",
+  # Template Formatting
+  "djlint",
+  # Security
+  "bandit",
+]
+
+# Testing
+testing = [
+  "pytest",
+  "pytest-django",
+  "pytest-cov",
+  "factory-boy",
+  "faker",
+  "selenium",
+]
+# --- Type Checking ---
+types = [
+  "mypy",
+  "mypy-extensions",
+  "django-stubs",
+  "django-stubs-ext",
+  "djangorestframework-stubs[compatible-mypy]",
+  "types-requests",
+]
+
+# Documentation generation
+docs = [
+  "mkdocs",
+  "mkdocs-material",
+  "sphinx",
+  "autotyping",
+  "infer-types",
+  "MonkeyType",
+  "mkdocstrings[python]", # Parses Python code and supports Sphinx/reST style
+]
+
+# uv-specific configuration
+[tool.uv]
+# Set to false if this is an application, not a distributable library.
+# This prevents uv from trying to build/install this project as a package.
+package = false
+
 
 [tool.black]
 line-length = 85
-target-version = ['py314'] # Updated to Python 3.13
+target-version = ['py314'] # Updated to Python 3.14
 preview = true
 unstable-feature = true
 unstable = true
@@ -29,7 +141,7 @@ exclude = '''
 '''
 
 [tool.isort]
-py_version = 313 # Updated to Python 3.13
+py_version = 314 # Updated to Python 3.14
 profile = "django"
 line_length = 85
 force_single_line = true
@@ -37,9 +149,9 @@ use_parentheses = true
 sections = ["FUTURE", "STDLIB", "THIRDPARTY", "FIRSTPARTY", "LOCALFOLDER"]
 known_first_party = ["your_project_name"] # Replace with your project's name
 known_third_party = [
-    "django",
-    "numpy",
-    "pandas",
+  "django",
+  "numpy",
+  "pandas",
 ] # Add your third-party dependencies
 
 [tool.djlint]
@@ -56,92 +168,9 @@ format_js = true
 format_css = true
 ignore = "H006, H014"
 
-[tool.ruff]
-line-length = 91
-target-version = "py314" # Updated to Python 3.13
-indent-width = 4
-exclude = [
-    ".bzr",
-    ".direnv",
-    ".eggs",
-    ".git",
-    ".git-rewrite",
-    ".hg",
-    ".mypy_cache",
-    ".nox",
-    ".pants.d",
-    ".pytype",
-    ".ruff_cache",
-    ".svn",
-    ".tox",
-    ".venv",
-    "__pypackages__",
-    "_build",
-    "buck-out",
-    "build",
-    "dist",
-    "node_modules",
-    "venv",
-]
-extend-exclude = ["docs", "test", "tests"]
-
-[tool.ruff.lint]
-# select = ["F", "E", "B", "I", "UP", "SIM"]
-# ignore = ["D", "CPY", "T20", "DOC", "PGH"]
-select = [
-    'A',     # flake8-builtins
-    'ASYNC', # https://docs.astral.sh/ruff/rules/#flake8-async-async
-    'B',     # flake8-bugbear
-    'BLE',   # flake8-blind-except
-    'C4',    # unnecessary comprehensions, map()
-    'COM',   # flake8-commas
-    'DTZ',   # flake8-datetimez
-    'E',     # pycodestyle
-    'ERA',   # No commented out code
-    'EXE',   # flake8-executable
-    'F',     # pyflakes
-    'FLY',   # flynt
-    'G',     # flake8-logging-format
-    'I',     # isort
-    'ICN',   # https://github.com/joaopalmeiro/flake8-import-conventions
-    'ISC',   # https://pypi.org/project/flake8-implicit-str-concat/
-    'LOG',   # flake8-logging
-    'PERF',  # perflint
-    'PIE',   # https://pypi.org/project/flake8-pie/
-    'PLC',   # Pylint conventions
-    'PLE',   # Pylint error
-    'PLW',   # Pylint warnings
-    'PT',    # https://pypi.org/project/flake8-pytest-style/
-    'PTH',   # flake8 use pathlib
-    'RET',   # https://pypi.org/project/flake8-return/
-    'RUF',   # Ruff rules
-    'S',     # https://docs.astral.sh/ruff/rules/#flake8-bandit-s
-    'SIM',   # https://pypi.org/project/flake8-simplify/
-    'T',     # flake8-debugger
-    'TRY',   # tryceratops
-    'UP',    # pyupgrade
-    'W',     # pycodestyle
-    "UP",
-    #'ARG',  # flake8 unused arguments (not really helpful, unused func args are common and ok)
-    # 'D', # pydocstyle (too much)
-    #'N',  # pep8-naming (too opinionated)
-    #'NPY', # numpy
-    #'PD', # pandas
-    'PL', # Full Pylint (too much)
-    #'PLR',  # Pylint refactor (too much/too opinionated)
-]
-fixable = ["ALL"]
-unfixable = []
-preview = true
-dummy-variable-rgx = "^(_+|(_+[a-zA-Z0-9_]*[a-zA-Z0-9]+?))$"
-
-[tool.ruff.lint.per-file-ignores]
-"__init__.py" = ["E402"]
-"**/{tests,docs,tools}/*" = ["E402"]
-
 
 [tool.mypy]
-python_version = "3.14"             # Updated to Python 3.13
+python_version = "3.14"             # Updated to Python 3.14
 ignore_missing_imports = true
 follow_imports = "silent"
 no_implicit_optional = true

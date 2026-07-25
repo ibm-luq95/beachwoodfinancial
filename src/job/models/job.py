@@ -14,6 +14,7 @@ from core.choices import JobTypeEnum
 from core.choices.fiscal_year import FiscalYearEnum
 from core.choices.months import MonthChoices
 from core.models.mixins import BaseModelMixin
+from core.models.mixins import SanitizeHTMLFieldsMixin
 from core.models.mixins import StartAndDueDateMixin
 from core.models.mixins import StrModelMixin
 from core.models.mixins.access_proxy_models_mixin import AccessProxyModelMixin
@@ -33,6 +34,7 @@ class Job(
     AccessProxyModelMixin,
     CronColumnMixin,
     StrModelMixin,
+    SanitizeHTMLFieldsMixin,
 ):
     """This is the job for every bookkeeper and assistant.
 
@@ -200,7 +202,7 @@ class Job(
             return False
 
     def get_absolute_url(self):
-        reverse_lazy("dashboard:job:details", kwargs={"pk": self.pk})
+        return reverse_lazy("dashboard:job:details", kwargs={"pk": self.pk})
 
     # def get_all_assigned_users(self) -> list:
     #     all_users = []

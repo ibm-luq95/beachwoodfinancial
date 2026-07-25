@@ -1,0 +1,223 @@
+{% extends "core/layouts/dashboard_base.html" %}
+{% load i18n static %}
+
+{% block title %}
+    {% translate "Notifications" %} | LedgerFlare
+{% endblock title %}
+
+{% block dashboard_content %}
+    <div class="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
+        <!-- Page Header -->
+        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-8 gap-y-4">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-800 dark:text-neutral-200">
+                    {% translate "Notifications" %}
+                </h1>
+                <p class="mt-1 text-sm text-gray-600 dark:text-neutral-400">
+                    {% translate "Manage your activity and alerts across the platform." %}
+                </p>
+            </div>
+            
+            <div class="inline-flex gap-x-2">
+                <button type="button" 
+                        id="markAllReadPageBtn"
+                        class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none focus:outline-hidden focus:ring-2 focus:ring-blue-500 transition-all">
+                    <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                    {% translate "Mark all as read" %}
+                </button>
+            </div>
+        </div>
+        <!-- End Page Header -->
+
+        <div class="bg-white border border-gray-200 rounded-xl shadow-sm dark:bg-neutral-800 dark:border-neutral-700 overflow-hidden">
+            <!-- Filter Bar -->
+            <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-b border-gray-200 dark:border-neutral-700">
+                <div class="inline-flex gap-x-2">
+                    <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-gray-100 text-gray-800 dark:bg-neutral-700 dark:text-neutral-300">
+                        {% blocktranslate count counter=notifications.count %}{{ counter }} total{% plural %}{{ counter }} total{% endblocktranslate %}
+                    </span>
+                </div>
+            </div>
+            <!-- End Filter Bar -->
+
+            <!-- List -->
+            <ul class="divide-y divide-gray-200 dark:divide-neutral-700">
+                {% for item in notifications %}
+                    <li class="p-5 hover:bg-gray-50 dark:hover:bg-neutral-700/50 transition-colors cursor-pointer notification-item-row {% if not item.is_read %}bg-blue-50/30 dark:bg-blue-900/10{% endif %}"
+                        data-pk="{{ item.pk }}"
+                        data-url="{{ item.notification.get_absolute_url }}">
+                        <div class="flex gap-x-4">
+                            <!-- Avatar/Icon -->
+                            <div class="shrink-0">
+                                {% with staff_details=item.notification.actor.get_staff_details %}
+                                    {% if staff_details.profile_picture %}
+                                        <img class="size-10 rounded-full" src="{{ staff_details.profile_picture.url }}" alt="{{ item.notification.actor.fullname }}">
+                                    {% else %}
+                                        <div class="size-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 dark:bg-neutral-700 dark:text-neutral-400">
+                                            <svg class="size-5" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                                        </div>
+                                    {% endif %}
+                                {% endwith %}
+                            </div>
+                            
+                            <!-- Content -->
+                            <div class="grow space-y-1">
+                                <div class="flex items-center justify-between gap-x-2">
+                                    <p class="text-sm text-gray-800 dark:text-neutral-200">
+                                        <span class="font-bold text-gray-900 dark:text-white">{{ item.notification.actor.fullname|default:_("System") }}</span>
+                                        {{ item.notification.get_verb_display|lower }}
+                                    </p>
+                                    <span class="text-xs text-gray-500 dark:text-neutral-400 whitespace-nowrap">
+                                        {{ item.created_at|timesince }} {% translate "ago" %}
+                                    </span>
+                                </div>
+                                
+                                <h3 class="text-base font-semibold text-gray-900 dark:text-white">
+                                    {{ item.notification.message_template|safe }}
+                                </h3>
+
+                                <div class="flex items-center gap-x-3 mt-2">
+                                    {% if item.notification.content_type %}
+                                        <span class="inline-flex items-center gap-x-1 py-1 px-2 rounded-md text-xs font-medium bg-gray-100 text-gray-600 dark:bg-neutral-700 dark:text-neutral-400 uppercase tracking-wider">
+                                            {{ item.notification.content_type.model }}
+                                        </span>
+                                    {% endif %}
+                                    
+                                    {% if not item.is_read %}
+                                        <button type="button" 
+                                                class="mark-single-read-btn text-xs font-medium text-blue-600 hover:text-blue-500 dark:text-blue-500 dark:hover:text-blue-400"
+                                                data-pk="{{ item.pk }}">
+                                            {% translate "Mark as read" %}
+                                        </button>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                {% empty %}
+                    <li class="p-10 text-center">
+                        <div class="max-w-xs mx-auto space-y-3">
+                            <div class="size-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto dark:bg-neutral-700">
+                                <svg class="size-8 text-gray-400 dark:text-neutral-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg>
+                            </div>
+                            <h4 class="text-lg font-bold text-gray-800 dark:text-neutral-200">{% translate "All caught up!" %}</h4>
+                            <p class="text-sm text-gray-500 dark:text-neutral-400">{% translate "No notifications to show here." %}</p>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+            <!-- End List -->
+
+            <!-- Pagination -->
+            {% if is_paginated %}
+                <div class="px-6 py-4 grid gap-3 md:flex md:justify-between md:items-center border-t border-gray-200 dark:border-neutral-700">
+                    <div>
+                        <p class="text-sm text-gray-600 dark:text-neutral-400">
+                            {% blocktranslate with start=page_obj.start_index end=page_obj.end_index count=paginator.count %}
+                                Showing <span class="font-semibold text-gray-800 dark:text-neutral-200">{{ start }}</span> to <span class="font-semibold text-gray-800 dark:text-neutral-200">{{ end }}</span> of <span class="font-semibold text-gray-800 dark:text-neutral-200">{{ count }}</span> results
+                            {% endblocktranslate %}
+                        </p>
+                    </div>
+
+                    <div class="inline-flex gap-x-2">
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{ page_obj.previous_page_number }}" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 transition-all">
+                                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+                                {% translate "Prev" %}
+                            </a>
+                        {% endif %}
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}" class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 transition-all">
+                                {% translate "Next" %}
+                                <svg class="shrink-0 size-4" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+                            </a>
+                        {% endif %}
+                    </div>
+                </div>
+            {% endif %}
+            <!-- End Pagination -->
+        </div>
+    </div>
+{% endblock dashboard_content %}
+
+{% block externaljs %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const csrfToken = window.csrfToken;
+
+        // Mark all as read
+        const markAllBtn = document.getElementById('markAllReadPageBtn');
+        if (markAllBtn) {
+            markAllBtn.addEventListener('click', async () => {
+                try {
+                    const response = await fetch('/notifications/api/notifications/mark_all_read/', {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': csrfToken,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    if (response.ok) {
+                        window.location.reload();
+                    }
+                } catch (error) {
+                    console.error('Error marking all read:', error);
+                }
+            });
+        }
+
+        // Handle entire row click
+        document.querySelectorAll('.notification-item-row').forEach(row => {
+            row.addEventListener('click', async (e) => {
+                // If the user clicked a button specifically, let that handler deal with it
+                if (e.target.closest('button')) return;
+
+                const pk = row.dataset.pk;
+                const url = row.dataset.url;
+
+                try {
+                    // We don't necessarily need to await this if we want speed,
+                    // but awaiting ensures the read status is updated before the page reloads/navigates.
+                    await fetch(`/notifications/api/notifications/${pk}/mark_read/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': csrfToken,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error marking read:', error);
+                } finally {
+                    // Navigate even if the API call fails
+                    if (url && url !== '#') {
+                        window.location.href = url;
+                    }
+                }
+            });
+        });
+
+        // Mark single read button
+        document.querySelectorAll('.mark-single-read-btn').forEach(btn => {
+            btn.addEventListener('click', async (e) => {
+                e.stopPropagation(); // Prevent row click navigation
+                const pk = btn.dataset.pk;
+                try {
+                    const response = await fetch(`/notifications/api/notifications/${pk}/mark_read/`, {
+                        method: 'POST',
+                        headers: {
+                            'X-CSRFToken': csrfToken,
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    if (response.ok) {
+                        window.location.reload();
+                    }
+                } catch (error) {
+                    console.error('Error marking read:', error);
+                }
+            });
+        });
+    });
+</script>
+{% endblock externaljs %}

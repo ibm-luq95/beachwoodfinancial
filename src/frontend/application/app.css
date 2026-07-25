@@ -1,0 +1,34 @@
+@import "@fortawesome/fontawesome-free/css/all.min.css";
+
+@import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+@source "../../**/*.{html,py,js}";
+
+/* @import "preline/variants.css"; */
+@source "../../../node_modules/preline/dist/*.js";
+@source "../../../node_modules/@preline/tabs/*.js";
+@source "../node_modules/@preline/dropdown/*.js";
+
+/* Optional Preline UI Datepicker Plugin */
+@import "../../node_modules/preline/src/plugins/datepicker/styles.css";
+
+/* Plugins */
+@plugin "@tailwindcss/forms";
+@plugin "@tailwindcss/aspect-ratio";
+@plugin "@tailwindcss/typography";
+
+/* Preline Themes */
+
+/* Preline UI */
+@source "../../node_modules/preline/dist/*.js";
+@import "../../node_modules/preline/variants.css";
+@import "../../node_modules/preline/css/themes/theme.css";
+/* Adds pointer cursor to buttons */
+@layer base {
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+}
+/* Defaults hover styles on all devices */
+@custom-variant hover (&:hover);

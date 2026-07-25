@@ -6,6 +6,7 @@ from django.utils.translation import gettext as _
 from core.choices import TaskStatusEnum
 from core.choices import TaskTypeEnum
 from core.models.mixins import BaseModelMixin
+from core.models.mixins import SanitizeHTMLFieldsMixin
 from core.models.mixins import StrModelMixin
 from core.models.mixins.access_proxy_models_mixin import AccessProxyModelMixin
 from core.models.mixins.cron_column_mixin import CronColumnMixin
@@ -14,7 +15,14 @@ from task.models.manager.tasks_manager import TaskManager
 
 
 # class Task(BaseModelMixin, StartAndDueDateMixin, StrModelMixin, CreatedByMixin):
-class Task(BaseModelMixin, AccessProxyModelMixin, CronColumnMixin, StrModelMixin):
+class Task(
+    BaseModelMixin,
+    AccessProxyModelMixin,
+    CronColumnMixin,
+    StrModelMixin,
+    SanitizeHTMLFieldsMixin,
+):
+    SANITY_HTML_FIELDS = ("additional_notes",)
     """Tasks for every job.
 
     This class represents a task in the system. It extends the `BaseModelMixin`, `AccessProxyModelMixin`, `CronColumnMixin`, and `StrModelMixin` classes.
