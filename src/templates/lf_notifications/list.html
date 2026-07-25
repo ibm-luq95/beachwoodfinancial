@@ -39,7 +39,6 @@
                 </div>
             </div>
             <!-- End Filter Bar -->
-
             <!-- List -->
             <ul class="divide-y divide-gray-200 dark:divide-neutral-700">
                 {% for item in notifications %}
@@ -146,7 +145,7 @@
     document.addEventListener('DOMContentLoaded', () => {
         const csrfToken = window.csrfToken;
 
-        // Mark all as read
+        /* Mark all as read */
         const markAllBtn = document.getElementById('markAllReadPageBtn');
         if (markAllBtn) {
             markAllBtn.addEventListener('click', async () => {
@@ -167,18 +166,16 @@
             });
         }
 
-        // Handle entire row click
+        /* Handle entire row click */
         document.querySelectorAll('.notification-item-row').forEach(row => {
             row.addEventListener('click', async (e) => {
-                // If the user clicked a button specifically, let that handler deal with it
+                /* If the user clicked a button specifically, let that handler deal with it */
                 if (e.target.closest('button')) return;
 
                 const pk = row.dataset.pk;
                 const url = row.dataset.url;
 
                 try {
-                    // We don't necessarily need to await this if we want speed,
-                    // but awaiting ensures the read status is updated before the page reloads/navigates.
                     await fetch(`/notifications/api/notifications/${pk}/mark_read/`, {
                         method: 'POST',
                         headers: {
@@ -189,7 +186,7 @@
                 } catch (error) {
                     console.error('Error marking read:', error);
                 } finally {
-                    // Navigate even if the API call fails
+                    /* Navigate even if the API call fails */
                     if (url && url !== '#') {
                         window.location.href = url;
                     }
@@ -197,10 +194,10 @@
             });
         });
 
-        // Mark single read button
+        /* Mark single read button */
         document.querySelectorAll('.mark-single-read-btn').forEach(btn => {
             btn.addEventListener('click', async (e) => {
-                e.stopPropagation(); // Prevent row click navigation
+                e.stopPropagation(); /* Prevent row click navigation */
                 const pk = btn.dataset.pk;
                 try {
                     const response = await fetch(`/notifications/api/notifications/${pk}/mark_read/`, {
