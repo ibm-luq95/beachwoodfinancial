@@ -20,6 +20,12 @@ const getCookie = (name) => {
       }
     }
   }
+  if (!cookieValue && name === "csrftoken") {
+    const metaTag = document.querySelector('meta[name="csrf-token"]');
+    if (metaTag) {
+      cookieValue = metaTag.getAttribute("content");
+    }
+  }
   return cookieValue;
 };
 
