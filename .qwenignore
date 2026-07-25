@@ -15,6 +15,7 @@ ENV/
 # Node modules and dependencies
 node_modules/
 npm-debug.log*
+src/htmlcov/
 yarn-debug.log*
 yarn-error.log*
 

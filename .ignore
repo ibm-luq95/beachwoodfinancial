@@ -11,7 +11,7 @@ venv/
 env/
 ENV/
 .venv/
-
+src/htmlcov/
 # Node modules and dependencies
 node_modules/
 npm-debug.log*
