@@ -10,7 +10,9 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
   if (setAllNotificationsReadBtn) {
     setAllNotificationsReadBtn.addEventListener("click", async (event) => {
       const url = "/notifications/api/notifications/mark_all_read/";
-      const token = getCookie("csrftoken");
+      const token =
+        document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") ||
+        getCookie("csrftoken");
       
       try {
         const response = await fetch(url, {
@@ -61,10 +63,14 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
         // console.log(dataset);
 
         // const dataset = anchor.dataset;
+        const csrfToken =
+          document.querySelector('meta[name="csrf-token"]')?.getAttribute("content") ||
+          getCookie("csrftoken");
+
         notificationsWorker.postMessage({
           pk: dataset["notificationPk"],
           url: document.querySelector("input#notificationUrl").value,
-          token: getCookie("csrftoken"),
+          token: csrfToken,
           user: dataset["user"],
           notificationType: dataset["notificationType"],
         });
