@@ -617,3 +617,4 @@ CONTEXT.md
 nginx
 
 src/public
+src/my_exported
