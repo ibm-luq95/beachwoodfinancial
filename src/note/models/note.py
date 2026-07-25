@@ -8,13 +8,21 @@ from core.models.mixins import (
     BaseModelMixin,
     GetObjectSectionMixin,
     GeneralStatusFieldMixin,
+    SanitizeHTMLFieldsMixin,
     StrModelMixin,
 )
 from job.models import JobProxy
 from task.models import TaskProxy
 
 
-class Note(BaseModelMixin, GetObjectSectionMixin, GeneralStatusFieldMixin, StrModelMixin):
+class Note(
+    BaseModelMixin,
+    GetObjectSectionMixin,
+    GeneralStatusFieldMixin,
+    StrModelMixin,
+    SanitizeHTMLFieldsMixin,
+):
+    SANITY_HTML_FIELDS = ("body",)
     """Notes model for bookkeeper, assistant, and manager.
 
     This class represents a Note in the system with attributes such as title, body, client, job, task, and note_section.
