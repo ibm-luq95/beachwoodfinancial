@@ -259,8 +259,8 @@ CSRF_HEADER_NAME = "HTTP_X_CSRFTOKEN"  # This is the default
 
 # CSRF_COOKIE_DOMAIN = "app.ledgerflare.com"
 
-CSRF_COOKIE_DOMAIN = "app.ledgerflare.com"
-SESSION_COOKIE_DOMAIN = "app.ledgerflare.com"
+# CSRF_COOKIE_DOMAIN = "app.ledgerflare.com"
+# SESSION_COOKIE_DOMAIN = "app.ledgerflare.com"
 
 # OPTION 2: Match your exact subdomain (recommended)
 # CSRF_COOKIE_DOMAIN = 'app.ledgerflare.com'  # Exact domain match
