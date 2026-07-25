@@ -205,7 +205,7 @@ LOGGING["loggers"]["django.db.backends"] = {
 
 LOGGING["loggers"]["django.security"] = {
     "handlers": ["file_error"],
-    "level": "ERROR", 
+    "level": "ERROR",
     "propagate": False,
 }
 
@@ -329,3 +329,17 @@ CORS_ALLOW_METHODS = [
 
 # Optional: If you want to log blocked origins
 # CORS_REPLACE_HTTPS_REFERER = True
+
+DJANGO_VITE = {
+    "default": {
+        # dev_mode=True  → Vite dev server (localhost:3036) is used.
+        # dev_mode=False → django-vite reads the built manifest.json.
+        # Driven by DEBUG: False in production, True in dev.
+        "dev_mode": False,
+        # vite-plugin-rails with publicOutputDir="static" writes the manifest
+        # to static/.vite/manifest.json — NOT public/static/.vite/manifest.json.
+        # A wrong path here causes django-vite to silently fall back to dev mode,
+        # injecting localhost:3036 URLs into production HTML. Fixed below.
+        "manifest_path": BASE_DIR / "public" / "static" / ".vite" / "manifest.json",
+    },
+}
