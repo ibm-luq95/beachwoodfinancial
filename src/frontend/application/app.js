@@ -11,7 +11,6 @@ import tableSort from "table-sort-js/table-sort.js";
 import "./dashboard/dashboard.js";
 import "./dashboard/manager_dashboard.js";
 import "./job/details.js";
-import "trumbowyg/dist/ui/trumbowyg.css"
 import "./special_assignment/details.js";
 import "./special_assignment/special_assignment.js";
 import "./task/task.js";
@@ -37,9 +36,6 @@ import "./dashboard/notifications.js";
 import "./dashboard/manager_dashboard.js";
 import "./management/delete_staff.js";
 import "./utils/rich_editor.js";
-import "quill/dist/quill.core.css";
-import Quill from "quill";
-import "quill/themes/snow.js";
 import { initJournalEntryModule } from "./client/journal_entry.js";
 // import "../styles/datatable.css";
 import { setFormInputsReadOnly } from "./utils/form_helpers.js";
