@@ -7,6 +7,7 @@ from django.utils.translation import gettext as _
 
 from core.choices import ClientStatusEnum
 from core.models.mixins import BaseModelMixin
+from core.models.mixins import SanitizeHTMLFieldsMixin
 from core.models.mixins.access_proxy_models_mixin import AccessProxyModelMixin
 from core.utils import FileValidator
 from client_category.models import ClientCategory
@@ -17,12 +18,14 @@ file_validator = FileValidator(
 )
 
 
-class Client(BaseModelMixin, AccessProxyModelMixin):
+class Client(BaseModelMixin, AccessProxyModelMixin, SanitizeHTMLFieldsMixin):
     """This is client model
 
     Args:
         BaseModelMixin (models.Model): Django base model mixin
     """
+
+    SANITY_HTML_FIELDS = ("description",)
 
     categories = models.ManyToManyField(
         to=ClientCategory, related_name="clients", blank=True
