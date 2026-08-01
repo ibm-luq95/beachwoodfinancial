@@ -54,7 +54,7 @@ admin.site.site_title = _("LedgerFlare Administrator")
 
 if settings.DEBUG:
     urlpatterns += static_and_media_path_urls
-    urlpatterns.append(path("__debug__/", include("debug_toolbar.urls")))
+    urlpatterns.append(path("__debug__/", include(("debug_toolbar.urls", "djdt"), namespace="djdt")))
     # urlpatterns.append(
     #     path("request-logs/", include("request_viewer.urls")),
     # )
