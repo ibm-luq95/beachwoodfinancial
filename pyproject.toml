@@ -70,6 +70,7 @@ dev = [
   "django-debugtools>=2.0",
   "coverage>=7.15.2",
   "django-coverage-plugin>=3.2.2",
+  "playwright>=1.62.0",
 ]
 
 # Code quality and static analysis
