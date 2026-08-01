@@ -145,9 +145,14 @@ class StaffProfileView(BWLoginRequiredMixin, SuccessMessageMixin, FormView, Deta
         return self.render_to_response(self.get_context_data(form=form))
 
 
+from core.api.throttling import AuthEndpointRateThrottle
+from core.views.mixins import ThrottledViewMixin
+
+
 class StaffUpdatePasswordView(
-    BWLoginRequiredMixin, SuccessMessageMixin, SingleObjectMixin, FormView
+    ThrottledViewMixin, BWLoginRequiredMixin, SuccessMessageMixin, SingleObjectMixin, FormView
 ):
+    throttle_classes = [AuthEndpointRateThrottle]
     form_class = ForceChangePasswordForm
     template_name = "beach_wood_user/update_password.html"
     model = BWUser
