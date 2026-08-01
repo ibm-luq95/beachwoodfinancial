@@ -9,3 +9,4 @@ class ClientAccountProxy(ClientAccount):
 
     class Meta(ClientAccount.Meta):
         proxy = True
+        indexes = []
