@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "django.contrib.postgres",
     "django.contrib.humanize",
     "django.forms",
     "django.contrib.sites",
@@ -64,6 +65,7 @@ INSTALLED_APPS = [
     "widget_tweaks",
     "rangefilter",
     "auditlog",
+    "axes",
     # "defender",
     "core.apps.CoreConfig",
     "beach_wood_user.apps.BeachWoodUserConfig",
@@ -138,6 +140,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     # 9. Authentication middleware - after sessions and CSRF
     "django.contrib.auth.middleware.AuthenticationMiddleware",
+    "axes.middleware.AxesMiddleware",
     "auditlog.middleware.AuditlogMiddleware",
     # 10. Session timeout - after auth to check authenticated users
     "django_session_timeout.middleware.SessionTimeoutMiddleware",
@@ -298,10 +301,20 @@ LANGUAGES = (("en", "English"),)
 # Django guardian configs
 GUARDIAN_MONKEY_PATCH_USER = False
 AUTHENTICATION_BACKENDS = (
-    # "beach_wood_user.authentication_backend.SoftDeleteModelBackend",
-    "django.contrib.auth.backends.ModelBackend",  # this is default
+    "axes.backends.AxesStandaloneBackend",
+    "django.contrib.auth.backends.ModelBackend",
     "guardian.backends.ObjectPermissionBackend",
 )
+
+# Axes Brute Force Protection
+AXES_FAILURE_LIMIT = 5
+AXES_COOLOFF_TIME = 0.25  # 15 minutes
+AXES_LOCKOUT_PARAMETERS = ["username", "ip_address"]
+AXES_USERNAME_FORM_FIELD = "email"
+AXES_HTTP_RESPONSE_CODE = 403
+AXES_CACHE_ALIAS = "default"
+AXES_RESET_ON_SUCCESS = True
+AXES_LOCKOUT_TEMPLATE = "account/lockout.html"
 
 # Django rest framework configs
 REST_FRAMEWORK = {
@@ -320,6 +333,21 @@ REST_FRAMEWORK = {
         # "rest_framework.parsers.FormParser",
     ],
     "DATETIME_FORMAT": "%Y-%m-%d",
+    "DEFAULT_PAGINATION_CLASS": "rest_framework.pagination.PageNumberPagination",
+    "PAGE_SIZE": 25,
+    "DEFAULT_FILTER_BACKENDS": [
+        "django_filters.rest_framework.DjangoFilterBackend",
+        "rest_framework.filters.SearchFilter",
+        "rest_framework.filters.OrderingFilter",
+    ],
+    "DEFAULT_THROTTLE_CLASSES": [
+        "rest_framework.throttling.AnonRateThrottle",
+        "rest_framework.throttling.UserRateThrottle",
+    ],
+    "DEFAULT_THROTTLE_RATES": {
+        "anon": "100/day",
+        "user": "1000/hour",
+    },
 }
 # drf-standardized-errors config
 DRF_STANDARDIZED_ERRORS = {
@@ -421,6 +449,10 @@ COMPRESS_LEVEL = app_settings.COMPRESS_LEVEL
 
 # ENCRYPT_KEY
 ENCRYPT_KEY = bytes(app_settings.ENCRYPT_KEY, "ascii")  # type: ignore
+OLD_ENCRYPT_KEYS = [
+    bytes(k, "ascii") if isinstance(k, str) else k
+    for k in app_settings.OLD_ENCRYPT_KEYS
+]
 
 
 # Django log viewer package config

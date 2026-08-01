@@ -125,16 +125,6 @@ class BWLoginViewBW(SuccessMessageMixin, BWSiteSettingsViewMixin, FormMixin, Vie
         :rtype: HttpResponse
         """
         try:
-            # Rate limiting check
-            if self._is_rate_limited(request):
-                logger.warning(
-                    "Rate limit exceeded for IP: %s", self._get_client_ip(request)
-                )
-                messages.error(
-                    request, _("Too many failed attempts. Please try again later.")
-                )
-                return self.form_invalid(self.get_form())
-
             form = self.get_form()
 
             if form.is_valid():
@@ -208,21 +198,13 @@ class BWLoginViewBW(SuccessMessageMixin, BWSiteSettingsViewMixin, FormMixin, Vie
             password = form.cleaned_data.get("password")
             user_type = form.cleaned_data.get("user_type")
 
-            # Validate user credentials
+            # Authenticate user via Django auth backend (triggers django-axes tracking)
+            auth_result = self._authenticate_user(email, password)
             validation_result = self._validate_credentials(email, user_type)
 
-            if not validation_result["valid"]:
-                form.add_error(None, validation_result["error"])
-                self._record_failed_attempt(self.request)
-                return self.form_invalid(form)
-
-            user = validation_result["user"]
-
-            # Authenticate user
-            auth_result = self._authenticate_user(email, password)
-
-            if not auth_result["authenticated"]:
-                form.add_error(None, auth_result["error"])
+            if not auth_result["authenticated"] or not validation_result["valid"]:
+                error_msg = auth_result.get("error") or validation_result.get("error")
+                form.add_error(None, error_msg)
                 self._record_failed_attempt(self.request)
                 return self.form_invalid(form)
 
