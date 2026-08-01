@@ -5,12 +5,18 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from django.utils import timezone
 
+from core.api.permissions import BaseApiPermissionMixin
 from lf_notifications.models import NotificationRecipientProxy
 from lf_notifications.serializers.notification import NotificationRecipientSerializer
 
 class NotificationViewSet(viewsets.ModelViewSet):
     serializer_class = NotificationRecipientSerializer
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
+    perm_slug = "lf_notifications.notification"
+    filterset_fields = ["is_read", "notification__notification_type"]
+    search_fields = ["notification__verb"]
+    ordering_fields = ["created_at", "read_at"]
+    ordering = ["-created_at"]
 
     def get_queryset(self):
         """
