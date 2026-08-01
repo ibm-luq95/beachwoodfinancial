@@ -24,7 +24,7 @@ logger = get_formatted_logger()
 
 
 class DiscussionNotificationsApiView(APIView):
-    permission_classes = [permissions.IsAuthenticated]
+    permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
     perm_slug = "discussion.discussionnotifications"
     http_method_names = ["post"]
     # authentication_classes = [TokenAuthentication]
@@ -58,6 +58,14 @@ class DiscussionViewSet(RoleScopedQuerysetMixin, ModelViewSet):
     perm_slug = "discussion.discussion"
     queryset = DiscussionProxy.objects.all()
     authentication_classes = [TokenAuthentication]
+    filterset_fields = ["is_seen", "job", "special_assignment", "is_deleted"]
+    search_fields = ["body", "subject"]
+    ordering_fields = ["created_at", "updated_at"]
+    ordering = ["-created_at"]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.select_related("job", "special_assignment")
 
     def scope_queryset_for_bookkeeper(self, queryset, bookkeeper):
         return queryset.filter(
