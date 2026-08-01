@@ -9,16 +9,16 @@ from special_assignment.models import SpecialAssignmentProxy
 
 class DiscussionSerializer(serializers.ModelSerializer):
     special_assignment = serializers.PrimaryKeyRelatedField(
-        queryset=SpecialAssignmentProxy.original_objects.all(), many=False, required=False
+        queryset=SpecialAssignmentProxy.objects.all(), many=False, required=False
     )
     replies = serializers.PrimaryKeyRelatedField(
-        queryset=DiscussionProxy.original_objects.all(), many=False, required=False
+        queryset=DiscussionProxy.objects.all(), many=False, required=False
     )
     job = serializers.PrimaryKeyRelatedField(
-        queryset=JobProxy.original_objects.all(), many=False, required=False
+        queryset=JobProxy.objects.all(), many=False, required=False
     )
     sender = serializers.PrimaryKeyRelatedField(
-        queryset=BWUser.original_objects.all(), many=False, required=False
+        queryset=BWUser.objects.all(), many=False, required=False
     )
 
     class Meta:
