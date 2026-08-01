@@ -30,8 +30,7 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
         const eyeIcon = ["fa-solid", "fa-eye", "w-3", "h-3"];
         const eyeSlashIcon = ["fa-solid", "fa-eye-slash", "w-3", "h-3"];
         const spanIcon = currentTarget.querySelector("span.ca-icon");
-        const icon = spanIcon.querySelector("svg");
-        spanIcon.removeChild(icon);
+        spanIcon.innerHTML = "";
         const newIcon = document.createElement("i");
         switch (showStatus) {
           case true:
