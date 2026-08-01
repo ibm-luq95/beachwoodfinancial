@@ -617,3 +617,10 @@ nginx
 
 src/public
 src/my_exported
+.aiassistant
+.agents
+.envrc
+.cline
+.playwright-mcp
+src/e2e_browser
+src/e2e_workflows
