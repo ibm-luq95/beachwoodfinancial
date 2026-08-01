@@ -42,12 +42,14 @@ dependencies = [
   "sentry-sdk[django]",
   "inflection",
   "python-json-logger",
-  "django-defender",
+  "django-axes>=6.0.0",
+  "django-csp>=4.0.0",
   "whitenoise",
   "drf-spectacular",
   "prettyprinter",
   "termcolor",
   "nh3>=0.3.6",
+  "beautifulsoup4>=4.15.0",
 ]
 
 [dependency-groups]
@@ -66,6 +68,8 @@ dev = [
   "ipython",
   "django-debug-toolbar",
   "django-debugtools>=2.0",
+  "coverage>=7.15.2",
+  "django-coverage-plugin>=3.2.2",
 ]
 
 # Code quality and static analysis
@@ -87,6 +91,7 @@ testing = [
   "pytest-cov",
   "factory-boy",
   "faker",
+  "model-bakery",
   "selenium",
 ]
 # --- Type Checking ---
