@@ -44,8 +44,10 @@ from rest_framework.exceptions import AuthenticationFailed
 
 from beach_wood_user.forms import BWLoginForm
 from beach_wood_user.models import BWUser
+from core.api.throttling import AuthEndpointRateThrottle
 from core.cache import BWSiteSettingsViewMixin
 from core.utils.grab_env_file import grab_env_file
+from core.views.mixins import ThrottledViewMixin
 
 
 logger = logging.getLogger(__name__)
@@ -57,7 +59,8 @@ FAILED_LOGIN_TIMEOUT = 300  # seconds (5 minutes)
 
 
 @method_decorator(csrf_protect, name="dispatch")
-class BWLoginViewBW(SuccessMessageMixin, BWSiteSettingsViewMixin, FormMixin, View):
+class BWLoginViewBW(ThrottledViewMixin, SuccessMessageMixin, BWSiteSettingsViewMixin, FormMixin, View):
+    throttle_classes = [AuthEndpointRateThrottle]
     """
     BWLoginViewBW Default login form view
     Customized login form for staff members with integrated DRF token support.
@@ -210,6 +213,8 @@ class BWLoginViewBW(SuccessMessageMixin, BWSiteSettingsViewMixin, FormMixin, Vie
 
             # Clear failed attempts on successful login
             self._clear_failed_attempts(self.request)
+
+            user: BWUser = auth_result["user"]
 
             # Store token and login
             self._handle_post_login(user)
