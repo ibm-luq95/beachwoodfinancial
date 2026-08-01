@@ -49,3 +49,4 @@ class NotificationPreference(BaseModelMixin):
 class NotificationPreferenceProxy(NotificationPreference):
     class Meta(NotificationPreference.Meta):
         proxy = True
+        indexes = []

@@ -146,3 +146,4 @@ class Notification(BaseModelMixin):
 class NotificationProxy(Notification):
     class Meta(Notification.Meta):
         proxy = True
+        indexes = []
