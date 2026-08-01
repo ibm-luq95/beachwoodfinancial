@@ -1,6 +1,7 @@
 import os
 import pprint
 from pathlib import Path
+from csp.constants import NONE, NONCE, SELF, UNSAFE_INLINE
 from django.contrib.messages import constants as messages
 from django_components import ComponentsSettings
 from .config import app_settings
@@ -126,6 +127,7 @@ MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
     # 3. Cors middleware - must come early, before SessionMiddleware
     "corsheaders.middleware.CorsMiddleware",  # <-- ADD IT HERE
+    "csp.middleware.CSPMiddleware",
     # 3. Static files middleware - early for performance
     # "whitenoise.middleware.WhiteNoiseMiddleware",
     # 4. Maintenance mode - early to catch all requests
@@ -315,6 +317,22 @@ AXES_HTTP_RESPONSE_CODE = 403
 AXES_CACHE_ALIAS = "default"
 AXES_RESET_ON_SUCCESS = True
 AXES_LOCKOUT_TEMPLATE = "account/lockout.html"
+
+# Content Security Policy (django-csp 4.0)
+CONTENT_SECURITY_POLICY = {
+    "DIRECTIVES": {
+        "default-src": [SELF],
+        "script-src": [SELF, NONCE],
+        "style-src": [SELF, UNSAFE_INLINE, "https://fonts.googleapis.com"],
+        "font-src": [SELF, "https://fonts.gstatic.com", "data:"],
+        "img-src": [SELF, "data:", "blob:", "https:"],
+        "connect-src": [SELF],
+        "frame-ancestors": [SELF],
+        "form-action": [SELF],
+        "base-uri": [SELF],
+        "object-src": [NONE],
+    },
+}
 
 # Django rest framework configs
 REST_FRAMEWORK = {

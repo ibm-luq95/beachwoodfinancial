@@ -74,7 +74,7 @@ DATABASES = {
         "PASSWORD": app_settings.DB_PASSWORD,
         "HOST": app_settings.DB_HOST,
         "PORT": app_settings.DB_PORT,
-        "CONN_MAX_AGE": None,
+        "CONN_MAX_AGE": 60,
         "ATOMIC_REQUESTS": True,
         "OPTIONS": {
             "client_encoding": app_settings.DB_CLIENT_ENCODING,
@@ -336,3 +336,12 @@ SECURE_SSL_REDIRECT = False
 SESSION_COOKIE_SECURE = False
 CSRF_COOKIE_SECURE = False
 X_FRAME_OPTIONS = "DENY"
+
+# Development CSP Overrides for Vite HMR
+if "CONTENT_SECURITY_POLICY" in locals():
+    CONTENT_SECURITY_POLICY["DIRECTIVES"]["connect-src"].extend(
+        ["http://localhost:3036", "ws://localhost:3036", "http://127.0.0.1:3036", "ws://127.0.0.1:3036"]
+    )
+    CONTENT_SECURITY_POLICY["DIRECTIVES"]["script-src"].extend(
+        ["http://localhost:3036", "http://127.0.0.1:3036"]
+    )
