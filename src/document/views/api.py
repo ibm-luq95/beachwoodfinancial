@@ -22,6 +22,10 @@ class DocumentViewSet(RoleScopedQuerysetMixin, ModelViewSet):
     permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
     perm_slug = "document.document"
     queryset = Document.objects.all()
+    filterset_fields = ["document_type", "client", "job", "is_deleted"]
+    search_fields = ["title"]
+    ordering_fields = ["created_at", "updated_at", "title"]
+    ordering = ["-created_at"]
 
     def scope_queryset_for_bookkeeper(self, queryset, bookkeeper):
         return queryset.filter(
