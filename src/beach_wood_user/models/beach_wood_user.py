@@ -124,14 +124,6 @@ class BWUser(BaseModelMixin, AbstractBaseUser, PermissionsMixin, GuardianUserMix
         # Trigger post_soft_delete signal
         bwuser_post_soft_delete.send(sender=self.__class__, instance=self)
 
-    def delete(self):
-        """
-        Soft delete the user.
-        """
-        self.is_deleted = True
-        self.deleted_at = timezone.now()
-        self.save(update_fields=["is_deleted", "deleted_at"])
-
     def restore(self):
         """
         Restore the soft-deleted user.
