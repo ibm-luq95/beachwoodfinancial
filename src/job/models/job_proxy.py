@@ -39,6 +39,7 @@ class JobProxy(Job):
 
     class Meta(Job.Meta):
         proxy = True
+        indexes = []
 
     def get_absolute_url(self):
         return reverse_lazy("dashboard:job:details", kwargs={"pk": self.pk})
