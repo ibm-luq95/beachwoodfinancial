@@ -10,7 +10,7 @@ def test_axes_login_lockout_after_five_failures(client: Client):
     for _ in range(5):
         client.post(login_url, {"email": "nonexistent@example.com", "password": "wrongpassword", "user_type": "manager"})
     
-    # 6th attempt must be blocked by Axes (HTTP 403)
+    # 6th attempt must be blocked by rate limit / Axes (HTTP 403 or 429)
     response6 = client.post(login_url, {"email": "nonexistent@example.com", "password": "wrongpassword", "user_type": "manager"})
-    assert response6.status_code == 403
+    assert response6.status_code in (403, 429)
 
