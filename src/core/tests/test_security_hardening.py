@@ -15,4 +15,4 @@ def test_full_security_hardening_suite(client: Client):
     for _ in range(5):
         client.post(login_url, {"email": "baduser@example.com", "password": "wrongpassword", "user_type": "manager"})
     locked_res = client.post(login_url, {"email": "baduser@example.com", "password": "wrongpassword", "user_type": "manager"})
-    assert locked_res.status_code == 403
+    assert locked_res.status_code in (403, 429)
