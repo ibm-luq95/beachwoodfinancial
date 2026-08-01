@@ -363,8 +363,10 @@ REST_FRAMEWORK = {
         "rest_framework.throttling.UserRateThrottle",
     ],
     "DEFAULT_THROTTLE_RATES": {
-        "anon": "100/day",
-        "user": "1000/hour",
+        "anon": "20/minute",
+        "user": "100/minute",
+        "auth_endpoint": "5/minute",
+        "export_data": "10/minute",
     },
 }
 # drf-standardized-errors config
