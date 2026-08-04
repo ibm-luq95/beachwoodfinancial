@@ -18,6 +18,14 @@ class TaskViewSet(RoleScopedQuerysetMixin, ModelViewSet):
     perm_slug = "task.task"
     authentication_classes = [TokenAuthentication]
     queryset = TaskProxy.objects.all()
+    filterset_fields = ["status", "task_type", "is_completed", "job", "is_deleted"]
+    search_fields = ["title", "hints", "additional_notes"]
+    ordering_fields = ["created_at", "updated_at", "title", "status"]
+    ordering = ["-created_at"]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.select_related("job", "job__client")
 
     def scope_queryset_for_bookkeeper(self, queryset, bookkeeper):
         return queryset.filter(

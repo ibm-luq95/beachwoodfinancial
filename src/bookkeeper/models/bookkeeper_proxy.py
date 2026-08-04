@@ -38,6 +38,7 @@ class BookkeeperProxy(Bookkeeper):
 
     class Meta(Bookkeeper.Meta):
         proxy = True
+        indexes = []
 
     def delete(self):
         """

@@ -5,10 +5,11 @@ from django.utils.translation import gettext as _
 from django.views.generic import FormView
 
 from client.models import ClientProxy
+from core.api.throttling import ExportDataRateThrottle
 from core.cache import BWSiteSettingsViewMixin
 from core.forms.per_page_form import PerPageForm
 from core.utils import get_months_abbr
-from core.views.mixins import BWLoginRequiredMixin
+from core.views.mixins import BWLoginRequiredMixin, ThrottledViewMixin
 from reports.filters.client import ClientJobsFilter
 
 
@@ -18,6 +19,7 @@ from reports.filters.client import ClientJobsFilter
 
 # @method_decorator(csrf_exempt, name="dispatch")  # TODO: check if this is needed
 class JobsReportView(
+    ThrottledViewMixin,
     PermissionRequiredMixin,
     BWLoginRequiredMixin,
     BWSiteSettingsViewMixin,
@@ -25,6 +27,7 @@ class JobsReportView(
     FormView,
     # ListView,
 ):
+    throttle_classes = [ExportDataRateThrottle]
     # context_object_name = "clients_object_list"
     http_method_names = ["get"]
     form_class = ClientJobsFilter

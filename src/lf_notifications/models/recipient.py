@@ -70,3 +70,4 @@ class NotificationRecipient(BaseModelMixin):
 class NotificationRecipientProxy(NotificationRecipient):
     class Meta(NotificationRecipient.Meta):
         proxy = True
+        indexes = []

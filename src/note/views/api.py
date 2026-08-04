@@ -17,6 +17,10 @@ class NoteViewSet(RoleScopedQuerysetMixin, ModelViewSet):
     permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
     perm_slug = "note.note"
     queryset = Note.objects.all()
+    filterset_fields = ["note_type", "client", "job", "is_deleted"]
+    search_fields = ["title", "body"]
+    ordering_fields = ["created_at", "updated_at", "title"]
+    ordering = ["-created_at"]
     authentication_classes = [TokenAuthentication]
 
     def scope_queryset_for_bookkeeper(self, queryset, bookkeeper):

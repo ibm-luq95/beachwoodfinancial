@@ -10,7 +10,7 @@ from job.models import JobProxy
 class DocumentSerializer(serializers.ModelSerializer):
 
     job = serializers.PrimaryKeyRelatedField(
-        queryset=JobProxy.original_objects.all(),
+        queryset=JobProxy.objects.all(),
         many=False,
         # read_only=True,
         # allow_null=True,
@@ -18,7 +18,7 @@ class DocumentSerializer(serializers.ModelSerializer):
         required=False
     )
     client = serializers.PrimaryKeyRelatedField(
-        queryset=ClientProxy.original_objects.all(),
+        queryset=ClientProxy.objects.all(),
         many=False,
         required=False
     )

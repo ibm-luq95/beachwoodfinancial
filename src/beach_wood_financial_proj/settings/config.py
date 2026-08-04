@@ -35,6 +35,7 @@ class AppSettings(BaseSettings):
     DEBUG: bool = False
     SECRET_KEY: str
     ENCRYPT_KEY: str
+    OLD_ENCRYPT_KEYS: CommaSeparatedList = Field(default=[])
     BACKUP_KEY: str
     COMPRESS_LEVEL: int = 5
     MANAGER_MAIN_EMAIL: str = "manager@beachwoodfinancial.com"

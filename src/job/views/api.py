@@ -27,6 +27,14 @@ class JobViewSet(RoleScopedQuerysetMixin, ModelViewSet):
     authentication_classes = [TokenAuthentication]
     perm_slug = "job.job"
     queryset = JobProxy.objects.all()
+    filterset_fields = ["status", "state", "job_type", "client", "managed_by", "is_deleted"]
+    search_fields = ["title", "description", "client__name"]
+    ordering_fields = ["created_at", "updated_at", "title", "status", "due_date"]
+    ordering = ["-created_at"]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.select_related("client", "managed_by").prefetch_related("tasks", "categories")
 
     def scope_queryset_for_bookkeeper(self, queryset, bookkeeper):
         return queryset.filter(models.Q(managed_by=bookkeeper.user) | models.Q(bookkeeper=bookkeeper))

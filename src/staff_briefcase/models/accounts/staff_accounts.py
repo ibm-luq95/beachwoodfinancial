@@ -1,34 +1,21 @@
 # -*- coding: utf-8 -*-#
+from __future__ import annotations
+
 from django.db import models
 from django.utils.translation import gettext as _
 
 from core.choices import ServiceNameEnum
-from core.models.mixins import BaseModelMixin
-from core.models.mixins import StrModelMixin
-from core.utils import PasswordHasher
+from core.models.fields import EncryptedCharField
+from core.models.mixins import BaseModelMixin, StrModelMixin
 
 
 class StaffAccounts(BaseModelMixin, StrModelMixin):
-    """Represents a staff account.
-
-    This class defines a staff account with attributes such as title, URL, username/email, password, and name.
-
-    Attributes:
-        title (CharField): The title of the account.
-        url (TextField): The URL associated with the account.
-        username_email (CharField): The username or email associated with the account.
-        password (CharField): The password associated with the account.
-        name (CharField): The name of the service associated with the account.
-
-    Methods:
-        decrypted_password(self) -> str | None: Returns the decrypted password if it exists, otherwise returns None.
-        save(self, *args, **kwargs): Overrides the save method to encrypt the password before saving.
-    """
+    """Represents a staff account with encrypted password storage."""
 
     title = models.CharField(_("title"), max_length=25)
     url = models.TextField(_("url"), null=True, blank=True)
     username_email = models.CharField(_("Username / Email"), max_length=150)
-    password = models.CharField(_("Password"), max_length=250)
+    password = EncryptedCharField(_("Password"), max_length=500, null=True, blank=True)
     name = models.CharField(
         _("name"),
         max_length=35,
@@ -47,16 +34,8 @@ class StaffAccounts(BaseModelMixin, StrModelMixin):
 
     @property
     def decrypted_password(self) -> str | None:
-        """Property function to return the decrypted password if it exists, otherwise
-        returns None."""
-        if not self.password:
-            return None
-        else:
-            return PasswordHasher.decrypt(self.password)
+        """Alias property returning password for backward compatibility."""
+        return self.password
 
     def save(self, *args, **kwargs):
-        if self.decrypted_password:
-            self.password = PasswordHasher.encrypt(self.password)
-        else:
-            self.password = PasswordHasher.encrypt(self.password)
         super(StaffAccounts, self).save(*args, **kwargs)

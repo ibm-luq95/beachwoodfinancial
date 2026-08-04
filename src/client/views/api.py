@@ -32,6 +32,14 @@ class ClientViewSet(RoleScopedQuerysetMixin, ModelViewSet):
     authentication_classes = [TokenAuthentication]
     queryset = ClientProxy.objects.all()
     http_method_names = ["get", "post", "patch"]
+    filterset_fields = ["status", "is_deleted"]
+    search_fields = ["name", "email", "phone_number"]
+    ordering_fields = ["created_at", "name", "status"]
+    ordering = ["name"]
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        return qs.prefetch_related("bookkeepers", "cfos", "categories")
 
     def scope_queryset_for_bookkeeper(self, queryset, bookkeeper):
         return queryset.filter(bookkeepers=bookkeeper)

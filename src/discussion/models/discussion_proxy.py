@@ -11,6 +11,7 @@ from special_assignment.models import SpecialAssignmentProxy
 class DiscussionProxy(Discussion):
     class Meta(Discussion.Meta):
         proxy = True
+        indexes = []
 
     def for_what(self) -> None | SpecialAssignmentProxy | JobProxy:
         if self.job:

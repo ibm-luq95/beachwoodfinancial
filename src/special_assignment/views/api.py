@@ -20,6 +20,10 @@ class SpecialAssignmentViewSet(RoleScopedQuerysetMixin, ModelViewSet):
     parser_classes = [parsers.FormParser, parsers.MultiPartParser]
     perm_slug = "special_assignment.specialassignment"
     authentication_classes = [TokenAuthentication]
+    filterset_fields = ["status", "client", "assigned_to", "is_deleted"]
+    search_fields = ["title", "description"]
+    ordering_fields = ["created_at", "updated_at", "title", "status", "due_date"]
+    ordering = ["-created_at"]
     queryset = SpecialAssignmentProxy.objects.all()
 
     def scope_queryset_for_bookkeeper(self, queryset, bookkeeper):

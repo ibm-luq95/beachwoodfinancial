@@ -44,8 +44,10 @@ from rest_framework.exceptions import AuthenticationFailed
 
 from beach_wood_user.forms import BWLoginForm
 from beach_wood_user.models import BWUser
+from core.api.throttling import AuthEndpointRateThrottle
 from core.cache import BWSiteSettingsViewMixin
 from core.utils.grab_env_file import grab_env_file
+from core.views.mixins import ThrottledViewMixin
 
 
 logger = logging.getLogger(__name__)
@@ -57,7 +59,8 @@ FAILED_LOGIN_TIMEOUT = 300  # seconds (5 minutes)
 
 
 @method_decorator(csrf_protect, name="dispatch")
-class BWLoginViewBW(SuccessMessageMixin, BWSiteSettingsViewMixin, FormMixin, View):
+class BWLoginViewBW(ThrottledViewMixin, SuccessMessageMixin, BWSiteSettingsViewMixin, FormMixin, View):
+    throttle_classes = [AuthEndpointRateThrottle]
     """
     BWLoginViewBW Default login form view
     Customized login form for staff members with integrated DRF token support.
@@ -125,16 +128,6 @@ class BWLoginViewBW(SuccessMessageMixin, BWSiteSettingsViewMixin, FormMixin, Vie
         :rtype: HttpResponse
         """
         try:
-            # Rate limiting check
-            if self._is_rate_limited(request):
-                logger.warning(
-                    "Rate limit exceeded for IP: %s", self._get_client_ip(request)
-                )
-                messages.error(
-                    request, _("Too many failed attempts. Please try again later.")
-                )
-                return self.form_invalid(self.get_form())
-
             form = self.get_form()
 
             if form.is_valid():
@@ -208,26 +201,20 @@ class BWLoginViewBW(SuccessMessageMixin, BWSiteSettingsViewMixin, FormMixin, Vie
             password = form.cleaned_data.get("password")
             user_type = form.cleaned_data.get("user_type")
 
-            # Validate user credentials
+            # Authenticate user via Django auth backend (triggers django-axes tracking)
+            auth_result = self._authenticate_user(email, password)
             validation_result = self._validate_credentials(email, user_type)
 
-            if not validation_result["valid"]:
-                form.add_error(None, validation_result["error"])
-                self._record_failed_attempt(self.request)
-                return self.form_invalid(form)
-
-            user = validation_result["user"]
-
-            # Authenticate user
-            auth_result = self._authenticate_user(email, password)
-
-            if not auth_result["authenticated"]:
-                form.add_error(None, auth_result["error"])
+            if not auth_result["authenticated"] or not validation_result["valid"]:
+                error_msg = auth_result.get("error") or validation_result.get("error")
+                form.add_error(None, error_msg)
                 self._record_failed_attempt(self.request)
                 return self.form_invalid(form)
 
             # Clear failed attempts on successful login
             self._clear_failed_attempts(self.request)
+
+            user: BWUser = auth_result["user"]
 
             # Store token and login
             self._handle_post_login(user)

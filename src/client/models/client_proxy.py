@@ -23,6 +23,7 @@ class ClientProxy(Client, BWGetRelatedNotesAndDocuments):
 
     class Meta(Client.Meta):
         proxy = True
+        indexes = []
 
     def active_jobs(self) -> BaseQuerySetMixin | int:
         if hasattr(self, "jobs"):
