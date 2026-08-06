@@ -115,12 +115,18 @@ class RequestHandler {
     }
 
     if (options.djangoRequest) {
-      // Use token from window.AUTH_TOKEN
-      const authToken = window.AUTH_TOKEN;
+      const getAuthToken = () => {
+        if (window.AUTH_TOKEN && window.AUTH_TOKEN.length > 0) return window.AUTH_TOKEN;
+        const meta = document.querySelector('meta[name="auth-token"]');
+        if (meta && meta.getAttribute("content")) return meta.getAttribute("content");
+        return null;
+      };
+      const authToken = getAuthToken();
       if (authToken) {
         headers.append("Authorization", `Token ${authToken}`);
       }
       credentials = "include";
+
       if (environment === "production") {
         headers.append("X-Content-Type-Options", "nosniff");
         headers.append("X-XSS-Protection", "1; mode=block");
