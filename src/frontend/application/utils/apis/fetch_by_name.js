@@ -52,13 +52,21 @@ class FetchError extends AuthError {
  */
 class AuthTokenHandler {
   /**
-   * Get the authentication token from the window object.
+   * Get the authentication token from the window object or meta tag.
    * @returns {?string} The authentication token or null if not found.
    */
   static getAuthToken() {
-    return window.AUTH_TOKEN || null;
+    if (window.AUTH_TOKEN && window.AUTH_TOKEN.length > 0) {
+      return window.AUTH_TOKEN;
+    }
+    const metaToken = document.querySelector('meta[name="auth-token"]')?.getAttribute("content");
+    if (metaToken && metaToken.length > 0) {
+      return metaToken;
+    }
+    return null;
   }
 }
+
 
 /**
  * Handles CSRF token retrieval and validation.
