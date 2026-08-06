@@ -16,11 +16,12 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
         const urlPath = urlData["urlPath"];
         RequestHandler.sendRequest({
           url: urlPath,
-          method: "POST",
+          method: "GET",
           djangoRequest: true,
           debug: true,
           environment: import.meta.env.VITE_STAGE_ENVIRONMENT || "development",
         })
+
           .then((newData) => {
             mgDashboardHWidgetElements.forEach((element) => {
               const widgetName = element.dataset["widgetName"];
