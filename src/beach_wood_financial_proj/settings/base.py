@@ -323,6 +323,7 @@ CONTENT_SECURITY_POLICY = {
     "DIRECTIVES": {
         "default-src": [SELF],
         "script-src": [SELF, NONCE],
+        "script-src-attr": [SELF, UNSAFE_INLINE],
         "style-src": [SELF, UNSAFE_INLINE, "https://fonts.googleapis.com"],
         "font-src": [SELF, "https://fonts.gstatic.com", "data:"],
         "img-src": [SELF, "data:", "blob:", "https:"],
@@ -333,6 +334,7 @@ CONTENT_SECURITY_POLICY = {
         "object-src": [NONE],
     },
 }
+
 
 # Django rest framework configs
 REST_FRAMEWORK = {
