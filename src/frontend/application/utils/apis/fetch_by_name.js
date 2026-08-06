@@ -99,17 +99,25 @@ class CSRFTokenHandler {
    * @throws {CSRFTokenError} If the token is not found or invalid.
    */
   static getCSRFToken() {
+    if (window.CSRF_TOKEN && window.CSRF_TOKEN.length === 64) return window.CSRF_TOKEN;
+    if (window.csrfToken && window.csrfToken.length === 64) return window.csrfToken;
+
     const metaTag = document.querySelector('meta[name="csrf-token"]');
     if (metaTag) {
       const token = metaTag.getAttribute("content");
-      if (token && token.length > 0) return token;
+      if (token && token.length === 64) return token;
     }
 
     const cookieToken = this.getCookie("csrftoken");
+    if (cookieToken && cookieToken.length === 64) return cookieToken;
+
+    if (window.CSRF_TOKEN && window.CSRF_TOKEN.length > 0) return window.CSRF_TOKEN;
+    if (metaTag && metaTag.getAttribute("content")) return metaTag.getAttribute("content");
     if (cookieToken && cookieToken.length > 0) return cookieToken;
 
     throw new CSRFTokenError("CSRF token not found in meta tag or cookie");
   }
+
 
   /**
    * Debug function to check all CSRF token sources.
