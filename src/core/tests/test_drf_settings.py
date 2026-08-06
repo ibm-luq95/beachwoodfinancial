@@ -13,5 +13,5 @@ def test_drf_global_features_configured() -> None:
     assert "DEFAULT_FILTER_BACKENDS" in rf
     assert "DEFAULT_THROTTLE_CLASSES" in rf
     assert "DEFAULT_THROTTLE_RATES" in rf
-    assert rf["DEFAULT_THROTTLE_RATES"].get("anon") == "100/day"
-    assert rf["DEFAULT_THROTTLE_RATES"].get("user") == "1000/hour"
+    assert rf["DEFAULT_THROTTLE_RATES"].get("anon") == "20/minute"
+    assert rf["DEFAULT_THROTTLE_RATES"].get("user") == "100/minute"

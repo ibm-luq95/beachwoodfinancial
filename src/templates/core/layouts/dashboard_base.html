@@ -2,8 +2,11 @@
 {% nospaces %}
 <html lang="en" class="h-full">
     <head>
-        <!-- CSRF Token Meta Tag - Add this to your base template -->
+        <!-- CSRF & Auth Token Meta Tags -->
         <meta name="csrf-token" content="{{ csrf_token }}" />
+        <meta name="auth-token" content="{{ request.session.auth_token }}" />
+
+
 
         {% include "core/inc/meta_tags.html" with get_web_app_settings=get_web_app_settings %}
 
@@ -49,21 +52,23 @@
         </div>
         <!-- End Content -->
         <!-- ========== END MAIN CONTENT ========== -->
-        <script defer>
-            const t = "{{ request.session.auth_token }}";
-            window.AUTH_TOKEN = t;
-            window.CSRF_TOKEN = "{{ csrf_token }}";
-            /* Freeze object to prevent modification */
-            Object.defineProperty(window, 'AUTH_TOKEN', {
-                configurable: false,
-                writable: false,
-                value: window.AUTH_TOKEN
-            });
+        <script nonce="{{ request.csp_nonce }}">
+            (function() {
+                const token = "{{ request.session.auth_token }}";
+                try {
+                    window.AUTH_TOKEN = token;
+                } catch (e) {
+                    /* Ignore if window.AUTH_TOKEN is read-only */
+                }
+                window.CSRF_TOKEN = "{{ csrf_token }}";
+                const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+                if (csrfMeta) {
+                    window.csrfToken = csrfMeta.getAttribute('content');
+                }
+            })();
         </script>
-        <script>
-            /* Make CSRF token available globally */
-            window.csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        </script>
+
+
 
         {% include "core/inc/js.html" %}
 
@@ -72,3 +77,4 @@
     </body>
 </html>
 {% endnospaces %}
+

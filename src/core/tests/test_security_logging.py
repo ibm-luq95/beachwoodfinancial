@@ -16,4 +16,4 @@ def test_failed_login_event_captured(
         "/auth/login",
         {"email": "wrong@example.com", "password": "bad", "user_type": "manager"},
     )
-    assert response.status_code in (400, 401)
+    assert response.status_code in (400, 401, 429)

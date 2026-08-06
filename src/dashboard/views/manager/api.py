@@ -7,7 +7,7 @@ from django.db.models import Q
 from django.utils import timezone
 from rest_framework import permissions
 from rest_framework import status
-from rest_framework.authentication import TokenAuthentication
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
@@ -34,7 +34,7 @@ logger = get_formatted_logger()
 class ManagementDashboardApiView(APIView):
     permission_classes = (permissions.IsAuthenticated, ManagerApiPermission)
     http_method_names = ["post"]
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
     def post(self, request: Request, *args, **kwargs):
         try:
@@ -78,7 +78,7 @@ class ManagerKPIStatsAPIView(APIView):
 
     permission_classes = (permissions.IsAuthenticated, ManagerApiPermission)
     http_method_names = ["get"]
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
     def get(self, request: Request, *args, **kwargs):
         try:
@@ -158,7 +158,7 @@ class ManagerPastDueJobsAPIView(APIView):
 
     permission_classes = (permissions.IsAuthenticated, ManagerApiPermission)
     http_method_names = ["get"]
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
     def get(self, request: Request, *args, **kwargs):
         try:
@@ -217,7 +217,7 @@ class ManagerTasksThisWeekAPIView(APIView):
 
     permission_classes = (permissions.IsAuthenticated, ManagerApiPermission)
     http_method_names = ["get"]
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
     def get(self, request: Request, *args, **kwargs):
         try:
@@ -275,7 +275,7 @@ class ManagerStaffWorkloadAPIView(APIView):
 
     permission_classes = (permissions.IsAuthenticated, ManagerApiPermission)
     http_method_names = ["get"]
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
     def get(self, request: Request, *args, **kwargs):
         try:
@@ -363,7 +363,7 @@ class ManagerJobCompletionRateAPIView(APIView):
 
     permission_classes = (permissions.IsAuthenticated, ManagerApiPermission)
     http_method_names = ["get"]
-    authentication_classes = [TokenAuthentication]
+    authentication_classes = [SessionAuthentication, TokenAuthentication]
 
     def get(self, request: Request, *args, **kwargs):
         try:

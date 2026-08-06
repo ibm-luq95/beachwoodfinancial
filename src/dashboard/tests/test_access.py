@@ -1,4 +1,6 @@
 # -*- coding: utf-8 -*-#
+import re
+
 from django.test import TestCase, RequestFactory, SimpleTestCase, Client
 from bs4 import BeautifulSoup
 from django.core import management
@@ -60,6 +62,44 @@ class TestAccessDashboard(TestCase):
         response = self.client.post(reverse_lazy("auth:login"), self.credentials)
         self.assertEqual(response.status_code, 302)
         self.assertRedirects(response, reverse_lazy("dashboard:manager:home"))
+
+    def test_dashboard_bootstrap_scripts_match_csp_nonce(self):
+        login_response = self.client.post(
+            reverse_lazy("auth:login"),
+            self.credentials,
+        )
+        self.assertRedirects(login_response, reverse_lazy("dashboard:manager:home"))
+
+        response = self.client.get(reverse_lazy("dashboard:manager:home"))
+
+        self.assertEqual(response.status_code, 200)
+        csp_header = response.headers["Content-Security-Policy"]
+        script_src = next(
+            directive
+            for directive in csp_header.split(";")
+            if directive.strip().startswith("script-src")
+        )
+        nonce_match = re.search(r"'nonce-([^']+)'", script_src)
+        if nonce_match is None:
+            self.fail("The script-src directive does not contain a CSP nonce")
+        nonce = nonce_match.group(1)
+
+        soup = BeautifulSoup(response.content, "html.parser")
+        auth_script = soup.find(
+            "script",
+            string=lambda text: text and "window.AUTH_TOKEN" in text,
+        )
+        csrf_script = soup.find(
+            "script",
+            string=lambda text: text and "window.csrfToken" in text,
+        )
+        if auth_script is None or csrf_script is None:
+            self.fail("Dashboard bootstrap scripts are missing from the response")
+
+        self.assertEqual(auth_script.get("nonce"), nonce)
+        self.assertEqual(csrf_script.get("nonce"), nonce)
+        self.assertIn(self.client.session["auth_token"], auth_script.text)
+        self.assertNotIn("'unsafe-inline'", script_src)
 
     def test_invalid_login(self):
         self.credentials.update({"password": "Dsfdf"})

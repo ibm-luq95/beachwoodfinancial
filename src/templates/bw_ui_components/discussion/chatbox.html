@@ -173,7 +173,8 @@
         {% endif %}
     </div>
     <!-- JavaScript -->
-    <script>
+    <script nonce="{{ request.csp_nonce }}">
+
         function showFileName(event) {
             const fileInput = event.target;
             const fileNameSpan = document.getElementById('file-name');

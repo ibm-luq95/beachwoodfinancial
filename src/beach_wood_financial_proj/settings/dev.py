@@ -339,9 +339,25 @@ X_FRAME_OPTIONS = "DENY"
 
 # Development CSP Overrides for Vite HMR
 if "CONTENT_SECURITY_POLICY" in locals():
+    VITE_DEV_ORIGINS = ["http://localhost:3036", "http://127.0.0.1:3036"]
+    VITE_WS_ORIGINS = ["ws://localhost:3036", "ws://127.0.0.1:3036"]
+
     CONTENT_SECURITY_POLICY["DIRECTIVES"]["connect-src"].extend(
-        ["http://localhost:3036", "ws://localhost:3036", "http://127.0.0.1:3036", "ws://127.0.0.1:3036"]
+        VITE_DEV_ORIGINS + VITE_WS_ORIGINS
     )
-    CONTENT_SECURITY_POLICY["DIRECTIVES"]["script-src"].extend(
-        ["http://localhost:3036", "http://127.0.0.1:3036"]
-    )
+    CONTENT_SECURITY_POLICY["DIRECTIVES"]["script-src"].extend(VITE_DEV_ORIGINS)
+
+    CONTENT_SECURITY_POLICY["DIRECTIVES"]["style-src"].extend(VITE_DEV_ORIGINS)
+    CONTENT_SECURITY_POLICY["DIRECTIVES"]["font-src"].extend(VITE_DEV_ORIGINS)
+    CONTENT_SECURITY_POLICY["DIRECTIVES"]["img-src"].extend(VITE_DEV_ORIGINS)
+
+
+# Development Throttle Overrides (Prevent HTTP 429 during local development)
+REST_FRAMEWORK["DEFAULT_THROTTLE_RATES"] = {
+    "anon": "1000/minute",
+    "user": "1000/minute",
+    "auth_endpoint": "1000/minute",
+    "export_data": "1000/minute",
+}
+
+
