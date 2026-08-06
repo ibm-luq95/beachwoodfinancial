@@ -108,11 +108,25 @@ class RequestHandler {
         (options.method || "GET").toUpperCase(),
       )
     ) {
-      const csrfToken = options.csrfToken || getCookie("csrftoken");
-      if (csrfToken) {
+      const getCSRFToken = () => {
+        if (options.csrfToken && options.csrfToken.length === 64) return options.csrfToken;
+        if (window.CSRF_TOKEN && window.CSRF_TOKEN.length === 64) return window.CSRF_TOKEN;
+        if (window.csrfToken && window.csrfToken.length === 64) return window.csrfToken;
+        const meta = document.querySelector('meta[name="csrf-token"]');
+        if (meta && meta.getAttribute("content") && meta.getAttribute("content").length === 64) {
+          return meta.getAttribute("content");
+        }
+        const cookie = getCookie("csrftoken");
+        if (cookie && cookie.length === 64) return cookie;
+        return options.csrfToken || window.CSRF_TOKEN || window.csrfToken || (meta ? meta.getAttribute("content") : null) || cookie;
+      };
+
+      const csrfToken = getCSRFToken();
+      if (csrfToken && csrfToken.length === 64) {
         headers.append("X-CSRFToken", csrfToken);
       }
     }
+
 
     if (options.djangoRequest) {
       const getAuthToken = () => {
