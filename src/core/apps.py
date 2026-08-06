@@ -1,6 +1,11 @@
 from __future__ import annotations
 
+import re
+
 from django.apps import AppConfig
+from django.utils import cache as django_cache
+
+django_cache.cc_delim_re = re.compile(r"\s*,\s*")
 
 
 class CoreConfig(AppConfig):
