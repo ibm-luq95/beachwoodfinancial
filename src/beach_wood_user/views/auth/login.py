@@ -351,15 +351,16 @@ class BWLoginViewBW(ThrottledViewMixin, SuccessMessageMixin, BWSiteSettingsViewM
 
         :param BWUser user: Authenticated user instance
         """
+        # Actual login (initializes the user session)
+        login(self.request, user, backend="django.contrib.auth.backends.ModelBackend")
+
         # Generate or get existing DRF token
-        token, created = Token.objects.get_or_create(user=user)
+        token, _ = Token.objects.get_or_create(user=user)
 
         # Store token in session for frontend access
         self.request.session["auth_token"] = token.key
         self.request.session.modified = True
 
-        # Actual login
-        login(self.request, user, backend="django.contrib.auth.backends.ModelBackend")
 
     def _determine_redirect(self, user: BWUser) -> HttpResponseRedirect:
         """
