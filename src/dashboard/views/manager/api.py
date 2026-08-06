@@ -33,38 +33,51 @@ logger = get_formatted_logger()
 
 class ManagementDashboardApiView(APIView):
     permission_classes = (permissions.IsAuthenticated, ManagerApiPermission)
-    http_method_names = ["post"]
+    http_method_names = ["post", "get"]
     authentication_classes = [SessionAuthentication, TokenAuthentication]
+
+    def _get_dashboard_data(self):
+        data = dict()
+        jobs_count = JobProxy.objects.count()
+        data["jobs_count"] = jobs_count
+        clients_count = ClientProxy.objects.count()
+        data["clients_count"] = clients_count
+        assignments_counts = SpecialAssignmentProxy.objects.count()
+        data["assignments_counts"] = assignments_counts
+        staff_users_count = BWUser.objects.count()
+        data["staff_users_count"] = staff_users_count
+        completed_jobs_count = JobProxy.objects.filter(
+            status=CON_COMPLETED
+        ).count()
+        past_due_jobs_count = JobProxy.objects.filter(
+            status=CON_PAST_DUE
+        ).count()
+        in_progress_jobs_count = JobProxy.objects.filter(
+            status=CON_IN_PROGRESS
+        ).count()
+        data["jobs_statistics"] = {
+            "completed_jobs_count": completed_jobs_count,
+            "past_due_jobs_count": past_due_jobs_count,
+            "in_progress_jobs_count": in_progress_jobs_count,
+        }
+        return data
 
     def post(self, request: Request, *args, **kwargs):
         try:
-            data = dict()
-            jobs_count = JobProxy.objects.count()
-            data["jobs_count"] = jobs_count
-            clients_count = ClientProxy.objects.count()
-            data["clients_count"] = clients_count
-            assignments_counts = SpecialAssignmentProxy.objects.count()
-            data["assignments_counts"] = assignments_counts
-            staff_users_count = BWUser.objects.count()
-            data["staff_users_count"] = staff_users_count
-            completed_jobs_count = JobProxy.objects.filter(
-                status=CON_COMPLETED
-            ).count()
-            past_due_jobs_count = JobProxy.objects.filter(
-                status=CON_PAST_DUE
-            ).count()
-            in_progress_jobs_count = JobProxy.objects.filter(
-                status=CON_IN_PROGRESS
-            ).count()
-            data["jobs_statistics"] = {
-                "completed_jobs_count": completed_jobs_count,
-                "past_due_jobs_count": past_due_jobs_count,
-                "in_progress_jobs_count": in_progress_jobs_count,
-            }
+            data = self._get_dashboard_data()
             return Response(status=status.HTTP_200_OK, data=data)
         except Exception as e:
             logger.error(traceback.format_exc())
             return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+    def get(self, request: Request, *args, **kwargs):
+        try:
+            data = self._get_dashboard_data()
+            return Response(status=status.HTTP_200_OK, data=data)
+        except Exception as e:
+            logger.error(traceback.format_exc())
+            return Response(status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
 
 
 class ManagerKPIStatsAPIView(APIView):
