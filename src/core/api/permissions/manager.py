@@ -22,9 +22,15 @@ class ManagerApiPermission(permissions.BasePermission):
     edit_methods: Tuple[str] = ("PUT", "PATCH")
 
     def has_permission(self, request: HttpRequest, view: APIView) -> bool:
+        if not request.user or not request.user.is_authenticated:
+            return False
+        if request.user.is_superuser or request.user.is_staff:
+            return True
         if request.user.user_type in (
             BeachWoodUserTypeEnum.MANAGER,
             BeachWoodUserTypeEnum.ASSISTANT,
+            BeachWoodUserTypeEnum.CFO,
         ):
             return True
         return False
+
