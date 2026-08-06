@@ -308,7 +308,8 @@
         animation-delay: 150ms;
     }
 </style>
-<script>
+<script nonce="{{ request.csp_nonce }}">
+
     // Enhanced table interactions
     function confirmDelete(url) {
         if (confirm('{% translate "Are you sure you want to delete this item?" %}')) {
