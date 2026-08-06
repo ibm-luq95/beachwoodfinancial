@@ -24,3 +24,12 @@ STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.InMemoryStorage"},
     "staticfiles": {"BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage"},
 }
+
+# Standard Throttle Rates for Unit Testing
+REST_FRAMEWORK["DEFAULT_THROTTLE_RATES"] = {
+    "anon": "20/minute",
+    "user": "100/minute",
+    "auth_endpoint": "5/minute",
+    "export_data": "10/minute",
+}
+
