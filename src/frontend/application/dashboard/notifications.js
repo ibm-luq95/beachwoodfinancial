@@ -53,42 +53,71 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
 
         // Prevent default navigation
         event.preventDefault();
-        // alert("Clicke");
-        const notificationsWorker = new Worker(
-          new URL("./notifications_worker.js", import.meta.url),
-          {
-            name: "NotificationsWorker",
-            type: "module",
-            credentials: "same-origin",
-          },
-        );
-        // console.log(dataset);
 
-        // const dataset = anchor.dataset;
         const csrfToken =
           document
             .querySelector('meta[name="csrf-token"]')
             ?.getAttribute("content") || getCookie("csrftoken");
 
-        notificationsWorker.postMessage({
-          pk: dataset["notificationPk"],
-          url: document.querySelector("input#notificationUrl").value,
-          token: csrfToken,
-          user: dataset["user"],
-          notificationType: dataset["notificationType"],
-        });
-        notificationsWorker.onmessage = (event) => {
-          // console.log("Worker response:", event.data);
-          // console.log("Worker response:", event);
-          notificationsWorker.terminate();
+        const notificationUrlInput = document.querySelector("input#notificationUrl");
+        const notificationUrl = notificationUrlInput ? notificationUrlInput.value : null;
+
+        const sendRequestFallback = async () => {
+          if (notificationUrl) {
+            try {
+              await fetch(notificationUrl, {
+                method: "POST",
+                headers: {
+                  Accept: "application/json",
+                  "Content-Type": "application/json;charset=utf-8",
+                  "X-Requested-With": "XMLHttpRequest",
+                  "X-CSRFToken": csrfToken,
+                },
+                body: JSON.stringify({
+                  pk: dataset["notificationPk"],
+                  user: dataset["user"],
+                  notificationType: dataset["notificationType"],
+                }),
+              });
+            } catch (error) {
+              console.error("Error marking notification as read (fallback):", error);
+            }
+          }
           window.location.assign(href);
         };
 
-        notificationsWorker.onerror = (error) => {
-          console.error("Worker error:", error);
-          console.error("Worker error:", error["message"]);
-          notificationsWorker.terminate();
-        };
+        try {
+          const notificationsWorker = new Worker(
+            new URL("./notifications_worker.js", import.meta.url),
+            {
+              name: "NotificationsWorker",
+              type: "module",
+              credentials: "same-origin",
+            },
+          );
+
+          notificationsWorker.postMessage({
+            pk: dataset["notificationPk"],
+            url: notificationUrl,
+            token: csrfToken,
+            user: dataset["user"],
+            notificationType: dataset["notificationType"],
+          });
+
+          notificationsWorker.onmessage = () => {
+            notificationsWorker.terminate();
+            window.location.assign(href);
+          };
+
+          notificationsWorker.onerror = (error) => {
+            console.error("Worker error:", error);
+            notificationsWorker.terminate();
+            window.location.assign(href);
+          };
+        } catch (workerError) {
+          console.warn("Worker creation failed (cross-origin or unsupported), using fetch fallback:", workerError);
+          sendRequestFallback();
+        }
       });
     });
   }

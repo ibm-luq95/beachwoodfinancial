@@ -27,12 +27,10 @@ class NoteViewSet(RoleScopedQuerysetMixin, ModelViewSet):
         return queryset.filter(
             models.Q(client__bookkeepers=bookkeeper) |
             models.Q(job__managed_by=bookkeeper.user) |
-            models.Q(job__bookkeeper=bookkeeper) |
             models.Q(job__client__bookkeepers=bookkeeper) |
             models.Q(task__job__managed_by=bookkeeper.user) |
-            models.Q(task__job__bookkeeper=bookkeeper) |
             models.Q(task__job__client__bookkeepers=bookkeeper)
-        )
+        ).distinct()
 
     def scope_queryset_for_cfo(self, queryset, cfo):
         return queryset.filter(
