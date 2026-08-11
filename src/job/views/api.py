@@ -37,7 +37,9 @@ class JobViewSet(RoleScopedQuerysetMixin, ModelViewSet):
         return qs.select_related("client", "managed_by").prefetch_related("tasks", "categories")
 
     def scope_queryset_for_bookkeeper(self, queryset, bookkeeper):
-        return queryset.filter(models.Q(managed_by=bookkeeper.user) | models.Q(bookkeeper=bookkeeper))
+        return queryset.filter(
+            models.Q(managed_by=bookkeeper.user) | models.Q(client__bookkeepers=bookkeeper)
+        ).distinct()
 
     def scope_queryset_for_cfo(self, queryset, cfo):
         return queryset.filter(client__cfos=cfo)
@@ -50,7 +52,9 @@ class UpdateJobApiView(RoleScopedQuerysetMixin, APIView):
     queryset = JobProxy.objects.all()
 
     def scope_queryset_for_bookkeeper(self, queryset, bookkeeper):
-        return queryset.filter(models.Q(managed_by=bookkeeper.user) | models.Q(bookkeeper=bookkeeper))
+        return queryset.filter(
+            models.Q(managed_by=bookkeeper.user) | models.Q(client__bookkeepers=bookkeeper)
+        ).distinct()
 
     def scope_queryset_for_cfo(self, queryset, cfo):
         return queryset.filter(client__cfos=cfo)

@@ -30,9 +30,8 @@ class TaskViewSet(RoleScopedQuerysetMixin, ModelViewSet):
     def scope_queryset_for_bookkeeper(self, queryset, bookkeeper):
         return queryset.filter(
             models.Q(job__managed_by=bookkeeper.user) |
-            models.Q(job__bookkeeper=bookkeeper) |
             models.Q(job__client__bookkeepers=bookkeeper)
-        )
+        ).distinct()
 
     def scope_queryset_for_cfo(self, queryset, cfo):
         return queryset.filter(job__client__cfos=cfo)
