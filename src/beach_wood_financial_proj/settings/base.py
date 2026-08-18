@@ -48,7 +48,6 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "guardian",
     "django_extensions",
-    # "webpack_boilerplate",
     "django_vite",
     "django_vite_boilerplate",
     "django_components",
@@ -417,14 +416,7 @@ DJANGO_VITE = {
         "manifest_path": BASE_DIR / "public/static/.vite/manifest.json",
     },
 }
-# Webpack configs
-# WEBPACK_LOADER = {
-#     "MANIFEST_FILE": BASE_DIR / "frontend/build/manifest.json",
-# "MANIFEST_FILE": BASE_DIR
-# / "frontend"
-# / "build"
-# / "manifest.json"
-# }
+
 
 # Media URLs
 MEDIA_ROOT = BASE_DIR / "media"
