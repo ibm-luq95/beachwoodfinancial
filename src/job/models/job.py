@@ -175,12 +175,25 @@ class Job(
     class Meta(BaseModelMixin.Meta):
         ordering = ["title"]
 
-        permissions = BaseModelMixin.Meta.permissions + [
-            ("list_abstract_job_template", "List abstract job template")
+        permissions = [
+            *BaseModelMixin.Meta.permissions,
+            ("list_abstract_job_template", "List abstract job template"),
         ]
         indexes = [
             models.Index(name="jobs_is_scheduled_idx", fields=["is_scheduled"]),
             models.Index(name="scheduled_date_idx", fields=["scheduled_date"]),
+            models.Index(
+                name="job_client_period_del_idx",
+                fields=["client", "period_year", "period_month", "is_deleted"],
+            ),
+            models.Index(
+                name="job_due_date_del_idx",
+                fields=["due_date", "is_deleted"],
+            ),
+            models.Index(
+                name="job_year_status_del_idx",
+                fields=["period_year", "status", "is_deleted"],
+            ),
         ]
 
     # def get_absolute_url(self):
