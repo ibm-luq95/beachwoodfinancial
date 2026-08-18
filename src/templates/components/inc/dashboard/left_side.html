@@ -133,7 +133,14 @@
             </a>
           </li>
           <li>
-            <a class="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm rounded-lg focus:outline-hidden {% if 'job' in request.resolver_match.namespaces and 'archive' not in request.resolver_match.namespaces and 'reports' not in request.resolver_match.namespaces %}bg-neutral-700 text-white{% else %}bg-neutral-800 hover:bg-neutral-700 focus:bg-neutral-700 text-neutral-200{% endif %}"
+            <a class="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm rounded-lg focus:outline-hidden {% if request.resolver_match.url_name == 'workstation' %}bg-neutral-700 text-white{% else %}bg-neutral-800 hover:bg-neutral-700 focus:bg-neutral-700 text-neutral-200{% endif %}"
+               href="{% url 'dashboard:job:workstation' %}">
+              <i class="fa-solid fa-calendar-check text-inherit"></i>
+              {% translate 'Workstation' %}
+            </a>
+          </li>
+          <li>
+            <a class="w-full flex items-center gap-x-3.5 py-2 px-2.5 text-sm rounded-lg focus:outline-hidden {% if 'job' in request.resolver_match.namespaces and request.resolver_match.url_name != 'workstation' and 'archive' not in request.resolver_match.namespaces and 'reports' not in request.resolver_match.namespaces %}bg-neutral-700 text-white{% else %}bg-neutral-800 hover:bg-neutral-700 focus:bg-neutral-700 text-neutral-200{% endif %}"
                href="{% url 'dashboard:job:list' %}">
               <i class="fa-solid fa-briefcase text-inherit"></i>
               {% translate 'Jobs' %}
