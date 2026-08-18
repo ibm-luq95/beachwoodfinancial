@@ -21,8 +21,12 @@ def test_job_status_enum_values() -> None:
 @pytest.mark.django_db(transaction=True)
 def test_job_proxy_soft_delete() -> None:
     """Verify soft-delete filtering on JobProxy instances."""
-    active_job = baker.make(JobProxy, is_deleted=False)
-    deleted_job = baker.make(JobProxy, is_deleted=True)
+    active_job = baker.make(
+        JobProxy, is_deleted=False, status=JobStatusEnum.NOT_STARTED
+    )
+    deleted_job = baker.make(
+        JobProxy, is_deleted=True, status=JobStatusEnum.NOT_STARTED
+    )
 
     assert active_job in JobProxy.objects.all()
     assert deleted_job not in JobProxy.objects.all()
