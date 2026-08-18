@@ -18,6 +18,7 @@ import "./document/document.js";
 import "./note/note.js";
 import "./discussion/discussion.js";
 import "./job/job.js";
+import "./job/workstation.js";
 import "./important_contact/important_contact.js";
 import "./client/client.js";
 import "./client_account/client_account.js";
