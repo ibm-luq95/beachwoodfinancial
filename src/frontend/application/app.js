@@ -28,6 +28,7 @@ import "./staff_briefcase/staff_documents.js";
 import "./staff_briefcase/staff_accounts.js";
 import "./filter_category_forms/filter_category_forms.js";
 import "./reports/new_report.js";
+import "./reports/jobs_report.js";
 import "./beach_wood_user/assistant.js";
 import "./beach_wood_user/bookkeeper.js";
 import "./beach_wood_user/manager.js";

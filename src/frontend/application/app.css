@@ -32,3 +32,6 @@
 }
 /* Defaults hover styles on all devices */
 @custom-variant hover (&:hover);
+
+/* Reports styles */
+@import "./reports/jobs_report.css";

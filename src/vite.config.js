@@ -13,9 +13,14 @@ const config = defineConfig({
   plugins: [
     ViteRails({
       fullReload: {
-        // Specify the paths to watch for full page reloads
-        overridePaths: ["./**/*.py", "./**/*.html"],
-        delay: 5000,
+        // Reload Django templates and backend changes without watching generated
+        // or dependency HTML files across the entire project tree.
+        overridePaths: [
+          "./**/*.py",
+          "./templates/**/*.html",
+          "./components/**/*.html",
+        ],
+        delay: 300,
       },
       compress: false,
     }),
