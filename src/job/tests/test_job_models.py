@@ -18,7 +18,7 @@ def test_job_status_enum_values() -> None:
 
 
 @pytest.mark.unit
-@pytest.mark.django_db(transaction=True)
+@pytest.mark.django_db
 def test_job_proxy_soft_delete() -> None:
     """Verify soft-delete filtering on JobProxy instances."""
     active_job = baker.make(
