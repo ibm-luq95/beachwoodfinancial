@@ -27,7 +27,7 @@ logger = get_formatted_logger()
 class ClientViewSet(RoleScopedQuerysetMixin, ModelViewSet):
     serializer_class = ClientSerializer
     permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
-    parser_classes = [parsers.FormParser, parsers.MultiPartParser]
+    parser_classes = [parsers.JSONParser, parsers.FormParser, parsers.MultiPartParser]
     perm_slug = "client.client"
     authentication_classes = [TokenAuthentication]
     queryset = ClientProxy.objects.all()
@@ -79,24 +79,7 @@ class ClientViewSet(RoleScopedQuerysetMixin, ModelViewSet):
         """
         Get queryset filtered by user role.
         """
-        user = request.user
-        user_type = getattr(user, "user_type", None)
-        
-        if user_type in (CON_MANAGER, CON_ASSISTANT):
-            return ClientProxy.objects.all()
-        elif user_type == CON_BOOKKEEPER:
-            try:
-                bookkeeper = BookkeeperProxy.objects.get(staff=user.staff_member)
-                return ClientProxy.objects.filter(bookkeepers=bookkeeper)
-            except BookkeeperProxy.DoesNotExist:
-                return ClientProxy.objects.none()
-        elif user_type == CON_CFO:
-            try:
-                cfo = CFOProxy.objects.get(staff=user.staff_member)
-                return ClientProxy.objects.filter(cfos=cfo)
-            except CFOProxy.DoesNotExist:
-                return ClientProxy.objects.none()
-        return ClientProxy.objects.none()
+        return self.get_queryset()
 
     @action(
         methods=["POST"],
@@ -105,6 +88,15 @@ class ClientViewSet(RoleScopedQuerysetMixin, ModelViewSet):
         parser_classes=[parsers.JSONParser],
     )
     def assign_bookkeeper(self, request: HttpRequest, pk=None, *args, **kwargs):
+        if not (
+            request.user.is_superuser
+            or request.user.user_type in (CON_MANAGER, CON_ASSISTANT)
+        ):
+            return Response(
+                data={"error": _("You do not have permission to assign staff.")},
+                status=status.HTTP_403_FORBIDDEN,
+                content_type="application/json",
+            )
         try:
             data = {}
             client_pk: str = request.data.get("client")
@@ -158,6 +150,15 @@ class ClientViewSet(RoleScopedQuerysetMixin, ModelViewSet):
         parser_classes=[parsers.JSONParser],
     )
     def assign_cfo(self, request: HttpRequest, pk=None, *args, **kwargs):
+        if not (
+            request.user.is_superuser
+            or request.user.user_type in (CON_MANAGER, CON_ASSISTANT)
+        ):
+            return Response(
+                data={"error": _("You do not have permission to assign staff.")},
+                status=status.HTTP_403_FORBIDDEN,
+                content_type="application/json",
+            )
         try:
             data = {}
             client_pk: str = request.data.get("client")
@@ -214,20 +215,19 @@ class ClientDropdownView(APIView):
     def get_queryset(self, request):
         """
         Filter clients based on user type:
-        - Manager/Assistant: All clients
+        - Superuser/Manager/Assistant: All clients
         - Bookkeeper: Only assigned clients
         - CFO: Only assigned clients
         """
         user = request.user
         user_type = getattr(user, "user_type", None)
         
-        # Manager or Assistant: All clients
-        if user_type in (CON_MANAGER, CON_ASSISTANT):
+        # Superuser, Manager or Assistant: All clients
+        if user.is_superuser or user_type in (CON_MANAGER, CON_ASSISTANT):
             return ClientProxy.objects.all()
         
         # Bookkeeper: Only assigned clients
         elif user_type == CON_BOOKKEEPER:
-            # Get bookkeeper staff object
             try:
                 bookkeeper = BookkeeperProxy.objects.get(user=user)
                 return ClientProxy.objects.filter(bookkeepers=bookkeeper)

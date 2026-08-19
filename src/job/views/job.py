@@ -27,8 +27,11 @@ from core.constants.users import CON_CFO
 from core.constants.users import CON_MANAGER
 from core.models.querysets.base_queryset import BaseQuerySetMixin
 from core.utils.developments.debugging_print_object import DebuggingPrint
-from core.views.mixins import BWBaseListViewMixin
-from core.views.mixins import BWLoginRequiredMixin
+from core.views.mixins import (
+    BWBaseListViewMixin,
+    BWLoginRequiredMixin,
+    BWObjectAccessRequiredMixin,
+)
 from core.views.mixins.update_previous_mixin import UpdateReturnPreviousMixin
 from discussion.forms import DiscussionMiniForm
 from document.forms import DocumentForm
@@ -194,26 +197,16 @@ class JobCreateView(
 
 class JobDetailsView(
     PermissionRequiredMixin,
-    UserPassesTestMixin,
+    BWObjectAccessRequiredMixin,
     BWLoginRequiredMixin,
     BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     DetailView,
 ):
-    # permission_required = ["job.view_job", "job.view_jobproxy"]
     permission_required = "job.view_job"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job/details.html"
     model = JobProxy
-
-    # template_name_suffix = "_create_client"
-
-    def test_func(self) -> bool:
-        user = self.request.user
-        if user.user_type == CON_ASSISTANT or user.user_type == CON_MANAGER:
-            return True
-        else:
-            return self.get_object().managed_by == user
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -312,23 +305,20 @@ class JobDetailsView(
 
 class JobUpdateView(
     PermissionRequiredMixin,
+    BWObjectAccessRequiredMixin,
     BWLoginRequiredMixin,
     BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     UpdateReturnPreviousMixin,
     UpdateView,
 ):
-    # permission_required = ["job.change_job", "job.change_jobproxy"]
     permission_required = "job.change_job"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "job/update.html"
     form_class = JobForm
     success_message = _("Job updated successfully")
-    # success_url = reverse_lazy("dashboard:job:list")
     model = JobProxy
     BASE_SUCCESS_URL = "dashboard:job:list"
-
-    # template_name_suffix = "_create_client"
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -339,6 +329,7 @@ class JobUpdateView(
 
 class JobDeleteView(
     PermissionRequiredMixin,
+    BWObjectAccessRequiredMixin,
     BWLoginRequiredMixin,
     BWSiteSettingsViewMixin,
     BWBaseListViewMixin,
@@ -346,7 +337,6 @@ class JobDeleteView(
     DeleteView,
 ):
     template_name = "core/crudl/delete.html"
-    # permission_required = ["job.delete_job", "job.delete_jobproxy"]
     permission_required = "job.delete_job"
     permission_denied_message = _("You do not have permission to access this page.")
     model = JobProxy

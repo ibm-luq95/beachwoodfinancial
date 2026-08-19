@@ -8,12 +8,12 @@ from staff_briefcase.models import StaffAccounts, StaffBriefcase
 
 
 class StaffAccountsSerializer(serializers.ModelSerializer):
-    briefcase = serializers.UUIDField(required=True)
+    briefcase = serializers.UUIDField(required=True, write_only=True)
     has_password = serializers.SerializerMethodField()
 
     class Meta:
         model = StaffAccounts
-        fields = ("title", "url", "briefcase", "username_email", "password", "has_password", "name")
+        fields = ("id", "title", "url", "briefcase", "username_email", "password", "has_password", "name")
         extra_kwargs = {"password": {"write_only": True}}
         depth = 1
 

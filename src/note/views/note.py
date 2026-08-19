@@ -9,7 +9,11 @@ from core.cache import BWSiteSettingsViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.users import CON_BOOKKEEPER, CON_CFO
-from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
+from core.views.mixins import (
+    BWBaseListViewMixin,
+    BWLoginRequiredMixin,
+    BWObjectAccessRequiredMixin,
+)
 from core.views.mixins.bookkeeper_pass_related_mixin import BookkeeperPassRelatedMixin
 from core.views.mixins.update_previous_mixin import UpdateReturnPreviousMixin
 from note.filters import NoteFilter
@@ -89,6 +93,12 @@ class NoteListView(
                     "notes"
                 )
             )
+        elif self.request.user.user_type == CON_CFO:
+            queryset = (
+                self.request.user.cfo.get_proxy_model().get_all_related_items(
+                    "notes"
+                )
+            )
         self.filterset = NoteFilter(self.request.GET, queryset=queryset)
         return self.filterset.qs
 
@@ -108,8 +118,6 @@ class NoteCreateView(
     success_message = _("Note created successfully")
     success_url = reverse_lazy("dashboard:note:list")
 
-    # template_name_suffix = "_create_client"
-
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
@@ -119,6 +127,7 @@ class NoteCreateView(
 
 class NoteUpdateView(
     PermissionRequiredMixin,
+    BWObjectAccessRequiredMixin,
     BWLoginRequiredMixin,
     BWSiteSettingsViewMixin,
     SuccessMessageMixin,
@@ -131,11 +140,8 @@ class NoteUpdateView(
     template_name = "note/update.html"
     form_class = NoteForm
     success_message = _("Note updated successfully")
-    # success_url = reverse_lazy("dashboard:note:list")
     model = Note
     BASE_SUCCESS_URL = "dashboard:note:list"
-
-    # template_name_suffix = "_create_client"
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -146,6 +152,7 @@ class NoteUpdateView(
 
 class NoteDeleteView(
     PermissionRequiredMixin,
+    BWObjectAccessRequiredMixin,
     BWLoginRequiredMixin,
     BWSiteSettingsViewMixin,
     BWBaseListViewMixin,

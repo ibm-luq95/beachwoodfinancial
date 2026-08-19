@@ -32,8 +32,11 @@ from core.utils.developments.enhanced_debugging_print import (
     ENHANCED_DEBUGGING_PRINT_INSTANCE,
 )
 from core.utils.developments.enhanced_debugging_print import EnhancedDebuggingPrint
-from core.views.mixins import BWBaseListViewMixin
-from core.views.mixins import BWLoginRequiredMixin
+from core.views.mixins import (
+    BWBaseListViewMixin,
+    BWLoginRequiredMixin,
+    BWObjectAccessRequiredMixin,
+)
 from core.views.mixins.base_list_view import BWSectionDescriptionHelperMixin
 from document.forms import DocumentForm
 
@@ -164,12 +167,12 @@ class ClientCreateView(
 
 class ClientUpdateView(
     PermissionRequiredMixin,
+    BWObjectAccessRequiredMixin,
     BWLoginRequiredMixin,
     BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     UpdateView,
 ):
-    # permission_required = ["client.change_client", "client.change_client"]
     permission_required = "client.change_client"
     permission_denied_message = _("You do not have permission to access this page.")
     template_name = "client/update.html"
@@ -178,8 +181,6 @@ class ClientUpdateView(
     success_url = reverse_lazy("dashboard:client:list")
     model = ClientProxy
 
-    # template_name_suffix = "_create_client"
-
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
@@ -187,20 +188,15 @@ class ClientUpdateView(
         return context
 
 
-# def form_valid(self, form: BaseForm):
-#     debugging_print(form.cleaned_data)
-#     return super().form_valid(form)
-
-
 class ClientDeleteView(
     PermissionRequiredMixin,
+    BWObjectAccessRequiredMixin,
     BWLoginRequiredMixin,
     BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):
     template_name = "core/crudl/delete.html"
-    # permission_required = ["client.delete_client", "client.delete_client"]
     permission_required = "client.delete_client"
     permission_denied_message = _("You do not have permission to access this page.")
     model = ClientProxy

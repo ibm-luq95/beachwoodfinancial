@@ -23,13 +23,14 @@ class StaffDocumentsViewSet(RoleScopedQuerysetMixin, ModelViewSet):
     permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
     perm_slug = "staff_briefcase.staffdocuments"
     queryset = StaffDocuments.objects.all()
-    filterset_fields = ["document_type", "is_deleted"]
+    filterset_fields = ["is_deleted"]
     search_fields = ["title"]
     ordering_fields = ["created_at", "updated_at", "title"]
     ordering = ["-created_at"]
 
     def scope_queryset_for_bookkeeper(self, queryset, bookkeeper):
-        return queryset.filter(briefcase__staff__user=bookkeeper.user).distinct()
+        return queryset.filter(briefcase__user=bookkeeper.user).distinct()
 
     def scope_queryset_for_cfo(self, queryset, cfo):
-        return queryset.filter(briefcase__staff__user=cfo.user).distinct()
+        return queryset.filter(briefcase__user=cfo.user).distinct()
+

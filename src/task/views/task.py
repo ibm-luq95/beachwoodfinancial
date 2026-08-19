@@ -10,9 +10,12 @@ from django.views.generic import UpdateView
 from core.cache import BWSiteSettingsViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
-from core.constants.users import CON_BOOKKEEPER
-from core.views.mixins import BWBaseListViewMixin
-from core.views.mixins import BWLoginRequiredMixin
+from core.constants.users import CON_BOOKKEEPER, CON_CFO
+from core.views.mixins import (
+    BWBaseListViewMixin,
+    BWLoginRequiredMixin,
+    BWObjectAccessRequiredMixin,
+)
 from core.views.mixins.bookkeeper_pass_related_mixin import (
     BookkeeperPassRelatedMixin,
 )
@@ -39,7 +42,7 @@ class TaskListView(
     is_actions_menu_enabled = True
     is_header_enabled = True
     is_footer_enabled = True
-    show_info_icon = False
+    show_info_icon = True
     page_title = _("Tasks")
     page_header = _("Tasks".title())
     component_path = "bw_components/task/table_list.html"
@@ -47,30 +50,20 @@ class TaskListView(
     filter_cancel_url = "dashboard:task:list"
     table_header_title = _("C")
     pagination_list_url_name = "dashboard:task:list"
-    actions_items = "update,delete"
+    actions_items = "details,update,delete"
     base_url_name = "dashboard:task"
-    empty_label = _("task")
-    subtitle = _("tasks".title())
+    empty_label = _("tasks")
+    subtitle = _("Tasks".title())
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
-        # context.setdefault("filter_form", self.filterset.form)
-        context.setdefault(
-            "extra_context",
-            {
-                "is_show_status_column": True,
-                "is_show_type_column": True,
-                "is_show_manager_column": True,
-                "is_show_client_column": True,
-                "is_show_job_column": True,
-            },
-        )
+        context.setdefault("extra_context", {})
         context.setdefault(
             "info_details",
             {
-                "tooltip_txt": (
-                    BW_INFO_MODAL_CSS_CLASSES.get("task").get("tooltip_txt")
+                "tooltip_txt": BW_INFO_MODAL_CSS_CLASSES.get("task").get(
+                    "tooltip_txt"
                 ),
                 "modal_css_id": BW_INFO_MODAL_CSS_CLASSES.get("task").get("cssID"),
             },
@@ -81,7 +74,6 @@ class TaskListView(
         else:
             context["title"] = _("Tasks")
 
-        # debugging_print(self.filterset.form["name"])
         return context
 
     def get_queryset(self):
@@ -90,6 +82,12 @@ class TaskListView(
         if self.request.user.user_type == CON_BOOKKEEPER:
             queryset = (
                 self.request.user.bookkeeper.get_proxy_model().get_all_related_items(
+                    "tasks"
+                )
+            )
+        elif self.request.user.user_type == CON_CFO:
+            queryset = (
+                self.request.user.cfo.get_proxy_model().get_all_related_items(
                     "tasks"
                 )
             )
@@ -125,6 +123,7 @@ class TaskCreateView(
 
 class TaskUpdateView(
     PermissionRequiredMixin,
+    BWObjectAccessRequiredMixin,
     BWLoginRequiredMixin,
     BWSiteSettingsViewMixin,
     SuccessMessageMixin,
@@ -159,12 +158,12 @@ class TaskUpdateView(
         self.request.session.modified = True
         if prev_url is not None:
             return str(prev_url)  # success_url may be lazy
-        else:
-            return reverse_lazy("dashboard:task:list")
+        return str(reverse_lazy("dashboard:task:list"))
 
 
 class TaskDeleteView(
     PermissionRequiredMixin,
+    BWObjectAccessRequiredMixin,
     BWLoginRequiredMixin,
     BWSiteSettingsViewMixin,
     BWBaseListViewMixin,
@@ -172,9 +171,9 @@ class TaskDeleteView(
     DeleteView,
 ):
     # permission_required = ["task.delete_taskproxy", "task.delete_task"]
+    template_name = "core/crudl/delete.html"
     permission_required = "task.delete_task"
     permission_denied_message = _("You do not have permission to access this page.")
-    template_name = "core/crudl/delete.html"
     model = TaskProxy
     success_message = _("Task deleted successfully")
     success_url = reverse_lazy("dashboard:task:list")

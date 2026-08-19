@@ -16,9 +16,13 @@ from core.cache import BWSiteSettingsViewMixin
 from core.constants import LIST_VIEW_PAGINATE_BY
 from core.constants.css_classes import BW_INFO_MODAL_CSS_CLASSES
 from core.constants.status_labels import CON_ARCHIVED, CON_COMPLETED
-from core.constants.users import CON_BOOKKEEPER, CON_ASSISTANT
+from core.constants.users import CON_ASSISTANT, CON_BOOKKEEPER
 from core.utils.developments.debugging_print_object import DebuggingPrint
-from core.views.mixins import BWLoginRequiredMixin, BWBaseListViewMixin
+from core.views.mixins import (
+    BWBaseListViewMixin,
+    BWLoginRequiredMixin,
+    BWObjectAccessRequiredMixin,
+)
 from core.views.mixins.update_previous_mixin import UpdateReturnPreviousMixin
 from special_assignment.filters import SpecialAssignmentFilter
 from special_assignment.forms import SpecialAssignmentForm
@@ -26,13 +30,14 @@ from special_assignment.models import SpecialAssignmentProxy
 
 
 class SpecialAssignmentListView(
-    # PermissionRequiredMixin,
+    PermissionRequiredMixin,
     BWLoginRequiredMixin,
     BWSiteSettingsViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
-    # permission_required = "special_assignment.can_view_list"
+    permission_required = "special_assignment.can_view_list"
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "core/crudl/list.html"
     model = SpecialAssignmentProxy
     paginate_by = LIST_VIEW_PAGINATE_BY
@@ -42,7 +47,7 @@ class SpecialAssignmentListView(
     is_actions_menu_enabled = True
     is_header_enabled = True
     is_footer_enabled = True
-    show_info_icon = False
+    show_info_icon = True
     page_title = _("Special assignments")
     page_header = _("Special assignments".title())
     component_path = "bw_components/special_assignment/table_list.html"
@@ -52,10 +57,8 @@ class SpecialAssignmentListView(
     pagination_list_url_name = "dashboard:special_assignment:list"
     actions_items = "details,update,delete"
     base_url_name = "dashboard:special_assignment"
-    empty_label = _("assignments")
-    subtitle = _(
-        "Special assignments custom specific assignments to clients".capitalize()
-    )
+    empty_label = _("special assignments")
+    subtitle = _("Special assignments".title())
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -75,7 +78,7 @@ class SpecialAssignmentListView(
                 ),
             },
         )
-        context.setdefault("filter_form_id", "specialAssignmentFilterForm")
+        context.setdefault("filter_form_id", "specialAssignmentsFilterForm")
         if self.request.GET:
             context["title"] = _("Filtered Special assignments")
         else:
@@ -99,17 +102,14 @@ class SpecialAssignmentListView(
 
 
 class SpecialAssignmentCreateView(
-    # PermissionRequiredMixin,
+    PermissionRequiredMixin,
     BWLoginRequiredMixin,
     BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     CreateView,
 ):
-    # permission_required = [
-    #     "special_assignment.add_specialassignmentproxy",
-    #     "special_assignment.add_specialassignment",
-    # ]
-    # permission_required = "special_assignment.add_specialassignment"
+    permission_required = "special_assignment.add_specialassignment"
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "special_assignment/create.html"
     form_class = SpecialAssignmentForm
     success_message = _("Special assignment created successfully")
@@ -131,7 +131,8 @@ class SpecialAssignmentCreateView(
 
 
 class SpecialAssignmentUpdateView(
-    # PermissionRequiredMixin,
+    PermissionRequiredMixin,
+    BWObjectAccessRequiredMixin,
     BWLoginRequiredMixin,
     BWSiteSettingsViewMixin,
     SuccessMessageMixin,
@@ -139,7 +140,8 @@ class SpecialAssignmentUpdateView(
     UpdateView,
 ):
 
-    # permission_required = "special_assignment.change_specialassignment"
+    permission_required = "special_assignment.change_specialassignment"
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "special_assignment/update.html"
     form_class = SpecialAssignmentForm
     success_message = _("Special assignment updated successfully")
@@ -159,12 +161,14 @@ class SpecialAssignmentUpdateView(
 
 class SpecialAssignmentDeleteView(
     PermissionRequiredMixin,
+    BWObjectAccessRequiredMixin,
     BWLoginRequiredMixin,
     BWSiteSettingsViewMixin,
     SuccessMessageMixin,
     DeleteView,
 ):
     permission_required = "special_assignment.delete_specialassignment"
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "core/crudl/delete.html"
     model = SpecialAssignmentProxy
     success_message = _("Special assignment deleted successfully")
@@ -182,13 +186,19 @@ class SpecialAssignmentDeleteView(
 
 
 class SpecialAssignmentDetailsView(
-    BWLoginRequiredMixin, BWSiteSettingsViewMixin, DetailView
+    PermissionRequiredMixin,
+    BWObjectAccessRequiredMixin,
+    BWLoginRequiredMixin,
+    BWSiteSettingsViewMixin,
+    DetailView,
 ):
+    permission_required = "special_assignment.view_specialassignment"
+    permission_denied_message = _("You do not have permission to access this page.")
     model = SpecialAssignmentProxy
     template_name = "special_assignment/details.html"
 
     def get_queryset(self):
-        return SpecialAssignmentProxy.original_objects.all()
+        return SpecialAssignmentProxy.objects.all()
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -198,13 +208,14 @@ class SpecialAssignmentDetailsView(
 
 
 class RequestedSpecialAssignmentsListView(
-    # PermissionRequiredMixin,
+    PermissionRequiredMixin,
     BWLoginRequiredMixin,
     BWSiteSettingsViewMixin,
     BWBaseListViewMixin,
     ListView,
 ):
-    # permission_required = "special_assignment.can_view_list"
+    permission_required = "special_assignment.can_view_list"
+    permission_denied_message = _("You do not have permission to access this page.")
     template_name = "core/crudl/list.html"
 
     model = SpecialAssignmentProxy
