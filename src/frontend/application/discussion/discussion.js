@@ -10,18 +10,27 @@ import {
 import { showToastNotification } from "../utils/toasts.js";
 
 document.addEventListener("DOMContentLoaded", (readyEvent) => {
-  const chatbox = document.getElementById("chatbox");
+  const chatbox =
+    document.getElementById("chatbox-messages") ||
+    document.getElementById("chatbox");
   if (chatbox) {
-    chatbox.scrollTop = chatbox.scrollHeight - chatbox.clientHeight;
-    // chatbox.scrollTo({ top: chatbox.scrollHeight, behavior: "smooth" });
-    // alert("Dd")
+    chatbox.scrollTop = chatbox.scrollHeight;
   }
 
-  const discussionModalElement = document.querySelector("div#add-discussion-model-form");
-  const discussionsResetBtn = document.querySelector("button#discussionsResetBtn");
+  // --------------------------------------------------
+  // MODAL FORM (createDiscussionForm)
+  // --------------------------------------------------
+  const discussionModalElement = document.querySelector(
+    "div#add-discussion-model-form",
+  );
+  const discussionsResetBtn = document.querySelector(
+    "button#discussionsResetBtn",
+  );
   if (discussionsResetBtn) {
     discussionsResetBtn.addEventListener("click", (event) => {
-      const replyElements = document.querySelectorAll("input[name='discussionID']");
+      const replyElements = document.querySelectorAll(
+        "input[name='discussionID']",
+      );
       if (replyElements.length > 0) {
         replyElements.forEach((element) => {
           element.checked = false;
@@ -33,12 +42,15 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
     const discussionForm = discussionModalElement.querySelector(
       "form#createDiscussionForm",
     );
-    if (discussionForm) {
+    if (discussionForm && !discussionForm.dataset.listenerAttached) {
+      discussionForm.dataset.listenerAttached = "true";
       discussionForm.addEventListener("submit", (event) => {
         event.preventDefault();
         let submitType = "Discussion";
         const currentTarget = event.currentTarget;
-        const replyElement = document.querySelector("input[name='discussionID']:checked");
+        const replyElement = document.querySelector(
+          "input[name='discussionID']:checked",
+        );
 
         const formInputs = formInputSerializer({
           formElement: currentTarget,
@@ -50,7 +62,6 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
           formInputs.append("replies", replyElement.value);
           submitType = "Reply";
         }
-        console.log(formInputs);
         disableAndEnableFieldsetItems({
           formElement: discussionForm,
           state: "disable",
@@ -65,8 +76,10 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
         const request = uploadRequest.sendRequest();
         request
           .then((data) => {
-            console.log(data);
-            showToastNotification(`${submitType} submitted successfully!`, "success");
+            showToastNotification(
+              `${submitType} submitted successfully!`,
+              "success",
+            );
             setTimeout(() => {
               window.location.reload();
             }, SUCCESSTIMEOUTSECS);
