@@ -40,9 +40,10 @@ class JobWorkstationView(
 
     def get_template_names(self) -> list[str]:
         """Return partial or full template based on HTMX request."""
-        if self.request.headers.get("HX-Request") == "true" and self.request.GET.get(
-            "partial"
-        ) == "content":
+        if (
+            self.request.headers.get("HX-Request") == "true"
+            and self.request.GET.get("partial") == "content"
+        ):
             return ["job/workstation_partials/content_wrapper.html"]
         return [self.template_name]
 
@@ -57,7 +58,7 @@ class JobWorkstationView(
                 month = int(month_param) if month_param else now.month
                 if 1 <= month <= 12:
                     return year, month
-            except (ValueError, TypeError):
+            except ValueError, TypeError:
                 pass
 
         # If not specified in URL, check if current period has jobs
@@ -70,16 +71,15 @@ class JobWorkstationView(
 
         # Fallback to the latest year and month with jobs
         latest_job = (
-            JobProxy.objects.filter(
-                period_year__isnull=False, period_month__isnull=False
-            )
+            JobProxy.objects
+            .filter(period_year__isnull=False, period_month__isnull=False)
             .order_by("-period_year", "-due_date")
             .first()
         )
         if latest_job and latest_job.period_year and latest_job.period_month:
             try:
                 return int(latest_job.period_year), int(latest_job.period_month)
-            except (ValueError, TypeError):
+            except ValueError, TypeError:
                 pass
 
         return now.year, now.month
@@ -128,7 +128,8 @@ class JobWorkstationView(
         ).replace(day=1)
 
         base_qs = (
-            JobProxy.objects.select_related("client", "managed_by")
+            JobProxy.objects
+            .select_related("client", "managed_by")
             .prefetch_related(
                 "tasks",
                 "client__bookkeepers",
@@ -187,25 +188,21 @@ class JobWorkstationView(
             for day_num in week:
                 if day_num != 0:
                     day_date = datetime.date(year, month, day_num)
-                    week_days.append(
-                        {
-                            "day": day_num,
-                            "date": day_date,
-                            "is_current_month": True,
-                            "is_today": day_date == today,
-                            "jobs": jobs_by_day.get(day_num, []),
-                        }
-                    )
+                    week_days.append({
+                        "day": day_num,
+                        "date": day_date,
+                        "is_current_month": True,
+                        "is_today": day_date == today,
+                        "jobs": jobs_by_day.get(day_num, []),
+                    })
                 else:
-                    week_days.append(
-                        {
-                            "day": 0,
-                            "date": None,
-                            "is_current_month": False,
-                            "is_today": False,
-                            "jobs": [],
-                        }
-                    )
+                    week_days.append({
+                        "day": 0,
+                        "date": None,
+                        "is_current_month": False,
+                        "is_today": False,
+                        "jobs": [],
+                    })
             calendar_weeks.append(week_days)
 
         kanban_columns: dict[str, list[JobProxy]] = {
@@ -217,9 +214,7 @@ class JobWorkstationView(
             "in_progress": [
                 j for j in jobs_list if j.status == JobStatusEnum.IN_PROGRESS
             ],
-            "past_due": [
-                j for j in jobs_list if j.status == JobStatusEnum.PAST_DUE
-            ],
+            "past_due": [j for j in jobs_list if j.status == JobStatusEnum.PAST_DUE],
             "completed": [
                 j
                 for j in jobs_list
@@ -256,14 +251,11 @@ class JobWorkstationView(
                 and j.due_date > today + datetime.timedelta(days=7)
                 and j.status != JobStatusEnum.COMPLETED
             ],
-            "completed": [
-                j for j in jobs_list if j.status == JobStatusEnum.COMPLETED
-            ],
+            "completed": [j for j in jobs_list if j.status == JobStatusEnum.COMPLETED],
         }
 
         total_pending_tasks = sum(
-            len([t for t in j.tasks.all() if not t.is_completed])
-            for j in jobs_list
+            len([t for t in j.tasks.all() if not t.is_completed]) for j in jobs_list
         )
 
         metrics = {
@@ -297,7 +289,8 @@ class JobWorkstationView(
 
         # Build list of available years for quick jump
         db_years = list(
-            JobProxy.objects.filter(period_year__isnull=False)
+            JobProxy.objects
+            .filter(period_year__isnull=False)
             .values_list("period_year", flat=True)
             .distinct()
         )
@@ -310,38 +303,41 @@ class JobWorkstationView(
 
         active_filters_count = sum(
             1
-            for val in [client_filter, status_filter, search_query, self.request.GET.get("staff")]
+            for val in [
+                client_filter,
+                status_filter,
+                search_query,
+                self.request.GET.get("staff"),
+            ]
             if val
         )
 
-        context.update(
-            {
-                "title": _("Staff Workstation"),
-                "current_year": year,
-                "current_month_num": month,
-                "current_month_name": calendar.month_name[month],
-                "prev_year": prev_date.year,
-                "prev_month": prev_date.month,
-                "next_year": next_date.year,
-                "next_month": next_date.month,
-                "jobs": jobs_list,
-                "calendar_weeks": calendar_weeks,
-                "kanban_columns": kanban_columns,
-                "agenda_groups": agenda_groups,
-                "metrics": metrics,
-                "clients": available_clients,
-                "status_choices": JobStatusEnum.choices,
-                "active_view": self.request.GET.get("view", "calendar"),
-                "is_manager_or_admin": is_manager_or_admin,
-                "staff_members": staff_members,
-                "selected_staff": selected_staff,
-                "selected_client_id": client_filter or "",
-                "selected_status": status_filter or "",
-                "search_query": search_query,
-                "available_years": available_years,
-                "months_list": months_list,
-                "active_filters_count": active_filters_count,
-            }
-        )
+        context.update({
+            "title": _("Staff Workstation"),
+            "current_year": year,
+            "current_month_num": month,
+            "current_month_name": calendar.month_name[month],
+            "prev_year": prev_date.year,
+            "prev_month": prev_date.month,
+            "next_year": next_date.year,
+            "next_month": next_date.month,
+            "jobs": jobs_list,
+            "calendar_weeks": calendar_weeks,
+            "kanban_columns": kanban_columns,
+            "agenda_groups": agenda_groups,
+            "metrics": metrics,
+            "clients": available_clients,
+            "status_choices": JobStatusEnum.choices,
+            "active_view": self.request.GET.get("view", "calendar"),
+            "is_manager_or_admin": is_manager_or_admin,
+            "staff_members": staff_members,
+            "selected_staff": selected_staff,
+            "selected_client_id": client_filter or "",
+            "selected_status": status_filter or "",
+            "search_query": search_query,
+            "available_years": available_years,
+            "months_list": months_list,
+            "active_filters_count": active_filters_count,
+        })
 
         return context
