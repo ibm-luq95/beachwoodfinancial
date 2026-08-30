@@ -63,7 +63,8 @@ def create_notification(
                                     discussion=instance,
                                     job=job,
                                     recipient=discussion_user,
-                                    msg=_("You have notification for job ") + short_title,
+                                    msg=_("You have notification for job ")
+                                    + short_title,
                                 )
                             )
                             notification_obj.save()
@@ -108,33 +109,32 @@ def create_notification(
                                     content_object=instance,
                                 )
                                 break
-                            else:
                                 manager_user = BWUser.objects.filter(
                                     email=settings.MANAGER_MAIN_EMAIL
                                 ).first()
-                                # DebuggingPrint.pprint(manager_user)
-                                notification_obj: DiscussionNotification = (
-                                    DiscussionNotification(
-                                        discussion=instance,
-                                        job=job,
-                                        recipient=manager_user,
-                                        msg=_("You have notification for job ")
-                                        + short_title,
+                                if manager_user is not None:
+                                    notification_obj: DiscussionNotification = (
+                                        DiscussionNotification(
+                                            discussion=instance,
+                                            job=job,
+                                            recipient=manager_user,
+                                            msg=_("You have notification for job ")
+                                            + short_title,
+                                        )
                                     )
-                                )
-                                notification_obj.save()
-                                NotificationService.trigger(
-                                    notification_type_name="discussion_created",
-                                    actor=instance.sender,
-                                    recipients=[manager_user],
-                                    verb=NotificationVerb.COMMENTED,
-                                    context={
-                                        "actor_name": instance.sender.fullname,
-                                        "target_name": job.title,
-                                        "url": job.get_absolute_url(),
-                                    },
-                                    content_object=instance,
-                                )
+                                    notification_obj.save()
+                                    NotificationService.trigger(
+                                        notification_type_name="discussion_created",
+                                        actor=instance.sender,
+                                        recipients=[manager_user],
+                                        verb=NotificationVerb.COMMENTED,
+                                        context={
+                                            "actor_name": instance.sender.fullname,
+                                            "target_name": job.title,
+                                            "url": job.get_absolute_url(),
+                                        },
+                                        content_object=instance,
+                                    )
                                 break
             elif isinstance(instance.for_what(), SpecialAssignmentProxy):
                 special_assignment: SpecialAssignmentProxy = instance.for_what()
