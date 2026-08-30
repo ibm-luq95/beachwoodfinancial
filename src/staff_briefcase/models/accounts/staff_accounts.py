@@ -12,7 +12,7 @@ from core.models.mixins import BaseModelMixin, StrModelMixin
 class StaffAccounts(BaseModelMixin, StrModelMixin):
     """Represents a staff account with encrypted password storage."""
 
-    title = models.CharField(_("title"), max_length=25)
+    title = models.CharField(_("title"), max_length=150)
     url = models.TextField(_("url"), null=True, blank=True)
     username_email = models.CharField(_("Username / Email"), max_length=150)
     password = EncryptedCharField(_("Password"), max_length=500, null=True, blank=True)

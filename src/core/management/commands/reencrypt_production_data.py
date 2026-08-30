@@ -15,15 +15,17 @@ from rich.progress import BarColumn, MofNCompleteColumn, Progress, SpinnerColumn
 from rich.table import Table
 
 from core.crypto.engine import VERSION_PREFIX_V2, CryptoEngine
+from core.management.mixins.production_guard import ProductionGuardCommandMixin
 
 logger = logging.getLogger(__name__)
 console = Console()
 
 
-class Command(BaseCommand):
+class Command(ProductionGuardCommandMixin, BaseCommand):
     help = "Safely inspects or upgrades legacy production credentials to v2$ format under primary ENCRYPT_KEY."
 
     def add_arguments(self, parser: Any) -> None:
+        super().add_arguments(parser)
         parser.add_argument(
             "--dry-run",
             action="store_true",

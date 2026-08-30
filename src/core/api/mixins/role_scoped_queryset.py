@@ -25,8 +25,8 @@ class RoleScopedQuerysetMixin:
 
         user_type = getattr(user, "user_type", None)
 
-        # Managers and Assistants have global visibility
-        if user_type in (
+        # Superusers, Managers and Assistants have global visibility
+        if user.is_superuser or user_type in (
             BeachWoodUserTypeEnum.MANAGER,
             BeachWoodUserTypeEnum.ASSISTANT,
         ):

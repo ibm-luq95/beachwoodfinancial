@@ -1,7 +1,7 @@
-# -*- coding: utf-8 -*-#
+"""Permission classes for manager-level API access control."""
 from __future__ import annotations
 
-from typing import Tuple
+from typing import ClassVar
 
 from django.http import HttpRequest
 from rest_framework import permissions
@@ -11,26 +11,19 @@ from core.choices import BeachWoodUserTypeEnum
 
 
 class ManagerApiPermission(permissions.BasePermission):
-    """
-    Permission class restricting API access to managers and assistants only.
+    """Permission class restricting API access to managers and assistants only."""
 
-    Attributes:
-        edit_methods (Tuple[str]): The HTTP methods for which edit permissions are required.
-
-    """
-
-    edit_methods: Tuple[str] = ("PUT", "PATCH")
+    edit_methods: ClassVar[tuple[str, ...]] = ("PUT", "PATCH")
 
     def has_permission(self, request: HttpRequest, view: APIView) -> bool:
+        """Check if requesting user has manager or assistant privileges."""
         if not request.user or not request.user.is_authenticated:
             return False
         if request.user.is_superuser or request.user.is_staff:
             return True
-        if request.user.user_type in (
+        return request.user.user_type in (
             BeachWoodUserTypeEnum.MANAGER,
             BeachWoodUserTypeEnum.ASSISTANT,
-            BeachWoodUserTypeEnum.CFO,
-        ):
-            return True
-        return False
+        )
+
 

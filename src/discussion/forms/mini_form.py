@@ -31,22 +31,23 @@ file_validator = FileValidator(max_size=1024 * 1000, content_types=IMAGES_AND_DO
 
 
 class DiscussionMiniForm(
-    BWJSModalFormRendererMixin, RemoveFieldsMixin, BWStaffMemberFormMixin, BWBaseFormMixin
+    BWJSModalFormRendererMixin,
+    RemoveFieldsMixin,
+    BWStaffMemberFormMixin,
+    BWBaseFormMixin,
 ):
     def __init__(self, removed_fields: Optional[list] = None, *args, **kwargs):
         super(BWBaseFormMixin, self).__init__(*args, **kwargs)
         BWStaffMemberFormMixin.__init__(self, *args, **kwargs)
         RemoveFieldsMixin.__init__(self, removed_fields=removed_fields)
-        self.fields.get("attachment").widget.attrs.update(
-            {
-                "accept": (
-                    f"{PDF_MIME_TYPE}, {DOCX_MIME_TYPE}, {DOC_MIME_TYPE}, {CSV_MIME_TYPE},"
-                    f" {PNG_MIME_TYPE}, {JPEG_MIME_TYPE}, {JPG_MIME_TYPE},"
-                    f" {PPTX_MIME_TYPE}, {PPT_MIME_TYPE}, {AVIF_MIME_TYPE},"
-                    f" {WEBP_MIME_TYPE}"
-                )
-            }
-        )
+        self.fields.get("attachment").widget.attrs.update({
+            "accept": (
+                f"{PDF_MIME_TYPE}, {DOCX_MIME_TYPE}, {DOC_MIME_TYPE}, {CSV_MIME_TYPE},"
+                f" {PNG_MIME_TYPE}, {JPEG_MIME_TYPE}, {JPG_MIME_TYPE},"
+                f" {PPTX_MIME_TYPE}, {PPT_MIME_TYPE}, {AVIF_MIME_TYPE},"
+                f" {WEBP_MIME_TYPE}"
+            )
+        })
 
     body = forms.CharField(label=_("Body"), required=True, widget=RichHTMLEditorWidget)
     attachment = forms.FileField(
@@ -60,4 +61,6 @@ class DiscussionMiniForm(
         required=False,
         widget=forms.HiddenInput,
     )
-    sender = forms.UUIDField(label=_("Sender"), required=False, widget=forms.HiddenInput)
+    sender = forms.UUIDField(
+        label=_("Sender"), required=False, widget=forms.HiddenInput
+    )

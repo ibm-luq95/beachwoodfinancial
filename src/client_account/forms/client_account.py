@@ -38,6 +38,13 @@ class ClientAccountForm(BaseModelFormMixin, SetFieldsInputsHiddenMixin):
             # print(self.fields.get("client"))
             self.fields["client"].initial = client
 
+    def clean_client(self):
+        client = self.cleaned_data.get("client")
+        if self.is_update and self.instance and self.instance.pk:
+            if client != self.instance.client:
+                raise forms.ValidationError("Client cannot be changed for an existing account.")
+        return client
+
     account_password = forms.CharField(widget=BWPasswordInputWidget, required=False)
 
     # def clean_account_password(self):

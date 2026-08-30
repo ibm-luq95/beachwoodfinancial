@@ -57,7 +57,7 @@ class Discussion(BaseModelMixin, TeamMembersMixin, StrModelMixin):
     objects = RepliesManager()
 
     class Meta(BaseModelMixin.Meta):
-        ordering = ["-created_at"]
+        ordering = ["created_at"]
 
     def for_what(self) -> None | SpecialAssignmentProxy | JobProxy:
         if self.job:

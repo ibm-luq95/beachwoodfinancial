@@ -624,3 +624,8 @@ src/my_exported
 .playwright-mcp
 src/e2e_browser
 src/e2e_workflows
+.slim
+**/codemap.md
+ARCHITECTURE.md
+SECURITY.md
+TESTING.md

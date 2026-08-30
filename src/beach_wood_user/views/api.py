@@ -13,6 +13,7 @@ from rest_framework.views import APIView
 from beach_wood_user.models import BWUser
 from bookkeeper.models import BookkeeperProxy
 from client.models import ClientProxy
+from core.api.throttling import AuthEndpointRateThrottle
 from core.api.permissions import ManagerApiPermission
 from core.utils import get_formatted_logger
 from core.utils.developments.debugging_print_object import DebuggingPrint
@@ -22,6 +23,7 @@ logger = get_formatted_logger()
 
 class UpdateStaffPermissionsApiView(APIView):
     permission_classes = (permissions.IsAuthenticated, ManagerApiPermission)
+    throttle_classes = [AuthEndpointRateThrottle]
     http_method_names = ["post"]
     authentication_classes = [TokenAuthentication]
 
@@ -49,6 +51,7 @@ class UpdateStaffPermissionsApiView(APIView):
 
 class AssignClientToBookkeeperApiView(APIView):
     permission_classes = (permissions.IsAuthenticated, ManagerApiPermission)
+    throttle_classes = [AuthEndpointRateThrottle]
     http_method_names = ["post"]
     authentication_classes = [TokenAuthentication]
 

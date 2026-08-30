@@ -18,14 +18,15 @@ class StaffNotesViewSet(RoleScopedQuerysetMixin, ModelViewSet):
     permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
     perm_slug = "staff_briefcase.staffnotes"
     queryset = StaffNotes.objects.all()
-    filterset_fields = ["note_type", "is_deleted"]
-    search_fields = ["title", "body"]
+    filterset_fields = ["is_deleted"]
+    search_fields = ["title", "note"]
     ordering_fields = ["created_at", "updated_at", "title"]
     ordering = ["-created_at"]
     authentication_classes = [TokenAuthentication]
 
     def scope_queryset_for_bookkeeper(self, queryset, bookkeeper):
-        return queryset.filter(briefcase__staff__user=bookkeeper.user).distinct()
+        return queryset.filter(briefcase__user=bookkeeper.user).distinct()
 
     def scope_queryset_for_cfo(self, queryset, cfo):
-        return queryset.filter(briefcase__staff__user=cfo.user).distinct()
+        return queryset.filter(briefcase__user=cfo.user).distinct()
+

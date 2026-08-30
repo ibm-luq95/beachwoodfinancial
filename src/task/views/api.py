@@ -3,11 +3,12 @@ from rest_framework import permissions
 from rest_framework.authentication import TokenAuthentication
 from rest_framework.viewsets import ModelViewSet
 
-from core.api.permissions import BaseApiPermissionMixin
 from core.api.mixins import RoleScopedQuerysetMixin
+from core.api.permissions import BaseApiPermissionMixin
 from core.utils import get_formatted_logger
 from task.models import TaskProxy
 from task.serializers import TaskSerializer
+
 
 logger = get_formatted_logger()
 

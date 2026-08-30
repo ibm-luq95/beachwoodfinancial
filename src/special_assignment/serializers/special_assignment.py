@@ -11,9 +11,7 @@ class SpecialAssignmentSerializer(serializers.ModelSerializer):
     assigned_by = serializers.PrimaryKeyRelatedField(
         default=serializers.CurrentUserDefault(), queryset=BWUser.objects.all()
     )
-    assigned_to = serializers.PrimaryKeyRelatedField(
-        queryset=BWUser.objects.all()
-    )
+    assigned_to = serializers.PrimaryKeyRelatedField(queryset=BWUser.objects.all())
     job = serializers.PrimaryKeyRelatedField(
         queryset=JobProxy.objects.all(),
         required=False,

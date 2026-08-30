@@ -40,13 +40,23 @@ class StaffNotesListView(
         context.setdefault(
             "component_path", "bw_components/staff_briefcase/notes/table_list.html"
         )
-        context.setdefault("subtitle", _("staff notes subtitle".title()))
-        context.setdefault("actions_base_url", "dashboard:briefcase:briefcase_staff_notes")
+        context.setdefault(
+            "subtitle",
+            _(
+                "Private memos, working references, and operational reminders for staff members."
+            ),
+        )
+        context.setdefault(
+            "actions_base_url", "dashboard:briefcase:briefcase_staff_notes"
+        )
         context.setdefault(
             "filter_cancel_url", "dashboard:briefcase:briefcase_staff_notes:list"
         )
         context.setdefault("table_header_title", _("C"))
-        context.setdefault("table_header_subtitle", _("staff notes subtitle"))
+        context.setdefault(
+            "table_header_subtitle",
+            _("Personal work notes, draft summaries, and internal reminders."),
+        )
         context.setdefault("is_show_create_btn", True)
         context.setdefault(
             "pagination_list_url_name", "dashboard:briefcase:briefcase_staff_notes:list"
@@ -135,13 +145,11 @@ class StaffNotesCreateView(
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context.setdefault("title", _("Create staff note"))
-        context.update(
-            {
-                "form_css_id": "mainStaffNotesCreateForm",
-                "form_title": _("Create new staff note"),
-                "form_subtitle": _("Subtitle"),
-            }
-        )
+        context.update({
+            "form_css_id": "mainStaffNotesCreateForm",
+            "form_title": _("Create new staff note"),
+            "form_subtitle": _("Subtitle"),
+        })
         return context
 
 
@@ -164,7 +172,9 @@ class StaffNotesDeleteView(
         # Call the base implementation first to get a context
         context = super().get_context_data(**kwargs)
         context.setdefault("title", _("Delete note"))
-        context.setdefault("cancel_url", "dashboard:briefcase:briefcase_staff_notes:list")
+        context.setdefault(
+            "cancel_url", "dashboard:briefcase:briefcase_staff_notes:list"
+        )
         context.setdefault("object", self.get_object())
         context.setdefault("object_name", "staff note")
         context.setdefault("form_css_id", "staffNoteDeleteForm")

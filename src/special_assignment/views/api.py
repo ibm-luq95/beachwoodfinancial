@@ -28,20 +28,11 @@ class SpecialAssignmentViewSet(RoleScopedQuerysetMixin, ModelViewSet):
 
     def scope_queryset_for_bookkeeper(self, queryset, bookkeeper):
         return queryset.filter(
-            models.Q(assigned_to=bookkeeper.user) |
-            models.Q(assigned_by=bookkeeper.user) |
-            models.Q(bookkeeper=bookkeeper) |
-            models.Q(client__bookkeepers=bookkeeper)
+            models.Q(assigned_to=bookkeeper.user)
+            | models.Q(assigned_by=bookkeeper.user)
+            | models.Q(bookkeeper=bookkeeper)
+            | models.Q(client__bookkeepers=bookkeeper)
         )
 
     def scope_queryset_for_cfo(self, queryset, cfo):
         return queryset.filter(client__cfos=cfo)
-
-    # def create(self, request, *args, **kwargs):
-    #     serializer = self.get_serializer(data=request.data)
-    #     # serializer.is_valid(raise_exception=True)
-    #     serializer.is_valid(raise_exception=False)
-    #     DebuggingPrint.print(serializer.data)
-    #     self.perform_create(serializer)
-    #     headers = self.get_success_headers(serializer.data)
-    #     return Response(serializer.data, status=status.HTTP_201_CREATED, headers=headers)
