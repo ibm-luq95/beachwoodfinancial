@@ -11,9 +11,17 @@ from task.views.api import TaskViewSet
 @pytest.mark.django_db
 def test_core_viewsets_have_filter_search_ordering() -> None:
     for viewset_cls in [JobViewSet, TaskViewSet, ClientViewSet, DiscussionViewSet]:
-        assert hasattr(viewset_cls, "filterset_fields") and len(viewset_cls.filterset_fields) > 0
-        assert hasattr(viewset_cls, "search_fields") and len(viewset_cls.search_fields) > 0
-        assert hasattr(viewset_cls, "ordering_fields") and len(viewset_cls.ordering_fields) > 0
+        assert (
+            hasattr(viewset_cls, "filterset_fields")
+            and len(viewset_cls.filterset_fields) > 0
+        )
+        assert (
+            hasattr(viewset_cls, "search_fields") and len(viewset_cls.search_fields) > 0
+        )
+        assert (
+            hasattr(viewset_cls, "ordering_fields")
+            and len(viewset_cls.ordering_fields) > 0
+        )
 
 
 @pytest.mark.django_db
@@ -34,7 +42,9 @@ def test_job_scope_queryset_for_bookkeeper() -> None:
     for group_name in [BOOKKEEPER_GROUP_NAME, ASSISTANT_GROUP_NAME, MANAGER_GROUP_NAME]:
         Group.objects.get_or_create(name=group_name)
 
-    user = baker.make(BWUser, first_name="Test", last_name="Bookkeeper", user_type=CON_BOOKKEEPER)
+    user = baker.make(
+        BWUser, first_name="Test", last_name="Bookkeeper", user_type=CON_BOOKKEEPER
+    )
     bookkeeper = BookkeeperProxy.objects.get(user=user)
     job_viewset = JobViewSet()
     update_view = UpdateJobApiView()
