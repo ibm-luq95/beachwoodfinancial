@@ -2,7 +2,7 @@
 
 <!-- Sidebar -->
 <div id="hs-sidebar-content-push"
-     class="hs-overlay [--body-scroll:true] lg:[--overlay-backdrop:false] [--is-layout-affect:true] [--opened:lg] [--auto-close:lg] hs-overlay-open:translate-x-0 lg:hs-overlay-layout-open:translate-x-0 lg:block lg:-translate-x-full lg:end-auto lg:bottom-0 w-64 [--body-scroll:true] hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform h-full hidden fixed top-0 start-0 bottom-0 z-60 border-e bg-neutral-800 border-neutral-700 print:hidden"
+     class="hs-overlay [--body-scroll:true] lg:[--overlay-backdrop:false] [--is-layout-affect:true] [--opened:lg] [--auto-close:lg] hs-overlay-open:translate-x-0 lg:hs-overlay-layout-open:translate-x-0 lg:block lg:-translate-x-full lg:end-auto lg:bottom-0 w-56 [--body-scroll:true] hs-overlay-open:translate-x-0 -translate-x-full transition-all duration-300 transform h-full hidden fixed top-0 start-0 bottom-0 z-60 border-e bg-neutral-800 border-neutral-700 print:hidden"
      role="dialog"
      tabindex="-1"
      aria-label="Sidebar">
@@ -12,7 +12,7 @@
       <a class="flex-none font-semibold text-xl focus:outline-hidden focus:opacity-80 text-white"
          href="{% if request.user.user_type == CON_MANAGER or request.user.user_type == CON_ASSISTANT %} {% url 'dashboard:manager:home' %} {% elif request.user.user_type == CON_BOOKKEEPER %} {% url 'dashboard:bookkeeper:home' %} {% elif request.user.user_type == CON_CFO %} {% url 'dashboard:cfo:home' %} {% endif %}"
          aria-label="{{ get_web_app_settings.name }}">
-        <img class="w-60 h-auto max-w-full max-h-full"
+        <img class="w-48 h-auto max-w-full max-h-full"
              width="116"
              height="32"
              src="{% if get_web_app_settings.logo %} {{ get_web_app_settings.logo.url }} {% endif %}"
