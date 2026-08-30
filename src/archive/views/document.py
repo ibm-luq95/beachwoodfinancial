@@ -45,7 +45,9 @@ class DocumentArchiveListView(
     pagination_list_url_name = "dashboard:archive:documents:list"
     base_url_name = "dashboard:document"
     empty_label = _("document(s)")
-    subtitle = _("Documents archive".title())
+    subtitle = _(
+        "Archived financial documents, past period workpapers, and historical attachments."
+    )
     actions_items = "update,delete"
 
     def get_context_data(self, **kwargs):
