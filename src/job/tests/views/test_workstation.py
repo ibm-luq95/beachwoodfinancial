@@ -67,14 +67,10 @@ def test_job_workstation_manager_context() -> None:
         start_date=datetime.date(2026, 8, 15),
         due_date=datetime.date(2026, 8, 28),
     )
-    baker.make(
-        TaskProxy, job=job, title="Bank Reconciliation", is_completed=False
-    )
+    baker.make(TaskProxy, job=job, title="Bank Reconciliation", is_completed=False)
 
     factory = RequestFactory()
-    request = factory.get(
-        reverse("dashboard:job:workstation") + "?year=2026&month=8"
-    )
+    request = factory.get(reverse("dashboard:job:workstation") + "?year=2026&month=8")
     request.user = user
 
     view = JobWorkstationView()
@@ -138,9 +134,7 @@ def test_job_workstation_bookkeeper_scoping() -> None:
     )
 
     factory = RequestFactory()
-    request = factory.get(
-        reverse("dashboard:job:workstation") + "?year=2026&month=8"
-    )
+    request = factory.get(reverse("dashboard:job:workstation") + "?year=2026&month=8")
     request.user = bk_user1
 
     view = JobWorkstationView()
@@ -198,8 +192,7 @@ def test_job_workstation_admin_filter_specific_staff() -> None:
 
     factory = RequestFactory()
     request = factory.get(
-        reverse("dashboard:job:workstation")
-        + f"?year=2026&month=8&staff={bk_user.id}"
+        reverse("dashboard:job:workstation") + f"?year=2026&month=8&staff={bk_user.id}"
     )
     request.user = admin_user
 
@@ -211,3 +204,31 @@ def test_job_workstation_admin_filter_specific_staff() -> None:
     job_titles = [j.title for j in context["jobs"]]
     assert "Target Staff Job" in job_titles
     assert "Other Staff Job" not in job_titles
+
+
+@pytest.mark.django_db
+def test_job_workstation_render_with_unassigned_job(client) -> None:
+    """Verify workstation template renders without error when a job has no managed_by."""
+    from site_settings.models import SiteSettings
+
+    baker.make(SiteSettings, slug="web-app-site-settings")
+
+    admin_user = BWUser.objects.create_superuser(
+        email="super_ws@ledgerflare.com",
+        password="Password123!",
+        user_type=CON_MANAGER,
+    )
+    baker.make(
+        JobProxy,
+        title="Unassigned Job In Workstation",
+        managed_by=None,
+        period_year="2026",
+        period_month="8",
+        status=JobStatusEnum.IN_PROGRESS,
+        start_date=datetime.date(2026, 8, 15),
+    )
+
+    client.force_login(admin_user)
+    response = client.get(reverse("dashboard:job:workstation") + "?year=2026&month=8")
+    assert response.status_code == 200
+    assert "Unassigned Job In Workstation" in response.content.decode("utf-8")
