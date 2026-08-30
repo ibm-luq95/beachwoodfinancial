@@ -2,7 +2,7 @@
 
 import { bwCleanApiError } from "../utils/apis/clean_errors.js";
 import { RequestHandler } from "../utils/apis/request_handler.js";
-import { CSRFINPUTNAME, SUCCESSTIMEOUTSECS } from "../utils/constants.js";
+import { CSRFINPUTNAME } from "../utils/constants.js";
 import {
   disableAndEnableFieldsetItems,
   formInputSerializer,
@@ -35,31 +35,74 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
           token: currentTarget[CSRFINPUTNAME].value,
           djangoRequest: true,
         };
-        // console.log(requestOptions);
         const request = RequestHandler.sendRequest(requestOptions);
         request
           .then((data) => {
-            // console.log(bwI18Helper.t("jobs"));
-            // showToastNotification(bwI18Helper.t("key"), "success");
-            showToastNotification("Category created successfully", "success");
-            setTimeout(() => {
-              window.location.reload();
-            }, SUCCESSTIMEOUTSECS);
+            const categoryName = formInputs["name"] || data?.name;
+            const categoryId = data?.id || data?.pk;
+
+            showToastNotification(`Category "${categoryName}" created successfully!`, "success");
+
+            // Reset form input
+            form.reset();
+
+            // Dynamically append new category row into categoriesModalList
+            const listEl = document.getElementById("categoriesModalList");
+            const emptyEl = document.getElementById("categoriesModalEmptyState");
+            const countEl = document.getElementById("categoriesModalCount");
+
+            if (listEl) {
+              listEl.classList.remove("hidden");
+              if (emptyEl) emptyEl.classList.add("hidden");
+
+              const newRow = document.createElement("div");
+              newRow.className =
+                "flex items-center justify-between p-2.5 rounded-lg border border-gray-100 bg-gray-50/50 hover:bg-gray-50 dark:bg-neutral-800/40 dark:border-neutral-800 dark:hover:bg-neutral-800/80 transition-colors animate__animated animate__fadeInDown";
+              newRow.innerHTML = `
+                <div class="flex items-center gap-2 min-w-0">
+                  <span class="size-2 rounded-full bg-blue-500 shrink-0"></span>
+                  <span class="text-xs font-medium text-gray-800 dark:text-neutral-200 truncate">
+                    ${categoryName}
+                  </span>
+                </div>
+                <div class="flex items-center gap-2 shrink-0">
+                  <span class="inline-flex items-center py-0.5 px-2 rounded-full text-[10px] font-medium bg-blue-50 text-blue-700 dark:bg-blue-900/30 dark:text-blue-300">
+                    0 items
+                  </span>
+                </div>
+              `;
+              listEl.prepend(newRow);
+
+              if (countEl) {
+                const currentCount = parseInt(countEl.textContent || "0", 10) || 0;
+                countEl.textContent = `${currentCount + 1}`;
+              }
+            }
+
+            // Dynamically update any categories select/multi-select on the page
+            const categorySelects = document.querySelectorAll(
+              'select[name="categories"], select[name="category"], select#id_categories'
+            );
+            categorySelects.forEach((sel) => {
+              if (categoryId && categoryName) {
+                const opt = document.createElement("option");
+                opt.value = categoryId;
+                opt.textContent = categoryName;
+                sel.appendChild(opt);
+              }
+            });
           })
           .catch((error) => {
             const er = bwCleanApiError(error);
-            // console.warn(er);
-            // console.warn(error);
-
             if (er) {
               er.forEach((erElement) => {
                 showToastNotification(
                   `Error: ${erElement["detail"]} - ${erElement["attr"]}`,
-                  "error",
+                  "danger",
                 );
               });
             } else {
-              showToastNotification(`Error adding category!`, "error");
+              showToastNotification("Error adding category!", "danger");
             }
             console.error(error);
           })
