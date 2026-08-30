@@ -50,7 +50,9 @@ class DocumentListView(
     actions_items = "details,update,delete"
     base_url_name = "dashboard:document"
     empty_label = _("documents")
-    subtitle = _("Documents".title())
+    subtitle = _(
+        "Secure repository for financial statements, tax filings, legal agreements, and client records."
+    )
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -77,10 +79,8 @@ class DocumentListView(
                 )
             )
         elif self.request.user.user_type == CON_CFO:
-            queryset = (
-                self.request.user.cfo.get_proxy_model().get_all_related_items(
-                    "documents"
-                )
+            queryset = self.request.user.cfo.get_proxy_model().get_all_related_items(
+                "documents"
             )
         self.filterset = DocumentFilter(self.request.GET, queryset=queryset)
         return self.filterset.qs
