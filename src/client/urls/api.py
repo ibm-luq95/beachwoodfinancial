@@ -1,8 +1,9 @@
-# -*- coding: utf-8 -*-#
 
 from django.urls import path
 from rest_framework import routers
-from client.views.api import ClientViewSet, ClientDropdownView
+
+from client.views.api import ClientDropdownView, ClientViewSet
+
 
 app_name = "api"
 
