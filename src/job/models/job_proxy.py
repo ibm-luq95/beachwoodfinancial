@@ -66,7 +66,9 @@ class JobProxy(Job):
                     client = self.client
                     if hasattr(managed_by, "bookkeeper"):
                         bookkeeper_obj = managed_by.bookkeeper
-                        bookkeeper_obj = BookkeeperProxy.objects.get(pk=bookkeeper_obj.pk)
+                        bookkeeper_obj = BookkeeperProxy.objects.get(
+                            pk=bookkeeper_obj.pk
+                        )
                         client.bookkeepers.remove(bookkeeper_obj)
                         client.save()
                         JobProxy.objects.filter(pk=self.pk).update(managed_by=None)
