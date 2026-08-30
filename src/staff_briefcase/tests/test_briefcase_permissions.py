@@ -190,3 +190,75 @@ class TestStaffBriefcasePermissions:
         client.refresh_from_db()
         assert bk.bookkeeper.get_proxy_model() in client.bookkeepers.all()
 
+    def test_briefcase_detail_view_renders_cleanly(self, client) -> None:
+        """Verify StaffBriefcaseDetailView renders all sections, tabs, and modals."""
+        from django.urls import reverse
+
+        manager = BWUser.objects.create_user(
+            email="mgr_render@example.com",
+            password="ValidPassword123!",
+            user_type=CON_MANAGER,
+        )
+        bc = StaffBriefcase.objects.get(user=manager)
+        client.force_login(manager)
+        url = reverse("dashboard:briefcase:details", kwargs={"pk": bc.pk})
+        response = client.get(url)
+
+        assert response.status_code == 200
+        content = response.content.decode("utf-8")
+        assert "Personal Working Notes" in content
+        assert "Briefcase Documents &amp; Attachments" in content or "Briefcase Documents & Attachments" in content
+        assert "Encrypted Credential Vault" in content
+        assert "createBriefcaseNoteModal" in content
+        assert "createBriefcaseDocumentModal" in content
+        assert "createBriefcaseAccountModal" in content
+
+    def test_staff_accounts_api_create(self, client) -> None:
+        from django.urls import reverse
+        from rest_framework.authtoken.models import Token
+
+        manager = BWUser.objects.create_user(
+            email="mgr_acc_api@example.com",
+            password="ValidPassword123!",
+            user_type=CON_MANAGER,
+        )
+        token, _ = Token.objects.get_or_create(user=manager)
+        bc = StaffBriefcase.objects.get(user=manager)
+        url = reverse("dashboard:briefcase:briefcase_staff_accounts:api:staff-accounts-api-router-list")
+        
+        # Test with a valid ServiceNameEnum choice:
+        payload = {
+            "title": "QuickBooks Online Login",
+            "name": "quickbooks_online",
+            "url": "https://qbo.intuit.com",
+            "username_email": "admin@quickbooks.com",
+            "password": "SecretPassword123!",
+            "briefcase": str(bc.pk),
+        }
+        response = client.post(
+            url,
+            payload,
+            content_type="application/json",
+            HTTP_AUTHORIZATION=f"Token {token.key}",
+        )
+        assert response.status_code == 201
+        data = response.json()
+        assert data["title"] == "QuickBooks Online Login"
+
+        # Test with optional/empty name:
+        payload_empty_name = {
+            "title": "Custom Portal",
+            "name": "",
+            "url": "https://custom.portal.com",
+            "username_email": "user@portal.com",
+            "password": "SecretPassword456!",
+            "briefcase": str(bc.pk),
+        }
+        response2 = client.post(
+            url,
+            payload_empty_name,
+            content_type="application/json",
+            HTTP_AUTHORIZATION=f"Token {token.key}",
+        )
+        assert response2.status_code == 201
+
