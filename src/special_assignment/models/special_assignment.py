@@ -22,7 +22,11 @@ file_validator = FileValidator(max_size=1024 * 1000, content_types=IMAGES_AND_DO
 
 
 class SpecialAssignment(
-    BaseModelMixin, StartAndDueDateMixin, TeamMembersMixin, CronColumnMixin, StrModelMixin
+    BaseModelMixin,
+    StartAndDueDateMixin,
+    TeamMembersMixin,
+    CronColumnMixin,
+    StrModelMixin,
 ):
     """Represents a special assignment.
 
