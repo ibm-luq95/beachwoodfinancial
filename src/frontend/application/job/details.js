@@ -17,6 +17,7 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
     "form#addDiscussionFormInJob",
   );
   const updateJobForm = document.querySelector("form#updateJobForm");
+
   if (updateJobStatusStateForm) {
     updateJobStatusStateForm.addEventListener("submit", (event) => {
       event.preventDefault();
@@ -52,7 +53,6 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
             console.error(error);
             console.warn(error);
             showToastNotification("Error while update job!", "danger");
-            // throw new Error(error.message);
           });
       } catch (error) {
         showToastNotification("Error while update job!", "danger");
@@ -62,14 +62,11 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
           state: "enable",
         });
       }
-
-      // console.log(jobStatusInput.value);
     });
 
     if (addDiscussionFormInJob) {
       addDiscussionFormInJob.addEventListener("submit", (event) => {
         event.preventDefault();
-        console.log("Add reply");
       });
     }
 
@@ -77,7 +74,6 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
       updateJobForm.addEventListener("submit", (event) => {
         event.preventDefault();
         const currentTarget = event.currentTarget;
-        const fieldset = currentTarget.querySelector("fieldset");
         const formInputs = formInputSerializer({
           formElement: currentTarget,
           excludedFields: ["_method"],
@@ -96,18 +92,13 @@ document.addEventListener("DOMContentLoaded", (readyEvent) => {
           token: currentTarget[CSRFINPUTNAME].value,
         };
         if (formInputs["is_scheduled"]) {
-          // console.log("Scheduled");
           formInputs["is_scheduled"] = true;
         } else {
           formInputs["is_scheduled"] = false;
         }
-        // console.log(formInputs)
-        // throw new Error("Error while updating job!");
         const request = RequestHandler.sendRequest(requestOptions);
         request
           .then((data) => {
-            // console.log(bwI18Helper.t("jobs"));
-            // showToastNotification(bwI18Helper.t("key"), "success");
             showToastNotification("Job updated successfully", "success");
             setTimeout(() => {
               window.location.reload();
