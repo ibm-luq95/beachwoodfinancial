@@ -51,13 +51,16 @@ class StaffBriefcaseListView(
         context.setdefault(
             "subtitle",
             _(
-                "Briefcases include documents and notes belongs to staff members".capitalize()
+                "Personal staff workspace, private working notes, and assigned engagement references."
             ),
         )
         context.setdefault("actions_base_url", "dashboard:briefcase")
         context.setdefault("filter_cancel_url", "dashboard:special_assignment:list")
         context.setdefault("table_header_title", _("C"))
-        context.setdefault("table_header_subtitle", _("Briefcases subtitle"))
+        context.setdefault(
+            "table_header_subtitle",
+            _("Personal briefcase items, workspace notes, and quick references."),
+        )
         context.setdefault("is_show_create_btn", True)
         context.setdefault("pagination_list_url_name", "dashboard:briefcase:list")
         context.setdefault("is_filters_enabled", False)
@@ -132,4 +135,3 @@ class StaffBriefcaseCreateView(
     template_name = "core/crudl/create.html"
     model = StaffBriefcase
     success_url = reverse_lazy("dashboard:briefcase:list")
-
