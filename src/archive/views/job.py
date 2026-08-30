@@ -35,7 +35,9 @@ class JobArchiveListView(
     pagination_list_url_name = "dashboard:archive:jobs:list"
     base_url_name = "dashboard:job"
     empty_label = _("job(s)")
-    subtitle = _("Jobs archive".title())
+    subtitle = _(
+        "Completed and archived fiscal jobs, past reconciliation periods, and closed engagements."
+    )
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
