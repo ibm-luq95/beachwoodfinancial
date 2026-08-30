@@ -1,10 +1,9 @@
-# -*- coding: utf-8 -*-#
 import re
 
 from django.core import validators
+from django.core.exceptions import ValidationError
 from django.db import models
 from django.urls import reverse
-from django.core.exceptions import ValidationError
 from django.utils.translation import gettext as _
 
 # from client.models import Client
