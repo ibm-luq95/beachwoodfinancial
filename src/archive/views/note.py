@@ -41,7 +41,9 @@ class NoteArchiveListView(
     pagination_list_url_name = "dashboard:archive:notes:list"
     base_url_name = "dashboard:note"
     empty_label = _("note(s)")
-    subtitle = _("Notes archive".title())
+    subtitle = _(
+        "Archived internal annotations, legacy comments, and historical client notes."
+    )
     actions_items = "update,delete"
 
     def get_context_data(self, **kwargs):
