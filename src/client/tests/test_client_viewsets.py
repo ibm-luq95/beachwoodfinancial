@@ -9,7 +9,7 @@ from rest_framework.test import APIClient
 
 from beach_wood_user.models import BWUser
 from client.models import ClientProxy
-from core.constants.users import CON_MANAGER, CON_BOOKKEEPER
+from core.constants.users import CON_BOOKKEEPER, CON_MANAGER
 
 
 @pytest.fixture(autouse=True)
