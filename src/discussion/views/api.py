@@ -16,6 +16,7 @@ from core.api.permissions import BaseApiPermissionMixin
 from core.api.mixins import RoleScopedQuerysetMixin
 from core.utils import get_formatted_logger
 from core.utils.developments.debugging_print_object import DebuggingPrint
+from core.utils.html_sanitizer import sanitize_html
 from discussion.models import DiscussionProxy
 from discussion.serializers import DiscussionSerializer
 from lf_notifications.models import NotificationRecipientProxy
@@ -35,15 +36,15 @@ class DiscussionNotificationsApiView(APIView):
                 data = dict()
                 post_data = request.data
                 pk = post_data.get("pk")
-                
+
                 # Try to find and mark as read in the new system
                 notification_recipient = NotificationRecipientProxy.objects.filter(
                     pk=pk, recipient=request.user
                 ).first()
-                
+
                 if notification_recipient:
                     notification_recipient.mark_as_read()
-                
+
                 return Response(status=status.HTTP_200_OK, data=data)
         except Exception as e:
             logger.error(traceback.format_exc())
@@ -54,34 +55,61 @@ class DiscussionNotificationsApiView(APIView):
 class DiscussionViewSet(RoleScopedQuerysetMixin, ModelViewSet):
     serializer_class = DiscussionSerializer
     permission_classes = (permissions.IsAuthenticated, BaseApiPermissionMixin)
-    parser_classes = [parsers.FormParser, parsers.MultiPartParser]
+    parser_classes = [parsers.FormParser, parsers.MultiPartParser, parsers.JSONParser]
     perm_slug = "discussion.discussion"
     queryset = DiscussionProxy.objects.all()
-    authentication_classes = [TokenAuthentication]
     filterset_fields = ["is_seen", "job", "special_assignment", "is_deleted"]
-    search_fields = ["body", "subject"]
+    search_fields = ["body"]
     ordering_fields = ["created_at", "updated_at"]
-    ordering = ["-created_at"]
+    ordering = ["created_at"]
+    pagination_class = None
 
     def get_queryset(self):
         qs = super().get_queryset()
-        return qs.select_related("job", "special_assignment")
+        return qs.select_related(
+            "job",
+            "special_assignment",
+            "sender",
+            "manager",
+            "manager__profile",
+            "bookkeeper",
+            "bookkeeper__profile",
+            "assistant",
+            "assistant__profile",
+        )
+
+    def perform_create(self, serializer):
+        user = self.request.user
+        extra_kwargs = {"sender": user}
+
+        if "body" in serializer.validated_data:
+            extra_kwargs["body"] = sanitize_html(serializer.validated_data["body"])
+
+        match user.user_type:
+            case "manager" if hasattr(user, "manager"):
+                extra_kwargs["manager"] = user.manager.get_proxy_model()
+            case "bookkeeper" if hasattr(user, "bookkeeper"):
+                extra_kwargs["bookkeeper"] = user.bookkeeper.get_proxy_model()
+            case "assistant" if hasattr(user, "assistant"):
+                extra_kwargs["assistant"] = user.assistant.get_proxy_model()
+
+        serializer.save(**extra_kwargs)
 
     def scope_queryset_for_bookkeeper(self, queryset, bookkeeper):
         return queryset.filter(
-            models.Q(job__managed_by=bookkeeper.user) |
-            models.Q(job__bookkeeper=bookkeeper) |
-            models.Q(job__client__bookkeepers=bookkeeper) |
-            models.Q(special_assignment__assigned_to=bookkeeper.user) |
-            models.Q(special_assignment__assigned_by=bookkeeper.user) |
-            models.Q(special_assignment__bookkeeper=bookkeeper) |
-            models.Q(special_assignment__client__bookkeepers=bookkeeper)
+            models.Q(job__managed_by=bookkeeper.user)
+            | models.Q(job__bookkeeper=bookkeeper)
+            | models.Q(job__client__bookkeepers=bookkeeper)
+            | models.Q(special_assignment__assigned_to=bookkeeper.user)
+            | models.Q(special_assignment__assigned_by=bookkeeper.user)
+            | models.Q(special_assignment__bookkeeper=bookkeeper)
+            | models.Q(special_assignment__client__bookkeepers=bookkeeper)
         )
 
     def scope_queryset_for_cfo(self, queryset, cfo):
         return queryset.filter(
-            models.Q(job__client__cfos=cfo) |
-            models.Q(special_assignment__client__cfos=cfo)
+            models.Q(job__client__cfos=cfo)
+            | models.Q(special_assignment__client__cfos=cfo)
         )
 
 
