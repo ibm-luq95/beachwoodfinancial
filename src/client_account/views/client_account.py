@@ -50,11 +50,21 @@ class ClientAccountListViewBW(
         context.setdefault(
             "component_path", "bw_components/client_account/table_list.html"
         )
-        context.setdefault("subtitle", _("client accounts".title()))
+        context.setdefault(
+            "subtitle",
+            _(
+                "Encrypted credentials, portal logins, and banking access configurations for client accounts."
+            ),
+        )
         context.setdefault("actions_base_url", "dashboard:client_account")
         context.setdefault("filter_cancel_url", "dashboard:client_account:list")
         context.setdefault("table_header_title", _("C"))
-        context.setdefault("table_header_subtitle", _("client_account subtitle"))
+        context.setdefault(
+            "table_header_subtitle",
+            _(
+                "Secure credential vault, external portal logins, and authorized credentials."
+            ),
+        )
         context.setdefault("is_show_create_btn", True)
         context.setdefault("pagination_list_url_name", "dashboard:client_account:list")
         context.setdefault("is_filters_enabled", True)
@@ -171,4 +181,3 @@ class ClientAccountDeleteView(
         context.setdefault("object_name", "client account")
         context.setdefault("form_css_id", "clientAccountDeleteForm")
         return context
-
