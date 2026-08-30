@@ -49,7 +49,9 @@ class ClientArchiveListView(
     actions_items = "details,update,delete"
     base_url_name = "dashboard:archive:clients"
     empty_label = _("client(s)")
-    subtitle = _("Client archive".title())
+    subtitle = _(
+        "Archived and inactive client accounts preserved for historical and compliance records."
+    )
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
@@ -60,7 +62,9 @@ class ClientArchiveListView(
         context.setdefault(
             "info_details",
             {
-                "tooltip_txt": BW_INFO_MODAL_CSS_CLASSES.get("client").get("tooltip_txt"),
+                "tooltip_txt": BW_INFO_MODAL_CSS_CLASSES.get("client").get(
+                    "tooltip_txt"
+                ),
                 "modal_css_id": BW_INFO_MODAL_CSS_CLASSES.get("client").get("cssID"),
             },
         )
@@ -83,4 +87,3 @@ class ClientArchiveListView(
             queryset = ClientProxy.archive_objects.none()
         self.filterset = ClientFilter(self.request.GET, queryset=queryset)
         return self.filterset.qs
-
