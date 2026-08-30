@@ -31,7 +31,6 @@ file_validator = FileValidator(max_size=1024 * 1000, content_types=IMAGES_AND_DO
 
 
 class MiniSpecialAssignmentForm(BWJSModalFormRendererMixin, BWBaseFormMixin):
-
     def __init__(self, *args, **kwargs):
         super(BWBaseFormMixin, self).__init__(*args, **kwargs)
         initial_values: dict = kwargs.get("initial")
@@ -39,16 +38,14 @@ class MiniSpecialAssignmentForm(BWJSModalFormRendererMixin, BWBaseFormMixin):
             # ENHANCED_DEBUGGING_PRINT_INSTANCE.display(locals())
             self.fields["job"].initial = initial_values.get("job")
         # self.fields["assigned_by"].label = ""
-        self.fields.get("attachment").widget.attrs.update(
-            {
-                "accept": (
-                    f"{PDF_MIME_TYPE}, {DOCX_MIME_TYPE}, {DOC_MIME_TYPE}, {CSV_MIME_TYPE},"
-                    f" {PNG_MIME_TYPE}, {JPEG_MIME_TYPE}, {JPG_MIME_TYPE},"
-                    f" {PPTX_MIME_TYPE}, {PPT_MIME_TYPE}, {AVIF_MIME_TYPE},"
-                    f" {WEBP_MIME_TYPE}"
-                )
-            }
-        )
+        self.fields.get("attachment").widget.attrs.update({
+            "accept": (
+                f"{PDF_MIME_TYPE}, {DOCX_MIME_TYPE}, {DOC_MIME_TYPE}, {CSV_MIME_TYPE},"
+                f" {PNG_MIME_TYPE}, {JPEG_MIME_TYPE}, {JPG_MIME_TYPE},"
+                f" {PPTX_MIME_TYPE}, {PPT_MIME_TYPE}, {AVIF_MIME_TYPE},"
+                f" {WEBP_MIME_TYPE}"
+            )
+        })
 
     field_order = ["job", "client"]
     assigned_to = forms.ModelChoiceField(
