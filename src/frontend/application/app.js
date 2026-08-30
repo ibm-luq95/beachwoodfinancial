@@ -34,6 +34,7 @@ import "./beach_wood_user/assistant.js";
 import "./beach_wood_user/bookkeeper.js";
 import "./beach_wood_user/manager.js";
 import "./beach_wood_user/cfo.js";
+import "./beach_wood_user/auth.js";
 import "./dashboard/notifications.js";
 import "./dashboard/notification_list.js";
 import "./dashboard/manager_dashboard.js";
@@ -46,10 +47,28 @@ import { setFormInputsReadOnly } from "./utils/form_helpers.js";
 import "./utils/ldgf_pop_modal.js";
 import HSTabs from "@preline/tabs/non-auto.mjs";
 
+import { createApp } from "vue";
+import Chatbox from "../components/discussion/Chatbox.vue";
+
 window.htmx = htmx;
 window.Alpine = Alpine;
 Alpine.start();
 window.document.addEventListener("DOMContentLoaded", function () {
+  // Init Vue Chatbox components
+  const vueChatboxContainers = document.querySelectorAll("[data-vue-chatbox]");
+  vueChatboxContainers.forEach((el) => {
+    const props = {
+      objectId: el.dataset.objectId,
+      objectType: el.dataset.objectType || "special_assignment",
+      currentUserId: el.dataset.currentUserId,
+      currentUserName: el.dataset.currentUserName,
+      currentUserAvatar: el.dataset.currentUserAvatar,
+      apiEndpoint: el.dataset.apiEndpoint || "/dashboard/discussions/api/discussion-api-router/",
+      csrfToken: el.dataset.csrfToken,
+    };
+    createApp(Chatbox, props).mount(el);
+  });
+
   // Init preline
   if (window.HSStaticMethods) {
     window.HSStaticMethods.autoInit();
