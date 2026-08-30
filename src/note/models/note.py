@@ -6,8 +6,8 @@ from core.choices import NoteSectionEnum
 from core.constants.general import CON_JOB
 from core.models.mixins import (
     BaseModelMixin,
-    GetObjectSectionMixin,
     GeneralStatusFieldMixin,
+    GetObjectSectionMixin,
     SanitizeHTMLFieldsMixin,
     StrModelMixin,
 )
