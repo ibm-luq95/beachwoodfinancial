@@ -86,8 +86,23 @@ class BWBaseListViewMixin:
         per_page_number = self.request.GET.get("per_page", LIST_VIEW_PAGINATE_BY)
         per_page_form = PerPageForm(initial={"per_page": per_page_number})
         context.setdefault("per_page_filter_form", per_page_form)
-        if hasattr(self, "object_list"):
-            context.setdefault("total_records", len(self.object_list))
+        if "paginator" in context and context["paginator"] is not None:
+            context.setdefault("total_records", context["paginator"].count)
+        elif "page_obj" in context and context["page_obj"] is not None:
+            context.setdefault("total_records", context["page_obj"].paginator.count)
+        elif "object_list" in context and context["object_list"] is not None:
+            if isinstance(context["object_list"], list):
+                context.setdefault("total_records", len(context["object_list"]))
+            else:
+                context.setdefault(
+                    "total_records",
+                    getattr(context["object_list"], "count", lambda: 0)(),
+                )
+        elif hasattr(self, "object_list"):
+            context.setdefault(
+                "total_records",
+                getattr(self.object_list, "count", lambda: 0)(),
+            )
         if hasattr(self, "modal"):
             if hasattr(self.model, "_meta"):
                 context.setdefault("app_label", self.model._meta.app_label)
