@@ -41,9 +41,10 @@ class TaskArchiveListView(
     pagination_list_url_name = "dashboard:archive:tasks:list"
     base_url_name = "dashboard:task"
     empty_label = _("task(s)")
-    subtitle = _("Tasks archive".title())
+    subtitle = _(
+        "Archived subtasks and completed checklist items preserved for historical reference."
+    )
     actions_items = "update,delete"
-
 
     def get_context_data(self, **kwargs):
         # Call the base implementation first to get a context
